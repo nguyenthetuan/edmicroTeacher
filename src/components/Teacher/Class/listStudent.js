@@ -1,0 +1,85 @@
+import React, { Component } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Image, Dimensions,Text } from 'react-native';
+import ItemStudent from './itemStudent';
+import RippleItem from '../../common-new/RippleItem';
+import dataHelper from '../../../utils/dataHelper';
+import Api from '../../../services/apiClassTeacher';
+
+const { width, height } = Dimensions.get('window');
+export default class listStudent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+      isLoading: true,
+      data: {}
+    }
+  }
+
+  async componentDidMount() {
+    const { classId } = this.props.screenProps;
+    try {
+      const { token } = await dataHelper.getToken();
+      const response = await Api.getInfoClass({ token, classId })
+      this.setState({
+        isLoading: false,
+        data: response && response,
+      })
+    } catch (error) {
+
+    }
+  }
+
+  renderItem = ({ item, index }) => {
+    const { data } = this.state;
+    return (
+      <RippleItem onPress={() => this.props.screenProps.show({ studentId: item.studentId, classID: data.code })} >
+        <View style={{ paddingVertical: 12 }} >
+          <ItemStudent
+            item={item}
+            index={index}
+            navigation={this.props.navigation}
+          />
+        </View>
+      </RippleItem>
+    );
+  }
+
+  render() {
+    const { data, showModal, isLoading } = this.state;
+    return (
+      <View style={styles.container}>
+        {!isLoading ? <FlatList
+          data={data.students}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={this.renderItem}
+          removeClippedSubviews={false}
+          initialNumToRender={8}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => <View style={styles.viewNotFound}><Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+          </View>}
+        />
+          : <ActivityIndicator animating size={'small'} style={{ flex: 1 }} color='#56CCF2' />}
+      </View>
+    );
+  }
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  viewNotFound: {
+    marginTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtNotFound: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: 14,
+    color: '#000'
+  }
+})

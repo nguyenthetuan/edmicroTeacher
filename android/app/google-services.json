@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "826468171337",
+    "firebase_url": "https://onluyen-a2989.firebaseio.com",
+    "project_id": "onluyen-a2989",
+    "storage_bucket": "onluyen-a2989.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826468171337:android:79a1340a2e48c1e77b4998",
+        "android_client_info": {
+          "package_name": "vn.onluyen.teacher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826468171337-g734mtg2msab4d7qtqcmtvgm5dubboia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.onluyen.teacher",
+            "certificate_hash": "6c93f235fe04842bb4cecb3db1215bb4a7fbe3cd"
+          }
+        },
+        {
+          "client_id": "826468171337-kvr16to05he7et52e78199io5jn48cld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.onluyen.teacher",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "826468171337-13ir42n0tfc5jfrbm0kier001vlnjp53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL1VNZEopQvqqNtNqo7MMzFwJ_XGXwVdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826468171337-f4at6ish835lciqds5ls1kc7pe61pscr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
