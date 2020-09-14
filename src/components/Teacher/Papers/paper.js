@@ -183,7 +183,7 @@ class Papers extends Component {
         NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
       ),
       payloadAssignment: null,
-      animation: 'slideInUp',
+      animation: 'fadeInUpBig',
       assignmentContentType: 0,
     };
 
@@ -763,9 +763,9 @@ class Papers extends Component {
   };
 
   _handleCloseModal = () => {
-    this.setState({animation: 'slideOutDown'}, () => {
+    this.setState({animation: 'fadeOutDownBig'}, () => {
       this.myTime = setTimeout(() => {
-        this.setState({animation: 'slideInUp', visibleEdit: false});
+        this.setState({animation: 'fadeInUpBig', visibleEdit: false});
       }, 500);
     });
   };

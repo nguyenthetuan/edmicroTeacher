@@ -19,7 +19,7 @@ const { width, height } = Dimensions.get('window');
 class SelectModal extends Component {
     state = {
         modalVisible: false,
-        animation: 'slideInUp',
+        animation: 'fadeInUpBig',
     };
 
     onShowModal = () => {
@@ -27,9 +27,9 @@ class SelectModal extends Component {
     };
 
     onHideModal = () =>
-        this.setState({ animation: 'slideOutDown' }, () => {
+        this.setState({ animation: 'fadeOutDownBig' }, () => {
             this.myTime = setTimeout(() => {
-                this.setState({ modalVisible: false, animation: 'slideInUp' });
+                this.setState({ modalVisible: false, animation: 'fadeInUpBig' });
                 this.props.onHide();
             }, 700);
         });

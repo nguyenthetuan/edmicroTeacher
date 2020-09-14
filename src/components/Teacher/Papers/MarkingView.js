@@ -75,10 +75,10 @@ class MarkingView extends Component {
   componentDidMount() {
     const {assignmentId} = this.props.navigation.state.params.item;
     // const {token} = apiPaper.getToken();
-    apiHelper.getToken().then((tk) => {
+    apiHelper.getToken().then(tk => {
       apiPaper
         .getListClassAssigned({token: tk.token, assignmentId})
-        .then((res) => {
+        .then(res => {
           //có asignID ở đây,
           this.setState({
             listClassAssigned: res.data,
@@ -91,7 +91,7 @@ class MarkingView extends Component {
               token: tk.token,
               assignId: res.data[0].assignId,
             })
-            .then((rs) => {
+            .then(rs => {
               let studentListAssigned = this.filterDataStudentAssigned(rs);
               if (_.isEmpty(studentListAssigned)) {
                 return;
@@ -106,7 +106,7 @@ class MarkingView extends Component {
                   studentId: studentListAssigned[0]?.studentId,
                   assignId: res.data[0].assignId,
                 })
-                .then((respone) => {
+                .then(respone => {
                   this.setState({
                     assignmentDetailCheck: respone,
                     urlFile:
@@ -209,10 +209,10 @@ class MarkingView extends Component {
 
   async refreshDataWithNewClass() {
     const {assignId, classId} = this.state;
-    apiHelper.getToken().then((tk) => {
+    apiHelper.getToken().then(tk => {
       apiPaper
         .fetchListStudentAssign({token: tk.token, assignId: assignId})
-        .then((rs) => {
+        .then(rs => {
           let studentListAssigned = this.filterDataStudentAssigned(rs);
           this.setState({
             selectedValueStudent: studentListAssigned[0]?.studentId,
@@ -224,7 +224,7 @@ class MarkingView extends Component {
               studentId: studentListAssigned[0]?.studentId,
               assignId: res.data[0].assignId,
             })
-            .then((respone) => {
+            .then(respone => {
               this.setState({assignmentDetailCheck: respone});
             });
         });
@@ -233,20 +233,20 @@ class MarkingView extends Component {
 
   refreshWithNewStudent = () => {
     const {assignId, classId, selectedValueStudent} = this.state;
-    apiHelper.getToken().then((tk) => {
+    apiHelper.getToken().then(tk => {
       apiPaper
         .assignmentDetailCheck({
           token: tk.token,
           studentId: selectedValueStudent,
           assignId: assignId,
         })
-        .then((respone) => {
+        .then(respone => {
           this.setState({assignmentDetailCheck: respone});
         });
     });
   };
 
-  onValueChangePickerStudent = (value) => {
+  onValueChangePickerStudent = value => {
     const indexStudent = value;
     const {listStudentAssigned, indexSelected} = this.state;
     value = listStudentAssigned[value];
@@ -261,7 +261,7 @@ class MarkingView extends Component {
       () => this.getData(),
     );
   };
-  onValueChangePickerClass = (value) => {
+  onValueChangePickerClass = value => {
     const indexClass = value;
     const {listClassAssigned, indexSelected} = this.state;
     value = listClassAssigned[value];
@@ -300,11 +300,11 @@ class MarkingView extends Component {
         .stepId;
     const idLog = _.find(
       listStudentAssigned,
-      (e) => e.studentId === selectedValueStudent,
+      e => e.studentId === selectedValueStudent,
     ).idLog;
     const assignId = _.find(
       listClassAssigned,
-      (e) => e.classId === selectedValueClass,
+      e => e.classId === selectedValueClass,
     );
     try {
       let formData = {
@@ -321,16 +321,16 @@ class MarkingView extends Component {
       if (response && response.msg === null) {
         if (!_.isEmpty(assignmentDetailCheck?.data?.data)) {
           assignmentDetailCheck.data.data = assignmentDetailCheck.data.data.map(
-            (item) => {
+            item => {
               if (item.dataStandard != null) {
                 if (item.dataStandard.stepId == response.stepId) {
                   item.dataStandard.timeSetScore = new Date().getTime();
                 }
               } else {
-                let dataMaterial = item.dataMaterial;
+                let dataMaterial = item.dataMaterial.data;
                 for (let element of dataMaterial) {
-                  if (element.dataStandard.stepId == response.stepId) {
-                    element.dataStandard.timeSetScore = new Date().getTime();
+                  if (element.stepId == response.stepId) {
+                    element.timeSetScore = new Date().getTime();
                   }
                 }
               }
@@ -381,7 +381,7 @@ class MarkingView extends Component {
     }
   }
 
-  onButtonQuestionPress = (index) => {
+  onButtonQuestionPress = index => {
     const {assignmentDetailCheck} = this.state;
     if (!this.state.isHideCommentInput) {
       this.onpressComment();
@@ -400,7 +400,7 @@ class MarkingView extends Component {
     const {selectedValueClass, listClassAssigned} = this.state;
     const assignId = _.find(
       listClassAssigned,
-      (e) => e.classId === selectedValueClass,
+      e => e.classId === selectedValueClass,
     );
     const formData = {
       assignId: assignId?.assignId,
@@ -513,10 +513,10 @@ class MarkingView extends Component {
     const source = {uri: assignmentDetailCheck.data.listFile[0]};
     return (
       <Pdf
-        ref={(ref) => (this.pdfFull = ref)}
+        ref={ref => (this.pdfFull = ref)}
         source={source}
         onLoadComplete={(numberOfPages, filePath) => {}}
-        onError={(error) => {
+        onError={error => {
           console.log(error);
         }}
         style={styles.pdf}
@@ -529,10 +529,10 @@ class MarkingView extends Component {
     const source = {uri: assignmentDetailCheck.data.listFile[0]};
     return (
       <Pdf
-        ref={(ref) => (this.pdfFull = ref)}
+        ref={ref => (this.pdfFull = ref)}
         source={source}
         onLoadComplete={(numberOfPages, filePath) => {}}
-        onError={(error) => {
+        onError={error => {
           console.log(error);
         }}
         style={styles.pdf}
@@ -540,7 +540,7 @@ class MarkingView extends Component {
     );
   };
 
-  _changeTab = (key) => {
+  _changeTab = key => {
     const {tabActive} = this.state;
     if (key == tabActive) {
       return;
@@ -563,10 +563,10 @@ class MarkingView extends Component {
       case 0:
         return (
           <Pdf
-            ref={(ref) => (this.pdfFull = ref)}
+            ref={ref => (this.pdfFull = ref)}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => {}}
-            onError={(error) => {
+            onError={error => {
               console.log(error);
             }}
             style={styles.pdf}
@@ -575,22 +575,27 @@ class MarkingView extends Component {
       case 1:
         return (
           <Pdf
-            ref={ref => this.pdfFull = ref}
+            ref={ref => (this.pdfFull = ref)}
             source={answer}
-            onLoadComplete={(numberOfPages, filePath) => { }}
-            onError={(error) => { console.log(error); }}
-            style={styles.pdf} 
-          ></Pdf>
+            onLoadComplete={(numberOfPages, filePath) => {}}
+            onError={error => {
+              console.log(error);
+            }}
+            style={styles.pdf}
+          />
         );
       default:
         return (
           <Pdf
-            ref={ref => this.pdfFull = ref}
+            ref={ref => (this.pdfFull = ref)}
             source={source}
-            onLoadComplete={(numberOfPages, filePath) => { }}
-            onError={(error) => { console.log(error); }}
-            style={styles.pdf} />
-        )
+            onLoadComplete={(numberOfPages, filePath) => {}}
+            onError={error => {
+              console.log(error);
+            }}
+            style={styles.pdf}
+          />
+        );
     }
   };
 
@@ -599,7 +604,7 @@ class MarkingView extends Component {
     let arrayScored = [];
     Object.keys(assignmentDetailCheck).length !== 0 &&
       assignmentDetailCheck.data.length !== 0 &&
-      _.forEach(assignmentDetailCheck.data.data, (e) => {
+      _.forEach(assignmentDetailCheck.data.data, e => {
         if (e.dataStandard) {
           let dataStandard = e.dataStandard;
           if (dataStandard.timeSetScore != 0) {
@@ -615,7 +620,7 @@ class MarkingView extends Component {
     return arrayScored;
   };
 
-  _answer = (type) => {
+  _answer = type => {
     switch (type) {
       case 0:
         return 'A';
@@ -739,7 +744,7 @@ class MarkingView extends Component {
         {this.renderHeader()}
         {Object.keys(assignmentDetailCheck).length === 0 ||
         assignmentDetailCheck.data.data.length === 0 ? (
-          <View></View>
+          <View />
         ) : (
           <View style={{flex: 1, marginTop: 5}}>
             <View style={styles.wrapTop}>
@@ -755,17 +760,15 @@ class MarkingView extends Component {
               </View>
               <View style={styles.poinded}>
                 <View style={styles.review}>
-                  <View
-                    style={[styles.note, {backgroundColor: '#E34D5C'}]}></View>
+                  <View style={[styles.note, {backgroundColor: '#E34D5C'}]} />
                   <Text style={styles.txtNote}>Trắc nghiệm</Text>
                 </View>
                 <View style={styles.review}>
-                  <View style={styles.note}></View>
+                  <View style={styles.note} />
                   <Text style={styles.txtNote}>Chưa chấm</Text>
                 </View>
                 <View style={styles.review}>
-                  <View
-                    style={[styles.note, {backgroundColor: '#2D9CDB'}]}></View>
+                  <View style={[styles.note, {backgroundColor: '#2D9CDB'}]} />
                   <Text style={styles.txtNote}>Đã chấm</Text>
                 </View>
               </View>
@@ -777,7 +780,7 @@ class MarkingView extends Component {
                   <TextInput
                     ref={'TextInputPoint'}
                     onEndEditing={() => this.checkScore()}
-                    onChangeText={(text) => this.onChangeTextScore(text)}
+                    onChangeText={text => this.onChangeTextScore(text)}
                     keyboardType={'numeric'}
                     value={point}
                     style={{
@@ -832,14 +835,15 @@ class MarkingView extends Component {
                     alignSelf: 'center',
                   }}>
                   <TextInput
-                    onChangeText={(text) => {
+                    onChangeText={text => {
                       this.onChangeTextComment(text);
                     }}
                     value={
                       this.state[`valueCommnent${this.state.currentIndex}`]
                     }
                     multiline={true}
-                    autoFocus={true}></TextInput>
+                    autoFocus={true}
+                  />
                   <RippleButton
                     style={styles.buttonSubmit}
                     rippleContainerBorderRadius={10}
@@ -869,7 +873,7 @@ class MarkingView extends Component {
             )}
             {_.isEmpty(assignmentDetailCheck.data.listFile) && (
               <WebView
-                ref={(ref) => (this.webview = ref)}
+                ref={ref => (this.webview = ref)}
                 style={{
                   backgroundColor: 'transparent',
                   flex: 1,
@@ -906,7 +910,7 @@ class TabOfPaper extends Component {
     };
   }
 
-  _changeTab = (key) => () => {
+  _changeTab = key => () => {
     const {tabActive} = this.props;
     const {positionX} = this.state;
     if (key == tabActive) {
@@ -1145,18 +1149,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     assignId: state.paper.assignId,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchDetailAssignment: (payload) => {
+    fetchDetailAssignment: payload => {
       dispatch(fetchDataAssignmentAction(payload));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MarkingView);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MarkingView);
