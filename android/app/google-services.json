@@ -8,22 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:826468171337:android:79a1340a2e48c1e77b4998",
+        "mobilesdk_app_id": "1:826468171337:android:a8d3d7821c0188f87b4998",
         "android_client_info": {
           "package_name": "vn.onluyen.school"
         }
       },
       "oauth_client": [
         {
-          "client_id": "826468171337-g734mtg2msab4d7qtqcmtvgm5dubboia.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "vn.onluyen.school",
-            "certificate_hash": "6c93f235fe04842bb4cecb3db1215bb4a7fbe3cd"
-          }
-        },
-        {
-          "client_id": "826468171337-kvr16to05he7et52e78199io5jn48cld.apps.googleusercontent.com",
+          "client_id": "826468171337-3cjif8c2mu8lelordr5btmfhgjjn3os4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "vn.onluyen.school",
@@ -44,8 +36,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "826468171337-f4at6ish835lciqds5ls1kc7pe61pscr.apps.googleusercontent.com",
+              "client_id": "826468171337-g1ds1pviknkub3he5lhcdjlb3p6vlmrn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "826468171337-9lmcsf0543rk2309s2scnjupf5tj6hla.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.onluyen.school"
+              }
             }
           ]
         }
