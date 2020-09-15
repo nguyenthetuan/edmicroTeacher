@@ -198,7 +198,7 @@ export default class ModalCurriculum extends Component {
             <TouchableOpacity onPress={() => this.setState({visible: true})}>
               <View style={styles.icDow}>
                 <Ionicons
-                  name={dropdownVisible ? 'ios-arrow-up' : 'ios-arrow-down'}
+                  name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
                   size={16}
                   color="#fff"
                 />
