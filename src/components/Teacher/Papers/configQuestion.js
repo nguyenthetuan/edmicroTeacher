@@ -13,6 +13,8 @@ import {
   TextInput,
   Keyboard,
   ScrollView,
+  Modal,
+  ActivityIndicator
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -31,6 +33,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import {HEIGHT_TOPBAR} from '../../../utils/Common';
 import SwitchButton from '../../../components/common/ButtonSwitch';
 import {AlertNoti, roundToTwo} from '../../../utils/Common';
+import HTML from "react-native-render-html";
 
 const {width, height} = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -66,6 +69,9 @@ class ConfigQuestion extends Component {
       totalPoint: 10,
       webheight: 350,
       isExplain: false,
+      isModal:false,
+      isLoadingModal:false,
+      htmlContent:'',
     };
   }
   onHandleMessage(event) {
@@ -106,6 +112,10 @@ class ConfigQuestion extends Component {
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
       this.setState({webheight: parseInt(event.nativeEvent.data) + 40});
+    }
+    if (data[0] === 'matariaDetail') {
+      this.getDetailMatarial()
+      this.setState({ isModal: true }, () => this.getDetailMatarial(data[1]))
     }
   }
 
@@ -529,6 +539,18 @@ class ConfigQuestion extends Component {
     this.refs.ScrollView.scrollTo({x: 0, y: 0, animated: true});
   };
 
+  getDetailMatarial = async (idMatarial) => {
+    const { token } = await dataHelper.getToken();
+    this.setState({ isLoadingModal: true })
+    const response = await apiPapers.getMatarialDetail({ token, idMatarial })
+    if (response) {
+      this.setState({
+        htmlContent: response?.contentHtml,
+        isLoadingModal: false
+      })
+    }
+  }
+
   render() {
     const {
       name,
@@ -543,6 +565,9 @@ class ConfigQuestion extends Component {
       arrayQuestion,
       webheight,
       isExplain,
+      isModal,
+      isLoadingModal,
+      htmlContent,
     } = this.state;
     return (
       <View style={styles.container}>
@@ -976,6 +1001,38 @@ class ConfigQuestion extends Component {
           />
           <Text style={{color: '#FAFAFA'}}>TOP</Text>
         </TouchableOpacity>
+        <Modal
+          visible={isModal}
+          transparent={true}
+        >
+          <TouchableWithoutFeedback
+            onPress={() => this.setState({ isModal: false })}
+          >
+            <View style={styles.containerModal}>
+              <TouchableWithoutFeedback>
+                <View style={[styles.bodyModal]}>
+                    <TouchableOpacity
+                      style={{ alignSelf: 'flex-end', marginRight: 10, marginTop: 10, position: 'absolute', right: 0, top: 0 ,zIndex:2}}
+                      onPress={() => this.setState({ isModal: false })}>
+                      <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
+                    </TouchableOpacity>
+                    {isLoadingModal ?
+                      <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
+                      :
+                      <ScrollView style={{height:200}}>
+                        <HTML
+                          html={htmlContent}
+                          imagesMaxWidth={Dimensions.get('window').width}
+                          containerStyle={{ paddingHorizontal: 16, marginVertical: 20 }}
+                          baseFontStyle={{fontSize:12}}
+                        />
+                      </ScrollView>
+                    }
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     );
   }
@@ -990,6 +1047,20 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {})(ConfigQuestion);
 
 const styles = StyleSheet.create({
+  containerModal: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    height: 200,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 16
+  },
+  bodyModal: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    height: 500,
+    justifyContent: 'center'
+  },
   container: {
     flex: 1,
     backgroundColor: '#56CCF2',

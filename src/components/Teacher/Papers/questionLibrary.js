@@ -521,9 +521,8 @@ class QuestionLibrary extends Component {
             <View style={styles.containerModal}>
               <TouchableWithoutFeedback>
                 <View style={[styles.bodyModal]}>
-                  <>
                     <TouchableOpacity
-                      style={{ alignSelf: 'flex-end', marginRight: 10, marginTop: 10, position: 'absolute', right: 0, top: 0 }}
+                      style={{ alignSelf: 'flex-end', marginRight: 10, marginTop: 10, position: 'absolute', right: 0, top: 0 ,zIndex:2}}
                       onPress={() => this.setState({ isModal: false })}>
                       <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
                     </TouchableOpacity>
@@ -539,7 +538,6 @@ class QuestionLibrary extends Component {
                         />
                       </ScrollView>
                     }
-                  </>
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -676,7 +674,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 5,
-    height: 550,
+    height: 500,
     justifyContent: 'center'
   }
 });
