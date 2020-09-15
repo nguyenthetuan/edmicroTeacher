@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:826468171337:android:79a1340a2e48c1e77b4998",
         "android_client_info": {
-          "package_name": "vn.onluyen.teacher"
+          "package_name": "vn.onluyen.school"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "826468171337-g734mtg2msab4d7qtqcmtvgm5dubboia.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "vn.onluyen.teacher",
+            "package_name": "vn.onluyen.school",
             "certificate_hash": "6c93f235fe04842bb4cecb3db1215bb4a7fbe3cd"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "826468171337-kvr16to05he7et52e78199io5jn48cld.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "vn.onluyen.teacher",
+            "package_name": "vn.onluyen.school",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },

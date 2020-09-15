@@ -1,4 +1,4 @@
-package vn.onluyen.teacher;
+package vn.onluyen.school;
 
 import android.os.Bundle;
 
