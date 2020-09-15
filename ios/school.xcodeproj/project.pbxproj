@@ -30,7 +30,7 @@
 		7AD0B5B6C5444119AA24F601 /* Nunito-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD241B46BE8C4C21B1E4BB70 /* Nunito-SemiBoldItalic.ttf */; };
 		80B25111438C4D6A90D521D4 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */; };
 		82387D40B41E4BEAAD0B723D /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FFC042CFE143D39DE3DEF5 /* Nunito-Italic.ttf */; };
-		848BB3E2250CAF7500511F44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E1250CAF7500511F44 /* GoogleService-Info.plist */; };
+		840D737D25107E270007BEA0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840D737C25107E270007BEA0 /* GoogleService-Info.plist */; };
 		848BB3F4250CC7C800511F44 /* jqueryfastclick.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E5250CC7C600511F44 /* jqueryfastclick.js */; };
 		848BB3F5250CC7C800511F44 /* fontawesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E6250CC7C600511F44 /* fontawesome.min.css */; };
 		848BB3F6250CC7C800511F44 /* fastclick_min.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E7250CC7C600511F44 /* fastclick_min.js */; };
@@ -105,7 +105,7 @@
 		6C9161A0EEB84489B628E95C /* Nunito-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-ExtraLight.ttf"; path = "../src/asserts/fonts/Nunito-ExtraLight.ttf"; sourceTree = "<group>"; };
 		77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBold.ttf"; path = "../src/asserts/fonts/Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
 		8327978F2FCFA5E94AACFD64 /* Pods-school-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		848BB3E1250CAF7500511F44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		840D737C25107E270007BEA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848BB3E3250CBC0D00511F44 /* school.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = school.entitlements; path = school/school.entitlements; sourceTree = "<group>"; };
 		848BB3E5250CC7C600511F44 /* jqueryfastclick.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jqueryfastclick.js; sourceTree = "<group>"; };
 		848BB3E6250CC7C600511F44 /* fontawesome.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = fontawesome.min.css; sourceTree = "<group>"; };
@@ -198,7 +198,6 @@
 				848BB3E3250CBC0D00511F44 /* school.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				848BB3E1250CAF7500511F44 /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -293,6 +292,7 @@
 				848BB3F3250CC7C700511F44 /* jquery-pull-touch.js */,
 				848BB3E8250CC7C700511F44 /* jquery-ui.min.js */,
 				848BB3EF250CC7C700511F44 /* jquery.fireworks.js */,
+				840D737C25107E270007BEA0 /* GoogleService-Info.plist */,
 				848BB3F1250CC7C700511F44 /* jquery.min.js */,
 				848BB3ED250CC7C700511F44 /* jquery.ui.touch-punch.min.js */,
 				848BB3E5250CC7C600511F44 /* jqueryfastclick.js */,
@@ -499,8 +499,8 @@
 				9A548905C638480994F5C9DA /* Nunito-Light.ttf in Resources */,
 				848BB3FC250CC7C800511F44 /* jquery.ui.touch-punch.min.js in Resources */,
 				848BB400250CC7C800511F44 /* jquery.min.js in Resources */,
-				848BB3E2250CAF7500511F44 /* GoogleService-Info.plist in Resources */,
 				848BB402250CC7C800511F44 /* jquery-pull-touch.js in Resources */,
+				840D737D25107E270007BEA0 /* GoogleService-Info.plist in Resources */,
 				78D71DA2A4B14D7FBE2A06D0 /* Nunito-LightItalic.ttf in Resources */,
 				848BB3FF250CC7C800511F44 /* keypad.css in Resources */,
 				E594F73072744727A63AAA64 /* Nunito-Regular.ttf in Resources */,
