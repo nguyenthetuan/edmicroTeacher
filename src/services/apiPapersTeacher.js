@@ -288,6 +288,18 @@ const publicedScore = async ({ token, formData }) => {
   return responseJson;
 }
 
+const getMatarialDetail = async ({token,idMatarial}) => {
+  console.log('token',token)
+  console.log('idMatarial',idMatarial)
+  let response = await fetch(`${API_BASE}school-online/library/material/detail/${idMatarial}/0`, {
+    method: 'GET',
+    headers: getHeaders(token)
+  });
+  let responseJson = await response.json();
+  return responseJson;
+}
+
+
 module.exports = {
   getGrade,
   getSubject,
@@ -314,5 +326,6 @@ module.exports = {
   getListClassAssigned,
   submitReview,
   countSearch,
-  publicedScore
+  publicedScore,
+  getMatarialDetail
 };

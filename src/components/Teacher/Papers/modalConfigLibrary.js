@@ -81,7 +81,10 @@ export default class ModalConfigLibrary extends Component {
       <View style={{flex: 1}}>
         <View style={{flex: 1}}>
           <Text style={styles.txtTitle}>{title}</Text>
-          <View style={styles.btnModal}>
+          <TouchableOpacity 
+          style={styles.btnModal}
+          onPress={() => this.setState({visible: true})}
+          >
             {(!_.isEmpty(selectItem) && selectItem.name) ||
             (!_.isEmpty(value) && value.name) ? (
               <Text style={styles.txtSelectItem} numberOfLines={1}>
@@ -105,8 +108,8 @@ export default class ModalConfigLibrary extends Component {
                 </TouchableOpacity>
               ) : null}
               {
-                <TouchableOpacity
-                  onPress={() => this.setState({visible: true})}>
+                <View
+                  >
                   <View
                     style={{
                       width: 24,
@@ -117,15 +120,16 @@ export default class ModalConfigLibrary extends Component {
                       alignItems: 'center',
                     }}>
                     <Ionicons
-                      name={dropdownVisible ? 'ios-arrow-up' : 'ios-arrow-down'}
+                      name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
                       size={16}
                       color="#fff"
                     />
                   </View>
-                </TouchableOpacity>
+                </View>
               }
             </View>
-          </View>
+          </TouchableOpacity>
+          
           <Modal visible={visible} transparent={true}>
             <TouchableWithoutFeedback
               onPress={() => {
