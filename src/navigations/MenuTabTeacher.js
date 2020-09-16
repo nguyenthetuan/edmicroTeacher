@@ -172,7 +172,7 @@ class MenuTabTeacher extends Component {
                     <Icon name={'angle-right'} color={'#4776AD'} size={16} style={[styles.angle]} />
                   </View>
                 </RippleButton>
-                <RippleButton color={rippleColor}
+                {/* <RippleButton color={rippleColor}
                 // onPress={() => this.handleClick(1)}
                 >
                   <View style={styles.wrapComponent}>
@@ -180,7 +180,7 @@ class MenuTabTeacher extends Component {
                     <Text style={styles.txtComponent}>Đánh giá ứng dụng</Text>
                     <Icon name={'angle-right'} color={'#4776AD'} size={16} style={[styles.angle]} />
                   </View>
-                </RippleButton>
+                </RippleButton> */}
                 {/* <RippleButton color={rippleColor}
                   // onPress={() => this.handleClick(1)}
                 >

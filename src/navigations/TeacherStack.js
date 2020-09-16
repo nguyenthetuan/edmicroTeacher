@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import ClassDetail from '../components/Teacher/Class/classDetail';
 import ExcerciseDetail from '../components/Teacher/Class/excerciseDetail';
@@ -108,6 +107,6 @@ const TeacherStack = createStackNavigator({
     screen: TermsOfUse,
     navigationOptions: { header: null, gesturesEnabled: true },
   }
-});
+}, transition);
 
 export default TeacherStack;
