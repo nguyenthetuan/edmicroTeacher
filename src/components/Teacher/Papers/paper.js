@@ -324,17 +324,14 @@ class Papers extends Component {
   }
 
   _onScrollEndDrag = () => {
-    console.log('_onScrollEndDrag');
     this._scrollEndTimer = setTimeout(this._onMomentumScrollEnd, 250);
   };
 
   _onMomentumScrollBegin = () => {
-    console.log('_onMomentumScrollBegin');
     clearTimeout(this._scrollEndTimer);
   };
 
   _onMomentumScrollEnd = () => {
-    console.log('_onMomentumScrollEnd');
     const toValue =
       this._scrollValue > NAVBAR_HEIGHT &&
       this._clampedScrollValue > (NAVBAR_HEIGHT - STATUS_BAR_HEIGHT) / 2
@@ -709,7 +706,6 @@ class Papers extends Component {
       dataSelected,
       payloadAssignment,
     } = this.state;
-    console.log('dataSelected', dataSelected)
     switch (index) {
       case 1:
         this.setState({visibleEdit: false});

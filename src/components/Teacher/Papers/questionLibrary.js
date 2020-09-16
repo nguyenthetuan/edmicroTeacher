@@ -357,7 +357,8 @@ class QuestionLibrary extends Component {
       isAllowRerennder,
       isModal,
       htmlContent,
-      isLoadingModal
+      isLoadingModal,
+      curriculumCode
     } = this.state;
     const level = [
       { name: 'Nhận biết', code: '0' },
@@ -385,6 +386,7 @@ class QuestionLibrary extends Component {
                   this.props.navigation.navigate('ConfigQuestion', {
                     nagigation: this.props.nagigation,
                     statusbar: 'light-content',
+                    curriculumCode:this.state.objectSearch.curriculumCode,
                   });
                 } else {
                   AlertNoti(messageNoQuestion);
