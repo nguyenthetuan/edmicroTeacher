@@ -81,6 +81,9 @@ const renderHtmlQuestionDetail = (
   html += htmlPoint;
   html += `
     <script>
+    function matariaDetail (matariaID){
+      window.ReactNativeWebView.postMessage("matariaDetail---"+matariaID);
+    }
       function myReviewActionresult(questionId, stepId){
         window.ReactNativeWebView.postMessage("reviewResult---"+questionId+"---"+stepId);
       }
@@ -249,10 +252,12 @@ const renderHtmlQuestionDetail = (
        border-radius: 5px;margin-left: 16px;
        margin-right: 16px;overflow: hidden;">
       `;
-      html += `<div style="padding:10px 15px">
-      <span style="font-weight: bold;font-size: 14px;color: #000000">Câu ${
-        i + 1
-      }</span>
+      html += `
+      <div style="padding:10px 15px">
+      ${dataStandard.idMaterial&&` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
+      xem học liệu
+      </span>`||``
+    }
       <span style="float: right" id="arrayWarn${
         dataStandard.index
       }" data-numberQuestion="${
@@ -265,8 +270,9 @@ const renderHtmlQuestionDetail = (
         border: 0.5px solid #828282;
         border-radius: 4px;
         padding: 3px 3px 0px 3px;
+        margin:2px 0px 0px 8px;
         background-color: #F0F0F0;
-        height: 15px;
+        height: 16px;
         width: 14px;
       " 
       >

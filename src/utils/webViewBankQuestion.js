@@ -1,15 +1,11 @@
-
 import {
   isSubjectMathJax, getAnswerName, getMathJaxScript
 } from './WebUtils';
-
 import WebColor from './WebColorConfig';
 import _ from 'lodash';
-
 const { bgColorActive, bgOptionTrue, bgOptionFalse, bgOptionActive,
   bgViewTrue, bgViewFalse, textReviewColor, borderButton,
   bgButtonColor, textVideoColor, borderColor } = WebColor;
-
 const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
   console.log('data', data)
   let padding = '14px';
@@ -50,6 +46,9 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
       function myWarningFunction(numberQuestion){
         window.ReactNativeWebView.postMessage("warningWeb---"+numberQuestion);
       }
+      function matariaDetail (matariaID){
+        window.ReactNativeWebView.postMessage("matariaDetail---"+matariaID);
+      }
       function addQuestion(numberQuestion){
         arrData.push(numberQuestion);
         document.getElementById(numberQuestion + 'close').style.display = 'block';
@@ -74,7 +73,6 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
   </head>
   <body style="margin:0;padding:15px 0;font-family: Arial, sans-serif !important;font-size:14px !important;">`;
 
-
   for (let i = 0; i < totalAll; i++) {
     let typeData = data[i].typeViewContent;
     if (typeData == 1) {
@@ -89,14 +87,12 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
         if (dataMaterial.questionId == null || dataMaterial.questionId == 'null' || dataMaterial.questionId == '') {
           displayFlash = 'display: none';
         }
-
         let rightAnswer = '<i class="fa fa-question" style="color:#f1c05b;font-size: 14px;margin: auto"></i>';
         if (dataMaterial.rightAnswer) {
           rightAnswer = '<i class="fa fa-check" style="color:#4CAF79;font-size: 14px;margin: auto"></i>';
         } else if (Object.keys(dataMaterial.userOptionId).length > 0 || dataMaterial.userTextAnswer != null) {
           rightAnswer = '<i class="fa fa-close" style="color:#D9534F;font-size: 14px;margin: auto"></i>';
         }
-
         html += `<div style="padding:10px 15px">
             <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${i + 1}</span>
             ${rightAnswer}
@@ -109,7 +105,6 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
                 </span>
             </span>
           </div>`;
-
         html += `
           <div style="overflow:auto;padding:10px 15px;margin-bottom:10px;font-weight:bold;color:#232729">
             ${dataMaterial.question}
@@ -120,7 +115,6 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
             <textarea placeholder="Nhập câu trả lời" disabled type="text" name="in" style="width:96%;min-height:80px;max-height:140px;padding:5px;margin:15px 0" value="";> ${dataMaterial.userTextAnswer || ''}</textarea>
             </div>`;
         }
-
         if (Object.keys(dataMaterial).length > 0 || dataMaterial.userTextAnswer != null) {
           html += `
               <div id="answer" style="display:block;margin:0 15px;">
@@ -143,7 +137,6 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
             </div>`;
         }
 
-
         html += '<div style="height:10px;background:#eaeaea;opacity:0.7"></div>';
       }
     } else {
@@ -154,25 +147,23 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
       }
 
 
-
       let rightAnswer2 = '<i class="fa fa-question" style="color:#f1c05b;font-size: 14px;margin: auto"></i>';
-
       if (dataStandard.rightAnswer) {
         rightAnswer2 = '<i class="fa fa-check" style="color:#4CAF79;font-size: 14px;margin: auto"></i>';
       } else if (Object.keys(dataStandard).length > 0 || dataStandard.userTextAnswer != null) {
         rightAnswer2 = '<i class="fa fa-close" style="color:#D9534F;font-size: 14px;margin: auto"></i>';
       }
-
       html += `
       <div style="border: 0.5px solid #2D9CDB;
        border-radius: 5px;margin-left: 16px;
        margin-right: 16px;overflow: hidden;">
       `
-      html += `<div style="padding:10px 15px">
-      <span style="font-weight: bold;font-size: 14px;color: #000000">Câu ${i + 1}</span>
-      
+      html += `<div style="padding:10px 15px; margin-bottom:5px">
+      ${dataStandard.idMaterial&&` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
+        xem học liệu
+        </span>`||``
+      }
       <span style="float: right" id="arrayWarn${i}" data-numberQuestion="${dataStandard.questionNumber}">
-     
       `;
       const index = _.findIndex(listQuestionAdded, ['questionId', data[i].questionId])
       if (true) {
@@ -192,16 +183,14 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
       }
       html += `</span>
       </div>`;
-
       html += `
       <div style="overflow:auto;padding:0px 15px 0px;margin-bottom:0px;font-weight:bold;color:#232729">
         ${dataStandard.content}
       </div>`;
-
       let typeAnswer = dataStandard.typeAnswer;
 
-      
 
+      
       if (dataStandard.typeAnswer <= 1 && dataStandard.options.length !==0 || dataStandard.options.length !==0) {
         let countOption = Object.keys(dataStandard).length;
         for (let j = 0; j < dataStandard.options.length; j++) {
@@ -253,7 +242,6 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
           <img src=${dataStandard.answer} alt="Girl in a jacket" width="20px" height="20px" style="marigin-top:3px">
           `;
       }
-
       html += `
         <span style="padding-right: 5px, display: flex;flex-direction: row;" onclick="myWarningFunction('106622')">
           <span style="color:#054B9E;font-size: 9px; margin-right: 3px;">Báo lỗi</span>
@@ -265,12 +253,10 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
       html += '<div style="height:10px;background:#FFF;opacity:0.7"></div>';
     }
   }
-
   html += `</body>
          </html>`;
   return html;
 }
-
 
 module.exports = {
   renderHtmlQuestionDetail,
