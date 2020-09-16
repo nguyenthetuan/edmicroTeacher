@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "826468171337-vack9negnejtdsgq01ho7csfrp9ncjd2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.onluyen.school",
+            "certificate_hash": "acfd7a0fa5fb72870a0feeeb17d313a3c4742717"
+          }
+        },
+        {
           "client_id": "826468171337-3cjif8c2mu8lelordr5btmfhgjjn3os4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

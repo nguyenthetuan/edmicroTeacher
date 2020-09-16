@@ -49,7 +49,7 @@ export const APP_VERSION = Platform.OS == 'ios' ? '1.0' : '1.3';
  * 2 Staging
  * 3 Develop
  */
-export const API_TYPE = 3;
+export const API_TYPE = 0;
 
 
 /**
