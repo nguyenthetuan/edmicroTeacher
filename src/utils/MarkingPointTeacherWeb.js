@@ -1,7 +1,7 @@
 import {
   getMathJaxScript
 } from './WebUtils';
-
+import _ from 'lodash';
 // assignmentType
 // 0 dạng có ghi âm mp3
 // 1 dạng chữ thuần
@@ -174,6 +174,13 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
       html += `<div style="padding: 10px">
         <p style="margin-bottom: 20px">${!!data[i].dataMaterial.data[0].userOptionText ? data[i].dataMaterial.data[0].userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
       </div>`
+      return;
+    }else{
+      if (!_.isEmpty(data[i].dataStandard?.userOptionText)) {
+        html += `<div style="padding: 10px">
+          <p style="margin-bottom: 20px">${!_.isEmpty(data[i].dataStandard?.userOptionText)?data[i].dataStandard?.userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
+        </div>`
+      }
     }
     html += `<div>`
 
