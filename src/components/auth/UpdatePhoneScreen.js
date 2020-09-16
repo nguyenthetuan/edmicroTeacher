@@ -280,6 +280,7 @@ export default class UpdatePhoneScreen extends Component {
 
       }
     } catch (error) {
+      const {  phoneNumber } = this.state;
       console.log(error);
       this.updateFailed(error, phoneNumber);
     }

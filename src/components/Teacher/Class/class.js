@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Image,
@@ -16,10 +16,10 @@ import Api from '../../../services/apiClassTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import Header from '../Header';
 import jwt from 'jwt-decode';
-import { connect } from 'react-redux';
-import { saveUserAction, saveAvatarAction } from '../../../actions/userAction';
+import {connect} from 'react-redux';
+import {saveUserAction, saveAvatarAction} from '../../../actions/userAction';
 import SplashScreen from 'react-native-splash-screen';
-import { setProfileUserAction } from '../../../actions/userAction';
+import {setProfileUserAction} from '../../../actions/userAction';
 
 class Class extends Component {
   constructor(props) {
@@ -34,17 +34,17 @@ class Class extends Component {
   async componentDidMount() {
     try {
       SplashScreen.hide();
-      let { avatarSource } = this.props;
-      const { token } = await dataHelper.getToken();
+      let {avatarSource} = this.props;
+      const {token} = await dataHelper.getToken();
       const payload = jwt(token);
-      const { userName } = payload;
+      const {userName} = payload;
       this.props.makeRequestProfile(payload);
-      const response = await Api.getListClass({ token });
+      const response = await Api.getListClass({token});
       this.setState({
         isLoading: false,
         data: response && response,
       });
-      this.props.saveUser({ userName });
+      this.props.saveUser({userName});
       if (!avatarSource) {
         avatarSource = await dataHelper.getAvatar();
         this.props.saveAvatar(avatarSource);
@@ -54,19 +54,19 @@ class Class extends Component {
 
   _getData = async () => {
     try {
-      this.setState({ isRefresh: true });
-      const { token } = await dataHelper.getToken();
-      const response = await Api.getListClass({ token });
+      this.setState({isRefresh: true});
+      const {token} = await dataHelper.getToken();
+      const response = await Api.getListClass({token});
       this.setState({
         isRefresh: false,
         data: response && response,
       });
-    } catch (error) { }
+    } catch (error) {}
   };
 
   render() {
-    const { data, isLoading, isRefresh } = this.state;
-    const { avatarSource } = this.props;
+    const {data, isLoading, isRefresh} = this.state;
+    const {avatarSource} = this.props;
     return (
       <>
         <StatusBar />
@@ -76,25 +76,20 @@ class Class extends Component {
             avatarSource={avatarSource}
           />
           {!isLoading ? (
-            <ScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={isRefresh}
-                  tintColor={'#333'}
-                  enabled={true}
-                  onRefresh={this._getData}
-                />
-              }>
-              <ListClass data={data} navigation={this.props.navigation} />
-            </ScrollView>
+            <ListClass
+              data={data}
+              navigation={this.props.navigation}
+              onRefresh={this._getData}
+              isRefresh={isRefresh}
+            />
           ) : (
-              <ActivityIndicator
-                animating
-                size={'small'}
-                style={{ flex: 1 }}
-                color="#F98E2F"
-              />
-            )}
+            <ActivityIndicator
+              animating
+              size={'small'}
+              style={{flex: 1}}
+              color="#F98E2F"
+            />
+          )}
           <Image
             source={AppIcon.bottomChangeGrade}
             style={styles.imageBottom}
@@ -106,7 +101,7 @@ class Class extends Component {
   }
 }
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -125,20 +120,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     avatarSource: state.user.AvatarSource,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    saveUser: (user) => dispatch(saveUserAction(user)),
-    saveAvatar: (ava) => dispatch(saveAvatarAction(ava)),
-    makeRequestProfile: (payload) => {
+    saveUser: user => dispatch(saveUserAction(user)),
+    saveAvatar: ava => dispatch(saveAvatarAction(ava)),
+    makeRequestProfile: payload => {
       dispatch(setProfileUserAction(payload));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Class);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Class);
