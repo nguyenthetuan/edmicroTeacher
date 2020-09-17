@@ -314,7 +314,7 @@ export default class UploadPDF extends Component {
           setTimeout(() => {
             // this.props.navigation.goBack();
             this.props.navigation.navigate('Assignment', {
-              item: { ...res, name: name },
+              item: { ...res, name: name,id: res.id  },
               checked: true,
             });
           }, 100);
@@ -640,7 +640,7 @@ export default class UploadPDF extends Component {
               style={styles.btnEnterAnswer}>
               <Text style={styles.txtEnterAnswer}>Nhập đáp án</Text>
               <Ionicons
-                name={visibleViewAnswer ? 'ios-arrow-down' : 'ios-arrow-up'}
+                name={visibleViewAnswer ? 'ios-chevron-down' : 'ios-chevron-up'}
                 size={20}
                 color="#000"
               />
