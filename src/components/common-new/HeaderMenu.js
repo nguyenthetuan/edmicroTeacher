@@ -42,7 +42,7 @@ class HeaderMenu extends Component {
   };
 
   render() {
-    const { gradeId, PhoneNumber, userName, displayName } = this.props;
+    const { gradeId, phoneNumber, userName, displayName } = this.props;
     const { AvatarSource } = this.state;
     return (
       <View style={styles.wrapUser}>
@@ -68,9 +68,9 @@ class HeaderMenu extends Component {
               style={{ color: '#FFF', fontSize: 11, fontFamily: 'Nunito-Bold' }}>
               {displayName}
             </Text>
-            {PhoneNumber && PhoneNumber.length >= 10 ? (
+            {phoneNumber && phoneNumber.length >= 10 ? (
               <View>
-                <Text style={styles.txtInfo}>{PhoneNumber}</Text>
+                <Text style={styles.txtInfo}>{phoneNumber}</Text>
               </View>
             ) : null}
             <Text style={styles.txtInfo} numberOfLines={1}>

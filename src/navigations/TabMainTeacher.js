@@ -8,7 +8,7 @@ import Evaluate from '../components/Teacher/Evaluate/MainScreen';
 import Homework from '../containers/teacher/homework/MainScreen';
 import Papers from '../components/Teacher/Papers/paper';
 import AppIcon from '../utils/AppIcon';
-import MenuTabTeacher from './MenuTabTeacher';
+import MenuTabTeacher from '../components/menu/MenuTabTeacher';
 import classIcon from '../asserts/icon/icon_class_unactive.png';
 import classIconActive from '../asserts/icon/icon_class_active.png';
 import FreshchatComponent from '../utils/FreshchatComponent';

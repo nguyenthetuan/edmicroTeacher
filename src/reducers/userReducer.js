@@ -9,6 +9,7 @@
 import * as Types from '../constants/type';
 
 const initState = {
+  data: {},
   gradeId: '',
   displayName: '',
   email: '',
@@ -52,6 +53,9 @@ export default function userReducer(state = initState, action) {
     case Types.SET_PROFILE_USER_ACTION:
       return {
         ...state,
+        data: {
+          ...action.payload
+        },
         gradeId: action.payload.GradeId,
         displayName: action.payload.DisplayName,
         email: action.payload.Email,
