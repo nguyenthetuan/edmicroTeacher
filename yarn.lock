@@ -6117,18 +6117,6 @@ react-native-paper@^2.1.3:
     react-lifecycles-compat "^3.0.4"
     react-native-safe-area-view "^0.12.0"
 
-react-native-parallax-header@^1.1.3:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-parallax-header/-/react-native-parallax-header-1.1.4.tgz#5f4b072f69f3b24cf2035b3930981669cc6d2066"
-  integrity sha512-7RnuBaZondC49G85JKEJvYrELjbrb/42MB6z4WbTeiF58HRHi8dq2aNa1HUwVLe2DS9GGp7hyZ7RkeEZG1wuzA==
-
-react-native-parallax-scroll-view@^0.20.1:
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.20.1.tgz#7fad3411df8632b7c99fed5d0a5c0a8f97007b38"
-  integrity sha512-PpL1ODmfOw03gDAwCEWLHhGZgUgg6eYw0nivuLDrk1YIC5k984FAPfL+iRm1IBHXP1Bbvq4txi1tgyz5opS+Wg==
-  dependencies:
-    prop-types "^15.6.0"
-
 react-native-pdf@^6.1.1:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.2.0.tgz#e6da125b407338b7bca15d7f776b70773c37304f"
