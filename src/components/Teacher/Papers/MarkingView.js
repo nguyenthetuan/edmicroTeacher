@@ -65,7 +65,7 @@ class MarkingView extends Component {
   filterDataStudentAssigned(data) {
     let result = [];
     for (let i = 0; i < data.length; i++) {
-      if (data[i].idLog && data[i].status != 4) {
+      if (data[i].idLog && data[i].status === 6) {
         result.push(data[i]);
       }
     }
@@ -113,7 +113,7 @@ class MarkingView extends Component {
                     urlFile:
                       !_.isEmpty(respone.data.listFile) &&
                       respone.data.listFile[0],
-                  });
+                  },()=>this.state.urlFile&&this.checkCurrentIndex());
                   this.assignInitDataScoreAndComment(respone.data.data);
                 });
             });
@@ -140,7 +140,7 @@ class MarkingView extends Component {
           urlFile:
             !_.isEmpty(response.data.listFile) && response.data.listFile[0],
         },
-        () => this.state.urlFile&&this.checkCurrentIndex(),
+        () => {this.state.urlFile&&this.checkCurrentIndex()},
       );
       this.assignInitDataScoreAndComment(response.data.data);
     }
@@ -305,6 +305,7 @@ class MarkingView extends Component {
           indexClass,
           ...indexSelected,
         },
+        urlFile:'',
       },
       () => this.getData(),
     );
@@ -590,10 +591,11 @@ class MarkingView extends Component {
     const { tabActive } = this.state;
     const { assignmentDetailCheck } = this.state;
     const source = { uri: assignmentDetailCheck.data.listFile[0] };
+    const answer  ={uri:assignmentDetailCheck.data.answerFile}
     switch (tabActive) {
       case 0:
         return (
-          <Pdf
+          source.uri&&<Pdf
             ref={ref => (this.pdfFull = ref)}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => { }}
@@ -601,11 +603,11 @@ class MarkingView extends Component {
               console.log(error);
             }}
             style={styles.pdf}
-          />
+          />||null
         );
       case 1:
         return (
-          <Pdf
+          answer.uri&&<Pdf
             ref={ref => (this.pdfFull = ref)}
             source={answer}
             onLoadComplete={(numberOfPages, filePath) => { }}
@@ -613,7 +615,7 @@ class MarkingView extends Component {
               console.log(error);
             }}
             style={styles.pdf}
-          />
+          />||null
         );
       default:
         return (
