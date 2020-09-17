@@ -1,15 +1,6 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-17 11:53:22
- * @modify date 2018-04-17 11:53:22
- * @desc [description]
-*/
-
 import * as Types from '../constants/type';
 
 const initState = {
-  data: {},
   gradeId: '',
   displayName: '',
   email: '',
@@ -23,15 +14,6 @@ const initState = {
   AvatarSource: '',
   userName: '',
   listGrades: [],
-  userInfomation: {},
-  statisticChart: {},
-  isLoadingStatichart: true,
-  dataMatery: {},
-  isLoadMateryLoading: true,
-  dataChartSubjectId: [],
-  dataChartContribution: [],
-  flashCardTheory: [],
-  flashCardVideo: []
 };
 
 export default function userReducer(state = initState, action) {

@@ -25,3 +25,10 @@ export const getUserByToken = (token) => {
         phoneNumber
     }
 }
+
+
+export const getSourceAvatar = (userId) => {
+    return {
+        uri: `https://avatar.onluyen.vn/${userId}.jpg`
+    }
+}

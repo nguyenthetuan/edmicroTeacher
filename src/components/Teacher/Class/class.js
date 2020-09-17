@@ -6,21 +6,18 @@ import {
   StatusBar,
   ActivityIndicator,
   Dimensions,
-  RefreshControl,
-  ScrollView,
+  SafeAreaView
 } from 'react-native';
 import AppIcon from '../../../utils/AppIcon';
 import global from '../../../utils/Globals';
 import ListClass from './listClass';
 import Api from '../../../services/apiClassTeacher';
 import dataHelper from '../../../utils/dataHelper';
-import Header from '../Header';
-import jwt from 'jwt-decode';
 import { connect } from 'react-redux';
-import { saveUserAction, saveAvatarAction } from '../../../actions/userAction';
 import SplashScreen from 'react-native-splash-screen';
 import { setProfileUserAction } from '../../../actions/userAction';
 import { getUserByToken } from '../../../utils/Helper';
+import HeaderMain from '../../common-new/HeaderMain';
 
 class Class extends Component {
   constructor(props) {
@@ -35,7 +32,6 @@ class Class extends Component {
   async componentDidMount() {
     try {
       SplashScreen.hide();
-      let { avatarSource } = this.props;
       const { token } = await dataHelper.getToken();
       const payload = getUserByToken(token);
       this.props.makeRequestProfile(payload);
@@ -44,11 +40,6 @@ class Class extends Component {
         isLoading: false,
         data: response && response,
       });
-      this.props.saveUser({ userName });
-      if (!avatarSource) {
-        avatarSource = await dataHelper.getAvatar();
-        this.props.saveAvatar(avatarSource);
-      }
     } catch (error) { }
   }
 
@@ -66,14 +57,14 @@ class Class extends Component {
 
   render() {
     const { data, isLoading, isRefresh } = this.state;
-    const { avatarSource } = this.props;
+    const { user } = this.props;
     return (
       <>
         <StatusBar />
-        <View style={styles.container}>
-          <Header
-            navigation={this.props.navigation}
-            avatarSource={avatarSource}
+        <SafeAreaView style={styles.container}>
+          <HeaderMain 
+             {...user}
+             navigation={this.props.navigation}
           />
           {!isLoading ? (
             <ListClass
@@ -95,7 +86,7 @@ class Class extends Component {
             style={styles.imageBottom}
             resizeMode={'contain'}
           />
-        </View>
+        </SafeAreaView>
       </>
     );
   }
@@ -122,14 +113,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    avatarSource: state.user.AvatarSource,
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveUser: user => dispatch(saveUserAction(user)),
-    saveAvatar: ava => dispatch(saveAvatarAction(ava)),
     makeRequestProfile: payload => {
       dispatch(setProfileUserAction(payload));
     },
