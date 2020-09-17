@@ -53,19 +53,7 @@ export default function userReducer(state = initState, action) {
     case Types.SET_PROFILE_USER_ACTION:
       return {
         ...state,
-        data: {
-          ...action.payload
-        },
-        gradeId: action.payload.GradeId,
-        displayName: action.payload.DisplayName,
-        email: action.payload.Email,
-        birthday: action.payload.Birthday,
-        districtId: action.payload.DistrictId,
-        phoneNumber: action.payload.PhoneNumber,
-        provinceId: action.payload.ProvinceId,
-        schoolId: action.payload.SchoolId,
-        userName: action.userName,
-        CreateBySchool: action.payload.CreateBySchool
+        ...action.payload
       };
     case Types.FETCH_LIST_GRADE_SUCCESS_ACTION:
       return {
