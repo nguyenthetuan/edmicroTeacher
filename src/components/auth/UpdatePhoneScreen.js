@@ -65,11 +65,9 @@ export default class UpdatePhoneScreen extends Component {
     this.unsubscribe = null;
     this.unsubscribeToken = null;
     this.verificationId = null;
-    this.access_token = null;
   }
 
   async componentDidMount() {
-    const { token } = this.props.navigation.state.params;
     if (auth().currentUser) {
       auth().signOut();
     }
@@ -83,7 +81,6 @@ export default class UpdatePhoneScreen extends Component {
     });
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-    this.access_token = token;
     BackHandler.addEventListener('hardwareBackPress', () => {
       return false;
     });
@@ -211,7 +208,6 @@ export default class UpdatePhoneScreen extends Component {
   handleUpdate = async () => {
     try {
       const { codeOTP, projectId, phoneNumber, confirmResult } = this.state;
-      const { token } = this.props.navigation.state.params;
       if (codeOTP.trim().length <= 0) {
         this.setState({ errors: 'Mã OTP không được để trống!' });
         return;
@@ -249,7 +245,6 @@ export default class UpdatePhoneScreen extends Component {
         if (status == 200) {
           const { idMixpanel, userId } = jwtDecode(response.access_token);
 
-          this.access_token = response.access_token;
           dataHelper.saveToken(response.access_token);
           if (response.avatar != null) {
             dataHelper.saveAvatar(response.avatar);
@@ -280,7 +275,7 @@ export default class UpdatePhoneScreen extends Component {
 
       }
     } catch (error) {
-      const {  phoneNumber } = this.state;
+      const { phoneNumber } = this.state;
       console.log(error);
       this.updateFailed(error, phoneNumber);
     }
@@ -301,27 +296,7 @@ export default class UpdatePhoneScreen extends Component {
   }
 
   goToMain = () => {
-    const { GradeId, CreateBySchool } = jwtDecode(this.access_token);
-
-    if (GradeId) {
-      if (CreateBySchool) {
-        this.props.navigation.navigate('App', { statusbar: 'dark-content', });
-      } else {
-        this.props.navigation.navigate('App', { statusbar: 'dark-content', });
-        this.props.navigation.dispatch(StackActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({
-              routeName: 'AppStudent',
-              params: { statusbar: 'dark-content', isReset: true }
-            }),
-          ],
-        }));
-      }
-
-    } else {
-      this.props.navigation.navigate('Grades', { statusbar: 'dark-content' });
-    }
+    this.props.navigation.navigate('App', { statusbar: 'dark-content', });
   }
 
   componentWillUnmount() {
@@ -337,7 +312,6 @@ export default class UpdatePhoneScreen extends Component {
 
     const { phoneNumber, isShowKeybroad, isEditPhone, inputOtpVisible, updateSuccess } = this.state;
     const { backArrow, textAction, validationStyle, container } = authStyle;
-    const { prevScreen } = this.props.navigation.state.params;
     return (
       <View
         style={[container, { backgroundColor: '#FFF' }]}
