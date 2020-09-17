@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   Text,
+  RefreshControl,
 } from 'react-native';
 import ItemCLass from './itemClass';
 
@@ -37,7 +38,7 @@ export default class listClass extends Component {
   };
 
   render() {
-    const {data} = this.props;
+    const {data, isRefresh, onRefresh} = this.props;
     return (
       <FlatList
         data={data}
@@ -46,12 +47,20 @@ export default class listClass extends Component {
         removeClippedSubviews={false}
         ListEmptyComponent={() => (
           <View style={styles.viewNotFound}>
-            <Image source={require('../../..//asserts/icon/iconNodata.png')}/>
+            <Image source={require('../../../asserts/icon/iconNodata.png')} />
             <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
           </View>
         )}
         ListHeaderComponent={() => this._renderHeader()}
         style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefresh}
+            tintColor={'#333'}
+            enabled={true}
+            onRefresh={onRefresh}
+          />
+        }
       />
     );
   }
@@ -83,6 +92,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
     marginTop: 20,
-    color:'#828282'
+    color: '#828282',
   },
 });
