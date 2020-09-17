@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -17,12 +17,12 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class ModalConfigLibrary extends Component {
   constructor(props) {
     super(props);
-    const {value} = this.props;
+    const { value } = this.props;
     this.state = {
       visible: false,
       dropdownVisible: false,
@@ -35,7 +35,7 @@ export default class ModalConfigLibrary extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (JSON.stringify(nextProps.data) !== JSON.stringify(this.props.data)) {
       this.setState({
-        selectItem: {name: '', code: ''},
+        selectItem: { name: '', code: '' },
       });
     }
     if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
@@ -48,8 +48,8 @@ export default class ModalConfigLibrary extends Component {
     return true;
   }
 
-  selectItem = ({item, index}) => {
-    const {indexItem} = this.state;
+  selectItem = ({ item, index }) => {
+    const { indexItem } = this.state;
     if (index == indexItem) {
       return;
     }
@@ -66,33 +66,33 @@ export default class ModalConfigLibrary extends Component {
   deleteItem = () => {
     this.setState(
       {
-        selectItem: {name: '', code: ''},
+        selectItem: { name: '', code: '' },
       },
       () => this.props.onPress(this.state.selectItem),
     );
   };
 
   render() {
-    const {visible, dropdownVisible, selectItem, indexItem, value} = this.state;
-    const {title, data, widthItem, colum, activeButtom} = this.props;
+    const { visible, dropdownVisible, selectItem, indexItem, value } = this.state;
+    const { title, data, widthItem, colum, activeButtom } = this.props;
     const converData =
-      data && (data.length % 2 !== 0 ? [...data, {name: ''}] : data);
+      data && (data.length % 2 !== 0 ? [...data, { name: '' }] : data);
     return (
-      <View style={{flex: 1}}>
-        <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <Text style={styles.txtTitle}>{title}</Text>
-          <TouchableOpacity 
-          style={styles.btnModal}
-          onPress={() => this.setState({visible: true})}
+          <TouchableOpacity
+            style={styles.btnModal}
+            onPress={() => this.setState({ visible: true })}
           >
             {(!_.isEmpty(selectItem) && selectItem.name) ||
-            (!_.isEmpty(value) && value.name) ? (
-              <Text style={styles.txtSelectItem} numberOfLines={1}>
-                {selectItem.name || value.name}
-              </Text>
-            ) : (
-              <View />
-            )}
+              (!_.isEmpty(value) && value.name) ? (
+                <Text style={styles.txtSelectItem} numberOfLines={1}>
+                  {selectItem.name || value.name}
+                </Text>
+              ) : (
+                <View />
+              )}
             <View
               style={{
                 flexDirection: 'row',
@@ -102,14 +102,14 @@ export default class ModalConfigLibrary extends Component {
               {activeButtom && !_.isEmpty(selectItem) && selectItem.name ? (
                 <TouchableOpacity onPress={() => this.deleteItem()}>
                   <Text
-                    style={{fontSize: 12, color: '#757575', marginRight: 5}}>
+                    style={{ fontSize: 12, color: '#757575', marginRight: 5 }}>
                     x
                   </Text>
                 </TouchableOpacity>
               ) : null}
               {
                 <View
-                  >
+                >
                   <View
                     style={{
                       width: 24,
@@ -129,11 +129,11 @@ export default class ModalConfigLibrary extends Component {
               }
             </View>
           </TouchableOpacity>
-          
+
           <Modal visible={visible} transparent={true}>
             <TouchableWithoutFeedback
               onPress={() => {
-                this.setState({visible: false});
+                this.setState({ visible: false });
               }}>
               <View style={styles.container}>
                 <TouchableWithoutFeedback>
@@ -145,7 +145,7 @@ export default class ModalConfigLibrary extends Component {
                     </View>
                     <ScrollView
                       showsVerticalScrollIndicator={false}
-                      style={{flex: 1}}>
+                      style={{ flex: 1 }}>
                       <FlatList
                         numColumns={colum}
                         data={converData}
@@ -156,10 +156,10 @@ export default class ModalConfigLibrary extends Component {
                           alignItems: 'center',
                           paddingBottom: 20,
                         }}
-                        renderItem={({item, index}) => {
-                          return selectItem && selectItem.name === item.name ? (
+                        renderItem={({ item, index }) => {
+                          return selectItem && selectItem.name === item.name && selectItem.id === item.id ? (
                             <TouchableOpacity
-                              onPress={() => this.selectItem({item, index})}
+                              onPress={() => this.selectItem({ item, index })}
                               style={{
                                 marginHorizontal: 15,
                                 width: (widthItem && `${widthItem}%`) || '100%',
@@ -169,17 +169,17 @@ export default class ModalConfigLibrary extends Component {
                               <Text style={styles.txtActive}>{item.name}</Text>
                             </TouchableOpacity>
                           ) : (
-                            <TouchableOpacity
-                              onPress={() => this.selectItem({item, index})}
-                              style={{
-                                marginHorizontal: 15,
-                                width: (widthItem && `${widthItem}%`) || '100%',
-                                marginTop: 25,
-                                alignItems: 'center',
-                              }}>
-                              <Text style={styles.txtItem}>{item.name}</Text>
-                            </TouchableOpacity>
-                          );
+                              <TouchableOpacity
+                                onPress={() => this.selectItem({ item, index })}
+                                style={{
+                                  marginHorizontal: 15,
+                                  width: (widthItem && `${widthItem}%`) || '100%',
+                                  marginTop: 25,
+                                  alignItems: 'center',
+                                }}>
+                                <Text style={styles.txtItem}>{item.name}</Text>
+                              </TouchableOpacity>
+                            );
                         }}
                       />
                     </ScrollView>

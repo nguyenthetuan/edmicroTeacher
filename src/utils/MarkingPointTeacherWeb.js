@@ -1,7 +1,7 @@
 import {
   getMathJaxScript
 } from './WebUtils';
-
+import _ from 'lodash';
 // assignmentType
 // 0 dạng có ghi âm mp3
 // 1 dạng chữ thuần
@@ -27,7 +27,7 @@ const renderOptionsAnswers = (data, index, rightAnswer) => {
 }
 
 const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
-  let totalAll = (data).length;
+  let totalAll = data.length;
   let html = ``;
   html += `
 <!DOCTYPE html>
@@ -120,6 +120,7 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
 <body
   style="margin:0;font-family: Arial, sans-serif !important;font-size:14px !important; overflow-x:hidden;scroll-behavior: smooth; ">
   `;
+
   for (let i = 0; i < totalAll; i++) {
     html += ` <div id="section${i}"
     style="border-top: 1px solid #b1acac; margin-bottom: 25px; padding-bottom: 10px">
@@ -147,6 +148,7 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     html += `
       </div>
     </div>`
+    
     if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage) {
       html += `<div
       style="background-color: #F8F8F8; border: 0.5px solid #56BB73; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
@@ -174,6 +176,12 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
       html += `<div style="padding: 10px">
         <p style="margin-bottom: 20px">${!!data[i].dataMaterial.data[0].userOptionText ? data[i].dataMaterial.data[0].userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
       </div>`
+    }else{
+      if (!_.isEmpty(data[i].dataStandard?.userOptionText)) {
+        html += `<div style="padding: 10px">
+          <p style="margin-bottom: 20px">${!_.isEmpty(data[i].dataStandard?.userOptionText)?data[i].dataStandard?.userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
+        </div>`
+      }
     }
     html += `<div>`
 
@@ -188,6 +196,7 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
           data[i].dataStandard && data[i].dataStandard.rightAnswer)}`
       }
     }
+
     html += `</div>
       <!-- Giải thích -->
     </div>
@@ -206,7 +215,6 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     </div>
     `
   }
-
 
   html += `
   ${getMathJaxScript('TOAN')}`;
@@ -231,6 +239,7 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
 </body>
 
 </html>`;
+
   return html;
 }
 

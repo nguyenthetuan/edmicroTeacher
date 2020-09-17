@@ -19,7 +19,7 @@ import MockExample from '../components/Teacher/Class/MockExample';
 import MockExamDrawer from '../components/Teacher/Class/MockExamDrawer';
 import MockResult from '../components/Teacher/Class/exam-result/TestResultTab';
 import UpdatePlan from '../components/Teacher/Class/updatePlan';
-import V_UpdatePhone from '../components/auth/UpdatePhoneScreen';
+import V_UpdatePhone from '../containers/auth/UpdatePhoneContainer';
 import TermsOfUse from '../components/Terms/TermsOfUse';
 
 const TeacherStack = createStackNavigator({

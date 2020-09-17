@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -13,21 +13,21 @@ import {
   Animated,
   SafeAreaView,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {fetchDataAssignmentAction} from '../../../actions/paperAction';
+import { connect } from 'react-redux';
+import { fetchDataAssignmentAction } from '../../../actions/paperAction';
 import apiHelper from '../../../utils/dataHelper';
 import apiPaper from '../../../services/apiPapersTeacher';
 import MarkingPointTeacherWeb from '../../../utils/MarkingPointTeacherWeb';
-import {WebView} from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import RippleButton from '../../libs/RippleButton';
-import {Picker} from 'native-base';
+import { Picker } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AppIcon from '../../../utils/AppIcon';
 import Pdf from 'react-native-pdf';
 import _ from 'lodash';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dropdown from '../../../utils/Dropdown';
-import {AlertNoti, roundToTwo} from '../../../utils/Common';
+import { AlertNoti, roundToTwo } from '../../../utils/Common';
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';
@@ -37,7 +37,7 @@ let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
   baseUrl = 'web/';
 }
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 class MarkingView extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +65,7 @@ class MarkingView extends Component {
   filterDataStudentAssigned(data) {
     let result = [];
     for (let i = 0; i < data.length; i++) {
-      if (data[i].idLog && data[i].status != 4) {
+      if (data[i].idLog && data[i].status === 6) {
         result.push(data[i]);
       }
     }
@@ -73,11 +73,11 @@ class MarkingView extends Component {
   }
 
   componentDidMount() {
-    const {assignmentId} = this.props.navigation.state.params.item;
+    const { assignmentId } = this.props.navigation.state.params.item;
     // const {token} = apiPaper.getToken();
     apiHelper.getToken().then(tk => {
       apiPaper
-        .getListClassAssigned({token: tk.token, assignmentId})
+        .getListClassAssigned({ token: tk.token, assignmentId })
         .then(res => {
           //có asignID ở đây,
           this.setState({
@@ -99,6 +99,7 @@ class MarkingView extends Component {
               this.setState({
                 selectedValueStudent: studentListAssigned[0]?.studentId,
                 listStudentAssigned: studentListAssigned,
+                selectAssignId: res.data[0].assignId,
               });
               apiPaper
                 .assignmentDetailCheck({
@@ -112,7 +113,7 @@ class MarkingView extends Component {
                     urlFile:
                       !_.isEmpty(respone.data.listFile) &&
                       respone.data.listFile[0],
-                  });
+                  },()=>this.state.urlFile&&this.checkCurrentIndex());
                   this.assignInitDataScoreAndComment(respone.data.data);
                 });
             });
@@ -120,9 +121,34 @@ class MarkingView extends Component {
     });
   }
 
+  getDataPickupStudent = async () => {
+    const { selectedValueStudent, selectAssignId } = this.state;
+
+    const { token } = await apiHelper.getToken();
+    const response = await apiPaper.assignmentDetailCheck({
+      token,
+      studentId: selectedValueStudent,
+      assignId: selectAssignId,
+    });
+    if (response.status === 5) {
+      this.setState({ assignmentDetailCheck: {} });
+    }
+    if (response.status === 1) {
+      this.setState(
+        {
+          assignmentDetailCheck: response && response,
+          urlFile:
+            !_.isEmpty(response.data.listFile) && response.data.listFile[0],
+        },
+        () => {this.state.urlFile&&this.checkCurrentIndex()},
+      );
+      this.assignInitDataScoreAndComment(response.data.data);
+    }
+  }
+
   getData = async () => {
-    const {selectedValueStudent, selectAssignId} = this.state;
-    const {token} = await apiHelper.getToken();
+    const { selectedValueStudent, selectAssignId } = this.state;
+    const { token } = await apiHelper.getToken();
     const student = await apiPaper.fetchListStudentAssign({
       token,
       assignId: selectAssignId,
@@ -140,7 +166,7 @@ class MarkingView extends Component {
           assignId: this.state.selectAssignId,
         });
         if (response.status === 5) {
-          this.setState({assignmentDetailCheck: {}});
+          this.setState({ assignmentDetailCheck: {} });
         }
         if (response.status === 1) {
           this.setState(
@@ -149,7 +175,7 @@ class MarkingView extends Component {
               urlFile:
                 !_.isEmpty(response.data.listFile) && response.data.listFile[0],
             },
-            () => this.checkCurrentIndex(),
+            () => this.state.urlFile&&this.checkCurrentIndex(),
           );
           this.assignInitDataScoreAndComment(response.data.data);
         }
@@ -158,16 +184,20 @@ class MarkingView extends Component {
   };
 
   checkCurrentIndex = () => {
-    const {assignmentDetailCheck} = this.state;
+    const { assignmentDetailCheck } = this.state;
     let count = 0;
     _.forEach(assignmentDetailCheck.data.data, (e, index) => {
-      let typeAnswer =
-        e.dataMaterial?.data[0].typeAnswer || e.dataStandard.typeAnswer;
+      let typeAnswer = 0;
+      if(e.dataMaterial){
+        typeAnswer=e.dataMaterial?.data[0]?.typeAnswer;
+      }else{
+        typeAnswer= e?.dataStandard.typeAnswer;
+      }
       if (typeAnswer === 0) {
         count = count + 1;
       }
     });
-    this.setState({currentIndex: count});
+    this.setState({ currentIndex: count });
   };
 
   assignInitDataScoreAndComment(data) {
@@ -208,10 +238,10 @@ class MarkingView extends Component {
   }
 
   async refreshDataWithNewClass() {
-    const {assignId, classId} = this.state;
+    const { assignId, classId } = this.state;
     apiHelper.getToken().then(tk => {
       apiPaper
-        .fetchListStudentAssign({token: tk.token, assignId: assignId})
+        .fetchListStudentAssign({ token: tk.token, assignId: assignId })
         .then(rs => {
           let studentListAssigned = this.filterDataStudentAssigned(rs);
           this.setState({
@@ -225,14 +255,14 @@ class MarkingView extends Component {
               assignId: res.data[0].assignId,
             })
             .then(respone => {
-              this.setState({assignmentDetailCheck: respone});
+              this.setState({ assignmentDetailCheck: respone });
             });
         });
     });
   }
 
   refreshWithNewStudent = () => {
-    const {assignId, classId, selectedValueStudent} = this.state;
+    const { assignId, classId, selectedValueStudent } = this.state;
     apiHelper.getToken().then(tk => {
       apiPaper
         .assignmentDetailCheck({
@@ -241,29 +271,30 @@ class MarkingView extends Component {
           assignId: assignId,
         })
         .then(respone => {
-          this.setState({assignmentDetailCheck: respone});
+          this.setState({ assignmentDetailCheck: respone });
         });
     });
   };
 
   onValueChangePickerStudent = value => {
     const indexStudent = value;
-    const {listStudentAssigned, indexSelected} = this.state;
+    const { listStudentAssigned, indexSelected } = this.state;
     value = listStudentAssigned[value];
     this.setState(
       {
-        selectedValueStudent: value,
+        selectedValueStudent: value.studentId,
         indexSelected: {
           indexStudent,
           ...indexSelected,
         },
+        urlFile:'',
       },
-      () => this.getData(),
+      () => this.getDataPickupStudent(),
     );
   };
   onValueChangePickerClass = value => {
     const indexClass = value;
-    const {listClassAssigned, indexSelected} = this.state;
+    const { listClassAssigned, indexSelected } = this.state;
     value = listClassAssigned[value];
     let assignId = value?.assignId;
     this.setState(
@@ -274,6 +305,7 @@ class MarkingView extends Component {
           indexClass,
           ...indexSelected,
         },
+        urlFile:'',
       },
       () => this.getData(),
     );
@@ -316,8 +348,8 @@ class MarkingView extends Component {
         stepId: stepId,
         studentId: selectedValueStudent,
       };
-      const {token} = await apiHelper.getToken();
-      const response = await apiPaper.submitReview({token, formData});
+      const { token } = await apiHelper.getToken();
+      const response = await apiPaper.submitReview({ token, formData });
       if (response && response.msg === null) {
         if (!_.isEmpty(assignmentDetailCheck?.data?.data)) {
           assignmentDetailCheck.data.data = assignmentDetailCheck.data.data.map(
@@ -337,59 +369,59 @@ class MarkingView extends Component {
               return item;
             },
           );
-          this.setState({assignmentDetailCheck});
+          this.setState({ assignmentDetailCheck });
         }
         AlertNoti(messageSuccess);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   onChangeTextComment(value) {
-    this.setState({[`valueCommnent${this.state.currentIndex}`]: value});
+    this.setState({ [`valueCommnent${this.state.currentIndex}`]: value });
   }
 
   onChangeTextScore(value) {
-    this.setState({[`valueScore${this.state.currentIndex}`]: value});
+    this.setState({ [`valueScore${this.state.currentIndex}`]: value });
   }
 
   checkScore() {
-    const {assignmentDetailCheck, currentIndex} = this.state;
+    const { assignmentDetailCheck, currentIndex } = this.state;
     let pointCurrent = parseFloat(this.state[`valueScore${currentIndex}`]);
     pointCurrent = roundToTwo(pointCurrent);
     const maxScore =
       Object.keys(assignmentDetailCheck).length === 0
         ? null
         : assignmentDetailCheck.data.data[currentIndex]?.dataMaterial
-        ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0]
+          ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0]
             .maxScore
-        : assignmentDetailCheck.data.data[currentIndex].dataStandard.maxScore;
+          : assignmentDetailCheck.data.data[currentIndex].dataStandard.maxScore;
     if (pointCurrent > maxScore) {
       AlertNoti(messageErrPoint);
-      this.setState({[`valueScore${this.state.currentIndex}`]: maxScore});
+      this.setState({ [`valueScore${this.state.currentIndex}`]: maxScore });
       return true;
     } else {
-      this.setState({[`valueScore${this.state.currentIndex}`]: pointCurrent});
+      this.setState({ [`valueScore${this.state.currentIndex}`]: pointCurrent });
       return false;
     }
   }
 
   onpressComment() {
     if (this.state.isHideCommentInput) {
-      this.setState({isHideCommentInput: !this.state.isHideCommentInput});
+      this.setState({ isHideCommentInput: !this.state.isHideCommentInput });
     } else {
-      this.setState({isHideCommentInput: !this.state.isHideCommentInput});
+      this.setState({ isHideCommentInput: !this.state.isHideCommentInput });
     }
   }
 
   onButtonQuestionPress = index => {
-    const {assignmentDetailCheck} = this.state;
+    const { assignmentDetailCheck } = this.state;
     if (!this.state.isHideCommentInput) {
       this.onpressComment();
     }
     if (!assignmentDetailCheck.data.listFile[0]) {
       this.webview.postMessage(`buttonQuestion---${index}`);
     }
-    this.setState({currentIndex: index});
+    this.setState({ currentIndex: index });
   };
 
   publicedScore = async () => {
@@ -397,7 +429,7 @@ class MarkingView extends Component {
     if (isErr) {
       return;
     }
-    const {selectedValueClass, listClassAssigned} = this.state;
+    const { selectedValueClass, listClassAssigned } = this.state;
     const assignId = _.find(
       listClassAssigned,
       e => e.classId === selectedValueClass,
@@ -407,14 +439,14 @@ class MarkingView extends Component {
       classId: selectedValueClass,
     };
     try {
-      const {token} = await apiHelper.getToken();
-      const response = await apiPaper.publicedScore({token, formData});
+      const { token } = await apiHelper.getToken();
+      const response = await apiPaper.publicedScore({ token, formData });
       if (response.status === 1) {
         AlertNoti(messageSuccessPoint, () => {
           this.props.navigation.pop(1);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   renderHeader = () => {
@@ -427,7 +459,7 @@ class MarkingView extends Component {
     return (
       <SafeAreaView style={styles.header}>
         <View style={styles.headerTop}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <RippleButton
               style={styles.buttonBack}
               onPress={() => {
@@ -441,14 +473,14 @@ class MarkingView extends Component {
               />
             </RippleButton>
             <Text
-              style={{fontFamily: 'Nunito-Bold', fontSize: 14, color: '#fff'}}>
+              style={{ fontFamily: 'Nunito-Bold', fontSize: 14, color: '#fff' }}>
               Chấm điểm
             </Text>
           </View>
           <RippleButton
             style={styles.buttonReleasePoint}
             onPress={() => this.publicedScore()}>
-            <Text style={{fontFamily: 'Nunito', fontSize: 12, color: '#fff'}}>
+            <Text style={{ fontFamily: 'Nunito', fontSize: 12, color: '#fff' }}>
               Công bố điểm
             </Text>
           </RippleButton>
@@ -509,13 +541,13 @@ class MarkingView extends Component {
   };
 
   tabPaper = () => {
-    const {assignmentDetailCheck} = this.state;
-    const source = {uri: assignmentDetailCheck.data.listFile[0]};
+    const { assignmentDetailCheck } = this.state;
+    const source = { uri: assignmentDetailCheck.data.listFile[0] };
     return (
       <Pdf
         ref={ref => (this.pdfFull = ref)}
         source={source}
-        onLoadComplete={(numberOfPages, filePath) => {}}
+        onLoadComplete={(numberOfPages, filePath) => { }}
         onError={error => {
           console.log(error);
         }}
@@ -525,13 +557,13 @@ class MarkingView extends Component {
   };
 
   tabAnser = () => {
-    const {assignmentDetailCheck} = this.state;
-    const source = {uri: assignmentDetailCheck.data.listFile[0]};
+    const { assignmentDetailCheck } = this.state;
+    const source = { uri: assignmentDetailCheck.data.listFile[0] };
     return (
       <Pdf
         ref={ref => (this.pdfFull = ref)}
         source={source}
-        onLoadComplete={(numberOfPages, filePath) => {}}
+        onLoadComplete={(numberOfPages, filePath) => { }}
         onError={error => {
           console.log(error);
         }}
@@ -541,55 +573,56 @@ class MarkingView extends Component {
   };
 
   _changeTab = key => {
-    const {tabActive} = this.state;
+    const { tabActive } = this.state;
     if (key == tabActive) {
       return;
     }
     switch (key) {
       case 0:
-        this.setState({tabActive: key});
+        this.setState({ tabActive: key });
         break;
       case 1:
-        this.setState({tabActive: key});
+        this.setState({ tabActive: key });
         break;
     }
   };
 
   _changeTabComponent = () => {
-    const {tabActive} = this.state;
-    const {assignmentDetailCheck} = this.state;
-    const source = {uri: assignmentDetailCheck.data.listFile[0]};
+    const { tabActive } = this.state;
+    const { assignmentDetailCheck } = this.state;
+    const source = { uri: assignmentDetailCheck.data.listFile[0] };
+    const answer  ={uri:assignmentDetailCheck.data.answerFile}
     switch (tabActive) {
       case 0:
         return (
-          <Pdf
+          source.uri&&<Pdf
             ref={ref => (this.pdfFull = ref)}
             source={source}
-            onLoadComplete={(numberOfPages, filePath) => {}}
+            onLoadComplete={(numberOfPages, filePath) => { }}
             onError={error => {
               console.log(error);
             }}
             style={styles.pdf}
-          />
+          />||null
         );
       case 1:
         return (
-          <Pdf
+          answer.uri&&<Pdf
             ref={ref => (this.pdfFull = ref)}
             source={answer}
-            onLoadComplete={(numberOfPages, filePath) => {}}
+            onLoadComplete={(numberOfPages, filePath) => { }}
             onError={error => {
               console.log(error);
             }}
             style={styles.pdf}
-          />
+          />||null
         );
       default:
         return (
           <Pdf
             ref={ref => (this.pdfFull = ref)}
             source={source}
-            onLoadComplete={(numberOfPages, filePath) => {}}
+            onLoadComplete={(numberOfPages, filePath) => { }}
             onError={error => {
               console.log(error);
             }}
@@ -600,7 +633,7 @@ class MarkingView extends Component {
   };
 
   filterScored = () => {
-    const {assignmentDetailCheck} = this.state;
+    const { assignmentDetailCheck } = this.state;
     let arrayScored = [];
     Object.keys(assignmentDetailCheck).length !== 0 &&
       assignmentDetailCheck.data.length !== 0 &&
@@ -639,10 +672,10 @@ class MarkingView extends Component {
     }
   };
 
-  ItemQuestion = ({index, item}) => {
-    const {currentIndex, urlFile} = this.state;
+  ItemQuestion = ({ index, item }) => {
+    const { currentIndex, urlFile } = this.state;
     let arrayScored = this.filterScored();
-    let bg = '';
+    var bg = '';
     if (item.dataStandard) {
       if (arrayScored.includes(item.dataStandard.stepId)) {
         bg = '#2D9CDB';
@@ -662,10 +695,10 @@ class MarkingView extends Component {
         <RippleButton
           style={[
             styles.buttonQuestion,
-            {backgroundColor: '#E34D5C', borderColor: '#E34D5C'},
+            { backgroundColor: '#E34D5C', borderColor: '#E34D5C' },
           ]}>
-          <Text style={{color: '#fff'}}>{index + 1}</Text>
-          <Text style={{color: '#fff', marginLeft: 3}}>
+          <Text style={{ color: '#fff' }}>{index + 1}</Text>
+          <Text style={{ color: '#fff', marginLeft: 3 }}>
             {this._answer(answer)}
           </Text>
         </RippleButton>
@@ -675,34 +708,34 @@ class MarkingView extends Component {
         <RippleButton
           style={[
             styles.buttonQuestion,
-            {backgroundColor: bg, borderColor: (bg && '#56CCF2') || '#828282'},
+            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg },
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
           }}>
-          <Text style={{color: (bg && '#fff') || '#a4a6b0'}}>{index + 1}</Text>
-          <Text style={{color: (bg && '#fff') || '#a4a6b0', marginLeft: 3}}>
+          <Text style={{ color: (bg && '#fff') || '#a4a6b0' }}>{index + 1}</Text>
+          <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
             {this._answer(answer)}
           </Text>
         </RippleButton>
       ) : (
-        <RippleButton
-          style={[
-            styles.buttonQuestion,
-            {backgroundColor: bg, borderColor: '#56CCF2'},
-          ]}
-          onPress={() => {
-            this.onButtonQuestionPress(index);
-          }}>
-          <Text
-            style={{color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold'}}>
-            {index + 1}
-          </Text>
-          <Text style={{color: (bg && '#fff') || '#a4a6b0', marginLeft: 3}}>
-            {this._answer(answer)}
-          </Text>
-        </RippleButton>
-      );
+          <RippleButton
+            style={[
+              styles.buttonQuestion,
+              { borderColor: '#56CCF2' }, bg && { backgroundColor: bg },
+            ]}
+            onPress={() => {
+              this.onButtonQuestionPress(index);
+            }}>
+            <Text
+              style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold' }}>
+              {index + 1}
+            </Text>
+            <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
+              {this._answer(answer)}
+            </Text>
+          </RippleButton>
+        );
     }
   };
 
@@ -718,8 +751,8 @@ class MarkingView extends Component {
         <View style={styles.rootView}>
           {this.renderHeader()}
           <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: '#f86c6b', textAlign: 'center'}}>
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#f86c6b', textAlign: 'center' }}>
               Không tồn tại học sinh có bài cần chấm trong lớp
             </Text>
           </View>
@@ -728,12 +761,12 @@ class MarkingView extends Component {
     }
     const maxScore =
       Object.keys(assignmentDetailCheck).length === 0 ||
-      assignmentDetailCheck.data.data.length === 0
+        assignmentDetailCheck.data.data.length === 0
         ? null
         : assignmentDetailCheck.data.data[currentIndex]?.dataMaterial
-        ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0]
+          ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0]
             .maxScore
-        : assignmentDetailCheck.data.data[currentIndex].dataStandard.maxScore;
+          : assignmentDetailCheck.data.data[currentIndex].dataStandard.maxScore;
     const point =
       (typeof this.state[`valueScore${this.state.currentIndex}`] !==
         `undefined` &&
@@ -743,160 +776,160 @@ class MarkingView extends Component {
       <View style={styles.rootView}>
         {this.renderHeader()}
         {Object.keys(assignmentDetailCheck).length === 0 ||
-        assignmentDetailCheck.data.data.length === 0 ? (
-          <View />
-        ) : (
-          <View style={{flex: 1, marginTop: 5}}>
-            <View style={styles.wrapTop}>
-              <View style={{height: 70}}>
-                <Text style={styles.textQuestion}>Câu hỏi</Text>
-                <FlatList
-                  horizontal
-                  data={assignmentDetailCheck.data.data}
-                  keyExtractor={(item, index) => index.toString()}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={this.ItemQuestion}
-                />
-              </View>
-              <View style={styles.poinded}>
-                <View style={styles.review}>
-                  <View style={[styles.note, {backgroundColor: '#E34D5C'}]} />
-                  <Text style={styles.txtNote}>Trắc nghiệm</Text>
-                </View>
-                <View style={styles.review}>
-                  <View style={styles.note} />
-                  <Text style={styles.txtNote}>Chưa chấm</Text>
-                </View>
-                <View style={styles.review}>
-                  <View style={[styles.note, {backgroundColor: '#2D9CDB'}]} />
-                  <Text style={styles.txtNote}>Đã chấm</Text>
-                </View>
-              </View>
-              <View style={styles.wrapInputScore}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={{fontFamily: 'Nunito-Bold', fontSize: 14}}>
-                    Câu {this.state.currentIndex + 1}{' '}
-                  </Text>
-                  <TextInput
-                    ref={'TextInputPoint'}
-                    onEndEditing={() => this.checkScore()}
-                    onChangeText={text => this.onChangeTextScore(text)}
-                    keyboardType={'numeric'}
-                    value={point}
-                    style={{
-                      width: 50,
-                      height: 20,
-                      borderWidth: 1,
-                      borderRadius: 2,
-                      borderColor: '#828282',
-                      textAlign: 'center',
-                    }}
+          assignmentDetailCheck.data.data.length === 0 ? (
+            <View />
+          ) : (
+            <View style={{ flex: 1, marginTop: 5 }}>
+              <View style={styles.wrapTop}>
+                <View style={{ height: 70 }}>
+                  <Text style={styles.textQuestion}>Câu hỏi</Text>
+                  <FlatList
+                    horizontal
+                    data={assignmentDetailCheck.data.data}
+                    keyExtractor={(item, index) => index.toString()}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={this.ItemQuestion}
                   />
-                  <Text style={{fontFamily: 'Nunito-Bold', fontSize: 14}}>
-                    {' '}
+                </View>
+                <View style={styles.poinded}>
+                  <View style={styles.review}>
+                    <View style={[styles.note, { backgroundColor: '#E34D5C' }]} />
+                    <Text style={styles.txtNote}>Trắc nghiệm</Text>
+                  </View>
+                  <View style={styles.review}>
+                    <View style={styles.note} />
+                    <Text style={styles.txtNote}>Chưa chấm</Text>
+                  </View>
+                  <View style={styles.review}>
+                    <View style={[styles.note, { backgroundColor: '#2D9CDB' }]} />
+                    <Text style={styles.txtNote}>Đã chấm</Text>
+                  </View>
+                </View>
+                <View style={styles.wrapInputScore}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14 }}>
+                      Câu {this.state.currentIndex + 1}{' '}
+                    </Text>
+                    <TextInput
+                      ref={'TextInputPoint'}
+                      onEndEditing={() => this.checkScore()}
+                      onChangeText={text => this.onChangeTextScore(text)}
+                      keyboardType={'numeric'}
+                      value={point}
+                      style={{
+                        width: 50,
+                        height: 20,
+                        borderWidth: 1,
+                        borderRadius: 2,
+                        borderColor: '#828282',
+                        textAlign: 'center',
+                      }}
+                    />
+                    <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14 }}>
+                      {' '}
                     /{maxScore}
-                  </Text>
-                </View>
-                <RippleButton
-                  style={styles.buttonCommnet}
-                  rippleContainerBorderRadius={10}
-                  onPress={() => {
-                    this.onpressComment();
-                  }}>
-                  <Text
-                    style={{color: '#fff', fontFamily: 'Nunito', fontSize: 12}}>
-                    Nhận xét
-                  </Text>
-                </RippleButton>
-                <RippleButton
-                  style={styles.buttonUpdate}
-                  rippleContainerBorderRadius={10}
-                  onPress={() => {
-                    this.onPressSubmitButton();
-                  }}>
-                  <Text
-                    style={{color: '#fff', fontFamily: 'Nunito', fontSize: 12}}>
-                    Cập nhật
-                  </Text>
-                </RippleButton>
-              </View>
-              {!this.state.isHideCommentInput && (
-                <View
-                  style={{
-                    width: '90%',
-                    height: 30,
-                    borderWidth: 0.5,
-                    borderRadius: 5,
-                    paddingHorizontal: 5,
-                    height: 100,
-                    marginTop: 20,
-                    backgroundColor: '#F2F2F2',
-                    borderColor: '#C4C4C4',
-                    alignSelf: 'center',
-                  }}>
-                  <TextInput
-                    onChangeText={text => {
-                      this.onChangeTextComment(text);
-                    }}
-                    value={
-                      this.state[`valueCommnent${this.state.currentIndex}`]
-                    }
-                    multiline={true}
-                    autoFocus={true}
-                  />
+                    </Text>
+                  </View>
                   <RippleButton
-                    style={styles.buttonSubmit}
+                    style={styles.buttonCommnet}
                     rippleContainerBorderRadius={10}
                     onPress={() => {
                       this.onpressComment();
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontFamily: 'Nunito',
-                        fontSize: 12,
-                      }}>
+                      style={{ color: '#fff', fontFamily: 'Nunito', fontSize: 12 }}>
                       Nhận xét
-                    </Text>
+                  </Text>
+                  </RippleButton>
+                  <RippleButton
+                    style={styles.buttonUpdate}
+                    rippleContainerBorderRadius={10}
+                    onPress={() => {
+                      this.onPressSubmitButton();
+                    }}>
+                    <Text
+                      style={{ color: '#fff', fontFamily: 'Nunito', fontSize: 12 }}>
+                      Cập nhật
+                  </Text>
                   </RippleButton>
                 </View>
+                {!this.state.isHideCommentInput && (
+                  <View
+                    style={{
+                      width: '90%',
+                      height: 30,
+                      borderWidth: 0.5,
+                      borderRadius: 5,
+                      paddingHorizontal: 5,
+                      height: 100,
+                      marginTop: 20,
+                      backgroundColor: '#F2F2F2',
+                      borderColor: '#C4C4C4',
+                      alignSelf: 'center',
+                    }}>
+                    <TextInput
+                      onChangeText={text => {
+                        this.onChangeTextComment(text);
+                      }}
+                      value={
+                        this.state[`valueCommnent${this.state.currentIndex}`]
+                      }
+                      multiline={true}
+                      autoFocus={true}
+                    />
+                    <RippleButton
+                      style={styles.buttonSubmit}
+                      rippleContainerBorderRadius={10}
+                      onPress={() => {
+                        this.onpressComment();
+                      }}>
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontFamily: 'Nunito',
+                          fontSize: 12,
+                        }}>
+                        Nhận xét
+                    </Text>
+                    </RippleButton>
+                  </View>
+                )}
+              </View>
+              {!_.isEmpty(assignmentDetailCheck.data.listFile) && (
+                <>
+                  <TabOfPaper
+                    tabActive={tabActive}
+                    _changeTab={this._changeTab}
+                  />
+                  {this._changeTabComponent()}
+                </>
+              )}
+              {_.isEmpty(assignmentDetailCheck.data.listFile) && (
+                <WebView
+                  ref={ref => (this.webview = ref)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    flex: 1,
+                    alignContent: 'center',
+                  }}
+                  // onMessage={this.onHandleMessage.bind(this)}
+                  source={{
+                    html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
+                      this.state.assignmentDetailCheck.data.data,
+                      this.state.assignmentDetailCheck.data.assignmentType,
+                    ),
+                    baseUrl,
+                  }}
+                  originWhitelist={['file://']}
+                  startInLoadingState
+                  scalesPageToFit={false}
+                  injectedJavaScript={`window.testMessage = "hello world"`}
+                  javaScriptEnabled
+                  showsVerticalScrollIndicator={false}
+                />
               )}
             </View>
-            {!_.isEmpty(assignmentDetailCheck.data.listFile) && (
-              <>
-                <TabOfPaper
-                  tabActive={tabActive}
-                  _changeTab={this._changeTab}
-                />
-                {this._changeTabComponent()}
-              </>
-            )}
-            {_.isEmpty(assignmentDetailCheck.data.listFile) && (
-              <WebView
-                ref={ref => (this.webview = ref)}
-                style={{
-                  backgroundColor: 'transparent',
-                  flex: 1,
-                  alignContent: 'center',
-                }}
-                // onMessage={this.onHandleMessage.bind(this)}
-                source={{
-                  html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
-                    this.state.assignmentDetailCheck.data.data,
-                    this.state.assignmentDetailCheck.data.assignmentType,
-                  ),
-                  baseUrl,
-                }}
-                originWhitelist={['file://']}
-                startInLoadingState
-                scalesPageToFit={false}
-                injectedJavaScript={`window.testMessage = "hello world"`}
-                javaScriptEnabled
-                showsVerticalScrollIndicator={false}
-              />
-            )}
-          </View>
-        )}
+          )}
       </View>
     );
   }
@@ -911,8 +944,8 @@ class TabOfPaper extends Component {
   }
 
   _changeTab = key => () => {
-    const {tabActive} = this.props;
-    const {positionX} = this.state;
+    const { tabActive } = this.props;
+    const { positionX } = this.state;
     if (key == tabActive) {
       return;
     }
@@ -934,13 +967,13 @@ class TabOfPaper extends Component {
   };
 
   render() {
-    const {tabActive} = this.props;
-    const {positionX} = this.state;
+    const { tabActive } = this.props;
+    const { positionX } = this.state;
     return (
       <View style={styles.wrapTab}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
-            style={[styles.btnTab, {marginLeft: 30}]}
+            style={[styles.btnTab, { marginLeft: 30 }]}
             onPress={this._changeTab(0)}>
             <Text
               style={tabActive == 0 ? styles.labelTabActive : styles.labelTab}>
@@ -949,7 +982,7 @@ class TabOfPaper extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.btnTab, {marginLeft: 80}]}
+            style={[styles.btnTab, { marginLeft: 80 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
@@ -957,7 +990,7 @@ class TabOfPaper extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <Animated.View style={[styles.tabActive, {marginLeft: positionX}]} />
+        <Animated.View style={[styles.tabActive, { marginLeft: positionX }]} />
       </View>
     );
   }
