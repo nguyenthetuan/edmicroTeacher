@@ -203,10 +203,6 @@ PODS:
   - OpenSSL-Universal/Static (1.0.2.19)
   - Permission-Notifications (2.2.0):
     - RNPermissions
-  - Picker (4.3.7):
-    - Picker/Core (= 4.3.7)
-  - Picker/Core (4.3.7):
-    - React
   - PromisesObjC (1.2.10)
   - Protobuf (3.13.0)
   - QBImagePickerController (3.4.0)
@@ -575,7 +571,6 @@ DEPENDENCIES:
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - Permission-Notifications (from `../node_modules/react-native-permissions/ios/Notifications.podspec`)
-  - Picker (from `../node_modules/react-native-picker`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - RCTYouTube (from `../node_modules/react-native-youtube`)
@@ -703,8 +698,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/lottie-react-native"
   Permission-Notifications:
     :path: "../node_modules/react-native-permissions/ios/Notifications.podspec"
-  Picker:
-    :path: "../node_modules/react-native-picker"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -861,7 +854,6 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
   Permission-Notifications: 572d4e94121e57dbecc71a0933abd8ed61108e92
-  Picker: 37554355aef82a532ea95b71b6eeba66bc86182b
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
