@@ -23,14 +23,14 @@ export default class Header extends Component {
       <View style={styles.container}>
         <HeaderMain openDrawer={this.openDrawer} />
         <View style={styles.content}>
-          {__DEV__ && (
+          {/* {__DEV__ && (
             <Animatable.Image
               iterationCount="infinite"
               animation="swing"
               source={require('../../asserts/icon/notification.png')}
               resizeMode="contain"
             />
-          )}
+          )} */}
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate('ChangInfo', {
