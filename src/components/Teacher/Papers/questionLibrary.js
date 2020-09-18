@@ -138,6 +138,7 @@ class QuestionLibrary extends Component {
     if (token) {
       try {
         const response = await apiPapers.getUser({ token });
+        console.log('rexxx', response)
         this.setState(
           {
             subject: response && response,
@@ -172,7 +173,7 @@ class QuestionLibrary extends Component {
             element: response && response,
             objectSearch: {
               ...objectSearch,
-              curriculumCode: response && response[0].id,
+              // curriculumCode: response && response[0].id,
             },
             isLoading: false,
           },

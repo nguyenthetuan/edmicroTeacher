@@ -283,6 +283,7 @@ class ConfigQuestion extends Component {
     );
   };
   activeSubject = (item) => {
+    console.log('item', item)
     const { subjectCode, listSubjects } = this.state;
     let subjectCodeTmp = subjectCode;
     let listSubjectsTmp = listSubjects.map((e) => {

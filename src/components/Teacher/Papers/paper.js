@@ -233,6 +233,8 @@ class Papers extends Component {
       }
 
       const resSubject = await apiPapers.getSubject({token});
+      console.log('subject', resSubject
+      )
       if (resSubject) {
         listSubjects = resSubject;
         this.props.saveSubject(resSubject);
