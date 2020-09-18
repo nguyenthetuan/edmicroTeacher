@@ -8,7 +8,6 @@ function* getHomeworkDetail(action) {
         let response = yield apiHomeworkTeacher.getDetailResult(action.payload);
         yield put(fetchHomeworkSuccessAction({ response, assignId: action.payload.assignId }));
     } catch (error) {
-        console.log(error);
         yield put(fetchHomeworkFailedAction(error));
     }
 }

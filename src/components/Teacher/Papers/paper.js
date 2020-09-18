@@ -1,4 +1,4 @@
-import React, {Component, PureComponent} from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
   View,
   Image,
@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   Animated,
-  ImageBackground,
+  SafeAreaView,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import RippleItem from '../../common-new/RippleItem';
@@ -23,18 +23,16 @@ import Common from '../../../utils/Common';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import ModalEditName from './ModalEditName';
-import Header from '../Header';
-import {connect} from 'react-redux';
-import {setListGrades, setListSubject} from '../../../actions/paperAction';
-import Feather from 'react-native-vector-icons/Feather';
-import AnalyticsManager from '../../../utils/AnalyticsManager';
+import { connect } from 'react-redux';
+import { setListGrades, setListSubject } from '../../../actions/paperAction';
 import Globals from '../../../utils/Globals';
 import * as Animatable from 'react-native-animatable';
+import HeaderMain from '../../common-new/HeaderMain';
 
 const NAVBAR_HEIGHT = 220;
-const STATUS_BAR_HEIGHT = Platform.select({ios: 20, android: 24});
+const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class Item extends PureComponent {
   _handleClickDetail = (payloadAssignment) => () => {
@@ -59,7 +57,7 @@ class Item extends PureComponent {
       <View
         style={[
           styles.itemTest,
-          {borderColor: Common.getBackroundSubject(subjectCode)},
+          { borderColor: Common.getBackroundSubject(subjectCode) },
         ]}
         onPress={this._handleClickDetail(payloadAssignment)}>
         <TouchableOpacity
@@ -67,7 +65,7 @@ class Item extends PureComponent {
           <View
             style={[
               styles.topTest,
-              {backgroundColor: Common.getBackroundSubject(subjectCode)},
+              { backgroundColor: Common.getBackroundSubject(subjectCode) },
             ]}>
             <Text style={styles.txtName}>{item.name}</Text>
             <View
@@ -86,18 +84,18 @@ class Item extends PureComponent {
 
         <TouchableOpacity onPress={this._handleClickDetail(payloadAssignment)}>
           <View style={styles.bodyTest}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity>
                 <Image
                   source={require('../../../asserts/icon/icClass.png')}
-                  style={{height: 20, width: 20}}
+                  style={{ height: 20, width: 20 }}
                 />
                 <Text style={styles.txtTestClass}>{gradeCode}</Text>
               </TouchableOpacity>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image
                   source={Common.getIconSubject(subjectCode)}
-                  style={{width: 20, height: 20, marginLeft: 15}}
+                  style={{ width: 20, height: 20, marginLeft: 15 }}
                   resizeMode="contain"
                 />
                 <Text style={styles.txtQuestion}>{subjectCode}</Text>
@@ -111,12 +109,12 @@ class Item extends PureComponent {
                 <Image
                   source={require('../../../asserts/icon/icQuestion.png')}
                   resizeMode="contain"
-                  style={{height: 20, width: 20}}
+                  style={{ height: 20, width: 20 }}
                 />
                 <Text style={styles.txtQuestion}>{item.totalQuestion}</Text>
               </View>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <View
                 style={[
                   styles.buttomPractice,
@@ -133,7 +131,7 @@ class Item extends PureComponent {
               <View
                 style={[
                   styles.buttomDelivered,
-                  {backgroundColor: item.status === 4 ? '#56BB73' : '#E0E0E0'},
+                  { backgroundColor: item.status === 4 ? '#56BB73' : '#E0E0E0' },
                 ]}>
                 <Text style={styles.txtButtomPractice}>
                   {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
@@ -201,7 +199,7 @@ class Papers extends Component {
   };
   componentDidMount() {
     this.getData();
-    this.state.scrollAnim.addListener(({value}) => {
+    this.state.scrollAnim.addListener(({ value }) => {
       const diff = value - this._scrollValue;
       this._scrollValue = value;
       this._clampedScrollValue = Math.min(
@@ -209,7 +207,7 @@ class Papers extends Component {
         NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
       );
     });
-    this.state.offsetAnim.addListener(({value}) => {
+    this.state.offsetAnim.addListener(({ value }) => {
       this._offsetValue = value;
     });
     // this.didFocusSubscription = this.props.navigation.addListener(
@@ -219,22 +217,20 @@ class Papers extends Component {
   }
 
   getData = async () => {
-    const {token} = await dataHelper.getToken();
-    this.setState({loading: true});
+    const { token } = await dataHelper.getToken();
+    this.setState({ loading: true });
     if (token) {
       let listGrades = [];
       let listSubjects = [];
       let listPapers = [];
 
-      const resGrade = await apiPapers.getGrade({token});
+      const resGrade = await apiPapers.getGrade({ token });
       if (resGrade) {
         listGrades = resGrade;
         this.props.saveGrades(resGrade);
       }
 
-      const resSubject = await apiPapers.getSubject({token});
-      console.log('subject', resSubject
-      )
+      const resSubject = await apiPapers.getSubject({ token });
       if (resSubject) {
         listSubjects = resSubject;
         this.props.saveSubject(resSubject);
@@ -272,8 +268,8 @@ class Papers extends Component {
   };
 
   deletePaper = async () => {
-    const {dataSelected} = this.state;
-    const {token} = await dataHelper.getToken();
+    const { dataSelected } = this.state;
+    const { token } = await dataHelper.getToken();
     const response = await apiPapers.deletePaper({
       token,
       id: dataSelected.assignmentId,
@@ -336,7 +332,7 @@ class Papers extends Component {
   _onMomentumScrollEnd = () => {
     const toValue =
       this._scrollValue > NAVBAR_HEIGHT &&
-      this._clampedScrollValue > (NAVBAR_HEIGHT - STATUS_BAR_HEIGHT) / 2
+        this._clampedScrollValue > (NAVBAR_HEIGHT - STATUS_BAR_HEIGHT) / 2
         ? this._offsetValue + NAVBAR_HEIGHT
         : this._offsetValue - NAVBAR_HEIGHT;
 
@@ -348,8 +344,8 @@ class Papers extends Component {
   };
 
   onGetPapers = async () => {
-    const {gradeActive, subjectActive} = this.state;
-    const {token} = await dataHelper.getToken();
+    const { gradeActive, subjectActive } = this.state;
+    const { token } = await dataHelper.getToken();
     if (token) {
       this._indexPage = 0;
       const resPapers = await apiPapers.getPapers({
@@ -380,7 +376,7 @@ class Papers extends Component {
     this.setState({
       isLoadMore: true,
     });
-    const {token} = await dataHelper.getToken();
+    const { token } = await dataHelper.getToken();
     if (token) {
       this._indexPage++;
 
@@ -415,7 +411,7 @@ class Papers extends Component {
   };
 
   onUpdateItem = async (item) => {
-    const {listPapers} = this.state;
+    const { listPapers } = this.state;
     let listPapersTmp = listPapers;
     const index = _.findIndex(listPapers, ['assignmentId', item.assignmentId]);
     if (index > -1) {
@@ -427,26 +423,26 @@ class Papers extends Component {
   };
 
   activeClass = (item) => {
-    const {gradeActive} = this.state;
+    const { gradeActive } = this.state;
     const index = _.indexOf(gradeActive, item.gradeId);
     index < 0
       ? this.setState(
-          {
-            gradeActive: [...gradeActive, ...[item.gradeId]],
-            loading: true,
-          },
-          () => this.onGetPapers(),
-        )
+        {
+          gradeActive: [...gradeActive, ...[item.gradeId]],
+          loading: true,
+        },
+        () => this.onGetPapers(),
+      )
       : this.setState(
-          {
-            gradeActive: [
-              ...gradeActive.slice(0, index),
-              ...gradeActive.slice(index + 1),
-            ],
-            loading: true,
-          },
-          () => this.onGetPapers(),
-        );
+        {
+          gradeActive: [
+            ...gradeActive.slice(0, index),
+            ...gradeActive.slice(index + 1),
+          ],
+          loading: true,
+        },
+        () => this.onGetPapers(),
+      );
   };
 
   refreshClass = () => {
@@ -458,26 +454,26 @@ class Papers extends Component {
   };
 
   activeSubject = (item) => {
-    const {subjectActive} = this.state;
+    const { subjectActive } = this.state;
     const index = _.indexOf(subjectActive, item.code);
     index < 0
       ? this.setState(
-          {
-            subjectActive: [...subjectActive, ...[item.code]],
-            loading: true,
-          },
-          () => this.onGetPapers(),
-        )
+        {
+          subjectActive: [...subjectActive, ...[item.code]],
+          loading: true,
+        },
+        () => this.onGetPapers(),
+      )
       : this.setState(
-          {
-            subjectActive: [
-              ...subjectActive.slice(0, index),
-              ...subjectActive.slice(index + 1),
-            ],
-            loading: true,
-          },
-          () => this.onGetPapers(),
-        );
+        {
+          subjectActive: [
+            ...subjectActive.slice(0, index),
+            ...subjectActive.slice(index + 1),
+          ],
+          loading: true,
+        },
+        () => this.onGetPapers(),
+      );
   };
 
   refreshSubject = () => {
@@ -509,22 +505,22 @@ class Papers extends Component {
   };
 
   _renderClass = () => {
-    const {gradeActive, listGrades} = this.state;
+    const { gradeActive, listGrades } = this.state;
     return (
       <View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.txtClass}>Khối lớp</Text>
           <RippleButton onPress={() => this.refreshClass()}>
-            <View style={{padding: 5}}>
+            <View style={{ padding: 5 }}>
               <Image
                 source={require('../../../asserts/icon/refresh.png')}
                 resizeMode="contain"
-                style={{height: 20, width: 20}}
+                style={{ height: 20, width: 20 }}
               />
             </View>
           </RippleButton>
         </View>
-        <View style={{marginTop: 12}}>
+        <View style={{ marginTop: 12 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Image
               source={require('../../../asserts/images/iconHome.png')}
@@ -533,7 +529,7 @@ class Papers extends Component {
             <FlatList
               data={listGrades}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return !_.includes(gradeActive, item.gradeId) ? (
                   <RippleButton
                     style={Platform.OS === 'ios' ? styles.buttomClass : null}
@@ -546,17 +542,17 @@ class Papers extends Component {
                     </View>
                   </RippleButton>
                 ) : (
-                  <RippleButton
-                    style={Platform.OS === 'ios' ? styles.buttomActive : null}
-                    onPress={() => this.activeClass(item)}>
-                    <View
-                      style={
-                        Platform.OS === 'android' ? styles.buttomActive : null
-                      }>
-                      <Text style={styles.txtItemActive}>{item.name}</Text>
-                    </View>
-                  </RippleButton>
-                );
+                    <RippleButton
+                      style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                      onPress={() => this.activeClass(item)}>
+                      <View
+                        style={
+                          Platform.OS === 'android' ? styles.buttomActive : null
+                        }>
+                        <Text style={styles.txtItemActive}>{item.name}</Text>
+                      </View>
+                    </RippleButton>
+                  );
               }}
               removeClippedSubviews={false}
               horizontal
@@ -568,7 +564,7 @@ class Papers extends Component {
   };
 
   _renderSubject = () => {
-    const {subjectActive, listSubjects} = this.state;
+    const { subjectActive, listSubjects } = this.state;
     return (
       <View>
         <View
@@ -579,16 +575,16 @@ class Papers extends Component {
           }}>
           <Text style={styles.txtClass}>Môn học</Text>
           <RippleButton onPress={() => this.refreshSubject()}>
-            <View style={{padding: 5}}>
+            <View style={{ padding: 5 }}>
               <Image
                 source={require('../../../asserts/icon/refresh.png')}
                 resizeMode="contain"
-                style={{height: 20, width: 20}}
+                style={{ height: 20, width: 20 }}
               />
             </View>
           </RippleButton>
         </View>
-        <View style={{marginTop: 6}}>
+        <View style={{ marginTop: 6 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Image
               source={require('../../../asserts/icon/subject.png')}
@@ -597,7 +593,7 @@ class Papers extends Component {
             <FlatList
               data={listSubjects}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return !_.includes(subjectActive, item.code) ? (
                   <RippleButton
                     style={Platform.OS === 'ios' ? styles.buttomClass : null}
@@ -610,17 +606,17 @@ class Papers extends Component {
                     </View>
                   </RippleButton>
                 ) : (
-                  <RippleButton
-                    style={Platform.OS === 'ios' ? styles.buttomActive : null}
-                    onPress={() => this.activeSubject(item)}>
-                    <View
-                      style={
-                        Platform.OS === 'android' ? styles.buttomActive : null
-                      }>
-                      <Text style={styles.txtItemActive}>{item.name}</Text>
-                    </View>
-                  </RippleButton>
-                );
+                    <RippleButton
+                      style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                      onPress={() => this.activeSubject(item)}>
+                      <View
+                        style={
+                          Platform.OS === 'android' ? styles.buttomActive : null
+                        }>
+                        <Text style={styles.txtItemActive}>{item.name}</Text>
+                      </View>
+                    </RippleButton>
+                  );
               }}
               removeClippedSubviews={false}
               horizontal
@@ -634,7 +630,7 @@ class Papers extends Component {
 
   OpenModalEdit = () => {
     this.setButton(this.button2, () => {
-      this.setState({popover: true});
+      this.setState({ popover: true });
     });
   };
 
@@ -647,7 +643,7 @@ class Papers extends Component {
   };
 
   _listTestFooter = () => {
-    const {isLoadMore, hideLoadMore} = this.state;
+    const { isLoadMore, hideLoadMore } = this.state;
     return hideLoadMore ? null : (
       <TouchableOpacity
         onPress={this.onLoadMore}
@@ -659,25 +655,25 @@ class Papers extends Component {
         {isLoadMore ? (
           <ActivityIndicator size={'small'} />
         ) : (
-          <Text
-            style={{
-              color: '#000',
-              fontFamily: 'Nunito-Bold',
-              fontSize: 14,
-              textAlign: 'center',
-            }}>
-            Xem thêm
-          </Text>
-        )}
+            <Text
+              style={{
+                color: '#000',
+                fontFamily: 'Nunito-Bold',
+                fontSize: 14,
+                textAlign: 'center',
+              }}>
+              Xem thêm
+            </Text>
+          )}
       </TouchableOpacity>
     );
   };
 
   _crateBackUp = async (id) => {
-    const {listGrades, listSubjects} = this.state;
+    const { listGrades, listSubjects } = this.state;
     try {
-      const {token} = await dataHelper.getToken();
-      const res = await apiPapers.getAssignmentConfig({token, id: id});
+      const { token } = await dataHelper.getToken();
+      const res = await apiPapers.getAssignmentConfig({ token, id: id });
       if (res && res.assignmentContentType === 0) {
         const question = dataHelper.saveQuestion(res.questions);
         this.props.navigation.navigate('QuestionLibrary', {
@@ -693,11 +689,11 @@ class Papers extends Component {
           statusbar: 'light-content',
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   _handleAddPaper = () => {
-    this.setState({visibleModalAdd: true});
+    this.setState({ visibleModalAdd: true });
   };
 
   _handleClickDetail = (index) => () => {
@@ -710,7 +706,7 @@ class Papers extends Component {
     } = this.state;
     switch (index) {
       case 1:
-        this.setState({visibleEdit: false});
+        this.setState({ visibleEdit: false });
         this.props.navigation.navigate('ExcerciseDetail', {
           subjectCode: dataSelected.subjectCode,
           assignmentId: dataSelected.assignmentId,
@@ -720,11 +716,11 @@ class Papers extends Component {
         });
         break;
       case 2:
-        this.setState({visibleEdit: false});
+        this.setState({ visibleEdit: false });
         this._crateBackUp(dataSelected.assignmentId);
         break;
       case 4:
-        this.setState({visibleEdit: false});
+        this.setState({ visibleEdit: false });
         this.props.navigation.navigate('Assignment', {
           item: { ...dataSelected, id: dataSelected.assignmentId },
           payloadAssignment,
@@ -732,7 +728,7 @@ class Papers extends Component {
         });
         break;
       case 7:
-        this.setState({visibleEdit: false});
+        this.setState({ visibleEdit: false });
         this.props.navigation.navigate('MarkingView', {
           item: dataSelected,
           statusbar: 'light-content',
@@ -761,9 +757,9 @@ class Papers extends Component {
   };
 
   _handleCloseModal = () => {
-    this.setState({animation: 'fadeOutDownBig'}, () => {
+    this.setState({ animation: 'fadeOutDownBig' }, () => {
       this.myTime = setTimeout(() => {
-        this.setState({animation: 'fadeInUpBig', visibleEdit: false});
+        this.setState({ animation: 'fadeInUpBig', visibleEdit: false });
       }, 500);
     });
   };
@@ -779,7 +775,7 @@ class Papers extends Component {
       assignmentContentType,
     } = this.state;
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         {
           <Animated.FlatList
             contentContainerStyle={styles.contentContainer}
@@ -789,7 +785,7 @@ class Papers extends Component {
             extraData={listPapers}
             ListEmptyComponent={this._listTestEmpty}
             ListFooterComponent={this._listTestFooter}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <Item item={item} onOpenModal={this._onOpenModal(item)} />
             )}
             initialNumToRender={12}
@@ -799,8 +795,8 @@ class Papers extends Component {
             onMomentumScrollEnd={this._onMomentumScrollEnd}
             onScrollEndDrag={this._onScrollEndDrag}
             onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: this.state.scrollAnim}}}],
-              {useNativeDriver: true},
+              [{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }],
+              { useNativeDriver: true },
             )}
             ListHeaderComponent={this.renderHeaderFlastList()}
           />
@@ -885,7 +881,7 @@ class Papers extends Component {
   };
 
   onPress = () => {
-    this.setState({visibleModalAdd: false}, () =>
+    this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('QuestionLibrary', {
         nagigation: this.props.nagigation,
         statusbar: 'light-content',
@@ -894,8 +890,8 @@ class Papers extends Component {
   };
 
   onPressUploadPDF = () => {
-    const {listGrades, listSubjects} = this.state;
-    this.setState({visibleModalAdd: false}, () =>
+    const { listGrades, listSubjects } = this.state;
+    this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('UploadPDF', {
         nagigation: this.props.nagigation,
         listGrades,
@@ -905,10 +901,10 @@ class Papers extends Component {
     );
   };
 
-  closeModal = () => this.setState({visibleModalAdd: false});
+  closeModal = () => this.setState({ visibleModalAdd: false });
 
   _renderModalAddPaper = () => {
-    const {visibleModalAdd} = this.state;
+    const { visibleModalAdd } = this.state;
     return (
       <Modal
         visible={visibleModalAdd}
@@ -920,11 +916,11 @@ class Papers extends Component {
           <View style={styles.contentModal}>
             <View style={styles.topModal}>
               <Text style={styles.txtTitleModal}>Tạo bộ đề</Text>
-              <View style={{position: 'absolute', right: 5, top: 3}}>
+              <View style={{ position: 'absolute', right: 5, top: 3 }}>
                 <RippleButton onPress={this.closeModal}>
                   <Image
                     source={require('../../../asserts/icon/icCloseModal.png')}
-                    style={{height: 22, width: 22}}
+                    style={{ height: 22, width: 22 }}
                   />
                 </RippleButton>
               </View>
@@ -942,7 +938,7 @@ class Papers extends Component {
               </View>
               <Image
                 source={require('../../../asserts/icon/icPersonModal.png')}
-                style={{width: width * 0.2, height: width * 0.23}}
+                style={{ width: width * 0.2, height: width * 0.23 }}
                 resizeMode="contain"
               />
               <View style={styles.buttomMoadal}>
@@ -1008,13 +1004,13 @@ class Papers extends Component {
         ]}>
         {this._renderClass()}
         {this._renderSubject()}
-        <View style={{alignItems: 'flex-end'}}>
+        <View style={{ alignItems: 'flex-end' }}>
           <TouchableOpacity
             style={styles.buttonAdd}
             onPress={this._handleAddPaper}>
             <Image
               source={require('../../../asserts/icon/icAdd.png')}
-              style={{marginTop: 3}}
+              style={{ marginTop: 3 }}
             />
             <Text style={styles.txtAdd}>Thêm bộ đề</Text>
           </TouchableOpacity>
@@ -1033,7 +1029,7 @@ class Papers extends Component {
       clampedScroll,
       loading,
     } = this.state;
-    const {avatarSource} = this.props;
+    const { avatarSource } = this.props;
     const navbarTranslate = clampedScroll.interpolate({
       inputRange: [0, NAVBAR_HEIGHT - STATUS_BAR_HEIGHT],
       outputRange: [0, -(NAVBAR_HEIGHT - STATUS_BAR_HEIGHT)],
@@ -1044,25 +1040,26 @@ class Papers extends Component {
       outputRange: [1, 0],
       extrapolate: 'clamp',
     });
+    const { user } = this.props;
 
     return (
-      <View style={styles.fill}>
-        <Header
+      <SafeAreaView style={styles.fill}>
+        <HeaderMain
+          {...user}
           navigation={this.props.navigation}
-          avatarSource={avatarSource}
         />
         {loading ? (
           <ActivityIndicator
             animating
             size={'small'}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             color="#F98E2F"
           />
         ) : (
-          <View style={{flex: 1}}>
-            <View style={[styles.fill, {paddingHorizontal: 16}]}>
-              {this._renderListTest()}
-              {/* <Animated.View
+            <View style={{ flex: 1 }}>
+              <View style={[styles.fill, { paddingHorizontal: 16 }]}>
+                {this._renderListTest()}
+                {/* <Animated.View
                   style={[
                     styles.navbar,
                     {
@@ -1084,29 +1081,29 @@ class Papers extends Component {
                     </TouchableOpacity>
                   </View>
                 </Animated.View> */}
+              </View>
+              {this._renderModalAddPaper()}
+              {visibleModalEdit ? (
+                <ModalEditConfig
+                  onVisible={(visible) => this.onVisibleModalEdit(visible)}
+                  onUpdateItem={(item) => this.onUpdateItem(item)}
+                  listGrades={listGrades}
+                  listSubjects={listSubjects}
+                  data={dataSelected}
+                />
+              ) : null}
+              {visibleModalEditName ? (
+                <ModalEditName
+                  onVisible={(visible) => this.onVisibleModalEditName(visible)}
+                  onUpdateItem={(item) => this.onUpdateItem(item)}
+                  listGrades={listGrades}
+                  listSubjects={listSubjects}
+                  data={dataSelected}
+                />
+              ) : null}
             </View>
-            {this._renderModalAddPaper()}
-            {visibleModalEdit ? (
-              <ModalEditConfig
-                onVisible={(visible) => this.onVisibleModalEdit(visible)}
-                onUpdateItem={(item) => this.onUpdateItem(item)}
-                listGrades={listGrades}
-                listSubjects={listSubjects}
-                data={dataSelected}
-              />
-            ) : null}
-            {visibleModalEditName ? (
-              <ModalEditName
-                onVisible={(visible) => this.onVisibleModalEditName(visible)}
-                onUpdateItem={(item) => this.onUpdateItem(item)}
-                listGrades={listGrades}
-                listSubjects={listSubjects}
-                data={dataSelected}
-              />
-            ) : null}
-          </View>
-        )}
-      </View>
+          )}
+      </SafeAreaView>
     );
   }
 }
@@ -1361,7 +1358,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    avatarSource: state.user.AvatarSource,
+    user: state.user,
   };
 };
 
