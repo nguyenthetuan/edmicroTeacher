@@ -38,6 +38,7 @@ import jwtDecode from 'jwt-decode';
 import { NavigationActions, StackActions } from 'react-navigation';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { PHONE_DEBUG } from '../../constants/const';
+import { getUserByToken } from '../../utils/Helper';
 
 const { width, height } = Dimensions.get('window');
 const description = 'Việc cập nhật số điện thoại sẽ giúp bảo mật tài khoản và để cấp lại mật khẩu nếu bạn quên mật khẩu.'
@@ -243,13 +244,12 @@ export default class UpdatePhoneScreen extends Component {
       if (response != '') {
         const { status } = response;
         if (status == 200) {
-          const { idMixpanel, userId } = jwtDecode(response.access_token);
-
           dataHelper.saveToken(response.access_token);
           if (response.avatar != null) {
             dataHelper.saveAvatar(response.avatar);
           }
-          this.props.makeRequestProfile(dataSubmit);
+          const payload = getUserByToken(response.access_token);
+          this.props.makeRequestProfile(payload);
           this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
             this.props.navigation.goBack();
             console.log('update success')

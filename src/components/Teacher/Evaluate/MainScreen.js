@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,18 +8,21 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
+  SafeAreaView,
   StatusBar,
 } from 'react-native';
 import Header from '../Header';
 import dataHelper from '../../../utils/dataHelper';
 import apiPapers from '../../../services/apiPapersTeacher';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
-import {DATA_YEAR} from '../../../constants/const';
-import {convertSeconds} from '../../../utils/Utils';
+import { DATA_YEAR } from '../../../constants/const';
+import { convertSeconds } from '../../../utils/Utils';
 import _ from 'lodash';
-const {width, height} = Dimensions.get('window');
+import HeaderMain from '../../common-new/HeaderMain';
+
+const { width, height } = Dimensions.get('window');
 class MainScreen extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +39,7 @@ class MainScreen extends Component {
     };
   }
   renderHeader = () => {
-    const {currentExamTest} = this.state;
+    const { currentExamTest } = this.state;
     return (
       <View style={styles.wrapContain}>
         {!_.isEmpty(currentExamTest.examName) && (
@@ -47,7 +50,7 @@ class MainScreen extends Component {
         )}
 
         <View style={styles.containerHeader}>
-          <View style={[styles.itemHeader, {width: width * (3 / 8)}]}>
+          <View style={[styles.itemHeader, { width: width * (3 / 8) }]}>
             <Image
               source={require('../../../asserts/icon/ic_name_evaluate.png')}
             />
@@ -101,7 +104,7 @@ class MainScreen extends Component {
   }
 
   _fillter = (key, value) => {
-    const obj = Object.assign({[key]: value});
+    const obj = Object.assign({ [key]: value });
     this.setState(obj, () => {
       console.log(this.state.classSubjectIndex);
       this.getDataStaticExam();
@@ -109,7 +112,7 @@ class MainScreen extends Component {
   };
 
   getDataStaticExam = async () => {
-    const {token} = await dataHelper.getToken();
+    const { token } = await dataHelper.getToken();
     const {
       yearIndex,
       classSubjectIndex,
@@ -137,7 +140,7 @@ class MainScreen extends Component {
         });
         return;
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   renderEmpty = () => {
@@ -154,7 +157,6 @@ class MainScreen extends Component {
   };
 
   render() {
-    const {avatarSource} = this.props;
     const {
       isShowFillter,
       classSubject,
@@ -172,15 +174,16 @@ class MainScreen extends Component {
       testIndex,
       scores,
     };
+    const { user } = this.props;
     return (
-      <View style={styles.container}>
-        <Header
+      <SafeAreaView style={styles.container}>
+        <HeaderMain
+          {...user}
           navigation={this.props.navigation}
-          avatarSource={avatarSource}
         />
         <ScrollView
-          style={{zIndex: 1}}
-          contentContainerStyle={{paddingTop: 5}}
+          style={{ zIndex: 1 }}
+          contentContainerStyle={{ paddingTop: 5 }}
           showsVerticalScrollIndicator={false}>
           <View style={styles.container}>
             <TouchableOpacity
@@ -193,7 +196,7 @@ class MainScreen extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.btnStatistics, {marginTop: 10}]}
+              style={[styles.btnStatistics, { marginTop: 10 }]}
               onPress={this._handleClickFillter}>
               <Image source={AppIcon.icons_filter} />
               <Text style={styles.txtStatistics}>Tuỳ chọn</Text>
@@ -211,7 +214,7 @@ class MainScreen extends Component {
             keyExtractor={(item, index) => index.toString()}
             ListHeaderComponent={this.renderHeader}
             ListEmptyComponent={this.renderEmpty}
-            renderItem={({item}) => <RenderItem item={item} {...payload} />}
+            renderItem={({ item }) => <RenderItem item={item} {...payload} />}
           />
         </ScrollView>
         <ModalFillter
@@ -220,7 +223,7 @@ class MainScreen extends Component {
           payload={payload}
           fillter={this._fillter}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -234,34 +237,34 @@ class RenderItem extends Component {
   }
 
   _handleClick = () => {
-    this.setState({showInfo: !this.state.showInfo});
+    this.setState({ showInfo: !this.state.showInfo });
   };
 
   render() {
-    const {item, scores} = this.props;
+    const { item, scores } = this.props;
     const scoreCurrent =
       scores.find((element) => item.studentId == element.studentId) || {};
-    const {showInfo} = this.state;
+    const { showInfo } = this.state;
     return (
-      <View style={{backgroundColor: '#2D9CDB'}}>
+      <View style={{ backgroundColor: '#2D9CDB' }}>
         <View style={styles.containerItem}>
           <View style={styles.viewItemName}>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Image
                 source={require('../../../asserts/icon/ic_name_evaluate.png')}
               />
-              <View style={[styles.dotOnline, {backgroundColor: '#91EDC6'}]} />
+              <View style={[styles.dotOnline, { backgroundColor: '#91EDC6' }]} />
             </View>
-            <TouchableOpacity style={{flex: 3}} onPress={this._handleClick}>
+            <TouchableOpacity style={{ flex: 3 }} onPress={this._handleClick}>
               {showInfo ? (
                 <Text style={styles.txtNameShow} numberOfLines={1}>
                   {item.studentName}
                 </Text>
               ) : (
-                <Text style={styles.txtName} numberOfLines={1}>
-                  {item.studentName}
-                </Text>
-              )}
+                  <Text style={styles.txtName} numberOfLines={1}>
+                    {item.studentName}
+                  </Text>
+                )}
             </TouchableOpacity>
           </View>
           {!_.isEmpty(scoreCurrent) ? (
@@ -284,14 +287,14 @@ class RenderItem extends Component {
               <Text style={styles.txtItem}>{scoreCurrent.score || 0}</Text>
             </>
           ) : (
-            <>
-              <Text style={styles.txtItem}>_</Text>
-              <Text style={styles.txtItem}>_</Text>
-              <Text style={styles.txtItem}>_</Text>
-              <Text style={styles.txtItem}>_</Text>
-              <Text style={styles.txtItem}>_</Text>
-            </>
-          )}
+              <>
+                <Text style={styles.txtItem}>_</Text>
+                <Text style={styles.txtItem}>_</Text>
+                <Text style={styles.txtItem}>_</Text>
+                <Text style={styles.txtItem}>_</Text>
+                <Text style={styles.txtItem}>_</Text>
+              </>
+            )}
         </View>
       </View>
     );
@@ -300,7 +303,7 @@ class RenderItem extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    avatarSource: state.user.AvatarSource,
+    user: state.user,
   };
 };
 

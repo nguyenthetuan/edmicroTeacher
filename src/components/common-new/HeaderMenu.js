@@ -1,60 +1,35 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import RippleButton from '../common-new/RippleButton';
 import AppIcon from '../../utils/AppIcon';
-import { getAvatarSource } from '../../utils/Common';
-import dataHelper from '../../utils/dataHelper';
-import { connect } from 'react-redux';
-class HeaderMenu extends Component {
+import { getSourceAvatar } from '../../utils/Helper';
+
+class HeaderMenu extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       AvatarSource: '',
     };
   }
-  onBuyPackage = () => {
-    this.props.navigation.navigate('PayUpgrade', { statusbar: 'light-content' });
-  };
 
-  getAvatar() {
-    //to do code
-    dataHelper
-      .getAvatar()
-      .then((path) => {
-        this.setState(
-          {
-            AvatarSource: `${path}`,
-          },
-          () => console.log('avataMenuTab', this.state.AvatarSource),
-        );
-      })
-      .catch((err) => console.log(err));
-  }
-
-  ChangePassword = () =>
+  ChangePassword = () => {
     this.props.navigation.navigate('ChangePassword', {
       statusbar: 'light-content',
     });
-
-  componentDidMount = () => {
-    this.getAvatar();
-  };
+  }
 
   render() {
-    const { gradeId, phoneNumber, userName, displayName } = this.props;
-    const { AvatarSource } = this.state;
+    const { phoneNumber, userName, displayName, userId } = this.props;
+    const source = getSourceAvatar(userId);
     return (
       <View style={styles.wrapUser}>
         <View style={styles.wrapInfo}>
-          {AvatarSource != '' &&
-            AvatarSource != null &&
-            AvatarSource != '/img/no-avatar.png' ? (
-              <Image
-                style={styles.avatar}
-                source={{ uri: getAvatarSource(AvatarSource) }}
-              />
-            ) : (
+          {source ? (
+            <Image
+              style={styles.avatar}
+              source={source}
+            />
+          ) : (
               <View style={styles.avatar}>
                 <Image
                   style={styles.avatarDefault}
@@ -99,16 +74,7 @@ class HeaderMenu extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    avatarSource: state.user.AvatarSource,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderMenu);
+export default HeaderMenu
 
 const styles = StyleSheet.create({
   container: {
@@ -121,7 +87,6 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: '#3A608C',
     alignItems: 'center',
-    // justifyContent: 'space-around',
   },
   avatar: {
     borderColor: '#fff',

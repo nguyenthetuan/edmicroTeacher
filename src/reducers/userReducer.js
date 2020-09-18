@@ -1,15 +1,6 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-17 11:53:22
- * @modify date 2018-04-17 11:53:22
- * @desc [description]
-*/
-
 import * as Types from '../constants/type';
 
 const initState = {
-  data: {},
   gradeId: '',
   displayName: '',
   email: '',
@@ -23,15 +14,6 @@ const initState = {
   AvatarSource: '',
   userName: '',
   listGrades: [],
-  userInfomation: {},
-  statisticChart: {},
-  isLoadingStatichart: true,
-  dataMatery: {},
-  isLoadMateryLoading: true,
-  dataChartSubjectId: [],
-  dataChartContribution: [],
-  flashCardTheory: [],
-  flashCardVideo: []
 };
 
 export default function userReducer(state = initState, action) {
@@ -53,19 +35,7 @@ export default function userReducer(state = initState, action) {
     case Types.SET_PROFILE_USER_ACTION:
       return {
         ...state,
-        data: {
-          ...action.payload
-        },
-        gradeId: action.payload.GradeId,
-        displayName: action.payload.DisplayName,
-        email: action.payload.Email,
-        birthday: action.payload.Birthday,
-        districtId: action.payload.DistrictId,
-        phoneNumber: action.payload.PhoneNumber,
-        provinceId: action.payload.ProvinceId,
-        schoolId: action.payload.SchoolId,
-        userName: action.userName,
-        CreateBySchool: action.payload.CreateBySchool
+        ...action.payload
       };
     case Types.FETCH_LIST_GRADE_SUCCESS_ACTION:
       return {

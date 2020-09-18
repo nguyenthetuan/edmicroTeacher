@@ -76,6 +76,7 @@ class MenuTabTeacher extends Component {
         <View style={MenuStyle.container} >
           <HeaderMenu
             {...user}
+            navigation={this.props.navigation}
             handleClick={(n) => this.handleClick(n)}
           />
           <ScrollView

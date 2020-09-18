@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import HeaderMain from '../common-new/HeaderMain';
-import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
+import { getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
 import * as Animatable from 'react-native-animatable';
 import AppIcon from '../../utils/AppIcon';
-import {HEIGHT_TOPBAR, getAvatarSource} from '../../utils/Common';
+import { HEIGHT_TOPBAR, getAvatarSource } from '../../utils/Common';
+import { getSourceAvatar } from '../../utils/Helper';
 export default class Header extends Component {
   constructor(props) {
     super(props);
@@ -15,13 +16,11 @@ export default class Header extends Component {
   };
 
   render() {
-    const {avatarSource} = this.props;
-    const imgAvatar = !!avatarSource
-    ? {uri: getAvatarSource(avatarSource)}
-    : AppIcon.avatar_default;
+    const { userId } = this.props;
+    const source = getSourceAvatar(userId);
     return (
       <View style={styles.container}>
-        <HeaderMain openDrawer={this.openDrawer} />
+        <HeaderMain openDrawer={this.openDrawer} iconRight={source} />
         <View style={styles.content}>
           {/* {__DEV__ && (
             <Animatable.Image
@@ -31,7 +30,7 @@ export default class Header extends Component {
               resizeMode="contain"
             />
           )} */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate('ChangInfo', {
                 statusbar: 'light-content',
@@ -40,10 +39,10 @@ export default class Header extends Component {
             style={styles.btnAvatar}>
             <Image
               resizeMode="cover"
-              source={imgAvatar}
+              source={source}
               style={styles.imgAvatar}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     );
