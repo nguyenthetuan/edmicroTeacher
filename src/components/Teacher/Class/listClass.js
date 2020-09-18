@@ -43,6 +43,7 @@ export default class listClass extends Component {
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={this.renderItem}
         removeClippedSubviews={false}
         ListEmptyComponent={() => (
