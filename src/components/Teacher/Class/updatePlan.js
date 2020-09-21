@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, TextInput, ActivityIndicator, SafeAreaView } from 'react-native';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
 import _ from 'lodash';
@@ -8,6 +8,7 @@ import HeaderDetail from '../../common-new/HeaderDetail';
 import { getAvatarSource } from '../../../utils/Common';
 import RippleButton from '../../common-new/RippleButton';
 import Globals from '../../../utils/Globals';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 
 const { width, height } = Dimensions.get('window');
 export default class UpdatePlan extends Component {
@@ -15,15 +16,9 @@ export default class UpdatePlan extends Component {
     super(props)
     const { title, value } = this.props.navigation.state.params;
     this.state = {
-      avatar: '',
       value: value === 'Chưa được cập nhật' ? '' : value || '',
       isLoading: false,
     }
-  }
-
-  async componentDidMount() {
-    const avatar = await dataHelper.getAvatar();
-    this.setState({ avatar });
   }
 
   save = async (type) => {
@@ -55,17 +50,16 @@ export default class UpdatePlan extends Component {
     const { avatar, value, isLoading } = this.state;
     const { navigation } = this.props;
     const { title, index, classId } = this.props.navigation.state.params;
-    const imgAvatar = avatar
-      ? { uri: getAvatarSource(avatar) }
-      : require('../../../asserts/appIcon/background_game_play.png');
+
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={styles.container}
+        bounces={false}
       >
-        <View style={{ flex: 1 }}>
-          <HeaderDetail
+        <SafeAreaView style={{ flex: 1 }}>
+          <HeaderNavigation
             navigation={navigation}
-            source={imgAvatar}
+            actionIcon={''}
             title={title}
           />
           <View style={[styles.body]}>
@@ -84,7 +78,7 @@ export default class UpdatePlan extends Component {
               </View>
             </RippleButton>
           </View>
-        </View>
+        </SafeAreaView>
         {isLoading && <ActivityIndicator size='small' color='#2D9CDB' style={styles.styActivity} />}
       </KeyboardAwareScrollView>
     )

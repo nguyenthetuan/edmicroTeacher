@@ -22,7 +22,7 @@ const renderHtmlQuestionDetail = (data, subjectId) => {
   <head>
     <title></title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
     <style>
       p img {
         float: inherit !important;display:block; max-width: 100%; margin: 0 auto 4px auto !important;

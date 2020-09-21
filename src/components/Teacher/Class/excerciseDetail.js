@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,19 +8,17 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import { connect } from 'react-redux';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import ListClassAssigment from './listClassAssigment';
 import ListQuestion from './listQuestion';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {createAppContainer} from 'react-navigation';
-import RippleButton from '../../common-new/RippleButton';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import { createAppContainer } from 'react-navigation';
 import dataHelper from '../../../utils/dataHelper';
-import * as Animatable from 'react-native-animatable';
-import {getAvatarSource} from '../../../utils/Common';
+import { getAvatarSource } from '../../../utils/Common';
 import ModalMockExamStart from './modalMockExamStart';
-import HeaderDetail from '../../common-new/HeaderDetail';
-const {width, height} = Dimensions.get('window');
+import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { getSourceAvatar } from '../../../utils/Helper';
+const { width, height } = Dimensions.get('window');
 
 const ExerciseTab = createMaterialTopTabNavigator(
   {
@@ -28,12 +26,12 @@ const ExerciseTab = createMaterialTopTabNavigator(
       screen: (props) => <ListClassAssigment {...props} />,
       navigationOptions: {
         title: 'Lớp Giao Bài',
-        tabBarLabel: ({focused}) => {
+        tabBarLabel: ({ focused }) => {
           return !focused ? (
             <Text style={styles.labelTab}>Lớp Giao Bài </Text>
           ) : (
-            <Text style={styles.labelTabActive}>Lớp Giao Bài</Text>
-          );
+              <Text style={styles.labelTabActive}>Lớp Giao Bài</Text>
+            );
         },
       },
     },
@@ -41,12 +39,12 @@ const ExerciseTab = createMaterialTopTabNavigator(
       screen: (props) => <ListQuestion {...props} />,
       navigationOptions: {
         title: 'Câu hỏi',
-        tabBarLabel: ({focused}) => {
+        tabBarLabel: ({ focused }) => {
           return !focused ? (
             <Text style={styles.labelTab}>Câu hỏi</Text>
           ) : (
-            <Text style={styles.labelTabActive}>Câu hỏi</Text>
-          );
+              <Text style={styles.labelTabActive}>Câu hỏi</Text>
+            );
         },
       },
     },
@@ -74,7 +72,7 @@ const ExerciseTab = createMaterialTopTabNavigator(
         borderBottomColor: '#F98E2F',
         height: 40,
         elevation: 0,
-        shadowOffset: {height: 0, width: 0},
+        shadowOffset: { height: 0, width: 0 },
         // justifyContent: 'space-between'
       },
       indicatorStyle: {
@@ -94,48 +92,32 @@ const ExerciseTab = createMaterialTopTabNavigator(
 
 const ExcerciseTabOnline = createAppContainer(ExerciseTab);
 
-export default class ExcerciseDetail extends Component {
+class ExcerciseDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      avatar: '',
       visible: false,
     };
-  }
-
-  async componentDidMount() {
-    const avatar = await dataHelper.getAvatar();
-    this.setState({avatar});
-    this.getAvatar();
   }
 
   show = (props) => (props) => {
     this.refs.ModalMockExam.activeModal(props);
   };
 
-  getAvatar() {
-    //to do code
-    dataHelper
-      .getAvatar()
-      .then((path) => {
-        this.setState({
-          avatar: `${path}`,
-        });
-      })
-      .catch((err) => console.log(err));
-  }
-
   render() {
-    const {avatar, visible} = this.state;
-    const {name} = this.props.navigation.state.params;
-    const {navigation} = this.props;
-    const imgAvatar = avatar
-      ? {uri: getAvatarSource(avatar)}
-      : require('../../../asserts/appIcon/background_game_play.png');
+    const { visible } = this.state;
+    const { name } = this.props.navigation.state.params;
+    const { navigation, user } = this.props;
+    const avatar = getSourceAvatar(user.userId);
+
     return (
-      <View style={styles.container}>
-        <HeaderDetail source={imgAvatar} title={name} navigation={navigation}/>
-        <View style={{alignItems: 'center'}}>
+      <SafeAreaView style={styles.container}>
+        <HeaderNavigation
+          title={name}
+          navigation={navigation}
+          actionIcon={avatar}
+        />
+        <View style={{ alignItems: 'center' }}>
           <Image
             source={require('../../../asserts/images/excerciseDetail.png')}
             style={styles.image}
@@ -151,15 +133,28 @@ export default class ExcerciseDetail extends Component {
           }}
         />
         <ModalMockExamStart
-          closeModal={() => this.setState({visible: false})}
+          closeModal={() => this.setState({ visible: false })}
           visible={visible}
           ref="ModalMockExam"
           navigation={this.props.navigation}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExcerciseDetail);
 
 const styles = StyleSheet.create({
   container: {

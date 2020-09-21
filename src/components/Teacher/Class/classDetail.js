@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,24 +8,22 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
-import ListStudent from './listStudent';
-import ListExercise from './listExercise';
-import Plans from './plans';
-import global from '../../../utils/Globals';
+import { connect } from 'react-redux';
 import ModalLevelComplete from './modalLevelComplete';
-import Common from '../../../utils/Common';
 import dataHelper from '../../../utils/dataHelper';
-import {getAvatarSource} from '../../../utils/Common';
+import { getAvatarSource } from '../../../utils/Common';
 import HeaderDetail from '../../common-new/HeaderDetail';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 import TabTop from './TopNavigationClass';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { SafeAreaView } from 'react-navigation';
+import { getSourceAvatar } from '../../../utils/Helper';
 
 class ClassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
-      isLoaing: false,
       idStudent: '',
       classID: '',
       avatar: '',
@@ -41,29 +39,21 @@ class ClassDetail extends Component {
     });
   };
 
-  async componentDidMount() {
-    setTimeout(() => this.setState({isLoaing: true}), 1000);
-    const avatar = await dataHelper.getAvatar();
-    this.setState({avatar});
-  }
-
   render() {
-    const {visible, idStudent, classID, avatar} = this.state;
-    const {navigation} = this.props;
-    const {title} = this.props.navigation.state.params;
-    const imgAvatar = avatar
-      ? {uri: getAvatarSource(avatar)}
-      : require('../../../asserts/appIcon/background_game_play.png');
+    const { visible, idStudent, classID } = this.state;
+    const { navigation, user } = this.props;
+    const { title } = this.props.navigation.state.params;
+    const source = getSourceAvatar(user.userId);
     return (
-      <View style={styles.container}>
-        <HeaderDetail
-          source={imgAvatar}
-          navigation={navigation}
+      <SafeAreaView style={styles.container}>
+        <HeaderNavigation
           title={title}
+          actionIcon={source}
+          navigation={navigation}
         />
         {
           <View style={styles.body}>
-            <View style={{alignItems: 'center'}}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../../asserts/images/detailClass.png')}
                 style={styles.image}
@@ -82,12 +72,12 @@ class ClassDetail extends Component {
         }
         {visible && (
           <ModalLevelComplete
-            closeModal={() => this.setState({visible: false})}
+            closeModal={() => this.setState({ visible: false })}
             idStudent={idStudent}
             classID={classID}
           />
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -122,4 +112,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClassDetail;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassDetail);
+

@@ -1,20 +1,14 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import RippleButton from '../../libs/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import ProgressBar from '../../libs/ProgressBar';
 import Common from '../../../utils/Common';
 import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 
 const {width, height} = Dimensions.get('window');
+
 export default class itemClass extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +17,7 @@ export default class itemClass extends Component {
     };
   }
 
-  _Status = (status) => {
+  _Status = status => {
     switch (status) {
       case 1:
         return 'Đang mở';
@@ -36,7 +30,7 @@ export default class itemClass extends Component {
     }
   };
 
-  _classDetail = (item) => {
+  _classDetail = item => {
     this.props.navigation.navigate('ClassDetail', {
       navigation: this.props.navigation,
       subjectCode: item.subjectCode,
@@ -44,6 +38,16 @@ export default class itemClass extends Component {
       title: item.name,
       statusbar: 'dark-content',
     });
+  };
+
+  shouldComponentUpdate = (prevProps, nextState) => {
+    if (
+      prevProps.item != this.props.item ||
+      this.state.activeDetail != nextState.activeDetail
+    ) {
+      return true;
+    }
+    return false;
   };
 
   render() {
@@ -63,7 +67,7 @@ export default class itemClass extends Component {
             <View style={{flexDirection: 'row'}}>
               <Text style={styles.textStatus}>{this._Status(item.status)}</Text>
               {(item.status === 1 || item.status === 2) && (
-                <View style={styles.iconStatus}></View>
+                <View style={styles.iconStatus} />
               )}
             </View>
           </View>
@@ -104,7 +108,8 @@ export default class itemClass extends Component {
                       width: 1,
                       marginHorizontal: 3,
                       backgroundColor: '#E0E0E0',
-                    }}></View>
+                    }}
+                  />
                   <Image
                     source={require('../../../asserts/icon/registration.png')}
                   />
@@ -157,7 +162,7 @@ export default class itemClass extends Component {
                       {flexDirection: 'row', justifyContent: 'space-between'},
                       activeDetail && {marginTop: 9, alignItems: 'flex-end'},
                     ]}>
-                    <View style={styles.line}></View>
+                    <View style={styles.line} />
                     {(!activeDetail && (
                       <Image
                         source={require('../../../asserts/icon/icondow.png')}
@@ -165,7 +170,7 @@ export default class itemClass extends Component {
                     )) || (
                       <Image source={require('../../../asserts/icon/up.png')} />
                     )}
-                    <View style={styles.line}></View>
+                    <View style={styles.line} />
                   </View>
                 </View>
               </RippleButton>
@@ -227,9 +232,10 @@ export default class itemClass extends Component {
                 rippleColor={'#FFF'}
                 style={styles.btn}>
                 <View style={[styles.wrapBtn, {backgroundColor: bg}]}>
-                  <Image
+                  <FastImage
+                    style={{ width: 12 }}
                     source={require('../../../asserts/icon/book.png')}
-                    resizeMode="contain"
+                    resizeMode={FastImage.resizeMode.contain}
                   />
                   <Text style={styles.txtbtn}>Vào Lớp</Text>
                 </View>

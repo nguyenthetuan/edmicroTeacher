@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RippleButton from '../libs/RippleButton';
-import { HEIGHT_TOPBAR } from '../../utils/Common';
+import { HEIGHT_TOPBAR, } from '../../utils/Common';
+import { getSourceAvatar } from '../../utils/Helper';
+
 export default class HeaderDetail extends Component {
   constructor(props) {
     super(props);
@@ -25,8 +27,11 @@ export default class HeaderDetail extends Component {
     this.props.navigation.navigate('ChangInfo', { statusbar: 'light-content' });
   };
 
+
   render() {
-    const { source = '', title = '' } = this.props;
+    const {  title = '', userId } = this.props;
+    const source = getSourceAvatar(userId);
+
     return (
       <View style={styles.contain}>
         <RippleButton
@@ -43,7 +48,7 @@ export default class HeaderDetail extends Component {
           style={styles.stylAvatar}
           onPress={this.goToChangInfo}>
           <Image
-            source={{ uri: source.uri }}
+            source={source}
             resizeMode={'contain'}
             style={styles.stylAvatar}
           />

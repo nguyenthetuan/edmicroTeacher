@@ -229,7 +229,6 @@ export default class MockExample extends Component {
 
   buttonSkip = async () => {
     const { data, valueTextarea, index } = this.state;
-    console.log('dataaa', data)
     let formData = {};
 
     if (data.data[index].dataMaterial) {
@@ -432,13 +431,22 @@ class WebViewComponent extends Component {
     this._convertData();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.data !== nextProps.data) {
-      this.setState({ dataConvert: nextProps.data.data });
-      return true;
-    } else {
-      return true;
+  shouldComponentUpdate(prevProps, nextState) {
+    if(this.props.dataSideBar != prevProps.dataSideBar
+      || this.props.data != prevProps.data
+      || this.props.index != prevProps.index
+      || this.state.dataConvert != nextState.dataConvert
+      || this.state.heightWebview != nextState.heightWebview
+      ){
+        return true;
     }
+    return false;
+    // if (this.props.data !== nextProps.data) {
+    //   this.setState({ dataConvert: nextProps.data.data });
+    //   return true;
+    // } else {
+    //   return true;
+    // }
   }
 
   _convertData = () => {
@@ -447,27 +455,28 @@ class WebViewComponent extends Component {
   };
 
   render() {
+    console.log("render webview");
     const { handleMessage, dataSideBar, index, token, data } = this.props;
     const { dataConvert } = this.state;
     let dataTemp = dataConvert[index];
     let linkMedia = data.data[index].dataMaterial?.urlMedia;
-    console.log(
-      dataTemp &&
-      MathJaxLibs.renderMockExample(
-        dataTemp, //data
-        'TOAN', //subjectId
-        dataTemp?.numberQuestion, //numberQuestion
-        false, //isBookmark
-        dataTemp?.contentHtml, //contentHtml
-        dataTemp?.content, //question
-        2, //type
-        index,
-        !_.isEmpty(dataTemp?.userOptionId) && dataTemp?.userOptionId, //userAnswer
-        token, //token,
-        dataSideBar,
-        linkMedia,
-      ),
-    );
+    // console.log(
+    //   dataTemp &&
+    //   MathJaxLibs.renderMockExample(
+    //     dataTemp, //data
+    //     'TOAN', //subjectId
+    //     dataTemp?.numberQuestion, //numberQuestion
+    //     false, //isBookmark
+    //     dataTemp?.contentHtml, //contentHtml
+    //     dataTemp?.content, //question
+    //     2, //type
+    //     index,
+    //     !_.isEmpty(dataTemp?.userOptionId) && dataTemp?.userOptionId, //userAnswer
+    //     token, //token,
+    //     dataSideBar,
+    //     linkMedia,
+    //   ),
+    // );
     return dataTemp ? (
       <View
         style={{ height: Platform.OS === 'ios' ? height * 0.82 : height * 0.78 }}>

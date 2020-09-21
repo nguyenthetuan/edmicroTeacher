@@ -32,3 +32,12 @@ export const getSourceAvatar = (userId) => {
         uri: `https://avatar.onluyen.vn/${userId}.jpg`
     }
 }
+
+
+export const delay = (timeout = 350) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, timeout);
+    })
+}

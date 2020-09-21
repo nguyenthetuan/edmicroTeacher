@@ -4,7 +4,7 @@ import ListExercise from './listExercise';
 import Plans from './plans';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
-const {width} = Dimensions.get('window');
+
 const Tab = createMaterialTopTabNavigator(
   {
     ListStudent: {
@@ -27,7 +27,6 @@ const Tab = createMaterialTopTabNavigator(
     },
   },
   {
-    initialRouteName: 'ListStudent',
     swipeEnabled: Platform.OS == 'ios',
     lazy: false,
     tabBarOptions: {
