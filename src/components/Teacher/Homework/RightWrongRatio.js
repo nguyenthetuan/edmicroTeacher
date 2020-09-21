@@ -5,7 +5,7 @@ import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
-  const data = !!props.screenProps.data&&!_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
+  const data = !!props.screenProps.data && !_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
     return a.localeCompare(b);
   }).map(k => props.screenProps?.data?.data?.questionResult[k]) : [];
   let widthChart = width - 60;
@@ -16,13 +16,13 @@ export default function RightWrongRatio(props) {
   return (
     <View style={styles.container}>
       {
-         props.screenProps.isLoading
+        props.screenProps.isLoading
           ? <ActivityIndicator size='small' color='#04C6F1' />
           :
           _.isEmpty(data) ? (
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Image source={require('../../../asserts/icon/iconNodata.png')} />
-              <Text style={{color:'#828282', fontFamily:'Nunito-Regular', marginTop:30}}>Không đủ dữ liệu thống kê</Text>
+              <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
             </View>
           )
             : (<View style={{ flex: 1 }}>
@@ -102,7 +102,7 @@ export default function RightWrongRatio(props) {
                                   fontSize: 10,
                                   color: '#000',
                                   textAlign: 'center'
-                                }}>{e.name}</Text>
+                                }}>{i + 1}</Text>
                             )
                           })
                         }

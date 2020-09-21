@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,15 +12,16 @@ import {
   Platform,
   Keyboard,
   StatusBar,
+  SafeAreaView,
 } from 'react-native';
-import {connect} from 'react-redux';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import { connect } from 'react-redux';
+import Toast, { DURATION } from 'react-native-easy-toast';
 import ImagePickerCrop from 'react-native-image-crop-picker';
 import ImagePickerR from 'react-native-image-picker';
 import jwtDecode from 'jwt-decode';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import HeaderNavigation from '../common/HeaderNavigation';
 import apiHelper from '../../services/apiExamHelper';
+import HeaderNavigation from '../common-new/HeaderNavigation';
 import {
   getListProvince,
   getDistrictes,
@@ -33,17 +34,18 @@ import FormInput from '../common/FormInput';
 import FormSelect from '../common/FormSelectBeta';
 import FormDate from '../common/FormDateDefault';
 import HeaderUserInfo from './HeaderUserInfo';
-import {alertMessage, alertConfirmAvatar} from '../../utils/Alert';
+import { alertMessage, alertConfirmAvatar } from '../../utils/Alert';
 import Button from '../common/Button';
 import LoadingScreen from '../libs/LoadingScreen';
 import ScrollView2Colors from '../common/ScrollView2Colors';
-import {saveAvatarAction} from '../../actions/userAction';
+import { saveAvatarAction } from '../../actions/userAction';
 import _ from 'lodash';
 import AppIcon from '../../utils/AppIcon';
-import {mainStyle} from '../../themes';
+import { mainStyle } from '../../themes';
 import RippleButton from '../common-new/RippleButton';
-import {HEIGHT_TOPBAR} from '../../utils/Common';
+import { HEIGHT_TOPBAR } from '../../utils/Common';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getSourceAvatar } from '../../utils/Helper';
 
 const options = {
   title: 'Chọn Ảnh',
@@ -53,13 +55,9 @@ const options = {
   },
 };
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const isAndroid = Platform.OS === 'android';
 class ChangeInfo extends Component {
-  static navigationOptions = ({navigation}) => ({
-    header: null,
-  });
-
   constructor(props) {
     super(props);
     this.inputRefs = {};
@@ -104,7 +102,7 @@ class ChangeInfo extends Component {
     );
     dataHelper
       .getToken()
-      .then(({token}) => {
+      .then(({ token }) => {
         const {
           Birthday,
           DisplayName,
@@ -175,7 +173,7 @@ class ChangeInfo extends Component {
           label: '',
           value: -1,
         });
-        this.setState({districtes: res, districtesMap: mapDistrictes});
+        this.setState({ districtes: res, districtesMap: mapDistrictes });
       })
       .catch((err) => console.log(err));
   }
@@ -229,7 +227,7 @@ class ChangeInfo extends Component {
             SchoolId,
           )
           .then((res) => {
-            this.setState({isUpdate: false});
+            this.setState({ isUpdate: false });
             if (res.status === 200) {
               dataHelper.saveToken(res.access_token);
               global.updateUserInfo();
@@ -246,7 +244,7 @@ class ChangeInfo extends Component {
             }
           })
           .catch((err) => {
-            this.setState({isUpdate: false});
+            this.setState({ isUpdate: false });
           });
       },
     );
@@ -288,9 +286,9 @@ class ChangeInfo extends Component {
       .catch((err) => console.log(err));
   }
 
-  showDateTimePicker = () => this.setState({isDateTimePickerVisible: true});
+  showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
-  hideDateTimePicker = () => this.setState({isDateTimePickerVisible: false});
+  hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
   handleDatePicked = (d) => {
     let month = d.getMonth() + 1;
@@ -301,7 +299,7 @@ class ChangeInfo extends Component {
     if (date < 10) {
       date = `0${date}`;
     }
-    this.setState({Birthday: d.getFullYear() + '-' + month + '-' + date});
+    this.setState({ Birthday: d.getFullYear() + '-' + month + '-' + date });
     this.hideDateTimePicker();
   };
 
@@ -314,7 +312,7 @@ class ChangeInfo extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        let source = {uri: response.uri};
+        let source = { uri: response.uri };
         let myUri = response.uri;
         Image.getSize(
           myUri,
@@ -337,8 +335,8 @@ class ChangeInfo extends Component {
 
   async cropImageIOS(cropWidth, myUri) {
     let cropData = {
-      offset: {x: 0, y: 0},
-      size: {width: cropWidth, height: cropWidth},
+      offset: { x: 0, y: 0 },
+      size: { width: cropWidth, height: cropWidth },
     };
     ImageEditor.cropImage(
       myUri,
@@ -361,11 +359,11 @@ class ChangeInfo extends Component {
   postImageBase64(b64data) {
     dataHelper
       .getToken()
-      .then(({token}) => {
+      .then(({ token }) => {
         updateAvatar(token, this.state.Email, b64data).then((response) => {
-          const {status} = response;
+          const { status } = response;
           if (status == 200) {
-            const {urlAvatar, status} = response;
+            const { urlAvatar, status } = response;
             dataHelper.saveAvatar(urlAvatar);
             this.props.saveAvatar(urlAvatar);
             this.getAvatar();
@@ -425,11 +423,11 @@ class ChangeInfo extends Component {
     }
   }
   _keyboardDidShow = () => {
-    this.setState({isShowKeybroad: true});
+    this.setState({ isShowKeybroad: true });
   };
 
   _keyboardDidHide = () => {
-    this.setState({isShowKeybroad: false});
+    this.setState({ isShowKeybroad: false });
   };
 
   _backButton = () => {
@@ -442,24 +440,27 @@ class ChangeInfo extends Component {
   };
 
   render() {
-    const {avatarSource} = this.props;
+    const { avatarSource, user } = this.props;
+    const { userId } = user;
+    const source = getSourceAvatar(userId);
     return (
-      <View
-        style={{flex: 1}}
+      <SafeAreaView
+        style={{ flex: 1 }}
         onTouchStart={() => {
           Keyboard.dismiss();
         }}>
         <StatusBar />
         <ScrollView2Colors
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           topBounceColor="#3A608C"
           bottomBounceColor="#FFF">
-          <Image
+          {/* <Header */}
+          {/* <Image
             source={require('../../asserts/images/headerChangInfo.png')}
             resizeMode="contain"
             style={styles.imgChangeinfo}
-          />
-          <View
+          /> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -469,21 +470,26 @@ class ChangeInfo extends Component {
             <RippleButton onPress={this._backButton}>
               <Icon name="arrow-left" color="#FFF" size={25} />
             </RippleButton>
-            <View style={{flex: 0.9}}>
+            <View style={{ flex: 0.9 }}>
               <Text style={mainStyle.headerTextTitle}>Hồ sơ cá nhân</Text>
             </View>
-          </View>
+          </View> */}
+          <HeaderNavigation
+            title={'Hồ sơ cá nhân'}
+            navigation={this.props.navigation}
+            color={'#fff'}
+          />
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{backgroundColor: 'transparent', opacity: 1, width: width}}>
+            style={{ backgroundColor: 'transparent', opacity: 1, width: width }}>
             <View
               style={[
-                {backgroundColor: 'transparent', paddingBottom: 15},
-                Platform.OS === 'ios' && {height: 100},
+                { backgroundColor: 'transparent', paddingBottom: 15 },
+                Platform.OS === 'ios' && { height: 100 },
               ]}>
               {
                 <HeaderUserInfo
-                  avatarSource={avatarSource}
+                  avatarSource={source}
                   onPress={() => this.uploadAvatar()}
                   style={[
                     {
@@ -513,11 +519,11 @@ class ChangeInfo extends Component {
                   marginBottom: 50,
                   marginTop: isAndroid ? -30 : 70,
                 },
-                Platform.isPad && {height: height / 2},
+                Platform.isPad && { height: height / 2 },
               ]}>
               {false && (
                 <TouchableOpacity
-                  style={{alignSelf: 'center', flexDirection: 'row'}}
+                  style={{ alignSelf: 'center', flexDirection: 'row' }}
                   onPress={() => this.uploadAvatar()}>
                   <Image source={require('../../asserts/icon/camera.png')} />
                   <Text style={styles.txtTitle}>Thay đổi ảnh đại diện</Text>
@@ -535,10 +541,10 @@ class ChangeInfo extends Component {
                     label={'Tên'}
                     styleLabel={styles.styleLabel}
                     styleInput={styles.styleInputName}
-                    inputHeight={{height: 40}}
+                    inputHeight={{ height: 40 }}
                     placeholder="Tên hiển thị"
                     value={this.state.DisplayName}
-                    onChangeText={(text) => this.setState({DisplayName: text})}
+                    onChangeText={(text) => this.setState({ DisplayName: text })}
                   />
                   <Image
                     source={require('../../asserts/icon/icChange.png')}
@@ -580,8 +586,9 @@ class ChangeInfo extends Component {
                     styleLabel={styles.styleLabel}
                     styleInput={styles.styleInputName}
                     editable={false}
-                    inputHeight={{height: 40}}
+                    inputHeight={{ height: 40 }}
                     placeholder="Số điện thoại"
+                    onChangeText={() => null}
                     value={this.state.PhoneNumber}
                   />
                   <Image
@@ -631,7 +638,7 @@ class ChangeInfo extends Component {
                   data={this.state.schoolsMap}
                   selectedValue={Number.parseInt(this.state.SchoolId)}
                   onValueChange={(value) => {
-                    this.setState({SchoolId: value}, () =>
+                    this.setState({ SchoolId: value }, () =>
                       this.getListSchools(),
                     );
                   }}
@@ -648,22 +655,24 @@ class ChangeInfo extends Component {
               circle
               center
               vertical={20}
-              styleTitle={{fontSize: 14, color: '#FFFFFF'}}
-              style={{backgroundColor: '#56CCF2'}}
+              styleTitle={{ fontSize: 14, color: '#FFFFFF' }}
+              style={{ backgroundColor: '#56CCF2' }}
             />
           </ScrollView>
-          <DateTimePicker
-            isVisible={this.state.isDateTimePickerVisible}
-            onConfirm={this.handleDatePicked}
-            onCancel={this.hideDateTimePicker}
-          />
+          {this.state.isDateTimePickerVisible &&
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={this.hideDateTimePicker}
+            />
+          }
         </ScrollView2Colors>
         <Toast ref="toast" position={'bottom'} />
         <LoadingScreen
           isLoading={this.state.isUpdate}
           bgColor={'transparent'}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -766,7 +775,6 @@ const styles = StyleSheet.create({
   },
   styleLabel: {
     fontSize: 12,
-    color: '#828282',
     fontFamily: 'Nunito',
     marginStart: 0,
   },
@@ -809,6 +817,7 @@ const pickerSelectStyles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     avatarSource: state.user.AvatarSource,
+    user: state.user
   };
 };
 

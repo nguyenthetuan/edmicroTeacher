@@ -14,7 +14,7 @@ export default class HeaderUserInfo extends Component {
     return (
       <View horizontal={0} vertical={10} style={[styles.wrapContainer, style]} >
         {!_.isEmpty(avatarSource) ?
-          <Image source={{ uri: getAvatarSource(avatarSource) }} style={{ width: 118, height: 118, justifyContent: 'center', alignSelf: 'center', borderRadius: 60, marginBottom: 20 }} resizeMode={'cover'} /> :
+          <Image source={avatarSource} style={{ width: 118, height: 118, justifyContent: 'center', alignSelf: 'center', borderRadius: 60, marginBottom: 20 }} resizeMode={'cover'} /> :
           <Image source={AppIcon.avatar_default} style={{ width: 118, height: 118, justifyContent: 'center', alignSelf: 'center', borderRadius: 60, top: -20 }} resizeMode={'contain'} />
         }
         <View style={{ marginBottom: 20 }}>
@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     zIndex: 10,
     elevation: 10,
-    backgroundColor: 'green',
     flex: 1,
     flexDirection: 'row',
   },

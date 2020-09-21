@@ -490,7 +490,7 @@ export default function StatisticsPoints(props) {
             _.isEmpty(props.data) ?
               null
               : <View style={styles.wrapInfo}>
-                <Text style={styles.txtAssignment}>{props.data?.data.sname || ''}</Text>
+                <Text style={styles.txtAssignment}>{props.data?.data.name || ''}</Text>
                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
                 <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
               </View>
@@ -581,6 +581,7 @@ const styles = StyleSheet.create({
   txtAssignment: {
     color: '#2D9CDB',
     fontSize: 18,
+    marginLeft: 10,
     fontFamily: 'Nunito-Bold',
     marginBottom: 5,
   },
