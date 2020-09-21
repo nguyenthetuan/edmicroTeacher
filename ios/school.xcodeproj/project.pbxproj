@@ -79,6 +79,7 @@
 		00E356EE1AD99517003FC87E /* schoolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = schoolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* schoolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = schoolTests.m; sourceTree = "<group>"; };
+		0351DCAE20FCBA2AA8740782 /* Pods-school.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.debugdev.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.debugdev.xcconfig"; sourceTree = "<group>"; };
 		0DC6E97260B669E863EF9945 /* Pods-school-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* school.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = school.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = school/AppDelegate.h; sourceTree = "<group>"; };
@@ -92,7 +93,10 @@
 		2D02E47B1E0B4A5D006451C7 /* school-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "school-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* school-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "school-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D71CF888CF4493DAAB6D9CB /* Nunito-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-LightItalic.ttf"; path = "../src/asserts/fonts/Nunito-LightItalic.ttf"; sourceTree = "<group>"; };
+		2DD9C0DC0533CF76B4585F4C /* Pods-school-tvOSTests.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.debugprod.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.debugprod.xcconfig"; sourceTree = "<group>"; };
 		2F46F2AB3062C578E7CD35F3 /* Pods-school-schoolTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.debug.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.debug.xcconfig"; sourceTree = "<group>"; };
+		336C1EB994AEF73FDBC55313 /* Pods-school-tvOS.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.releasedev.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.releasedev.xcconfig"; sourceTree = "<group>"; };
+		34E660FD29F91791E13F738A /* Pods-school-tvOSTests.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.releaseprod.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		3809D1BCD44689EC4E6804C8 /* libPods-school-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-school-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		391006C3250F52CF008FF5D5 /* logo_spl@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_spl@3x.png"; sourceTree = "<group>"; };
 		391006C4250F52CF008FF5D5 /* logo_spl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_spl@2x.png"; sourceTree = "<group>"; };
@@ -100,9 +104,14 @@
 		391006C9250F5305008FF5D5 /* school.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = school.png; sourceTree = "<group>"; };
 		41AEE4B047E816FB0D7D051D /* Pods-school-schoolTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.release.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.release.xcconfig"; sourceTree = "<group>"; };
 		4633EF5C04C8331BC5E72173 /* libPods-school-schoolTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-school-schoolTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		46F9DCBF2FCD18DCF477753A /* Pods-school-tvOS.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debugdev.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debugdev.xcconfig"; sourceTree = "<group>"; };
+		489FFE949065EABDFD107716 /* Pods-school-tvOS.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debugprod.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debugprod.xcconfig"; sourceTree = "<group>"; };
 		4C8014327CDAAD4454D90621 /* Pods-school-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.release.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		58CDBDB923E387AD09B86BF0 /* Pods-school-tvOS.releasestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.releasestaging.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.releasestaging.xcconfig"; sourceTree = "<group>"; };
 		6C8E845E363A412596C623E7 /* Nunito-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-BoldItalic.ttf"; path = "../src/asserts/fonts/Nunito-BoldItalic.ttf"; sourceTree = "<group>"; };
 		6C9161A0EEB84489B628E95C /* Nunito-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-ExtraLight.ttf"; path = "../src/asserts/fonts/Nunito-ExtraLight.ttf"; sourceTree = "<group>"; };
+		6D42782500C8E68E3B431EBC /* Pods-school-schoolTests.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.debugstaging.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.debugstaging.xcconfig"; sourceTree = "<group>"; };
+		6E210B68FA47176B7AD9D561 /* Pods-school-schoolTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.releasedev.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.releasedev.xcconfig"; sourceTree = "<group>"; };
 		77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBold.ttf"; path = "../src/asserts/fonts/Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
 		8327978F2FCFA5E94AACFD64 /* Pods-school-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		840D737C25107E270007BEA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -122,20 +131,35 @@
 		848BB3F1250CC7C700511F44 /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
 		848BB3F2250CC7C700511F44 /* MathJax.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MathJax.min.js; sourceTree = "<group>"; };
 		848BB3F3250CC7C700511F44 /* jquery-pull-touch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-pull-touch.js"; sourceTree = "<group>"; };
+		93C385A9D4A05FD69350DA70 /* Pods-school-tvOSTests.releasestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.releasestaging.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.releasestaging.xcconfig"; sourceTree = "<group>"; };
+		93C3D99C7793B4FDFDE7AAD6 /* Pods-school-schoolTests.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.debugprod.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.debugprod.xcconfig"; sourceTree = "<group>"; };
 		942D3ACC67BA47C9A474DD50 /* Nunito-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Light.ttf"; path = "../src/asserts/fonts/Nunito-Light.ttf"; sourceTree = "<group>"; };
+		94906A1A2158B5208AEF56CD /* Pods-school-tvOS.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debugstaging.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debugstaging.xcconfig"; sourceTree = "<group>"; };
 		A1724A78F6B341A0B92206F6 /* Nunito-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Black.ttf"; path = "../src/asserts/fonts/Nunito-Black.ttf"; sourceTree = "<group>"; };
 		A376CC4A417A4AF69E8C769F /* Nunito-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Regular.ttf"; path = "../src/asserts/fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		A7D92785BEFAE491BC14DC94 /* Pods-school-schoolTests.releasestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.releasestaging.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.releasestaging.xcconfig"; sourceTree = "<group>"; };
+		A99685193D2260085A56D67F /* Pods-school-tvOSTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.debugdev.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.debugdev.xcconfig"; sourceTree = "<group>"; };
 		BD241B46BE8C4C21B1E4BB70 /* Nunito-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBoldItalic.ttf"; path = "../src/asserts/fonts/Nunito-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		BD562E68F6EF4F98A5F45FFC /* Nunito-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-BlackItalic.ttf"; path = "../src/asserts/fonts/Nunito-BlackItalic.ttf"; sourceTree = "<group>"; };
+		BE79F557E85870B6F4DA7969 /* Pods-school-schoolTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.debugdev.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.debugdev.xcconfig"; sourceTree = "<group>"; };
+		BF92B838983DF24CBF53DA54 /* Pods-school.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.releaseprod.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.releaseprod.xcconfig"; sourceTree = "<group>"; };
+		C41B4AE0551D752056B0AA0E /* Pods-school.releasestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.releasestaging.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.releasestaging.xcconfig"; sourceTree = "<group>"; };
+		C49D02C51C3D8D30C3E18520 /* Pods-school-tvOSTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.releasedev.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.releasedev.xcconfig"; sourceTree = "<group>"; };
 		CDE6CABFC373A31F55CCE2DB /* Pods-school.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.release.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.release.xcconfig"; sourceTree = "<group>"; };
+		D02498868F94B2D2CDBA1214 /* Pods-school-tvOSTests.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.debugstaging.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.debugstaging.xcconfig"; sourceTree = "<group>"; };
 		D4834A4FFCB54385B09E980F /* Nunito-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-ExtraBoldItalic.ttf"; path = "../src/asserts/fonts/Nunito-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		DF6C0981A6D2F0734B3E2A00 /* Pods-school.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.debugprod.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.debugprod.xcconfig"; sourceTree = "<group>"; };
 		E22F65FD27E950E57205AA57 /* libPods-school.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-school.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E414E2BD7691FF293E51059B /* Pods-school-tvOS.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.releaseprod.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.releaseprod.xcconfig"; sourceTree = "<group>"; };
+		E53A36FC859F92A8CD303F2C /* Pods-school-schoolTests.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.releaseprod.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EE492C375B4E48AAA100B0BF /* Nunito-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-ExtraLightItalic.ttf"; path = "../src/asserts/fonts/Nunito-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		F1170B02AE371CDCE5D993C5 /* Pods-school-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F71FD95C015843B5A3D317CB /* Nunito-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Bold.ttf"; path = "../src/asserts/fonts/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		F91D1A09FFB54546A2588693 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-ExtraBold.ttf"; path = "../src/asserts/fonts/Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
+		FC7C637561DF8655A8A71C48 /* Pods-school.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.releasedev.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.releasedev.xcconfig"; sourceTree = "<group>"; };
+		FD03C8F7DDC533CCB728E180 /* Pods-school.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.debugstaging.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.debugstaging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +266,30 @@
 				4C8014327CDAAD4454D90621 /* Pods-school-tvOS.release.xcconfig */,
 				F1170B02AE371CDCE5D993C5 /* Pods-school-tvOSTests.debug.xcconfig */,
 				0DC6E97260B669E863EF9945 /* Pods-school-tvOSTests.release.xcconfig */,
+				0351DCAE20FCBA2AA8740782 /* Pods-school.debugdev.xcconfig */,
+				DF6C0981A6D2F0734B3E2A00 /* Pods-school.debugprod.xcconfig */,
+				FD03C8F7DDC533CCB728E180 /* Pods-school.debugstaging.xcconfig */,
+				FC7C637561DF8655A8A71C48 /* Pods-school.releasedev.xcconfig */,
+				BF92B838983DF24CBF53DA54 /* Pods-school.releaseprod.xcconfig */,
+				C41B4AE0551D752056B0AA0E /* Pods-school.releasestaging.xcconfig */,
+				BE79F557E85870B6F4DA7969 /* Pods-school-schoolTests.debugdev.xcconfig */,
+				93C3D99C7793B4FDFDE7AAD6 /* Pods-school-schoolTests.debugprod.xcconfig */,
+				6D42782500C8E68E3B431EBC /* Pods-school-schoolTests.debugstaging.xcconfig */,
+				6E210B68FA47176B7AD9D561 /* Pods-school-schoolTests.releasedev.xcconfig */,
+				E53A36FC859F92A8CD303F2C /* Pods-school-schoolTests.releaseprod.xcconfig */,
+				A7D92785BEFAE491BC14DC94 /* Pods-school-schoolTests.releasestaging.xcconfig */,
+				46F9DCBF2FCD18DCF477753A /* Pods-school-tvOS.debugdev.xcconfig */,
+				489FFE949065EABDFD107716 /* Pods-school-tvOS.debugprod.xcconfig */,
+				94906A1A2158B5208AEF56CD /* Pods-school-tvOS.debugstaging.xcconfig */,
+				336C1EB994AEF73FDBC55313 /* Pods-school-tvOS.releasedev.xcconfig */,
+				E414E2BD7691FF293E51059B /* Pods-school-tvOS.releaseprod.xcconfig */,
+				58CDBDB923E387AD09B86BF0 /* Pods-school-tvOS.releasestaging.xcconfig */,
+				A99685193D2260085A56D67F /* Pods-school-tvOSTests.debugdev.xcconfig */,
+				2DD9C0DC0533CF76B4585F4C /* Pods-school-tvOSTests.debugprod.xcconfig */,
+				D02498868F94B2D2CDBA1214 /* Pods-school-tvOSTests.debugstaging.xcconfig */,
+				C49D02C51C3D8D30C3E18520 /* Pods-school-tvOSTests.releasedev.xcconfig */,
+				34E660FD29F91791E13F738A /* Pods-school-tvOSTests.releaseprod.xcconfig */,
+				93C385A9D4A05FD69350DA70 /* Pods-school-tvOSTests.releasestaging.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -963,9 +1011,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		00E356F61AD99517003FC87E /* Debug */ = {
+		00E356F61AD99517003FC87E /* DebugDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F46F2AB3062C578E7CD35F3 /* Pods-school-schoolTests.debug.xcconfig */;
+			baseConfigurationReference = BE79F557E85870B6F4DA7969 /* Pods-school-schoolTests.debugdev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
@@ -985,11 +1033,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
 			};
-			name = Debug;
+			name = DebugDev;
 		};
-		00E356F71AD99517003FC87E /* Release */ = {
+		00E356F71AD99517003FC87E /* ReleaseDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41AEE4B047E816FB0D7D051D /* Pods-school-schoolTests.release.xcconfig */;
+			baseConfigurationReference = 6E210B68FA47176B7AD9D561 /* Pods-school-schoolTests.releasedev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1006,11 +1054,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
 			};
-			name = Release;
+			name = ReleaseDev;
 		};
-		13B07F941A680F5B00A75B9A /* Debug */ = {
+		13B07F941A680F5B00A75B9A /* DebugDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1578D312D3DB04F6845C6800 /* Pods-school.debug.xcconfig */;
+			baseConfigurationReference = 0351DCAE20FCBA2AA8740782 /* Pods-school.debugdev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1030,16 +1078,16 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = school;
+				PRODUCT_NAME = "School-Dev";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = Debug;
+			name = DebugDev;
 		};
-		13B07F951A680F5B00A75B9A /* Release */ = {
+		13B07F951A680F5B00A75B9A /* ReleaseDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDE6CABFC373A31F55CCE2DB /* Pods-school.release.xcconfig */;
+			baseConfigurationReference = FC7C637561DF8655A8A71C48 /* Pods-school.releasedev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1054,15 +1102,15 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = school;
+				PRODUCT_NAME = "School-Dev";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = Release;
+			name = ReleaseDev;
 		};
-		2D02E4971E0B4A5E006451C7 /* Debug */ = {
+		2D02E4971E0B4A5E006451C7 /* DebugDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8327978F2FCFA5E94AACFD64 /* Pods-school-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 46F9DCBF2FCD18DCF477753A /* Pods-school-tvOS.debugdev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1086,11 +1134,11 @@
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
-			name = Debug;
+			name = DebugDev;
 		};
-		2D02E4981E0B4A5E006451C7 /* Release */ = {
+		2D02E4981E0B4A5E006451C7 /* ReleaseDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C8014327CDAAD4454D90621 /* Pods-school-tvOS.release.xcconfig */;
+			baseConfigurationReference = 336C1EB994AEF73FDBC55313 /* Pods-school-tvOS.releasedev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1114,11 +1162,11 @@
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
-			name = Release;
+			name = ReleaseDev;
 		};
-		2D02E4991E0B4A5E006451C7 /* Debug */ = {
+		2D02E4991E0B4A5E006451C7 /* DebugDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1170B02AE371CDCE5D993C5 /* Pods-school-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = A99685193D2260085A56D67F /* Pods-school-tvOSTests.debugdev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1141,11 +1189,11 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
-			name = Debug;
+			name = DebugDev;
 		};
-		2D02E49A1E0B4A5E006451C7 /* Release */ = {
+		2D02E49A1E0B4A5E006451C7 /* ReleaseDev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0DC6E97260B669E863EF9945 /* Pods-school-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = C49D02C51C3D8D30C3E18520 /* Pods-school-tvOSTests.releasedev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1168,9 +1216,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
-			name = Release;
+			name = ReleaseDev;
 		};
-		83CBBA201A601CBA00E9B192 /* Debug */ = {
+		83CBBA201A601CBA00E9B192 /* DebugDev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1228,9 +1276,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
-			name = Debug;
+			name = DebugDev;
 		};
-		83CBBA211A601CBA00E9B192 /* Release */ = {
+		83CBBA211A601CBA00E9B192 /* ReleaseDev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1281,7 +1329,647 @@
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = ReleaseDev;
+		};
+		84AACACA25185026002AFD00 /* DebugStaging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = DebugStaging;
+		};
+		84AACACB25185026002AFD00 /* DebugStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD03C8F7DDC533CCB728E180 /* Pods-school.debugstaging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
+				INFOPLIST_FILE = school/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
+				PRODUCT_NAME = "School-Staging";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = DebugStaging;
+		};
+		84AACACC25185026002AFD00 /* DebugStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D42782500C8E68E3B431EBC /* Pods-school-schoolTests.debugstaging.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = schoolTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
+			};
+			name = DebugStaging;
+		};
+		84AACACD25185026002AFD00 /* DebugStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94906A1A2158B5208AEF56CD /* Pods-school-tvOS.debugstaging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = DebugStaging;
+		};
+		84AACACE25185026002AFD00 /* DebugStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D02498868F94B2D2CDBA1214 /* Pods-school-tvOSTests.debugstaging.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = DebugStaging;
+		};
+		84AACACF2518503C002AFD00 /* ReleaseStaging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = ReleaseStaging;
+		};
+		84AACAD02518503C002AFD00 /* ReleaseStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C41B4AE0551D752056B0AA0E /* Pods-school.releasestaging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				INFOPLIST_FILE = school/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
+				PRODUCT_NAME = "School-Staging";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = ReleaseStaging;
+		};
+		84AACAD12518503C002AFD00 /* ReleaseStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7D92785BEFAE491BC14DC94 /* Pods-school-schoolTests.releasestaging.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				INFOPLIST_FILE = schoolTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
+			};
+			name = ReleaseStaging;
+		};
+		84AACAD22518503C002AFD00 /* ReleaseStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 58CDBDB923E387AD09B86BF0 /* Pods-school-tvOS.releasestaging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = ReleaseStaging;
+		};
+		84AACAD32518503C002AFD00 /* ReleaseStaging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 93C385A9D4A05FD69350DA70 /* Pods-school-tvOSTests.releasestaging.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = ReleaseStaging;
+		};
+		84AACAD425185048002AFD00 /* DebugProd */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = DebugProd;
+		};
+		84AACAD525185048002AFD00 /* DebugProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF6C0981A6D2F0734B3E2A00 /* Pods-school.debugprod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
+				INFOPLIST_FILE = school/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
+				PRODUCT_NAME = "School-Prod";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = DebugProd;
+		};
+		84AACAD625185048002AFD00 /* DebugProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 93C3D99C7793B4FDFDE7AAD6 /* Pods-school-schoolTests.debugprod.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = schoolTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
+			};
+			name = DebugProd;
+		};
+		84AACAD725185048002AFD00 /* DebugProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 489FFE949065EABDFD107716 /* Pods-school-tvOS.debugprod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = DebugProd;
+		};
+		84AACAD825185048002AFD00 /* DebugProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DD9C0DC0533CF76B4585F4C /* Pods-school-tvOSTests.debugprod.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = DebugProd;
+		};
+		84AACAD925185052002AFD00 /* ReleaseProd */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = ReleaseProd;
+		};
+		84AACADA25185052002AFD00 /* ReleaseProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF92B838983DF24CBF53DA54 /* Pods-school.releaseprod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				INFOPLIST_FILE = school/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
+				PRODUCT_NAME = "Trường học";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = ReleaseProd;
+		};
+		84AACADB25185052002AFD00 /* ReleaseProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E53A36FC859F92A8CD303F2C /* Pods-school-schoolTests.releaseprod.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				INFOPLIST_FILE = schoolTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
+			};
+			name = ReleaseProd;
+		};
+		84AACADC25185052002AFD00 /* ReleaseProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E414E2BD7691FF293E51059B /* Pods-school-tvOS.releaseprod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = ReleaseProd;
+		};
+		84AACADD25185052002AFD00 /* ReleaseProd */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34E660FD29F91791E13F738A /* Pods-school-tvOSTests.releaseprod.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "school-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.school-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = ReleaseProd;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1289,47 +1977,67 @@
 		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "schoolTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E356F61AD99517003FC87E /* Debug */,
-				00E356F71AD99517003FC87E /* Release */,
+				00E356F61AD99517003FC87E /* DebugDev */,
+				84AACAD625185048002AFD00 /* DebugProd */,
+				84AACACC25185026002AFD00 /* DebugStaging */,
+				00E356F71AD99517003FC87E /* ReleaseDev */,
+				84AACADB25185052002AFD00 /* ReleaseProd */,
+				84AACAD12518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = ReleaseDev;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "school" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				13B07F941A680F5B00A75B9A /* Debug */,
-				13B07F951A680F5B00A75B9A /* Release */,
+				13B07F941A680F5B00A75B9A /* DebugDev */,
+				84AACAD525185048002AFD00 /* DebugProd */,
+				84AACACB25185026002AFD00 /* DebugStaging */,
+				13B07F951A680F5B00A75B9A /* ReleaseDev */,
+				84AACADA25185052002AFD00 /* ReleaseProd */,
+				84AACAD02518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = ReleaseDev;
 		};
 		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "school-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2D02E4971E0B4A5E006451C7 /* Debug */,
-				2D02E4981E0B4A5E006451C7 /* Release */,
+				2D02E4971E0B4A5E006451C7 /* DebugDev */,
+				84AACAD725185048002AFD00 /* DebugProd */,
+				84AACACD25185026002AFD00 /* DebugStaging */,
+				2D02E4981E0B4A5E006451C7 /* ReleaseDev */,
+				84AACADC25185052002AFD00 /* ReleaseProd */,
+				84AACAD22518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = ReleaseDev;
 		};
 		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "school-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2D02E4991E0B4A5E006451C7 /* Debug */,
-				2D02E49A1E0B4A5E006451C7 /* Release */,
+				2D02E4991E0B4A5E006451C7 /* DebugDev */,
+				84AACAD825185048002AFD00 /* DebugProd */,
+				84AACACE25185026002AFD00 /* DebugStaging */,
+				2D02E49A1E0B4A5E006451C7 /* ReleaseDev */,
+				84AACADD25185052002AFD00 /* ReleaseProd */,
+				84AACAD32518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = ReleaseDev;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "school" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				83CBBA201A601CBA00E9B192 /* Debug */,
-				83CBBA211A601CBA00E9B192 /* Release */,
+				83CBBA201A601CBA00E9B192 /* DebugDev */,
+				84AACAD425185048002AFD00 /* DebugProd */,
+				84AACACA25185026002AFD00 /* DebugStaging */,
+				83CBBA211A601CBA00E9B192 /* ReleaseDev */,
+				84AACAD925185052002AFD00 /* ReleaseProd */,
+				84AACACF2518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = ReleaseDev;
 		};
 /* End XCConfigurationList section */
 	};
