@@ -1,11 +1,3 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-17 11:34:31
- * @modify date 2018-04-17 11:34:31
- * @desc [description]
-*/
-
 export const DISPLAY_PACKAGE_MODAL_ACTION = 'DISPLAY_PACKAGE_MODAL_ACTION';
 export const DISPLAY_INPUT_PHONE_ACTION = 'DISPLAY_INPUT_PHONE_ACTION';
 export const DISPLAY_WARNING_MODAL_ACTION = 'DISPLAY_WARNING_MODAL_ACTION';

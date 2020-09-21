@@ -1,11 +1,3 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-17 04:32:24
- * @modify date 2018-04-17 04:32:24
- * @desc [description]
-*/
-
 export const EXIT_APP_MSG = 'Bạn có muốn thoát ứng dụng không ?';
 export const PACKAGE_UPGRADE_ONE = 'Không giới hạn số lượng bài tập tự luyện, bài giảng video, bài giảng kiến thức';
 export const PACKAGE_UPGRADE_TWO = 'Không giới hạn số lượng bài kiểm tra , đề thi thử';
