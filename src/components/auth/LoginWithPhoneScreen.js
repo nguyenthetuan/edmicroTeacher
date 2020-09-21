@@ -7,6 +7,7 @@ import jwtDecode from 'jwt-decode';
 import { DotIndicator } from 'react-native-indicators';
 import SplashScreen from 'react-native-splash-screen';
 import Toast, { DURATION } from 'react-native-easy-toast';
+import Config from 'react-native-config';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -29,7 +30,6 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { authenRedirect } from '../../utils/AuthCommon';
 import { LOGIN_TYPE } from '../../utils/AuthCommon';
-import { API_TYPE } from '../../constants/const';
 import { AuthConfig } from './AuthConfig';
 import FreshchatComponent from '../../utils/FreshchatComponent';
 
@@ -80,13 +80,9 @@ class LoginWithPhoneScreen extends Component {
         this.setState({ RememberMe: true })
       }
     });
-    const webClientId = API_TYPE == 3 ?
-      '826468171337-oga35t90f5h5ela2gd10ivr7nmci8kgi.apps.googleusercontent.com'
-      :
-      '826468171337-f4at6ish835lciqds5ls1kc7pe61pscr.apps.googleusercontent.com';
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: webClientId,
+      webClientId: Config.WEB_CLIENT_ID,
       // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       hostedDomain: '', // specifies a hosted domain restriction

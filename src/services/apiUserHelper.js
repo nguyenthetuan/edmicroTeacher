@@ -1,5 +1,5 @@
 import { API_BASE, API_BASE_OAUTH, API_PROVIDER } from '../constants/setting';
-import { TEST_IN_APP_PURCHASE } from '../constants/const';
+import Config from 'react-native-config';
 
 const getHeaders = (token) => (
   {
@@ -428,7 +428,7 @@ const getPackageInfo = async ({ token, packageCode }) => {
 const iap = async (payload) => {
   const { token, receiptData } = payload;
 
-  if (TEST_IN_APP_PURCHASE) {
+  if (Config.TEST_IN_APP_PURCHASE) {
     return {
       status: 1,
       message: 'Thêm gói dev thành công'

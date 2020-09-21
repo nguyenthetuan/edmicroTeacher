@@ -1,4 +1,5 @@
 import { ToastAndroid, Dimensions, Alert, Platform } from 'react-native';
+import Config from 'react-native-config';
 import iconMath from '../asserts/appIcon/icon_math.png';
 import iconPhy from '../asserts/appIcon/iconPhy.png';
 import iconChem from '../asserts/appIcon/ic_chemistry_x60.png';
@@ -30,7 +31,6 @@ import icon_ComStep_sinh_hoc from '../asserts/icon/icon_ComStep_sinh_hoc.png';
 import icon_ComStep_vat_li from '../asserts/icon/icon_ComStep_vat_li.png';
 import icon_ComSteplich_su from '../asserts/icon/icon_ComSteplich_su.png';
 import icon_ComStepToan from '../asserts/icon/icon_ComStepToan.png';
-import { HIDDEN_PACKAGE } from '../constants/const';
 
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import Color from '../constants/colors';
@@ -614,7 +614,7 @@ const randomContent = () => {
  * HIDDEN_PACKAGE false when production
  */
 const isAcessUser = (isAcess) => {
-  if (HIDDEN_PACKAGE || Platform.OS == 'android') {
+  if (Config.HIDDEN_PACKAGE || Platform.OS == 'android') {
     return true;
   }
   return isAcess;

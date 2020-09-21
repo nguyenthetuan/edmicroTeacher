@@ -1,13 +1,4 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-17 04:20:50
- * @modify date 2018-04-17 04:20:50
- * @desc [description]
-*/
-
 import { Dimensions, Platform } from 'react-native';
-
 export const INPUT_PHONE = 'INPUT_PHONE';
 export const RESULT_UPGRADE = 'RESULT_UPGRADE';
 export const STICKEY_HEIGHT = 80;
@@ -28,33 +19,8 @@ export const DATA_YEAR = [
     { name: '2019-2020', year: '2019' },
     { name: '2018-2019', year: '2018' },
 ]
-/**
- * false Production
- */
-export const HIDDEN_PACKAGE = false;
-
-/**
- * false Production
- */
-export const TEST_IN_APP_PURCHASE = false;
 
 /**
  * Need change when upload store
  */
 export const APP_VERSION = Platform.OS == 'ios' ? '1.0' : '1.3';
-
-/**
- * 0 Production
- * 1 Alpha
- * 2 Staging
- * 3 Develop
- */
-export const API_TYPE = 3;
-
-
-/**
- * Add react-native-chart-kit
- */
-
-
-
