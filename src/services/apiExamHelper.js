@@ -10,9 +10,8 @@ const getHeaders = (token) => ({
   }
 });
 
-const register = (email, passWord, displayName, rememberMe, type) => (
-
-  fetch(API_BASE_OAUTH + 'account/register',
+const register = async (email, passWord, displayName, rememberMe, type) => {
+  let response = await fetch(API_BASE_OAUTH + 'account/register',
     {
       method: 'POST',
       headers: {
@@ -21,9 +20,11 @@ const register = (email, passWord, displayName, rememberMe, type) => (
         'Referer': 'https://m.k12.onluyen.vn'
       },
       body: JSON.stringify({ email, passWord, displayName, rememberMe, type })
-    })
-    .then(res => res.json())
-);
+    });
+  let responseJson = await response.json();
+  return responseJson;
+}
+
 
 const signin = async (email, passWord, RememberMe, socialType, socialId, socialToken) => {
   let response = await fetch(API_BASE_OAUTH + 'account/login',
@@ -74,6 +75,7 @@ const testQuestionsDetail = (token, testId, stepId) => (
     getHeaders(token))
     .then((response) => response.json())
 );
+
 const testInfo = (token, testId) => (
   fetch(API_BASE + 'tests/info/' + testId,
     getHeaders(token))

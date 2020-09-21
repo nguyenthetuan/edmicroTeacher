@@ -8,6 +8,7 @@ const getListClass = async ({token}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getInfoClass = async ({token, classId}) => {
   let response = await fetch(
     `${API_BASE}school-online/class/config/${classId}`,
@@ -19,6 +20,7 @@ const getInfoClass = async ({token, classId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getListExercise = async ({token, classId}) => {
   let response = await fetch(
     `${API_BASE}school-online/assignment/assign/class/${classId}/0`,
@@ -30,6 +32,7 @@ const getListExercise = async ({token, classId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getClassReport = async ({token, classID, idStudent}) => {
   let response = await fetch(
     `${API_BASE}school-online/report/class-report/${classID}/undefined/undefined/${idStudent}`,
@@ -41,6 +44,7 @@ const getClassReport = async ({token, classID, idStudent}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getMastery = async ({token, classID}) => {
   let response = await fetch(
     `${API_BASE}school-online/mastery/mastery-class/${classID}`,
@@ -52,6 +56,7 @@ const getMastery = async ({token, classID}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getListClassAssigment = async ({token, assignmentId}) => {
   let response = await fetch(
     `${API_BASE}school-online/assignment/assign/${assignmentId}`,
@@ -85,6 +90,7 @@ const getListPlan = async ({token, classId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const putPlan = async ({token, formData}) => {
   let response = await fetch(
     `${API_BASE}school-online/class/config/study-planning`,
@@ -108,6 +114,7 @@ const getConfigMockExample = async ({token, assignmentId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getMockExample = async ({token, assignmentId}) => {
   let response = await fetch(
     `${API_BASE}school-online/check-assign/question/${assignmentId}`,
@@ -119,6 +126,7 @@ const getMockExample = async ({token, assignmentId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getDatailQuestionMockExam = async ({token,assignmentId,questionId})=>{
   let response = await fetch(
     `${API_BASE}school-online/check-assign/question/${assignmentId}/${questionId}`,
@@ -130,6 +138,7 @@ const getDatailQuestionMockExam = async ({token,assignmentId,questionId})=>{
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getExam = async ({token, assignmentId}) => {
   let response = await fetch(
     `${API_BASE}school-online/check-assign/doing/${assignmentId}`,
@@ -149,6 +158,7 @@ const reviewlater = async ({token, id}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const putMockExam = async ({token, formData}) => {
   let response = await fetch(
     `${API_BASE}school-online/check-assign/question/send-answer`,
@@ -161,6 +171,7 @@ const putMockExam = async ({token, formData}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getInforMockExam = async ({token, assignmentId}) => {
   let response = await fetch(
     `${API_BASE}school-online/check-assign/info/${assignmentId}`,
@@ -172,6 +183,7 @@ const getInforMockExam = async ({token, assignmentId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const getMockResult = async ({token, assignmentId}) => {
   let response = await fetch(
     `${API_BASE}school-online/check-assign/detail/${assignmentId}`,
@@ -183,6 +195,7 @@ const getMockResult = async ({token, assignmentId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+
 const submitMockExam = async ({token, assignmentId}) => {
   let response = await fetch(
     `${API_BASE}school-online/check-assign/submit/${assignmentId}`,

@@ -1,11 +1,3 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-23 10:51:19
- * @modify date 2018-04-23 10:51:19
- * @desc [description]
-*/
-
 import * as Types from '../constants/type';
 
 export const fetchListProcessAction = (payload) => ({ type: Types.FETCH_LIST_PROCESS_ACTION, payload });

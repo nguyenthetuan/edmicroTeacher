@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
 import AuthLoading from '../../components/auth/AuthLoading';
-import { navigationRootAppAction, navigationGoAuthAction } from '../../actions/navigationAction';
-import { fetchListSubjectStartAction } from '../../actions/practiceAction';
 
 const mapStateToProps = state => {
     return {
@@ -10,15 +8,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        gotoRootApp: (payload) => {
-            dispatch(navigationRootAppAction(payload));
-        },
-        goBackAuth: () => {
-            dispatch(navigationGoAuthAction(payload));
-        },
-        makeRequestListSubject: (payload) => {
-            dispatch(fetchListSubjectStartAction(payload));
-        },
     }
 }
 

@@ -1,11 +1,3 @@
-/**
- * @author [DevSon]
- * @email [bienson72@mail.com]
- * @create date 2018-04-17 04:22:46
- * @modify date 2018-04-17 04:22:46
- * @desc [description]
-*/
-
 import * as Types from '../constants/type';
 
 export const displayPackageModalAction = (visible) => ({ type: Types.DISPLAY_PACKAGE_MODAL_ACTION, visible: visible });
