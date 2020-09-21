@@ -45,6 +45,7 @@ export default class listClass extends Component {
         data={data}
         initialNumToRender={3}
         keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={this.renderItem}
         removeClippedSubviews={false}
         ListEmptyComponent={() => (

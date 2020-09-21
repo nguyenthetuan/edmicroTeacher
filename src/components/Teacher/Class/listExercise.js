@@ -6,7 +6,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Text,
-  TouchableOpacity,
+  Image,
 } from 'react-native';
 import ItemExercise from './itemExercise';
 import RippleItem from '../../common-new/RippleItem';
@@ -82,6 +82,7 @@ export default class ListExercise extends Component {
             initialNumToRender={8}
             ListEmptyComponent={() => (
               <View style={styles.viewNotFound}>
+                <Image source={require('../../../asserts/icon/iconNodata.png')} />
                 <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
               </View>
             )}
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
     fontSize: 14,
-    color: '#000',
+    color:'#828282',
+    marginTop:16
   },
 });

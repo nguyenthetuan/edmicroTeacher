@@ -80,8 +80,12 @@ export default class listStudent extends Component {
           renderItem={this.renderItem}
           initialNumToRender={8}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => <View style={styles.viewNotFound}><Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
-          </View>}
+          ListEmptyComponent={() => (
+            <View style={styles.viewNotFound}>
+              <Image source={require('../../../asserts/icon/iconNodata.png')} />
+              <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+            </View>
+          )}
         />
           : <ActivityIndicator animating size={'small'} style={{ flex: 1 }} color='#56CCF2' />}
       </View>
@@ -103,6 +107,7 @@ const styles = StyleSheet.create({
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
     fontSize: 14,
-    color: '#000'
+    color:'#828282',
+    marginTop:16
   }
 })

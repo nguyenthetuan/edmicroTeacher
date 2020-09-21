@@ -34,6 +34,7 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import SwitchButton from '../../../components/common/ButtonSwitch';
 import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import HTML from "react-native-render-html";
+import html from '../../../utils/ModalMatarial'
 
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -282,6 +283,7 @@ class ConfigQuestion extends Component {
     );
   };
   activeSubject = (item) => {
+    console.log('item', item)
     const { subjectCode, listSubjects } = this.state;
     let subjectCodeTmp = subjectCode;
     let listSubjectsTmp = listSubjects.map((e) => {
@@ -1049,14 +1051,19 @@ class ConfigQuestion extends Component {
                   {isLoadingModal ?
                     <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
                     :
-                    <ScrollView style={{ height: 200 }}>
-                      <HTML
-                        html={htmlContent}
-                        imagesMaxWidth={Dimensions.get('window').width}
-                        containerStyle={{ paddingHorizontal: 16, marginVertical: 20 }}
-                        baseFontStyle={{ fontSize: 12 }}
-                      />
-                    </ScrollView>
+                    <WebView
+                    ref={(ref) => (this.webview = ref)}
+                    source={{
+                      html: html.renderMatarialDetail(htmlContent),
+                      baseUrl,
+                    }}
+                    subjectId={'TOAN'}
+                    originWhitelist={['file://']}
+                    scalesPageToFit={false}
+                    javaScriptEnabled
+                    showsVerticalScrollIndicator={false}
+                    startInLoadingState={false}
+                  />
                   }
                 </View>
               </TouchableWithoutFeedback>
@@ -1085,11 +1092,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16
   },
   bodyModal: {
-    alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 5,
     height: 500,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10
   },
   container: {
     flex: 1,

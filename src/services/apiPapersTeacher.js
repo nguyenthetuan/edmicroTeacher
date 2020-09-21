@@ -289,8 +289,6 @@ const publicedScore = async ({ token, formData }) => {
 }
 
 const getMatarialDetail = async ({token,idMatarial}) => {
-  console.log('token',token)
-  console.log('idMatarial',idMatarial)
   let response = await fetch(`${API_BASE}school-online/library/material/detail/${idMatarial}/0`, {
     method: 'GET',
     headers: getHeaders(token)

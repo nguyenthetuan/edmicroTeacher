@@ -178,7 +178,7 @@ export default class ModalCurriculum extends Component {
     console.log('fliter', fliter);
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 1}}>
+        <TouchableOpacity style={{flex: 1}} onPress={() => this.setState({visible: true})}>
           <Text style={styles.txtTitle}>{title}</Text>
           <View style={styles.wrapModal}>
             {!_.isEmpty(selectItem) && selectItem.name ? (
@@ -195,7 +195,7 @@ export default class ModalCurriculum extends Component {
             ) : (
               <View />
             )}
-            <TouchableOpacity onPress={() => this.setState({visible: true})}>
+            <TouchableOpacity >
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -262,7 +262,7 @@ export default class ModalCurriculum extends Component {
               </View>
             </TouchableWithoutFeedback>
           </Modal>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -31,7 +31,7 @@ import PaginationUtils from '../../../utils/PaginationUtils';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { AlertNoti } from '../../../utils/Common';
 import HTML from "react-native-render-html";
-
+import html from '../../../utils/ModalMatarial'
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
   'Thêm câu hỏi không thành công. Bạn vui lòng chọn câu hỏi khác.';
@@ -138,6 +138,7 @@ class QuestionLibrary extends Component {
     if (token) {
       try {
         const response = await apiPapers.getUser({ token });
+        console.log('rexxx', response)
         this.setState(
           {
             subject: response && response,
@@ -172,7 +173,7 @@ class QuestionLibrary extends Component {
             element: response && response,
             objectSearch: {
               ...objectSearch,
-              curriculumCode: response && response[0].id,
+              // curriculumCode: response && response[0].id,
             },
             isLoading: false,
           },
@@ -300,16 +301,26 @@ class QuestionLibrary extends Component {
         if (isAllowRerennder) {
           this.setState({
             questions: !!response && response,
-            isLoading: false,
             totalQuestion,
             isAllowRerennder: !this.state.isAllowRerennder,
+          }, () => {
+            setTimeout(() => {
+              this.setState({
+                isLoading: false,
+              })
+            },5000)
           });
           return;
         }
         this.setState({
           questions: !!response && response,
-          isLoading: false,
           totalQuestion,
+        },()=>{
+          setTimeout(()=>{
+            this.setState({
+              isLoading: false,
+            })
+          },5000)
         });
       }
     } catch (error) { }
@@ -386,7 +397,7 @@ class QuestionLibrary extends Component {
                   this.props.navigation.navigate('ConfigQuestion', {
                     nagigation: this.props.nagigation,
                     statusbar: 'light-content',
-                    curriculumCode:this.state.objectSearch.curriculumCode,
+                    curriculumCode: this.state.objectSearch.curriculumCode,
                   });
                 } else {
                   AlertNoti(messageNoQuestion);
@@ -522,24 +533,29 @@ class QuestionLibrary extends Component {
           >
             <View style={styles.containerModal}>
               <TouchableWithoutFeedback>
-                <View style={[styles.bodyModal]}>
-                    <TouchableOpacity
-                      style={{ alignSelf: 'flex-end', marginRight: 10, marginTop: 10, position: 'absolute', right: 0, top: 0 ,zIndex:2}}
-                      onPress={() => this.setState({ isModal: false })}>
-                      <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
-                    </TouchableOpacity>
-                    {isLoadingModal ?
-                      <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
-                      :
-                      <ScrollView style={{height:200}}>
-                        <HTML
-                          html={htmlContent}
-                          imagesMaxWidth={Dimensions.get('window').width}
-                          containerStyle={{ paddingHorizontal: 16, marginVertical: 20 }}
-                          baseFontStyle={{fontSize:12}}
-                        />
-                      </ScrollView>
-                    }
+                <View style={styles.bodyModal}>
+                  <TouchableOpacity
+                    style={styles.btnClose}
+                    onPress={() => this.setState({ isModal: false })}>
+                    <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
+                  </TouchableOpacity>
+                  {isLoadingModal ?
+                    <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
+                    :
+                    <WebView
+                      ref={(ref) => (this.webview = ref)}
+                      source={{
+                        html: html.renderMatarialDetail(htmlContent),
+                        baseUrl,
+                      }}
+                      subjectId={'TOAN'}
+                      originWhitelist={['file://']}
+                      scalesPageToFit={false}
+                      javaScriptEnabled
+                      showsVerticalScrollIndicator={false}
+                      startInLoadingState={false}
+                    />
+                  }
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -598,6 +614,15 @@ class WebViewComponent extends Component {
   }
 }
 const styles = StyleSheet.create({
+  btnClose: {
+    alignSelf: 'flex-end',
+    marginRight: 10,
+    marginTop: 10,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 2
+  },
   container: {
     flex: 1,
     backgroundColor: '#56CCF2',
@@ -673,11 +698,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16
   },
   bodyModal: {
-    alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 5,
     height: 500,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10
   }
 });
 const mapStateToProps = (state) => {
