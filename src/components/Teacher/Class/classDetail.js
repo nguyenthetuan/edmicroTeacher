@@ -18,6 +18,7 @@ import TabTop from './TopNavigationClass';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { SafeAreaView } from 'react-navigation';
 import { getSourceAvatar } from '../../../utils/Helper';
+import FastImage from 'react-native-fast-image';
 
 class ClassDetail extends Component {
   constructor(props) {
@@ -53,13 +54,13 @@ class ClassDetail extends Component {
         />
         {
           <View style={styles.body}>
-            <View style={{ alignItems: 'center' }}>
-              <Image
+            {/* <View style={{ alignItems: 'center' }}>
+              <FastImage
                 source={require('../../../asserts/images/detailClass.png')}
                 style={styles.image}
-                resizeMode="contain"
+                resizeMode={FastImage.resizeMode.contain}
               />
-            </View>
+            </View> */}
             <TabTop
               screenProps={{
                 navigation: navigation,

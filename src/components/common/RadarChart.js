@@ -1,6 +1,6 @@
 import React from "react";
 import { VictoryChart, VictoryTheme, VictoryPolarAxis, VictoryArea, VictoryGroup, VictoryLabel } from "victory-native";
-import { View, Text, StyleSheet, Dimensions, processColor } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, processColor, ActivityIndicator } from 'react-native';
 import { UIActivityIndicator, } from 'react-native-indicators';
 import _ from 'lodash';
 const borderColor = '#e2d7d7';
@@ -10,8 +10,17 @@ export default class RadarChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataMastery: this.processData(this.props.data)
+            isLoading: true,
+            // dataMastery: this.processData(this.props.data)
+            dataMastery: []
         };
+    }
+
+    componentDidMount() {
+        let dataMastery = this.processData(this.props.data)
+        setTimeout(() => {
+            this.setState({ dataMastery, isLoading: false });
+        }, 0);
     }
 
     processData(data) {
@@ -77,6 +86,9 @@ export default class RadarChart extends React.Component {
     }
 
     renderRadar(dataMastery, dataNameSubjects) {
+        if (dataMastery.length == 0) {
+            return (<View />);
+        }
         return (
             <View style={styles.viewContainer}>
                 {/* <View style={styles.textNumberPercentView}>
@@ -99,7 +111,7 @@ export default class RadarChart extends React.Component {
                             return (
                                 <VictoryPolarAxis key={i} dependentAxis
                                     style={{
-                                        axisLabel: {padding: 40, fontSize: 11, fill: '#828282', fontFamily: 'Nunito-Regular' },
+                                        axisLabel: { padding: 40, fontSize: 11, fill: '#828282', fontFamily: 'Nunito-Regular' },
                                         axis: { stroke: '#828282', strokeWidth: 1 },
                                         grid: { stroke: '#828282', strokeWidth: 1, opacity: 1 },
                                     }}
@@ -133,24 +145,28 @@ export default class RadarChart extends React.Component {
     renderDataEmty(dataMastery, dataNameSubjects, isLoadMateryLoading) {
         return (
             <>
-                {isLoadMateryLoading ? 
-                < UIActivityIndicator color={'#000'} size={25} style={styles.UIActivityIndicator} /> 
-                : (_.isEmpty(dataMastery) ? 
-                <Text style={{ alignSelf: 'center', textAlign: 'center', fontFamily: 'Nunito-Regular' }}>Không có dữ liệu</Text> 
-                :this.renderRadar(dataMastery, dataNameSubjects))}
+                {isLoadMateryLoading ?
+                    < UIActivityIndicator color={'#000'} size={25} style={styles.UIActivityIndicator} />
+                    : (_.isEmpty(dataMastery) ?
+                        <Text style={{ alignSelf: 'center', textAlign: 'center', fontFamily: 'Nunito-Regular' }}>Không có dữ liệu</Text>
+                        : this.renderRadar(dataMastery, dataNameSubjects))}
             </>
         )
     }
 
     render() {
-        const dataMastery = this.processData(this.props.data);
+        const { dataMastery, isLoading } = this.state;
+        // const dataMastery = this.processData(this.props.data);
         const dataNameSubjects = this.handleLongNameOfSubjects(this.props.data);
         return (
             <View>
-                {/* <View style={styles.containerText}>
-                    <Text style={styles.text}>Độ bao phủ </Text>
-                </View> */}
-                {this.renderDataEmty(dataMastery, dataNameSubjects, this.props.isLoadMateryLoading)}
+                {isLoading ?
+                    <View style={{ height: 300, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator animating={true} />
+                    </View>
+                    :
+                    this.renderDataEmty(dataMastery, dataNameSubjects, this.props.isLoadMateryLoading)
+                }
             </View>
         );
     }

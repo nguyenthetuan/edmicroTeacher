@@ -20,7 +20,7 @@ IconEntypo.loadFont();
 import RippleButton from '../libs/RippleButton';
 import AppIcon from '../../utils/AppIcon';
 import SlideLeft from '../anim/SlideLeft';
-import HeaderNavigation from '../common/HeaderNavigation';
+import HeaderNavigation from '../common-new/HeaderNavigation';
 import Common from '../../utils/Common';
 import global from '../../utils/Globals';
 import authStyle from '../../themes/authStyle';
@@ -43,9 +43,6 @@ import { getUserByToken } from '../../utils/Helper';
 const { width, height } = Dimensions.get('window');
 const description = 'Việc cập nhật số điện thoại sẽ giúp bảo mật tài khoản và để cấp lại mật khẩu nếu bạn quên mật khẩu.'
 export default class UpdatePhoneScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    header: <HeaderNavigation navigation={navigation} title="Cập nhật số điện thoại" bgColor={'transparent'} back={true} />
-  });
 
   constructor(props) {
     super(props);
@@ -313,13 +310,17 @@ export default class UpdatePhoneScreen extends Component {
     const { phoneNumber, isShowKeybroad, isEditPhone, inputOtpVisible, updateSuccess } = this.state;
     const { backArrow, textAction, validationStyle, container } = authStyle;
     return (
-      <View
+      <SafeAreaView
         style={[container, { backgroundColor: '#FFF' }]}
       >
         <StatusBar />
-        <SafeAreaView />
         <View style={{ flex: 1 }}>
-          {
+          <HeaderNavigation
+            title={!this.state.inputOtpVisible ? 'Cập nhật số điện thoại' : 'Xác thực'}
+            navigation={this.props.navigation}
+            goBack={this.handleBtnBack(isShowKeybroad)}
+          />
+          {/* {
             updateSuccess
               ?
               null
@@ -337,7 +338,7 @@ export default class UpdatePhoneScreen extends Component {
                   <Text style={styles.txtTitle}>{!this.state.inputOtpVisible ? 'Cập nhật số điện thoại' : 'Xác thực'}</Text>
                 </View>
               </View>
-          }
+          } */}
           <KeyboardAwareScrollView
             contentContainerStyle={{
               justifyContent: 'center',
@@ -484,7 +485,7 @@ export default class UpdatePhoneScreen extends Component {
         </View>
         <Toast ref="toast" position={'bottom'} />
         <LoadingScreen isLoading={this.state.isLoading} bgColor={'transparent'} color={'transparent'} />
-      </View>
+      </SafeAreaView>
     );
   }
 }

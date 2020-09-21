@@ -10,7 +10,12 @@ export default class HeaderNavigation extends React.PureComponent {
 
     onGoback = () => {
         requestAnimationFrame(() => {
-            this.props.navigation.goBack();
+            const { goBack } = this.props;
+            if (goBack) {
+                this.props.goBack();
+            }else{
+                this.props.navigation.goBack();
+            }
         });
     };
 

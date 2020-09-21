@@ -7,6 +7,7 @@ import {
   Platform,
   Image,
   Dimensions,
+  SafeAreaView,
   Text,
   Alert,
 } from 'react-native';
@@ -24,6 +25,7 @@ import ModalMockExamComplete from './modalMockExamComplete';
 import LearnPlaceholder from '../../shim/LearnPlaceholder';
 import HeaderDetail from '../../common-new/HeaderDetail';
 import AppIcon from '../../../utils/AppIcon';
+import HeaderExample from '../../common-new/HeaderExample';
 const messageError = 'Không có nội dung hiển thị';
 const { width, height } = Dimensions.get('window');
 let baseUrl = 'file:///android_asset/';
@@ -304,24 +306,16 @@ export default class MockExample extends Component {
       (!_.isEmpty(data) &&
         data.data[index].dataStandard &&
         data.data[index].dataStandard.statusStep);
+
     return !isError ? (
-      <View style={styles.containter}>
+      <SafeAreaView style={styles.containter}>
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}>
-          <View style={styles.wrapHeader}>
-            <TouchableOpacity onPress={() => this.openDrawer()}>
-              <Image source={require('../../../asserts/appIcon/icMenu.png')} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.complete()}
-              style={{ flexDirection: 'row', alignItems: 'center'}}>
-              <Image 
-              resizeMode='contain'
-              source={require('../../../asserts/appIcon/submit.png')}/>
-              <Text style={styles.txtSubmit}>Nộp bài</Text>
-            </TouchableOpacity>
-          </View>
+          <HeaderExample
+            navigation={this.props.navigation}
+            onActionPress={() => this.complete()}
+          />
           <View style={{ flex: 1 }}>
             <LearnPlaceholder visible={isLoading} />
             {!_.isEmpty(data) && (
@@ -394,7 +388,7 @@ export default class MockExample extends Component {
           ref={'modalMockExamComplete'}
           navigation={navigation}
         />
-      </View>
+      </SafeAreaView >
     ) : (
         <View style={styles.containter}>
           <HeaderDetail onPress={this._btnBackErr} />
@@ -432,13 +426,13 @@ class WebViewComponent extends Component {
   }
 
   shouldComponentUpdate(prevProps, nextState) {
-    if(this.props.dataSideBar != prevProps.dataSideBar
+    if (this.props.dataSideBar != prevProps.dataSideBar
       || this.props.data != prevProps.data
       || this.props.index != prevProps.index
       || this.state.dataConvert != nextState.dataConvert
       || this.state.heightWebview != nextState.heightWebview
-      ){
-        return true;
+    ) {
+      return true;
     }
     return false;
     // if (this.props.data !== nextProps.data) {
@@ -528,8 +522,6 @@ const styles = StyleSheet.create({
   styleWebView: {
     backgroundColor: Platform.OS == 'ios' ? '#fff' : 'transparent',
     flex: 1,
-    // height: height * 0.6
-    // marginBottom: 80
   },
   wrapBtn: {
     width,
