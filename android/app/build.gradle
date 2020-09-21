@@ -3,6 +3,8 @@ apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
 
+
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -82,8 +84,16 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+project.ext.envConfigFiles = [
+    dev: ".env",
+    staging:".env.staging",
+    prod:".env.production"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -178,6 +188,32 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+            dev{
+                applicationId "vn.onluyen.teacher"
+                resValue "string", "app_name", "Trường học-DEV"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                dimension "default"
+            }
+
+            staging{
+                applicationId "vn.onluyen.school"
+                resValue "string", "app_name", "Trường học-STG"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+            }
+
+            prod{
+                applicationId "vn.onluyen.school"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                resValue "string", "app_name", "Trường học"
+            }
+        }
 
     packagingOptions {
         pickFirst "lib/armeabi-v7a/libc++_shared.so"
