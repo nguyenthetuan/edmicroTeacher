@@ -39,6 +39,7 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { PHONE_DEBUG } from '../../constants/const';
 import { getUserByToken } from '../../utils/Helper';
+import FastImage from 'react-native-fast-image';
 
 const { width, height } = Dimensions.get('window');
 const description = 'Việc cập nhật số điện thoại sẽ giúp bảo mật tài khoản và để cấp lại mật khẩu nếu bạn quên mật khẩu.'
@@ -320,25 +321,6 @@ export default class UpdatePhoneScreen extends Component {
             navigation={this.props.navigation}
             goBack={this.handleBtnBack(isShowKeybroad)}
           />
-          {/* {
-            updateSuccess
-              ?
-              null
-              :
-              <View style={backArrow}>
-                <RippleButton
-                  size={50}
-                  color={'black'}
-                  duration={200}
-                  onPress={this.handleBtnBack(isShowKeybroad)}
-                >
-                  <Image source={AppIcon.arrow_left_S_light} style={styles.btnBack} resizeMode={'contain'} />
-                </RippleButton>
-                <View style={{ flex: .9, alignItems: 'center' }}>
-                  <Text style={styles.txtTitle}>{!this.state.inputOtpVisible ? 'Cập nhật số điện thoại' : 'Xác thực'}</Text>
-                </View>
-              </View>
-          } */}
           <KeyboardAwareScrollView
             contentContainerStyle={{
               justifyContent: 'center',
@@ -354,7 +336,11 @@ export default class UpdatePhoneScreen extends Component {
                 <View style={{ flex: 1 }}>
                   <SlideLeft>
                     <View style={{ flex: 1, alignItems: 'center' }}>
-                      <Image source={require('../../asserts/images/success_update_phone.png')} style={{ marginTop: height / 10 }} />
+                      <FastImage
+                        source={require('../../asserts/images/success_update_phone.png')}
+                        style={{ marginTop: height / 10 }}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
                       <View style={{ flex: 1, justifyContent: 'center' }}>
                         <Text style={{
                           fontSize: 14,

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  SafeAreaView
 } from 'react-native';
-import {PieChart} from 'react-native-chart-kit';
+import { PieChart } from 'react-native-chart-kit';
 import FastImage from 'react-native-fast-image';
 import AppIcon from '../../../utils/AppIcon';
-import {HEIGHT_TOPBAR, roundToTwo} from '../../../utils/Common';
-const {width, height} = Dimensions.get('window');
+import { HEIGHT_TOPBAR, roundToTwo } from '../../../utils/Common';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
+const { width, height } = Dimensions.get('window');
 
 let data = [
   {
@@ -108,7 +110,7 @@ export default class StatisticsPoints extends Component {
         color: '#FF5757',
       },
     ];
-    this.setState({data});
+    this.setState({ data });
   }
 
   mediumPoint = (data = [], amountPoint) => {
@@ -150,8 +152,8 @@ export default class StatisticsPoints extends Component {
           return (
             <View
               key={i.toString()}
-              style={{flexDirection: 'row', marginTop: i ? 22 : 0}}>
-              <View style={[styles.viewRank, {backgroundColor: e.color}]} />
+              style={{ flexDirection: 'row', marginTop: i ? 22 : 0 }}>
+              <View style={[styles.viewRank, { backgroundColor: e.color }]} />
               <Text style={styles.txtRank}>{e.name}</Text>
               <Text style={styles.txtPercentRank}>{e.population}%</Text>
             </View>
@@ -171,14 +173,14 @@ export default class StatisticsPoints extends Component {
     return (
       <View style={styles.containerChartBar}>
         <View style={styles.viewLeftChartBar}>
-          <View style={{width: 35}}>
+          <View style={{ width: 35 }}>
             <Text style={styles.txtLeftChartBar}>
               {roundToTwo((maxPercent / 3) * 3)}%
             </Text>
-            <Text style={[styles.txtLeftChartBar, {marginTop: 30}]}>
+            <Text style={[styles.txtLeftChartBar, { marginTop: 30 }]}>
               {roundToTwo((maxPercent / 3) * 2)}%
             </Text>
-            <Text style={[styles.txtLeftChartBar, {marginTop: 30}]}>
+            <Text style={[styles.txtLeftChartBar, { marginTop: 30 }]}>
               {roundToTwo(maxPercent / 3)}%
             </Text>
           </View>
@@ -207,7 +209,7 @@ export default class StatisticsPoints extends Component {
         </View>
         <View style={styles.viewBottomChartBar}>
           <Text style={styles.txtBottomChartBar}>0</Text>
-          <Text style={[styles.txtBottomChartBar, {marginStart: 3}]}>5</Text>
+          <Text style={[styles.txtBottomChartBar, { marginStart: 3 }]}>5</Text>
           <Text style={styles.txtBottomChartBar2}>10</Text>
         </View>
       </View>
@@ -217,31 +219,16 @@ export default class StatisticsPoints extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerNavigation}>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              <Image
-                source={AppIcon.arrow_left}
-                style={{width: 18, height: 18}}
-                resizeMode={'contain'}
-              />
-            </TouchableOpacity>
-            <Text style={styles.txtHeaderNavigation}>Thống kê điểm</Text>
-            {/* <TouchableOpacity>
-              <Image
-                source={require('../../../asserts/icon/ic_setting_evaluate.png')}
-                style={{width: 18, height: 18}}
-                resizeMode={'contain'}
-              />
-            </TouchableOpacity> */}
-          </View>
-          <View style={styles.chartHeader}>
-            {this.renderChartCircle()}
-            {this.renderRightChartCircle()}
-          </View>
+        <SafeAreaView style={{ backgroundColor: '#2D9CDB' }} />
+        <HeaderNavigation
+          title={'Thống kê điểm'}
+          backgroundColor={'#2D9CDB'}
+          color={'#fff'}
+          navigation={this.props.navigation}
+        />
+        <View style={styles.chartHeader}>
+          {this.renderChartCircle()}
+          {this.renderRightChartCircle()}
         </View>
         <Text style={styles.txtTitleContent}>Phổ điểm</Text>
         {this.renderChartBar()}
@@ -253,6 +240,7 @@ export default class StatisticsPoints extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   header: {
     backgroundColor: '#2D9CDB',
@@ -274,6 +262,8 @@ const styles = StyleSheet.create({
   chartHeader: {
     flexDirection: 'row',
     paddingHorizontal: 16,
+    backgroundColor: '#2D9CDB',
+    paddingTop: 20
   },
   txtTitleContent: {
     marginVertical: 11,
@@ -296,7 +286,7 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     marginStart: 3,
-    borderRadius:55
+    borderRadius: 55
   },
   viewChart1: {
     width: 170,

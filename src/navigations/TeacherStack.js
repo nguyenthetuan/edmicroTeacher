@@ -41,7 +41,7 @@ const TeacherStack = createStackNavigator({
   },
   StatisticsPoints: {
     screen: StatisticsPoints,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: { header: null, gesturesEnabled: true },
   },
   ModlaLevelComplete: {
     screen: ModlaLevelComplete,

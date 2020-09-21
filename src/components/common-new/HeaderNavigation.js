@@ -13,7 +13,7 @@ export default class HeaderNavigation extends React.PureComponent {
             const { goBack } = this.props;
             if (goBack) {
                 this.props.goBack();
-            }else{
+            } else {
                 this.props.navigation.goBack();
             }
         });
@@ -26,12 +26,12 @@ export default class HeaderNavigation extends React.PureComponent {
     }
 
     render() {
-        const { actionIcon, title, color } = this.props;
+        const { actionIcon, title, color, backgroundColor } = this.props;
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: backgroundColor }]}>
                 <RippleButton onPress={this.onGoback}>
                     <View style={styles.button}>
-                        <Icon name="arrow-left" color="#383838" size={25} />
+                        <Icon name="arrow-left" color={color || "#383838"} size={25} />
                     </View>
                 </RippleButton>
                 <View style={styles.viewTitle}>
@@ -39,15 +39,19 @@ export default class HeaderNavigation extends React.PureComponent {
                         color: color || '#383838'
                     }]}>{title}</Text>
                 </View>
-                <TouchableOpacity
-                    onPress={this.navigateUser}
-                    style={styles.btnAvatar}>
-                    <Image
-                        resizeMode="cover"
-                        source={actionIcon}
-                        style={styles.imgAvatar}
-                    />
-                </TouchableOpacity>
+                {actionIcon ?
+                    <TouchableOpacity
+                        onPress={this.navigateUser}
+                        style={styles.btnAvatar}>
+                        <Image
+                            resizeMode="cover"
+                            source={actionIcon}
+                            style={styles.imgAvatar}
+                        />
+                    </TouchableOpacity>
+                    :
+                    <View style={styles.btnAvatar} />
+                }
             </View>
         );
     }
@@ -58,8 +62,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: 10,
-        marginRight: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     viewTitle: {
         flex: 1,

@@ -5,7 +5,6 @@ import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
-  console.log('props', props)
   const data = !!props.screenProps.data&&!_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
     return a.localeCompare(b);
   }).map(k => props.screenProps?.data?.data?.questionResult[k]) : [];
