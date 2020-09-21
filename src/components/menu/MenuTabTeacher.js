@@ -58,7 +58,7 @@ class MenuTabTeacher extends Component {
       dataHelper.saveUserPost('');
       dataHelper.saveCodeHocMai('');
       dataHelper.saveAvatar('');
-      global.onSignIn(false);
+      this.props.navigation.navigate('Auth');
       AnalyticsManager.trackWithProperties('Sign Out', {
         "mobile": Platform.OS
       });

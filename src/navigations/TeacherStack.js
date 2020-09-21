@@ -33,11 +33,11 @@ const TeacherStack = createStackNavigator({
   },
   ClassDetail: {
     screen: ClassDetail,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: { header: null, gesturesEnabled: true },
   },
   ExcerciseDetail: {
     screen: ExcerciseDetail,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: { header: null, gesturesEnabled: true },
   },
   StatisticsPoints: {
     screen: StatisticsPoints,

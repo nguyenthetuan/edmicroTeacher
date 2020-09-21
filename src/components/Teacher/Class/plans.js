@@ -14,6 +14,7 @@ import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
 import _ from 'lodash';
 import Globals from '../../../utils/Globals';
+import { delay } from '../../../utils/Helper';
 
 export default class Plan extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ export default class Plan extends Component {
   };
 
   async componentDidMount() {
+    await delay(450);
     this.fetchData();
   }
 

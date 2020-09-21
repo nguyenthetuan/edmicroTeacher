@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
-import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
+import FastImage from 'react-native-fast-image';
 import AppIcon from '../../../utils/AppIcon';
 import {HEIGHT_TOPBAR, roundToTwo} from '../../../utils/Common';
 const {width, height} = Dimensions.get('window');
@@ -134,9 +134,8 @@ export default class StatisticsPoints extends Component {
           />
         </View>
         <View style={styles.viewChart2}>
-          <Image
+          <FastImage
             source={require('../../../asserts/images/banner_evaluate.png')}
-            resizeMode="center"
             style={styles.imgInChart}
           />
         </View>
@@ -297,6 +296,7 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     marginStart: 3,
+    borderRadius:55
   },
   viewChart1: {
     width: 170,

@@ -8,6 +8,7 @@ import Api from '../../../services/apiClassTeacher';
 import Pdf from 'react-native-pdf';
 import NineCubesLoader from '../../libs/NineCubesLoader';
 import _ from 'lodash';
+import { delay } from '../../../utils/Helper';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -25,6 +26,7 @@ export default class ListQuestion extends Component {
   }
 
   async componentDidMount() {
+    await delay(350);
     const { assignmentId } = this.props.screenProps;
     try {
       const { token } = await dataHelper.getToken();

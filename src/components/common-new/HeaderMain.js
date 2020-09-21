@@ -7,7 +7,7 @@ export default class HeaderMain extends React.PureComponent {
   constructor(props) {
     super(props);
   }
-  
+
   openDrawer = () => {
     requestAnimationFrame(() => {
       this.props.navigation.toggleDrawer();
@@ -27,7 +27,10 @@ export default class HeaderMain extends React.PureComponent {
       <View style={styles.container}>
         <RippleButton onPress={this.openDrawer}>
           <View style={styles.button}>
-            <Image source={require('../../asserts/icon/menu.png')} />
+            <Image
+              source={require('../../asserts/icon/menu.png')}
+              style={{ tintColor: '#383838' }}
+              tintColor={'#383838'} />
           </View>
         </RippleButton>
         <View style={{ flex: 1, marginLeft: 10 }}>

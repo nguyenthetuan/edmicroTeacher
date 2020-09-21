@@ -13,6 +13,7 @@ class HeaderMenu extends React.PureComponent {
   }
 
   ChangePassword = () => {
+    this.props.navigation.closeDrawer();
     this.props.navigation.navigate('ChangePassword', {
       statusbar: 'light-content',
     });

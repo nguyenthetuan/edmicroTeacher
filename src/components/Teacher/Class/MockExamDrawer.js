@@ -6,16 +6,17 @@ import QuestionMockMenu from './QuestionMockMenu';
 
 const { width } = Dimensions.get('window');
 
-const MockDrawer = createDrawerNavigator({
-  TestPlaying: {
-    screen: MockExam
-  }
-}, {
-  drawerWidth: width * 0.7,
-  drawerPosition: 'left',
-  contentComponent: props => <QuestionMockMenu {...props} />,
-}
-
+const MockDrawer = createDrawerNavigator(
+  {
+    TestPlaying: {
+      screen: MockExam,
+    },
+  },
+  {
+    drawerWidth: width * 0.7,
+    drawerPosition: 'left',
+    contentComponent: props => <QuestionMockMenu {...props} />,
+  },
 );
 
 export default MockDrawer;

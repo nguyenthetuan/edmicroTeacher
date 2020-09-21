@@ -188,6 +188,15 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - GTMSessionFetcher/Full (1.4.0):
     - GTMSessionFetcher/Core (= 1.4.0)
+  - libwebp (1.1.0):
+    - libwebp/demux (= 1.1.0)
+    - libwebp/mux (= 1.1.0)
+    - libwebp/webp (= 1.1.0)
+  - libwebp/demux (1.1.0):
+    - libwebp/webp
+  - libwebp/mux (1.1.0):
+    - libwebp/demux
+  - libwebp/webp (1.1.0)
   - lottie-ios (3.1.8)
   - lottie-react-native (3.5.0):
     - lottie-ios (~> 3.1.8)
@@ -483,6 +492,10 @@ PODS:
     - React
   - RNDeviceInfo (5.6.5):
     - React
+  - RNFastImage (8.3.2):
+    - React
+    - SDWebImage (~> 5.8)
+    - SDWebImageWebPCoder (~> 0.6.1)
   - RNFBApp (6.7.1):
     - Firebase/Core (~> 6.13.0)
     - React
@@ -535,6 +548,12 @@ PODS:
   - RNVectorIcons (7.1.0):
     - React
   - RSKImageCropper (2.3.0)
+  - SDWebImage (5.9.1):
+    - SDWebImage/Core (= 5.9.1)
+  - SDWebImage/Core (5.9.1)
+  - SDWebImageWebPCoder (0.6.1):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.7)
   - Shimmer (1.0.2)
   - XCDYouTubeKit (2.14.1)
   - Yoga (1.14.0)
@@ -617,6 +636,7 @@ DEPENDENCIES:
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
@@ -673,6 +693,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - libwebp
     - Mixpanel
     - nanopb
     - OpenSSL-Universal
@@ -680,6 +701,8 @@ SPEC REPOS:
     - Protobuf
     - QBImagePickerController
     - RSKImageCropper
+    - SDWebImage
+    - SDWebImageWebPCoder
     - Shimmer
     - XCDYouTubeKit
     - YogaKit
@@ -782,6 +805,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNFastImage:
+    :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -858,6 +883,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 1fb4ce21d6ad37dab8343eaff8719df76035bd93
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
@@ -906,6 +932,7 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: c145c6253ea016e5efeff604f2720736b4a596f7
   RNDateTimePicker: a84d2b439666c9243d42a8396c588d4d1d36e3f3
   RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
+  RNFastImage: e19ba191922e7dab9d932a4d59d62d76660aa222
   RNFBApp: 7b539bb25520fa73d6a240f5c6ea569e27683645
   RNFBAuth: c292603069a09065a1b4d3336148beff83e4c897
   RNFBCrashlytics: b34063b906dd0c57a5d286dd743a40c90c8326c7
@@ -923,6 +950,8 @@ SPEC CHECKSUMS:
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   RSKImageCropper: c337eacdcbed50e695e5153ff0c2b861b6ebfa84
+  SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
+  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   XCDYouTubeKit: 5d50bbacdd9fedf26fb578bab901d946ff3d064c
   Yoga: 9db9ff2025ad21d1ac0a8b3c85d5ac4e7c29d525

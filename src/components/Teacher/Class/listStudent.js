@@ -1,11 +1,36 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Image, Dimensions,Text } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Image, Dimensions, Text } from 'react-native';
 import ItemStudent from './itemStudent';
 import RippleItem from '../../common-new/RippleItem';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
+import { delay } from '../../../utils/Helper';
 
-const { width, height } = Dimensions.get('window');
+class ItemStudentContainer extends React.Component {
+
+  shouldComponentUpdate = (prevProps, nextState) => {
+    if (prevProps.item != this.props.item) {
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    const { onPress, index, navigation, item } = this.props;
+    return (
+      <RippleItem onPress={onPress} >
+        <View style={{ paddingVertical: 12 }} >
+          <ItemStudent
+            item={item}
+            index={index}
+            navigation={navigation}
+          />
+        </View>
+      </RippleItem>
+    );
+  }
+}
+
 export default class listStudent extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +43,7 @@ export default class listStudent extends Component {
 
   async componentDidMount() {
     const { classId } = this.props.screenProps;
+    await delay(450);
     try {
       const { token } = await dataHelper.getToken();
       const response = await Api.getInfoClass({ token, classId })
@@ -33,15 +59,12 @@ export default class listStudent extends Component {
   renderItem = ({ item, index }) => {
     const { data } = this.state;
     return (
-      <RippleItem onPress={() => this.props.screenProps.show({ studentId: item.studentId, classID: data.code })} >
-        <View style={{ paddingVertical: 12 }} >
-          <ItemStudent
-            item={item}
-            index={index}
-            navigation={this.props.navigation}
-          />
-        </View>
-      </RippleItem>
+      <ItemStudentContainer
+        onPress={() => this.props.screenProps.show({ studentId: item.studentId, classID: data.code })}
+        item={item}
+        index={index}
+        navigation={this.props.navigation}
+      />
     );
   }
 
@@ -49,13 +72,13 @@ export default class listStudent extends Component {
     const { data, showModal, isLoading } = this.state;
     return (
       <View style={styles.container}>
-        {!isLoading ? <FlatList
+        {
+        !isLoading ? 
+        <FlatList
           data={data.students}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
-          removeClippedSubviews={false}
           initialNumToRender={8}
-          showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => <View style={styles.viewNotFound}><Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
           </View>}

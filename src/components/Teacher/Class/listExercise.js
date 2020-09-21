@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,19 +12,20 @@ import ItemExercise from './itemExercise';
 import RippleItem from '../../common-new/RippleItem';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
+import { delay } from '../../../utils/Helper';
 
 export default class ListExercise extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       data: {
-        isLoading: false,
         data: [],
       },
     };
   }
 
-  renderItem = ({item, index}) => {
+  renderItem = ({ item, index }) => {
     return (
       <RippleItem
         onPress={() =>
@@ -37,7 +38,7 @@ export default class ListExercise extends Component {
             statusbar: 'dark-content',
           })
         }>
-        <View style={{paddingVertical: 12}}>
+        <View style={{ paddingVertical: 12 }}>
           <ItemExercise
             item={item}
             index={index}
@@ -50,22 +51,28 @@ export default class ListExercise extends Component {
   };
 
   async componentDidMount() {
-    setTimeout(() => this.setState({isLoading: true}), 500);
-    const {classId} = this.props.screenProps;
+    await delay(450);
+    const { classId } = this.props.screenProps;
     try {
-      const {token} = await dataHelper.getToken();
-      const response = await Api.getListExercise({token, classId});
+      const { token } = await dataHelper.getToken();
+      const response = await Api.getListExercise({ token, classId });
       this.setState({
         data: response && response,
+        isLoading: false
       });
-    } catch (error) {}
+    } catch (error) {
+      this.setState({
+        data: [],
+        isLoading: false
+      });
+    }
   }
 
   render() {
-    const {data, isLoading} = this.state;
+    const { data, isLoading } = this.state;
     return (
-      <View style={{flex: 1}}>
-        {isLoading ? (
+      <View style={{ flex: 1 }}>
+        {!isLoading ? (
           <FlatList
             data={data.data}
             keyExtractor={(item, index) => index.toString()}
@@ -80,13 +87,13 @@ export default class ListExercise extends Component {
             )}
           />
         ) : (
-          <ActivityIndicator
-            animating
-            size={'small'}
-            style={{flex: 1}}
-            color="#56CCF2"
-          />
-        )}
+            <ActivityIndicator
+              animating
+              size={'small'}
+              style={{ flex: 1 }}
+              color="#56CCF2"
+            />
+          )}
       </View>
     );
   }

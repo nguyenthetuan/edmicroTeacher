@@ -9,6 +9,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import ItemCLass from './itemClass';
+import FastImage from 'react-native-fast-image';
 
 export default class listClass extends Component {
   constructor(props) {
@@ -26,10 +27,10 @@ export default class listClass extends Component {
     return (
       <View>
         <View style={{alignItems: 'center'}}>
-          <Image
+          <FastImage
             style={styles.imageHome}
             source={require('../../../asserts/icon/imageHome.png')}
-            resizeMode="contain"
+            resizeMode={FastImage.resizeMode.contain}
           />
           <Text style={styles.txtTitle}>danh sách lớp học</Text>
         </View>
@@ -42,6 +43,7 @@ export default class listClass extends Component {
     return (
       <FlatList
         data={data}
+        initialNumToRender={3}
         keyExtractor={(item, index) => index.toString()}
         renderItem={this.renderItem}
         removeClippedSubviews={false}
@@ -93,5 +95,9 @@ const styles = StyleSheet.create({
     color: '#000',
     marginTop: 20,
     color: '#828282',
+  },
+  imageHome: {
+    width: 200,
+    height: (200 * 156) / 276,
   },
 });

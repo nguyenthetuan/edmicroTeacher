@@ -81,11 +81,6 @@ class Class extends Component {
                 color="#F98E2F"
               />
             )}
-          <Image
-            source={AppIcon.bottomChangeGrade}
-            style={styles.imageBottom}
-            resizeMode={'contain'}
-          />
         </SafeAreaView>
       </>
     );
