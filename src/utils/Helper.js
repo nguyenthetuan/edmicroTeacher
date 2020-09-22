@@ -27,11 +27,21 @@ export const getUserByToken = (token) => {
 }
 
 
-export const getSourceAvatar = (userId) => {
+export const getSourceAvatar = (userId, timeCached = new Date().getTime()) => {
+    // https://s3-ap-southeast-1.amazonaws.com/onluyen-avatar/
     return {
-        uri: `https://avatar.onluyen.vn/${userId}.jpg`
+        uri: `https://s3-ap-southeast-1.amazonaws.com/onluyen-avatar/${userId}.jpg?time=${timeCached}`
     }
 }
+
+
+export const getSourceAvatarOwl = (source) => {
+    // https://s3-ap-southeast-1.amazonaws.com/onluyen-avatar/
+    return {
+        uri: source.replace('s3-ap-southeast-1.amazonaws.com/onluyen-avatar', 'avatar.onluyen.vn')
+    }
+}
+
 
 
 export const delay = (timeout = 350) => {

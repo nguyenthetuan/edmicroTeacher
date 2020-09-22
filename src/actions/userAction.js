@@ -19,3 +19,5 @@ export const changePasswordAction = (payload) => ({ type: Types.CHANGE_PASSWORD_
 export const changePasswordSuccessAction = (data) => ({ type: Types.CHANGE_PASSWORD_SUCCESS_ACTION, data });
 
 export const changePasswordFaildAction = (error) => ({ type: Types.CHANGE_PASSWORD_FAILD_ACTION, error });
+
+export const saveAvatarAction = (payload) => ({ type: Types.SAVE_AVATAR_ACTION, payload });

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import AppIcon from '../../utils/AppIcon';
 import { getSourceAvatar } from '../../utils/Helper';
+import Avatar from './Avatar';
 
 class HeaderMenu extends React.PureComponent {
   constructor(props) {
@@ -20,12 +21,16 @@ class HeaderMenu extends React.PureComponent {
   }
 
   render() {
-    const { phoneNumber, userName, displayName, userId } = this.props;
-    const source = getSourceAvatar(userId);
+    const { phoneNumber, userName, displayName, userId, timeCached } = this.props;
+    const source = getSourceAvatar(userId, timeCached);
     return (
       <View style={styles.wrapUser}>
         <View style={styles.wrapInfo}>
-          {source ? (
+          <Avatar 
+            source={source}
+            size={50}
+          />
+          {/* {source ? (
             <Image
               style={styles.avatar}
               source={source}
@@ -38,7 +43,7 @@ class HeaderMenu extends React.PureComponent {
                   resizeMode="contain"
                 />
               </View>
-            )}
+            )} */}
           <View style={{ marginLeft: 10 }}>
             <Text
               style={{ color: '#FFF', fontSize: 11, fontFamily: 'Nunito-Bold' }}>

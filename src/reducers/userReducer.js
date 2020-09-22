@@ -34,8 +34,13 @@ export default function userReducer(state = initState, action) {
     case Types.SET_PROFILE_USER_ACTION:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
+    case Types.SAVE_AVATAR_ACTION:
+      return {
+        ...state,
+        timeCached: action.payload.timeCached
+      }
     default:
       return state;
   }

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import { getSourceAvatar } from '../../utils/Helper';
+import Avatar from '../common-new/Avatar';
 
-export default class HeaderMain extends React.PureComponent {
+export default class HeaderMain extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -21,8 +22,9 @@ export default class HeaderMain extends React.PureComponent {
   }
 
   render() {
-    const { userId } = this.props;
-    const source = getSourceAvatar(userId);
+    const { userId, timeCached } = this.props;
+    const source = getSourceAvatar(userId, timeCached);
+    console.log(source);
     return (
       <View style={styles.container}>
         <RippleButton onPress={this.openDrawer}>
@@ -39,10 +41,9 @@ export default class HeaderMain extends React.PureComponent {
         <TouchableOpacity
           onPress={this.navigateUser}
           style={styles.btnAvatar}>
-          <Image
-            resizeMode="cover"
+          <Avatar
             source={source}
-            style={styles.imgAvatar}
+            size={25}
           />
         </TouchableOpacity>
       </View>

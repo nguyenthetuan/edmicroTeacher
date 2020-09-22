@@ -4,6 +4,7 @@ import {
   BackHandler, SafeAreaView, StatusBar, Dimensions, Alert
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
+import { connect } from 'react-redux';
 import { DotIndicator } from 'react-native-indicators';
 import SplashScreen from 'react-native-splash-screen';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -32,6 +33,7 @@ import { authenRedirect } from '../../utils/AuthCommon';
 import { LOGIN_TYPE } from '../../utils/AuthCommon';
 import { AuthConfig } from './AuthConfig';
 import FreshchatComponent from '../../utils/FreshchatComponent';
+import { saveAvatarAction } from '../../actions/userAction';
 
 const ACCOUNTKIT = 'ACCOUNTKIT';
 const ICON_SIZE = 17;
@@ -505,7 +507,11 @@ class LoginWithPhoneScreen extends Component {
         });
       }
       if (response.avatar != null) {
-        dataHelper.saveAvatar(response.avatar);
+        const payload = {
+          avatar: response.avatar,
+          timeCached: new Date().getTime()
+        }
+        this.props.saveAvatar(payload);
       }
       if (RememberMe) {
         dataHelper.saveUserName(loginType == "Username" ? userName : phoneNumber);
@@ -875,4 +881,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginWithPhoneScreen;
+
+const mapStateToProps = state => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveAvatar: (avatar) => dispatch(saveAvatarAction(avatar)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginWithPhoneScreen);

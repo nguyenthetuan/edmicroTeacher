@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import AppIcon from '../../utils/AppIcon';
 import _ from 'lodash';
-import {getAvatarSource} from '../../utils/Common';
+import { getAvatarSource } from '../../utils/Common';
+import Avatar from '../common-new/Avatar';
 const { width, height } = Dimensions.get('window');
 export default class HeaderUserInfo extends Component {
   constructor(props) {
@@ -13,10 +14,11 @@ export default class HeaderUserInfo extends Component {
     const { style, avatarSource } = this.props;
     return (
       <View horizontal={0} vertical={10} style={[styles.wrapContainer, style]} >
-        {!_.isEmpty(avatarSource) ?
-          <Image source={avatarSource} style={{ width: 118, height: 118, justifyContent: 'center', alignSelf: 'center', borderRadius: 60, marginBottom: 20 }} resizeMode={'cover'} /> :
-          <Image source={AppIcon.avatar_default} style={{ width: 118, height: 118, justifyContent: 'center', alignSelf: 'center', borderRadius: 60, top: -20 }} resizeMode={'contain'} />
-        }
+        <Avatar
+          source={avatarSource}
+          size={118}
+          style={{ justifyContent: 'center', alignSelf: 'center', marginBottom: 20 }}
+        />
         <View style={{ marginBottom: 20 }}>
           < TouchableOpacity
             style={{ alignSelf: 'flex-end' }}

@@ -16,8 +16,8 @@ export default class Header extends Component {
   };
 
   render() {
-    const { userId } = this.props;
-    const source = getSourceAvatar(userId);
+    const { userId, timeCached } = this.props;
+    const source = getSourceAvatar(userId, timeCached);
     return (
       <View style={styles.container}>
         <HeaderMain openDrawer={this.openDrawer} iconRight={source} />

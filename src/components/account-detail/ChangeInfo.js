@@ -129,7 +129,7 @@ class ChangeInfo extends Component {
             this.getProvines(token);
             this.getDistrict();
             this.getListSchools();
-            this.getAvatar();
+            // this.getAvatar();
           },
         );
       })
@@ -180,15 +180,15 @@ class ChangeInfo extends Component {
 
   getAvatar = () => {
     //to do code
-    dataHelper
-      .getAvatar()
-      .then((path) => {
-        this.setState({
-          avatarSource: `${path}`,
-        });
-        this.props.saveAvatar(path);
-      })
-      .catch((err) => console.log(err));
+    // dataHelper
+    //   .getAvatar()
+    //   .then((path) => {
+    //     this.setState({
+    //       avatarSource: `${path}`,
+    //     });
+    //     this.props.saveAvatar(path);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   updateProfile() {
@@ -362,11 +362,11 @@ class ChangeInfo extends Component {
       .then(({ token }) => {
         updateAvatar(token, this.state.Email, b64data).then((response) => {
           const { status } = response;
+          console.log(response);
           if (status == 200) {
             const { urlAvatar, status } = response;
-            dataHelper.saveAvatar(urlAvatar);
-            this.props.saveAvatar(urlAvatar);
-            this.getAvatar();
+            this.props.saveAvatar({ timeCached: new Date().getTime() });
+            // this.getAvatar();
             // global.updateAvatar();
           } else {
             alertMessage('Thông báo', 'upload avatar không thành công');
@@ -384,10 +384,11 @@ class ChangeInfo extends Component {
       includeBase64: true,
     })
       .then((image) => {
-        this.postImageBase64(`data:${image.mime};base64,${image.data}`);
-        this.setState({
-          avatarSource: image.path,
-        });
+        console.log(image);
+        this.postImageBase64(image.data);
+        // this.setState({
+        //   avatarSource: image.path,
+        // });
       })
       .catch((err) => console.log(err));
   }
@@ -441,10 +442,10 @@ class ChangeInfo extends Component {
 
   render() {
     const { avatarSource, user } = this.props;
-    const { userId } = user;
-    const source = getSourceAvatar(userId);
+    const { userId, timeCached } = user;
+    const source = getSourceAvatar(userId, timeCached);
     return (
-      <SafeAreaView
+      <View
         style={{ flex: 1 }}
         onTouchStart={() => {
           Keyboard.dismiss();
@@ -454,31 +455,13 @@ class ChangeInfo extends Component {
           style={{ flex: 1 }}
           topBounceColor="#3A608C"
           bottomBounceColor="#FFF">
-          {/* <Header */}
-          {/* <Image
-            source={require('../../asserts/images/headerChangInfo.png')}
-            resizeMode="contain"
-            style={styles.imgChangeinfo}
-          /> */}
-          {/* <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginLeft: 16,
-              marginTop: HEIGHT_TOPBAR + 10,
-            }}>
-            <RippleButton onPress={this._backButton}>
-              <Icon name="arrow-left" color="#FFF" size={25} />
-            </RippleButton>
-            <View style={{ flex: 0.9 }}>
-              <Text style={mainStyle.headerTextTitle}>Hồ sơ cá nhân</Text>
-            </View>
-          </View> */}
-          <HeaderNavigation
-            title={'Hồ sơ cá nhân'}
-            navigation={this.props.navigation}
-            color={'#fff'}
-          />
+          <SafeAreaView>
+            <HeaderNavigation
+              title={'Hồ sơ cá nhân'}
+              navigation={this.props.navigation}
+              color={'#fff'}
+            />
+          </SafeAreaView>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{ backgroundColor: 'transparent', opacity: 1, width: width }}>
@@ -490,6 +473,7 @@ class ChangeInfo extends Component {
               {
                 <HeaderUserInfo
                   avatarSource={source}
+                  {...user}
                   onPress={() => this.uploadAvatar()}
                   style={[
                     {
@@ -672,7 +656,7 @@ class ChangeInfo extends Component {
           isLoading={this.state.isUpdate}
           bgColor={'transparent'}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }
