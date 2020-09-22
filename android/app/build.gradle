@@ -192,26 +192,28 @@ android {
     flavorDimensions "default"
 
     productFlavors {
-            dev{
-                applicationId "vn.onluyen.teacher"
+            dev {
+                applicationId "vn.onluyen.school"
                 resValue "string", "app_name", "Trường học-DEV"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 dimension "default"
             }
 
-            staging{
+            staging {
                 applicationId "vn.onluyen.school"
                 resValue "string", "app_name", "Trường học-STG"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
+                dimension "default"
             }
 
-            prod{
+            prod {
                 applicationId "vn.onluyen.school"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 resValue "string", "app_name", "Trường học"
+                dimension "default"
             }
         }
 

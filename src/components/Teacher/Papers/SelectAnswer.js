@@ -17,12 +17,12 @@ const { width, height } = Dimensions.get('window')
 export default class SelectAnswer extends Component {
   constructor(props) {
     super(props);
-    const{totalPoint,totalQuestionTL}=this.props
+    const { totalPoint, totalQuestionTL } = this.props
     this.state = {
       indexSelecting: 0,
       questions: [],
       totalAddQuestion: 0,
-      totalPoint: totalPoint||0,
+      totalPoint: totalPoint || 0,
 
       indexSlelectingTL: 0,
       questionsTL: [],
@@ -328,21 +328,23 @@ export default class SelectAnswer extends Component {
               returnKeyType={'done'}
               maxLength={4}
               keyboardType={'numeric'}
+              editable={false}
               onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
               onEndEditing={() => this.pointSentence(typeQuestion)}
-              value={totalPoint&&`${totalPoint}`||''}
+              value={totalPoint && `${totalPoint}` || ''}
             /> :
               <TextInput
                 style={[styles.inputPoint, { marginTop: 0, width: 60, marginLeft: 5 }]}
                 numberOfLines={1}
                 returnKeyType={'done'}
                 maxLength={4}
+                editable={false}
                 keyboardType={'numeric'}
                 onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
                 onEndEditing={() => this.pointSentence(typeQuestion)}
-                value={totalPointTL&&`${totalPointTL}`||''}
+                value={totalPointTL && `${totalPointTL}` || ''}
               />}
-            <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} />
+            {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
           </View>
         </View>
         <View
@@ -433,7 +435,7 @@ export default class SelectAnswer extends Component {
               fontFamily: 'Nunito-Bold',
               fontSize: 14,
               color: '#000'
-            }}>Điểm câu {typeQuestion === 0 ? indexSelecting : indexSlelectingTL + 1}</Text>
+            }}>Điểm câu 1000</Text>
             <View>
               <TextInput
                 style={styles.inputPoint}

@@ -88,7 +88,7 @@ export default class InputNumberQuestion extends Component {
             alignItems: 'center'
           }}>
           <TouchableOpacity
-            onPress={this.increase}
+            onPress={this.decrease}
             style={{
               width: 20,
               height: 24,
@@ -97,7 +97,7 @@ export default class InputNumberQuestion extends Component {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Ionicons name={'md-add'} size={16} color='#fff' />
+            <Ionicons name={'md-remove'} size={16} color='#fff' />
           </TouchableOpacity>
           <TextInput
             value={`${total}`}
@@ -115,7 +115,7 @@ export default class InputNumberQuestion extends Component {
             returnKeyType={'done'}
           />
           <TouchableOpacity
-            onPress={this.decrease}
+            onPress={this.increase}
             style={{
               width: 20,
               height: 24,
@@ -124,7 +124,7 @@ export default class InputNumberQuestion extends Component {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Ionicons name={'md-remove'} size={16} color='#fff' />
+            <Ionicons name={'md-add'} size={16} color='#fff' />
           </TouchableOpacity>
         </View>
       </View>

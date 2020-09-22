@@ -1,5 +1,5 @@
 import { API_BASE, API_BASE_OAUTH, API_PROVIDER } from '../constants/setting';
-import Config from 'react-native-config';
+import fetch from './fetchWithTimeout';
 
 const getHeaders = (token) => (
   {
@@ -427,13 +427,6 @@ const getPackageInfo = async ({ token, packageCode }) => {
 
 const iap = async (payload) => {
   const { token, receiptData } = payload;
-
-  if (Config.TEST_IN_APP_PURCHASE) {
-    return {
-      status: 1,
-      message: 'Thêm gói dev thành công'
-    }
-  }
 
   try {
     const response = await fetch(`${API_BASE}package/in-app-purchase`, {

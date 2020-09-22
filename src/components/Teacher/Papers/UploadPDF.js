@@ -485,7 +485,7 @@ export default class UploadPDF extends Component {
                   onChangeText={this.onChangeTextName}
                   numberOfLines={1}
                   returnKeyType={'done'}
-                  placeholder={'Nhập tên bộ đề'}
+                  placeholder={'Nhập tên bài kiểm tra'}
                   placeholderTextColor={'#BDBDBD'}
                   style={styles.inputName}
                 />
