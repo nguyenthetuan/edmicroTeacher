@@ -34,6 +34,7 @@ import SelectAnswer from './SelectAnswer';
 import AnalyticsManager from '../../../utils/AnalyticsManager';
 import Globals from '../../../utils/Globals';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
+import HeaderPaper from './HeaderPaper';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -314,7 +315,7 @@ export default class UploadPDF extends Component {
           setTimeout(() => {
             // this.props.navigation.goBack();
             this.props.navigation.navigate('Assignment', {
-              item: { ...res, name: name,id: res.id  },
+              item: { ...res, name: name, id: res.id },
               checked: true,
             });
           }, 100);
@@ -436,9 +437,15 @@ export default class UploadPDF extends Component {
     const numColumns = this.getNumColumns();
     const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {/* start header */}
-        <View style={styles.topheader}>
+        <HeaderPaper
+          title={'Câu Hỏi PDF'}
+          navigation={this.props.navigation}
+          color={'#fff'}
+          onRightAction={this.assignmentContent}
+        />
+        {/* <View style={styles.topheader}>
           <RippleButton
             style={{ marginTop: 3, marginLeft: 3 }}
             onPress={() => {
@@ -462,10 +469,10 @@ export default class UploadPDF extends Component {
             onPress={this.assignmentContent}>
             <Text style={styles.txtRightHeader}>Tạo bộ đề</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         {/* End header */}
         <View style={styles.viewPosition} />
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 10 }}>
           {/* start create Upload PDF */}
           <TouchableWithoutFeedback onPress={this._hideKeybroad}>
             <View
@@ -803,7 +810,7 @@ export default class UploadPDF extends Component {
 
         {this.renderModalFullViewPDF()}
         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
-      </View>
+      </SafeAreaView>
     );
   }
 }

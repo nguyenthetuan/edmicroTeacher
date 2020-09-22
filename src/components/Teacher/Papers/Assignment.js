@@ -126,13 +126,15 @@ function Item(props) {
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
         </View>
-        <DateTimePickerModal
-          isVisible={isDPVisibleStart}
-          mode='datetime'
-          date={new Date(timeStart)}
-          onConfirm={handleConfirmStart}
-          onCancel={() => setDPVisibilityStart(false)}
-        />
+        {isDPVisibleStart &&
+          <DateTimePickerModal
+            isVisible={isDPVisibleStart}
+            mode='datetime'
+            date={new Date(timeStart)}
+            onConfirm={handleConfirmStart}
+            onCancel={() => setDPVisibilityStart(false)}
+          />
+        }
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Kết thúc</Text>
           <TouchableOpacity
@@ -141,13 +143,15 @@ function Item(props) {
               {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
         </View>
-        <DateTimePickerModal
-          isVisible={isDPVisibleEnd}
-          mode='datetime'
-          date={new Date(timeEnd)}
-          onConfirm={handleConfirmEnd}
-          onCancel={() => setDPVisibilityEnd(false)}
-        />
+        {isDPVisibleEnd &&
+          <DateTimePickerModal
+            isVisible={isDPVisibleEnd}
+            mode='datetime'
+            date={new Date(timeEnd)}
+            onConfirm={handleConfirmEnd}
+            onCancel={() => setDPVisibilityEnd(false)}
+          />
+        }
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Học sinh</Text>
           <DropdownStudent
@@ -248,7 +252,7 @@ export default class Assignment extends Component {
         <TouchableOpacity style={styles.wrapHeader} onPress={this._handleGoBack}>
           <MaterialCommunityIcons name="arrow-left" color="#FFF" size={23} />
           <Text numberOfLines={1} style={styles.txtBack}>{dataItem.name}</Text>
-          <View style={{width:30}}/>
+          <View style={{ width: 30 }} />
         </TouchableOpacity>
         <FlatList
           bounces={false}

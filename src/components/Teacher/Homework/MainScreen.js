@@ -7,7 +7,8 @@ import {
   Image,
   StatusBar,
   Platform,
-  ActivityIndicator
+  ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
@@ -24,6 +25,7 @@ import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
 import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -454,11 +456,17 @@ export default function StatisticsPoints(props) {
   let timeEnd = props.data?.data.timeEnd;
   timeEnd = convertTimeHMDMY(timeEnd);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar />
+      <HeaderNavigation
+        title={'Thống kê bài tập'}
+        navigation={props.navigation}
+        onRightAction={onClickFillter}
+        actionIcon={!isShow ? AppIcon.icons_filter : null}
+      />
       <View style={styles.header}>
-        <View style={styles.headerNavigation}>
-          {
+        {/* <View style={styles.headerNavigation}> */}
+        {/* {
             isShow ? (
               <RippleButton
                 onPress={() => {
@@ -474,17 +482,17 @@ export default function StatisticsPoints(props) {
             )
               :
               <View style={{ width: 30 }} />
-          }
+          } */}
 
-          <Text style={styles.txtHeaderNavigation}>Thống kê bài tập</Text>
-          {
+        {/* <Text style={styles.txtHeaderNavigation}>Thống kê bài tập</Text> */}
+        {/* {
             !isShow ?
               <RippleButton onPress={onClickFillter}>
                 <Image source={AppIcon.icons_filter} resizeMode={'contain'} />
               </RippleButton>
               : null
-          }
-        </View>
+          } */}
+        {/* </View> */}
         {
           !isLoading ?
             _.isEmpty(props.data) ?
@@ -517,7 +525,7 @@ export default function StatisticsPoints(props) {
         onPressItemClass={(index) => onPressItemClass(index)}
         handleStatistic={handleStatistic}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

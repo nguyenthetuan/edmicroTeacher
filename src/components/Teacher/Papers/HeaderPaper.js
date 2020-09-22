@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
-import RippleButton from '../common-new/RippleButton';
+import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class HeaderNavigation extends React.PureComponent {
+export default class HeaderPaper extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -20,17 +20,13 @@ export default class HeaderNavigation extends React.PureComponent {
     };
 
     navigateUser = () => {
-        const { onRightAction } = this.props;
-        if(onRightAction){
-            return onRightAction();
-        }
         this.props.navigation.navigate('ChangInfo', {
             statusbar: 'light-content',
         });
     }
 
     render() {
-        const { actionIcon, title, color, backgroundColor } = this.props;
+        const { onRightAction, title, color, backgroundColor } = this.props;
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
                 <RippleButton onPress={this.onGoback}>
@@ -43,19 +39,11 @@ export default class HeaderNavigation extends React.PureComponent {
                         color: color || '#383838'
                     }]}>{title}</Text>
                 </View>
-                {actionIcon ?
-                    <TouchableOpacity
-                        onPress={this.navigateUser}
-                        style={styles.btnAvatar}>
-                        <Image
-                            resizeMode="cover"
-                            source={actionIcon}
-                            style={styles.imgAvatar}
-                        />
-                    </TouchableOpacity>
-                    :
-                    <View style={styles.btnAvatar} />
-                }
+                <TouchableOpacity
+                    style={styles.rightHeader}
+                    onPress={onRightAction}>
+                    <Text style={styles.txtRightHeader}>Tạo bộ đề</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -95,5 +83,23 @@ const styles = StyleSheet.create({
         height: 25,
         width: 25,
         borderRadius: 12.5,
+    },
+    rightHeader: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        alignContent: 'center',
+        paddingHorizontal: 5,
+        paddingVertical: 2,
+        backgroundColor: '#F49A31',
+        borderRadius: 5,
+        marginEnd: 5,
+    },
+    txtRightHeader: {
+        paddingHorizontal: 13,
+        fontSize: 12,
+        fontFamily: 'Nunito-Regular',
+        color: '#FFF',
     },
 });
