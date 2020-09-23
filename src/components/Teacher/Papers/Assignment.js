@@ -28,6 +28,7 @@ import Globals from '../../../utils/Globals';
 import { MaterialKeyBoard } from '../../common/Material';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 const { width, height } = Dimensions.get('screen');
 
 function Item(props) {
@@ -248,16 +249,19 @@ export default class Assignment extends Component {
     const { data } = this.state;
     const dataItem = this.props.navigation.getParam('item');
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.wrapHeader} onPress={this._handleGoBack}>
-          <MaterialCommunityIcons name="arrow-left" color="#FFF" size={23} />
-          <Text numberOfLines={1} style={styles.txtBack}>{dataItem.name}</Text>
-          <View style={{ width: 30 }} />
-        </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        <SafeAreaView style={styles.container} />
+        <HeaderNavigation
+          backgroundColor={'#56CCF2'}
+          color={'#fff'}
+          title={dataItem.name}
+          navigation={this.props.navigation}
+        />
         <FlatList
           bounces={false}
           showsVerticalScrollIndicator={false}
           data={data}
+          style={{ backgroundColor: '#fff' }}
           keyExtractor={(item, index) => index.toString()}
           ListHeaderComponent={this._renderListHeader}
           ListEmptyComponent={this._renderListEmpty}
@@ -270,14 +274,15 @@ export default class Assignment extends Component {
           }}
         />
         <Toast ref="toast" position={'bottom'} />
-      </View>
+        <SafeAreaView />
+      </View >
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#56CCF2'
   },
   wrapHeader: {
     flexDirection: 'row',

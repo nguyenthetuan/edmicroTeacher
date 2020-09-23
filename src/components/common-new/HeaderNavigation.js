@@ -21,7 +21,7 @@ export default class HeaderNavigation extends React.PureComponent {
 
     navigateUser = () => {
         const { onRightAction } = this.props;
-        if(onRightAction){
+        if (onRightAction) {
             return onRightAction();
         }
         this.props.navigation.navigate('ChangInfo', {
@@ -30,14 +30,18 @@ export default class HeaderNavigation extends React.PureComponent {
     }
 
     render() {
-        const { actionIcon, title, color, backgroundColor } = this.props;
+        const { actionIcon, title, color, backgroundColor, isShow = true } = this.props;
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-                <RippleButton onPress={this.onGoback}>
-                    <View style={styles.button}>
-                        <Icon name="arrow-left" color={color || "#383838"} size={25} />
-                    </View>
-                </RippleButton>
+                {!!isShow ?
+                    <RippleButton onPress={this.onGoback}>
+                        <View style={styles.button}>
+                            <Icon name="arrow-left" color={color || "#383838"} size={25} />
+                        </View>
+                    </RippleButton>
+                    :
+                    <View style={styles.btnAvatar} />
+                }
                 <View style={styles.viewTitle}>
                     <Text style={[styles.textTitleHeader, {
                         color: color || '#383838'

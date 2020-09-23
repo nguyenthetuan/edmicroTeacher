@@ -463,6 +463,7 @@ export default function StatisticsPoints(props) {
         navigation={props.navigation}
         onRightAction={onClickFillter}
         actionIcon={!isShow ? AppIcon.icons_filter : null}
+        isShow={isShow}
       />
       <View style={styles.header}>
         {/* <View style={styles.headerNavigation}> */}
