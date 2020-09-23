@@ -47,6 +47,7 @@ export default class listStudent extends Component {
     try {
       const { token } = await dataHelper.getToken();
       const response = await Api.getInfoClass({ token, classId })
+      console.log(response);
       this.setState({
         isLoading: false,
         data: response && response,

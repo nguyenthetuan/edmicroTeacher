@@ -19,7 +19,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import ImagePickerCrop from 'react-native-image-crop-picker';
 import ImagePickerR from 'react-native-image-picker';
 import jwtDecode from 'jwt-decode';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import apiHelper from '../../services/apiExamHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';
 import {
@@ -40,11 +40,6 @@ import LoadingScreen from '../libs/LoadingScreen';
 import ScrollView2Colors from '../common/ScrollView2Colors';
 import { saveAvatarAction } from '../../actions/userAction';
 import _ from 'lodash';
-import AppIcon from '../../utils/AppIcon';
-import { mainStyle } from '../../themes';
-import RippleButton from '../common-new/RippleButton';
-import { HEIGHT_TOPBAR } from '../../utils/Common';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getSourceAvatar } from '../../utils/Helper';
 
 const options = {
@@ -643,13 +638,13 @@ class ChangeInfo extends Component {
               style={{ backgroundColor: '#56CCF2' }}
             />
           </ScrollView>
-          {this.state.isDateTimePickerVisible &&
-            <DateTimePicker
-              isVisible={this.state.isDateTimePickerVisible}
-              onConfirm={this.handleDatePicked}
-              onCancel={this.hideDateTimePicker}
-            />
-          }
+          <DateTimePickerModal
+            isVisible={this.state.isDateTimePickerVisible}
+            mode="date"
+            date={new Date(this.state.Birthday)}
+            onConfirm={this.handleDatePicked}
+            onCancel={this.hideDateTimePicker}
+          />
         </ScrollView2Colors>
         <Toast ref="toast" position={'bottom'} />
         <LoadingScreen

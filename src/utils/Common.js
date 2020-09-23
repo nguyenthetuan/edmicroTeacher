@@ -641,7 +641,11 @@ export const getAvatarSource = (url) => {
 }
 
 export const getAvatarSourceNew = (avatar) => {
-  return avatar.indexOf('http') != 0 ? `https://avatar.onluyen.vn/${avatar}` : avatar
+  if (avatar.startsWith('//')) {
+    return `https:${avatar}`;
+  } else {
+    return avatar;
+  }
 }
 
 export const convertNameToAvatar = (name) => {

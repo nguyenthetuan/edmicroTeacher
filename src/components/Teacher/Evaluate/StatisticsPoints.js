@@ -263,7 +263,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 16,
     backgroundColor: '#2D9CDB',
-    paddingTop: 20
+    paddingTop: 20,
+    paddingBottom: 20
   },
   txtTitleContent: {
     marginVertical: 11,
@@ -321,7 +322,7 @@ const styles = StyleSheet.create({
   },
   chartCircle: {
     flex: 1,
-    marginStart: width / 8,
+    marginStart: width / 9,
   },
   containerChartBar: {
     width: width - 54,

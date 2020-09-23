@@ -31,9 +31,16 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 const { width, height } = Dimensions.get('screen');
 
+const Stage = {
+  begin: 1,
+  end: 2
+}
+
 function Item(props) {
   const dropdownStudent = useRef();
   const item = props.item;
+
+  let [stage, setStage] = useState(Stage.begin);
 
   const [timeStart, setTimeStart] = useState(
     item.timeStart
@@ -46,17 +53,25 @@ function Item(props) {
       : new Date().getTime()
   );
   const [isCheck, setCheck] = useState(item.permissionViewResult === 1);
-  const [isDPVisibleStart, setDPVisibilityStart] = useState(false);
-  const [isDPVisibleEnd, setDPVisibilityEnd] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const handleConfirmStart = (date) => {
-    setTimeStart(date);
-    setDPVisibilityStart(false);
+  const showDatePicker = (stage) => {
+    setStage(stage);
+    setDatePickerVisibility(true);
   };
 
-  const handleConfirmEnd = (date) => {
-    setTimeEnd(date);
-    setDPVisibilityEnd(false);
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", stage);
+    if (_=stage == Stage.begin) {
+      setTimeStart(date);
+    } else {
+      setTimeEnd(date);
+    }
+    hideDatePicker();
   };
 
   const validate = () => {
@@ -121,13 +136,13 @@ function Item(props) {
           <Text style={styles.txtTitleItemContent}>Bắt đầu</Text>
           <TouchableOpacity
             disabled={item.timeStart}
-            onPress={() => setDPVisibilityStart(true)}
+            onPress={() => showDatePicker(Stage.begin)}
             style={[styles.btnDate, { backgroundColor: item.timeStart ? '#cccccc' : '#D9ebf5' }]}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
         </View>
-        {isDPVisibleStart &&
+        {/* {isDPVisibleStart &&
           <DateTimePickerModal
             isVisible={isDPVisibleStart}
             mode='datetime'
@@ -135,16 +150,17 @@ function Item(props) {
             onConfirm={handleConfirmStart}
             onCancel={() => setDPVisibilityStart(false)}
           />
-        }
+        } */}
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Kết thúc</Text>
           <TouchableOpacity
-            onPress={() => setDPVisibilityEnd(true)} style={styles.btnDate}>
+            onPress={() => showDatePicker(Stage.end)}
+            style={styles.btnDate}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
         </View>
-        {isDPVisibleEnd &&
+        {/* {isDPVisibleEnd &&
           <DateTimePickerModal
             isVisible={isDPVisibleEnd}
             mode='datetime'
@@ -152,7 +168,7 @@ function Item(props) {
             onConfirm={handleConfirmEnd}
             onCancel={() => setDPVisibilityEnd(false)}
           />
-        }
+        } */}
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Học sinh</Text>
           <DropdownStudent
@@ -179,6 +195,12 @@ function Item(props) {
           <Text style={styles.txtAssignment}>Giao bài</Text>
         </TouchableOpacity>
       </View>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="datetime"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />
     </View >
   )
 }

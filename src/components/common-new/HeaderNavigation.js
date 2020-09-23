@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class HeaderNavigation extends React.PureComponent {
+export default class HeaderNavigation extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -33,7 +33,7 @@ export default class HeaderNavigation extends React.PureComponent {
         const { actionIcon, title, color, backgroundColor, isShow = true } = this.props;
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-                {!!isShow ?
+                {isShow ?
                     <RippleButton onPress={this.onGoback}>
                         <View style={styles.button}>
                             <Icon name="arrow-left" color={color || "#383838"} size={25} />
