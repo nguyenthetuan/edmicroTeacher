@@ -81,7 +81,7 @@
 		00E356F21AD99517003FC87E /* schoolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = schoolTests.m; sourceTree = "<group>"; };
 		0351DCAE20FCBA2AA8740782 /* Pods-school.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school.debugdev.xcconfig"; path = "Target Support Files/Pods-school/Pods-school.debugdev.xcconfig"; sourceTree = "<group>"; };
 		0DC6E97260B669E863EF9945 /* Pods-school-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* School-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "School-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Shool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = school/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = school/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* School-Dev.app */,
+				13B07F961A680F5B00A75B9A /* Shool.app */,
 				00E356EE1AD99517003FC87E /* schoolTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* school-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* school-tvOSTests.xctest */,
@@ -416,7 +416,7 @@
 			);
 			name = school;
 			productName = school;
-			productReference = 13B07F961A680F5B00A75B9A /* School-Dev.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Shool.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* school-tvOS */ = {
@@ -1078,7 +1078,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = "School-Dev";
+				PRODUCT_NAME = Shool;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1102,7 +1102,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = "School-Dev";
+				PRODUCT_NAME = Shool;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1413,7 +1413,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = "School-Staging";
+				PRODUCT_NAME = Shool;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1569,7 +1569,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = "School-Staging";
+				PRODUCT_NAME = Shool;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1733,7 +1733,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = "Trường học";
+				PRODUCT_NAME = Shool;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1889,7 +1889,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.onluyen.school;
-				PRODUCT_NAME = "Trường học";
+				PRODUCT_NAME = Shool;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

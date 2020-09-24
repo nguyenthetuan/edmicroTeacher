@@ -68,11 +68,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     marginStart: -10,
-    color: '#396599',
     // width: AppConst.CONTAINER_FORM_WIDTH + 40,
     height: 40,
-    fontFamily: 'Nunito-Bold',
-    fontWeight: 'bold',
   },
   textStyle: {
     color: '#000',

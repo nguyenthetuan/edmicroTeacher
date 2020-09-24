@@ -629,7 +629,7 @@ class ChangeInfo extends Component {
               btn={'rgb'}
               size={100}
               title={'Lưu thay đổi'}
-              width={'70%'}
+              width={width * 0.7}
               onPress={this.updateProfile.bind(this)}
               circle
               center
