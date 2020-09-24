@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -15,21 +15,22 @@ import {
   TouchableOpacity,
   Animated,
   Keyboard,
+  SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import SearchInput, {createFilter} from 'react-native-search-filter';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import SearchInput, { createFilter } from 'react-native-search-filter';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import _ from 'lodash';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 let heightTextInput = 0,
   heightContent = 0;
 const KEY_TO_FILTERS = ['name'];
 export default class ModalCurriculum extends Component {
   constructor(props) {
     super(props);
-    const {data} = this.props;
+    const { data } = this.props;
     this.state = {
       visible: false,
       dropdownVisible: false,
@@ -38,6 +39,7 @@ export default class ModalCurriculum extends Component {
       searchKey: '',
       data: data || [],
       isKeyBoard: false,
+      searched: false
     };
     this.positionY = new Animated.Value(-40);
   }
@@ -63,7 +65,7 @@ export default class ModalCurriculum extends Component {
       duration: event.duration - 200,
       toValue: isIphoneX() ? -160 : -80,
     }).start();
-    this.setState({isKeyBoard: true});
+    this.setState({ isKeyBoard: true });
   };
 
   keyboardWillHide = (event) => {
@@ -73,7 +75,7 @@ export default class ModalCurriculum extends Component {
     }).start();
   };
 
-  selectItem = ({item, index}) => {
+  selectItem = ({ item, index }) => {
     this.setState(
       {
         selectItem: item,
@@ -87,14 +89,15 @@ export default class ModalCurriculum extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (JSON.stringify(nextProps.data) !== JSON.stringify(this.props.data)) {
       this.setState({
-        selectItem: {name: '', code: ''},
+        selectItem: { name: '', code: '' },
         data: nextProps.data,
       });
     }
     return true;
   }
 
-  searchExactly = ({data, item}) => {
+  searchExactly = ({ data, item }) => {
+    console.log(data);
     let reslult = [];
     _.map(data, (element) => {
       if (element.parentCode === item.code) {
@@ -104,26 +107,27 @@ export default class ModalCurriculum extends Component {
     this.setState({
       searchKey: '',
       data: reslult,
+      searched: true,
     });
   };
 
   deleteItem = () => {
     this.setState(
       {
-        selectItem: {name: '', code: ''},
+        selectItem: { name: '', code: '' },
       },
       () => this.props.onPress(this.state.selectItem),
     );
   };
 
   _closeModal = () => {
-    const {isKeyBoard} = this.state;
+    const { isKeyBoard } = this.state;
     if (isKeyBoard) {
-      this.setState({isKeyBoard: false});
+      this.setState({ isKeyBoard: false });
       Keyboard.dismiss();
       return;
     }
-    this.setState({visible: false});
+    this.setState({ visible: false });
   };
 
   renderListEmptyComponent = () => {
@@ -134,8 +138,8 @@ export default class ModalCurriculum extends Component {
     );
   };
 
-  renderItem = ({item, index}) => {
-    const {data} = this.state;
+  renderItem = ({ item, index }) => {
+    const { data } = this.state;
     let name = '';
     if (item.name) {
       name = item.name;
@@ -144,22 +148,23 @@ export default class ModalCurriculum extends Component {
         name = item.content?.slice(3, item.content.length - 4);
       }
     }
+
     return (
       <TouchableOpacity
         style={styles.wrapElement}
-        onPress={() => this.selectItem({item, index})}
-        onLongPress={() => !item.isLeaf && this.searchExactly({data, item})}>
+        onPress={() => this.selectItem({ item, index })}
+        onLongPress={() => !item.isLeaf && this.searchExactly({ data, item })}>
         <Text style={styles.name} numberOfLines={1}>
           {item.name}
         </Text>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={() => this.selectItem({item, index})}>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={() => this.selectItem({ item, index })}>
             <EvilIcons name="search" size={20} color="#BDBDBD" />
           </TouchableOpacity>
           {!item.isLeaf && (
             <TouchableOpacity
-              style={{marginLeft: 5}}
-              onPress={() => this.searchExactly({data, item})}>
+              style={{ marginLeft: 5 }}
+              onPress={() => this.searchExactly({ data, item })}>
               <Image
                 source={require('../../../asserts/appIcon/icSearch.png')}
                 resizeMode="contain"
@@ -172,29 +177,28 @@ export default class ModalCurriculum extends Component {
   };
 
   render() {
-    const {visible, dropdownVisible, selectItem, searchKey, data} = this.state;
-    const {title, widthItem, colum, value} = this.props;
+    const { visible, dropdownVisible, selectItem, searchKey, data } = this.state;
+    const { title, widthItem, colum, value } = this.props;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
-    console.log('fliter', fliter);
     return (
-      <View style={{flex: 1}}>
-        <TouchableOpacity style={{flex: 1}} onPress={() => this.setState({visible: true})}>
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.setState({ visible: true })}>
           <Text style={styles.txtTitle}>{title}</Text>
           <View style={styles.wrapModal}>
             {!_.isEmpty(selectItem) && selectItem.name ? (
               <View style={styles.wrapElementSelect}>
                 <TouchableOpacity
-                  style={{flexDirection: 'row'}}
+                  style={{ flexDirection: 'row' }}
                   onPress={() => this.deleteItem()}>
                   <Text style={styles.txtSelectItem} numberOfLines={1}>
                     {selectItem.name}
                   </Text>
-                  <Text style={{color: '#757575', fontSize: 10}}>x</Text>
+                  <Text style={{ color: '#757575', fontSize: 10 }}>x</Text>
                 </TouchableOpacity>
               </View>
             ) : (
-              <View />
-            )}
+                <View />
+              )}
             <TouchableOpacity >
               <View style={styles.icDow}>
                 <Ionicons
@@ -208,10 +212,10 @@ export default class ModalCurriculum extends Component {
 
           <Modal visible={visible} transparent={true}>
             <TouchableWithoutFeedback onPress={this._closeModal}>
-              <View style={[styles.container, {height: this.props.height}]}>
+              <View style={[styles.container, { height: this.props.height }]}>
                 <View style={styles.content}>
                   <Animated.View
-                    style={[styles.topheader, {top: this.positionY}]}>
+                    style={[styles.topheader, { top: this.positionY }]}>
                     <TouchableOpacity
                       onPress={() =>
                         this.setState({
@@ -225,11 +229,11 @@ export default class ModalCurriculum extends Component {
                         size={20}
                       />
                     </TouchableOpacity>
-                    <View style={{flexDirection: 'row', overflow: 'hidden'}}>
+                    <View style={{ flexDirection: 'row', overflow: 'hidden' }}>
                       <TextInput
                         style={styles.TextInput}
                         onChangeText={(Text) =>
-                          this.setState({searchKey: Text})
+                          this.setState({ searchKey: Text })
                         }
                         value={searchKey}
                         onLayout={(e) =>
@@ -261,6 +265,7 @@ export default class ModalCurriculum extends Component {
                 </View>
               </View>
             </TouchableWithoutFeedback>
+            <SafeAreaView />
           </Modal>
         </TouchableOpacity>
       </View>

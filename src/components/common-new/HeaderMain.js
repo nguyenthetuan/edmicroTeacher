@@ -24,7 +24,6 @@ export default class HeaderMain extends React.Component {
   render() {
     const { userId, timeCached } = this.props;
     const source = getSourceAvatar(userId, timeCached);
-    console.log(source);
     return (
       <View style={styles.container}>
         <RippleButton onPress={this.openDrawer}>

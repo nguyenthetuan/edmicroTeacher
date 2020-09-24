@@ -49,11 +49,11 @@ const TeacherStack = createStackNavigator({
   },
   QuestionLibrary: {
     screen: QuestionLibrary,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: { header: null, gesturesEnabled: true },
   },
   ConfigQuestion: {
     screen: ConfigQuestion,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: { header: null, gesturesEnabled: true },
   },
   Assignment: {
     screen: Assignment,

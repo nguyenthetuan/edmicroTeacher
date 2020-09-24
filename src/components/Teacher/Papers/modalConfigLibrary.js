@@ -14,6 +14,7 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
@@ -187,6 +188,7 @@ export default class ModalConfigLibrary extends Component {
                 </TouchableWithoutFeedback>
               </View>
             </TouchableWithoutFeedback>
+            <SafeAreaView />
           </Modal>
         </View>
       </View>

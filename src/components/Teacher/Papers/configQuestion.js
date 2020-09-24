@@ -35,6 +35,7 @@ import SwitchButton from '../../../components/common/ButtonSwitch';
 import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
+import HeaderPaper from './HeaderPaper';
 
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -139,7 +140,7 @@ class ConfigQuestion extends Component {
       listGrades: this.props.paper.listGrade && this.props.paper.listGrade,
       listSubjects:
         this.props.paper.listSubject && this.props.paper.listSubject,
-    },()=>this.activeSubject({item:{code:this.props.navigation.state.params.curriculumCode}}));
+    }, () => this.activeSubject({ item: { code: this.props.navigation.state.params.curriculumCode } }));
   }
 
   getTotalTypeQuestion = (questions) => {
@@ -587,23 +588,15 @@ class ConfigQuestion extends Component {
     } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.topheader}>
-          <RippleButton
-            style={{ marginTop: 3, marginLeft: 5 }}
-            onPress={() => {
-              this.props.navigation.goBack();
-            }}>
-            <MaterialCommunityIcons name="arrow-left" color="#FFF" size={23} />
-          </RippleButton>
-          <View style={{ alignItems: 'center', marginLeft: width * 0.1 }}>
-            <Text style={styles.txtTitle}>Cấu hình câu hỏi</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.rightHeader}
-            onPress={() => this.config()}>
-            <Text style={styles.txtRightHeader}>Tạo bài tập</Text>
-          </TouchableOpacity>
-        </View>
+        <SafeAreaView />
+        <HeaderPaper
+          title={'Cấu hình câu hỏi'}
+          color={'white'}
+          navigation={this.props.navigation}
+          actionIcon={require('../../../asserts/appIcon/icRight.png')}
+          actionStyle={{ borderRadius: 0 }}
+          onRightAction={() => this.config()}
+        />
         <ScrollView
           contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
           ref={'ScrollView'}>
@@ -983,7 +976,7 @@ class ConfigQuestion extends Component {
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                   onPress={this.updateScore}>
                   <Text style={styles.txtDeleteChoose}>Chia đều điểm</Text>
-                  <View style={{marginLeft:5}}>
+                  <View style={{ marginLeft: 5 }}>
                     <Image
                       source={require('../../../asserts/images/iconDiv.png')}
                       resizeMode="contain"
@@ -1022,6 +1015,7 @@ class ConfigQuestion extends Component {
               subjectId={'TOAN'}
             />
           </View>
+          <SafeAreaView />
         </ScrollView>
         <TouchableOpacity
           style={styles.buttomTop}
@@ -1052,18 +1046,19 @@ class ConfigQuestion extends Component {
                     <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
                     :
                     <WebView
-                    ref={(ref) => (this.webview = ref)}
-                    source={{
-                      html: html.renderMatarialDetail(htmlContent),
-                      baseUrl,
-                    }}
-                    subjectId={'TOAN'}
-                    originWhitelist={['file://']}
-                    scalesPageToFit={false}
-                    javaScriptEnabled
-                    showsVerticalScrollIndicator={false}
-                    startInLoadingState={false}
-                  />
+                      ref={(ref) => (this.webview = ref)}
+                      source={{
+                        html: html.renderMatarialDetail(htmlContent),
+                        baseUrl,
+                      }}
+                      subjectId={'TOAN'}
+                      originWhitelist={['file://']}
+                      scalesPageToFit={false}
+                      javaScriptEnabled
+                      showsVerticalScrollIndicator={false}
+                      startInLoadingState={false}
+                      style={{ backgroundColor: '#fff' }}
+                    />
                   }
                 </View>
               </TouchableWithoutFeedback>

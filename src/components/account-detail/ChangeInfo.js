@@ -651,6 +651,7 @@ class ChangeInfo extends Component {
           isLoading={this.state.isUpdate}
           bgColor={'transparent'}
         />
+        <SafeAreaView />
       </View>
     );
   }

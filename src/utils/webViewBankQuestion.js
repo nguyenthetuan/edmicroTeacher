@@ -7,7 +7,6 @@ const { bgColorActive, bgOptionTrue, bgOptionFalse, bgOptionActive,
   bgViewTrue, bgViewFalse, textReviewColor, borderButton,
   bgButtonColor, textVideoColor, borderColor } = WebColor;
 const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
-  console.log('data', data)
   let padding = '14px';
   if (!isSubjectMathJax(subjectId)) {
     padding = '21px';
@@ -159,10 +158,10 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
        margin-right: 16px;overflow: hidden;">
       `
       html += `<div style="padding:10px 15px; margin-bottom:5px">
-      ${dataStandard.idMaterial&&` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
+      ${dataStandard.idMaterial && ` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
         xem học liệu
-        </span>`||``
-      }
+        </span>`|| ``
+        }
       <span style="float: right" id="arrayWarn${i}" data-numberQuestion="${dataStandard.questionNumber}">
       `;
       const index = _.findIndex(listQuestionAdded, ['questionId', data[i].questionId])
@@ -170,11 +169,15 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
         html += ` <div id=${dataStandard.questionId}add style="padding-right: 5px; display: ${index < 0 ? 'block' : 'none'};flex-direction: row;border: 0.5px solid #56BB73;border-radius: 4px;padding:3px;padding-bottom: 3px;" 
         onclick="addQuestion('${dataStandard.questionId}')">
           <span style="color:#828282;font-size: 9px; margin-right: 3px;">Thêm +</span>
-        </div>`
-        html += `<div id=${dataStandard.questionId}close style="padding-left: 5px; display: ${index < 0 ? 'none' : 'block'};flex-direction: row;border: 0.5px solid #FFA4AD;border-radius: 4px;padding:3px;padding-bottom: 3px;" 
+        </div>`;
+        html += ` <div id=${dataStandard.questionId}close style="padding-right: 5px; display: ${index < 0 ? 'none' : 'block'};flex-direction: row;border: 0.5px solid #FFA4AD;border-radius: 4px;padding:3px;padding-bottom: 3px;padding-left:8px;" 
         onclick="deleteQuestion('${dataStandard.questionId}')">
           <span style="color:#828282;font-size: 9px; margin-right: 3px;">Huỷ X</span>
-        </div>`
+        </div>`;
+        // html += `<div id=${dataStandard.questionId}close style="padding-left: 5px; display: ${index < 0 ? 'none' : 'block'};flex-direction: row;border: 0.5px solid #FFA4AD;border-radius: 4px;padding:3px;padding-bottom: 3px;" 
+        // onclick="deleteQuestion('${dataStandard.questionId}')">
+        //   <span style="color:#828282;font-size: 9px; margin-right: 2px;">Huỷ X</span>
+        // </div>`;
       } else {
         // html += `<div style="padding-left: 5px; flex-direction: row;border: 0.5px solid #FFA4AD;border-radius: 4px;padding:3px;padding-bottom: 3px;" 
         // onclick="deleteQuestion('${dataStandard.questionId}')">
@@ -190,8 +193,8 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
       let typeAnswer = dataStandard.typeAnswer;
 
 
-      
-      if (dataStandard.typeAnswer <= 1 && dataStandard.options.length !==0 || dataStandard.options.length !==0) {
+
+      if (dataStandard.typeAnswer <= 1 && dataStandard.options.length !== 0 || dataStandard.options.length !== 0) {
         let countOption = Object.keys(dataStandard).length;
         for (let j = 0; j < dataStandard.options.length; j++) {
           let idOption = dataStandard.options[j];
@@ -222,7 +225,7 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
             </div>
             `;
         }
-      }else{
+      } else {
         if (typeAnswer > 2) {
           html += `<div style="margin-left:15px;margin-right:15px;">
           <textarea placeholder="Nhập câu trả lời" disabled type="text" name="in" style="width:96%;min-height:80px;max-height:140px;padding:5px;margin:15px 0" value="";> ${dataStandard.userTextAnswer || ''}</textarea>

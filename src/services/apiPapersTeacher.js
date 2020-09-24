@@ -67,7 +67,7 @@ const assignment = async ({ token, body }) => {
   return responseJson;
 }
 
-const getUser = async ({ token }) => {
+const getSubjects = async ({ token }) => {
   let response = await fetch(`${API_BASE}school-online/common/subject`, {
     method: 'GET',
     headers: getHeaders(token)
@@ -309,7 +309,7 @@ module.exports = {
   signedUrlContentPDF,
   uploadPDF,
   assignmentContent,
-  getUser,
+  getSubjects,
   getDetailSubject,
   getLearingTarget,
   searchPaper,

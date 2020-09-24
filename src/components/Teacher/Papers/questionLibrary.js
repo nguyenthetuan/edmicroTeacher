@@ -32,6 +32,7 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { AlertNoti } from '../../../utils/Common';
 import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
   'Thêm câu hỏi không thành công. Bạn vui lòng chọn câu hỏi khác.';
@@ -40,6 +41,7 @@ if (Platform.OS === 'ios') {
   baseUrl = 'web/';
 }
 const { width, height } = Dimensions.get('window');
+
 class QuestionLibrary extends Component {
   constructor(props) {
     super(props);
@@ -72,12 +74,15 @@ class QuestionLibrary extends Component {
       isLoadingModal: false,
     };
   }
+
   displayWarning(b) {
     this.refs.warningModal.showModal();
   }
+
   setListQuestion = async (data) => {
     const response = await dataHeper.saveQuestion(data);
   };
+
   onHandleMessage = (event) => {
     const data = event.nativeEvent.data.split('---');
     const { questions, listQuestionAdded } = this.state;
@@ -116,6 +121,7 @@ class QuestionLibrary extends Component {
       this.setState({ isModal: true }, () => this.getDetailMatarial(data[1]))
     }
   };
+
   getDetailMatarial = async (idMatarial) => {
     const { token } = await dataHelper.getToken();
     this.setState({ isLoadingModal: true })
@@ -131,27 +137,28 @@ class QuestionLibrary extends Component {
     // this.webview.postMessage('onTop');
     this.refs.WebViewComponent._onTop();
   };
+
   async componentDidMount() {
     this.getQuestionLocal();
     const { token } = await dataHelper.getToken();
     const { objectSearch } = this.state;
     if (token) {
       try {
-        const response = await apiPapers.getUser({ token });
-        console.log('rexxx', response)
-        this.setState(
+        const response = await apiPapers.getSubjects({ token });
+        await this.setState(
           {
             subject: response && response,
             objectSearch: {
               ...objectSearch,
               curriculumCode: response[0].code,
             },
-          },
-          () => this.getDetailSubject(),
+          }
         );
+        this.getDetailSubject();
       } catch (error) { }
     }
   }
+
   getQuestionLocal = async () => {
     const getListQuestion = await dataHeper.getQuestion();
     !_.isEmpty(getListQuestion) &&
@@ -159,6 +166,7 @@ class QuestionLibrary extends Component {
         listQuestionAdded: getListQuestion,
       });
   };
+
   getDetailSubject = async () => {
     const { objectSearch } = this.state;
     try {
@@ -168,25 +176,24 @@ class QuestionLibrary extends Component {
           token: token,
           subjectCode: objectSearch.curriculumCode,
         });
-        this.setState(
+        await this.setState(
           {
             element: response && response,
             objectSearch: {
               ...objectSearch,
-              // curriculumCode: response && response[0].id,
+              curriculumCode: response && response[0].id,
             },
             isLoading: false,
           },
-          () => {
-            this.searchPaper();
-            this.getLearingTarget();
-          },
         );
+        this.searchPaper();
+        this.getLearingTarget();
       }
     } catch (error) {
       this.setState({ isLoading: false });
     }
   };
+
   getLearingTarget = async () => {
     const { objectSearch } = this.state;
     try {
@@ -205,6 +212,7 @@ class QuestionLibrary extends Component {
       }
     } catch (error) { }
   };
+
   onPress = (value, item) => {
     this.refs.PaginationUtils.resetState();
     const { objectSearch } = this.state;
@@ -261,7 +269,10 @@ class QuestionLibrary extends Component {
             },
             isLoading: true,
           },
-          () => this.searchPaper(),
+          () =>{
+            console.log(this.state.objectSearch.learningTargetsCode);
+            this.searchPaper();
+          }
         );
         break;
       case 5:
@@ -283,6 +294,7 @@ class QuestionLibrary extends Component {
         break;
     }
   };
+
   searchPaper = async (isAllowRerennder) => {
     const key = this.getKeyCache(this.state.objectSearch);
     try {
@@ -308,23 +320,24 @@ class QuestionLibrary extends Component {
               this.setState({
                 isLoading: false,
               })
-            },5000)
+            }, 5000)
           });
           return;
         }
         this.setState({
           questions: !!response && response,
           totalQuestion,
-        },()=>{
-          setTimeout(()=>{
+        }, () => {
+          setTimeout(() => {
             this.setState({
               isLoading: false,
             })
-          },5000)
+          }, 5000)
         });
       }
     } catch (error) { }
   };
+
   getKeyCache = (obj) => {
     let _return = '';
     for (const property in obj) {
@@ -356,6 +369,20 @@ class QuestionLibrary extends Component {
       },
     );
   };
+
+  configurationQuestion = () => {
+    const { listQuestionAdded } = this.state;
+    if (listQuestionAdded.length !== 0) {
+      this.props.navigation.navigate('ConfigQuestion', {
+        nagigation: this.props.nagigation,
+        statusbar: 'light-content',
+        curriculumCode: this.state.objectSearch.curriculumCode,
+      });
+    } else {
+      AlertNoti(messageNoQuestion);
+    }
+  }
+
   render() {
     const {
       listQuestionAdded,
@@ -379,37 +406,15 @@ class QuestionLibrary extends Component {
     ];
     return (
       <View style={styles.container}>
-        <View style={styles.topheader}>
-          <RippleButton
-            style={{ marginTop: 3, marginLeft: 5 }}
-            onPress={() => {
-              this.props.navigation.goBack();
-            }}>
-            <MaterialCommunityIcons name="arrow-left" color="#FFF" size={23} />
-          </RippleButton>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={styles.txtTitle}>Ngân hàng câu hỏi</Text>
-          </View>
-          <View style={styles.rightHeader}>
-            <TouchableOpacity
-              onPress={() => {
-                if (listQuestionAdded.length !== 0) {
-                  this.props.navigation.navigate('ConfigQuestion', {
-                    nagigation: this.props.nagigation,
-                    statusbar: 'light-content',
-                    curriculumCode: this.state.objectSearch.curriculumCode,
-                  });
-                } else {
-                  AlertNoti(messageNoQuestion);
-                }
-              }}>
-              <Image
-                source={require('../../../asserts/appIcon/icRight.png')}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <SafeAreaView />
+        <HeaderNavigation
+          title={'Ngân hàng câu hỏi'}
+          color={'white'}
+          navigation={this.props.navigation}
+          actionIcon={require('../../../asserts/appIcon/icRight.png')}
+          actionStyle={{ borderRadius: 0 }}
+          onRightAction={() => this.configurationQuestion()}
+        />
         <View style={styles.wrapSelectQuestion}>
           <View style={{ flex: 0.45 }}>
             <ModalConfigLibrary
@@ -561,6 +566,7 @@ class QuestionLibrary extends Component {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
+        <SafeAreaView style={{ backgroundColor: '#fff' }} />
       </View>
     );
   }

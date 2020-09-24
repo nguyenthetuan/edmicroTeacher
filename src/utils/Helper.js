@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 export const getUserByToken = (token) => {
+    const timeCached = new Date().getTime();
     const {
         GradeId: gradeId,
         userId,
@@ -22,7 +23,8 @@ export const getUserByToken = (token) => {
         codeApp,
         createBySchool,
         userName,
-        phoneNumber
+        phoneNumber,
+        timeCached
     }
 }
 

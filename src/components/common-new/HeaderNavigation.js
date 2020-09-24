@@ -52,9 +52,11 @@ export default class HeaderNavigation extends React.Component {
                         onPress={this.navigateUser}
                         style={styles.btnAvatar}>
                         <Image
-                            resizeMode="cover"
+                            resizeMode="contain"
                             source={actionIcon}
-                            style={styles.imgAvatar}
+                            style={[styles.imgAvatar, 
+                                this.props.actionStyle
+                            ]}
                         />
                     </TouchableOpacity>
                     :
