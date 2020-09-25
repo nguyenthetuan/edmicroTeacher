@@ -159,7 +159,7 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
       `
       html += `<div style="padding:10px 15px; margin-bottom:5px">
       ${dataStandard.idMaterial && ` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
-        xem học liệu
+        Xem học liệu
         </span>`|| ``
         }
       <span style="float: right" id="arrayWarn${i}" data-numberQuestion="${dataStandard.questionNumber}">
