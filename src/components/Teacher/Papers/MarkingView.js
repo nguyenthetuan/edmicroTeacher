@@ -28,6 +28,7 @@ import _ from 'lodash';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dropdown from '../../../utils/Dropdown';
 import { AlertNoti, roundToTwo } from '../../../utils/Common';
+import FormInput from '../../../components/common/FormInput';
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';
@@ -113,7 +114,7 @@ class MarkingView extends Component {
                     urlFile:
                       !_.isEmpty(respone.data.listFile) &&
                       respone.data.listFile[0],
-                  },()=>this.state.urlFile&&this.checkCurrentIndex());
+                  }, () => this.state.urlFile && this.checkCurrentIndex());
                   this.assignInitDataScoreAndComment(respone.data.data);
                 });
             });
@@ -140,7 +141,7 @@ class MarkingView extends Component {
           urlFile:
             !_.isEmpty(response.data.listFile) && response.data.listFile[0],
         },
-        () => {this.state.urlFile&&this.checkCurrentIndex()},
+        () => { this.state.urlFile && this.checkCurrentIndex() },
       );
       this.assignInitDataScoreAndComment(response.data.data);
     }
@@ -175,7 +176,7 @@ class MarkingView extends Component {
               urlFile:
                 !_.isEmpty(response.data.listFile) && response.data.listFile[0],
             },
-            () => this.state.urlFile&&this.checkCurrentIndex(),
+            () => this.state.urlFile && this.checkCurrentIndex(),
           );
           this.assignInitDataScoreAndComment(response.data.data);
         }
@@ -188,10 +189,10 @@ class MarkingView extends Component {
     let count = 0;
     _.forEach(assignmentDetailCheck.data.data, (e, index) => {
       let typeAnswer = 0;
-      if(e.dataMaterial){
-        typeAnswer=e.dataMaterial?.data[0]?.typeAnswer;
-      }else{
-        typeAnswer= e?.dataStandard.typeAnswer;
+      if (e.dataMaterial) {
+        typeAnswer = e.dataMaterial?.data[0]?.typeAnswer;
+      } else {
+        typeAnswer = e?.dataStandard.typeAnswer;
       }
       if (typeAnswer === 0) {
         count = count + 1;
@@ -287,7 +288,7 @@ class MarkingView extends Component {
           indexStudent,
           ...indexSelected,
         },
-        urlFile:'',
+        urlFile: '',
       },
       () => this.getDataPickupStudent(),
     );
@@ -305,7 +306,7 @@ class MarkingView extends Component {
           indexClass,
           ...indexSelected,
         },
-        urlFile:'',
+        urlFile: '',
       },
       () => this.getData(),
     );
@@ -591,11 +592,11 @@ class MarkingView extends Component {
     const { tabActive } = this.state;
     const { assignmentDetailCheck } = this.state;
     const source = { uri: assignmentDetailCheck.data.listFile[0] };
-    const answer  ={uri:assignmentDetailCheck.data.answerFile}
+    const answer = { uri: assignmentDetailCheck.data.answerFile }
     switch (tabActive) {
       case 0:
         return (
-          source.uri&&<Pdf
+          source.uri && <Pdf
             ref={ref => (this.pdfFull = ref)}
             source={source}
             onLoadComplete={(numberOfPages, filePath) => { }}
@@ -603,11 +604,11 @@ class MarkingView extends Component {
               console.log(error);
             }}
             style={styles.pdf}
-          />||null
+          /> || null
         );
       case 1:
         return (
-          answer.uri&&<Pdf
+          answer.uri && <Pdf
             ref={ref => (this.pdfFull = ref)}
             source={answer}
             onLoadComplete={(numberOfPages, filePath) => { }}
@@ -615,7 +616,7 @@ class MarkingView extends Component {
               console.log(error);
             }}
             style={styles.pdf}
-          />||null
+          /> || null
         );
       default:
         return (
@@ -715,7 +716,7 @@ class MarkingView extends Component {
           }}>
           <Text style={{ color: (bg && '#fff') || '#a4a6b0' }}>{index + 1}</Text>
           <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
-            {this._answer(answer)}
+            {typeAnswer === 0 && this._answer(answer)}
           </Text>
         </RippleButton>
       ) : (
@@ -732,7 +733,7 @@ class MarkingView extends Component {
               {index + 1}
             </Text>
             <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
-              {this._answer(answer)}
+              {typeAnswer === 0 && this._answer(answer)}
             </Text>
           </RippleButton>
         );
@@ -772,6 +773,7 @@ class MarkingView extends Component {
         `undefined` &&
         `${this.state[`valueScore${this.state.currentIndex}`]}`) ||
       ``;
+    console.log('assignmentDetailCheck', assignmentDetailCheck)
     return (
       <View style={styles.rootView}>
         {this.renderHeader()}
@@ -810,21 +812,24 @@ class MarkingView extends Component {
                     <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14 }}>
                       Câu {this.state.currentIndex + 1}{' '}
                     </Text>
-                    <TextInput
-                      ref={'TextInputPoint'}
-                      onEndEditing={() => this.checkScore()}
-                      onChangeText={text => this.onChangeTextScore(text)}
-                      keyboardType={'numeric'}
-                      value={point}
-                      style={{
-                        width: 50,
-                        height: 20,
-                        borderWidth: 1,
-                        borderRadius: 2,
-                        borderColor: '#828282',
-                        textAlign: 'center',
-                      }}
-                    />
+                    <View style={{
+                      width: 50,
+                      height: 50,
+                      justifyContent: 'center'
+                    }}>
+                      <FormInput
+                        paddingTopContent={4}
+                        borderRadius={2}
+                        borderWidth={0.5}
+                        borderColor={'#828282'}
+                        onChangeText={text => this.onChangeTextScore(text)}
+                        value={point}
+                        keyboardType={'email-address'}
+                        height={28}
+                        bgColor='#FFF'
+                        styleInput={styles.point}
+                      />
+                    </View>
                     <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14 }}>
                       {' '}
                     /{maxScore}
@@ -982,7 +987,7 @@ class TabOfPaper extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.btnTab, { marginLeft: 80 }]}
+            style={[styles.btnTab, { marginLeft: 65 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
@@ -997,6 +1002,11 @@ class TabOfPaper extends Component {
 }
 
 const styles = StyleSheet.create({
+  point: {
+    textAlign: 'center',
+    paddingRight: 10,
+    marginBottom: 13
+  },
   txtNote: {
     color: '#828282',
     fontSize: 10,
