@@ -148,7 +148,7 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     html += `
       </div>
     </div>`
-    
+
     if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage) {
       html += `<div
       style="background-color: #F8F8F8; border: 0.5px solid #56BB73; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
@@ -176,10 +176,10 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
       html += `<div style="padding: 10px">
         <p style="margin-bottom: 20px">${!!data[i].dataMaterial.data[0].userOptionText ? data[i].dataMaterial.data[0].userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
       </div>`
-    }else{
+    } else {
       if (!_.isEmpty(data[i].dataStandard?.userOptionText)) {
         html += `<div style="padding: 10px">
-          <p style="margin-bottom: 20px">${!_.isEmpty(data[i].dataStandard?.userOptionText)?data[i].dataStandard?.userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
+          <p style="margin-bottom: 20px">${!_.isEmpty(data[i].dataStandard?.userOptionText) ? data[i].dataStandard?.userOptionText : ' <p style="color:blue;">Không có câu trả lời</p>'}</p><br />
         </div>`
       }
     }
@@ -198,15 +198,15 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     }
 
     html += `</div>
-      <!-- Giải thích -->
+      <!-- Giải Đáp -->
     </div>
     <div
       style="background-color: #F8F8F8; border: 1px solid #ffa449; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
       <div
         style="background-color: #ffa449; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
         <p
-          style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: black; margin-block-start: auto">
-          Giải thích</p>
+          style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: white; margin-block-start: auto">
+          Giải đáp</p>
       </div>
       <div style="padding: 10px">
         <p style="margin-bottom: 20px">${data[i].dataMaterial && data[i].dataMaterial.data[0].explain || data[i].dataStandard && data[i].dataStandard.explain}</p><br />
@@ -214,6 +214,44 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     </div>
     </div>
     `
+    if (data[i].dataStandard.reasonImage) {
+      html += `</div>
+        <!-- Giải thích -->
+      </div>
+      <div
+        style="background-color: #F8F8F8; border: 1px solid #56CCF2; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
+        <div
+          style="background-color: #56CCF2; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
+          <p
+            style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: white; margin-block-start: auto">
+            Giải thích</p>
+        </div>
+        <div style="padding: 10px">
+          <img style=" width: 100%; height: 100%;"src="${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage}" alt="Italian Trulli">
+        </div>
+      </div>
+      </div>
+      `
+    } else {
+      html += `</div>
+        <!-- Giải thích -->
+      </div>
+      <div
+        style="background-color: #F8F8F8; border: 1px solid #56CCF2; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
+        <div
+          style="background-color: #56CCF2; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
+          <p
+            style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: white; margin-block-start: auto">
+            Giải thích</p>
+        </div>
+        <div style="padding: 10px">
+          <p style="margin-bottom: 20px">${data[i].dataMaterial && data[i].dataMaterial.data[0].explain || data[i].dataStandard && data[i].dataStandard.explain}</p><br />
+        </div>
+      </div>
+      </div>
+      `
+    }
+
   }
 
   html += `
@@ -239,7 +277,6 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
 </body>
 
 </html>`;
-
   return html;
 }
 
