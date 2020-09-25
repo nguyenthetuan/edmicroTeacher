@@ -36,6 +36,7 @@ import {AlertNoti, roundToTwo} from '../../../utils/Common';
 import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
 const {width, height} = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -432,6 +433,7 @@ class ConfigQuestion extends Component {
         const {token} = await dataHelper.getToken();
         const response = await apiPapers.createQuestion({token, formData});
         if (response.status === 0) {
+          this.refToast.show('Tạo bộ đề thành công!');
           const setQuestion = await dataHelper.saveQuestion([]);
           const res = await apiPapers.getAssignmentConfig({
             token,
@@ -1089,6 +1091,7 @@ class ConfigQuestion extends Component {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
+        <Toast ref={ref=>this.refToast = ref} position={'bottom'} />
       </View>
     );
   }

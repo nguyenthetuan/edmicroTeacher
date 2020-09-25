@@ -66,7 +66,7 @@ function Item(props) {
 
   const handleConfirm = (date) => {
     console.warn("A date has been picked: ", stage);
-    if (_=stage == Stage.begin) {
+    if (_ = stage == Stage.begin) {
       setTimeStart(date);
     } else {
       setTimeEnd(date);
@@ -248,8 +248,9 @@ export default class Assignment extends Component {
   _renderListEmpty = () => {
     const { loading } = this.state;
     return (
-      <View style={styles.viewEmpty}>
-        {loading ? <ActivityIndicator size='small' /> : null}
+      <View style={styles.viewNotFound}>
+        <Image source={require('../../../asserts/icon/iconNodata.png')} />
+        <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
       </View>
     )
   }
@@ -278,6 +279,7 @@ export default class Assignment extends Component {
           color={'#fff'}
           title={dataItem.name}
           navigation={this.props.navigation}
+          goBack={() => this._handleGoBack()}
         />
         <FlatList
           bounces={false}
@@ -441,5 +443,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     paddingHorizontal: 8
-  }
+  },
+  viewNotFound: {
+    marginTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  txtNotFound: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: 14,
+    color: '#000',
+    marginTop: 20,
+    color: '#828282',
+  },
 })
