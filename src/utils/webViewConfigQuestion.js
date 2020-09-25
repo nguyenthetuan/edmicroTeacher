@@ -111,6 +111,10 @@ const renderHtmlQuestionDetail = (
         if(e.data == 'hideAll'){
             ${hidetmp}
         }
+        var dataMessage = e.data.split('---');
+        if(dataMessage[0] == 'resetPoint'){
+          document.getElementById('point'+dataMessage[1]).value = dataMessage[2];
+        }
       })
       <!-- android -->
 
@@ -121,6 +125,10 @@ const renderHtmlQuestionDetail = (
         } 
         if(e.data == 'hideAll'){
             ${hidetmp}
+        }
+        var dataMessage = e.data.split('---');
+        if(dataMessage[0] == 'resetPoint'){
+          document.getElementById('point'+dataMessage[1]).value = dataMessage[2];
         }
       })
       
