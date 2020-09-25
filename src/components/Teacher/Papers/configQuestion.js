@@ -406,7 +406,12 @@ class ConfigQuestion extends Component {
         questions,
         name,
         isExplain,
+        totalPoint,
       } = this.state;
+      if (totalPoint < 10) {
+        AlertNoti('Tổng điểm không được nhỏ hơn 10');
+        return;
+      }
       const formData = new FormData();
       const time = Math.ceil(new Date().getTime() / 1000);
       formData.append(`name`, name);
