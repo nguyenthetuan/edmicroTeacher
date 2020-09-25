@@ -75,7 +75,7 @@ const renderHtmlQuestionDetail = (data, subjectId) => {
         }
 
         html += `<div style="padding:10px 15px">
-            <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${dataMaterial.index + 1}</span>
+            <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${i + 1}</span>
             ${rightAnswer}
             <span style="color:#9B9B9B;margin: 0 5px;font-size: 14px;">|</span>
             <span style="color:#9B9B9B;font-size: 14px">#${dataMaterial.numberQuestion}</span>
@@ -147,7 +147,7 @@ const renderHtmlQuestionDetail = (data, subjectId) => {
        margin-right: 16px;overflow: hidden;">
       `
       html += `<div style="padding:10px 15px">
-      <span style="font-weight: bold;font-size: 14px;color: #000000">Câu ${dataStandard.index + 1}</span>
+      <span style="font-weight: bold;font-size: 14px;color: #000000">Câu ${i + 1}</span>
       
       <span style="float: right" id="arrayWarn${dataStandard.index}" data-numberQuestion="${dataStandard.questionNumber}">
           <span style="padding-right: 5px">
