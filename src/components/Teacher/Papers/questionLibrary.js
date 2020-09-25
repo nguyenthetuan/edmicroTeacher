@@ -181,7 +181,7 @@ class QuestionLibrary extends Component {
             element: response && response,
             objectSearch: {
               ...objectSearch,
-              curriculumCode: response && response[0].id,
+              // curriculumCode: response && response[0].id,
             },
             isLoading: false,
           },

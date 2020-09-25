@@ -211,13 +211,15 @@ export default class ModalLevelComplete extends Component {
                     })}
                     {data.assignmentTimeline.map((e, i) => {
                       const x = (width / 4) * (i + 1);
-                      const y2 = (e.points !== 'NaN' && e.points) ? 220 - (e.points / 100) * 200 : 219;
+                      const y2 = 
+                      (e.points !== 'NaN' && e.points) ? 220 - (e.points*10 / 100) * 200 : 219;
+                     
                       const stroke =
-                        (e.points !== 'NaN' && e.points) >= 70
+                        (e.points !== 'NaN' && e.points*10) >= 70
                           ? '#04C6F1'
                           :
-                          (e.points === 'NaN' || e.points)
-                      e.points < 50
+                          (e.points === 'NaN' || e.points*10)&&
+                      e.points*10 < 50
                         ? '#a55'
                         : '#FFA500';
                       return (
@@ -450,7 +452,6 @@ export default class ModalLevelComplete extends Component {
 
   render() {
     const { data, visible, dataReview, isLoading } = this.state;
-    console.log(data);
     return (
       <Modal transparent={true} visible={true}>
         <View style={styles.container}>

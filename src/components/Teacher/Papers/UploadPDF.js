@@ -307,11 +307,9 @@ export default class UploadPDF extends Component {
 
       const { token } = await dataHelper.getToken();
       if (token) {
-        console.log('body', body);
         const res = await apiPapers.assignmentContent({ token, body });
-        console.log('res', res);
         if (res && res.status === 0) {
-          // this.toast.show('Tạo bộ đề thành công!');
+          this.refToast.show('Tạo bộ đề thành công!');
           setTimeout(() => {
             // this.props.navigation.goBack();
             this.props.navigation.navigate('Assignment', {
@@ -807,7 +805,7 @@ export default class UploadPDF extends Component {
           </View>
           {/* End setting question */}
         </ScrollView>
-
+        <Toast ref={ref=>this.refToast = ref} position={'bottom'} />
         {this.renderModalFullViewPDF()}
         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
       </SafeAreaView>
