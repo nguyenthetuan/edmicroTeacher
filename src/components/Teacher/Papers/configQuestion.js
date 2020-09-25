@@ -121,7 +121,7 @@ class ConfigQuestion extends Component {
           return;
         }
       }
-      this.setState({questions});
+      this.setState({questions, totalPoint: totalPointTemp});
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
@@ -851,7 +851,9 @@ class ConfigQuestion extends Component {
                     alignItems: 'center',
                     marginTop: 6,
                   }}>
-                  <Text style={styles.totalAddQuestion}>Tổng điểm: 10</Text>
+                  <Text style={styles.totalAddQuestion}>
+                    Tổng điểm: {totalPoint}
+                  </Text>
 
                   {/* <TextInput
                     editable={false}
