@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     viewTitle: {
         flex: 1,
-        marginLeft: 10,
+        marginLeft: 60,
     },
     button: {
         width: 38,

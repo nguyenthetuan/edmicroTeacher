@@ -328,7 +328,7 @@ export default class SelectAnswer extends Component {
               returnKeyType={'done'}
               maxLength={4}
               keyboardType={'numeric'}
-              editable={false}
+              editable={true}
               onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
               onEndEditing={() => this.pointSentence(typeQuestion)}
               value={totalPoint && `${totalPoint}` || ''}
@@ -435,7 +435,7 @@ export default class SelectAnswer extends Component {
               fontFamily: 'Nunito-Bold',
               fontSize: 14,
               color: '#000'
-            }}>Điểm câu 1000</Text>
+            }}>Điểm câu {indexSelecting + 1}</Text>
             <View>
               <TextInput
                 style={styles.inputPoint}
