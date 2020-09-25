@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,10 +15,10 @@ import WebView from 'react-native-webview';
 import MathJaxLibs from '../../../utils/WebVIewMockExample';
 import Api from '../../../services/apiClassTeacher';
 import dataHelper from '../../../utils/dataHelper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import _ from 'lodash';
 import RippleButton from '../../libs/RippleButton';
-import { isIphoneX } from 'react-native-iphone-x-helper';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 import Globals from '../../../utils/Globals';
 import WarningModal from '../../modals/WarningModal';
 import ModalMockExamComplete from './modalMockExamComplete';
@@ -27,7 +27,7 @@ import HeaderDetail from '../../common-new/HeaderDetail';
 import AppIcon from '../../../utils/AppIcon';
 import HeaderExample from '../../common-new/HeaderExample';
 const messageError = 'Không có nội dung hiển thị';
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
   baseUrl = 'web/';
@@ -55,7 +55,7 @@ export default class MockExample extends Component {
   }
 
   handleQuestion(index) {
-    const { data } = this.state;
+    const {data} = this.state;
     this.setState(
       {
         index: index,
@@ -67,9 +67,9 @@ export default class MockExample extends Component {
   }
 
   handNext = () => {
-    const { index, data } = this.state;
+    const {index, data} = this.state;
     if (data.data.length - 1 === index) {
-      this.setState({ isDone: true });
+      this.setState({isDone: true});
     } else {
       this.setState(
         {
@@ -83,19 +83,19 @@ export default class MockExample extends Component {
     }
   };
 
-  getData = async (init) => {
+  getData = async init => {
     const {
       assignId,
       classId,
       assignmentId,
     } = this.props.navigation.state.params;
     if (init) {
-      this.setState({ isLoading: false });
+      this.setState({isLoading: false});
     }
     try {
-      const { token } = await dataHelper.getToken();
-      let response = await Api.getExam({ token, assignmentId });
-      const resSideBar = await Api.getMockExample({ token, assignmentId });
+      const {token} = await dataHelper.getToken();
+      let response = await Api.getExam({token, assignmentId});
+      const resSideBar = await Api.getMockExample({token, assignmentId});
       if (_.isEmpty(response.data.data) && _.isEmpty(response.data.data)) {
         this.setState({
           data: [],
@@ -105,26 +105,25 @@ export default class MockExample extends Component {
         return;
       }
       response.data.data = this._convertData(response.data.data);
-
       this.setState({
         data: response.data,
         isLoading: true,
         dataSideBar: resSideBar.data,
       });
     } catch (error) {
-      this.setState({ isError: true });
+      this.setState({isError: true});
     }
   };
 
   _convertData = (data = []) => {
     if (_.isArray(data)) {
-      data = data.map((item) => {
+      data = data.map(item => {
         let dataStandard = new Object();
         if (item.typeData == 0) {
           return item.dataStandard;
         } else {
-          item.dataMaterial.data.forEach((element) => {
-            dataStandard = { ...element };
+          item.dataMaterial.data.forEach(element => {
+            dataStandard = {...element};
           });
           dataStandard.contentHtml = item.dataMaterial.contentHtml;
           dataStandard.materialId = item.dataMaterial.materialId;
@@ -146,7 +145,7 @@ export default class MockExample extends Component {
 
   reviewlater = async () => {
     try {
-      const { data, index, dataSideBar } = this.state;
+      const {data, index, dataSideBar} = this.state;
       const typeAnswer =
         (data.data[index].dataMaterial &&
           data.data[index].dataMaterial.data[0].typeAnswer) ||
@@ -157,16 +156,16 @@ export default class MockExample extends Component {
       } else {
         id = dataSideBar[index].stepId;
       }
-      const { token } = await dataHelper.getToken();
-      const res = await Api.reviewlater({ token, id: id });
+      const {token} = await dataHelper.getToken();
+      const res = await Api.reviewlater({token, id: id});
       Globals.updateMenuQuestion();
-    } catch (error) { }
+    } catch (error) {}
   };
 
   onHandleMessage(event) {
     const data = event.nativeEvent.data.split('---');
     if (data[0] === 'warningWeb') {
-      this.setState({ numberQuestion: data[1] }, () => {
+      this.setState({numberQuestion: data[1]}, () => {
         this.displayWarning(true);
       });
     }
@@ -177,12 +176,14 @@ export default class MockExample extends Component {
       this.setState({
         valueTextarea: data[1],
         actBtnSbumit: true,
+        isDone: false,
       });
     }
     if (data[0] === 'chonseEventTest') {
       this.setState({
         optionId: data[1],
         actBtnSbumit: data[1] != -1,
+        isDone: false,
       });
     }
   }
@@ -192,7 +193,7 @@ export default class MockExample extends Component {
   }
 
   Submit = async () => {
-    const { data, valueTextarea, index, optionId } = this.state;
+    const {data, valueTextarea, index, optionId} = this.state;
     let formData = new Object();
     if (data.data[index].typeAnswer == 3) {
       // dang tu luan
@@ -213,9 +214,9 @@ export default class MockExample extends Component {
         studentDoRight: true,
       };
     }
-    this.setState({ loadingSubmit: false });
-    const { token } = await dataHelper.getToken();
-    const resSubmit = await Api.putMockExam({ token, formData });
+    this.setState({loadingSubmit: false});
+    const {token} = await dataHelper.getToken();
+    const resSubmit = await Api.putMockExam({token, formData});
     if (resSubmit.status === 1) {
       this.setState(
         {
@@ -230,7 +231,7 @@ export default class MockExample extends Component {
   };
 
   buttonSkip = async () => {
-    const { data, valueTextarea, index } = this.state;
+    const {data, valueTextarea, index} = this.state;
     let formData = {};
 
     if (data.data[index].dataMaterial) {
@@ -260,9 +261,9 @@ export default class MockExample extends Component {
         };
       }
     }
-    this.setState({ loadingSubmit: false });
-    const { token } = await dataHelper.getToken();
-    const resSkip = await Api.putMockExam({ token, formData });
+    this.setState({loadingSubmit: false});
+    const {token} = await dataHelper.getToken();
+    const resSkip = await Api.putMockExam({token, formData});
     if (resSkip.status === 1) {
       this.setState(
         {
@@ -274,8 +275,8 @@ export default class MockExample extends Component {
   };
 
   complete = async () => {
-    const { assignmentId } = this.props.navigation.state.params;
-    const { data } = this.state;
+    const {assignmentId} = this.props.navigation.state.params;
+    const {data} = this.state;
     this.refs.modalMockExamComplete.activeModal({
       nameTest: data.name,
       assignmentId,
@@ -297,8 +298,8 @@ export default class MockExample extends Component {
       loadingSubmit,
       dataSideBar,
     } = this.state;
-    const { navigation } = this.props;
-    const { assignId, classId } = navigation.state.params;
+    const {navigation} = this.props;
+    const {assignId, classId} = navigation.state.params;
     const status =
       (!_.isEmpty(data) &&
         data.data[index].dataMaterial &&
@@ -316,7 +317,7 @@ export default class MockExample extends Component {
             navigation={this.props.navigation}
             onActionPress={() => this.complete()}
           />
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             <LearnPlaceholder visible={isLoading} />
             {!_.isEmpty(data) && (
               <WebViewComponent
@@ -337,42 +338,42 @@ export default class MockExample extends Component {
                     {!loadingSubmit ? (
                       <ActivityIndicator color={'#FFF'} />
                     ) : (
-                        <Text style={[styles.textButton, { color: '#FFF' }]}>
-                          Trả Lời
-                        </Text>
-                      )}
+                      <Text style={[styles.textButton, {color: '#FFF'}]}>
+                        Trả Lời
+                      </Text>
+                    )}
                   </RippleButton>
                 ) : (
-                    <RippleButton
-                      radius={25}
-                      onPress={this.buttonSkip}
-                      style={[
-                        styles.wrapButtonAnswer,
-                        { backgroundColor: '#828282' },
-                      ]}>
-                      {!loadingSubmit ? (
-                        <ActivityIndicator />
-                      ) : (
-                          <Text style={[styles.textButton, { color: '#FFF' }]}>
-                            Bỏ Qua
-                          </Text>
-                        )}
-                    </RippleButton>
-                  )
-              ) : (
                   <RippleButton
-                    color={'#'}
                     radius={25}
-                    onPress={() => this.complete()}
+                    onPress={this.buttonSkip}
                     style={[
                       styles.wrapButtonAnswer,
-                      { backgroundColor: '#55B619' },
+                      {backgroundColor: '#828282'},
                     ]}>
-                    <Text style={[styles.textButton, { color: '#FFF' }]}>
-                      Kết Thúc
-                  </Text>
+                    {!loadingSubmit ? (
+                      <ActivityIndicator />
+                    ) : (
+                      <Text style={[styles.textButton, {color: '#FFF'}]}>
+                        Bỏ Qua
+                      </Text>
+                    )}
                   </RippleButton>
-                )}
+                )
+              ) : (
+                <RippleButton
+                  color={'#'}
+                  radius={25}
+                  onPress={() => this.complete()}
+                  style={[
+                    styles.wrapButtonAnswer,
+                    {backgroundColor: '#55B619'},
+                  ]}>
+                  <Text style={[styles.textButton, {color: '#FFF'}]}>
+                    Kết Thúc
+                  </Text>
+                </RippleButton>
+              )}
             </View>
           </View>
         </KeyboardAwareScrollView>
@@ -388,27 +389,27 @@ export default class MockExample extends Component {
           ref={'modalMockExamComplete'}
           navigation={navigation}
         />
-      </SafeAreaView >
+      </SafeAreaView>
     ) : (
-        <View style={styles.containter}>
-          <HeaderDetail onPress={this._btnBackErr} />
-          <View style={styles.wrapContanErr}>
-            <Image
-              source={AppIcon.iconNodata}
-              resizeMode={'contain'}
-              style={{ marginBottom: 20 }}
-            />
-            <Text style={[styles.txtErr, { fontFamily: 'Nunito-Regular' }]}>
-              {messageError}
-            </Text>
-            <TouchableOpacity
-              style={styles.btnBackErr}
-              onPress={this._btnBackErr}>
-              <Text style={[styles.txtErr, { color: '#FFF' }]}>Quay lại</Text>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.containter}>
+        <HeaderDetail onPress={this._btnBackErr} />
+        <View style={styles.wrapContanErr}>
+          <Image
+            source={AppIcon.iconNodata}
+            resizeMode={'contain'}
+            style={{marginBottom: 20}}
+          />
+          <Text style={[styles.txtErr, {fontFamily: 'Nunito-Regular'}]}>
+            {messageError}
+          </Text>
+          <TouchableOpacity
+            style={styles.btnBackErr}
+            onPress={this._btnBackErr}>
+            <Text style={[styles.txtErr, {color: '#FFF'}]}>Quay lại</Text>
+          </TouchableOpacity>
         </View>
-      );
+      </View>
+    );
   }
 }
 
@@ -421,59 +422,27 @@ class WebViewComponent extends Component {
     };
   }
 
-  componentDidMount() {
-    this._convertData();
-  }
-
   shouldComponentUpdate(prevProps, nextState) {
-    if (this.props.dataSideBar != prevProps.dataSideBar
-      || this.props.data != prevProps.data
-      || this.props.index != prevProps.index
-      || this.state.dataConvert != nextState.dataConvert
-      || this.state.heightWebview != nextState.heightWebview
+    if (
+      this.props.dataSideBar != prevProps.dataSideBar ||
+      this.props.data != prevProps.data ||
+      this.props.index != prevProps.index ||
+      this.state.dataConvert != nextState.dataConvert ||
+      this.state.heightWebview != nextState.heightWebview
     ) {
       return true;
     }
     return false;
-    // if (this.props.data !== nextProps.data) {
-    //   this.setState({ dataConvert: nextProps.data.data });
-    //   return true;
-    // } else {
-    //   return true;
-    // }
   }
 
-  _convertData = () => {
-    const { data } = this.props;
-    this.setState({ dataConvert: data.data });
-  };
-
   render() {
-    console.log("render webview");
-    const { handleMessage, dataSideBar, index, token, data } = this.props;
-    const { dataConvert } = this.state;
+    const {handleMessage, dataSideBar, index, token, data} = this.props;
+    let dataConvert = data.data;
     let dataTemp = dataConvert[index];
-    let linkMedia = data.data[index].dataMaterial?.urlMedia;
-    // console.log(
-    //   dataTemp &&
-    //   MathJaxLibs.renderMockExample(
-    //     dataTemp, //data
-    //     'TOAN', //subjectId
-    //     dataTemp?.numberQuestion, //numberQuestion
-    //     false, //isBookmark
-    //     dataTemp?.contentHtml, //contentHtml
-    //     dataTemp?.content, //question
-    //     2, //type
-    //     index,
-    //     !_.isEmpty(dataTemp?.userOptionId) && dataTemp?.userOptionId, //userAnswer
-    //     token, //token,
-    //     dataSideBar,
-    //     linkMedia,
-    //   ),
-    // );
+    let linkMedia = dataTemp.dataMaterial?.urlMedia;
     return dataTemp ? (
       <View
-        style={{ height: Platform.OS === 'ios' ? height * 0.82 : height * 0.78 }}>
+        style={{height: Platform.OS === 'ios' ? height * 0.82 : height * 0.78}}>
         <WebView
           showsVerticalScrollIndicator={false}
           ignoreSsError={false}
@@ -503,8 +472,8 @@ class WebViewComponent extends Component {
         />
       </View>
     ) : (
-        <View />
-      );
+      <View />
+    );
   }
 }
 

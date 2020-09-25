@@ -15,8 +15,8 @@ const getHeaderPractice = ({ index, numberQuestion, bookMarkStatus, bookmarkcolo
               <span style="padding-right: 5px" data-numberQuestion="${numberQuestion}">
               <div style="display:flex;flex-direction: row;">
               </span>
-                <div 
-                style="
+             <!--- <div 
+               style="
                display: flex;
                flex-direction: row;
                border: 0.5px solid #828282;
@@ -27,7 +27,7 @@ const getHeaderPractice = ({ index, numberQuestion, bookMarkStatus, bookmarkcolo
              " 
              >
                <i  id="checkBox" class="fa fa-check" aria-hidden="true" style="color:#37B34A;font-size: 14px; display:${dataSideBar[index].status===2||dataSideBar[index].status===4?`block`:`none`}"></i>
-            </div>
+            </div> ---!>
             </div>
             </span>
         </div>`;
