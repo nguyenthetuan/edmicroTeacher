@@ -22,6 +22,7 @@ const { bgColorActive, bgOptionTrue, bgOptionFalse, bgOptionActive,
 * HTML Practice 
 */
 const renderMockExample = (data, subjectId, numberQuestion, isBookmark, contentHtml, question, type, index, userAnswer, token, dataSideBar,linkMedia, allowClick = true) => {
+    console.log("renderMockExample -> userAnswer", userAnswer)
     let mockData = [];
     if (userAnswer?.imageAnswer?.length > 0) {
         for (let j = 0; j < userAnswer.imageAnswer?.length; j++) {

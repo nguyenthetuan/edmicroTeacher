@@ -13,6 +13,7 @@ import dataHelper from '../../../utils/dataHelper';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import Globals from '../../../utils/Globals';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import _ from 'lodash';
 const {width} = Dimensions.get('window');
 export default class QuestionMockMenu extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ export default class QuestionMockMenu extends Component {
     Globals.nextQuestion = this.updateMenu.bind(this);
   }
 
-  updateMenu = (index) => {
+  updateMenu = index => {
     this.setState(
       {
         indexActive: index,
@@ -75,7 +76,7 @@ export default class QuestionMockMenu extends Component {
   renderItem = ({item, index}) => {
     const regex = /(<([^>]+)>)/gi;
     const {indexActive} = this.state;
-    return (
+    return !_.isEmpty(item) ? (
       <TouchableOpacity
         onPress={() => {
           this.props.navigation.closeDrawer();
@@ -122,40 +123,23 @@ export default class QuestionMockMenu extends Component {
               Đã trả lời
             </Text>
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <Icon
-              name={'star'}
-              color={
-                item.status === 2 || item.status === 4 ? '#FFC571' : '#C4C4C4'
-              }
-              size={14}
-              style={styles.icon}
-            />
-            <Text
-              style={[
-                styles.textDesc,
-                {
-                  color:
-                    item.status === 2 || item.status === 4
-                      ? '#FFC571'
-                      : '#C4C4C4',
-                },
-              ]}>
-              Xem lại sau
-            </Text>
-          </View>
         </View>
       </TouchableOpacity>
+    ) : (
+      <View style={[styles.rowQuestion, {backgroundColor: 'transparent'}]} />
     );
   };
 
   render() {
     const {data} = this.state;
+    console.log('QuestionMockMenu -> render -> data', data);
+    if (data.length % 2 != 0) data.push({});
     return (
       <View style={styles.container}>
         <FlatList
           style={styles.flatList}
           data={data}
+          extraData={this.state}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
           removeClippedSubviews={false}
@@ -167,7 +151,7 @@ export default class QuestionMockMenu extends Component {
               <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
             </View>
           )}
-          ListFooterComponent={() => <View style={{height: 50}}></View>}
+          ListFooterComponent={() => <View style={{height: 50}} />}
           style={styles.styFlatlist}
         />
       </View>
