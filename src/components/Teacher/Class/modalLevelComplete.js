@@ -66,7 +66,7 @@ export default class ModalLevelComplete extends Component {
         };
       });
       avgPercentComplete = (
-        totalPoint / data.assignmentTimeline.length
+        totalPoint*10 / data.assignmentTimeline.length
       ).toFixed(2);
       avgTimeComplete = totalTimeComplete / data.assignmentTimeline.length;
     }
