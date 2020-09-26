@@ -58,7 +58,7 @@ class ConfigQuestion extends Component {
       arrayQuestion: [],
       gradeCode: [],
       listGrades: [],
-      subjectCode: [`${this.props.navigation.state.params.curriculumCode}`],
+      subjectCode: [],
       name: '',
       listSubjects: [],
       questions: [],
@@ -75,6 +75,7 @@ class ConfigQuestion extends Component {
       isModal: false,
       isLoadingModal: false,
       htmlContent: '',
+      urlMedia:'',
     };
   }
   onHandleMessage(event) {
@@ -157,7 +158,7 @@ class ConfigQuestion extends Component {
       },
       () =>
         this.activeSubject({
-          item: {code: this.props.navigation.state.params.curriculumCode},
+           code: this.props.navigation.state.params.curriculumCode,
         }),
     );
   }
@@ -300,7 +301,6 @@ class ConfigQuestion extends Component {
     );
   };
   activeSubject = item => {
-    console.log('item', item);
     const {subjectCode, listSubjects} = this.state;
     let subjectCodeTmp = subjectCode;
     let listSubjectsTmp = listSubjects.map(e => {
@@ -569,6 +569,7 @@ class ConfigQuestion extends Component {
     if (response) {
       this.setState({
         htmlContent: response?.contentHtml,
+        urlMedia:response?.urlMedia,
         isLoadingModal: false,
       });
     }
@@ -604,6 +605,7 @@ class ConfigQuestion extends Component {
       isLoadingModal,
       htmlContent,
       subjectCode,
+      urlMedia,
     } = this.state;
     return (
       <View style={styles.container}>
@@ -1079,7 +1081,7 @@ class ConfigQuestion extends Component {
                     <WebView
                       ref={ref => (this.webview = ref)}
                       source={{
-                        html: html.renderMatarialDetail(htmlContent),
+                        html: html.renderMatarialDetail(htmlContent, urlMedia),
                         baseUrl,
                       }}
                       subjectId={'TOAN'}

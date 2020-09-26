@@ -328,7 +328,6 @@ export default class SelectAnswer extends Component {
               returnKeyType={'done'}
               maxLength={4}
               keyboardType={'numeric'}
-              editable={true}
               onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
               onEndEditing={() => this.pointSentence(typeQuestion)}
               value={totalPoint && `${totalPoint}` || ''}
@@ -338,7 +337,6 @@ export default class SelectAnswer extends Component {
                 numberOfLines={1}
                 returnKeyType={'done'}
                 maxLength={4}
-                editable={false}
                 keyboardType={'numeric'}
                 onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
                 onEndEditing={() => this.pointSentence(typeQuestion)}
@@ -435,7 +433,7 @@ export default class SelectAnswer extends Component {
               fontFamily: 'Nunito-Bold',
               fontSize: 14,
               color: '#000'
-            }}>Điểm câu {indexSelecting + 1}</Text>
+            }}>Điểm câu {typeQuestion ===0?indexSelecting + 1:indexSlelectingTL+1}</Text>
             <View>
               <TextInput
                 style={styles.inputPoint}
