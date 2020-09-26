@@ -706,6 +706,7 @@ class Papers extends Component {
   };
 
   _handleAddPaper = () => {
+    dataHelper.saveQuestion([]);
     this.setState({visibleModalAdd: true});
   };
 
