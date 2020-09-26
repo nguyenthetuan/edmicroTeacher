@@ -36,7 +36,7 @@ import {AlertNoti, roundToTwo} from '../../../utils/Common';
 import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
-import Toast, { DURATION } from 'react-native-easy-toast';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 const {width, height} = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -100,27 +100,16 @@ class ConfigQuestion extends Component {
     }
 
     if (data[0] === 'enterPoint') {
+      console.log('ConfigQuestion -> data[0]', data[0]);
       let {questions, totalPoint} = this.state;
       let totalPointTemp = 0;
-      let pointTemp = 0;
       const questionId = data[1];
       const value = parseFloat(data[2]) || 0;
       for (let item of questions) {
         if (item.questionId === questionId) {
-          pointTemp = item.point;
           item.point = value;
-          // totalPoint = totalPoint - pointCurrent + value;
         }
         totalPointTemp += item.point;
-        if (totalPointTemp > totalPoint) {
-          item.point = pointTemp;
-          AlertNoti('Tổng điểm không được lớn hơn 10', () => {
-            this.webview.postMessage(
-              'resetPoint---' + questionId + '---' + pointTemp,
-            );
-          });
-          return;
-        }
       }
       this.setState({questions, totalPoint: totalPointTemp});
     }
@@ -408,8 +397,8 @@ class ConfigQuestion extends Component {
         isExplain,
         totalPoint,
       } = this.state;
-      if (totalPoint < 10) {
-        AlertNoti('Tổng điểm không được nhỏ hơn 10');
+      if (totalPoint < 10 || totalPoint > 10) {
+        AlertNoti('Vui lòng nhập tổng điểm bằng 10');
         return;
       }
       const formData = new FormData();
@@ -586,6 +575,13 @@ class ConfigQuestion extends Component {
       });
   };
 
+  unFocusTime = () => {
+    const {duration} = this.state;
+    if (duration == '') {
+      this.setState({duration: 5});
+    }
+  };
+
   render() {
     const {
       name,
@@ -672,8 +668,8 @@ class ConfigQuestion extends Component {
                   </View>
 
                   {assignmentType !== 0 && (
-                    <View style={{}}>
-                      <Text style={styles.txtTitleGrade}>Thời gian</Text>
+                    <View>
+                      <Text style={styles.txtTitleGrade}>Thời gian(Phút)</Text>
                       <TextInput
                         style={styles.pickTime}
                         onChangeText={text => {
@@ -686,6 +682,7 @@ class ConfigQuestion extends Component {
                         }
                         numeric
                         keyboardType={'numeric'}
+                        onBlur={this.unFocusTime}
                       />
 
                       {/* <View style={{ position: 'absolute', right: 10, top: -5, zIndex: 2, backgroundColor: 'red' }}>
@@ -817,12 +814,12 @@ class ConfigQuestion extends Component {
 
                   {/* Điểm */}
                   <View>
-                    {/* Nhận biết
+                    {/* Nhận biết */}
                     {this.getTotalPointQuestion(questions).pointOne !== 0 && (
                       <Text style={styles.txtIndexTwo}>
                         {this.getTotalPointQuestion(questions).pointOne}
                       </Text>
-                    )} */}
+                    )}
                     {/* Thông hiều */}
                     {this.getTotalPointQuestion(questions).pointTwo !== 0 && (
                       <Text style={styles.txtIndexTwo}>
@@ -1096,7 +1093,7 @@ class ConfigQuestion extends Component {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-        <Toast ref={ref=>this.refToast = ref} position={'bottom'} />
+        <Toast ref={ref => (this.refToast = ref)} position={'bottom'} />
       </View>
     );
   }
@@ -1168,12 +1165,13 @@ const styles = StyleSheet.create({
   },
   pickTime: {
     height: 30,
+    width: 100,
     fontSize: 12,
     color: '#828282',
     fontFamily: 'Nunito-Regular',
     backgroundColor: '#fff',
     paddingVertical: 3,
-    paddingHorizontal: 30,
+    paddingHorizontal: 5,
     borderRadius: 4,
     textAlign: 'center',
   },
