@@ -1,5 +1,4 @@
 const renderMatarialDetail = (contentHtml,urlMedia) => {
-  console.log('url', urlMedia)
     let html = `<div>`;
     html += `
 <html style="overflow-x:hidden">
