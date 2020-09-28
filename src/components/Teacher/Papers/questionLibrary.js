@@ -66,13 +66,14 @@ class QuestionLibrary extends Component {
       questions: [],
       listQuestionAdded: [],
       height: 0,
-      isLoading: false,
+      isLoading: true,
       totalQuestion: 0,
       isAllowRerennder: false,
       isModal: false,
       htmlContent: '',
       isLoadingModal: false,
       listSkills: [],
+      urlMedia: '',
     };
   }
 
@@ -129,6 +130,7 @@ class QuestionLibrary extends Component {
     const response = await apiPapers.getMatarialDetail({ token, idMatarial })
     if (response) {
       this.setState({
+        urlMedia: response?.urlMedia,
         htmlContent: response?.contentHtml,
         isLoadingModal: false
       })
@@ -184,7 +186,7 @@ class QuestionLibrary extends Component {
               ...objectSearch,
               // curriculumCode: response && response[0].id,
             },
-            isLoading: false,
+            // isLoading: false,
           },
         );
         this.searchPaper();
@@ -327,35 +329,22 @@ class QuestionLibrary extends Component {
         body: this.state.objectSearch,
         key: key,
       });
+      console.log(response);
       const responseCount = await apiPapers.countSearch({
         token: token,
         body: this.state.objectSearch,
       });
       const { totalQuestion } = responseCount;
-      if (response !== undefined) {
-        if (isAllowRerennder) {
-          this.setState({
-            questions: !!response && response,
-            totalQuestion,
-            isAllowRerennder: !this.state.isAllowRerennder,
-          }, () => {
-            setTimeout(() => {
-              this.setState({
-                isLoading: false,
-              })
-            }, 5000)
-          });
-          return;
-        }
+      if (response && response.length > 0) {
         this.setState({
           questions: !!response && response,
           totalQuestion,
-        }, () => {
-          setTimeout(() => {
-            this.setState({
-              isLoading: false,
-            })
-          }, 5000)
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          questions: [],
+          totalQuestion: 0
         });
       }
     } catch (error) { }
@@ -424,6 +413,7 @@ class QuestionLibrary extends Component {
       htmlContent,
       isLoadingModal,
       curriculumCode,
+      urlMedia,
       listSkills
     } = this.state;
     const level = [
@@ -521,8 +511,8 @@ class QuestionLibrary extends Component {
                 _closeLearnPlaceholder={this._closeLearnPlaceholder}
                 questions={this.state.questions}
                 listQuestionAdded={listQuestionAdded}
-                isAllowRerennder={isAllowRerennder}
               />
+
             ) : (
                 <View
                   style={{
@@ -578,6 +568,7 @@ class QuestionLibrary extends Component {
                       ref={(ref) => (this.webview = ref)}
                       source={{
                         html: html.renderMatarialDetail(htmlContent),
+                        html: html.renderMatarialDetail(htmlContent, urlMedia),
                         baseUrl,
                       }}
                       subjectId={'TOAN'}
@@ -603,9 +594,9 @@ class WebViewComponent extends Component {
     super(props);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.isAllowRerennder != nextProps.isAllowRerennder) {
-      return true;
-    }
+    // if (this.props.isAllowRerennder != nextProps.isAllowRerennder) {
+    //   return true;
+    // }
     if (this.props.questions != nextProps.questions) {
       return true;
     }
@@ -739,6 +730,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   }
 });
+
 const mapStateToProps = (state) => {
   return {
     paper: state.paper,
