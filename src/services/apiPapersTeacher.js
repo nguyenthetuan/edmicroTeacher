@@ -298,6 +298,15 @@ const getMatarialDetail = async ({ token, idMatarial }) => {
   return responseJson;
 }
 
+const getSkill = async ({token,idSubject})=>{
+  let response = await fetch(`${API_BASE}school-online/curriculum/curriculum/learning-target/skill/${idSubject}`, {
+    method: 'GET',
+    headers: getHeaders(token)
+  });
+  let responseJson = await response.json();
+  return responseJson;
+}
+
 
 module.exports = {
   getGrade,
@@ -326,5 +335,6 @@ module.exports = {
   submitReview,
   countSearch,
   publicedScore,
-  getMatarialDetail
+  getMatarialDetail,
+  getSkill,
 };
