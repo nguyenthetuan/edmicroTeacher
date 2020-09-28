@@ -213,57 +213,82 @@ export default class ModalCurriculum extends Component {
           <Modal visible={visible} transparent={true}>
             <TouchableWithoutFeedback onPress={this._closeModal}>
               <View style={[styles.container, { height: this.props.height }]}>
-                <View style={styles.content}>
-                  <Animated.View
-                    style={[styles.topheader, { top: this.positionY }]}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({
-                          data: this.props.data,
-                          searchKey: '',
-                        })
-                      }>
-                      <MaterialCommunityIcons
-                        name="arrow-left"
-                        color="#FFF"
-                        size={20}
-                      />
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', overflow: 'hidden' }}>
-                      <TextInput
-                        style={styles.TextInput}
-                        onChangeText={(Text) =>
-                          this.setState({ searchKey: Text })
-                        }
-                        value={searchKey}
-                        onLayout={(e) =>
-                          (heightTextInput = e.nativeEvent.layout.height)
-                        }
-                      />
-                      <TouchableOpacity
-                        style={{
-                          position: 'absolute',
-                          right: 4,
-                          top: 4,
-                          height: 18,
-                          width: 24,
-                          backgroundColor: '#2D9CDB',
-                        }}>
-                        <EvilIcons name="search" size={20} color="#FFF" />
-                      </TouchableOpacity>
-                    </View>
-                  </Animated.View>
-                  <FlatList
-                    data={fliter}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={this.renderItem}
-                    ListEmptyComponent={this.renderListEmptyComponent}
-                    onLayout={(e) =>
-                      (heightContent = e.nativeEvent.layout.height)
-                    }
-                  />
-                </View>
+                <TouchableWithoutFeedback>
+
+                  <View style={styles.content}>
+                    <TouchableWithoutFeedback>
+                      <>
+                        {Platform.OS == 'android' && <TouchableOpacity
+                        style={{backgroundColor:'#fff',alignSelf:'flex-end',paddingHorizontal:10}}
+                          onPress={() => {
+                            this.setState({
+                              data: this.props.data,
+                              searchKey: '',
+                            })
+                          }
+                          }>
+                          <MaterialCommunityIcons
+                            name="arrow-left"
+                            color="#000"
+                            size={20}
+                          />
+                        </TouchableOpacity>}
+                        <Animated.View
+                          style={[styles.topheader, { top: this.positionY }]}>
+                          {Platform.OS == 'ios' && <TouchableOpacity
+                            onPress={() => {
+                              alert(1)
+                              this.setState({
+                                data: this.props.data,
+                                searchKey: '',
+                              })
+                            }
+                            }>
+                            <MaterialCommunityIcons
+                              name="arrow-left"
+                              color="#FFF"
+                              size={20}
+                            />
+                          </TouchableOpacity>}
+                          <View style={{ flexDirection: 'row', overflow: 'hidden' }}>
+                            <TextInput
+                              style={styles.TextInput}
+                              onChangeText={(Text) =>
+                                this.setState({ searchKey: Text })
+                              }
+                              value={searchKey}
+                              onLayout={(e) =>
+                                (heightTextInput = e.nativeEvent.layout.height)
+                              }
+                            />
+                            <TouchableOpacity
+                              style={{
+                                position: 'absolute',
+                                right: 4,
+                                top: 4,
+                                height: 18,
+                                width: 24,
+                                backgroundColor: '#2D9CDB',
+                              }}>
+                              <EvilIcons name="search" size={20} color="#FFF" />
+                            </TouchableOpacity>
+                          </View>
+                        </Animated.View>
+                      </>
+                    </TouchableWithoutFeedback>
+                    <FlatList
+                      data={fliter}
+                      keyExtractor={(item, index) => index.toString()}
+                      renderItem={this.renderItem}
+                      ListEmptyComponent={this.renderListEmptyComponent}
+                      onLayout={(e) =>
+                        (heightContent = e.nativeEvent.layout.height)
+                      }
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
+
             </TouchableWithoutFeedback>
             <SafeAreaView />
           </Modal>

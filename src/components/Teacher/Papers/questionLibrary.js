@@ -72,6 +72,7 @@ class QuestionLibrary extends Component {
       isModal: false,
       htmlContent: '',
       isLoadingModal: false,
+      urlMedia:'',
     };
   }
 
@@ -128,6 +129,7 @@ class QuestionLibrary extends Component {
     const response = await apiPapers.getMatarialDetail({ token, idMatarial })
     if (response) {
       this.setState({
+        urlMedia:response?.urlMedia,
         htmlContent: response?.contentHtml,
         isLoadingModal: false
       })
@@ -396,6 +398,7 @@ class QuestionLibrary extends Component {
       isModal,
       htmlContent,
       isLoadingModal,
+      urlMedia,
       curriculumCode
     } = this.state;
     const level = [
@@ -496,6 +499,7 @@ class QuestionLibrary extends Component {
                 listQuestionAdded={listQuestionAdded}
                 isAllowRerennder={isAllowRerennder}
               />
+              
             ) : (
                 <View
                   style={{
@@ -550,7 +554,7 @@ class QuestionLibrary extends Component {
                     <WebView
                       ref={(ref) => (this.webview = ref)}
                       source={{
-                        html: html.renderMatarialDetail(htmlContent),
+                        html: html.renderMatarialDetail(htmlContent,urlMedia),
                         baseUrl,
                       }}
                       subjectId={'TOAN'}

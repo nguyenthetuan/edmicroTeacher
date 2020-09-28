@@ -1,4 +1,5 @@
-const renderMatarialDetail = (contentHtml) => {
+const renderMatarialDetail = (contentHtml,urlMedia) => {
+  console.log('url', urlMedia)
     let html = `<div>`;
     html += `
 <html style="overflow-x:hidden">
@@ -11,6 +12,15 @@ const renderMatarialDetail = (contentHtml) => {
   <div>
   ${contentHtml}
   </div>
+  `
+  if (urlMedia) {
+    html += `<audio controls>
+        <source src="${urlMedia}">
+      </audio>`
+  }
+
+  html+=
+  `
 </body>
 </html>
 `

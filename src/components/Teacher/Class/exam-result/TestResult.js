@@ -11,7 +11,7 @@ import { formatSecond } from '../../../../utils/Common';
 import MyActivityIndicator from '../../../libs/MyActivityIndicator';
 import Api from '../../../../services/apiClassTeacher'
 
-import RateApp from '../../../common/RateApp';
+// import RateApp from '../../../common/RateApp';
 // import Mixpanel from 'react-native-mixpanel';
 // import jwtDecode from 'jwt-decode';
 // import global from '../../utils/Globals';
@@ -46,11 +46,11 @@ export default class TestResult extends Component {
       });
       Share.updateH(responseJson.data.data);
       const list = [];
-      try {
-        if (responseJson.data.accuracy >= 80) {
-          this.myTime = setTimeout(this.refs.RateApp._showRateApp, 3000);
-        }
-      } catch (error) { }
+      // try {
+      //   if (responseJson.data.accuracy >= 80) {
+      //     this.myTime = setTimeout(this.refs.RateApp._showRateApp, 3000);
+      //   }
+      // } catch (error) { }
       (responseJson.data.data).forEach(element => {
         if (element.dataMaterial !== null) {
           (element.dataMaterial.data).forEach(model => {
@@ -138,7 +138,7 @@ export default class TestResult extends Component {
 
           {/* <View style={styles.borderBottom}></View> */}
         </View>
-        <RateApp ref='RateApp' />
+        {/* <RateApp ref='RateApp' /> */}
       </ScrollView>
     );
   }
