@@ -284,7 +284,7 @@ class QuestionLibrary extends Component {
           },
           () => {
             this.getListSkills();
-            
+            this.searchPaper();
           }
         );
         break;
@@ -567,7 +567,6 @@ class QuestionLibrary extends Component {
                     <WebView
                       ref={(ref) => (this.webview = ref)}
                       source={{
-                        html: html.renderMatarialDetail(htmlContent),
                         html: html.renderMatarialDetail(htmlContent, urlMedia),
                         baseUrl,
                       }}
