@@ -60,6 +60,7 @@ class MarkingView extends Component {
         indexStudent: 0,
       },
       urlFile: '',
+
     };
   }
 
@@ -773,7 +774,7 @@ class MarkingView extends Component {
         `undefined` &&
         `${this.state[`valueScore${this.state.currentIndex}`]}`) ||
       ``;
-    console.log('assignmentDetailCheck', assignmentDetailCheck)
+
     return (
       <View style={styles.rootView}>
         {this.renderHeader()}
@@ -905,33 +906,37 @@ class MarkingView extends Component {
                   <TabOfPaper
                     tabActive={tabActive}
                     _changeTab={this._changeTab}
+                    currentIndex={currentIndex}
+                    assignmentDetailCheck={assignmentDetailCheck}
                   />
                   {this._changeTabComponent()}
                 </>
               )}
               {_.isEmpty(assignmentDetailCheck.data.listFile) && (
-                <WebView
-                  ref={ref => (this.webview = ref)}
-                  style={{
-                    backgroundColor: 'transparent',
-                    flex: 1,
-                    alignContent: 'center',
-                  }}
-                  // onMessage={this.onHandleMessage.bind(this)}
-                  source={{
-                    html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
-                      this.state.assignmentDetailCheck.data.data,
-                      this.state.assignmentDetailCheck.data.assignmentType,
-                    ),
-                    baseUrl,
-                  }}
-                  originWhitelist={['file://']}
-                  startInLoadingState
-                  scalesPageToFit={false}
-                  injectedJavaScript={`window.testMessage = "hello world"`}
-                  javaScriptEnabled
-                  showsVerticalScrollIndicator={false}
-                />
+                <>
+                  <WebView
+                    ref={ref => (this.webview = ref)}
+                    style={{
+                      backgroundColor: 'transparent',
+                      flex: 1,
+                      alignContent: 'center',
+                    }}
+                    // onMessage={this.onHandleMessage.bind(this)}
+                    source={{
+                      html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
+                        this.state.assignmentDetailCheck.data.data,
+                        this.state.assignmentDetailCheck.data.assignmentType,
+                      ),
+                      baseUrl,
+                    }}
+                    originWhitelist={['file://']}
+                    startInLoadingState
+                    scalesPageToFit={false}
+                    injectedJavaScript={`window.testMessage = "hello world"`}
+                    javaScriptEnabled
+                    showsVerticalScrollIndicator={false}
+                  />
+                </>
               )}
             </View>
           )}
@@ -972,10 +977,28 @@ class TabOfPaper extends Component {
   };
 
   render() {
-    const { tabActive } = this.props;
+    const { tabActive, currentIndex,assignmentDetailCheck } = this.props;
+    let explan =  assignmentDetailCheck.data.data[currentIndex]?.dataMaterial?
+    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0]:
+    assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0];
+    if (explan?.indexOf('<p>') >= 0) {
+      explan = explan?.slice(
+        3,
+        explan.length - 4,
+      );
+    }
     const { positionX } = this.state;
     return (
       <View style={styles.wrapTab}>
+        <View style={{ paddingHorizontal: 28, marginBottom: 18 }}>
+          <Text style={{fontFamily:'Nunito-Regular', fontSize:12,color:'#828282', marginBottom:3}}>Bài làm của học sinh</Text>
+          <TextInput
+            style={{ height: 47, borderWidth: .5, borderRadius: 4, borderColor: '#C4C4C4', paddingLeft: 12 }}
+            multiline={true}
+            value={explan}
+            editable={false}
+          />
+        </View>
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
             style={[styles.btnTab, { marginLeft: 30 }]}

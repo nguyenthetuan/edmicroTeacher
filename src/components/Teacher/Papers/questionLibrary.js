@@ -72,7 +72,7 @@ class QuestionLibrary extends Component {
       isModal: false,
       htmlContent: '',
       isLoadingModal: false,
-      urlMedia:'',
+      listSkills: [],
     };
   }
 
@@ -129,7 +129,6 @@ class QuestionLibrary extends Component {
     const response = await apiPapers.getMatarialDetail({ token, idMatarial })
     if (response) {
       this.setState({
-        urlMedia:response?.urlMedia,
         htmlContent: response?.contentHtml,
         isLoadingModal: false
       })
@@ -215,6 +214,16 @@ class QuestionLibrary extends Component {
     } catch (error) { }
   };
 
+  getListSkills = async () => {
+    const { objectSearch } = this.state;
+    const { token } = await dataHelper.getToken();
+    const response = await apiPapers.getSkill({ token, idSubject: objectSearch.learningTargetsCode });
+    const res = Object.entries(response).map((e) => ({ id: e[0], name: e[1] }));
+    this.setState({
+      listSkills: res
+    })
+  }
+
   onPress = (value, item) => {
     this.refs.PaginationUtils.resetState();
     const { objectSearch } = this.state;
@@ -271,13 +280,25 @@ class QuestionLibrary extends Component {
             },
             isLoading: true,
           },
-          () =>{
-            console.log(this.state.objectSearch.learningTargetsCode);
+          () => {
+            this.getListSkills();
             this.searchPaper();
           }
         );
         break;
       case 5:
+        this.setState({
+          objectSearch: {
+            ...objectSearch,
+            indexPage: 0,
+            skill:item.code
+          },
+          isLoading: true,
+        },()=>{
+          this.searchPaper()
+        })
+        break;
+      case 6:
         {
           this.setState(
             {
@@ -353,9 +374,11 @@ class QuestionLibrary extends Component {
     }
     return md5(_return);
   };
+
   _closeLearnPlaceholder = () => {
     this.setState({ isLoading: false });
   };
+
   handleNextPage = (indexPage) => {
     const { objectSearch } = this.state;
     this.setState(
@@ -385,6 +408,8 @@ class QuestionLibrary extends Component {
     }
   }
 
+
+
   render() {
     const {
       listQuestionAdded,
@@ -398,8 +423,8 @@ class QuestionLibrary extends Component {
       isModal,
       htmlContent,
       isLoadingModal,
-      urlMedia,
-      curriculumCode
+      curriculumCode,
+      listSkills
     } = this.state;
     const level = [
       { name: 'Nhận biết', code: '0' },
@@ -455,8 +480,8 @@ class QuestionLibrary extends Component {
             />
             <ModalConfigLibrary
               title="Dạng bài"
-              // data={subject}
-              // onPress={value => this.onPress(2, value)}
+              data={listSkills}
+              onPress={value => this.onPress(5, value)}
               colum={2}
               widthItem={40}
             />
@@ -465,8 +490,7 @@ class QuestionLibrary extends Component {
               data={level}
               colum={2}
               widthItem={40}
-              onPress={(value) => this.onPress(5, value)}
-              activeButtom
+              onPress={(value) => this.onPress(6, value)}
             />
           </View>
         </View>
@@ -499,7 +523,6 @@ class QuestionLibrary extends Component {
                 listQuestionAdded={listQuestionAdded}
                 isAllowRerennder={isAllowRerennder}
               />
-              
             ) : (
                 <View
                   style={{
@@ -554,7 +577,7 @@ class QuestionLibrary extends Component {
                     <WebView
                       ref={(ref) => (this.webview = ref)}
                       source={{
-                        html: html.renderMatarialDetail(htmlContent,urlMedia),
+                        html: html.renderMatarialDetail(htmlContent),
                         baseUrl,
                       }}
                       subjectId={'TOAN'}

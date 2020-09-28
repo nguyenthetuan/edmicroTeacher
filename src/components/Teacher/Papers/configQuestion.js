@@ -101,7 +101,6 @@ class ConfigQuestion extends Component {
     }
 
     if (data[0] === 'enterPoint') {
-      console.log('ConfigQuestion -> data[0]', data[0]);
       let {questions, totalPoint} = this.state;
       let totalPointTemp = 0;
       const questionId = data[1];
@@ -206,10 +205,10 @@ class ConfigQuestion extends Component {
       });
       // pointFour = totalPoint - (pointOne + pointTwo + pointThree);
       return {
-        pointOne: roundToTwo(pointOne),
-        pointTwo: roundToTwo(pointTwo),
-        pointThree: roundToTwo(pointThree),
-        pointFour: roundToTwo(pointFour),
+        pointOne: Math.round(roundToTwo(pointOne)),
+        pointTwo: Math.round(roundToTwo(pointTwo)),
+        pointThree: Math.round(roundToTwo(pointThree)),
+        pointFour: Math.round(roundToTwo(pointFour)),
       };
     }
   };
@@ -289,6 +288,7 @@ class ConfigQuestion extends Component {
       />
     );
   };
+
   activeSubject = item => {
     const {subjectCode, listSubjects} = this.state;
     let subjectCodeTmp = subjectCode;
@@ -317,6 +317,7 @@ class ConfigQuestion extends Component {
       errors: [],
     });
   };
+  
   _renderSubject = () => {
     const {listSubjects} = this.state;
     return (
