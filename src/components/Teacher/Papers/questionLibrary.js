@@ -223,7 +223,7 @@ class QuestionLibrary extends Component {
     const res = Object.entries(response).map((e) => ({ id: e[0], name: e[1] }));
     this.setState({
       listSkills: res
-    })
+    },()=>this.searchPaper())
   }
 
   onPress = (value, item) => {
@@ -284,7 +284,7 @@ class QuestionLibrary extends Component {
           },
           () => {
             this.getListSkills();
-            this.searchPaper();
+            
           }
         );
         break;
