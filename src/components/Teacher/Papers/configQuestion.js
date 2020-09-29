@@ -76,6 +76,7 @@ class ConfigQuestion extends Component {
       isLoadingModal: false,
       htmlContent: '',
       urlMedia:'',
+      loading:false,
     };
   }
   onHandleMessage(event) {
@@ -425,6 +426,7 @@ class ConfigQuestion extends Component {
       });
       formData.append('question', JSON.stringify(questions));
       try {
+        this.setState({loading:true})
         const {token} = await dataHelper.getToken();
         const response = await apiPapers.createQuestion({token, formData});
         if (response.status === 0) {
@@ -441,6 +443,7 @@ class ConfigQuestion extends Component {
               listSubjects:
                 this.props.paper.listSubject && this.props.paper.listSubject,
               name: '',
+              loading:false,
             },
             () =>
               this.props.navigation.navigate('Assignment', {
@@ -458,6 +461,7 @@ class ConfigQuestion extends Component {
           Globals.updatePaper();
         }
       } catch (error) {
+        this.setState({loading:false})
         console.log('error', error);
       }
     } else {
@@ -603,6 +607,7 @@ class ConfigQuestion extends Component {
       htmlContent,
       subjectCode,
       urlMedia,
+      loading
     } = this.state;
     return (
       <View style={styles.container}>
@@ -614,6 +619,7 @@ class ConfigQuestion extends Component {
           actionIcon={require('../../../asserts/appIcon/icRight.png')}
           actionStyle={{borderRadius: 0}}
           onRightAction={() => this.config()}
+          loading={loading}
         />
         <ScrollView
           contentContainerStyle={{height: webheight + HEIGHT_WEB}}
