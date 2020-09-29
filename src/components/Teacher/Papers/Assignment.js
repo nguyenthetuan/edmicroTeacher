@@ -39,7 +39,6 @@ const Stage = {
 function Item(props) {
   const dropdownStudent = useRef();
   const item = props.item;
-
   let [stage, setStage] = useState(Stage.begin);
 
   const [timeStart, setTimeStart] = useState(
@@ -85,7 +84,7 @@ function Item(props) {
   const onAssignment = async () => {
     if (validate()) {
       const body = {
-        assignmentId: props.dataItem.assignmentId,
+        assignmentId: props.dataItem.assignmentId||props.dataItem.id,
         timeEnd: moment(timeEnd).unix(),
         timeStart: moment(timeStart).unix(),
         name: props.dataItem.name,
@@ -98,22 +97,26 @@ function Item(props) {
 
       const { token } = await dataHelper.getToken();
       if (token) {
-        const response = await apiPapers.assignment({
-          token,
-          body
-        })
-        if (response && response.status === 1) {
-          props.onToast('Giao bài thành công!');
-          const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
-          AnalyticsManager.trackWithProperties('School Teacher', {
-            action: 'ASSIGNMENT',
-            mobile: Platform.OS,
-            grade: gradeCode,
-            subject: subjectCode
-          });
-        } else {
-          props.onToast('Có lỗi xảy ra vui lòng thử lại!')
+        try {
+          const response = await apiPapers.assignment({
+            token,
+            body
+          })
+          if (response && response.status === 1) {
+            props.onToast('Giao bài thành công!');
+            const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
+            AnalyticsManager.trackWithProperties('School Teacher', {
+              action: 'ASSIGNMENT',
+              mobile: Platform.OS,
+              grade: gradeCode,
+              subject: subjectCode
+            });
+          } else {
+            props.onToast('Có lỗi xảy ra vui lòng thử lại!')
+          }
+        } catch (error) {
         }
+
       } else {
         props.onToast('Có lỗi xảy ra vui lòng thử lại!')
       }
@@ -290,7 +293,8 @@ export default class Assignment extends Component {
           ListHeaderComponent={this._renderListHeader}
           ListEmptyComponent={this._renderListEmpty}
           renderItem={({ item, index }) => {
-            return <Item item={item}
+            return <Item
+              item={item}
               navigation={this.props.navigation}
               onToast={(text) => this.onToast(text)}
               dataItem={dataItem}
