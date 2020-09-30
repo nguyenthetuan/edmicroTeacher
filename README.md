@@ -33,9 +33,9 @@
     pod install
     ```
     ```
-    yarn ios --schema SchoolDev --configuation debugDev --simulator = "iPhone 11 pro"
-    yarn ios --schema SchoolStaging --configuation debugStaging --simulator = "iPhone 11 pro" 
-    yarn ios --schema SchoolProd --configuation debugProd --simulator = "iPhone 11 pro"  
+    npx react-native run-ios --scheme school --configuration DebugDev --simulator="iPhone 8"
+    npx react-native run-ios --scheme school --configuration DebugStaging --simulator="iPhone 8"
+    npx react-native run-ios --scheme school --configuration DebugProd --simulator="iPhone 8"
     ```
 
 
