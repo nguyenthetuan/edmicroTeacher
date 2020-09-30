@@ -9,7 +9,8 @@ import {
   Dimensions,
   Image,
   TouchableWithoutFeedback,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 import Dropdown from './Dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -101,9 +102,6 @@ export default class ModalFillter extends Component {
               <Text style={styles.txtBtn}>Xem thống kê</Text>
               <Icon name='angle-right' size={20} color={'#FFF'} />
             </TouchableOpacity>
-
-
-
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -151,7 +149,7 @@ const styles = StyleSheet.create({
   styBtnClose: {
     position: 'absolute',
     right: 10,
-    top:18
+    top:Platform.isPad?30:50
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',
