@@ -218,30 +218,38 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     html += `</div>
     <!-- Giải thích -->
   </div>
-  <div
-    style="background-color: #F8F8F8; border: 1px solid #56CCF2; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
+  `
+  if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText&&data[i].dataStandard && data[i].dataStandard.reasonText
+    &&data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage&&data[i].dataStandard && data[i].dataStandard.reasonImage){
+    html+=
+    `
     <div
-      style="background-color: #56CCF2; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
-      <p
-        style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: white; margin-block-start: auto">
-        Giải thích</p>
+      style="background-color: #F8F8F8; border: 1px solid #56CCF2; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
+      <div
+        style="background-color: #56CCF2; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
+        <p
+          style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: white; margin-block-start: auto">
+          Giải thích</p>
+      </div>
+      `
+      html += `
+      <div style="padding: 10px">
+      `
+      if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText){
+        html+=`
+        <p style="margin-bottom: 20px">${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText}</p><br />
+        `
+      }
+      if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage) {
+        html += `
+          <img style=" width: 100%; height: 100%;"src="${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage}" alt="Italian Trulli">
+        `
+      }
+      html += `</div>
     </div>
     `
-    html += `
-    <div style="padding: 10px">
-    `
-    if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText){
-      html+=`
-      <p style="margin-bottom: 20px">${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText}</p><br />
-      `
-    }
-    if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage) {
-      html += `
-        <img style=" width: 100%; height: 100%;"src="${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage}" alt="Italian Trulli">
-      `
-    }
-    html += `</div>
-  </div>
+  }
+  `
   </div>
   `
   }
