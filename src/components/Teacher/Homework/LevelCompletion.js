@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Image } from 'react-native';
+import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Image, Platform } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { Svg, Line, Rect } from 'react-native-svg';
 import _ from 'lodash';
@@ -331,13 +331,15 @@ export default function LevelCompletion(props) {
               </View>
             )
             : (<ScrollView style={styles.container}>
-              {this.renderChartCircle()}
-              <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
-                <Text style={styles.txtTitleChart}>
-                  Tỷ lệ học sinh tham gia làm bài
+              <View style={{flex:1, justifyContent:'center'}}>
+                {this.renderChartCircle()}
+                <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
+                  <Text style={styles.txtTitleChart}>
+                    Tỷ lệ học sinh tham gia làm bài
               </Text>
+                </View>
+                {this.renderChartLevelComplete()}
               </View>
-              {this.renderChartLevelComplete()}
             </ScrollView>)
       }
     </View>
@@ -346,13 +348,13 @@ export default function LevelCompletion(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   containerChartCircle: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     paddingTop: 25,
-    marginStart: width / 3
+    marginStart: width / 3 + (Platform.isPad?60:0)
   },
   txtLeftChartCircle: {
     fontFamily: 'Nunito-Regular',

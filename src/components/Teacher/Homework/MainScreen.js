@@ -104,7 +104,7 @@ const initTab = createMaterialTopTabNavigator(
       indicatorStyle: {
         backgroundColor: '#2D9CDB',
         height: 5,
-        width: 80,
+        width: Platform.isPad ?200:80,
         borderBottomWidth: 1,
         borderBottomColor: '#2D9CDB',
         borderBottomWidth: 1,

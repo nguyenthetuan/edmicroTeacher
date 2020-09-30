@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Animated,
   SafeAreaView,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction } from '../../../actions/paperAction';
@@ -742,6 +743,7 @@ class MarkingView extends Component {
   };
 
   render() {
+    console.log('plastForm', Platform.isPad)
     const {
       assignmentDetailCheck,
       currentIndex,
@@ -1010,7 +1012,7 @@ class TabOfPaper extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.btnTab, { marginLeft: 65 }]}
+            style={[styles.btnTab, { marginLeft:  Platform.isPad?220:65 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
