@@ -739,7 +739,7 @@ class LoginWithPhoneScreen extends Component {
           <Toast ref="toast" position={'bottom'} />
         </SafeAreaView>
         {/* <FreshchatComponent /> */}
-      </View >
+      </View>
     );
   }
 }

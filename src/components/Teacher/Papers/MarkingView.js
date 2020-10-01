@@ -743,7 +743,6 @@ class MarkingView extends Component {
   };
 
   render() {
-    console.log('plastForm', Platform.isPad)
     const {
       assignmentDetailCheck,
       currentIndex,
@@ -979,10 +978,10 @@ class TabOfPaper extends Component {
   };
 
   render() {
-    const { tabActive, currentIndex,assignmentDetailCheck } = this.props;
-    let explan =  assignmentDetailCheck.data.data[currentIndex]?.dataMaterial?
-    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0]:
-    assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0];
+    const { tabActive, currentIndex, assignmentDetailCheck } = this.props;
+    let explan = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
+      assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
+      : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
     if (explan?.indexOf('<p>') >= 0) {
       explan = explan?.slice(
         3,
@@ -993,7 +992,7 @@ class TabOfPaper extends Component {
     return (
       <View style={styles.wrapTab}>
         <View style={{ paddingHorizontal: 28, marginBottom: 18 }}>
-          <Text style={{fontFamily:'Nunito-Regular', fontSize:12,color:'#828282', marginBottom:3}}>Bài làm của học sinh</Text>
+          <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 12, color: '#828282', marginBottom: 3 }}>Bài làm của học sinh</Text>
           <TextInput
             style={{ height: 47, borderWidth: .5, borderRadius: 4, borderColor: '#C4C4C4', paddingLeft: 12 }}
             multiline={true}
@@ -1012,7 +1011,7 @@ class TabOfPaper extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.btnTab, { marginLeft:  Platform.isPad?220:65 }]}
+            style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>

@@ -237,7 +237,6 @@ export default class ModalCurriculum extends Component {
                           style={[styles.topheader, { top: this.positionY }]}>
                           {Platform.OS == 'ios' && <TouchableOpacity
                             onPress={() => {
-                              alert(1)
                               this.setState({
                                 data: this.props.data,
                                 searchKey: '',
