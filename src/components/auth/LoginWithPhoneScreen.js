@@ -738,7 +738,7 @@ class LoginWithPhoneScreen extends Component {
           </KeyboardAwareScrollView>
           <Toast ref="toast" position={'bottom'} />
         </SafeAreaView>
-        <FreshchatComponent />
+        {/* <FreshchatComponent /> */}
       </View >
     );
   }
