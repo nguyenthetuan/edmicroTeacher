@@ -377,7 +377,7 @@ class LoginWithPhoneScreen extends Component {
   }
 
   checkLoginType(authorizationCode = "") {
-   
+
     Keyboard.dismiss();
     const phone = this.state.phoneNumber;
     const password = this.state.passWord;
