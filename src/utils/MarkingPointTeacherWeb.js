@@ -219,8 +219,8 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     <!-- Giải thích -->
   </div>
   `
-  if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText&&data[i].dataStandard && data[i].dataStandard.reasonText
-    &&data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage&&data[i].dataStandard && data[i].dataStandard.reasonImage){
+  if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText||data[i].dataStandard && data[i].dataStandard.reasonText
+    ||data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage||data[i].dataStandard && data[i].dataStandard.reasonImage){
     html+=
     `
     <div
