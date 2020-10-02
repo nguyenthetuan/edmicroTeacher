@@ -32,7 +32,7 @@ import Globals from '../../../utils/Globals';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {HEIGHT_TOPBAR} from '../../../utils/Common';
 import SwitchButton from '../../../components/common/ButtonSwitch';
-import {AlertNoti, roundToTwo} from '../../../utils/Common';
+import {AlertNoti, roundToTwo,roundToFour} from '../../../utils/Common';
 import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
@@ -132,7 +132,7 @@ class ConfigQuestion extends Component {
     const getListQuestion = await dataHelper.getQuestion();
     const {totalPoint} = this.state;
     for (let item of getListQuestion) {
-      item.point = roundToTwo(totalPoint / getListQuestion.length);
+      item.point = roundToFour(totalPoint / getListQuestion.length);
     }
     !_.isEmpty(getListQuestion) &&
       this.setState({
@@ -206,10 +206,10 @@ class ConfigQuestion extends Component {
       });
       // pointFour = totalPoint - (pointOne + pointTwo + pointThree);
       return {
-        pointOne: Math.round(roundToTwo(pointOne)),
-        pointTwo: Math.round(roundToTwo(pointTwo)),
-        pointThree: Math.round(roundToTwo(pointThree)),
-        pointFour: Math.round(roundToTwo(pointFour)),
+        pointOne: Math.round(roundToFour(pointOne)),
+        pointTwo: Math.round(roundToFour(pointTwo)),
+        pointThree: Math.round(roundToFour(pointThree)),
+        pointFour: Math.round(roundToFour(pointFour)),
       };
     }
   };
@@ -573,7 +573,7 @@ class ConfigQuestion extends Component {
     const {totalPoint, questions} = this.state;
     let questionTmp = questions;
     for (let item of questionTmp) {
-      item.point = roundToTwo(10 / questionTmp.length);
+      item.point = roundToFour(10 / questionTmp.length);
     }
     !_.isEmpty(questionTmp) &&
       this.setState({
@@ -865,9 +865,8 @@ class ConfigQuestion extends Component {
                     marginTop: 6,
                   }}>
                   <Text style={styles.totalAddQuestion}>
-                    Tổng điểm: {totalPoint}
+                    Tổng điểm:{roundToTwo(totalPoint)}
                   </Text>
-
                   {/* <TextInput
                     editable={false}
                     style={[
@@ -1001,7 +1000,7 @@ class ConfigQuestion extends Component {
               <View>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}
-                  onPress={this.updateScore}>
+                  onPress={()=>this.setState({totalPoint:10},()=>this.updateScore())}>
                   <Text style={styles.txtDeleteChoose}>Chia đều điểm</Text>
                   <View style={{marginLeft: 5}}>
                     <Image

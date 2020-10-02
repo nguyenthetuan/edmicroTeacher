@@ -5,6 +5,7 @@ import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
+  console.log('data',props.screenProps.data)
   const data = !!props.screenProps.data && !_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
     return a.localeCompare(b);
   }).map(k => props.screenProps?.data?.data?.questionResult[k]) : [];
@@ -61,12 +62,17 @@ export default function RightWrongRatio(props) {
                         <Line x1="1" y1="20" x2={`${widthChart}`} y2="20" stroke="#C4C4C4" strokeWidth="0.5" />
                         {
                           data.map((e, i) => {
-                            const x2 = 40 * (i + 1) - 10;
                             const total = e.countSkip + e.countRight + e.countWrong;
+                           
+                            const x2 = 40 * (i + 1) - 10;
                             const y2Skip = e.countSkip ? 220 - ((e.countSkip / total) * 200) : 219;
                             const y2Wrong = e.countWrong ? ((e.countWrong / total) * 200) + 20 : 20;
-
                             const lineChart = [];
+                            
+                            if(total === 0){
+                              return null
+                            }
+
                             lineChart.push(<Line
                               key={`b${i.toString()}`}
                               x1={`${x2}`} y1="219"
@@ -82,7 +88,9 @@ export default function RightWrongRatio(props) {
                               x1={`${x2}`} y1="20"
                               x2={`${x2}`} y2={`${y2Wrong}`}
                               stroke="#FF3D3D" strokeWidth="20" />);
+
                             return lineChart;
+
                           })
                         }
                       </Svg>

@@ -67,6 +67,17 @@ const rework = async ({ token, assignId, studentId }) => {
     return responseJson;
 }
 
+const getStudentDetail = async ({ token, assignId, studentId }) => {
+    console.log('assignId',assignId,studentId)
+    let response = await fetch(`${API_BASE}school-online/assignment/detail/${assignId}/${studentId}`,
+        {
+            method: 'GET',
+            headers: getHeaders(token)
+        });
+    let responseJson = await response.json();
+    return responseJson;
+}
+
 module.exports = {
     getGrade,
     getSubject,
@@ -74,5 +85,6 @@ module.exports = {
     getClass,
     getDetailResult,
     retryCheckPoint,
-    rework
+    rework,
+    getStudentDetail
 };

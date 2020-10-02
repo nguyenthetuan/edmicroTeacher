@@ -662,6 +662,10 @@ export const AlertNoti = (message, clickOK) => {
 }
 
 export function roundToTwo(num) {
+  return +(Math.round(num + "e+2") + "e-2");
+}
+
+export function roundToFour(num){
   return +(Math.round(num + "e+4") + "e-4");
 }
 
@@ -705,5 +709,6 @@ module.exports = {
   convertNameToAvatar,
   HEIGHT_TOPBAR,
   AlertNoti,
-  roundToTwo
+  roundToTwo,
+  roundToFour
 };
