@@ -17,6 +17,7 @@ import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
+import Global from '../../../utils/Globals';
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,7 +31,6 @@ const getProcess = (item) => {
 }
 
 const getStatus = (item, point) => {
-    console.log('dataItem', item)
     switch (item.status) {
         case 0:
             return {
@@ -242,6 +242,7 @@ export default function StudentDetail(props) {
                                 toast.current.show('Yêu cầu làm lại thành công!');
                             }, 500)
                         } else {
+                            Global.updateHomeWork();
                             toast.current.show(res);
                         }
                     }
@@ -331,8 +332,7 @@ export default function StudentDetail(props) {
         )
     }
 
-    console.log('point', point)
-
+    console.log('isLoading',props.screenProps.isLoading )
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
             {
