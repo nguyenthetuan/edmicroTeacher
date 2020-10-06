@@ -65,4 +65,5 @@ module.exports = {
   nextQuestion: () => { },
   updatePlan: () => { },
   updatePaper: () => { },
+  updateHomeWork: () => { },
 };
