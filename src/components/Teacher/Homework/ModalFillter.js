@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   styBtnClose: {
     position: 'absolute',
     right: 10,
-    top:Platform.isPad?30:50
+    top:Platform.isPad?30:Platform.OS=='ios'?50:0
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',
