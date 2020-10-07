@@ -333,8 +333,15 @@ export default class UploadPDF extends Component {
   };
 
   onChangeTextDuration = (text) => {
-    this.setState({ duration: text });
+      this.setState({ duration: text });
   };
+
+  onEnediting = () => {
+    const { duration } = this.state;
+    if(duration === '0'){
+      this.setState({duration:'5'})
+    }
+  }
 
   onPressItemSubject = (index) => {
     const { listSubjects } = this.props.navigation.state.params;
@@ -540,6 +547,7 @@ export default class UploadPDF extends Component {
                           placeholder={'Nhập thời gian'}
                           placeholderTextColor={'#BDBDBD'}
                           style={styles.inputName}
+                          onEndEditing={() =>this.onEnediting()}
                         />
                       </View>
                     ) : null}
@@ -709,8 +717,8 @@ export default class UploadPDF extends Component {
             <View style={[styles.viewPdf, { height: height / 2 }]}>
               <View style={{ flex: 1 }}>
                 {viewFileFDF ?
-                  <View style={{ flex: 1,justifyContent:'center'  }}>
-                    {urlFilePDF ? <View style={{flex:1, }}>
+                  <View style={{ flex: 1, justifyContent: 'center' }}>
+                    {urlFilePDF ? <View style={{ flex: 1, }}>
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({
@@ -777,8 +785,8 @@ export default class UploadPDF extends Component {
                       </View>}
                   </View>
                   :
-                  <View style={{ flex: 1, justifyContent:'center' }}>
-                    {urlFileAnswerPDF ? <View style={{flex:1}}>
+                  <View style={{ flex: 1, justifyContent: 'center' }}>
+                    {urlFileAnswerPDF ? <View style={{ flex: 1 }}>
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({
@@ -828,7 +836,7 @@ export default class UploadPDF extends Component {
                       </View>
                     </View>
                       :
-                      <View style={{alignItems:'center'}}>
+                      <View style={{ alignItems: 'center' }}>
                         {loadingUpload ? (
                           <View>
                             <ActivityIndicator />

@@ -115,6 +115,11 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
       display: inline-block;
     }
   </style>
+  <script>
+  function imageDetail (arrayurlImage){
+    window.ReactNativeWebView.postMessage("urlImage---"+arrayurlImage);
+  }
+  </script>
   <link rel="stylesheet" href="font47/css/font-awesome.min.css">
 
 <body
@@ -149,20 +154,20 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
       </div>
     </div>`
 
-    if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage) {
-      html += `<div
-      style="background-color: #F8F8F8; border: 0.5px solid #56BB73; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
-      <div
-        style="background-color: #56BB73; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
-        <p
-          style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: #FFFFFF; margin-block-start: auto">
-          Ảnh giải thích của học sinh</p>
-      </div>
-      <div id="reason-img">
-        <img style="max-width: 100%" src="${data[i].dataMaterial.data[0].reasonImage}" />
-      </div>
-    </div>`
-    }
+    // if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage) {
+    //   html += `<div
+    //   style="background-color: #F8F8F8; border: 0.5px solid #56BB73; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
+    //   <div
+    //     style="background-color: #56BB73; border-top-left-radius: 5px;border-top-right-radius: 5px;  height: 20px; padding-left: 10px">
+    //     <p
+    //       style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 12px;line-height: 16px;color: #FFFFFF; margin-block-start: auto">
+    //       Ảnh giải thích của học sinh</p>
+    //   </div>
+    //   <div id="reason-img" onclick="imageDetail('${data[i].dataMaterial.data[0].reasonImage}')">
+    //     <img style="max-width: 100%" src="${data[i].dataMaterial.data[0].reasonImage}" />
+    //   </div>
+    // </div>`
+    // }
 
     html += `<div
       style="background-color: #F8F8F8; border: 0.5px solid #56BB73; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
@@ -219,10 +224,10 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
     <!-- Giải thích -->
   </div>
   `
-  if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText||data[i].dataStandard && data[i].dataStandard.reasonText
-    ||data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage||data[i].dataStandard && data[i].dataStandard.reasonImage){
-    html+=
-    `
+    if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText
+      || data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage) {
+      html +=
+        `
     <div
       style="background-color: #F8F8F8; border: 1px solid #56CCF2; margin-left: 10px; margin-right: 10px; margin-top: 10px; border-top-left-radius: 5px;border-top-right-radius: 5px;">
       <div
@@ -235,21 +240,23 @@ const renderListQuestionAndAnswersMaterial = (data, assignmentType) => {
       html += `
       <div style="padding: 10px">
       `
-      if(data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText){
-        html+=`
+      if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText) {
+        html += `
         <p style="margin-bottom: 20px">${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonText || data[i].dataStandard && data[i].dataStandard.reasonText}</p><br />
         `
       }
       if (data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage) {
         html += `
-          <img style=" width: 100%; height: 100%;"src="${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage}" alt="Italian Trulli">
+        <div id="reason-img" onclick="imageDetail('${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage}')">
+        <img style=" width: 100%; height: 100%;"src="${data[i].dataMaterial && data[i].dataMaterial.data[0].reasonImage || data[i].dataStandard && data[i].dataStandard.reasonImage}" alt="Italian Trulli">
+        </div>
         `
       }
       html += `</div>
     </div>
     `
-  }
-  `
+    }
+    `
   </div>
   `
   }
