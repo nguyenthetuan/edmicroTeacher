@@ -623,6 +623,11 @@ class LoginWithPhoneScreen extends Component {
             <View style={[{ alignItems: 'center', marginTop: 0.02 * height }, (errors) && { marginTop: 0 }]}>
               <Image source={require('../../asserts/images/image_login.png')} resizeMode={'contain'} style={{ width: height / 4 * 981 / 617, height: height / 4 }} />
             </View>
+            <Text style={{
+              fontFamily: 'Nunito-Regular',
+              fontSize: 14,
+              color:'#56CCF2'
+            }}>Ứng dụng hỗ trợ giáo viên</Text>
             <Text style={[validationStyle, { marginBottom: 15 }]}>{this.state.errors}</Text>
             <View style={[viewLogin, { flex: 1 }]}>
               <Text style={{ color: '#828282', fontFamily: 'Nunito-Bold', fontSize: 14, lineHeight: 19 }}>Tên đăng nhập</Text>

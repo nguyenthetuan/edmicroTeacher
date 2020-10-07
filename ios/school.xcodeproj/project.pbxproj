@@ -23,7 +23,6 @@
 		391006C6250F52CF008FF5D5 /* logo_spl@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 391006C3250F52CF008FF5D5 /* logo_spl@3x.png */; };
 		391006C7250F52CF008FF5D5 /* logo_spl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 391006C4250F52CF008FF5D5 /* logo_spl@2x.png */; };
 		391006C8250F52CF008FF5D5 /* logo_spl.png in Resources */ = {isa = PBXBuildFile; fileRef = 391006C5250F52CF008FF5D5 /* logo_spl.png */; };
-		391006CA250F5305008FF5D5 /* school.png in Resources */ = {isa = PBXBuildFile; fileRef = 391006C9250F5305008FF5D5 /* school.png */; };
 		3D16A5D7A79E4639BC8B2FA4 /* Nunito-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE492C375B4E48AAA100B0BF /* Nunito-ExtraLightItalic.ttf */; };
 		49F5985EE3464493AEF0A66E /* Nunito-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4834A4FFCB54385B09E980F /* Nunito-ExtraBoldItalic.ttf */; };
 		78D71DA2A4B14D7FBE2A06D0 /* Nunito-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D71CF888CF4493DAAB6D9CB /* Nunito-LightItalic.ttf */; };
@@ -31,6 +30,7 @@
 		80B25111438C4D6A90D521D4 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */; };
 		82387D40B41E4BEAAD0B723D /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FFC042CFE143D39DE3DEF5 /* Nunito-Italic.ttf */; };
 		840D737D25107E270007BEA0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840D737C25107E270007BEA0 /* GoogleService-Info.plist */; };
+		845F29DB252D7DEB009FB28A /* teacher.png in Resources */ = {isa = PBXBuildFile; fileRef = 845F29DA252D7DEA009FB28A /* teacher.png */; };
 		848BB3F4250CC7C800511F44 /* jqueryfastclick.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E5250CC7C600511F44 /* jqueryfastclick.js */; };
 		848BB3F5250CC7C800511F44 /* fontawesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E6250CC7C600511F44 /* fontawesome.min.css */; };
 		848BB3F6250CC7C800511F44 /* fastclick_min.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E7250CC7C600511F44 /* fastclick_min.js */; };
@@ -101,7 +101,6 @@
 		391006C3250F52CF008FF5D5 /* logo_spl@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_spl@3x.png"; sourceTree = "<group>"; };
 		391006C4250F52CF008FF5D5 /* logo_spl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_spl@2x.png"; sourceTree = "<group>"; };
 		391006C5250F52CF008FF5D5 /* logo_spl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_spl.png; sourceTree = "<group>"; };
-		391006C9250F5305008FF5D5 /* school.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = school.png; sourceTree = "<group>"; };
 		41AEE4B047E816FB0D7D051D /* Pods-school-schoolTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.release.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.release.xcconfig"; sourceTree = "<group>"; };
 		4633EF5C04C8331BC5E72173 /* libPods-school-schoolTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-school-schoolTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F9DCBF2FCD18DCF477753A /* Pods-school-tvOS.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debugdev.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debugdev.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBold.ttf"; path = "../src/asserts/fonts/Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
 		8327978F2FCFA5E94AACFD64 /* Pods-school-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		840D737C25107E270007BEA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		845F29DA252D7DEA009FB28A /* teacher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teacher.png; sourceTree = "<group>"; };
 		848BB3E3250CBC0D00511F44 /* school.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = school.entitlements; path = school/school.entitlements; sourceTree = "<group>"; };
 		848BB3E5250CC7C600511F44 /* jqueryfastclick.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jqueryfastclick.js; sourceTree = "<group>"; };
 		848BB3E6250CC7C600511F44 /* fontawesome.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = fontawesome.min.css; sourceTree = "<group>"; };
@@ -247,8 +247,8 @@
 		391006C2250F52B2008FF5D5 /* SplashScreen */ = {
 			isa = PBXGroup;
 			children = (
-				391006C9250F5305008FF5D5 /* school.png */,
 				391006C5250F52CF008FF5D5 /* logo_spl.png */,
+				845F29DA252D7DEA009FB28A /* teacher.png */,
 				391006C4250F52CF008FF5D5 /* logo_spl@2x.png */,
 				391006C3250F52CF008FF5D5 /* logo_spl@3x.png */,
 			);
@@ -521,10 +521,10 @@
 			files = (
 				848BB3FE250CC7C800511F44 /* jquery.fireworks.js in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				845F29DB252D7DEB009FB28A /* teacher.png in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				391006C7250F52CF008FF5D5 /* logo_spl@2x.png in Resources */,
 				848BB401250CC7C800511F44 /* MathJax.min.js in Resources */,
-				391006CA250F5305008FF5D5 /* school.png in Resources */,
 				22A955C03AAE46C5BE8F8863 /* Nunito-Black.ttf in Resources */,
 				B0B7F8DFE502416799A1C042 /* Nunito-BlackItalic.ttf in Resources */,
 				848BB3FB250CC7C800511F44 /* fontAsome.css in Resources */,
