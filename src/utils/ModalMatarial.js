@@ -9,7 +9,7 @@ const renderMatarialDetail = (contentHtml,urlMedia) => {
 <link rel="stylesheet" href="font47/css/font-awesome.min.css">
 <body>
   <div>
-  ${contentHtml}
+  ${contentHtml||''}
   </div>
   `
   if (urlMedia) {

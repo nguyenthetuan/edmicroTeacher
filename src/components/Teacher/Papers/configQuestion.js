@@ -206,10 +206,10 @@ class ConfigQuestion extends Component {
       });
       // pointFour = totalPoint - (pointOne + pointTwo + pointThree);
       return {
-        pointOne: Math.round(roundToFour(pointOne)),
-        pointTwo: Math.round(roundToFour(pointTwo)),
-        pointThree: Math.round(roundToFour(pointThree)),
-        pointFour: Math.round(roundToFour(pointFour)),
+        pointOne: roundToTwo(pointOne),
+        pointTwo: roundToTwo(pointTwo),
+        pointThree: roundToTwo(pointThree),
+        pointFour: roundToTwo(pointFour),
       };
     }
   };

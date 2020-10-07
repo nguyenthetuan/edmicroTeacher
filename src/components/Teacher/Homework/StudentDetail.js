@@ -62,7 +62,7 @@ const getStatus = (item, point) => {
             return {
                 title: 'Đã hoàn thành',
                 color: '#55B619',
-                result: `${point} điểm`
+                // result: `${point} điểm`
             };
         case 6:
             return {
@@ -293,10 +293,10 @@ export default function StudentDetail(props) {
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', marginEnd: 7 }}>
+                        {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
-                            <Text style={styles.txtPoint}>{status.result}</Text>
-                        </View>
+                            <Text style={styles.txtPoint}>{status.result||point}</Text>
+                        </View> */}
                     </View>
                     {
                         item.status === 4
@@ -332,7 +332,6 @@ export default function StudentDetail(props) {
         )
     }
 
-    console.log('isLoading',props.screenProps.isLoading )
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
             {

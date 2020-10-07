@@ -30,6 +30,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Dropdown from '../../../utils/Dropdown';
 import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import FormInput from '../../../components/common/FormInput';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';
@@ -61,7 +62,8 @@ class MarkingView extends Component {
         indexStudent: 0,
       },
       urlFile: '',
-
+      modalImageFull: false,
+      arrayImage: []
     };
   }
 
@@ -545,7 +547,7 @@ class MarkingView extends Component {
 
   tabPaper = () => {
     const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0] };
+    const source = { uri: assignmentDetailCheck.data.listFile[0], cache: true };
     return (
       <Pdf
         ref={ref => (this.pdfFull = ref)}
@@ -689,10 +691,10 @@ class MarkingView extends Component {
       }
     }
     let typeAnswer =
-      item.dataMaterial?.data[0].typeAnswer || item.dataStandard?.typeAnswer;
+      item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
     let answer =
-      item.dataMaterial?.data[0].userOptionId[0] ||
-      item.dataStandard?.userOptionId[0];
+      item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
+        item.dataStandard?.userOptionId[0];
     if (typeAnswer === 0 && urlFile) {
       return (
         <RippleButton
@@ -742,12 +744,31 @@ class MarkingView extends Component {
     }
   };
 
+  onHandleMessage = (event) => {
+    const data = event.nativeEvent.data.split('---');
+    if (data[0] === 'urlImage') {
+      this.modalFullImage(data[1])
+    }
+  }
+
+  modalFullImage = (image) => {
+    const imsges = [{
+      url: image
+    }]
+    this.setState({
+      modalImageFull: true,
+      arrayImage: imsges
+    })
+  }
+
   render() {
     const {
       assignmentDetailCheck,
       currentIndex,
       tabActive,
       selectedValueClass,
+      modalImageFull,
+      arrayImage
     } = this.state;
     if (_.isEmpty(assignmentDetailCheck)) {
       return (
@@ -922,7 +943,7 @@ class MarkingView extends Component {
                       flex: 1,
                       alignContent: 'center',
                     }}
-                    // onMessage={this.onHandleMessage.bind(this)}
+                    onMessage={this.onHandleMessage.bind(this)}
                     source={{
                       html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
                         this.state.assignmentDetailCheck.data.data,
@@ -941,6 +962,17 @@ class MarkingView extends Component {
               )}
             </View>
           )}
+        <Modal visible={modalImageFull}>
+          <TouchableOpacity style={{zIndex:1, position:'absolute', top:40, left:20}} onPress={()=>this.setState({modalImageFull:false})}>
+            <Image source={require('../../../asserts/appIcon/icon_close_modal.png')} style={{tintColor:'#fff'}}/>
+          </TouchableOpacity>
+          <ImageViewer
+            imageUrls={arrayImage}
+            enableSwipeDown={true}
+            onSwipeDown={() => this.setState({ modalImageFull: false })}
+            enableImageZoom={true}
+          />
+        </Modal>
       </View>
     );
   }
@@ -994,10 +1026,12 @@ class TabOfPaper extends Component {
         <View style={{ paddingHorizontal: 28, marginBottom: 18 }}>
           <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 12, color: '#828282', marginBottom: 3 }}>Bài làm của học sinh</Text>
           <TextInput
-            style={{ height: 47, borderWidth: .5, borderRadius: 4, borderColor: '#C4C4C4', paddingLeft: 12 }}
+            style={{ height: 60, borderWidth: .5, borderRadius: 4, borderColor: '#C4C4C4', paddingLeft: 12, color: '#000' }}
             multiline={true}
             value={explan}
-            editable={false}
+            editable={true}
+            scrollEnabled={true}
+            autogrow
           />
         </View>
         <View style={{ flexDirection: 'row' }}>

@@ -71,9 +71,10 @@ class QuestionLibrary extends Component {
       isAllowRerennder: false,
       isModal: false,
       htmlContent: '',
-      isLoadingModal: false,
+      isLoadingModal: true,
       listSkills: [],
       urlMedia: '',
+      idMatarial: ''
     };
   }
 
@@ -119,14 +120,14 @@ class QuestionLibrary extends Component {
       );
     }
     if (data[0] === 'matariaDetail') {
-      this.getDetailMatarial()
-      this.setState({ isModal: true }, () => this.getDetailMatarial(data[1]))
+      this.setState({ isModal: true, idMatarial: data[1] }, () => this.getDetailMatarial(data[1]))
     }
   };
 
-  getDetailMatarial = async (idMatarial) => {
+  getDetailMatarial = async () => {
+    const { idMatarial } = this.state;
+    this.setState({isLoadingModal:true})
     const { token } = await dataHelper.getToken();
-    this.setState({ isLoadingModal: true })
     const response = await apiPapers.getMatarialDetail({ token, idMatarial })
     if (response) {
       this.setState({
@@ -223,7 +224,7 @@ class QuestionLibrary extends Component {
     const res = Object.entries(response).map((e) => ({ id: e[0], name: e[1] }));
     this.setState({
       listSkills: res
-    },()=>this.searchPaper())
+    }, () => this.searchPaper())
   }
 
   onPress = (value, item) => {
@@ -293,10 +294,10 @@ class QuestionLibrary extends Component {
           objectSearch: {
             ...objectSearch,
             indexPage: 0,
-            skill:item.code
+            skill: item.code
           },
           isLoading: true,
-        },()=>{
+        }, () => {
           this.searchPaper()
         })
         break;
@@ -397,7 +398,9 @@ class QuestionLibrary extends Component {
     }
   }
 
-
+  _closeLearnModal = () => {
+    this.setState({ isLoadingModal: false })
+  }
 
   render() {
     const {
@@ -561,22 +564,32 @@ class QuestionLibrary extends Component {
                     onPress={() => this.setState({ isModal: false })}>
                     <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
                   </TouchableOpacity>
-                  {isLoadingModal ?
+                  {isLoadingModal && htmlContent ?
                     <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
                     :
-                    <WebView
-                      ref={(ref) => (this.webview = ref)}
-                      source={{
-                        html: html.renderMatarialDetail(htmlContent, urlMedia),
-                        baseUrl,
-                      }}
-                      subjectId={'TOAN'}
-                      originWhitelist={['file://']}
-                      scalesPageToFit={false}
-                      javaScriptEnabled
-                      showsVerticalScrollIndicator={false}
-                      startInLoadingState={false}
-                    />
+                    htmlContent===null ?
+                      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
+                        <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                        <TouchableOpacity 
+                        style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
+                        onPress={()=>this.getDetailMatarial()}
+                        >
+                          <Text style={{ color: '#fff' }}>Tải lại</Text>
+                        </TouchableOpacity>
+                      </View> :
+                      <WebView
+                        ref={(ref) => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={true}
+                      />
                   }
                 </View>
               </TouchableWithoutFeedback>
