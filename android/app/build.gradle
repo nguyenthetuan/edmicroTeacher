@@ -194,7 +194,7 @@ android {
     productFlavors {
             dev {
                 applicationId "vn.onluyen.school"
-                resValue "string", "app_name", "Trường học-DEV"
+                resValue "string", "app_name", "Giáo viên-Dev"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 dimension "default"
@@ -202,7 +202,7 @@ android {
 
             staging {
                 applicationId "vn.onluyen.school"
-                resValue "string", "app_name", "Trường học-STG"
+                resValue "string", "app_name", "Giáo viên-Stg"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 dimension "default"
@@ -212,7 +212,7 @@ android {
                 applicationId "vn.onluyen.school"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                resValue "string", "app_name", "Trường học"
+                resValue "string", "app_name", "Giáo viên"
                 dimension "default"
             }
         }
