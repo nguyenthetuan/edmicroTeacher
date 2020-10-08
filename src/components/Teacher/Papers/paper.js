@@ -1404,7 +1404,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontSize: 10,
     paddingRight: 24,
-    color: '#C4C4C4',
+    color: '#000',
     paddingVertical: 5,
     fontFamily: 'Nunito-Regular',
     alignContent: 'flex-end'

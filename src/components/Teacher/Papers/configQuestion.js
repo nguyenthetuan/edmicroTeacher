@@ -517,6 +517,11 @@ class ConfigQuestion extends Component {
         );
         let index = position - 1;
         let idx = questions.length - 1;
+        console.log('questions.length',questions.length)
+        console.log('index',index)
+        console.log('position',position)
+
+
         if (positionItem !== index) {
           if (index >= questions.length) {
             let tmp = {};
@@ -529,6 +534,12 @@ class ConfigQuestion extends Component {
                 newQuestions[idx] = tmp;
               }
             }
+            if(index < questions.length){
+              this.setState({
+                questions: newQuestions,
+                arrayQuestion: [],
+              });
+            }
           } else {
             let m = {};
             for (let i = 0; i < newQuestions.length; i++) {
@@ -537,15 +548,15 @@ class ConfigQuestion extends Component {
                 newQuestions[positionItem] = newQuestions[index];
                 newQuestions[index] = m;
               }
-              // if (i === index) {
-              //   newQuestions[index] = m;
-              // }
+              if (i === index) {
+                newQuestions[index] = m;
+              }
             }
+            this.setState({
+              questions: newQuestions,
+              arrayQuestion: [],
+            });
           }
-          this.setState({
-            questions: newQuestions,
-            arrayQuestion: [],
-          });
         }
       } else {
         alert('Xin Vui lòng Chọn một câu hỏi');

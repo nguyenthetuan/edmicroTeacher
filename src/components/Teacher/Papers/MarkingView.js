@@ -545,38 +545,6 @@ class MarkingView extends Component {
     );
   };
 
-  tabPaper = () => {
-    const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0], cache: true };
-    return (
-      <Pdf
-        ref={ref => (this.pdfFull = ref)}
-        source={source}
-        onLoadComplete={(numberOfPages, filePath) => { }}
-        onError={error => {
-          console.log(error);
-        }}
-        style={styles.pdf}
-      />
-    );
-  };
-
-  tabAnser = () => {
-    const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0] };
-    return (
-      <Pdf
-        ref={ref => (this.pdfFull = ref)}
-        source={source}
-        onLoadComplete={(numberOfPages, filePath) => { }}
-        onError={error => {
-          console.log(error);
-        }}
-        style={styles.pdf}
-      />
-    );
-  };
-
   _changeTab = key => {
     const { tabActive } = this.state;
     if (key == tabActive) {
@@ -963,8 +931,8 @@ class MarkingView extends Component {
             </View>
           )}
         <Modal visible={modalImageFull}>
-          <TouchableOpacity style={{zIndex:1, position:'absolute', top:40, left:20}} onPress={()=>this.setState({modalImageFull:false})}>
-            <Image source={require('../../../asserts/appIcon/icon_close_modal.png')} style={{tintColor:'#fff'}}/>
+          <TouchableOpacity style={{ zIndex: 1, position: 'absolute', top: 40, left: 20 }} onPress={() => this.setState({ modalImageFull: false })}>
+            <Image source={require('../../../asserts/appIcon/icon_close_modal.png')} style={{ tintColor: '#fff' }} />
           </TouchableOpacity>
           <ImageViewer
             imageUrls={arrayImage}
@@ -1006,6 +974,11 @@ class TabOfPaper extends Component {
           toValue: width / 4,
         }).start();
         break;
+      case 2:
+        Animated.timing(positionX, {
+          duration: 400,
+          toValue: width / 1.8,
+        }).start();
     }
   };
 
@@ -1043,13 +1016,20 @@ class TabOfPaper extends Component {
               Bộ đề
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
               Lời giải
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
+            onPress={this._changeTab(2)}>
+            <Text
+              style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
+              Bài làm của học sinh
             </Text>
           </TouchableOpacity>
         </View>
