@@ -1396,12 +1396,18 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   searchPaper: {
+    height: 24,
+    borderColor: '#C4C4C4',
+    borderWidth: 0.5,
     width: width * 0.5,
-    height: 23,
-    borderWidth: 1,
+    borderRadius: 4,
+    paddingLeft: 5,
     fontSize: 10,
-    paddingLeft: 7,
-    borderColor: '#C4C4C4'
+    paddingRight: 24,
+    color: '#C4C4C4',
+    paddingVertical: 5,
+    fontFamily: 'Nunito-Regular',
+    alignContent: 'flex-end'
   }
 });
 

@@ -9,7 +9,8 @@ import {
   FlatList,
   ActivityIndicator,
   Platform,
-  SafeAreaView
+  SafeAreaView,
+  Alert
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import AppIcon from '../../../utils/AppIcon';
@@ -74,9 +75,9 @@ function Item(props) {
   };
 
   const validate = () => {
-    if (new Date(timeEnd).getTime() <= new Date(timeStart).getTime()) {
+    if (moment(timeStart).format('DD-MM-YYYY, HH:mm') === moment(timeEnd).format('DD-MM-YYYY, HH:mm')) {
       props.onToast('Thời gian không hợp lệ!')
-      return;
+      return false
     }
     return true;
   }
