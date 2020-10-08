@@ -30,6 +30,8 @@ import * as Animatable from 'react-native-animatable';
 import HeaderMain from '../../common-new/HeaderMain';
 import FastImage from 'react-native-fast-image';
 import { alertDeletePaper } from '../../../utils/Alert';
+import { TextInput } from 'react-native-gesture-handler';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 const NAVBAR_HEIGHT = 220;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -177,6 +179,7 @@ class Papers extends Component {
       isLoadMore: false,
       hideLoadMore: false,
       visibleModalEditName: false,
+      textSearch: '',
 
       scrollAnim,
       offsetAnim,
@@ -356,14 +359,14 @@ class Papers extends Component {
   };
 
   onGetPapers = async () => {
-    const { gradeActive, subjectActive } = this.state;
+    const { gradeActive, subjectActive, textSearch } = this.state;
     const { token } = await dataHelper.getToken();
     if (token) {
       this._indexPage = 0;
       const resPapers = await apiPapers.getPapers({
         token,
         body: {
-          text: '',
+          text: textSearch,
           gradeCode: gradeActive,
           subjectCode: subjectActive,
           status: [],
@@ -1007,7 +1010,12 @@ class Papers extends Component {
     }
   }
 
+  searchPaper = () => {
+    this.setState({ loading: true, }, () => this.onGetPapers())
+  }
+
   renderHeaderFlastList() {
+    const { textSearch } = this.state;
     return (
       <View
         style={[
@@ -1019,7 +1027,28 @@ class Papers extends Component {
         ]}>
         {this._renderClass()}
         {this._renderSubject()}
-        <View style={{ alignItems: 'flex-end' }}>
+        <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+          <View>
+            <TextInput
+              placeholder='Nhập tên bài tập'
+              placeholderTextColor='#C4C4C4'
+              style={styles.searchPaper}
+              value={textSearch}
+              onChangeText={text => this.setState({ textSearch: text })}
+              onEndEditing={() => this.searchPaper()}
+            />
+            <TouchableOpacity
+              onPress={() => this.searchPaper()}
+              style={{
+                position: 'absolute',
+                right: 4,
+                top: 4,
+                height: 18,
+                width: 24,
+              }}>
+              <EvilIcons name="search" size={20} color="#C4C4C4" />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={styles.buttonAdd}
             onPress={this._handleAddPaper}>
@@ -1366,6 +1395,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     marginLeft: 25,
   },
+  searchPaper: {
+    width: width * 0.5,
+    height: 23,
+    borderWidth: 1,
+    fontSize: 10,
+    paddingLeft: 7,
+    borderColor: '#C4C4C4'
+  }
 });
 
 const mapStateToProps = state => {
