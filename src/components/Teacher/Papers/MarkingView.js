@@ -19,6 +19,7 @@ import { fetchDataAssignmentAction } from '../../../actions/paperAction';
 import apiHelper from '../../../utils/dataHelper';
 import apiPaper from '../../../services/apiPapersTeacher';
 import MarkingPointTeacherWeb from '../../../utils/MarkingPointTeacherWeb';
+import markingHomework from '../../../utils/webviewHomeWorkForStudent';
 import { WebView } from 'react-native-webview';
 import RippleButton from '../../libs/RippleButton';
 import { Picker } from 'native-base';
@@ -545,38 +546,6 @@ class MarkingView extends Component {
     );
   };
 
-  tabPaper = () => {
-    const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0], cache: true };
-    return (
-      <Pdf
-        ref={ref => (this.pdfFull = ref)}
-        source={source}
-        onLoadComplete={(numberOfPages, filePath) => { }}
-        onError={error => {
-          console.log(error);
-        }}
-        style={styles.pdf}
-      />
-    );
-  };
-
-  tabAnser = () => {
-    const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0] };
-    return (
-      <Pdf
-        ref={ref => (this.pdfFull = ref)}
-        source={source}
-        onLoadComplete={(numberOfPages, filePath) => { }}
-        onError={error => {
-          console.log(error);
-        }}
-        style={styles.pdf}
-      />
-    );
-  };
-
   _changeTab = key => {
     const { tabActive } = this.state;
     if (key == tabActive) {
@@ -589,8 +558,47 @@ class MarkingView extends Component {
       case 1:
         this.setState({ tabActive: key });
         break;
+      case 2:
+        this.setState({ tabActive: key })
+        break;
     }
   };
+
+  tabHomework() {
+    const {currentIndex,assignmentDetailCheck}=this.state;
+    console.log('assignmentDetailCheck',assignmentDetailCheck)
+    let explan = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
+    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
+    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
+    let urlMedia = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
+    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer.length ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer : ''
+    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer.length ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer : '';
+    return (
+      <View style={{ flex: 1 , paddingHorizontal:16,}}>
+        <WebView
+          style={{
+            backgroundColor: 'transparent',
+            flex: 1,
+            alignContent: 'center',
+          }}
+          onMessage={this.onHandleMessage.bind(this)}
+          source={{
+            html: markingHomework.renderHomeWork(
+              explan,
+              urlMedia
+            ),
+            baseUrl,
+          }}
+          originWhitelist={['file://']}
+          startInLoadingState
+          scalesPageToFit={false}
+          injectedJavaScript={`window.testMessage = "hello world"`}
+          javaScriptEnabled
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    )
+  }
 
   _changeTabComponent = () => {
     const { tabActive } = this.state;
@@ -610,6 +618,7 @@ class MarkingView extends Component {
             style={styles.pdf}
           /> || null
         );
+        break;
       case 1:
         return (
           answer.uri && <Pdf
@@ -622,6 +631,10 @@ class MarkingView extends Component {
             style={styles.pdf}
           /> || null
         );
+        break;
+      case 2:
+        return this.tabHomework();
+        break;
       default:
         return (
           <Pdf
@@ -963,8 +976,8 @@ class MarkingView extends Component {
             </View>
           )}
         <Modal visible={modalImageFull}>
-          <TouchableOpacity style={{zIndex:1, position:'absolute', top:40, left:20}} onPress={()=>this.setState({modalImageFull:false})}>
-            <Image source={require('../../../asserts/appIcon/icon_close_modal.png')} style={{tintColor:'#fff'}}/>
+          <TouchableOpacity style={{ zIndex: 1, position: 'absolute', top: 40, left: 20 }} onPress={() => this.setState({ modalImageFull: false })}>
+            <Image source={require('../../../asserts/appIcon/icon_close_modal.png')} style={{ tintColor: '#fff' }} />
           </TouchableOpacity>
           <ImageViewer
             imageUrls={arrayImage}
@@ -1006,34 +1019,19 @@ class TabOfPaper extends Component {
           toValue: width / 4,
         }).start();
         break;
+      case 2:
+        Animated.timing(positionX, {
+          duration: 400,
+          toValue: width / 1.78,
+        }).start();
     }
   };
 
   render() {
     const { tabActive, currentIndex, assignmentDetailCheck } = this.props;
-    let explan = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
-      assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
-      : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
-    if (explan?.indexOf('<p>') >= 0) {
-      explan = explan?.slice(
-        3,
-        explan.length - 4,
-      );
-    }
     const { positionX } = this.state;
     return (
       <View style={styles.wrapTab}>
-        <View style={{ paddingHorizontal: 28, marginBottom: 18 }}>
-          <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 12, color: '#828282', marginBottom: 3 }}>Bài làm của học sinh</Text>
-          <TextInput
-            style={{ height: 60, borderWidth: .5, borderRadius: 4, borderColor: '#C4C4C4', paddingLeft: 12, color: '#000' }}
-            multiline={true}
-            value={explan}
-            editable={true}
-            scrollEnabled={true}
-            autogrow
-          />
-        </View>
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
             style={[styles.btnTab, { marginLeft: 30 }]}
@@ -1043,13 +1041,20 @@ class TabOfPaper extends Component {
               Bộ đề
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
               Lời giải
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
+            onPress={this._changeTab(2)}>
+            <Text
+              style={tabActive == 2 ? styles.labelTabActive : styles.labelTab}>
+              Bài làm của học sinh
             </Text>
           </TouchableOpacity>
         </View>

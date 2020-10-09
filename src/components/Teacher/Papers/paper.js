@@ -1034,7 +1034,7 @@ class Papers extends Component {
               placeholderTextColor='#C4C4C4'
               style={styles.searchPaper}
               value={textSearch}
-              onChangeText={text => this.setState({ textSearch: text })}
+              onChangeText={text => this.setState({ textSearch: text.toLowerCase() })}
               onEndEditing={() => this.searchPaper()}
             />
             <TouchableOpacity
@@ -1404,7 +1404,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontSize: 10,
     paddingRight: 24,
-    color: '#C4C4C4',
+    color: '#000',
     paddingVertical: 5,
     fontFamily: 'Nunito-Regular',
     alignContent: 'flex-end'
