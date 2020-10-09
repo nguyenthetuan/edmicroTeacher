@@ -23,7 +23,7 @@ const getInfoClass = async ({token, classId}) => {
 
 const getListExercise = async ({token, classId}) => {
   let response = await fetch(
-    `${API_BASE}school-online/assignment/assign/class/${classId}/0`,
+    `${API_BASE}school-online/assignment/assign/class/${classId}`,
     {
       method: 'GET',
       headers: getHeaders(token),

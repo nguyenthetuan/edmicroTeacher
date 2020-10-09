@@ -566,13 +566,12 @@ class MarkingView extends Component {
 
   tabHomework() {
     const {currentIndex,assignmentDetailCheck}=this.state;
-    console.log('assignmentDetailCheck',assignmentDetailCheck)
     let explan = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
     assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
     : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
     let urlMedia = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
-    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer.length ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer : ''
-    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer.length ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer : '';
+    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer : ''
+    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer : '';
     return (
       <View style={{ flex: 1 , paddingHorizontal:16,}}>
         <WebView
