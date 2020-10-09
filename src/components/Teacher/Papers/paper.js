@@ -1034,7 +1034,7 @@ class Papers extends Component {
               placeholderTextColor='#C4C4C4'
               style={styles.searchPaper}
               value={textSearch}
-              onChangeText={text => this.setState({ textSearch: text })}
+              onChangeText={text => this.setState({ textSearch: text.toLowerCase() })}
               onEndEditing={() => this.searchPaper()}
             />
             <TouchableOpacity

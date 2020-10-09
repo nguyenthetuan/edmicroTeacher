@@ -517,11 +517,6 @@ class ConfigQuestion extends Component {
         );
         let index = position - 1;
         let idx = questions.length - 1;
-        console.log('questions.length',questions.length)
-        console.log('index',index)
-        console.log('position',position)
-
-
         if (positionItem !== index) {
           if (index >= questions.length) {
             let tmp = {};
