@@ -12,6 +12,7 @@ import MenuTabTeacher from '../components/menu/MenuTabTeacher';
 import classIcon from '../asserts/icon/icon_class_unactive.png';
 import classIconActive from '../asserts/icon/icon_class_active.png';
 import FreshchatComponent from '../utils/FreshchatComponent';
+import MissionScreen from '../containers/teacher/Mission/MissionContainer';
 const {width, height} = Dimensions.get('window');
 
 const TabMainTeacher = createBottomTabNavigator(
@@ -72,6 +73,36 @@ const TabMainTeacher = createBottomTabNavigator(
                 <Text style={styles.txtLabel}>Bộ đề</Text>
               ) : (
                 <Text style={styles.txtLabelActive}>Bộ đề</Text>
+              );
+            },
+      },
+    },
+    Mission: {
+      screen: MissionScreen,
+      navigationOptions: {
+        title: 'Nhiệm vụ',
+        tabBarIcon: ({tintColor, focused}) => {
+          return !focused ? (
+            <Image
+              color={tintColor}
+              source={AppIcon.task_inactive}
+              resizeMode={'contain'}
+            />
+          ) : (
+            <Image
+              color={tintColor}
+              source={AppIcon.task_active}
+              resizeMode={'contain'}
+            />
+          );
+        },
+        tabBarLabel: Platform.isPad
+          ? 'Nhiệm vụ'
+          : ({focused}) => {
+              return !focused ? (
+                <Text style={styles.txtLabel}>Nhiệm vụ</Text>
+              ) : (
+                <Text style={styles.txtLabelActive}>Nhiệm vụ</Text>
               );
             },
       },
@@ -174,7 +205,7 @@ const TabMainTeacher = createBottomTabNavigator(
         // borderTopColor: 'rgba(88,72,255,0.3)',
       },
     },
-    tabBarComponent: (props) => {
+    tabBarComponent: props => {
       return <TabBarComponent {...props} />;
     },
   },

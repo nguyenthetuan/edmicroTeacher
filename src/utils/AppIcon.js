@@ -77,6 +77,10 @@ import icClassNonActive from '../asserts/images/icClassNonActive.png';
 import icPaperActive from '../asserts/images/icPaper.png';
 import icon_freshchat from '../asserts/appIcon/icon_freshchat.png';
 
+import task_inactive from '../asserts/icon/task_inactive.png';
+import task_active from '../asserts/icon/task_active.png';
+
+
 import icons_filter from '../asserts/appIcon/icons_filter.png';
 import close_img from '../asserts/appIcon/close_img.png';
 
@@ -144,4 +148,6 @@ module.exports = {
   icons_filter,
   close_img,
   iconNodata,
+  task_active,
+  task_inactive
 };
