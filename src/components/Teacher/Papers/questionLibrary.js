@@ -66,12 +66,15 @@ class QuestionLibrary extends Component {
       questions: [],
       listQuestionAdded: [],
       height: 0,
-      isLoading: false,
+      isLoading: true,
       totalQuestion: 0,
       isAllowRerennder: false,
       isModal: false,
       htmlContent: '',
-      isLoadingModal: false,
+      isLoadingModal: true,
+      listSkills: [],
+      urlMedia: '',
+      idMatarial: ''
     };
   }
 
@@ -117,17 +120,18 @@ class QuestionLibrary extends Component {
       );
     }
     if (data[0] === 'matariaDetail') {
-      this.getDetailMatarial()
-      this.setState({ isModal: true }, () => this.getDetailMatarial(data[1]))
+      this.setState({ isModal: true, idMatarial: data[1] }, () => this.getDetailMatarial(data[1]))
     }
   };
 
-  getDetailMatarial = async (idMatarial) => {
+  getDetailMatarial = async () => {
+    const { idMatarial } = this.state;
+    this.setState({isLoadingModal:true})
     const { token } = await dataHelper.getToken();
-    this.setState({ isLoadingModal: true })
     const response = await apiPapers.getMatarialDetail({ token, idMatarial })
     if (response) {
       this.setState({
+        urlMedia: response?.urlMedia,
         htmlContent: response?.contentHtml,
         isLoadingModal: false
       })
@@ -183,7 +187,7 @@ class QuestionLibrary extends Component {
               ...objectSearch,
               // curriculumCode: response && response[0].id,
             },
-            isLoading: false,
+            // isLoading: false,
           },
         );
         this.searchPaper();
@@ -212,6 +216,16 @@ class QuestionLibrary extends Component {
       }
     } catch (error) { }
   };
+
+  getListSkills = async () => {
+    const { objectSearch } = this.state;
+    const { token } = await dataHelper.getToken();
+    const response = await apiPapers.getSkill({ token, idSubject: objectSearch.learningTargetsCode });
+    const res = Object.entries(response).map((e) => ({ id: e[0], name: e[1] }));
+    this.setState({
+      listSkills: res
+    }, () => this.searchPaper())
+  }
 
   onPress = (value, item) => {
     this.refs.PaginationUtils.resetState();
@@ -269,13 +283,25 @@ class QuestionLibrary extends Component {
             },
             isLoading: true,
           },
-          () =>{
-            console.log(this.state.objectSearch.learningTargetsCode);
+          () => {
+            this.getListSkills();
             this.searchPaper();
           }
         );
         break;
       case 5:
+        this.setState({
+          objectSearch: {
+            ...objectSearch,
+            indexPage: 0,
+            skill: item.code
+          },
+          isLoading: true,
+        }, () => {
+          this.searchPaper()
+        })
+        break;
+      case 6:
         {
           this.setState(
             {
@@ -304,35 +330,22 @@ class QuestionLibrary extends Component {
         body: this.state.objectSearch,
         key: key,
       });
+      console.log(response);
       const responseCount = await apiPapers.countSearch({
         token: token,
         body: this.state.objectSearch,
       });
       const { totalQuestion } = responseCount;
-      if (response !== undefined) {
-        if (isAllowRerennder) {
-          this.setState({
-            questions: !!response && response,
-            totalQuestion,
-            isAllowRerennder: !this.state.isAllowRerennder,
-          }, () => {
-            setTimeout(() => {
-              this.setState({
-                isLoading: false,
-              })
-            }, 5000)
-          });
-          return;
-        }
+      if (response && response.length > 0) {
         this.setState({
           questions: !!response && response,
           totalQuestion,
-        }, () => {
-          setTimeout(() => {
-            this.setState({
-              isLoading: false,
-            })
-          }, 5000)
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          questions: [],
+          totalQuestion: 0
         });
       }
     } catch (error) { }
@@ -351,9 +364,11 @@ class QuestionLibrary extends Component {
     }
     return md5(_return);
   };
+
   _closeLearnPlaceholder = () => {
     this.setState({ isLoading: false });
   };
+
   handleNextPage = (indexPage) => {
     const { objectSearch } = this.state;
     this.setState(
@@ -383,6 +398,10 @@ class QuestionLibrary extends Component {
     }
   }
 
+  _closeLearnModal = () => {
+    this.setState({ isLoadingModal: false })
+  }
+
   render() {
     const {
       listQuestionAdded,
@@ -396,7 +415,9 @@ class QuestionLibrary extends Component {
       isModal,
       htmlContent,
       isLoadingModal,
-      curriculumCode
+      curriculumCode,
+      urlMedia,
+      listSkills
     } = this.state;
     const level = [
       { name: 'Nhận biết', code: '0' },
@@ -452,8 +473,8 @@ class QuestionLibrary extends Component {
             />
             <ModalConfigLibrary
               title="Dạng bài"
-              // data={subject}
-              // onPress={value => this.onPress(2, value)}
+              data={listSkills}
+              onPress={value => this.onPress(5, value)}
               colum={2}
               widthItem={40}
             />
@@ -462,8 +483,7 @@ class QuestionLibrary extends Component {
               data={level}
               colum={2}
               widthItem={40}
-              onPress={(value) => this.onPress(5, value)}
-              activeButtom
+              onPress={(value) => this.onPress(6, value)}
             />
           </View>
         </View>
@@ -494,8 +514,8 @@ class QuestionLibrary extends Component {
                 _closeLearnPlaceholder={this._closeLearnPlaceholder}
                 questions={this.state.questions}
                 listQuestionAdded={listQuestionAdded}
-                isAllowRerennder={isAllowRerennder}
               />
+
             ) : (
                 <View
                   style={{
@@ -544,22 +564,32 @@ class QuestionLibrary extends Component {
                     onPress={() => this.setState({ isModal: false })}>
                     <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
                   </TouchableOpacity>
-                  {isLoadingModal ?
+                  {isLoadingModal && htmlContent ?
                     <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
                     :
-                    <WebView
-                      ref={(ref) => (this.webview = ref)}
-                      source={{
-                        html: html.renderMatarialDetail(htmlContent),
-                        baseUrl,
-                      }}
-                      subjectId={'TOAN'}
-                      originWhitelist={['file://']}
-                      scalesPageToFit={false}
-                      javaScriptEnabled
-                      showsVerticalScrollIndicator={false}
-                      startInLoadingState={false}
-                    />
+                    htmlContent===null ?
+                      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
+                        <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                        <TouchableOpacity 
+                        style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
+                        onPress={()=>this.getDetailMatarial()}
+                        >
+                          <Text style={{ color: '#fff' }}>Tải lại</Text>
+                        </TouchableOpacity>
+                      </View> :
+                      <WebView
+                        ref={(ref) => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={true}
+                      />
                   }
                 </View>
               </TouchableWithoutFeedback>
@@ -576,9 +606,9 @@ class WebViewComponent extends Component {
     super(props);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.isAllowRerennder != nextProps.isAllowRerennder) {
-      return true;
-    }
+    // if (this.props.isAllowRerennder != nextProps.isAllowRerennder) {
+    //   return true;
+    // }
     if (this.props.questions != nextProps.questions) {
       return true;
     }
@@ -712,6 +742,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   }
 });
+
 const mapStateToProps = (state) => {
   return {
     paper: state.paper,

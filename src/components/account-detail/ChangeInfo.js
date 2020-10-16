@@ -400,10 +400,10 @@ class ChangeInfo extends Component {
     // const { status } = await Permissions.askAsync(Permissions.CAMERA);
     // this.setState({ hasCameraPermission: status === 'granted' });
     // alert(this.state.hasCameraPermission);
-    alertConfirmAvatar((cal) => {
-      // this.uploadAvatarIos();
-      this.cropPickerAndroid();
-    });
+    // alertConfirmAvatar((cal) => {
+    // this.uploadAvatarIos();
+    this.cropPickerAndroid();
+    // });
     // this.uploadAvatarIos();
     // } else {
     // this.cropPickerAndroid();
@@ -441,191 +441,99 @@ class ChangeInfo extends Component {
     const source = getSourceAvatar(userId, timeCached);
     return (
       <View
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: '#3A608C' }}
         onTouchStart={() => {
           Keyboard.dismiss();
         }}>
         <StatusBar />
-        <ScrollView2Colors
-          style={{ flex: 1 }}
-          topBounceColor="#3A608C"
-          bottomBounceColor="#FFF">
-          <SafeAreaView>
-            <HeaderNavigation
-              title={'Hồ sơ cá nhân'}
-              navigation={this.props.navigation}
-              color={'#fff'}
-            />
-          </SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: '#3A608C' }} />
+        <HeaderNavigation
+          title={'Hồ sơ cá nhân'}
+          navigation={this.props.navigation}
+          color={'#fff'}
+        />
+        <View style={{ flex: 1, backgroundColor: '#fff', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
           <ScrollView
+            bounces={false}
             showsVerticalScrollIndicator={false}
-            style={{ backgroundColor: 'transparent', opacity: 1, width: width }}>
-            <View
-              style={[
-                { backgroundColor: 'transparent', paddingBottom: 15 },
-                Platform.OS === 'ios' && { height: 100 },
-              ]}>
-              {
-                <HeaderUserInfo
-                  avatarSource={source}
-                  {...user}
-                  onPress={() => this.uploadAvatar()}
-                  style={[
+            contentContainerStyle={{ opacity: 1, width: width, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+            <HeaderUserInfo
+              avatarSource={source}
+              {...user}
+              onPress={() => this.uploadAvatar()}
+            />
+            <View style={styles.wrapForm}>
+              <FormInput
+                editable={false}
+                label={'Tên'}
+                styleLabel={styles.styleLabel}
+                styleInput={styles.styleInputName}
+                inputHeight={{ height: 40 }}
+                placeholder="Tên hiển thị"
+                value={this.state.DisplayName}
+                onChangeText={(text) => this.setState({ DisplayName: text })}
+              />
+              <FormDate
+                label={'Ngày sinh'}
+                styleLabel={styles.styleLabel}
+                value={this.state.Birthday}
+                styleInput={styles.styleInputBirthday}
+                onPress={() => {
+                  // this.showDateTimePicker();
+                }}
+              />
+              <FormInput
+                label={'Số điện thoại'}
+                styleLabel={styles.styleLabel}
+                styleInput={styles.styleInputName}
+                editable={false}
+                inputHeight={{ height: 40 }}
+                placeholder="Số điện thoại"
+                onChangeText={() => null}
+                value={this.state.PhoneNumber}
+              />
+              <FormSelect
+                label={'Tỉnh/Thành Phố'}
+                styleLabel={styles.styleLabel}
+                styleText={styles.styleTxtFomselect}
+                data={this.state.provinesMap}
+                selectedValue={Number.parseInt(this.state.ProvinceId)}
+                onValueChange={(value) => {
+                  this.changeProvines(value);
+                }}
+                disable={true}
+              />
+              <FormSelect
+                label={'Quận/Huyện'}
+                styleLabel={styles.styleLabel}
+                styleText={styles.styleTxtFomselect}
+                data={this.state.districtesMap}
+                selectedValue={Number.parseInt(this.state.DistrictId)}
+                onValueChange={(value) => {
+                  this.setState(
                     {
-                      position: 'absolute',
-                      left: 16,
-                      backgroundColor: 'transparent',
-                      flexDirection: 'row',
-                      top: -10,
+                      DistrictId: value,
                     },
-                    Platform.OS === 'android' && {
-                      position: 'relative',
-                      marginLeft: 16,
-                      top: 0,
-                    },
-                  ]}
-                />
-              }
-            </View>
-            <View
-              style={[
-                {
-                  flex: 1,
-                  backgroundColor: '#FFF',
-                  zIndex: -1,
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15,
-                  marginBottom: 50,
-                  marginTop: isAndroid ? -30 : 70,
-                },
-                Platform.isPad && { height: height / 2 },
-              ]}>
-              {false && (
-                <TouchableOpacity
-                  style={{ alignSelf: 'center', flexDirection: 'row' }}
-                  onPress={() => this.uploadAvatar()}>
-                  <Image source={require('../../asserts/icon/camera.png')} />
-                  <Text style={styles.txtTitle}>Thay đổi ảnh đại diện</Text>
-                </TouchableOpacity>
-              )}
-              <View
-                style={[
-                  {
-                    flex: 1,
-                    marginHorizontal: 16,
-                  },
-                ]}>
-                <View>
-                  <FormInput
-                    label={'Tên'}
-                    styleLabel={styles.styleLabel}
-                    styleInput={styles.styleInputName}
-                    inputHeight={{ height: 40 }}
-                    placeholder="Tên hiển thị"
-                    value={this.state.DisplayName}
-                    onChangeText={(text) => this.setState({ DisplayName: text })}
-                  />
-                  <Image
-                    source={require('../../asserts/icon/icChange.png')}
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      bottom: 15,
-                      tintColor: '#828282',
-                      height: 15,
-                      width: 15,
-                    }}
-                  />
-                </View>
-                <View>
-                  <FormDate
-                    label={'Ngày sinh'}
-                    styleLabel={styles.styleLabel}
-                    value={this.state.Birthday}
-                    styleInput={styles.styleInputBirthday}
-                    onPress={() => {
-                      this.showDateTimePicker();
-                    }}
-                  />
-                  <Image
-                    source={require('../../asserts/icon/icChange.png')}
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      bottom: 25,
-                      tintColor: '#828282',
-                      height: 15,
-                      width: 15,
-                    }}
-                  />
-                </View>
-                <View>
-                  <FormInput
-                    label={'Số điện thoại'}
-                    styleLabel={styles.styleLabel}
-                    styleInput={styles.styleInputName}
-                    editable={false}
-                    inputHeight={{ height: 40 }}
-                    placeholder="Số điện thoại"
-                    onChangeText={() => null}
-                    value={this.state.PhoneNumber}
-                  />
-                  <Image
-                    source={require('../../asserts/icon/icChange.png')}
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      bottom: 20,
-                      tintColor: '#828282',
-                      height: 15,
-                      width: 15,
-                    }}
-                  />
-                </View>
-
-                <FormSelect
-                  label={'Tỉnh/Thành Phố'}
-                  styleLabel={styles.styleLabel}
-                  styleText={styles.styleTxtFomselect}
-                  data={this.state.provinesMap}
-                  selectedValue={Number.parseInt(this.state.ProvinceId)}
-                  onValueChange={(value) => {
-                    this.changeProvines(value);
-                  }}
-                  disable={true}
-                />
-                <FormSelect
-                  label={'Quận/Huyện'}
-                  styleLabel={styles.styleLabel}
-                  styleText={styles.styleTxtFomselect}
-                  data={this.state.districtesMap}
-                  selectedValue={Number.parseInt(this.state.DistrictId)}
-                  onValueChange={(value) => {
-                    this.setState(
-                      {
-                        DistrictId: value,
-                      },
-                      () => this.getListSchools(),
-                    );
-                  }}
-                  disable={true}
-                />
-                <FormSelect
-                  label={'Trường'}
-                  styleLabel={styles.styleLabel}
-                  styleText={styles.styleTxtFomselect}
-                  data={this.state.schoolsMap}
-                  selectedValue={Number.parseInt(this.state.SchoolId)}
-                  onValueChange={(value) => {
-                    this.setState({ SchoolId: value }, () =>
-                      this.getListSchools(),
-                    );
-                  }}
-                  disable={true}
-                />
-              </View>
-            </View>
-            <Button
+                    () => this.getListSchools(),
+                  );
+                }}
+                disable={true}
+              />
+              <FormSelect
+                label={'Trường'}
+                styleLabel={styles.styleLabel}
+                styleText={styles.styleTxtFomselect}
+                data={this.state.schoolsMap}
+                selectedValue={Number.parseInt(this.state.SchoolId)}
+                onValueChange={(value) => {
+                  this.setState({ SchoolId: value }, () =>
+                    this.getListSchools(),
+                  );
+                }}
+                disable={true}
+              />
+              <View style={{ height: 70, backgroundColor: '#fff' }} />
+              {/* <Button
               btn={'rgb'}
               size={100}
               title={'Lưu thay đổi'}
@@ -636,22 +544,23 @@ class ChangeInfo extends Component {
               vertical={20}
               styleTitle={{ fontSize: 14, color: '#FFFFFF' }}
               style={{ backgroundColor: '#56CCF2' }}
-            />
+            /> */}
+            </View>
           </ScrollView>
-          <DateTimePickerModal
-            isVisible={this.state.isDateTimePickerVisible}
-            mode="date"
-            date={new Date(this.state.Birthday)}
-            onConfirm={this.handleDatePicked}
-            onCancel={this.hideDateTimePicker}
-          />
-        </ScrollView2Colors>
+        </View>
+        <SafeAreaView style={{ backgroundColor: '#fff' }} />
+        <DateTimePickerModal
+          isVisible={this.state.isDateTimePickerVisible}
+          mode="date"
+          date={new Date(this.state.Birthday)}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
+        />
         <Toast ref="toast" position={'bottom'} />
         <LoadingScreen
           isLoading={this.state.isUpdate}
           bgColor={'transparent'}
         />
-        <SafeAreaView />
       </View>
     );
   }
@@ -666,6 +575,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 5,
     marginTop: 10,
+  },
+  wrapForm: {
+    flex: 1,
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   },
   viewLogin: {
     flex: 1,

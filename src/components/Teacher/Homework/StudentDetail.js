@@ -17,6 +17,7 @@ import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
+import Global from '../../../utils/Globals';
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,7 +30,7 @@ const getProcess = (item) => {
     return (item.point / item.totalPoint) * 100;
 }
 
-const getStatus = (item) => {
+const getStatus = (item, point) => {
     switch (item.status) {
         case 0:
             return {
@@ -61,7 +62,7 @@ const getStatus = (item) => {
             return {
                 title: 'Đã hoàn thành',
                 color: '#55B619',
-                result: `${result} điểm`
+                // result: `${point} điểm`
             };
         case 6:
             return {
@@ -117,6 +118,7 @@ function ModalDetail(props) {
     const item = props.data;
     const progress = getProcess(item);
     const status = getStatus(item);
+    const point = props.point;
 
     return (
         <View style={styles.centeredView}>
@@ -155,7 +157,7 @@ function ModalDetail(props) {
                                     <View style={styles.viewResult} />
                                     <View>
                                         <Text style={styles.txtTitleItem}>Điểm số</Text>
-                                        <Text style={[styles.txtPoint, { marginTop: 2 }]}>{status.result}</Text>
+                                        <Text style={[styles.txtPoint, { marginTop: 2 }]}>{point}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -205,6 +207,7 @@ export default function StudentDetail(props) {
     const toast = useRef();
 
     const [dataDetail, setDetail] = useState(null);
+    const [point, setPoint] = useState(0);
 
     const handleRetryCheckPoint = async (studentId) => {
         if (dataDetail) {
@@ -239,6 +242,7 @@ export default function StudentDetail(props) {
                                 toast.current.show('Yêu cầu làm lại thành công!');
                             }, 500)
                         } else {
+                            Global.updateHomeWork();
                             toast.current.show(res);
                         }
                     }
@@ -248,9 +252,17 @@ export default function StudentDetail(props) {
         );
     }
 
+    const detailStudent = async (item) => {
+        const { token } = await dataHelper.getToken();
+        const response = await apiHomework.getStudentDetail({ token, assignId: props.screenProps?.data?.data.assignId, studentId: item.studentId })
+        setPoint(response.data.totalScore)
+        setDetail(item)
+
+    }
+
     renderItem = ({ item, index }) => {
         const progress = getProcess(item);
-        const status = getStatus(item);
+        const status = getStatus(item,point);
         return (
             <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }]}>
                 <View style={styles.viewAvatar}>
@@ -281,17 +293,17 @@ export default function StudentDetail(props) {
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', marginEnd: 7 }}>
+                        {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
-                            <Text style={styles.txtPoint}>{status.result}</Text>
-                        </View>
+                            <Text style={styles.txtPoint}>{status.result||point}</Text>
+                        </View> */}
                     </View>
                     {
                         item.status === 4
                             ?
                             <View style={styles.viewOption}>
                                 <TouchableOpacity style={styles.btnDetail}
-                                    onPress={() => { setDetail(item) }}>
+                                    onPress={() => { detailStudent(item) }}>
                                     <Text style={styles.txtDetail}>Chi tiết</Text>
                                     <Ionicons
                                         name='ios-arrow-forward'
@@ -347,6 +359,7 @@ export default function StudentDetail(props) {
                                     onRework={(studentId) => handleRework(studentId)}
                                     data={dataDetail}
                                     onClose={() => setDetail(null)}
+                                    point={point}
                                 /> : null
                             }
                         </View>)

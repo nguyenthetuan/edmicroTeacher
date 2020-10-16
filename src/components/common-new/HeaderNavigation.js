@@ -52,10 +52,9 @@ export default class HeaderNavigation extends React.Component {
                         onPress={this.navigateUser}
                         style={styles.btnAvatar}>
                         <Image
-                            resizeMode="contain"
                             source={actionIcon}
-                            style={[styles.imgAvatar, 
-                                this.props.actionStyle
+                            style={[styles.imgAvatar,
+                            this.props.actionStyle
                             ]}
                         />
                     </TouchableOpacity>
@@ -94,12 +93,13 @@ const styles = StyleSheet.create({
         height: 38,
         width: 38,
         marginLeft: 10,
+        borderRadius: 19,
         justifyContent: 'center',
         alignItems: 'center',
     },
     imgAvatar: {
         height: 25,
         width: 25,
-        borderRadius: 12.5,
+        borderRadius: 25,
     },
 });

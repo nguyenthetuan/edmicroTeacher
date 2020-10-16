@@ -12,12 +12,14 @@ import {
   TouchableOpacity,
   Animated,
   SafeAreaView,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction } from '../../../actions/paperAction';
 import apiHelper from '../../../utils/dataHelper';
 import apiPaper from '../../../services/apiPapersTeacher';
 import MarkingPointTeacherWeb from '../../../utils/MarkingPointTeacherWeb';
+import markingHomework from '../../../utils/webviewHomeWorkForStudent';
 import { WebView } from 'react-native-webview';
 import RippleButton from '../../libs/RippleButton';
 import { Picker } from 'native-base';
@@ -29,6 +31,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Dropdown from '../../../utils/Dropdown';
 import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import FormInput from '../../../components/common/FormInput';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';
@@ -60,6 +63,8 @@ class MarkingView extends Component {
         indexStudent: 0,
       },
       urlFile: '',
+      modalImageFull: false,
+      arrayImage: []
     };
   }
 
@@ -541,38 +546,6 @@ class MarkingView extends Component {
     );
   };
 
-  tabPaper = () => {
-    const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0] };
-    return (
-      <Pdf
-        ref={ref => (this.pdfFull = ref)}
-        source={source}
-        onLoadComplete={(numberOfPages, filePath) => { }}
-        onError={error => {
-          console.log(error);
-        }}
-        style={styles.pdf}
-      />
-    );
-  };
-
-  tabAnser = () => {
-    const { assignmentDetailCheck } = this.state;
-    const source = { uri: assignmentDetailCheck.data.listFile[0] };
-    return (
-      <Pdf
-        ref={ref => (this.pdfFull = ref)}
-        source={source}
-        onLoadComplete={(numberOfPages, filePath) => { }}
-        onError={error => {
-          console.log(error);
-        }}
-        style={styles.pdf}
-      />
-    );
-  };
-
   _changeTab = key => {
     const { tabActive } = this.state;
     if (key == tabActive) {
@@ -585,8 +558,46 @@ class MarkingView extends Component {
       case 1:
         this.setState({ tabActive: key });
         break;
+      case 2:
+        this.setState({ tabActive: key })
+        break;
     }
   };
+
+  tabHomework() {
+    const {currentIndex,assignmentDetailCheck}=this.state;
+    let explan = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
+    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
+    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
+    let urlMedia = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
+    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer : ''
+    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer : '';
+    return (
+      <View style={{ flex: 1 , paddingHorizontal:16,}}>
+        <WebView
+          style={{
+            backgroundColor: 'transparent',
+            flex: 1,
+            alignContent: 'center',
+          }}
+          onMessage={this.onHandleMessage.bind(this)}
+          source={{
+            html: markingHomework.renderHomeWork(
+              explan,
+              urlMedia
+            ),
+            baseUrl,
+          }}
+          originWhitelist={['file://']}
+          startInLoadingState
+          scalesPageToFit={false}
+          injectedJavaScript={`window.testMessage = "hello world"`}
+          javaScriptEnabled
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    )
+  }
 
   _changeTabComponent = () => {
     const { tabActive } = this.state;
@@ -606,6 +617,7 @@ class MarkingView extends Component {
             style={styles.pdf}
           /> || null
         );
+        break;
       case 1:
         return (
           answer.uri && <Pdf
@@ -618,6 +630,10 @@ class MarkingView extends Component {
             style={styles.pdf}
           /> || null
         );
+        break;
+      case 2:
+        return this.tabHomework();
+        break;
       default:
         return (
           <Pdf
@@ -687,10 +703,10 @@ class MarkingView extends Component {
       }
     }
     let typeAnswer =
-      item.dataMaterial?.data[0].typeAnswer || item.dataStandard?.typeAnswer;
+      item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
     let answer =
-      item.dataMaterial?.data[0].userOptionId[0] ||
-      item.dataStandard?.userOptionId[0];
+      item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
+        item.dataStandard?.userOptionId[0];
     if (typeAnswer === 0 && urlFile) {
       return (
         <RippleButton
@@ -740,12 +756,31 @@ class MarkingView extends Component {
     }
   };
 
+  onHandleMessage = (event) => {
+    const data = event.nativeEvent.data.split('---');
+    if (data[0] === 'urlImage') {
+      this.modalFullImage(data[1])
+    }
+  }
+
+  modalFullImage = (image) => {
+    const imsges = [{
+      url: image
+    }]
+    this.setState({
+      modalImageFull: true,
+      arrayImage: imsges
+    })
+  }
+
   render() {
     const {
       assignmentDetailCheck,
       currentIndex,
       tabActive,
       selectedValueClass,
+      modalImageFull,
+      arrayImage
     } = this.state;
     if (_.isEmpty(assignmentDetailCheck)) {
       return (
@@ -773,7 +808,7 @@ class MarkingView extends Component {
         `undefined` &&
         `${this.state[`valueScore${this.state.currentIndex}`]}`) ||
       ``;
-    console.log('assignmentDetailCheck', assignmentDetailCheck)
+
     return (
       <View style={styles.rootView}>
         {this.renderHeader()}
@@ -905,36 +940,51 @@ class MarkingView extends Component {
                   <TabOfPaper
                     tabActive={tabActive}
                     _changeTab={this._changeTab}
+                    currentIndex={currentIndex}
+                    assignmentDetailCheck={assignmentDetailCheck}
                   />
                   {this._changeTabComponent()}
                 </>
               )}
               {_.isEmpty(assignmentDetailCheck.data.listFile) && (
-                <WebView
-                  ref={ref => (this.webview = ref)}
-                  style={{
-                    backgroundColor: 'transparent',
-                    flex: 1,
-                    alignContent: 'center',
-                  }}
-                  // onMessage={this.onHandleMessage.bind(this)}
-                  source={{
-                    html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
-                      this.state.assignmentDetailCheck.data.data,
-                      this.state.assignmentDetailCheck.data.assignmentType,
-                    ),
-                    baseUrl,
-                  }}
-                  originWhitelist={['file://']}
-                  startInLoadingState
-                  scalesPageToFit={false}
-                  injectedJavaScript={`window.testMessage = "hello world"`}
-                  javaScriptEnabled
-                  showsVerticalScrollIndicator={false}
-                />
+                <>
+                  <WebView
+                    ref={ref => (this.webview = ref)}
+                    style={{
+                      backgroundColor: 'transparent',
+                      flex: 1,
+                      alignContent: 'center',
+                    }}
+                    onMessage={this.onHandleMessage.bind(this)}
+                    source={{
+                      html: MarkingPointTeacherWeb.renderListQuestionAndAnswersMaterial(
+                        this.state.assignmentDetailCheck.data.data,
+                        this.state.assignmentDetailCheck.data.assignmentType,
+                      ),
+                      baseUrl,
+                    }}
+                    originWhitelist={['file://']}
+                    startInLoadingState
+                    scalesPageToFit={false}
+                    injectedJavaScript={`window.testMessage = "hello world"`}
+                    javaScriptEnabled
+                    showsVerticalScrollIndicator={false}
+                  />
+                </>
               )}
             </View>
           )}
+        <Modal visible={modalImageFull}>
+          <TouchableOpacity style={{ zIndex: 1, position: 'absolute', top: 40, left: 20 }} onPress={() => this.setState({ modalImageFull: false })}>
+            <Image source={require('../../../asserts/appIcon/icon_close_modal.png')} style={{ tintColor: '#fff' }} />
+          </TouchableOpacity>
+          <ImageViewer
+            imageUrls={arrayImage}
+            enableSwipeDown={true}
+            onSwipeDown={() => this.setState({ modalImageFull: false })}
+            enableImageZoom={true}
+          />
+        </Modal>
       </View>
     );
   }
@@ -968,11 +1018,16 @@ class TabOfPaper extends Component {
           toValue: width / 4,
         }).start();
         break;
+      case 2:
+        Animated.timing(positionX, {
+          duration: 400,
+          toValue: width / 1.78,
+        }).start();
     }
   };
 
   render() {
-    const { tabActive } = this.props;
+    const { tabActive, currentIndex, assignmentDetailCheck } = this.props;
     const { positionX } = this.state;
     return (
       <View style={styles.wrapTab}>
@@ -985,13 +1040,20 @@ class TabOfPaper extends Component {
               Bộ đề
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
-            style={[styles.btnTab, { marginLeft: 65 }]}
+            style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
             onPress={this._changeTab(1)}>
             <Text
               style={tabActive == 1 ? styles.labelTabActive : styles.labelTab}>
               Lời giải
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.btnTab, { marginLeft: Platform.isPad ? 220 : 65 }]}
+            onPress={this._changeTab(2)}>
+            <Text
+              style={tabActive == 2 ? styles.labelTabActive : styles.labelTab}>
+              Bài làm của học sinh
             </Text>
           </TouchableOpacity>
         </View>

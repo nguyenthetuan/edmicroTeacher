@@ -104,6 +104,7 @@ const searchPaper = async ({ token, body, key }) => {
     let responseJson = await response.json();
     return responseJson;
   } catch (error) {
+    return "";
   }
 
 }
@@ -288,8 +289,17 @@ const publicedScore = async ({ token, formData }) => {
   return responseJson;
 }
 
-const getMatarialDetail = async ({token,idMatarial}) => {
+const getMatarialDetail = async ({ token, idMatarial }) => {
   let response = await fetch(`${API_BASE}school-online/library/material/detail/${idMatarial}/0`, {
+    method: 'GET',
+    headers: getHeaders(token)
+  });
+  let responseJson = await response.json();
+  return responseJson;
+}
+
+const getSkill = async ({token,idSubject})=>{
+  let response = await fetch(`${API_BASE}school-online/curriculum/curriculum/learning-target/skill/${idSubject}`, {
     method: 'GET',
     headers: getHeaders(token)
   });
@@ -325,5 +335,6 @@ module.exports = {
   submitReview,
   countSearch,
   publicedScore,
-  getMatarialDetail
+  getMatarialDetail,
+  getSkill,
 };

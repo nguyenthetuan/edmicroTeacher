@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import AppIcon from '../../utils/AppIcon';
 import _ from 'lodash';
 import { getAvatarSource } from '../../utils/Common';
@@ -14,14 +14,18 @@ export default class HeaderUserInfo extends Component {
     const { style, avatarSource } = this.props;
     return (
       <View horizontal={0} vertical={10} style={[styles.wrapContainer, style]} >
-        <Avatar
-          source={avatarSource}
-          size={118}
-          style={{ justifyContent: 'center', alignSelf: 'center', marginBottom: 20 }}
-        />
-        <View style={{ marginBottom: 20 }}>
+        <View>
+          <Avatar
+            source={avatarSource}
+            size={Platform.isPad ? 130 : 118}
+            center
+            style={{ justifyContent: 'center', alignSelf: 'center' }}
+            onEdit={() => this.props.onPress()}
+          />
+        </View>
+        {/* <View style={{ marginBottom: 20 }}>
           < TouchableOpacity
-            style={{ alignSelf: 'flex-end' }}
+            style={{ alignSelf: 'center' }}
             onPress={() => this.props.onPress()}
           >
             <View style={{ flexDirection: 'row' }}>
@@ -29,7 +33,7 @@ export default class HeaderUserInfo extends Component {
               <Text style={styles.txtTitle}>Thay đổi ảnh đại diện</Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View >
     )
   }
@@ -43,13 +47,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   wrapContainer: {
-    paddingTop: 50,
-    // justifyContent: 'center',
-    alignItems: 'flex-end',
-    zIndex: 10,
-    elevation: 10,
-    flex: 1,
-    flexDirection: 'row',
+    paddingTop: Platform.isPad ? 40 : 20,
+    backgroundColor: '#3A608C',
+    paddingBottom: Platform.isPad ? 40 : 20,
   },
   icon_wrap_avatar: {
     position: 'absolute',

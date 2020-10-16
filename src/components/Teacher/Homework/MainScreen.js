@@ -26,6 +26,7 @@ import ModalFillter from './ModalFillter';
 import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import Global from '../../../utils/Globals';
 
 const { width, height } = Dimensions.get('window');
 
@@ -66,7 +67,9 @@ const initTab = createMaterialTopTabNavigator(
       },
     },
     StudentDetail: {
-      screen: (props) => <StudentDetail {...props} />,
+      screen: (props) => <StudentDetail
+        {...props}
+      />,
       navigationOptions: {
         title: 'Học sinh',
         tabBarLabel: ({ focused }) => {
@@ -104,7 +107,7 @@ const initTab = createMaterialTopTabNavigator(
       indicatorStyle: {
         backgroundColor: '#2D9CDB',
         height: 5,
-        width: 80,
+        width: Platform.isPad ? 200 : 80,
         borderBottomWidth: 1,
         borderBottomColor: '#2D9CDB',
         borderBottomWidth: 1,
@@ -371,6 +374,15 @@ export default function StatisticsPoints(props) {
     }
   };
 
+  const refreshData =  async () =>{
+    setIsLoading(true);
+    fetchData();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }
+
+  Global.updateHomeWork = refreshData;
   useEffect(() => {
     fetchData();
     setTimeout(() => {
@@ -510,7 +522,12 @@ export default function StatisticsPoints(props) {
         }
       </View>
       <Tab
-        screenProps={{ onRefresh: handleStatistic, data: props.data, isLoading: isLoading }}
+        screenProps={{
+          onRefresh: handleStatistic,
+          data: props.data,
+          isLoading: isLoading,
+          refreshData: refreshData,
+        }}
       />
       <Toast ref={toast} position={'top'} />
       <ModalFillter

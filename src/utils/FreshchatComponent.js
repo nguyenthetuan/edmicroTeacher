@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -17,7 +17,7 @@ import {
 import dataHelper from './dataHelper';
 import jwtDecode from 'jwt-decode';
 import apiUserHelper from '../services/apiUserHelper';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 const APP_ID = '8d0af544-bbe3-4d5b-bd87-3ed6e2338a35';
 const APP_KEY = '97de673e-7c15-46d6-9a22-875bf38f2ecf';
@@ -33,7 +33,7 @@ export default class FreshchatComponent extends Component {
   }
 
   async componentDidMount() {
-    const {token} = await dataHelper.getToken();
+    const { token } = await dataHelper.getToken();
     const {
       userId,
       PhoneNumber,
@@ -70,7 +70,7 @@ export default class FreshchatComponent extends Component {
     freshchatConfig.cameraCaptureEnabled = false;
     freshchatConfig.gallerySelectionEnabled = true;
     freshchatConfig.responseExpectationEnabled = true;
-    
+
     if (Platform.OS === 'ios') {
       freshchatConfig.notificationSoundEnabled = true; //iOS only
       freshchatConfig.themeName = 'CustomTheme.plist'; //iOS only
@@ -79,17 +79,12 @@ export default class FreshchatComponent extends Component {
     }
     //end config for Freshchat
     Freshchat.init(freshchatConfig);
-    
+
     // neu nguoi dung da duoc khoi tao tren freshchat thi bo qua khoi tao moi
-    if (!!idFreshchat) {
-      Freshchat.identifyUser(userId, idFreshchat, (error) => {
-        console.log(error);
-      });
-    }else{
-      Freshchat.identifyUser(userId, null, (error) => {
-        console.log(error);
-      });
-    }
+    let freshChatId = (Array.isArray(idFreshchat) && idFreshchat.length > 0) ? idFreshchat[0] : !!idFreshchat ? idFreshchat : null
+    Freshchat.identifyUser(userId, freshChatId, (error) => {
+      console.log(error);
+    });
 
     //Updating User Information
     var freshchatUser = new FreshchatUser();
@@ -105,28 +100,28 @@ export default class FreshchatComponent extends Component {
       Freshchat.setUserProperties(userProperties, (error) => {
         console.log('err setUserWithIdToken', error);
       });
-      if (Platform.OS=='android') {
+      if (Platform.OS == 'android') {
         var freshchatNotificationConfig = new FreshchatNotificationConfig();
         freshchatNotificationConfig.priority = FreshchatNotificationConfig.NotificationPriority.PRIORITY_HIGH;
         freshchatNotificationConfig.notificationSoundEnabled = true;
         freshchatNotificationConfig.largeIcon = "notif"; // Drawable name
         freshchatNotificationConfig.smallIcon = "notif"; // Drawable name
         Freshchat.setNotificationConfig(freshchatNotificationConfig);
-    }
+      }
     }, 1000);
 
     // khi co api luu restoreId thi thuc hien check va goi ham luu no tai day
     Freshchat.addEventListener(
-        Freshchat.EVENT_USER_RESTORE_ID_GENERATED,
-        () => {
-              Freshchat.getUser(async (user) => {
-                  let restoreId = user.restoreId;
-                  if (!!restoreId && !idFreshchat) {
-                  const response = await apiUserHelper.updateFreshchatId({token,idFreshchat: restoreId});
-                  console.log("FreshchatComponent -> componentDidMount -> response", response)
-                  }
-              })
+      Freshchat.EVENT_USER_RESTORE_ID_GENERATED,
+      () => {
+        Freshchat.getUser(async (user) => {
+          let restoreId = user.restoreId;
+          if (!!restoreId && !idFreshchat) {
+            const response = await apiUserHelper.updateFreshchatId({ token, idFreshchat: restoreId });
+            console.log("FreshchatComponent -> componentDidMount -> response", response)
           }
+        })
+      }
     );
 
     Freshchat.addEventListener(
@@ -137,7 +132,7 @@ export default class FreshchatComponent extends Component {
           var count = data.count;
           var status = data.status;
           if (status) {
-            this._onUnreadChange({count});
+            this._onUnreadChange({ count });
             console.log('Message count: ' + count);
           } else {
             console.log('getUnreadCountAsync unsuccessful');
@@ -160,8 +155,8 @@ export default class FreshchatComponent extends Component {
     }
   }
 
-  _onUnreadChange = ({count}) => {
-    this.setState({count});
+  _onUnreadChange = ({ count }) => {
+    this.setState({ count });
   };
 
   componentWillUnmount() {
@@ -173,11 +168,11 @@ export default class FreshchatComponent extends Component {
   }
 
   render() {
-    const {count} = this.state;
-    const {style}= this.props;
+    const { count } = this.state;
+    const { style } = this.props;
     return (
       <TouchableOpacity
-        style={[styles.wrapIntercom,style]}
+        style={[styles.wrapIntercom, style]}
         onPress={this.registerUnidentifiedUser}>
         <Image source={AppIcon.icon_freshchat} resizeMode={'contain'} />
         {count > 0 && (

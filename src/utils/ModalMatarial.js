@@ -1,4 +1,4 @@
-const renderMatarialDetail = (contentHtml) => {
+const renderMatarialDetail = (contentHtml,urlMedia) => {
     let html = `<div>`;
     html += `
 <html style="overflow-x:hidden">
@@ -9,8 +9,17 @@ const renderMatarialDetail = (contentHtml) => {
 <link rel="stylesheet" href="font47/css/font-awesome.min.css">
 <body>
   <div>
-  ${contentHtml}
+  ${contentHtml||''}
   </div>
+  `
+  if (urlMedia) {
+    html += `<audio controls>
+        <source src="${urlMedia}">
+      </audio>`
+  }
+
+  html+=
+  `
 </body>
 </html>
 `

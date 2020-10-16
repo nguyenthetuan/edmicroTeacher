@@ -211,17 +211,22 @@ export default class ModalCurriculum extends Component {
           </View>
 
           <Modal visible={visible} transparent={true}>
-            <TouchableWithoutFeedback onPress={this._closeModal}>
-              <View style={[styles.container, { height: this.props.height }]}>
-                <View style={styles.content}>
-                  <Animated.View
-                    style={[styles.topheader, { top: this.positionY }]}>
+            <TouchableWithoutFeedback style={[styles.container, { height: this.props.height }]} onPress={() => this._closeModal()}>
+              <View style={styles.container}>
+                <TouchableWithoutFeedback >
+                  <View style={{
+                  flexDirection: 'row', justifyContent: 'space-between',
+                  backgroundColor: '#2D9CDB',
+                  paddingHorizontal: 16,
+                  paddingVertical: 4
+                }}>
                     <TouchableOpacity
-                      onPress={() =>
+                      onPress={() => {
                         this.setState({
                           data: this.props.data,
                           searchKey: '',
                         })
+                      }
                       }>
                       <MaterialCommunityIcons
                         name="arrow-left"
@@ -229,7 +234,7 @@ export default class ModalCurriculum extends Component {
                         size={20}
                       />
                     </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', overflow: 'hidden' }}>
+                    <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', }}>
                       <TextInput
                         style={styles.TextInput}
                         onChangeText={(Text) =>
@@ -247,12 +252,13 @@ export default class ModalCurriculum extends Component {
                           top: 4,
                           height: 18,
                           width: 24,
-                          backgroundColor: '#2D9CDB',
                         }}>
                         <EvilIcons name="search" size={20} color="#FFF" />
                       </TouchableOpacity>
                     </View>
-                  </Animated.View>
+                  </View>
+                </TouchableWithoutFeedback>
+                <View style={styles.content}>
                   <FlatList
                     data={fliter}
                     keyExtractor={(item, index) => index.toString()}
@@ -283,9 +289,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFF',
     height: 220,
     borderRadius: 5,
-    position: 'absolute',
+    // position: 'absolute',
     width: width,
-    right: 0,
+    // right: 0,
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
@@ -298,7 +304,7 @@ const styles = StyleSheet.create({
     padding: 6,
     justifyContent: 'space-between',
     paddingLeft: 23,
-    position: 'absolute',
+    // position: 'absolute',
     width,
     top: 0 - 40,
     height: 40,
@@ -315,6 +321,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     paddingVertical: 5,
     fontFamily: 'Nunito-Regular',
+    alignContent: 'flex-end'
   },
   name: {
     fontFamily: 'Nunito-Regular',

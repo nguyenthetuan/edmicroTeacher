@@ -9,7 +9,8 @@ import {
   Dimensions,
   Image,
   TouchableWithoutFeedback,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 import Dropdown from './Dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -53,12 +54,17 @@ export default class ModalFillter extends Component {
     } = this.props;
     const { isShowModal } = this.state;
     return (
-      <Modal transparent={false} visible={isShowModal} presentationStyle={'formSheet'} animationType={'slide'}>
+      <Modal transparent={false} visible={isShowModal}>
         <TouchableWithoutFeedback
           onPressOut={this.changeStateModale}>
           <View style={styles.contain}>
             <SafeAreaView />
-            <Text style={styles.styTitle}>Tuỳ chọn</Text>
+            <View style={{flexDirection:'row',}}>
+              <Text style={styles.styTitle}>Tuỳ chọn</Text>
+            </View>
+              <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
+                <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
+              </TouchableOpacity>
             <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR }]}>
               <Dropdown
                 title="Khối"
@@ -96,11 +102,6 @@ export default class ModalFillter extends Component {
               <Text style={styles.txtBtn}>Xem thống kê</Text>
               <Icon name='angle-right' size={20} color={'#FFF'} />
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
-              <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
-            </TouchableOpacity>
-
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -147,8 +148,8 @@ const styles = StyleSheet.create({
   },
   styBtnClose: {
     position: 'absolute',
-    top: 10,
-    right: 10
+    right: 10,
+    top:Platform.isPad?30:Platform.OS=='ios'?50:0
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class FormDateDefault extends Component {
@@ -18,19 +18,21 @@ export default class FormDateDefault extends Component {
                             <Icon name={name} size={17} color={'#333'} style={styles.iconInput} />
                         }
                     </View>
-                    <TouchableOpacity onPress={() => this.props.onPress()} style={{ flex: 1, alignSelf: 'center' }}>
-                        <TextInput
-                            underlineColorAndroid='transparent'
-                            editable={false}
-                            selectTextOnFocus={false}
-                        />
-                        <View style={[styles.inputDate,
-                        { width: this.props.width || 150, height: this.props.height || 35 }]}>
-                            <Text style={[styles.textDate, styleInput]}>
-                                {this.props.value}
-                            </Text>
+                    <TouchableWithoutFeedback onPress={() => this.props.onPress()}>
+                        <View style={{ flex: 1, alignSelf: 'center' }}>
+                            <TextInput
+                                underlineColorAndroid='transparent'
+                                editable={false}
+                                selectTextOnFocus={false}
+                            />
+                            <View style={[styles.inputDate,
+                            { width: this.props.width || 150, height: this.props.height || 35 }]}>
+                                <Text style={[styles.textDate, styleInput]}>
+                                    {this.props.value}
+                                </Text>
+                            </View>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
                 </View>
             </View >
         )

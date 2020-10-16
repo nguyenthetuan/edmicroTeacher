@@ -59,3 +59,15 @@ export const alertMessage = (title, message) => {
     { cancelable: false }
   )
 }
+
+export const alertDeletePaper = (title, message,onPress) => {
+  Alert.alert(
+    title,
+    message,
+    [
+      { text: 'Không', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      { text: 'Có', onPress: () => onPress(), style: 'cancel' }
+    ],
+    { cancelable: false }
+  )
+}

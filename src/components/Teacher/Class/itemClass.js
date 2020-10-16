@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import RippleButton from '../../libs/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProgressBar from '../../libs/ProgressBar';
@@ -7,7 +7,7 @@ import Common from '../../../utils/Common';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class itemClass extends Component {
   constructor(props) {
@@ -51,20 +51,21 @@ export default class itemClass extends Component {
   };
 
   render() {
-    const {item} = this.props;
-    const {activeDetail} = this.state;
+    const { item } = this.props;
+    console.log('item', item)
+    const { activeDetail } = this.state;
     const bg = Common.getBackroundSubject(item.subjectCode);
     return (
-      <View style={[styles.container, {borderColor: bg}]}>
-        <View style={{flex: 1}}>
-          <View style={[styles.top, {backgroundColor: bg}]}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={[styles.container, { borderColor: bg }]}>
+        <View style={{ flex: 1 }}>
+          <View style={[styles.top, { backgroundColor: bg }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {/* <View style={{ height: 26, width: 26, borderRadius: 13, borderColor: '#FFF', borderWidth: .5, alignItems: 'center', justifyContent: 'center' }}>
                 <Image source={Common.getIconSubject(item.subjectCode)} style={{ width: 25, height: 25 }} resizeMode='contain' />
               </View> */}
               <Text style={styles.name}>{item.name}</Text>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Text style={styles.textStatus}>{this._Status(item.status)}</Text>
               {(item.status === 1 || item.status === 2) && (
                 <View style={styles.iconStatus} />
@@ -83,23 +84,23 @@ export default class itemClass extends Component {
                   name={'calendar-range'}
                   size={23}
                   color={'#0E5FCD'}
-                  style={{marginTop: 0}}
+                  style={{ marginTop: 0 }}
                 />
-                <Text style={styles.txtDate}>
+                {item.timeStart && <Text style={styles.txtDate}>
                   {moment(item.timeStart * 1000).format('DD/MM/YYYY')}
-                </Text>
+                </Text>}
                 <MaterialCommunityIcons
                   name={'calendar-range'}
                   size={23}
                   color={'#EB5757'}
-                  style={{marginLeft: 30}}
+                  style={{ marginLeft: 30 }}
                 />
-                <Text style={styles.txtDate}>
+                {item.timeEnd && <Text style={styles.txtDate}>
                   {moment(item.timeEnd * 1000).format('DD/MM/YYYY')}
-                </Text>
+                </Text>}
               </View>
               {!activeDetail && (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image source={require('../../../asserts/icon/person.png')} />
                   <Text style={[styles.txtDate]}>{item.totalStudent}</Text>
                   <View
@@ -113,14 +114,14 @@ export default class itemClass extends Component {
                   <Image
                     source={require('../../../asserts/icon/registration.png')}
                   />
-                  <Text style={[styles.txtDate, {paddingHorizontal: 5}]}>
+                  <Text style={[styles.txtDate, { paddingHorizontal: 5 }]}>
                     {item.totalAssign}
                   </Text>
                 </View>
               )}
             </View>
 
-            <View style={{marginTop: 5}}>
+            <View style={{ marginTop: 5 }}>
               <Text
                 style={{
                   fontSize: 12,
@@ -152,15 +153,15 @@ export default class itemClass extends Component {
 
             <View>
               <RippleButton
-                onPress={() => this.setState({activeDetail: !activeDetail})}>
+                onPress={() => this.setState({ activeDetail: !activeDetail })}>
                 <View>
                   {!activeDetail && (
                     <Text style={styles.txtDetail}>Xem Chi Tiết</Text>
                   )}
                   <View
                     style={[
-                      {flexDirection: 'row', justifyContent: 'space-between'},
-                      activeDetail && {marginTop: 9, alignItems: 'flex-end'},
+                      { flexDirection: 'row', justifyContent: 'space-between' },
+                      activeDetail && { marginTop: 9, alignItems: 'flex-end' },
                     ]}>
                     <View style={styles.line} />
                     {(!activeDetail && (
@@ -168,8 +169,8 @@ export default class itemClass extends Component {
                         source={require('../../../asserts/icon/icondow.png')}
                       />
                     )) || (
-                      <Image source={require('../../../asserts/icon/up.png')} />
-                    )}
+                        <Image source={require('../../../asserts/icon/up.png')} />
+                      )}
                     <View style={styles.line} />
                   </View>
                 </View>
@@ -187,17 +188,17 @@ export default class itemClass extends Component {
                     borderBottomLeftRadius: 5,
                     borderBottomRightRadius: 5,
                   }}>
-                  <View style={{justifyContent: 'space-between'}}>
-                    <View style={{flexDirection: 'row'}}>
+                  <View style={{ justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row' }}>
                       <Image
                         source={require('../../../asserts/icon/edu.png')}
                       />
                       <Text style={styles.txtInfoDetail}>Khối Lớp</Text>
-                      <Text style={[styles.indexOne, {marginLeft: 30}]}>
+                      <Text style={[styles.indexOne, { marginLeft: 30 }]}>
                         {item.gradeId.slice(1, 3)}
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 13}}>
+                    <View style={{ flexDirection: 'row', marginTop: 13 }}>
                       <Image
                         source={require('../../../asserts/icon/person.png')}
                       />
@@ -206,15 +207,15 @@ export default class itemClass extends Component {
                     </View>
                   </View>
 
-                  <View style={{justifyContent: 'space-between'}}>
-                    <View style={{flexDirection: 'row'}}>
+                  <View style={{ justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row' }}>
                       <Image
                         source={require('../../../asserts/icon/registration.png')}
                       />
                       <Text style={styles.txtRight}>Số Bài Tập</Text>
                       <Text style={styles.txtThree}>{item.totalAssign}</Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 13}}>
+                    <View style={{ flexDirection: 'row', marginTop: 13 }}>
                       <Image
                         source={require('../../../asserts/icon/check.png')}
                       />
@@ -231,7 +232,7 @@ export default class itemClass extends Component {
                 rippleSize={250}
                 rippleColor={'#FFF'}
                 style={styles.btn}>
-                <View style={[styles.wrapBtn, {backgroundColor: bg}]}>
+                <View style={[styles.wrapBtn, { backgroundColor: bg }]}>
                   <FastImage
                     style={{ width: 12 }}
                     source={require('../../../asserts/icon/book.png')}

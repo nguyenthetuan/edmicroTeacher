@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -19,26 +19,26 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dropdown from '../Homework/Dropdown';
-import {WebView} from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import MathJaxLibs from '../../../utils/webViewConfigQuestion';
 import WarningModal from '../../modals/WarningModal';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import FormInput from '../../common/FormInput';
 import AnalyticsManager from '../../../utils/AnalyticsManager';
 import Globals from '../../../utils/Globals';
-import {isIphoneX} from 'react-native-iphone-x-helper';
-import {HEIGHT_TOPBAR} from '../../../utils/Common';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import SwitchButton from '../../../components/common/ButtonSwitch';
-import {AlertNoti, roundToTwo} from '../../../utils/Common';
+import { AlertNoti, roundToTwo, roundToFour } from '../../../utils/Common';
 import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
 let baseUrl = 'file:///android_asset/';
 const webViewScript = `
@@ -58,7 +58,7 @@ class ConfigQuestion extends Component {
       arrayQuestion: [],
       gradeCode: [],
       listGrades: [],
-      subjectCode: [`${this.props.navigation.state.params.curriculumCode}`],
+      subjectCode: [],
       name: '',
       listSubjects: [],
       questions: [],
@@ -75,12 +75,14 @@ class ConfigQuestion extends Component {
       isModal: false,
       isLoadingModal: false,
       htmlContent: '',
+      urlMedia: '',
+      loading: false,
     };
   }
   onHandleMessage(event) {
     const data = event.nativeEvent.data.split('---');
     if (data[0] === 'warningWeb') {
-      this.setState({numberQuestion: data[1]}, () => {
+      this.setState({ numberQuestion: data[1] }, () => {
         this.displayWarning(true);
       });
     }
@@ -100,8 +102,7 @@ class ConfigQuestion extends Component {
     }
 
     if (data[0] === 'enterPoint') {
-      console.log('ConfigQuestion -> data[0]', data[0]);
-      let {questions, totalPoint} = this.state;
+      let { questions, totalPoint } = this.state;
       let totalPointTemp = 0;
       const questionId = data[1];
       const value = parseFloat(data[2]) || 0;
@@ -111,15 +112,15 @@ class ConfigQuestion extends Component {
         }
         totalPointTemp += item.point;
       }
-      this.setState({questions, totalPoint: totalPointTemp});
+      this.setState({ questions, totalPoint: totalPointTemp });
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
-      this.setState({webheight: parseInt(event.nativeEvent.data) + 40});
+      this.setState({ webheight: parseInt(event.nativeEvent.data) + 40 });
     }
     if (data[0] === 'matariaDetail') {
       this.getDetailMatarial();
-      this.setState({isModal: true}, () => this.getDetailMatarial(data[1]));
+      this.setState({ isModal: true }, () => this.getDetailMatarial(data[1]));
     }
   }
 
@@ -129,9 +130,9 @@ class ConfigQuestion extends Component {
 
   async componentDidMount() {
     const getListQuestion = await dataHelper.getQuestion();
-    const {totalPoint} = this.state;
+    const { totalPoint } = this.state;
     for (let item of getListQuestion) {
-      item.point = roundToTwo(totalPoint / getListQuestion.length);
+      item.point = roundToFour(totalPoint / getListQuestion.length);
     }
     !_.isEmpty(getListQuestion) &&
       this.setState({
@@ -146,7 +147,7 @@ class ConfigQuestion extends Component {
       },
       () =>
         this.activeSubject({
-          item: {code: this.props.navigation.state.params.curriculumCode},
+          code: this.props.navigation.state.params.curriculumCode,
         }),
     );
   }
@@ -175,7 +176,7 @@ class ConfigQuestion extends Component {
         }
       });
       let typeFour = questions.length - (typeOne + typeTwo + typeThree);
-      return {typeOne, typeTwo, typeThree, typeFour};
+      return { typeOne, typeTwo, typeThree, typeFour };
     }
   };
 
@@ -220,19 +221,19 @@ class ConfigQuestion extends Component {
   };
 
   activeGrade = item => {
-    const {gradeCode, listGrades} = this.state;
+    const { gradeCode, listGrades } = this.state;
     let gradeCodeTmp = gradeCode;
     let listGradeTmp = listGrades.map(e => {
-      return {...e, isActive: false};
+      return { ...e, isActive: false };
     });
 
     const index = _.indexOf(gradeCodeTmp, item.gradeId);
     index < 0
       ? (gradeCodeTmp = [...gradeCodeTmp, ...[item.gradeId]])
       : (gradeCodeTmp = [
-          ...gradeCodeTmp.slice(0, index),
-          ...gradeCodeTmp.slice(index + 1),
-        ]);
+        ...gradeCodeTmp.slice(0, index),
+        ...gradeCodeTmp.slice(index + 1),
+      ]);
 
     gradeCodeTmp
       .sort((a, b) => parseInt(b.substring(1)) - parseInt(a.substring(1)))
@@ -243,7 +244,7 @@ class ConfigQuestion extends Component {
           listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
         }
       });
-    this.refs.flastList.scrollToIndex({animated: true, index: 0});
+    this.refs.flastList.scrollToIndex({ animated: true, index: 0 });
     this.setState({
       gradeCode: gradeCodeTmp,
       listGrades: listGradeTmp,
@@ -252,14 +253,14 @@ class ConfigQuestion extends Component {
   };
 
   _renderGrade = () => {
-    const {listGrades} = this.state;
+    const { listGrades } = this.state;
     return (
       <FlatList
         ref={'flastList'}
-        style={{marginTop: 8}}
+        style={{ marginTop: 8 }}
         data={listGrades}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return !item.isActive ? (
             <RippleButton
               key={`a${index}`}
@@ -271,16 +272,16 @@ class ConfigQuestion extends Component {
               </View>
             </RippleButton>
           ) : (
-            <RippleButton
-              key={`b${index}`}
-              style={Platform.OS === 'ios' ? styles.buttomActive : null}
-              onPress={() => this.activeGrade(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                <Text style={styles.txtItemActive}>{item.name}</Text>
-              </View>
-            </RippleButton>
-          );
+              <RippleButton
+                key={`b${index}`}
+                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                onPress={() => this.activeGrade(item)}>
+                <View
+                  style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                  <Text style={styles.txtItemActive}>{item.name}</Text>
+                </View>
+              </RippleButton>
+            );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -288,20 +289,20 @@ class ConfigQuestion extends Component {
       />
     );
   };
+
   activeSubject = item => {
-    console.log('item', item);
-    const {subjectCode, listSubjects} = this.state;
+    const { subjectCode, listSubjects } = this.state;
     let subjectCodeTmp = subjectCode;
     let listSubjectsTmp = listSubjects.map(e => {
-      return {...e, isActive: false};
+      return { ...e, isActive: false };
     });
     const index = _.indexOf(subjectCodeTmp, item.code);
     index < 0
       ? (subjectCodeTmp = [...subjectCodeTmp, ...[item.code]])
       : (subjectCodeTmp = [
-          ...subjectCodeTmp.slice(0, index),
-          ...subjectCodeTmp.slice(index + 1),
-        ]);
+        ...subjectCodeTmp.slice(0, index),
+        ...subjectCodeTmp.slice(index + 1),
+      ]);
 
     subjectCodeTmp.map(subjectId => {
       const i = _.indexOf(listSubjectsTmp.map(e => e.code), subjectId);
@@ -310,22 +311,23 @@ class ConfigQuestion extends Component {
         listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
       }
     });
-    this.refs.flastListSub.scrollToIndex({animated: true, index: 0});
+    this.refs.flastListSub.scrollToIndex({ animated: true, index: 0 });
     this.setState({
       subjectCode: subjectCodeTmp,
       listSubjects: listSubjectsTmp,
       errors: [],
     });
   };
+
   _renderSubject = () => {
-    const {listSubjects} = this.state;
+    const { listSubjects } = this.state;
     return (
       <FlatList
         ref={'flastListSub'}
-        style={{marginTop: 8}}
+        style={{ marginTop: 8 }}
         data={listSubjects}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return !item.isActive ? (
             <RippleButton
               key={`c${index}`}
@@ -337,16 +339,16 @@ class ConfigQuestion extends Component {
               </View>
             </RippleButton>
           ) : (
-            <RippleButton
-              key={`d${index}`}
-              style={Platform.OS === 'ios' ? styles.buttomActive : null}
-              onPress={() => this.activeSubject(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                <Text style={styles.txtItemActive}>{item.name}</Text>
-              </View>
-            </RippleButton>
-          );
+              <RippleButton
+                key={`d${index}`}
+                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                onPress={() => this.activeSubject(item)}>
+                <View
+                  style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                  <Text style={styles.txtItemActive}>{item.name}</Text>
+                </View>
+              </RippleButton>
+            );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -380,7 +382,7 @@ class ConfigQuestion extends Component {
             break;
         }
       }
-      this.setState({errors});
+      this.setState({ errors });
     });
     return result;
   };
@@ -424,8 +426,9 @@ class ConfigQuestion extends Component {
       });
       formData.append('question', JSON.stringify(questions));
       try {
-        const {token} = await dataHelper.getToken();
-        const response = await apiPapers.createQuestion({token, formData});
+        this.setState({ loading: true })
+        const { token } = await dataHelper.getToken();
+        const response = await apiPapers.createQuestion({ token, formData });
         if (response.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
           const setQuestion = await dataHelper.saveQuestion([]);
@@ -440,10 +443,11 @@ class ConfigQuestion extends Component {
               listSubjects:
                 this.props.paper.listSubject && this.props.paper.listSubject,
               name: '',
+              loading: false,
             },
             () =>
               this.props.navigation.navigate('Assignment', {
-                item: {...res, id: res.assignmentId},
+                item: { ...res, id: res.assignmentId },
                 checked: true,
               }),
           );
@@ -457,6 +461,7 @@ class ConfigQuestion extends Component {
           Globals.updatePaper();
         }
       } catch (error) {
+        this.setState({ loading: false })
         console.log('error', error);
       }
     } else {
@@ -477,17 +482,17 @@ class ConfigQuestion extends Component {
       () => {
         if (this.state.allQuestion) {
           this.webview.postMessage('tickAll');
-          this.setState({arrayQuestion: array});
+          this.setState({ arrayQuestion: array });
         } else {
           this.webview.postMessage('hideAll');
-          this.setState({arrayQuestion: []});
+          this.setState({ arrayQuestion: [] });
         }
       },
     );
   };
 
   deleteQuestion = async () => {
-    const {questions, arrayQuestion} = this.state;
+    const { questions, arrayQuestion } = this.state;
     const arrFilter = questions.filter(
       item => !arrayQuestion.includes(item.questionId),
     );
@@ -502,7 +507,7 @@ class ConfigQuestion extends Component {
   };
 
   _moveQuestion = () => {
-    const {questions, arrayQuestion, position} = this.state;
+    const { questions, arrayQuestion, position } = this.state;
     let newQuestions = questions;
     if (questions.length !== 1) {
       if (arrayQuestion.length === 1) {
@@ -524,22 +529,29 @@ class ConfigQuestion extends Component {
                 newQuestions[idx] = tmp;
               }
             }
+            if(index < questions.length){
+              this.setState({
+                questions: newQuestions,
+                arrayQuestion: [],
+              });
+            }
           } else {
             let m = {};
             for (let i = 0; i < newQuestions.length; i++) {
               if (i === positionItem) {
                 m = newQuestions[positionItem];
                 newQuestions[positionItem] = newQuestions[index];
+                newQuestions[index] = m;
               }
               if (i === index) {
                 newQuestions[index] = m;
               }
             }
+            this.setState({
+              questions: newQuestions,
+              arrayQuestion: [],
+            });
           }
-          this.setState({
-            questions: newQuestions,
-            arrayQuestion: [],
-          });
         }
       } else {
         alert('Xin Vui lòng Chọn một câu hỏi');
@@ -548,26 +560,27 @@ class ConfigQuestion extends Component {
   };
 
   _onTop = () => {
-    this.refs.ScrollView.scrollTo({x: 0, y: 0, animated: true});
+    this.refs.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
   };
 
   getDetailMatarial = async idMatarial => {
-    const {token} = await dataHelper.getToken();
-    this.setState({isLoadingModal: true});
-    const response = await apiPapers.getMatarialDetail({token, idMatarial});
+    const { token } = await dataHelper.getToken();
+    this.setState({ isLoadingModal: true });
+    const response = await apiPapers.getMatarialDetail({ token, idMatarial });
     if (response) {
       this.setState({
         htmlContent: response?.contentHtml,
+        urlMedia: response?.urlMedia,
         isLoadingModal: false,
       });
     }
   };
 
   updateScore = async () => {
-    const {totalPoint, questions} = this.state;
+    const { totalPoint, questions } = this.state;
     let questionTmp = questions;
     for (let item of questionTmp) {
-      item.point = roundToTwo(10 / questionTmp.length);
+      item.point = roundToFour(10 / questionTmp.length);
     }
     !_.isEmpty(questionTmp) &&
       this.setState({
@@ -576,9 +589,9 @@ class ConfigQuestion extends Component {
   };
 
   unFocusTime = () => {
-    const {duration} = this.state;
+    const { duration } = this.state;
     if (duration == '') {
-      this.setState({duration: 5});
+      this.setState({ duration: 5 });
     }
   };
 
@@ -600,7 +613,10 @@ class ConfigQuestion extends Component {
       isLoadingModal,
       htmlContent,
       subjectCode,
+      urlMedia,
+      loading
     } = this.state;
+
     return (
       <View style={styles.container}>
         <SafeAreaView />
@@ -609,22 +625,23 @@ class ConfigQuestion extends Component {
           color={'white'}
           navigation={this.props.navigation}
           actionIcon={require('../../../asserts/appIcon/icRight.png')}
-          actionStyle={{borderRadius: 0}}
+          actionStyle={{ borderRadius: 0 }}
           onRightAction={() => this.config()}
+          loading={loading}
         />
         <ScrollView
-          contentContainerStyle={{height: webheight + HEIGHT_WEB}}
+          contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
           ref={'ScrollView'}>
           <View>
             <View style={styles.bodyHeader}>
-              <View style={{flex: 1}}>
+              <View style={{ flex: 1 }}>
                 <View>
                   {!_.isEmpty(listGrades) && (
-                    <View style={{marginTop: 14}}>
+                    <View style={{ marginTop: 14 }}>
                       <Text
                         style={[
                           styles.txtTitleGrade,
-                          errors.gradeCode && {color: '#EB5757'},
+                          errors.gradeCode && { color: '#EB5757' },
                         ]}>
                         Khối
                       </Text>
@@ -632,11 +649,11 @@ class ConfigQuestion extends Component {
                     </View>
                   )}
                   {!_.isEmpty(listSubjects) && (
-                    <View style={{marginTop: 14}}>
+                    <View style={{ marginTop: 14 }}>
                       <Text
                         style={[
                           styles.txtTitleGrade,
-                          errors.subjectCode && {color: '#EB5757'},
+                          errors.subjectCode && { color: '#EB5757' },
                         ]}>
                         Môn học
                       </Text>
@@ -656,13 +673,13 @@ class ConfigQuestion extends Component {
                     <Dropdown
                       title="Dạng bài"
                       data={[
-                        {name: 'Bài tự luyện', code: 1},
-                        {name: 'Bài kiểm tra', code: 0},
+                        { name: 'Bài tự luyện', code: 1 },
+                        { name: 'Bài kiểm tra', code: 0 },
                       ]}
-                      containerStyle={{marginLeft: -20}}
+                      containerStyle={{ marginLeft: -20 }}
                       indexSelected={assignmentType}
                       onPressItem={index =>
-                        this.setState({assignmentType: index})
+                        this.setState({ assignmentType: index })
                       }
                     />
                   </View>
@@ -673,7 +690,7 @@ class ConfigQuestion extends Component {
                       <TextInput
                         style={styles.pickTime}
                         onChangeText={text => {
-                          this.setState({duration: parseInt(text) || ''});
+                          this.setState({ duration: parseInt(text) || '' });
                         }}
                         value={
                           (typeof duration.toString() !== NaN &&
@@ -710,13 +727,13 @@ class ConfigQuestion extends Component {
                         marginRight: 15,
                         marginBottom: 5,
                       }}>
-                      Giải thích trắc nghiệm
+                      Giải thích
                     </Text>
                     <SwitchButton
                       stylebtnOnOff={styles.btnSwitch}
                       isCheck={isExplain}
                       onPress={() => {
-                        this.setState({isExplain: !isExplain});
+                        this.setState({ isExplain: !isExplain });
                       }}
                     />
                   </View>
@@ -728,13 +745,13 @@ class ConfigQuestion extends Component {
                   }}>
                   <Text
                     style={[
-                      {color: '#FFF', fontSize: 12, fontFamily: 'Nunito-Bold'},
-                      errors.name && {color: '#EB5757'},
+                      { color: '#FFF', fontSize: 12, fontFamily: 'Nunito-Bold' },
+                      errors.name && { color: '#EB5757' },
                     ]}>
                     Nhập tên bài kiểm tra
                   </Text>
                   <FormInput
-                    styleInput={{marginBottom: 10}}
+                    styleInput={{ marginBottom: 10 }}
                     paddingTopContent={4}
                     height={30}
                     borderRadius={5}
@@ -760,7 +777,7 @@ class ConfigQuestion extends Component {
               <View
                 style={[
                   styles.bodyFooter,
-                  {borderBottomWidth: 1, borderBottomColor: '#E0E0E0'},
+                  { borderBottomWidth: 1, borderBottomColor: '#E0E0E0' },
                 ]}>
                 <Text style={styles.txtFooterheder}>Loại câu hỏi</Text>
                 <Text style={styles.txtFooterheder}>Số câu</Text>
@@ -843,8 +860,8 @@ class ConfigQuestion extends Component {
               ) : null}
             </View>
           </View>
-          <View style={{backgroundColor: '#FFF', flex: 1}}>
-            <View style={{paddingHorizontal: 16, marginBottom: 20}}>
+          <View style={{ backgroundColor: '#FFF', flex: 1 }}>
+            <View style={{ paddingHorizontal: 16, marginBottom: 20 }}>
               <View style={styles.topBodyHeader}>
                 <Text style={styles.addQuestion}>
                   Tổng số câu {questions.length}
@@ -856,9 +873,8 @@ class ConfigQuestion extends Component {
                     marginTop: 6,
                   }}>
                   <Text style={styles.totalAddQuestion}>
-                    Tổng điểm: {totalPoint}
+                    Tổng điểm:{roundToTwo(totalPoint)}
                   </Text>
-
                   {/* <TextInput
                     editable={false}
                     style={[
@@ -891,7 +907,7 @@ class ConfigQuestion extends Component {
                   height: 60,
                 }}>
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center'}}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
                   onPress={this.deleteQuestion}>
                   <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
                   <MaterialCommunityIcons
@@ -900,7 +916,7 @@ class ConfigQuestion extends Component {
                     color="#DB3546"
                   />
                 </TouchableOpacity>
-                <View style={[{justifyContent: 'flex-end'}]}>
+                <View style={[{ justifyContent: 'flex-end' }]}>
                   <TouchableOpacity
                     style={[
                       {
@@ -909,7 +925,7 @@ class ConfigQuestion extends Component {
                         marginHorizontal: 17,
                       },
                     ]}
-                    onPress={() => this.setState({activeSort: !activeSort})}>
+                    onPress={() => this.setState({ activeSort: !activeSort })}>
                     <Text style={styles.txtDeleteChoose}>Sắp xếp lại</Text>
                     <Image
                       source={require('../../../asserts/appIcon/sort.png')}
@@ -927,17 +943,17 @@ class ConfigQuestion extends Component {
                         top: 15,
                       }}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <TouchableOpacity
                           style={[
                             styles.buttonMove,
-                            {height: Platform.OS === 'ios' ? 20.5 : 22},
+                            { height: Platform.OS === 'ios' ? 20.5 : 22 },
                           ]}
                           onPress={() => this._moveQuestion()}>
-                          <Text style={{fontSize: 11}}>Đến</Text>
+                          <Text style={{ fontSize: 11 }}>Đến</Text>
                         </TouchableOpacity>
                         <View
-                          style={{marginTop: Platform.OS === 'ios' ? 5 : 5}}>
+                          style={{ marginTop: Platform.OS === 'ios' ? 5 : 5 }}>
                           <FormInput
                             style={{
                               borderTopRightRadius: 4,
@@ -945,7 +961,7 @@ class ConfigQuestion extends Component {
                               paddingBottom: 4,
                               paddingHorizontal: 2,
                             }}
-                            styleInput={{paddingBottom: 10}}
+                            styleInput={{ paddingBottom: 10 }}
                             width={45}
                             height={Platform.OS === 'ios' ? 20.5 : 22}
                             borderWidth={0.5}
@@ -968,7 +984,7 @@ class ConfigQuestion extends Component {
                 </View>
 
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center', right: 0}}
+                  style={{ flexDirection: 'row', alignItems: 'center', right: 0 }}
                   onPress={this.handleTickAll}>
                   <Text style={styles.txtDeleteChoose}>Tất cả</Text>
                   <View
@@ -991,10 +1007,10 @@ class ConfigQuestion extends Component {
               </View>
               <View>
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center'}}
-                  onPress={this.updateScore}>
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                  onPress={() => this.setState({ totalPoint: 10 }, () => this.updateScore())}>
                   <Text style={styles.txtDeleteChoose}>Chia đều điểm</Text>
-                  <View style={{marginLeft: 5}}>
+                  <View style={{ marginLeft: 5 }}>
                     <Image
                       source={require('../../../asserts/images/iconDiv.png')}
                       resizeMode="contain"
@@ -1041,13 +1057,13 @@ class ConfigQuestion extends Component {
           <Image
             source={require('../../../asserts/appIcon/icUp.png')}
             resizeMode="stretch"
-            style={{height: 20, width: 20}}
+            style={{ height: 20, width: 20 }}
           />
-          <Text style={{color: '#FAFAFA'}}>TOP</Text>
+          <Text style={{ color: '#FAFAFA' }}>TOP</Text>
         </TouchableOpacity>
         <Modal visible={isModal} transparent={true}>
           <TouchableWithoutFeedback
-            onPress={() => this.setState({isModal: false})}>
+            onPress={() => this.setState({ isModal: false })}>
             <View style={styles.containerModal}>
               <TouchableWithoutFeedback>
                 <View style={[styles.bodyModal]}>
@@ -1061,33 +1077,33 @@ class ConfigQuestion extends Component {
                       top: 0,
                       zIndex: 2,
                     }}
-                    onPress={() => this.setState({isModal: false})}>
+                    onPress={() => this.setState({ isModal: false })}>
                     <Image
                       source={require('../../../asserts/icon/icCloseModal.png')}
-                      style={{tintColor: '#828282'}}
+                      style={{ tintColor: '#828282' }}
                     />
                   </TouchableOpacity>
                   {isLoadingModal ? (
                     <ActivityIndicator
                       color="red"
-                      style={{justifyContent: 'center', alignItems: 'center'}}
+                      style={{ justifyContent: 'center', alignItems: 'center' }}
                     />
                   ) : (
-                    <WebView
-                      ref={ref => (this.webview = ref)}
-                      source={{
-                        html: html.renderMatarialDetail(htmlContent),
-                        baseUrl,
-                      }}
-                      subjectId={'TOAN'}
-                      originWhitelist={['file://']}
-                      scalesPageToFit={false}
-                      javaScriptEnabled
-                      showsVerticalScrollIndicator={false}
-                      startInLoadingState={false}
-                      style={{backgroundColor: '#fff'}}
-                    />
-                  )}
+                      <WebView
+                        ref={ref => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={false}
+                        style={{ backgroundColor: '#fff' }}
+                      />
+                    )}
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -1313,7 +1329,6 @@ const styles = StyleSheet.create({
     bottom: 15,
   },
   btnSwitch: {
-    alignSelf: 'flex-end',
     marginRight: 15,
   },
 });
