@@ -943,6 +943,14 @@ class Papers extends Component {
                 </RippleButton>
               </View>
             </View>
+            <Text style={styles.textTilteModal}>Hãy chọn loại bộ đề muốn tạo</Text>
+            <View style={{ width: '100%', alignItems: 'center' }}>
+              <Image
+                source={require('../../../asserts/icon/icPersonModalCloud.png')}
+                style={{ width: width * 0.5, height: width * 0.26 }}
+                resizeMode="contain"
+              />
+            </View>
             <View style={styles.bodyModal}>
               <View style={styles.buttomMoadal}>
                 <RippleButton onPress={() => this.onPress()}>
@@ -954,11 +962,17 @@ class Papers extends Component {
                   </View>
                 </RippleButton>
               </View>
-              <Image
-                source={require('../../../asserts/icon/icPersonModal.png')}
-                style={{ width: width * 0.2, height: width * 0.23 }}
-                resizeMode="contain"
-              />
+
+              <View style={styles.buttomMoadal}>
+                <RippleButton onPress={this.onPressUploadPDF}>
+                  <View style={styles.buttomMoadal}>
+                    <Image
+                      source={require('../../../asserts/icon/icon-saochepbode.png')}
+                    />
+                    <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
+                  </View>
+                </RippleButton>
+              </View>
               <View style={styles.buttomMoadal}>
                 <RippleButton onPress={this.onPressUploadPDF}>
                   <View style={styles.buttomMoadal}>
@@ -970,11 +984,11 @@ class Papers extends Component {
                 </RippleButton>
               </View>
             </View>
-            <View style={styles.footerModal}>
+            {/* <View style={styles.footerModal}>
               <Text style={styles.txtFooterModal}>
                 Hãy chọn loại bộ đề bạn muốn tạo{' '}
               </Text>
-            </View>
+            </View> */}
           </View>
         </View>
       </Modal>
@@ -1315,13 +1329,13 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   bodyModal: {
-    marginTop: 25,
+    marginTop: 10,
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 17,
-    borderBottomWidth: 1,
-    borderBottomColor: '#DCDCDC',
+    marginHorizontal: 5,
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#DCDCDC',
     borderRadius: 1,
   },
   txtUpload: {
@@ -1408,6 +1422,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontFamily: 'Nunito-Regular',
     alignContent: 'flex-end'
+  },
+  textTilteModal: {
+    fontFamily: 'Nunito-Regular',
+    fontWeight: '700',
+    fontSize: 14,
+    lineHeight: 19,
+    textAlign: 'center',
   }
 });
 
