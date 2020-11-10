@@ -11,6 +11,7 @@ import MarkingView from '../components/Teacher/Papers/MarkingView';
 import Homework from '../containers/teacher/homework/MainScreen';
 import MainHomeWork from '../containers/teacher/report/MainScreen';
 import UploadPDF from '../components/Teacher/Papers/UploadPDF';
+import CopyFromSubjectExists from '../components/Teacher/Papers/CopyFromSubjectExists';
 import transition from '../components/anim/Transition';
 import ChangInfo from '../components/account-detail/ChangeInfo';
 import Class from '../components/Teacher/Class/class';
@@ -73,6 +74,10 @@ const TeacherStack = createStackNavigator({
   },
   UploadPDF: {
     screen: UploadPDF,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  CopyFromSubjectExists: {
+    screen: CopyFromSubjectExists,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   ChangInfo: {

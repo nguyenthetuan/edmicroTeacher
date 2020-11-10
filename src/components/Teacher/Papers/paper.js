@@ -919,6 +919,17 @@ class Papers extends Component {
     );
   };
 
+  onPressCopy = () => {
+    const { listSubjects } = this.state;
+    this.setState({ visibleModalAdd: false }, () =>
+      this.props.navigation.navigate('CopyFromSubjectExists', {
+        nagigation: this.props.nagigation,
+        listSubjects,
+        statusbar: 'light-content',
+      }),
+    );
+  }
+
   closeModal = () => this.setState({ visibleModalAdd: false });
 
   _renderModalAddPaper = () => {
@@ -964,7 +975,7 @@ class Papers extends Component {
               </View>
 
               <View style={styles.buttomMoadal}>
-                <RippleButton onPress={this.onPressUploadPDF}>
+                <RippleButton onPress={this.onPressCopy}>
                   <View style={styles.buttomMoadal}>
                     <Image
                       source={require('../../../asserts/icon/icon-saochepbode.png')}

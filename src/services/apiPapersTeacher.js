@@ -39,6 +39,22 @@ const updateInfo = async ({ token, body }) => {
   return responseJson;
 }
 
+const findPremadeLib = async (payload) => {
+  console.log('find /.....: ', JSON.stringify(payload));
+  const { token, curriculumCodes, gradeCodes, knowledgeUnits, name, pageIndex, searchKnowledgeUnitChild, subjectCodes } = payload;
+  try {
+    let response = await fetch(`${API_BASE}school-online/premade-lib/find`, {
+      method: 'POST',
+      headers: getHeaders(token),
+      body: JSON.stringify({ curriculumCodes, gradeCodes, knowledgeUnits, name, pageIndex, searchKnowledgeUnitChild, subjectCodes })
+    })
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+
+  }
+}
+
 const getAssignment = async ({ token, assignmentId }) => {
   let response = await fetch(`${API_BASE}school-online/assignment/get-class-assign/${assignmentId}`, {
     method: 'GET',
@@ -298,7 +314,7 @@ const getMatarialDetail = async ({ token, idMatarial }) => {
   return responseJson;
 }
 
-const getSkill = async ({token,idSubject})=>{
+const getSkill = async ({ token, idSubject }) => {
   let response = await fetch(`${API_BASE}school-online/curriculum/curriculum/learning-target/skill/${idSubject}`, {
     method: 'GET',
     headers: getHeaders(token)
@@ -337,4 +353,5 @@ module.exports = {
   publicedScore,
   getMatarialDetail,
   getSkill,
+  findPremadeLib,
 };
