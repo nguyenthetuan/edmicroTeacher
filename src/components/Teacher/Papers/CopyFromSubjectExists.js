@@ -107,7 +107,7 @@ export default class CopyFromSubjectExists extends Component {
     onPress(data) {
         console.log('onPress: ', data);
         const { subjectCode, code, curriculumCode } = data;
-        this.setState({ curriculumCodes: curriculumCode, knowledgeUnits: [code], subjectCodes: [subjectCode] },
+        this.setState({ knowledgeUnits: code ? [code] : null },
             () => {
                 this.findPremadeLib();
             }
