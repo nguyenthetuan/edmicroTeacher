@@ -40,8 +40,8 @@ const updateInfo = async ({ token, body }) => {
 }
 
 const findPremadeLib = async (payload) => {
-  console.log('find /.....: ', JSON.stringify(payload));
   const { token, curriculumCodes, gradeCodes, knowledgeUnits, name, pageIndex, searchKnowledgeUnitChild, subjectCodes } = payload;
+  console.log('find /.....: ', JSON.stringify({ curriculumCodes, gradeCodes, knowledgeUnits, name, pageIndex, searchKnowledgeUnitChild, subjectCodes }));
   try {
     let response = await fetch(`${API_BASE}school-online/premade-lib/find`, {
       method: 'POST',

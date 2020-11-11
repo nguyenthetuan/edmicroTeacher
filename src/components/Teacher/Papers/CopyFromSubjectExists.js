@@ -33,6 +33,9 @@ export default class CopyFromSubjectExists extends Component {
             lerningTarget: [],
             currentCurriculum: '',
             targetLearning: [],
+            indexSelected: 0,
+            subjectCode: [],
+            knowledgeUnits: null
         }
     }
 
@@ -46,13 +49,26 @@ export default class CopyFromSubjectExists extends Component {
                 token: token,
                 subjectCode: subjectCode,
             });
+            console.log("response:L ", JSON.stringify(response));
+            if (_.isEmpty(response)) {
+                await this.setState({ lerningTarget: [], currentCurriculum: '' });
+                this.findPremadeLib();
+                return;
+            }
             await this.setState({ lerningTarget: response && response, currentCurriculum: response[0].id });
+            this.getLerningTarget(response[0].id);
+
             this.findPremadeLib();
         }
     }
 
     onPressItemSubject = async (index) => {
         const { listSubjects } = this.props.navigation.state.params;
+        let subjectCode = [];
+        subjectCode = [listSubjects[index].code];
+        if (JSON.stringify(subjectCode) === JSON.stringify(this.state.subjectCode)) {
+            return;
+        }
         await this.setState({ subjectCode: [listSubjects[index].code] });
         this.getDetailSubject(this.state.subjectCode)
     };
@@ -70,7 +86,7 @@ export default class CopyFromSubjectExists extends Component {
                 token: token,
                 subjectCode: subjectCode,
             });
-            this.setState({ targetLearning: response });
+            this.setState({ targetLearning: !response ? [] : response });
         }
     }
 
@@ -78,14 +94,24 @@ export default class CopyFromSubjectExists extends Component {
         const { token } = await dataHelper.getToken();
         console.log("this.state.subjectCode: ", this.state.subjectCode);
         let curriculumCodes = [this.state.currentCurriculum];
-        let pageIndex = 1;
+        let pageIndex = 0;
         let searchKnowledgeUnitChild = true;
         let subjectCodes = this.state.subjectCode;
         let gradeCodes = null;
-        let knowledgeUnits = null;
+        let knowledgeUnits = this.state.knowledgeUnits;
         let name = '';
         const rp = await apiPapers.findPremadeLib({ token, curriculumCodes, pageIndex, searchKnowledgeUnitChild, subjectCodes, gradeCodes, knowledgeUnits, name });
-        this.setState({ listTask: rp });
+        this.setState({ listTask: !rp ? [] : rp });
+    }
+
+    onPress(data) {
+        console.log('onPress: ', data);
+        const { subjectCode, code, curriculumCode } = data;
+        this.setState({ curriculumCodes: curriculumCode, knowledgeUnits: [code], subjectCodes: [subjectCode] },
+            () => {
+                this.findPremadeLib();
+            }
+        )
     }
 
     renderTask(data) {
@@ -168,15 +194,14 @@ export default class CopyFromSubjectExists extends Component {
                                     title="Giáo trình"
                                     data={this.state.lerningTarget}
                                     onPressItem={(index) => this.onPressCurriculum(index)}
-                                    indexSelected={0}
+                                    indexSelected={this.state.indexSelected}
                                 />
-
                             </View>
                             <ModalCurriculum
                                 title="Đơn vị kiến thức"
                                 // height={this.state.height}
                                 data={this.state.targetLearning}
-                            // onPress={(value) => this.onPress(4, value)}
+                                onPress={(value) => this.onPress(value)}
                             />
                         </View>
                     </View>
