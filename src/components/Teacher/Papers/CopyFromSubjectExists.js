@@ -117,7 +117,7 @@ export default class CopyFromSubjectExists extends Component {
     renderTask(data) {
         let { item, index } = data;
         return (
-            <View style={styles.singleTask}>
+            <TouchableOpacity style={styles.singleTask}>
                 <View style={styles.headerTask}>
                     <Text style={styles.titleTask}>{item.name}</Text>
                 </View>
@@ -128,14 +128,14 @@ export default class CopyFromSubjectExists extends Component {
                                 source={Common.getIconSubject(item.subjectCodes[0])}
                                 resizeMode="contain"
                                 style={{ height: 20, width: 20 }} />
-                            <Text>{item.subjectNames[0]}</Text>
+                            <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
                                 source={AppIcon.iconClassActive}
                                 resizeMode="contain"
                                 style={{ height: 20, width: 20 }} />
-                            <Text>Lớp {item.gradeCodes[0].slice(1)}</Text>
+                            <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
                         </View>
                     </View>
                     <View style={[styles.pieceBody, { width: '60%' }]}>
@@ -144,18 +144,18 @@ export default class CopyFromSubjectExists extends Component {
                                 source={AppIcon.totalQuestion}
                                 resizeMode="contain"
                                 style={{ height: 20, width: 20 }} />
-                            <Text>Số câu hỏi: {item.totalQuestion}</Text>
+                            <Text style={styles.textDetail}>Số câu hỏi: {item.totalQuestion}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
                                 source={AppIcon.icon_person}
                                 resizeMode="contain"
                                 style={{ height: 20, width: 20 }} />
-                            <Text style={{ fontSize: 12 }}>Tác giả: {item.author}</Text>
+                            <Text style={styles.textDetail}>Tác giả: {item.author}</Text>
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -277,5 +277,12 @@ const styles = StyleSheet.create({
     pieceBody: {
         width: '50%',
         height: '100%',
+    },
+    textDetail: {
+        fontSize: 12,
+        fontFamily: 'Nunito',
+        color: 'blue',
+        fontWeight: '600',
+        marginLeft: 5,
     }
 })
