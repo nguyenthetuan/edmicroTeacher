@@ -65,7 +65,6 @@ import icon_Time_exa from '../asserts/icon/icon_time_exa.png';
 //ICON OF SCHOOL ONLINE
 //ICON OF ACCOUNT SCREEN
 
-
 //icon Teacher
 import iconEvaluate from '../asserts/icon/evaluate.png';
 import iconEvaluateActive from '../asserts/appIcon/ic_tab_evaluate.png';
@@ -77,9 +76,15 @@ import icClassNonActive from '../asserts/images/icClassNonActive.png';
 import icPaperActive from '../asserts/images/icPaper.png';
 import icon_freshchat from '../asserts/appIcon/icon_freshchat.png';
 
+import task_inactive from '../asserts/icon/task_inactive.png';
+import task_active from '../asserts/icon/task_active.png';
+
 import icons_filter from '../asserts/appIcon/icons_filter.png';
 import close_img from '../asserts/appIcon/close_img.png';
-
+import pic_mission from '../asserts/images/pic_mission.png';
+import task_test from '../asserts/icon/task_test.png';
+import icon_practice from '../asserts/icon/icon_practice.png';
+import icon_handing from '../asserts/icon/icon_handing.png';
 module.exports = {
   logo_onluyen,
   // icon_google,
@@ -144,4 +149,10 @@ module.exports = {
   icons_filter,
   close_img,
   iconNodata,
+  task_active,
+  task_inactive,
+  pic_mission,
+  task_test,
+  icon_practice,
+  icon_handing
 };

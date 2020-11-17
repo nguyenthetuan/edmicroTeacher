@@ -66,4 +66,5 @@ module.exports = {
   updatePlan: () => { },
   updatePaper: () => { },
   updateHomeWork: () => { },
+  resetStateStepOne: () => { }
 };

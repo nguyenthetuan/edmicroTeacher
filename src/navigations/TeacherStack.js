@@ -21,6 +21,7 @@ import MockResult from '../components/Teacher/Class/exam-result/TestResultTab';
 import UpdatePlan from '../components/Teacher/Class/updatePlan';
 import V_UpdatePhone from '../containers/auth/UpdatePhoneContainer';
 import TermsOfUse from '../components/Terms/TermsOfUse';
+import MissionStepByStep from '../containers/teacher/Mission/MissionSBSContainer';
 
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -106,6 +107,10 @@ const TeacherStack = createStackNavigator({
   TermsOfUse: {
     screen: TermsOfUse,
     navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MissionStepByStep:{
+    screen:MissionStepByStep,
+    navigationOptions: { header: null, gesturesEnabled: false },
   }
 }, transition);
 
