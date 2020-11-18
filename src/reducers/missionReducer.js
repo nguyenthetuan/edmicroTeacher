@@ -7,6 +7,8 @@ const initState = {
   listCateHirachy: [],
   listCateTest: [],
   listProblem: [],
+  classList: [],
+  missionDetail: []
 };
 
 export default function missionReducer(state = initState, action) {
@@ -62,7 +64,7 @@ export default function missionReducer(state = initState, action) {
         isLoading: true,
       };
     case Types.FETCH_LIST_PROBLEM_MISSION_SUCCESS: {
-      const {listCateHirachy} = state;
+      const { listCateHirachy } = state;
       let listCateHirachyTemp = [];
       if (listCateHirachy) {
         listCateHirachyTemp = listCateHirachy.map(item => {
@@ -89,7 +91,7 @@ export default function missionReducer(state = initState, action) {
         isLoading: true,
       };
     case Types.FETCH_LIST_PROBLEM_TEST_MISSION_SUCCESS: {
-      const {listCateTest} = state;
+      const { listCateTest } = state;
       let listCateTestTemp = [];
       if (listCateTest) {
         if (action.data.data) {
@@ -118,6 +120,18 @@ export default function missionReducer(state = initState, action) {
         listProblem: action.data,
       };
     }
+    case Types.FETCH_ASSIGNMENT_BY_MISSION:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case Types.FETCH_ASSIGNMENT_BY_MISSION_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        classList: action.data.classList,
+        missionDetail: action.data.missionDetail
+      }
 
     default:
       return state;

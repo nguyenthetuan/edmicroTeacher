@@ -22,6 +22,7 @@ import UpdatePlan from '../components/Teacher/Class/updatePlan';
 import V_UpdatePhone from '../containers/auth/UpdatePhoneContainer';
 import TermsOfUse from '../components/Terms/TermsOfUse';
 import MissionStepByStep from '../containers/teacher/Mission/MissionSBSContainer';
+import MissionDetailScreen from '../containers/teacher/Mission/MissionDetailContainer';
 
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -108,9 +109,13 @@ const TeacherStack = createStackNavigator({
     screen: TermsOfUse,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
-  MissionStepByStep:{
-    screen:MissionStepByStep,
+  MissionStepByStep: {
+    screen: MissionStepByStep,
     navigationOptions: { header: null, gesturesEnabled: false },
+  },
+  MissionDetail: {
+    screen: MissionDetailScreen,
+    navigationOptions: { header: null, gesturesEnabled: true },
   }
 }, transition);
 

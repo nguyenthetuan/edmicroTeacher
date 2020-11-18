@@ -1,7 +1,7 @@
 import * as Types from '../constants/type';
 import * as Api from '../services/apiMission';
 import _ from 'lodash';
-import {put, takeLatest} from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import {
   fetchCommonSubjectMissionSuccess,
   fetchListMissionSuccess,
@@ -9,6 +9,7 @@ import {
   fetchCategoryTestMissionSuccess,
   fetchListProblemMissionSuccess,
   fetchListProblemTestMissSuccess,
+  fetchAssignmentByMissionSuccess,
 } from '../actions/missionAction';
 
 function* fetchCommonSubject(action) {
@@ -85,7 +86,15 @@ function* fetchListProblemTestMission(action) {
     }
   } catch (error) {
     console.log(error);
-    y;
+  }
+}
+
+function* fetchAssignmentBuyMission(action) {
+  try {
+    const response = yield Api.getAssignByMission(action.payload);
+    yield put(fetchAssignmentByMissionSuccess(response));
+  } catch (error) {
+    yield put(fetchAssignmentByMissionSuccess({}));
   }
 }
 
@@ -99,4 +108,5 @@ export function* watchApiMission() {
     Types.FETCH_LIST_PROBLEM_TEST_MISSION,
     fetchListProblemTestMission,
   );
+  yield takeLatest(Types.FETCH_ASSIGNMENT_BY_MISSION, fetchAssignmentBuyMission);
 }
