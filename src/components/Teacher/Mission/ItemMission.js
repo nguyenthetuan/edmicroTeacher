@@ -1,22 +1,40 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import AppIcon from '../../../utils/AppIcon';
-import {getIconSubject} from '../../../utils/Common';
+import { getIconSubject } from '../../../utils/Common';
+import moment from 'moment';
+const { width } = Dimensions.get('window');
+const modelStatus = {
+  unDelivered: 0,// chưa giao bài.
+  delivered: 1,// đã giao bài.
+}
 export default class ItemMission extends Component {
+
+  goToMissionDetail = () => {
+    const { data, token } = this.props;
+    this.props.getAssignmentByMission({ token, _id: data._id });
+    this.props.navigation.navigate('MissionDetail', { statusbar: 'light-content' });
+  }
+
   renderElement = (img, txt1, txt2) => {
     return (
       <View style={styles.styFlexDirRow}>
         <Image source={img} resizeMode={'contain'} style={styles.styWrapImg} />
-        <Text style={styles.styTxtLabel}>{txt1}</Text>
-        <Text style={styles.styTxtLabel}>{txt2}</Text>
+        <Text style={styles.styTxtLabel} numberOfLines={1}>{txt1}</Text>
+        <Text style={styles.styTxtLabel} numberOfLines={1}>{txt2}</Text>
       </View>
     );
   };
 
   render() {
-    const {data} = this.props;
+    const { data } = this.props;
+    const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
+    const textDelivered = data.status == modelStatus.delivered ? 'Chưa giao' : 'Đã giao';
     return (
-      <TouchableOpacity style={styles.contain}>
+      <TouchableOpacity
+        style={styles.contain}
+        onPress={this.goToMissionDetail}
+      >
         <View style={styles.styWrapHeader}>
           <Text style={styles.styTxtHeader}>{data.title}</Text>
         </View>
@@ -41,8 +59,8 @@ export default class ItemMission extends Component {
             )}
           </View>
           <View>
-            {this.renderElement('')}
-            {this.renderElement(AppIcon.icon_handing, 'Đã giao')}
+            {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)}
+            {this.renderElement(AppIcon.icon_handing, textDelivered)}
           </View>
         </View>
       </TouchableOpacity>
@@ -69,6 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     margin: 5,
+    width: width / 3 - 20
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',

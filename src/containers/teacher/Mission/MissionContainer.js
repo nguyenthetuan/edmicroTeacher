@@ -1,8 +1,9 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import MissionScreen from '../../../components/Teacher/Mission/MissionScreen';
 import {
   fetchListMission,
   fetchCommonSubjectMission,
+  fetchAssignmentByMission
 } from '../../../actions/missionAction';
 const mapStateToProps = state => {
   return {
@@ -17,6 +18,7 @@ const mapDispatchToProps = dispatch => {
     getCommonSubjectMission: payload =>
       dispatch(fetchCommonSubjectMission(payload)),
     getListMission: payload => dispatch(fetchListMission(payload)),
+    getAssignmentByMission: payload => dispatch(fetchAssignmentByMission(payload))
   };
 };
 

@@ -85,6 +85,16 @@ export const createMission = async (payload) => {
   let responseJson = await response.json();
   return responseJson;
 }
+// api get assign by mission
+export const getAssignByMission = async (payload) => {
+  const { token, _id } = payload;
+  let response = await fetch(`${API_BASE}school-online/mission/getassignbymission/${_id}`, {
+    method: 'GET',
+    headers: getHeaders(token),
+  });
+  let responseJson = await response.json();
+  return responseJson;
+}
 
 module.exports = {
   getCommonSubject,
@@ -93,5 +103,6 @@ module.exports = {
   getCategoryTestMission,
   getListProblemMission,
   getTestByCategory,
-  createMission
+  createMission,
+  getAssignByMission
 };

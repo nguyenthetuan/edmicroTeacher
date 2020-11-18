@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -17,8 +17,8 @@ import AppIcon from '../../../utils/AppIcon';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
-import {event} from 'react-native-reanimated';
-const {width, height} = Dimensions.get('window');
+import { event } from 'react-native-reanimated';
+const { width, height } = Dimensions.get('window');
 export default class MissionScreen extends Component {
   state = {
     positionY: new Animated.Value(0),
@@ -37,10 +37,10 @@ export default class MissionScreen extends Component {
   }
 
   async componentDidMount() {
-    const {token} = await dataHelper.getToken();
+    const { token } = await dataHelper.getToken();
     this.token = token;
-    this.props.getListMission({token});
-    this.props.getCommonSubjectMission({token});
+    this.props.getListMission({ token });
+    this.props.getCommonSubjectMission({ token });
   }
 
   goToSetupMission = () => {
@@ -48,15 +48,15 @@ export default class MissionScreen extends Component {
   };
 
   handleSearch = keyWord => {
-    let {listMission, listMissionSearch} = this.state;
+    let { listMission, listMissionSearch } = this.state;
     listMissionSearch = listMission.filter(item =>
       item.title.includes(keyWord),
     );
-    this.setState({listMissionSearch});
+    this.setState({ listMissionSearch });
   };
 
-  renderItem = ({item}) => {
-    return <ItemMission data={item} />;
+  renderItem = ({ item }) => {
+    return <ItemMission data={item} {...this.props} token={this.token} />;
   };
 
   renderHeader = () => {
@@ -71,7 +71,7 @@ export default class MissionScreen extends Component {
           />
           <IconAntDesign
             name={'search1'}
-            style={{fontSize: 20, color: '#999'}}
+            style={{ fontSize: 20, color: '#999' }}
           />
         </View>
         <TouchableOpacity
@@ -90,9 +90,9 @@ export default class MissionScreen extends Component {
   );
 
   changePosition = event => {
-    const {positionY} = this.state;
-    const {height} = event.nativeEvent.contentSize;
-    const {y} = event.nativeEvent.contentOffset;
+    const { positionY } = this.state;
+    const { height } = event.nativeEvent.contentSize;
+    const { y } = event.nativeEvent.contentOffset;
     if (y > height / 2 || y < 0) {
       return;
     }
@@ -100,8 +100,8 @@ export default class MissionScreen extends Component {
   };
 
   render() {
-    const {user} = this.props;
-    const {positionY, listMissionSearch} = this.state;
+    const { user } = this.props;
+    const { positionY, listMissionSearch } = this.state;
     const positionYDiff = Animated.diffClamp(positionY, 0, 150);
     const posY = positionYDiff.interpolate({
       inputRange: [0, 150],
@@ -109,8 +109,8 @@ export default class MissionScreen extends Component {
     });
     return (
       <View style={styles.contain}>
-        <SafeAreaView style={{backgroundColor: '#fff'}} />
-        <View style={{backgroundColor: '#fff'}}>
+        <SafeAreaView style={{ backgroundColor: '#fff' }} />
+        <View style={{ backgroundColor: '#fff' }}>
           <HeaderMain {...user} navigation={this.props.navigation} />
         </View>
         <Animated.Image
@@ -119,16 +119,16 @@ export default class MissionScreen extends Component {
           style={{
             alignSelf: 'center',
             zIndex: -1,
-            transform: [{translateY: posY}],
+            transform: [{ translateY: posY }],
           }}
         />
-        <Animated.View style={{transform: [{translateY: posY}]}}>
+        <Animated.View style={{ transform: [{ translateY: posY }] }}>
           <FlatList
             data={listMissionSearch}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderItem}
             ListHeaderComponent={this.renderHeader}
-            ListFooterComponent={<View style={{height: 150}} />}
+            ListFooterComponent={<View style={{ height: 150 }} />}
             ListEmptyComponent={this.renderEmpty}
             stickyHeaderIndices={[0]}
             onScroll={this.changePosition}

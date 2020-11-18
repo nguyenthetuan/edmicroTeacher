@@ -60,6 +60,16 @@ export const fetchListProblemTestMissSuccess = data => ({
   data,
 });
 
+export const fetchAssignmentByMission = payload => ({
+  type: Types.FETCH_ASSIGNMENT_BY_MISSION,
+  payload
+})
+
+export const fetchAssignmentByMissionSuccess = data => ({
+  type: Types.FETCH_ASSIGNMENT_BY_MISSION_SUCCESS,
+  data
+});
+
 module.exports = {
   fetchCommonSubjectMission,
   fetchCommonSubjectMissionSuccess,
@@ -73,4 +83,6 @@ module.exports = {
   fetchListProblemMissionSuccess,
   fetchListProblemTestMiss,
   fetchListProblemTestMissSuccess,
+  fetchAssignmentByMission,
+  fetchAssignmentByMissionSuccess
 };
