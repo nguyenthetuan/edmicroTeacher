@@ -114,10 +114,20 @@ export default class CopyFromSubjectExists extends Component {
         )
     }
 
-    renderTask(data) {
+    onPressItemTask = async (id) => {
+        const { token } = await dataHelper.getToken();
+        const data = await apiPapers.premadeLibCopy({ token, id });
+        this.props.navigation.navigate('ListQuestionCopy', {
+            nagigation: this.props.nagigation,
+            statusbar: 'light-content',
+            data: data,
+        });
+    }
+
+    renderTask = (data) => {
         let { item, index } = data;
         return (
-            <TouchableOpacity style={styles.singleTask}>
+            <TouchableOpacity style={styles.singleTask} onPress={(item) => { this.onPressItemTask(data.item.id) }} key={index}>
                 <View style={styles.headerTask}>
                     <Text style={styles.titleTask}>{item.name}</Text>
                 </View>
@@ -171,7 +181,7 @@ export default class CopyFromSubjectExists extends Component {
                             title={'Bộ đề có sẵn'}
                             navigation={this.props.navigation}
                             color={'#fff'}
-                        // onRightAction={this.assignmentContent}
+                            notRightButton={true}
                         />
                         <View style={styles.wrapDropdown}>
                             <View style={styles.wrap2Dropdown}>
@@ -209,7 +219,7 @@ export default class CopyFromSubjectExists extends Component {
                         <FlatList
                             data={this.state.listTask}
                             keyExtractor={(item, index) => index.toString()}
-                            renderItem={this.renderTask.bind(this)}
+                            renderItem={this.renderTask}
                         />
                     </View>
                 </SafeAreaView>

@@ -12,6 +12,8 @@ import Homework from '../containers/teacher/homework/MainScreen';
 import MainHomeWork from '../containers/teacher/report/MainScreen';
 import UploadPDF from '../components/Teacher/Papers/UploadPDF';
 import CopyFromSubjectExists from '../components/Teacher/Papers/CopyFromSubjectExists';
+import ListQuestionCopy from '../components/Teacher/Papers/ListQuestionCopy';
+import ConfigQuestionCopy from '../components/Teacher/Papers/ConfigQuestionCopy';
 import transition from '../components/anim/Transition';
 import ChangInfo from '../components/account-detail/ChangeInfo';
 import Class from '../components/Teacher/Class/class';
@@ -50,6 +52,14 @@ const TeacherStack = createStackNavigator({
   },
   QuestionLibrary: {
     screen: QuestionLibrary,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  ListQuestionCopy: {
+    screen: ListQuestionCopy,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  ConfigQuestionCopy: {
+    screen: ConfigQuestionCopy,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   ConfigQuestion: {

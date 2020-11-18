@@ -54,6 +54,21 @@ const findPremadeLib = async (payload) => {
 
   }
 }
+const premadeLibCopy = async (payload) => {
+  const { token, id } = payload;
+  try {
+    let response = await fetch(`${API_BASE}school-online/premade-lib/coppy/${id}`, {
+      method: 'GET',
+      headers: getHeaders(token)
+    });
+    let responseJson = await response.json();
+    console.log('Premade lib Copy: ', JSON.stringify(responseJson));
+    return responseJson;
+  } catch (error) {
+    
+  }
+}
+
 
 const getAssignment = async ({ token, assignmentId }) => {
   let response = await fetch(`${API_BASE}school-online/assignment/get-class-assign/${assignmentId}`, {
@@ -149,8 +164,8 @@ const assignmentDetailCheck = async (payload) => {
     let responseJson = await response.json();
     return responseJson;
   } catch (error) {
-  }
 
+  }
 }
 
 const getListClassAssigned = async (payload) => {
@@ -354,4 +369,5 @@ module.exports = {
   getMatarialDetail,
   getSkill,
   findPremadeLib,
+  premadeLibCopy,
 };

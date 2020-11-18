@@ -26,7 +26,7 @@ export default class HeaderPaper extends React.PureComponent {
   }
 
   render() {
-    const { onRightAction, title, color, backgroundColor, loading } = this.props;
+    const { onRightAction, title, color, backgroundColor, loading, buttonRightText, notRightButton } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
         <RippleButton onPress={this.onGoback}>
@@ -39,14 +39,14 @@ export default class HeaderPaper extends React.PureComponent {
             color: color || '#383838'
           }]}>{title}</Text>
         </View>
-        <TouchableOpacity
+        {!notRightButton && <TouchableOpacity
           style={styles.rightHeader}
           onPress={onRightAction}>
           {loading ? <View style={styles.txtRightHeader}>
-            <ActivityIndicator color='#fff' size='small'  />
+            <ActivityIndicator color='#fff' size='small' />
           </View>
-            : <Text style={styles.txtRightHeader}>Tạo bộ đề</Text>}
-        </TouchableOpacity>
+            : <Text style={styles.txtRightHeader}>{buttonRightText || `Tạo bộ đề`}</Text>}
+        </TouchableOpacity>}
       </View>
     );
   }
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   viewTitle: {
     flex: 1,
-    marginLeft: 60,
+    alignSelf: 'center'
   },
   button: {
     width: 38,
