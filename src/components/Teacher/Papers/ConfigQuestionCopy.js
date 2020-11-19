@@ -55,7 +55,8 @@ export default class ConfigQuestion extends Component {
             timeStart: null,
             timeEnd: null,
             status: 'Publish',
-            question: []
+            question: [],
+            hidePopupCreate: true
         }
     }
 
@@ -189,6 +190,10 @@ export default class ConfigQuestion extends Component {
 
     onPressCreate() {
 
+    }
+
+    closePopupCreate() {
+        this.setState({ hidePopupCreate: true });
     }
 
     validate = () => {
@@ -330,6 +335,7 @@ export default class ConfigQuestion extends Component {
         if (totalPoint != 10) {
             this.refs.toast.show('Vui lòng nhập tổng điểm bằng 10')
         }
+        this.setState({ hidePopupCreate: false })
     }
 
     onPressItemSubject = (index) => {
@@ -445,7 +451,7 @@ export default class ConfigQuestion extends Component {
                     </View>}
                     <Toast ref="toast" position={'center'} />
                 </SafeAreaView>
-                <View style={styles.blackLayer}>
+                {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
                     <TouchableWithoutFeedback style={styles.popUpCreate} onPress={() => { this.textInput.blur() }}>
                         <View style={[styles.popUpCreate, { borderWidth: 1 }]}>
                             <View style={{ width: '100%', alignItems: 'center', zIndex: 1 }}>
@@ -527,9 +533,14 @@ export default class ConfigQuestion extends Component {
                             <TouchableOpacity style={{ width: 100, height: 40, borderRadius: 10, backgroundColor: '#007bff', position: 'absolute', bottom: 20, alignItems: 'center', justifyContent: 'center' }} onPress={() => { this.onPressCreate() }}>
                                 <Text style={styles.buttonPopUpText}>Tạo bài</Text>
                             </TouchableOpacity>
+                            <View style={{ width: 30, height: 30, borderRadius: 10, position: 'absolute', zIndex: 20, right: 5, top: 10 }}>
+                                <TouchableOpacity onPress={() => { this.closePopupCreate() }} >
+                                    <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </TouchableWithoutFeedback>
-                </View>
+                </View>}
             </View >
         )
     }
