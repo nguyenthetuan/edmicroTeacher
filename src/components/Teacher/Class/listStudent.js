@@ -16,7 +16,12 @@ class ItemStudentContainer extends React.Component {
   }
 
   render() {
-    const { onPress, index, navigation, item } = this.props;
+    const {
+      onPress,
+      index,
+      navigation,
+      item
+    } = this.props;
     return (
       <RippleItem onPress={onPress} >
         <View style={{ paddingVertical: 12 }} >
@@ -61,7 +66,10 @@ export default class listStudent extends Component {
     const { data } = this.state;
     return (
       <ItemStudentContainer
-        onPress={() => this.props.screenProps.show({ studentId: item.studentId, classID: data.code })}
+        onPress={() => this.props.screenProps.show({
+          studentId: item.studentId,
+          classID: data.code
+        })}
         item={item}
         index={index}
         navigation={this.props.navigation}
@@ -70,25 +78,34 @@ export default class listStudent extends Component {
   }
 
   render() {
-    const { data, showModal, isLoading } = this.state;
+    const {
+      data,
+      showModal,
+      isLoading
+    } = this.state;
     return (
       <View style={styles.container}>
         {
-        !isLoading ? 
-        <FlatList
-          data={data.students}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={this.renderItem}
-          initialNumToRender={8}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => (
-            <View style={styles.viewNotFound}>
-              <Image source={require('../../../asserts/icon/iconNodata.png')} />
-              <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
-            </View>
-          )}
-        />
-          : <ActivityIndicator animating size={'small'} style={{ flex: 1 }} color='#56CCF2' />}
+          !isLoading ?
+            <FlatList
+              data={data.students}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={this.renderItem}
+              initialNumToRender={8}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={() => (
+                <View style={styles.viewNotFound}>
+                  <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                  <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+                </View>
+              )}
+            />
+            :
+            <ActivityIndicator
+              animating size={'small'}
+              style={{ flex: 1 }}
+              color='#56CCF2'
+            />}
       </View>
     );
   }
@@ -108,7 +125,7 @@ const styles = StyleSheet.create({
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
     fontSize: 14,
-    color:'#828282',
-    marginTop:16
+    color: '#828282',
+    marginTop: 16
   }
 })

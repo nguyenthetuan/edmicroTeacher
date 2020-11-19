@@ -74,18 +74,35 @@ export default class UpdatePhoneScreen extends Component {
       if (user) {
         let currentUser = await auth().currentUser;
         this.verificationId = await currentUser.getIdToken();
-        await this.setState({ secureTextEntry: true, codeOTP: '******' });
+        await this.setState({
+          secureTextEntry: true,
+          codeOTP: '******'
+        });
         this.handleUpdate();
       }
     });
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    this.keyboardDidShowListener = Keyboard.addListener
+      (
+        'keyboardDidShow',
+        this._keyboardDidShow
+      );
+    this.keyboardDidHideListener = Keyboard.addListener
+      (
+        'keyboardDidHide',
+        this._keyboardDidHide
+      );
     BackHandler.addEventListener('hardwareBackPress', () => {
       return false;
     });
     try {
       const phone = this.props.user.phoneNumber;
-      const phoneNumber = (phone.startsWith('84') && phone.length > 10) ? `${phone.replace('84', '0')}` : phone;
+      const phoneNumber = (
+        phone.startsWith('84')
+        && phone.length > 10)
+        ?
+        `${phone.replace('84', '0')}`
+        :
+        phone;
       this.setState({
         phoneNumber: phoneNumber
       });
@@ -120,7 +137,11 @@ export default class UpdatePhoneScreen extends Component {
     try {
       let confirmResult = await auth().signInWithPhoneNumber(phoneVerify);
       this.verificationId = confirmResult._verificationId;
-      await this.setState({ inputOtpVisible: true, isLoading: false, errors: '' });
+      await this.setState({
+        inputOtpVisible: true,
+        isLoading: false,
+        errors: ''
+      });
     } catch (error) {
       this.updateFailed(error, phone);
     }
@@ -190,7 +211,12 @@ export default class UpdatePhoneScreen extends Component {
   resendOTP = async () => {
     this.otp.onClear();
     const { phoneNumber } = this.state;
-    await this.setState({ isLoading: true, codeOTP: '', errors: '', secureTextEntry: false });
+    await this.setState({
+      isLoading: true,
+      codeOTP: '',
+      errors: '',
+      secureTextEntry: false
+    });
     this.updateWithPhone(phoneNumber);
   }
 
@@ -206,7 +232,12 @@ export default class UpdatePhoneScreen extends Component {
 
   handleUpdate = async () => {
     try {
-      const { codeOTP, projectId, phoneNumber, confirmResult } = this.state;
+      const {
+        codeOTP,
+        projectId,
+        phoneNumber,
+        confirmResult
+      } = this.state;
       if (codeOTP.trim().length <= 0) {
         this.setState({ errors: 'Mã OTP không được để trống!' });
         return;
@@ -308,11 +339,25 @@ export default class UpdatePhoneScreen extends Component {
 
   render() {
 
-    const { phoneNumber, isShowKeybroad, isEditPhone, inputOtpVisible, updateSuccess } = this.state;
-    const { backArrow, textAction, validationStyle, container } = authStyle;
+    const {
+      phoneNumber,
+      isShowKeybroad,
+      isEditPhone,
+      inputOtpVisible,
+      updateSuccess
+    } = this.state;
+    const {
+      backArrow,
+      textAction,
+      validationStyle,
+      container
+    } = authStyle;
     return (
       <SafeAreaView
-        style={[container, { backgroundColor: '#FFF' }]}
+        style={[
+          container,
+          { backgroundColor: '#FFF' }
+        ]}
       >
         <StatusBar />
         <View style={{ flex: 1 }}>
@@ -418,7 +463,10 @@ export default class UpdatePhoneScreen extends Component {
                             ref={ref => this.otp = ref}
                             containerStyle={styles.textInputContainer}
                             textInputStyle={styles.roundedTextInput}
-                            handleTextChange={text => this.setState({ codeOTP: text, errors: '' },
+                            handleTextChange={text => this.setState({
+                              codeOTP: text,
+                              errors: ''
+                            },
                               () => console.log('text1', this.state.codeOTP))}
                             inputCount={6}
                             keyboardType="numeric"
@@ -465,12 +513,20 @@ export default class UpdatePhoneScreen extends Component {
                 </View>
             }
             <View>
-              <Image source={AppIcon.bottomChangeGrade} style={styles.imageBottom} resizeMode={'contain'} />
+              <Image
+                source={AppIcon.bottomChangeGrade}
+                style={styles.imageBottom}
+                resizeMode={'contain'}
+              />
             </View>
           </KeyboardAwareScrollView>
         </View>
         <Toast ref="toast" position={'bottom'} />
-        <LoadingScreen isLoading={this.state.isLoading} bgColor={'transparent'} color={'transparent'} />
+        <LoadingScreen
+          isLoading={this.state.isLoading}
+          bgColor={'transparent'}
+          color={'transparent'}
+        />
       </SafeAreaView>
     );
   }
