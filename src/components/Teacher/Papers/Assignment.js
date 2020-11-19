@@ -85,7 +85,7 @@ function Item(props) {
   const onAssignment = async () => {
     if (validate()) {
       const body = {
-        assignmentId: props.dataItem.assignmentId||props.dataItem.id,
+        assignmentId: props.dataItem.assignmentId || props.dataItem.id,
         timeEnd: moment(timeEnd).unix(),
         timeStart: moment(timeStart).unix(),
         name: props.dataItem.name,
@@ -215,7 +215,11 @@ export default class Assignment extends Component {
     data: []
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getData();
+  }
+
+  async getData() {
     const dataItem = this.props.navigation.getParam('item');
     const { token } = await dataHelper.getToken();
     if (token) {

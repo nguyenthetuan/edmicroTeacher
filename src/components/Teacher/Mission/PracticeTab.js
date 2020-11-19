@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import ItemElement from './ItemElementPractice';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class PracticeTab extends Component {
   state = {
@@ -21,28 +21,32 @@ export default class PracticeTab extends Component {
   };
 
   token = null;
-  async componentDidMount() {
-    const {token} = await dataHelper.getToken();
+  componentDidMount() {
+    this.getToken();
+  }
+
+  async getToken() {
+    const { token } = await dataHelper.getToken();
     this.token = token;
   }
 
   handleAdd = data => item => {
     item.problemHierachyName = data.problemHierachyName;
-    const {dataPracticeAdd} = this.state;
+    const { dataPracticeAdd } = this.state;
     dataPracticeAdd.push(item);
     this.props.screenProps.changeDataPracticeAdd(dataPracticeAdd);
-    this.setState({dataPracticeAdd});
+    this.setState({ dataPracticeAdd });
   };
 
   handleDele = data => item => {
-    let {dataPracticeAdd} = this.state;
+    let { dataPracticeAdd } = this.state;
     dataPracticeAdd = dataPracticeAdd.filter(elem => elem.id != item.id);
     this.props.screenProps.changeDataPracticeAdd(dataPracticeAdd);
-    this.setState({dataPracticeAdd});
+    this.setState({ dataPracticeAdd });
   };
 
   _renderHeader = (section, index) => {
-    const {dataPracticeAdd} = this.state;
+    const { dataPracticeAdd } = this.state;
     const temp = dataPracticeAdd.filter(ele => {
       return ele.problemHierachyId == section.id;
     });
@@ -77,14 +81,14 @@ export default class PracticeTab extends Component {
 
   _updateSections = activeSections => {
     if (activeSections.length <= 0) {
-      this.setState({activeSections: []});
+      this.setState({ activeSections: [] });
       return;
     }
-    const {listCateHirachy} = this.props.screenProps;
+    const { listCateHirachy } = this.props.screenProps;
     //0 tu luyen
     if (_.isEmpty(listCateHirachy[activeSections].data)) {
-      this.setState({isLoading: true});
-      const {id} = listCateHirachy[activeSections];
+      this.setState({ isLoading: true });
+      const { id } = listCateHirachy[activeSections];
       new Promise((res, rej) => {
         this.props.screenProps.getListProblemMission({
           token: this.token,
@@ -93,16 +97,16 @@ export default class PracticeTab extends Component {
           rej,
         });
       }).then(res => {
-        this.setState({activeSections, isLoading: false});
+        this.setState({ activeSections, isLoading: false });
       });
     } else {
-      this.setState({activeSections});
+      this.setState({ activeSections });
     }
   };
 
   render() {
-    const {listCateHirachy} = this.props.screenProps;
-    const {isLoading} = this.state;
+    const { listCateHirachy } = this.props.screenProps;
+    const { isLoading } = this.state;
     return (
       <ScrollView style={styles.contain} showsVerticalScrollIndicator={false}>
         {isLoading && (

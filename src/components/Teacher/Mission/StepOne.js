@@ -34,7 +34,12 @@ export default class StepOne extends Component {
     Global.resetStateStepOne = this.reset.bind(this);
   }
   token = null;
-  async componentDidMount() {
+
+  componentDidMount() {
+    this.getToken();
+  }
+
+  async getToken() {
     const { token } = await dataHelper.getToken();
     this.token = token;
   }

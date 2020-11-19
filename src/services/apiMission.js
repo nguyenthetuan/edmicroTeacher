@@ -96,6 +96,48 @@ export const getAssignByMission = async (payload) => {
   return responseJson;
 }
 
+// api assigned mission 
+export const assignedMission = async (payload) => {
+  const { token, params } = payload;
+  const response = await fetch(`${API_BASE}school-online/mission/assignmission/`, {
+    method: 'POST',
+    headers: getHeaders(token),
+    body: JSON.stringify(params)
+  });
+  const responseJson = await response.json();
+  return responseJson;
+}
+
+// api get info practice
+export const getInfoPractice = async (token, _id) => {
+  const response = await fetch(`${API_BASE}practice/info/${_id}`, {
+    method: 'GET',
+    headers: getHeaders(token),
+  });
+  const responseJson = await response.json();
+  return responseJson;
+}
+
+// api get info test
+export const getInfoTest = async (token, _id) => {
+  const response = await fetch(`${API_BASE}tests/info/${_id}`, {
+    method: 'GET',
+    headers: getHeaders(token),
+  });
+  const responseJson = await response.json();
+  return responseJson;
+}
+
+// api check permission add Mission
+export const checkPermission = async (token) => {
+  const response = await fetch(`${API_BASE}package/feature/school`, {
+    method: 'GET',
+    headers: getHeaders(token),
+  });
+  const responseJson = await response.json();
+  return responseJson;
+}
+
 module.exports = {
   getCommonSubject,
   getListMission,
@@ -104,5 +146,9 @@ module.exports = {
   getListProblemMission,
   getTestByCategory,
   createMission,
-  getAssignByMission
+  getAssignByMission,
+  assignedMission,
+  getInfoPractice,
+  getInfoTest,
+  checkPermission
 };

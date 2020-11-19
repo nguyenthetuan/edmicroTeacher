@@ -17,13 +17,14 @@ import AppIcon from '../../../utils/AppIcon';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
-import { event } from 'react-native-reanimated';
+import Api from '../../../services/apiMission';
 const { width, height } = Dimensions.get('window');
 export default class MissionScreen extends Component {
   state = {
     positionY: new Animated.Value(0),
     listMission: this.props.listMission,
     listMissionSearch: this.props.listMission,
+    isAccessMission: false
   };
   token = null;
 
@@ -36,9 +37,16 @@ export default class MissionScreen extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getToken();
+  }
+
+  async getToken() {
     const { token } = await dataHelper.getToken();
     this.token = token;
+    const res = await Api.checkPermission(token);
+    const { isAccessMission } = res;
+    this.setState({ isAccessMission })
     this.props.getListMission({ token });
     this.props.getCommonSubjectMission({ token });
   }
@@ -60,6 +68,7 @@ export default class MissionScreen extends Component {
   };
 
   renderHeader = () => {
+    const { isAccessMission } = this.state;
     return (
       <View style={styles.styWrapHeader}>
         <View style={styles.styWrapSearch}>
@@ -74,11 +83,11 @@ export default class MissionScreen extends Component {
             style={{ fontSize: 20, color: '#999' }}
           />
         </View>
-        <TouchableOpacity
+        {isAccessMission && <TouchableOpacity
           style={styles.styWrapBtn}
           onPress={this.goToSetupMission}>
           <Text style={styles.styTxtBtn}>Thêm nhiệm vụ</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
     );
   };

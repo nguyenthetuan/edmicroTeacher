@@ -4,11 +4,26 @@ import HTML from 'react-native-render-html';
 import ItemPactice from './ItemPactice';
 import ItemTest from './ItemTest';
 import _ from 'lodash';
+import ModalMockStart from './modalMockStart';
+import ModalMockStartTest from './modalMockStartTest';
+
 export default class TabMisson extends Component {
+
+    state = {
+        visible: false
+    }
+
+    showPractice = (data) => {
+        this.refModalMockPractice.activeModal(data);
+    };
+
+    showTest = (data) => {
+        this.refModalMockTest.activeModal(data);
+    };
 
     renderSectionHeader = ({ section: { title } }) => (
         <View style={styles.styWrapElem}>
-            <Text style={styles.styTxtHeader}>{title}</Text>
+            <Text style={styles.styTxtHeader} numberOfLines={1}>{title}</Text>
         </View>
     )
 
@@ -16,6 +31,9 @@ export default class TabMisson extends Component {
     renderPactice = () => {
         const { missionDetail } = this.props.screenProps;
         let { listProblem } = missionDetail;
+        if (_.isEmpty(listProblem)) {
+            return null;
+        }
         listProblem = listProblem.map(item => ({ ...item, ...item.problemHierachy }));
         const dataTemp = _.chain(listProblem)
             .groupBy('problemHierarchyId')
@@ -23,11 +41,11 @@ export default class TabMisson extends Component {
             .value();
         return (
             <View style={{ backgroundColor: '#FFF' }}>
-                <Text style={[styles.styTxtHeader, { color: '#000' }]}>Tự luyện</Text>
+                <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Tự luyện</Text>
                 <SectionList
                     sections={dataTemp}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <ItemPactice item={item} />}
+                    renderItem={({ item }) => <ItemPactice item={item} show={this.showPractice} />}
                     renderSectionHeader={this.renderSectionHeader}
                     renderSectionFooter={() => <View style={{ marginBottom: 10 }} />}
                 />
@@ -38,6 +56,9 @@ export default class TabMisson extends Component {
     renderTest = () => {
         const { missionDetail } = this.props.screenProps;
         let { listTest } = missionDetail;
+        if (_.isEmpty(listTest)) {
+            return null;
+        }
         listTest = listTest.map(item => ({ ...item, ...item.testCategory[0] }));
         const dataTemp = _.chain(listTest)
             .groupBy('testCategoryId')
@@ -45,11 +66,11 @@ export default class TabMisson extends Component {
             .value();
         return (
             <View style={{ backgroundColor: '#FFF' }}>
-                <Text style={[styles.styTxtHeader, { color: '#000' }]}>Kiểm tra</Text>
+                <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Kiểm tra</Text>
                 <SectionList
                     sections={dataTemp}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <ItemTest item={item} />}
+                    renderItem={({ item }) => <ItemTest item={item} show={this.showTest} />}
                     renderSectionHeader={({ section: { title } }) => (
                         <View style={[styles.styWrapElem, { backgroundColor: '#56CCF2' }]}>
                             <Text style={styles.styTxtHeader}>{title}</Text>
@@ -62,17 +83,37 @@ export default class TabMisson extends Component {
     }
 
     render() {
-        const { isLoading, missionDetail } = this.props.screenProps;
+        const { missionDetail, navigation } = this.props.screenProps;
+        const { visible } = this.state;
         return (
             <View style={styles.contain}>
                 <ScrollView>
-                    <Text style={[styles.styTxtHeader, { color: '#000', marginTop: 10 }]}>Mô tả: </Text>
-                    <View style={styles.styWrapHtml}>
-                        <HTML html={missionDetail.description} />
-                    </View>
+                    <View style={{ height: 10 }} />
+                    {
+                        missionDetail.description ?
+                            <>
+                                <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Mô tả: </Text>
+                                <View style={styles.styWrapHtml}>
+                                    <HTML html={missionDetail.description} />
+                                </View>
+                            </>
+                            : null
+                    }
                     {this.renderPactice()}
                     {this.renderTest()}
                 </ScrollView>
+                <ModalMockStart
+                    closeModal={() => this.setState({ visible: false })}
+                    visible={visible}
+                    ref={ref => this.refModalMockPractice = ref}
+                    navigation={navigation}
+                />
+                <ModalMockStartTest
+                    closeModal={() => this.setState({ visible: false })}
+                    visible={visible}
+                    ref={ref => this.refModalMockTest = ref}
+                    navigation={navigation}
+                />
             </View>
         );
     }
@@ -86,13 +127,14 @@ const styles = StyleSheet.create({
         color: '#FFF',
         marginHorizontal: 3,
         fontSize: 14,
-        fontFamily: 'Nunito-Bold'
+        fontFamily: 'Nunito-Bold',
     },
     styWrapElem: {
         backgroundColor: '#FDC214',
         padding: 10,
         borderRadius: 5,
         marginHorizontal: 10,
+        marginTop: 10
     },
     styWrapHtml: {
         borderWidth: 1,

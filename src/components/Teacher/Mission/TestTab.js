@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import ItemElement from './ItemElementTest';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 export default class PracticeTab extends Component {
   state = {
     activeSections: [],
@@ -20,28 +20,32 @@ export default class PracticeTab extends Component {
   };
 
   token = null;
-  async componentDidMount() {
-    const {token} = await dataHelper.getToken();
+  componentDidMount() {
+    this.getToken();
+  }
+
+  async getToken() {
+    const { token } = await dataHelper.getToken();
     this.token = token;
   }
 
   handleAdd = title => item => {
-    const {dataTestAdd} = this.state;
+    const { dataTestAdd } = this.state;
     item.title = title;
     dataTestAdd.push(item);
     this.props.screenProps.changeDataTestAdd(dataTestAdd);
-    this.setState({dataTestAdd});
+    this.setState({ dataTestAdd });
   };
 
   handleDele = title => item => {
-    let {dataTestAdd} = this.state;
+    let { dataTestAdd } = this.state;
     dataTestAdd = dataTestAdd.filter(elem => elem.testId != item.testId);
     this.props.screenProps.changeDataTestAdd(dataTestAdd);
-    this.setState({dataTestAdd});
+    this.setState({ dataTestAdd });
   };
 
   _renderHeader = (section, index) => {
-    const {dataTestAdd} = this.state;
+    const { dataTestAdd } = this.state;
     const temp = dataTestAdd.filter(ele => {
       return ele.id == section.id;
     });
@@ -75,14 +79,14 @@ export default class PracticeTab extends Component {
 
   _updateSections = activeSections => {
     if (activeSections.length <= 0) {
-      this.setState({activeSections: []});
+      this.setState({ activeSections: [] });
       return;
     }
-    const {listCateTest} = this.props.screenProps;
+    const { listCateTest } = this.props.screenProps;
     if (_.isEmpty(listCateTest[activeSections].data)) {
-      this.setState({isLoading: true});
+      this.setState({ isLoading: true });
       //1 kiểm tra
-      const {testCategoryId} = listCateTest[activeSections];
+      const { testCategoryId } = listCateTest[activeSections];
       new Promise((res, rej) => {
         this.props.screenProps.getListProblemTestMiss({
           token: this.token,
@@ -90,16 +94,16 @@ export default class PracticeTab extends Component {
           res,
         });
       }).then(res => {
-        this.setState({activeSections, isLoading: false});
+        this.setState({ activeSections, isLoading: false });
       });
     } else {
-      this.setState({activeSections});
+      this.setState({ activeSections });
     }
   };
 
   render() {
-    const {listCateTest} = this.props.screenProps;
-    const {isLoading} = this.state;
+    const { listCateTest } = this.props.screenProps;
+    const { isLoading } = this.state;
     return (
       <ScrollView style={styles.contain} showsVerticalScrollIndicator={false}>
         {isLoading && (

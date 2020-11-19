@@ -32,7 +32,11 @@ export default class FreshchatComponent extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.configFreschat();
+  }
+
+  async configFreschat() {
     const { token } = await dataHelper.getToken();
     const {
       userId,

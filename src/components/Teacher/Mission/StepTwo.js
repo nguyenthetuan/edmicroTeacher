@@ -18,7 +18,11 @@ export default class StepTwo extends Component {
   }
 
   token = null;
-  async componentDidMount() {
+  componentDidMount() {
+    this.getToken();
+  }
+
+  async getToken() {
     const { token } = await dataHelper.getToken();
     this.token = token;
   }
