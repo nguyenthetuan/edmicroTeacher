@@ -29,7 +29,7 @@ export default class ItemMission extends Component {
   render() {
     const { data } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
-    const textDelivered = data.status == modelStatus.delivered ? 'Chưa giao' : 'Đã giao';
+    const textDelivered = data.status == modelStatus.unDelivered ? 'Chưa giao' : 'Đã giao';
     return (
       <TouchableOpacity
         style={styles.contain}
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   styTxtHeader: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
+    fontSize: 12
   },
   styFlexDirRow: {
     flexDirection: 'row',

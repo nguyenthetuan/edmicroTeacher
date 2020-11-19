@@ -5,7 +5,11 @@ import dataHelper from '../../../utils/dataHelper';
 const { width } = Dimensions.get('window');
 export default class StepFour extends Component {
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.getToken();
+    }
+
+    async getToken() {
         const { token } = await dataHelper.getToken();
         this.props.screenProps.getListMission({ token });
     }

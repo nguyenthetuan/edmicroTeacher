@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function ItemTest(props) {
     const { item } = props;
-    console.log("ItemTest -> item", item)
     return (
-        <TouchableOpacity style={styles.contain}>
-            <Text style={styles.styTxt}>{item.testName}</Text>
+        <TouchableOpacity style={styles.contain} onPress={() => {
+            props.show({ _id: item.testId });
+        }}>
+            <Text style={styles.styTxt} numberOfLines={1}>{item.testName}</Text>
             <View style={styles.styWrapCount}>
                 <Text style={styles.styCount}>{item.countDone}</Text>
             </View>

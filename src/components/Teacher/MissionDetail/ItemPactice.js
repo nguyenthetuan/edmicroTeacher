@@ -4,8 +4,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 export default function ItemPactice(props) {
     const { item } = props;
     return (
-        <TouchableOpacity style={styles.contain}>
-            <Text style={styles.styTxt}>{item.problemName}</Text>
+        <TouchableOpacity style={styles.contain} onPress={() => {
+            props.show({ _id: item.problemId });
+        }}>
+            <Text style={styles.styTxt} numberOfLines={1}>{item.problemName}</Text>
             <View style={styles.styWrapCount}>
                 <Text style={styles.styCount}>{item.countDone}</Text>
             </View>

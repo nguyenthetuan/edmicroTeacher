@@ -1,9 +1,8 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import PracticeTab from './PracticeTab';
 import TestTab from './TestTab';
-import {View, Text, StyleSheet} from 'react-native';
 const TabMissionType = createMaterialTopTabNavigator(
   {
     PracticeTab: {

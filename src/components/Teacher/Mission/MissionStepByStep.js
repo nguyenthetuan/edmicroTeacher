@@ -27,7 +27,11 @@ export default class MissionStepByStep extends Component {
     data: {},
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getToken();
+  }
+
+  async getToken() {
     const { token } = await dataHelper.getToken();
     this.token = token;
   }

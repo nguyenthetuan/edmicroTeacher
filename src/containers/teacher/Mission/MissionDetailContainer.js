@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import MissionDetailScreen from '../../../components/Teacher/MissionDetail/MissionDetailScreen';
+import { fetchListMission, fetchAssignmentByMission } from '../../../actions/missionAction';
 const mapStateToProps = state => {
     return {
         user: state.user,
@@ -10,7 +11,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        getListMission: payload => dispatch(fetchListMission(payload)),
+        getAssignmentByMission: payload => dispatch(fetchAssignmentByMission(payload))
+    };
 };
 
 export default connect(
