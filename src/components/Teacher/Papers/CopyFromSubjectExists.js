@@ -117,10 +117,13 @@ export default class CopyFromSubjectExists extends Component {
     onPressItemTask = async (id) => {
         const { token } = await dataHelper.getToken();
         const data = await apiPapers.premadeLibCopy({ token, id });
+        const { listSubjects } = this.props.navigation.state.params;
+
         this.props.navigation.navigate('ListQuestionCopy', {
             nagigation: this.props.nagigation,
             statusbar: 'light-content',
             data: data,
+            listSubjects: listSubjects,
         });
     }
 

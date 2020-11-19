@@ -11,7 +11,7 @@ const { bgColorActive, bgOptionTrue, bgOptionFalse, bgOptionActive,
     bgViewTrue, bgViewFalse, textReviewColor, borderButton,
     bgButtonColor, textVideoColor, borderColor } = WebColor;
 
-const renderHtmlListQuestionCopy = (data, points) => {
+const renderHtmlListQuestionCopy = (data, points, renderCheckbox) => {
     let html = ``;
     html += `
     <!DOCTYPE html>
@@ -98,7 +98,7 @@ const renderHtmlListQuestionCopy = (data, points) => {
         </script>
     </head>
     <body style="margin:0;padding:15px 15px 0 15px;font-family: Arial, sans-serif !important;font-size:14px !important;">`
-    html += renderListquestion(data, points);
+    html += renderListquestion(data, points, renderCheckbox);
     html += getMathJaxScript('TOAN');
     html += `</body>
         
@@ -106,19 +106,26 @@ const renderHtmlListQuestionCopy = (data, points) => {
     return html;
 }
 
-const renderListquestion = (data, points) => {
+const renderListquestion = (data, points, renderCheckbox) => {
     console.log("points: ", JSON.stringify(points));
     let html = ``;
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
         let options = item.options;
-        html += `<div style="border-bottom:1px solid #000; margin-top:15px" onclick="" >
-            <div style="display:flex;">
+        html += `<div style="border-bottom:1px solid #000; margin-top:15px" onclick="" >`
+        if (renderCheckbox) {
+            html += `<div style="display:flex;">
                 <div style="font-size:15px; font-weight: 900">Câu ${i + 1}:</div>
                 <input type="number" id="point${i}" name="point" style="width: 40px; margin-top: -2px; margin-left: 20px" value="${points?.length ? points[i] : 0}" onblur="onBlur()">
                 <input style="position: absolute; right: 10px" type="checkbox" id="myCheck${i}" onclick="checkboxFunc('${i}')" name="checkbox">
-            </div>
-        ${item.content}`
+            </div>`
+        } else {
+            html += `<div style="display:flex;">
+                <div style="font-size:15px; font-weight: 900">Câu ${i + 1}:</div>
+            </div>`
+        }
+
+        html += `${item.content}`
         for (let j = 0; j < options.length; j++) {
             html +=
                 `<div style="display:flex;">                   

@@ -59,10 +59,13 @@ export default class ListQuestionCopy extends Component {
     copySubjectMatter = async () => {
         const data = this.state.data;
         const { token } = await dataHelper.getToken();
+        const { listSubjects } = this.props.navigation.state.params;
+        
         this.props.navigation.navigate('ConfigQuestionCopy', {
             nagigation: this.props.nagigation,
             statusbar: 'light-content',
             data: data,
+            listSubjects: listSubjects,
         });
     }
 
@@ -83,7 +86,7 @@ export default class ListQuestionCopy extends Component {
                             title={'Bộ đề có sẵn'}
                             navigation={this.props.navigation}
                             color={'#fff'}
-                            buttonRightText={'Sao chép bộ đề'}
+                            buttonRightText={'Cấu hình bộ đề'}
                             onRightAction={this.copySubjectMatter}
                         />
                         <View>
