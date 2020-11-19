@@ -1,38 +1,49 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, Image, Platform, Keyboard,
-  BackHandler, SafeAreaView, StatusBar, Dimensions, Alert
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Platform,
+  Keyboard,
+  BackHandler,
+  SafeAreaView,
+  StatusBar,
+  Dimensions,
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { DotIndicator } from 'react-native-indicators';
 import SplashScreen from 'react-native-splash-screen';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import Config from 'react-native-config';
-import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import {
+  GoogleSignin,
+  statusCodes
+} from '@react-native-community/google-signin';
+import {
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager
+} from 'react-native-fbsdk';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import apiUser from '../../services/apiUserHelper';
 import global from '../../utils/Globals';
 import authStyle from '../../themes/authStyle';
 import dataHelper from '../../utils/dataHelper';
 import AppIcon from '../../utils/AppIcon';
-import RippleButton from '../libs/RippleButton';
 import Button from '../common/Button';
 import Common from '../../utils/Common';
-import Footer from './Footer';
 import FormInput from '../common/FormInput';
-import * as Messages from '../../constants/message';
 import NetInfo from "@react-native-community/netinfo";
 import AnalyticsManager from '../../utils/AnalyticsManager';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationActions, StackActions } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { authenRedirect } from '../../utils/AuthCommon';
 import { LOGIN_TYPE } from '../../utils/AuthCommon';
 import { AuthConfig } from './AuthConfig';
-import FreshchatComponent from '../../utils/FreshchatComponent';
 import { saveAvatarAction } from '../../actions/userAction';
 
 const ACCOUNTKIT = 'ACCOUNTKIT';
@@ -49,7 +60,6 @@ const configMicrosoft = {
     tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
   }
 };
-
 
 class LoginWithPhoneScreen extends Component {
   constructor(props) {
@@ -599,38 +609,69 @@ class LoginWithPhoneScreen extends Component {
   }
 
   render() {
-    const { container, viewLogin, backArrow,
-      textLink, validationStyle } = authStyle;
-    const { isShowKeybroad, errorEmpty, phoneNumber, passWord, errors } = this.state;
+    const {
+      container,
+      viewLogin,
+      backArrow,
+      textLink,
+      validationStyle
+    } = authStyle;
+    const {
+      isShowKeybroad,
+      errorEmpty,
+      phoneNumber,
+      passWord,
+      errors
+    } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <StatusBar />
         <SafeAreaView style={container}>
-          <View style={[backArrow, { paddingTop: Platform.OS === 'android' ? 20 : null }]}>
+          <View style={[
+            backArrow,
+            {
+              paddingTop: Platform.OS === 'android'
+                ?
+                20
+                :
+                null
+            }]}>
             <View style={styles.wrapTitle}>
               <Text style={styles.txtTitle}>Đăng nhập</Text>
             </View>
           </View>
           <KeyboardAwareScrollView
-            contentContainerStyle={{
-              justifyContent: 'center',
+            contentContainerStyle={styles.viewKeyboard}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={[{
               alignItems: 'center',
-              flexGrow: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-            showsVerticalScrollIndicator={false}>
-            <View style={[{ alignItems: 'center', marginTop: 0.02 * height }, (errors) && { marginTop: 0 }]}>
-              <Image source={require('../../asserts/images/image_login.png')} resizeMode={'contain'} style={{ width: height / 4 * 981 / 617, height: height / 4 }} />
+              marginTop: 0.02 * height
+            },
+            (errors) && { marginTop: 0 }
+            ]}
+            >
+              <Image
+                source={require('../../asserts/images/image_login.png')}
+                resizeMode={'contain'}
+                style={styles.sizeImage}
+              />
             </View>
-            <Text style={{
-              fontFamily: 'Nunito-Regular',
-              fontSize: 14,
-              color:'#56CCF2'
-            }}>Ứng dụng hỗ trợ giáo viên</Text>
-            <Text style={[validationStyle, { marginBottom: 15 }]}>{this.state.errors}</Text>
+            <Text style={styles.txtDesc}>
+              Ứng dụng hỗ trợ giáo viên
+              </Text>
+            <Text
+              style={[
+                validationStyle,
+                { marginBottom: 15 }
+              ]}
+            >
+              {this.state.errors}
+            </Text>
             <View style={[viewLogin, { flex: 1 }]}>
-              <Text style={{ color: '#828282', fontFamily: 'Nunito-Bold', fontSize: 14, lineHeight: 19 }}>Tên đăng nhập</Text>
+              <Text style={styles.labelUsername}>
+                Tên đăng nhập
+                </Text>
               <FormInput
                 paddingTopContent={4}
                 borderRadius={5}
@@ -647,8 +688,17 @@ class LoginWithPhoneScreen extends Component {
                 height={40}
                 bgColor='#FFF'
               />
-              {(errorEmpty.phoneNumber && !phoneNumber) && (<View><Text style={styles.txtErrorEmpty} >{errorEmpty.phoneNumber}</Text></View>)}
-              <Text style={{ paddingTop: 10, color: '#828282', fontFamily: 'Nunito-Bold', fontSize: 14, lineHeight: 19 }}>Mật khẩu</Text>
+              {(
+                errorEmpty.phoneNumber && !phoneNumber
+              )
+                &&
+                (
+                  <View>
+                    <Text style={styles.txtErrorEmpty} >
+                      {errorEmpty.phoneNumber}
+                    </Text></View>
+                )}
+              <Text style={styles.labelPass}>Mật khẩu</Text>
               <FormInput
                 paddingTopContent={4}
                 height={40}
@@ -670,16 +720,30 @@ class LoginWithPhoneScreen extends Component {
                 showPassword={() => this.showPassword()}
                 bgColor='#FFF'
               />
-              {(errorEmpty.passWord && !passWord) && (<View><Text style={styles.txtErrorEmpty}>{errorEmpty.passWord}</Text></View>)}
+              {(
+                errorEmpty.passWord && !passWord
+              )
+                &&
+                (
+                  <View>
+                    <Text style={styles.txtErrorEmpty}>
+                      {errorEmpty.passWord}
+                    </Text>
+                  </View>)}
               <View style={styles.wrapbottom}>
-                <TouchableOpacity style={styles.buttonRemember} onPress={() => this.handleRemember()}>
+                <TouchableOpacity
+                  style={styles.buttonRemember}
+                  onPress={() => this.handleRemember()}
+                >
                   <View style={styles.wrapButtonRemember}>
                     {this.state.RememberMe ?
                       <Icon name="check" color={'#828282'} size={12} /> :
                       <View />
                     }
                   </View>
-                  <Text style={{ color: '#828282', fontSize: 12, fontFamily: 'Nunito-Regular' }}>Ghi nhớ đăng nhập</Text>
+                  <Text style={styles.rememberLogin}>
+                    Ghi nhớ đăng nhập
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.handlerFogot()}>
                   <Text style={[textLink, {
@@ -692,14 +756,17 @@ class LoginWithPhoneScreen extends Component {
               </View>
               {!this.state.isLoging ?
                 <Button
-                  center={true} btn={'rgb'} title="Đăng nhập"
-                  width={width - width / 5} circle={40}
+                  center={true}
+                  btn={'rgb'}
+                  title="Đăng nhập"
+                  width={width - width / 5}
+                  circle={40}
                   style={styles.btnLogin}
-                  styleTitle={{ fontWeight: 'bold', fontSize: 14, color: '#FFF' }}
+                  styleTitle={styles.styleTitle}
                   onPress={() => this.checkLoginType()}
                 />
                 :
-                <View style={{ height: 20, marginTop: 8 }}>
+                <View style={styles.viewDotIn}>
                   <DotIndicator color={'#54CEF5'} size={6} count={8} />
                 </View>
               }
@@ -750,31 +817,8 @@ class LoginWithPhoneScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    paddingBottom: height <= 592 ? 0 : height / 8,
-    zIndex: 10,
-  },
-  containerAware: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   row: {
     flexDirection: 'row'
-  },
-  imageLogo: {
-    width: 150,
-    height: 150
-  },
-  buttonHide: {
-    position: 'absolute',
-    right: 10,
-    top: 0,
-    bottom: 0,
-    backgroundColor: 'red',
-    justifyContent: 'center',
   },
   wrapbottom: {
     marginTop: 10,
@@ -802,12 +846,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: 11,
   },
-  btnBack: {
-    tintColor: '#FFFFFF',
-    width: 30,
-    height: 30,
-    marginLeft: 10
-  },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
     fontSize: 16,
@@ -817,27 +855,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
-  viewDot: {
-    borderWidth: 2,
-    borderRadius: 50,
-    width: 5, height: 5,
-    alignSelf: 'center',
-    borderColor: '#E0E0E0',
-    marginRight: 10
-  },
   btnLogin: {
     backgroundColor: '#2D9CDB',
     height: 40,
     zIndex: 10,
     borderRadius: 5,
     marginTop: 10
-  },
-  imageBottom: {
-    position: 'absolute',
-    bottom: 0,
-    zIndex: -1,
-    width: width,
-    height: width * global.ratioImageBottom
   },
   wrapOr: {
     flexDirection: 'row',
@@ -884,20 +907,59 @@ const styles = StyleSheet.create({
     color: '#C4C4C4',
     fontSize: width > 380 ? 16 : 14,
     fontFamily: 'Nunito-Regular'
+  },
+  viewKeyboard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  sizeImage: {
+    width: height / 4 * 981 / 617,
+    height: height / 4
+  },
+  txtDesc: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: 14,
+    color: '#56CCF2'
+  },
+  labelUsername: {
+    color: '#828282',
+    fontFamily: 'Nunito-Bold',
+    fontSize: 14,
+    lineHeight: 19
+  },
+  labelPass: {
+    paddingTop: 10,
+    color: '#828282',
+    fontFamily: 'Nunito-Bold',
+    fontSize: 14,
+    lineHeight: 19
+  },
+  rememberLogin: {
+    color: '#828282',
+    fontSize: 12,
+    fontFamily: 'Nunito-Regular'
+  },
+  styleTitle: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: '#FFF'
+  },
+  viewDotIn: {
+    height: 20,
+    marginTop: 8
   }
 });
 
-
 const mapStateToProps = state => {
   return {
-
   }
 }
-
 const mapDispatchToProps = dispatch => {
   return {
     saveAvatar: (avatar) => dispatch(saveAvatarAction(avatar)),
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(LoginWithPhoneScreen);

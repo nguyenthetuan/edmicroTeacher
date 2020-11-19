@@ -123,7 +123,7 @@ export default class Plan extends Component {
           <Text style={styles.txtTitle}>Kế Hoạch Dạy Học</Text>
         </View>
         <View style={styles.body}>
-          <Image source={require('../../../asserts/images/Rectangle.png')} resizeMode={'contain'} style={{ marginLeft: -15 }} />
+          {/* <Image source={require('../../../asserts/images/Rectangle.png')} resizeMode={'contain'} style={{ marginLeft: -15 }} /> */}
 
           {/* Muc tieu */}
           <View style={{ position: 'relative' }}>
@@ -141,7 +141,12 @@ export default class Plan extends Component {
                 <View style={styles.wrapContent}>
                   {targer ? (
                     <View style={styles.wrapTxtContent}>
-                      <Text style={styles.txtEmpty} numberOfLines={numberOfLines1}>{targer}</Text>
+                      <Text
+                        style={styles.txtEmpty}
+                        numberOfLines={numberOfLines1}
+                      >
+                        {targer}
+                      </Text>
                       {
                         targer?.toString()?.split('').length > 500 &&
                         <>
@@ -167,7 +172,11 @@ export default class Plan extends Component {
                   />
                 </View>
               </TouchableOpacity>
-              <Image source={require('../../../asserts/images/Rectangle.png')} resizeMode={"contain"} style={styles.styRect} />
+              <Image
+                source={require('../../../asserts/images/Rectangle.png')}
+                resizeMode={"contain"}
+                style={styles.styRect}
+              />
             </View>
           </View>
 
@@ -281,8 +290,9 @@ const styles = StyleSheet.create({
   txtEmpty: {
     fontSize: 12,
     fontFamily: 'Nunito-Regular',
-    color: '#C4C4C4',
-    flex: 1
+    color: '#828282',
+    flex: 1,
+    paddingVertical:10,
   },
   buttonCancel: {
     color: '#FFF',
