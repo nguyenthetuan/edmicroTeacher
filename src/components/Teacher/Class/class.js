@@ -56,15 +56,19 @@ class Class extends Component {
   };
 
   render() {
-    const { data, isLoading, isRefresh } = this.state;
+    const {
+      data,
+      isLoading,
+      isRefresh
+    } = this.state;
     const { user } = this.props;
     return (
       <>
         <StatusBar />
         <SafeAreaView style={styles.container}>
-          <HeaderMain 
-             {...user}
-             navigation={this.props.navigation}
+          <HeaderMain
+            {...user}
+            navigation={this.props.navigation}
           />
           {!isLoading ? (
             <ListClass

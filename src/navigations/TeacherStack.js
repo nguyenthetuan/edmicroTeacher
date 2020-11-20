@@ -24,6 +24,10 @@ import MockResult from '../components/Teacher/Class/exam-result/TestResultTab';
 import UpdatePlan from '../components/Teacher/Class/updatePlan';
 import V_UpdatePhone from '../containers/auth/UpdatePhoneContainer';
 import TermsOfUse from '../components/Terms/TermsOfUse';
+import MissionStepByStep from '../containers/teacher/Mission/MissionSBSContainer';
+import MissionDetailScreen from '../containers/teacher/Mission/MissionDetailContainer';
+import MissionPlayWebView from '../components/Teacher/MissionDetail/MissonPlayWebView';
+import MissonTestPlayWebView from '../components/Teacher/MissionDetail/MissonTestPlayWebView';
 
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -120,6 +124,22 @@ const TeacherStack = createStackNavigator({
   },
   TermsOfUse: {
     screen: TermsOfUse,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MissionStepByStep: {
+    screen: MissionStepByStep,
+    navigationOptions: { header: null, gesturesEnabled: false },
+  },
+  MissionDetail: {
+    screen: MissionDetailScreen,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MissionPlayWebView: {
+    screen: MissionPlayWebView,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MissonTestPlayWebView: {
+    screen: MissonTestPlayWebView,
     navigationOptions: { header: null, gesturesEnabled: true },
   }
 }, transition);

@@ -224,7 +224,6 @@ export default class itemClass extends Component {
                   </View>
                 </View>
               )}
-
               <RippleButton
                 onPress={() => this._classDetail(item)}
                 rippleDuration={150}

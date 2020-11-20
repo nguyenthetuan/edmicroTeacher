@@ -423,8 +423,8 @@ PODS:
     - React
   - react-native-viewpager (2.0.2):
     - React
-  - react-native-webview (7.6.0):
-    - React
+  - react-native-webview (10.9.2):
+    - React-Core
   - React-RCTActionSheet (0.62.0):
     - React-Core/RCTActionSheetHeaders (= 0.62.0)
   - React-RCTAnimation (0.62.0):
@@ -928,7 +928,7 @@ SPEC CHECKSUMS:
   react-native-shimmer: d9e6f436e8b0318da2b6f391e04725363b01c2d9
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-viewpager: 88f4269c19d626d2ccd5f7c7f5f7f76422ddb9e3
-  react-native-webview: db4682f1698ab4b17a5e88f951031d203ff8aea8
+  react-native-webview: 4e96d493f9f90ba4f03b28933f30b2964df07e39
   React-RCTActionSheet: 674afbc8b9c76e0a83520e0a51da29a70802c03f
   React-RCTAnimation: f5f24330d09ee677fb49e0782f8321868f4df431
   React-RCTBlob: b773ce6138ab0d172ebd8a455fd4efd200a92549

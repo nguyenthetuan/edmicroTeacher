@@ -66,4 +66,8 @@ module.exports = {
   updatePlan: () => { },
   updatePaper: () => { },
   updateHomeWork: () => { },
+  resetStateStepOne: () => { },
+  resetDataPracticeAdd: () => { },
+  resetDataTestAdd: () => { },
+  resetDataSelect: () => { }
 };

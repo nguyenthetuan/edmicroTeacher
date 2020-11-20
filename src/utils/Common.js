@@ -39,7 +39,7 @@ import AppConst from '../constants/appConst';
 const { width } = Dimensions.get('window');
 const parallaxHeight = width * 670 / 1000;
 const HEIGHT_TOPBAR = (Platform.OS == 'ios' ? (isIphoneX() ? 35 : 20) : 0);
-const getIconSubject = (id) => {
+export const getIconSubject = (id) => {
   switch (id) {
     case AppConst.mathID: return iconMath;
     case AppConst.mathThID: return iconMath;
