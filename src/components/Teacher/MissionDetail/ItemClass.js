@@ -56,7 +56,7 @@ export default class ItemClass extends Component {
                 const response = await apiMission.assignedMission({ token, params });
                 if (response && response.success) {
                     this.setState({ status: 1 });
-                    this.props.onToast(response.message);
+                    this.props.onToast('Giao nhiêm vụ thành công');
                     setTimeout(() => {
                         this.props.getListMission({ token });
                         this.props.getAssignmentByMission({ token, _id: missionId });

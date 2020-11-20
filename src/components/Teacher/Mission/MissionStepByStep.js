@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  Image,
   SafeAreaView,
-  ScrollView,
   Keyboard,
-  KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
-import AppIcon from '../../../utils/AppIcon';
 import dataHelper from '../../../utils/dataHelper';
 import StepIndicator from 'react-native-step-indicator';
 import StepOne from './StepOne';
@@ -52,40 +48,46 @@ export default class MissionStepByStep extends Component {
     this.setState({ currentPosition: index });
   };
 
+  goBack = () => {
+    Alert.alert('Thông báo', 'Dữ liệu sẽ không được lưu khi bạn rời khỏi đây', [
+      {
+        text: 'Rời khỏi',
+        onPress: () => {
+          this.props.navigation.goBack();
+        }
+      },
+      {
+        text: 'Ở lại',
+        onPress: () => { }
+      },
+    ])
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.contain}>
-        <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
-          <HeaderNavigation
-            title={'Thêm nhiệm vụ'}
-            navigation={this.props.navigation}
-            actionIcon={false}
+        <HeaderNavigation
+          title={'Thêm nhiệm vụ'}
+          navigation={this.props.navigation}
+          actionIcon={false}
+          goBack={this.goBack}
+        />
+        <View style={{ backgroundColor: '#fff' }}>
+          <StepIndicator
+            customStyles={customStyles}
+            currentPosition={this.state.currentPosition}
+            labels={labels}
+            stepCount={4}
           />
-          {/* <ScrollView style={styles.contain} stickyHeaderIndices={[1]}> */}
-          {/* <Image
-              source={AppIcon.pic_mission}
-              resizeMode={'contain'}
-              style={{alignSelf: 'center'}}
-            /> */}
-          <View style={{ backgroundColor: '#fff' }}>
-            <StepIndicator
-              customStyles={customStyles}
-              currentPosition={this.state.currentPosition}
-              labels={labels}
-              stepCount={4}
-            />
-          </View>
-          {/* <StepOne /> */}
-          <TopTabMissionContain
-            screenProps={{
-              ...this.props,
-              handleNextStep: this.handleNextStep,
-              token: this.token,
-              data: this.state.data,
-            }}
-          />
-          {/* </ScrollView> */}
-        </KeyboardAvoidingView>
+        </View>
+        <TopTabMissionContain
+          screenProps={{
+            ...this.props,
+            handleNextStep: this.handleNextStep,
+            token: this.token,
+            data: this.state.data,
+          }}
+        />
       </SafeAreaView>
     );
   }

@@ -48,7 +48,11 @@ export default class ProgressBarClassic extends React.Component {
             <View style={[{ flex: this.state.progress }]}>
               <View style={Style.progressBar__balloon}>
                 <Text style={Style.progressBar__balloonVal}>{this.state.progress}%</Text>
-                <Entypo name='triangle-down' style={Style.progressBar__balloonArrow} size={12} color='#56CCF2' />
+                <Entypo
+                  name='triangle-down'
+                  style={Style.progressBar__balloonArrow}
+                  size={12} color='#56CCF2'
+                />
               </View>
             </View>
             <View style={[{ flex: 100 - this.state.progress }]}></View>

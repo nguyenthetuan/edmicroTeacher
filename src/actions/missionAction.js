@@ -70,6 +70,10 @@ export const fetchAssignmentByMissionSuccess = data => ({
   data
 });
 
+export const resetDataMission = () => ({
+  type: Types.RESET_DATA_MISSION
+});
+
 module.exports = {
   fetchCommonSubjectMission,
   fetchCommonSubjectMissionSuccess,
@@ -84,5 +88,6 @@ module.exports = {
   fetchListProblemTestMiss,
   fetchListProblemTestMissSuccess,
   fetchAssignmentByMission,
-  fetchAssignmentByMissionSuccess
+  fetchAssignmentByMissionSuccess,
+  resetDataMission
 };

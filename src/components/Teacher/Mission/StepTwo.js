@@ -5,6 +5,7 @@ import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import TabMissionType from './TabMissionType';
 import Toast from 'react-native-easy-toast';
+import Global from '../../../utils/Globals';
 export default class StepTwo extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ export default class StepTwo extends Component {
   token = null;
   componentDidMount() {
     this.getToken();
+    Global.resetDataSelect = this.resetDataSelect;
   }
 
   async getToken() {
@@ -58,6 +60,10 @@ export default class StepTwo extends Component {
     this.props.navigation.navigate('StepThree');
     this.props.screenProps.handleNextStep(2, data);
   };
+
+  resetDataSelect = () => {
+    this.setState({ dataPracticeAdd: [], dataTestAdd: [] });
+  }
 
   render() {
     return (

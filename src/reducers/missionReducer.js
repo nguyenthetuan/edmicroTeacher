@@ -132,7 +132,12 @@ export default function missionReducer(state = initState, action) {
         classList: action.data.classList,
         missionDetail: action.data.missionDetail
       }
-
+    case Types.RESET_DATA_MISSION:
+      return {
+        ...state,
+        listCateHirachy: [],
+        listCateTest: [],
+      }
     default:
       return state;
   }

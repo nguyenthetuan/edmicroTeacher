@@ -6,7 +6,8 @@ import {
   fetchListProblemMission,
   fetchListProblemTestMiss,
   fetchListMission,
-  fetchAssignmentByMission
+  fetchAssignmentByMission,
+  resetDataMission
 } from '../../../actions/missionAction';
 
 const mapStateToProps = state => {
@@ -28,7 +29,8 @@ const mapDispatchToProps = dispatch => {
     getListProblemTestMiss: payload =>
       dispatch(fetchListProblemTestMiss(payload)),
     getListMission: payload => dispatch(fetchListMission(payload)),
-    getAssignmentByMission: payload => dispatch(fetchAssignmentByMission(payload))
+    getAssignmentByMission: payload => dispatch(fetchAssignmentByMission(payload)),
+    resetDataMission: () => dispatch(resetDataMission())
   };
 };
 

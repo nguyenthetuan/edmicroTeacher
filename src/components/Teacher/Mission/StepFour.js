@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import AppIcon from '../../../utils/AppIcon';
 import dataHelper from '../../../utils/dataHelper';
+import Global from '../../../utils/Globals';
 const { width } = Dimensions.get('window');
 export default class StepFour extends Component {
 
@@ -12,16 +13,23 @@ export default class StepFour extends Component {
     async getToken() {
         const { token } = await dataHelper.getToken();
         this.props.screenProps.getListMission({ token });
-        // this.props.screenProps.getAssignmentByMission({ token, _id: data._id });
     }
 
     createMissionOther = () => {
+        this.reset();
         this.props.navigation.navigate('StepOne');
         this.props.screenProps.handleNextStep(0);
     }
 
     assignedMission = () => {
+        this.reset();
         this.props.screenProps.navigation.navigate('MissionDetail', { statusbar: 'light-content' });
+    }
+
+    reset = () => {
+        Global.resetDataTestAdd();
+        Global.resetDataPracticeAdd();
+        this.props.screenProps.resetDataMission();
     }
 
     render() {
