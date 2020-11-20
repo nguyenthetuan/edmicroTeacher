@@ -160,12 +160,14 @@ const styles = StyleSheet.create({
   styWrapSearch: {
     borderWidth: 1,
     borderColor: '#ddd',
-    padding: 5,
+    paddingHorizontal: 15,
     marginHorizontal: 10,
     marginTop: 10,
     borderRadius: 3,
     flexDirection: 'row',
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   styTxtInput: {
     color: '#000',

@@ -156,7 +156,8 @@ export default class StepThree extends Component {
         <Text>Tự luyện</Text>
         <View>
           <View style={styles.styWrapHeader}>
-            <Text style={[styles.styName, { flex: 1 }]}>Tên nhiệm vụ</Text>
+            <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
+            <View style={{ flex: 1 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={[styles.styName, { flexGrow: 1 }]}>Số lần</Text>
               <Text style={[styles.styName, { flexGrow: 1 }]}> | </Text>
