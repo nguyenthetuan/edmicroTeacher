@@ -107,12 +107,11 @@ const renderHtmlListQuestionCopy = (data, points, renderCheckbox) => {
 }
 
 const renderListquestion = (data, points, renderCheckbox) => {
-    console.log("points: ", JSON.stringify(points));
     let html = ``;
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
         let options = item.options;
-        html += `<div style="border-bottom:1px solid #000; margin-top:15px" onclick="" >`
+        html += `<div style="margin-top:15px" onclick="" >`
         if (renderCheckbox) {
             html += `<div style="display:flex;">
                 <div style="font-size:15px; font-weight: 900">Câu ${i + 1}:</div>
@@ -133,6 +132,16 @@ const renderListquestion = (data, points, renderCheckbox) => {
                         <div style="margin-bottom: 10px;" id="abcd">${options[j].content}</div>
                 </div>`
         }
+        html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row;    padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">
+            <p style="font-family: Nunito-regular;font-size: 10px;color: #FFF;">ID: ${item.questionNumber}</p>
+            <div style="display: flex; flex-direction: row;">
+                <p style="font-family: Nunito-regular;font-size: 13px;color: #E0E0E0;margin-left: 16px;">Tạo bởi:${item.author}</p>
+            </div>
+                <span style="padding-right: 5px, display: flex;flex-direction: row;" onclick="">
+                <span style="color:#054B9E;font-size: 11px; margin-right: 3px;">Báo lỗi</span>
+                <i class="fa fa-warning" style="color:#FFF;font-size: 14px;"></i>
+            </span>
+        </div>`
         html += `</div>`
     }
     return html;

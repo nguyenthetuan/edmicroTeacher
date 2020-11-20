@@ -52,7 +52,6 @@ export default class itemClass extends Component {
 
   render() {
     const { item } = this.props;
-    console.log('item', item)
     const { activeDetail } = this.state;
     const bg = Common.getBackroundSubject(item.subjectCode);
     return (

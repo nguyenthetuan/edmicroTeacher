@@ -41,7 +41,6 @@ const updateInfo = async ({ token, body }) => {
 
 const findPremadeLib = async (payload) => {
   const { token, curriculumCodes, gradeCodes, knowledgeUnits, name, pageIndex, searchKnowledgeUnitChild, subjectCodes } = payload;
-  console.log('find /.....: ', JSON.stringify({ curriculumCodes, gradeCodes, knowledgeUnits, name, pageIndex, searchKnowledgeUnitChild, subjectCodes }));
   try {
     let response = await fetch(`${API_BASE}school-online/premade-lib/find`, {
       method: 'POST',
@@ -62,7 +61,6 @@ const premadeLibCopy = async (payload) => {
       headers: getHeaders(token)
     });
     let responseJson = await response.json();
-    console.log('Premade lib Copy: ', JSON.stringify(responseJson));
     return responseJson;
   } catch (error) {
     

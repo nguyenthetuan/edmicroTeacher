@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
@@ -12,6 +12,8 @@ let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
     baseUrl = 'web/';
 }
+
+const { width, height } = Dimensions.get('window');
 
 const knowledgeText = { 0: 'Nhận biết', 1: 'Thông hiểu', 2: 'Vận dụng', 3: 'Vận dụng cao' };
 export default class ListQuestionCopy extends Component {
@@ -60,7 +62,7 @@ export default class ListQuestionCopy extends Component {
         const data = this.state.data;
         const { token } = await dataHelper.getToken();
         const { listSubjects } = this.props.navigation.state.params;
-        
+
         this.props.navigation.navigate('ConfigQuestionCopy', {
             nagigation: this.props.nagigation,
             statusbar: 'light-content',
@@ -108,8 +110,8 @@ export default class ListQuestionCopy extends Component {
                                 </View>
                             </View>
                             <View style={styles.headerContentRight}>
-                                <View style={styles.headerLineParams}>
-                                    <View style={[styles.leftParams, { borderWidth: 0 }]}>
+                                <View style={[styles.headerLineParams, { borderBottomWidth: 1, }]}>
+                                    <View style={[styles.leftParams, { borderWidth: 0, paddingHorizontal: 5 }]}>
                                         <Text style={styles.textTitle}>Loại câu hỏi</Text>
                                     </View>
                                     <View style={[styles.rightParams, { borderWidth: 0 }]}>
@@ -151,7 +153,7 @@ export default class ListQuestionCopy extends Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{ width: '100%', height: 600, backgroundColor: 'red' }}>
+                    <View style={{ width: '100%', height: height - 220, backgroundColor: 'red' }}>
                         <WebView
                             ref={(ref) => (this.webview = ref)}
                             source={{
@@ -194,10 +196,15 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: '#fff',
+        marginBottom: 10,
     },
     headerLineParams: {
         height: 25,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderColor: '#fff'
     },
     leftParams: {
         width: '60%',
@@ -214,18 +221,20 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Nunito-bold',
         fontWeight: '800',
-        color: '#fff'
+        color: '#fff',
     },
     textNormal: {
-        fontSize: 12,
-        fontFamily: 'Nunito',
+        fontSize: 13,
+        fontFamily: 'Nunito-bold',
         color: '#fff',
-        fontWeight: '400',
+        fontWeight: '800',
+        marginLeft: 5,
+
     },
     textName: {
         fontSize: 14,
         fontWeight: '800',
         fontFamily: 'Nunito-bold',
-        color: '#fff'
+        color: '#fff',
     }
 })

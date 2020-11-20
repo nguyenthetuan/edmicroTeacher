@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Image, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Image, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -10,6 +10,9 @@ import htmlHelper from '../../../utils/WebviewListQuestionCopy';
 import { WebView } from 'react-native-webview';
 import { result } from 'lodash';
 import _ from 'lodash';
+import RippleButton from '../../common-new/RippleButton';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -46,9 +49,8 @@ export default class ConfigQuestion extends Component {
             eachQSPoint: [],
             totalPoint: 10,
             hidePopUp: true,
-            grades: [],
+            listGrades: [],
             name: '',
-            toggleCheckBoxExpand: false,
             assignmentType: 0,
             isExplain: false,
             duration: 0,
@@ -56,13 +58,16 @@ export default class ConfigQuestion extends Component {
             timeEnd: null,
             status: 'Publish',
             question: [],
-            hidePopupCreate: true
+            hidePopupCreate: true,
+            gradeCode: [],
+            subjectCode: []
         }
     }
 
     componentDidMount() {
         const data = this.props.navigation.state.params.data;
-        this.setState({ data, name: data.name });
+        const { listSubjects } = this.props.navigation.state.params;
+        this.setState({ data, name: data.name, listSubjects });
         let eachQSPoint = [];
         this.resetListCheckedAndPoint(data.questions);
         this.getGrades();
@@ -74,7 +79,7 @@ export default class ConfigQuestion extends Component {
     }
 
     onTickCheckBoxExpand = () => {
-        this.setState({ toggleCheckBoxExpand: !this.state.toggleCheckBoxExpand })
+        this.setState({ isExplain: !this.state.isExplain })
     }
 
     onPressDecidePoint() {
@@ -152,7 +157,6 @@ export default class ConfigQuestion extends Component {
         dataHelper.getToken().then(({ token }) => {
             apiService.getGrades(token).then(resJSON => {
                 const { grades } = resJSON;
-                console.log("getGrades ", JSON.stringify(grades));
                 let result = [];
                 for (let i = 0; i < grades.length; i++) {
                     let grade = grades[i];
@@ -164,7 +168,7 @@ export default class ConfigQuestion extends Component {
                     })
                 }
                 this.setState({
-                    grades: result,
+                    listGrades: result,
                 });
             }).catch(err => console.log(err));
         }).catch(err => console.log(`errors token ${err}`));
@@ -189,7 +193,7 @@ export default class ConfigQuestion extends Component {
     }
 
     onPressCreate() {
-
+        this.config();
     }
 
     closePopupCreate() {
@@ -226,14 +230,22 @@ export default class ConfigQuestion extends Component {
         return result;
     };
 
+    filterQuestions(data) {
+        data = data.map((item, index) => {
+            return ({ questionId: item.questionId, point: this.state.eachQSPoint[index], index: index, typeAnswer: item.typeAnswer });
+        })
+        return data;
+    }
+
     config = async () => {
+        const data = this.props.navigation.state.params.data;
+
         if (this.validate()) {
             const {
                 gradeCode,
                 subjectCode,
                 assignmentType,
                 duration,
-                questions,
                 name,
                 isExplain,
                 totalPoint,
@@ -263,49 +275,27 @@ export default class ConfigQuestion extends Component {
             _.forEach(subjectCode, item => {
                 formData.append(`subjectCode[]`, item);
             });
-            formData.append('question', JSON.stringify(questions));
+            formData.append('question', JSON.stringify(this.filterQuestions(data.questions)));
             try {
-                this.setState({ loading: true })
                 const { token } = await dataHelper.getToken();
                 const response = await apiPapers.createQuestion({ token, formData });
                 if (response.status === 0) {
-                    this.refToast.show('Tạo bộ đề thành công!');
+                    this.refs.toast.show('Tạo bộ đề thành công!');
                     const setQuestion = await dataHelper.saveQuestion([]);
                     const res = await apiPapers.getAssignmentConfig({
                         token,
                         id: response.id,
                     });
-                    this.setState(
-                        {
-                            listGrades:
-                                this.props.paper.listGrade && this.props.paper.listGrade,
-                            listSubjects:
-                                this.props.paper.listSubject && this.props.paper.listSubject,
-                            name: '',
-                            loading: false,
-                        },
-                        () =>
-                            this.props.navigation.navigate('Assignment', {
-                                item: { ...res, id: res.assignmentId },
-                                checked: true,
-                            }),
-                    );
-                    // cau hinh thanh cong
-                    AnalyticsManager.trackWithProperties('School Teacher', {
-                        action: 'CREATEASSIGNMENT',
-                        mobile: Platform.OS,
-                        grade: gradeCode,
-                        subject: subjectCode,
-                    });
-                    Globals.updatePaper();
+                    this.closePopupCreate();
+                    this.props.navigation.navigate('CopyFromSubjectExists');
                 }
+
             } catch (error) {
                 this.setState({ loading: false })
                 console.log('error', error);
             }
         } else {
-            AlertNoti('Vui lòng điền đầy đủ thông tin');
-            // alert('Vui lòng điền đầy đủ thông tin')
+            alert('Vui lòng điền đầy đủ thông tin');
         }
     };
 
@@ -344,7 +334,7 @@ export default class ConfigQuestion extends Component {
     }
 
     onPressItemGrade = (index) => {
-        this.setState({ gradeCode: this.state.grades[index].code })
+        this.setState({ gradeCode: this.state.listGrades[index].code })
     }
 
     onValueChangeNameTest = (value) => {
@@ -353,19 +343,167 @@ export default class ConfigQuestion extends Component {
 
     onValueChangeTypeExam = (va) => {
         console.log("onValueChangeTypeExam: ", va);
+        if (va == 0) {
+            this.setState({ duration: 0 })
+        }
         this.setState({ assignmentType: va })
-
     }
 
+    _renderGrade = () => {
+        const { listGrades } = this.state;
+        return (
+            <FlatList
+                ref={'flastList'}
+                style={{ marginTop: 8 }}
+                data={listGrades}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => {
+                    return !item.isActive ? (
+                        <RippleButton
+                            key={`a${index}`}
+                            style={Platform.OS === 'ios' ? styles.buttomClass : null}
+                            onPress={() => this.activeGrade(item)}>
+                            <View
+                                style={Platform.OS === 'android' ? styles.buttomClass : null}>
+                                <Text style={styles.txtItem}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    ) : (
+                            <RippleButton
+                                key={`b${index}`}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                                onPress={() => this.activeGrade(item)}>
+                                <View
+                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
+                }}
+                removeClippedSubviews={false}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            />
+        );
+    };
+
+    _renderSubject = () => {
+        const { listSubjects } = this.state;
+        return (
+            <FlatList
+                ref={'flastListSub'}
+                style={{ marginTop: 8 }}
+                data={listSubjects}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => {
+                    return !item.isActive ? (
+                        <RippleButton
+                            key={`c${index}`}
+                            style={Platform.OS === 'ios' ? styles.buttomClass : null}
+                            onPress={() => this.activeSubject(item)}>
+                            <View
+                                style={Platform.OS === 'android' ? styles.buttomClass : null}>
+                                <Text style={styles.txtItem}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    ) : (
+                            <RippleButton
+                                key={`d${index}`}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                                onPress={() => this.activeSubject(item)}>
+                                <View
+                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
+                }}
+                removeClippedSubviews={false}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            />
+        );
+    };
+
+    moveArrayItem = (array, fromIndex, toIndex) => {
+        const arr = [...array];
+        arr.splice(toIndex, 0, ...arr.splice(fromIndex, 1));
+        return arr;
+    };
+
+    activeSubject = item => {
+        const { subjectCode, listSubjects } = this.state;
+        let subjectCodeTmp = subjectCode;
+        let listSubjectsTmp = listSubjects.map(e => {
+            return { ...e, isActive: false };
+        });
+        const index = _.indexOf(subjectCodeTmp, item.code);
+        index < 0
+            ? (subjectCodeTmp = [...subjectCodeTmp, ...[item.code]])
+            : (subjectCodeTmp = [
+                ...subjectCodeTmp.slice(0, index),
+                ...subjectCodeTmp.slice(index + 1),
+            ]);
+
+        subjectCodeTmp.map(subjectId => {
+            const i = _.indexOf(listSubjectsTmp.map(e => e.code), subjectId);
+            if (i > -1) {
+                listSubjectsTmp[i].isActive = true;
+                listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
+            }
+        });
+        this.refs.flastListSub.scrollToIndex({ animated: true, index: 0 });
+        this.setState({
+            subjectCode: subjectCodeTmp,
+            listSubjects: listSubjectsTmp,
+            errors: [],
+        });
+    };
+
+    activeGrade = item => {
+        const { gradeCode, listGrades } = this.state;
+        console.log("item.gradeId: ", item);
+        let gradeCodeTmp = gradeCode;
+        let listGradeTmp = listGrades.map(e => {
+            return { ...e, isActive: false };
+        });
+
+        const index = _.indexOf(gradeCodeTmp, item.code);
+        index < 0
+            ? (gradeCodeTmp = [...gradeCodeTmp, ...[item.code]])
+            : (gradeCodeTmp = [
+                ...gradeCodeTmp.slice(0, index),
+                ...gradeCodeTmp.slice(index + 1),
+            ]);
+
+        gradeCodeTmp
+            .sort((a, b) => parseInt(b.substring(1)) - parseInt(a.substring(1)))
+            .map(code => {
+                const i = _.indexOf(listGradeTmp.map(e => e.code), code);
+                if (i > -1) {
+                    listGradeTmp[i].isActive = true;
+                    listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
+                }
+            });
+        this.refs.flastList.scrollToIndex({ animated: true, index: 0 });
+        this.setState({
+            gradeCode: gradeCodeTmp,
+            listGrades: listGradeTmp,
+            errors: [],
+        });
+    };
+
     onValueChangeDuration = (val) => {
-        this.setState({ duration: parseInt(val) })
+        if (!val || isNaN(val)) {
+            this.setState({ duration: ('') })
+        } else {
+            this.setState({ duration: parseInt(val) })
+        }
     }
 
     render() {
         const data = this.props.navigation.state.params.data;
         const { listSubjects } = this.props.navigation.state.params;
-        console.log("this.state.grades: ", JSON.stringify(this.state.grades));
-        console.log("listSubjects: ", JSON.stringify(listSubjects));
         return (
             <View >
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
@@ -388,27 +526,42 @@ export default class ConfigQuestion extends Component {
                                     <Text style={styles.textHeader}>Tổng số điểm: {this.state.totalPoint}</Text>
                                 </View>
                                 <View style={styles.bottomOfHeader}>
-                                    <View style={{ flexDirection: 'row', position: 'absolute' }}>
-                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, padding: 3, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onPressDecidePoint() }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, paddingHorizontal: 10, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onPressDecidePoint() }}>
+                                            <Image
+                                                source={require('../../../asserts/images/iconDiv.png')}
+                                                resizeMode="contain"
+                                                style={{ tintColor: 'blue' }}
+                                            />
                                             <Text style={styles.textHeader}>Chia đều điểm</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, padding: 3, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onChangePosition() }}>
+                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, paddingHorizontal: 10, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onChangePosition() }}>
+                                            <Image
+                                                source={require('../../../asserts/appIcon/sort.png')}
+                                                resizeMode="contain"
+                                            />
                                             <Text style={styles.textHeader}>Sắp xếp lại</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, padding: 3, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.deleteCheckedQs() }}>
-                                            <Text style={styles.textHeader}>Xóa câu đã chọn</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', borderWidth: 1, padding: 3, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}>
+                                        <TouchableOpacity style={{ flexDirection: 'row', borderWidth: 1, paddingHorizontal: 10, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}>
                                             <Text style={styles.textHeader}>Chọn tất cả</Text>
                                             <CheckBox
                                                 disabled={false}
                                                 value={this.state.toggleCheckBox}
                                                 onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
                                                 boxType="square"
-                                                style={{ width: 20, height: 20, marginLeft: 5 }}
+                                                style={{ width: 20, height: 20, marginLeft: 10 }}
                                             />
                                         </TouchableOpacity>
                                     </View>
+                                    <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center', width: 150 }} onPress={() => { this.deleteCheckedQs() }}>
+                                        <MaterialCommunityIcons
+                                            name="delete-sweep"
+                                            size={23}
+                                            color="#DB3546"
+                                            style={{ left: -10 }}
+                                        />
+                                        <Text style={[styles.textHeader, { left: -10 }]}>Xóa câu đã chọn</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
@@ -449,7 +602,6 @@ export default class ConfigQuestion extends Component {
                         </TouchableOpacity>
 
                     </View>}
-                    <Toast ref="toast" position={'center'} />
                 </SafeAreaView>
                 {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
                     <TouchableWithoutFeedback style={styles.popUpCreate} onPress={() => { this.textInput.blur() }}>
@@ -464,34 +616,16 @@ export default class ConfigQuestion extends Component {
                                     ref={(ref) => { this.textInput = ref }}
                                 />
                             </View>
-                            <View style={{ zIndex: 1, flexDirection: 'row', width: '100%', paddingHorizontal: 20, alignItems: 'center', marginTop: 30 }}>
-                                <Text style={[{ marginLeft: 20, marginRight: 4 }, styles.textInPopupCreate]}>Môn học</Text>
-                                <Dropdown
-                                    containerStyle={{
-                                        marginHorizontal: 0,
-                                    }}
-                                    contentStyle={{ marginHorizontal: 0, borderWidth: 1 }}
-                                    title="Môn Học"
-                                    data={listSubjects}
-                                    onPressItem={(index) => this.onPressItemSubject(index)}
-                                    indexSelected={0}
-                                />
+                            <View style={{ zIndex: 1, flexDirection: 'column', width: '100%', paddingHorizontal: 20, marginTop: 30 }}>
+                                <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Môn học</Text>
+                                {this._renderSubject()}
                             </View>
-                            <View style={{ zIndex: 1, flexDirection: 'row', width: '100%', paddingHorizontal: 20, alignItems: 'center', marginTop: 10 }}>
-                                <Text style={[{ marginLeft: 46, marginRight: 4 }, styles.textInPopupCreate]}>Khối</Text>
-                                <Dropdown
-                                    containerStyle={{
-                                        marginHorizontal: 0,
-                                    }}
-                                    contentStyle={{ marginHorizontal: 0, borderWidth: 1 }}
-                                    title="Khối"
-                                    data={this.state.grades}
-                                    onPressItem={(index) => this.onPressItemGrade(index)}
-                                    indexSelected={0}
-                                />
+                            <View style={{ zIndex: 1, flexDirection: 'column', width: '100%', paddingHorizontal: 20, marginTop: 10 }}>
+                                <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Khối</Text>
+                                {this._renderGrade()}
                             </View>
-                            <View style={{ zIndex: 1, flexDirection: 'row', width: '100%', paddingHorizontal: 20, alignItems: 'center', marginTop: 10 }}>
-                                <Text style={[{ marginLeft: 17, marginRight: 4 }, styles.textInPopupCreate]}>Dạng bài</Text>
+                            <View style={{ zIndex: 1, flexDirection: 'row', width: '100%', paddingHorizontal: 20, marginTop: 20, alignItems: 'center' }}>
+                                <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Dạng bài</Text>
                                 <Dropdown
                                     containerStyle={{
                                         marginHorizontal: 0,
@@ -503,32 +637,33 @@ export default class ConfigQuestion extends Component {
                                     indexSelected={0}
                                 />
                             </View>
-                            {!!this.state.assignmentType && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row' }}>
-                                <Text style={[{ marginLeft: 30, marginRight: 4, top: 4 }, styles.textInPopupCreate]}>Thời gian:</Text>
+                            {!!this.state.assignmentType && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', top: 10, paddingHorizontal: 20 }}>
+                                <Text style={[{ marginLeft: 4, marginRight: 4, top: 4 }, styles.textInPopupCreate]}>Thời gian:</Text>
                                 <TextInput
                                     style={{ width: '20%', height: 30, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, backgroundColor: '#fff', color: '#2D9CDB' }}
                                     onChangeText={(value) => { this.onValueChangeDuration(value) }}
-                                    keyboardType={'default'}
+                                    keyboardType={'numeric'}
                                     value={this.state.duration.toString()}
                                     ref={(ref) => { this.textInput2 = ref }}
                                 />
+                                <Text style={[styles.textInPopupCreate, { top: 4, marginLeft: 5 }]}>phút</Text>
                             </View>}
+                            <View style={{ flexDirection: 'row', marginTop: 10, width: '100%', paddingHorizontal: 20 }}>
+                                <Text style={styles.textInPopupCreate}>Giải thích trắc nghiệm</Text>
+                                <CheckBox
+                                    disabled={false}
+                                    value={this.state.isExplain}
+                                    onValueChange={(newValue) => { this.onTickCheckBoxExpand(newValue) }}
+                                    boxType="square"
+                                    style={{ width: 20, height: 20, marginLeft: 5 }}
+                                />
+                            </View>
                             <View style={{ width: '100%', padding: 20 }}>
                                 <Text style={[styles.textInPopupCreate, { color: 'red', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
                                     <Text style={[styles.textInPopupCreate, { color: 'red' }]}>{data.questions.length} câu hỏi</Text>
                                     <Text style={[styles.textInPopupCreate, { color: 'red' }]}>{this.state.totalPoint} điểm</Text>
                                 </View>
-                            </View>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={styles.textInPopupCreate}>Giải thích trắc nghiệm</Text>
-                                <CheckBox
-                                    disabled={false}
-                                    value={this.state.toggleCheckBoxExpand}
-                                    onValueChange={(newValue) => { this.onTickCheckBoxExpand(newValue) }}
-                                    boxType="square"
-                                    style={{ width: 20, height: 20, marginLeft: 5 }}
-                                />
                             </View>
                             <TouchableOpacity style={{ width: 100, height: 40, borderRadius: 10, backgroundColor: '#007bff', position: 'absolute', bottom: 20, alignItems: 'center', justifyContent: 'center' }} onPress={() => { this.onPressCreate() }}>
                                 <Text style={styles.buttonPopUpText}>Tạo bài</Text>
@@ -541,6 +676,7 @@ export default class ConfigQuestion extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>}
+                <Toast ref="toast" position={'center'} />
             </View >
         )
     }
@@ -613,15 +749,40 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '800',
         fontFamily: 'Nunito-bold',
-        color: '#fff'
+        color: '#fff',
+        left: 5
+    },
+    buttomClass: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#C4C4C4',
+        borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 5,
+        paddingVertical: 3,
+        paddingHorizontal: 5,
+        backgroundColor: '#FFF',
+    },
+    buttomActive: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#0085FF',
+        backgroundColor: '#89EAFF',
+        borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 3,
     },
     bottomOfHeader: {
         position: 'absolute',
-        height: 40,
+        height: 70,
         bottom: 0,
         right: 0,
         width: '100%',
-        alignItems: 'center'
+        justifyContent: 'space-evenly'
     },
     popUp: {
         width: 150,
