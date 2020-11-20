@@ -55,37 +55,35 @@ export default class MissionStepByStep extends Component {
   render() {
     return (
       <SafeAreaView style={styles.contain}>
-        <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
-          <HeaderNavigation
-            title={'Thêm nhiệm vụ'}
-            navigation={this.props.navigation}
-            actionIcon={false}
-          />
-          {/* <ScrollView style={styles.contain} stickyHeaderIndices={[1]}> */}
-          {/* <Image
+        <HeaderNavigation
+          title={'Thêm nhiệm vụ'}
+          navigation={this.props.navigation}
+          actionIcon={false}
+        />
+        {/* <ScrollView style={styles.contain} stickyHeaderIndices={[1]}> */}
+        {/* <Image
               source={AppIcon.pic_mission}
               resizeMode={'contain'}
               style={{alignSelf: 'center'}}
             /> */}
-          <View style={{ backgroundColor: '#fff' }}>
-            <StepIndicator
-              customStyles={customStyles}
-              currentPosition={this.state.currentPosition}
-              labels={labels}
-              stepCount={4}
-            />
-          </View>
-          {/* <StepOne /> */}
-          <TopTabMissionContain
-            screenProps={{
-              ...this.props,
-              handleNextStep: this.handleNextStep,
-              token: this.token,
-              data: this.state.data,
-            }}
+        <View style={{ backgroundColor: '#fff' }}>
+          <StepIndicator
+            customStyles={customStyles}
+            currentPosition={this.state.currentPosition}
+            labels={labels}
+            stepCount={4}
           />
-          {/* </ScrollView> */}
-        </KeyboardAvoidingView>
+        </View>
+        {/* <StepOne /> */}
+        <TopTabMissionContain
+          screenProps={{
+            ...this.props,
+            handleNextStep: this.handleNextStep,
+            token: this.token,
+            data: this.state.data,
+          }}
+        />
+        {/* </ScrollView> */}
       </SafeAreaView>
     );
   }

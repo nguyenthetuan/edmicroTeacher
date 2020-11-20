@@ -27,6 +27,7 @@ const TabTop = createMaterialTopTabNavigator({
     tabBarOptions: {
         style: {
             backgroundColor: '#2D9CDB',
+            elevation: 0
         },
         tabStyle: {
             width: 120,
