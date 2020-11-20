@@ -5,7 +5,8 @@ import {
   fetchCategoryTestMission,
   fetchListProblemMission,
   fetchListProblemTestMiss,
-  fetchListMission
+  fetchListMission,
+  fetchAssignmentByMission
 } from '../../../actions/missionAction';
 
 const mapStateToProps = state => {
@@ -26,7 +27,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchListProblemMission(payload)),
     getListProblemTestMiss: payload =>
       dispatch(fetchListProblemTestMiss(payload)),
-    getListMission: payload => dispatch(fetchListMission(payload))
+    getListMission: payload => dispatch(fetchListMission(payload)),
+    getAssignmentByMission: payload => dispatch(fetchAssignmentByMission(payload))
   };
 };
 

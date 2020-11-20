@@ -160,7 +160,9 @@ const styles = StyleSheet.create({
   styWrapSearch: {
     borderWidth: 1,
     borderColor: '#ddd',
-    padding: 5,
+    paddingHorizontal: 10,
+    justifyContent:'center',
+    alignItems:'center',
     marginHorizontal: 10,
     marginTop: 10,
     borderRadius: 3,

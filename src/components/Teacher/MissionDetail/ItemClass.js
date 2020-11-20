@@ -85,6 +85,7 @@ export default class ItemClass extends Component {
                     <View style={styles.viewDate}>
                         <Text style={styles.txtTitleItemContent}>Kết thúc: </Text>
                         <TouchableOpacity
+                            disabled={status}
                             onPress={this.showDatePicker}
                             style={styles.btnDate}>
                             <Text numberOfLines={1} style={styles.txtContentItem}>
@@ -99,6 +100,7 @@ export default class ItemClass extends Component {
                             style={{ width: width - 32 - 54 - 80, height: 25 }}
                             dropdownStyle={{ width: width - 32 - 54 - 80 }}
                             options={item.students}
+                            status={status}
                         />
                     </View>
                     {status ?

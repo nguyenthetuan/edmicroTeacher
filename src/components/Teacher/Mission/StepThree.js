@@ -96,6 +96,7 @@ export default class StepThree extends Component {
     if (response.status == 0) {
       this.props.navigation.navigate('StepFour');
       this.props.screenProps.handleNextStep(3);
+      this.props.screenProps.getAssignmentByMission({ token: this.token, _id: response._id });
       this.setState({ isLoading: false });
     }
   };
@@ -153,8 +154,8 @@ export default class StepThree extends Component {
       .value();
     return (
       <>
-        <Text>Tự luyện</Text>
-        <View>
+        <Text style={styles.styTxtLabel}>Tự luyện</Text>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName, { flex: 1 }]}>Tên nhiệm vụ</Text>
             <View style={{ flexDirection: 'row' }}>
@@ -191,8 +192,8 @@ export default class StepThree extends Component {
       .value();
     return (
       <>
-        <Text>Kiểm tra</Text>
-        <View>
+        <Text style={styles.styTxtLabel}>Kiểm tra</Text>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flexDirection: 'row' }}>

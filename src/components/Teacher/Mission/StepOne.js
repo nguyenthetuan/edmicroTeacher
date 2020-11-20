@@ -26,7 +26,7 @@ export default class StepOne extends Component {
     super(props);
     this.inputRefs = {};
     this.state = {
-      htmlContent,
+      htmlContent: '',
       valueClass: '',
       valueSubject: '',
       nameMission: '',
@@ -186,6 +186,7 @@ export default class StepOne extends Component {
             imagesMaxWidth={Dimensions.get('window').width}
             baseFontStyle={{ color: '#000' }}
           />
+          {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -230,6 +231,7 @@ const styles = StyleSheet.create({
     borderColor: '#efefef',
     borderRadius: 5,
     margin: 10,
+    padding: 10,
     minHeight: 200
   },
   viewRNPicker: {
@@ -258,13 +260,14 @@ const styles = StyleSheet.create({
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
   },
+  styTxtPlacehoder: {
+    color: '#999',
+  }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    paddingTop: 13,
     paddingHorizontal: 20,
-    paddingBottom: 12,
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',
@@ -286,7 +289,7 @@ const pickerSelectStyles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderColor: '#999',
-  },
+  }
 });
 
 const htmlContent = `

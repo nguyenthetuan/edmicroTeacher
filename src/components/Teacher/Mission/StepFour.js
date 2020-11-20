@@ -12,11 +12,16 @@ export default class StepFour extends Component {
     async getToken() {
         const { token } = await dataHelper.getToken();
         this.props.screenProps.getListMission({ token });
+        // this.props.screenProps.getAssignmentByMission({ token, _id: data._id });
     }
 
     createMissionOther = () => {
         this.props.navigation.navigate('StepOne');
         this.props.screenProps.handleNextStep(0);
+    }
+
+    assignedMission = () => {
+        this.props.screenProps.navigation.navigate('MissionDetail', { statusbar: 'light-content' });
     }
 
     render() {
@@ -28,7 +33,7 @@ export default class StepFour extends Component {
                     <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#28a745' }]} onPress={this.createMissionOther}>
                         <Text style={styles.styTxtBtn}>Tạo nhiệm vụ khác</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.styBtn}>
+                    <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                         <Text style={styles.styTxtBtn}>Giao nhiệm vụ vừa tạo</Text>
                     </TouchableOpacity>
                 </View>
