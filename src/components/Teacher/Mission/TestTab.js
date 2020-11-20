@@ -11,6 +11,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import ItemElement from './ItemElementTest';
+import Global from '../../../utils/Globals';
 const { width, height } = Dimensions.get('window');
 export default class PracticeTab extends Component {
   state = {
@@ -22,6 +23,11 @@ export default class PracticeTab extends Component {
   token = null;
   componentDidMount() {
     this.getToken();
+    Global.resetDataTestAdd = this.resetDataTestAdd;
+  }
+
+  resetDataTestAdd = () => {
+    this.setState({ dataTestAdd: [] });
   }
 
   async getToken() {

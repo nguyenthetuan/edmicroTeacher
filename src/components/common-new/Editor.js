@@ -88,7 +88,7 @@ export default class RichTextExample extends Component {
               containerStyle={themeBg}
               ref={r => (this.richText = r)}
               style={[styles.rich, themeBg]}
-              placeholder={'please input content'}
+              placeholder={'Viết mô tả cho nhiệm vụ này...'}
               initialContentHTML={htmlContent}
               disabled={disabled}
             />

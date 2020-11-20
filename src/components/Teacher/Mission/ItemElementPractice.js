@@ -26,19 +26,6 @@ export default class ItemElement extends Component {
         nestedScrollEnabled={true}
         extraData={data}
       />
-      // data ? (
-      //   data.listProblem.map((item, index) => (
-      //     <View style={styles.styWrapItem} key={index}>
-      //       <Text style={styles.styTxtName}>{item.name}</Text>
-      //       <TouchableOpacity style={styles.styWrapBtnAdd}>
-      //         <Icon name={'plus'} color={'#fff'} />
-      //         <Text style={styles.styTxtBtnAdd}>Thêm</Text>
-      //       </TouchableOpacity>
-      //     </View>
-      //   ))
-      // ) : (
-      //   <View />
-      // )
     );
   }
 }

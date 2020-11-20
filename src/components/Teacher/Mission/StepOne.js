@@ -27,7 +27,7 @@ export default class StepOne extends Component {
     super(props);
     this.inputRefs = {};
     this.state = {
-      htmlContent,
+      htmlContent: '',
       valueClass: '',
       valueSubject: '',
       nameMission: '',
@@ -47,7 +47,7 @@ export default class StepOne extends Component {
 
   reset = () => {
     this.setState({
-      htmlContent,
+      htmlContent: '',
       valueClass: '',
       valueSubject: '',
       nameMission: '',
@@ -70,7 +70,6 @@ export default class StepOne extends Component {
   handleNextStepTwo = () => {
     Keyboard.dismiss();
     const { valueClass, valueSubject, nameMission, htmlContent } = this.state;
-    const gradeId = `C${valueClass.split(' ')[1]}`;
     if (
       _.isEmpty(valueClass) ||
       _.isEmpty(valueSubject) ||
@@ -79,6 +78,7 @@ export default class StepOne extends Component {
       this.refToast.show('Bạn chưa điền đầy đủ thông tin', 3000);
       return;
     }
+    const gradeId = `C${valueClass.split(' ')[1]}`;
     let { listSubject } = this.props.screenProps;
     let subjectId = '';
     subjectId = listSubject.find(item => item.name == valueSubject).code;
@@ -189,6 +189,7 @@ export default class StepOne extends Component {
               imagesMaxWidth={Dimensions.get('window').width}
               baseFontStyle={{ color: '#000' }}
             />
+            {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
           </TouchableOpacity>
         </ScrollView>
         <TouchableOpacity
@@ -233,6 +234,7 @@ const styles = StyleSheet.create({
     borderColor: '#efefef',
     borderRadius: 5,
     margin: 10,
+    padding: 10,
     minHeight: 200
   },
   viewRNPicker: {
@@ -261,13 +263,14 @@ const styles = StyleSheet.create({
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
   },
+  styTxtPlacehoder: {
+    color: '#999',
+  }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    paddingTop: 13,
     paddingHorizontal: 20,
-    paddingBottom: 12,
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',
@@ -289,12 +292,8 @@ const pickerSelectStyles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderColor: '#999',
-  },
+  }
 });
-
-const htmlContent = `
-    <h4 style="font-weight: 300;">Viết mô tả cho nhiệm vụ này...</h4>
-`;
 
 const listClass = [];
 
