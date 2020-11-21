@@ -14,62 +14,40 @@ import {
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
+import { Formik } from 'formik';
 import { DotIndicator } from 'react-native-indicators';
 import SplashScreen from 'react-native-splash-screen';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import {
-  GoogleSignin,
-  statusCodes
-} from '@react-native-community/google-signin';
-import {
-  AccessToken,
-  LoginManager,
-  GraphRequest,
-  GraphRequestManager
-} from 'react-native-fbsdk';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import apiUser from '../../services/apiUserHelper';
 import global from '../../utils/Globals';
 import authStyle from '../../themes/authStyle';
 import dataHelper from '../../utils/dataHelper';
-import AppIcon from '../../utils/AppIcon';
 import Button from '../common/Button';
 import Common from '../../utils/Common';
-import FormInput from '../common/FormInput';
-import NetInfo from "@react-native-community/netinfo";
 import AnalyticsManager from '../../utils/AnalyticsManager';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { authenRedirect } from '../../utils/AuthCommon';
 import { LOGIN_TYPE } from '../../utils/AuthCommon';
-import { AuthConfig } from './AuthConfig';
 import { saveAvatarAction } from '../../actions/userAction';
+import HeaderPrimary from '../common-new/Header';
+import InputPrimary from '../common-new/InputPrimary';
+import { singInValidate } from '../../utils/SchemaValidate';
+import Checked from '../common-new/Checked';
+import TextLink from '../common-new/TextLink';
+import { Row, TextValidate, SizedBox } from '../common-new/Bootstrap';
 
-const ACCOUNTKIT = 'ACCOUNTKIT';
-const ICON_SIZE = 17;
 const { width, height } = Dimensions.get('window');
-
-const configMicrosoft = {
-  clientId: AuthConfig.appId,
-  redirectUrl: 'graph-tutorial://react-native-auth',
-  scopes: AuthConfig.appScopes,
-  additionalParameters: { prompt: 'select_account' },
-  serviceConfiguration: {
-    authorizationEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-    tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-  }
-};
 
 class LoginWithPhoneScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoging: false,
-      phoneNumber: '',
-      userName: '',
-      passWord: '',
       RememberMe: false,
+      phoneNumber: '',
+      passWord: '',
       socialType: '',
       socialId: '',
       socialToken: '',
@@ -78,6 +56,7 @@ class LoginWithPhoneScreen extends Component {
       errorEmpty: [],
       isShowKeybroad: false
     };
+    this._resetForm = null;
     global.updateRemember = this.update.bind(this);
   }
 
@@ -92,17 +71,6 @@ class LoginWithPhoneScreen extends Component {
         this.setState({ RememberMe: true })
       }
     });
-    // GoogleSignin.configure({
-    //   // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-    //   webClientId: Config.WEB_CLIENT_ID,
-    //   // client ID of type WEB for your server (needed to verify user ID and offline access)
-    //   offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-    //   hostedDomain: '', // specifies a hosted domain restriction
-    //   loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
-    //   forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-    //   accountName: '', // [Android] specifies an account name on the device that should be used
-    //   // iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-    // });
   }
 
   getRememberPhoneAndPass() {
@@ -120,363 +88,63 @@ class LoginWithPhoneScreen extends Component {
     this.getRememberPhoneAndPass();
   }
 
-  signInGoogle = async () => {
-    try {
-      this.setState({ isLoging: true });
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      const socialType = 'google';
-      if (!_.isEmpty(userInfo)) {
-        const { idToken, user } = userInfo;
-        if (!_.isEmpty(user)) {
-          const { id } = user;
-          const payload = {
-            socialId: id,
-            socialToken: idToken,
-            socialType: socialType
-          }
-          const response = await apiUser.loginWithSocial(payload);
-          const { status } = response;
-          if (status == 200) {
-            const { display_name } = response;
-            global.DisplayName = display_name;
-            const { idMixpanel, userId, userName } = jwtDecode(response.access_token);
-            if (!!idMixpanel && idMixpanel === Common.MixpanelToken) {
-              AnalyticsManager.identify(userId);
-              AnalyticsManager.trackWithProperties('Sign In', {
-                "mobile": Platform.OS,
-                "socialType": socialType
-              });
-              dataHelper.saveToken(response.access_token);
-            } else {
-              AnalyticsManager.createAlias(userId);
-              apiUser.updateMixpanelId({ token: response.access_token, mixpanelId: Common.MixpanelToken }).then(data => {
-                if (data && data.access_token) {
-                  AnalyticsManager.set(jwtDecode(data.access_token));
-                  AnalyticsManager.trackWithProperties('Sign Up', {
-                    "mobile": Platform.OS,
-                    "user": "OLD",
-                    "socialType": socialType
-                  });
-                  dataHelper.saveToken(data.access_token);
-                }
-              });
-            }
-            if (response.avatar != null) {
-              dataHelper.saveAvatar(response.avatar);
-            }
-
-            dataHelper.saveUserPost(JSON.stringify({ userName, password: '', socialType, socialId: id, socialToken: idToken, loginType: LOGIN_TYPE.SOCIAL, isPhonenumber: false }));
-            this.setState({ isLoging: false, errors: '' });
-            this.onSuccess(response.access_token);
-          } else {
-            this.myTimeErr = setTimeout(() => {
-              this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-              this.clearTimeError();
-            }, 2000);
-          }
-        }
-      }
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        this.setState({ isLoging: false });
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        this.setState({ isLoging: false });
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        this.setState({ isLoging: false });
-        // play services not available or outdated
-      } else {
-        // some other error happened
-        this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-      }
-    }
-  };
-
-
-  signInFacebook = () => {
-    this.setState({ isLoging: true });
-    let that = this;
-    LoginManager.logInWithPermissions(["public_profile"]).then((result) => {
-      if (result.isCancelled) {
-        this.setState({ isLoging: false });
-        console.log("Login cancelled");
-      } else {
-        console.log(result);
-        console.log(
-          "Login success with permissions: " +
-          result.grantedPermissions.toString()
-        );
-        that.requestGraph();
-      }
-    }
-    ).catch(err => {
-      this.setState({ isLoging: true });
-    });
-  }
-
-  _responseInfoCallback(error, result) {
-    if (error) {
-      console.log('Error fetching data: ' + error.toString());
-    } else {
-      console.log(result);
-      console.log('Success fetching data: ' + result.toString());
-      // id : 'dsajhdksahdsa'
-    }
-  }
-
-  requestGraph = () => {
-    const socialType = 'facebook';
-    AccessToken.getCurrentAccessToken().then(async (token) => {
-      if (!_.isEmpty(token)) {
-        const { accessToken, userID } = token;
-        let payload = {
-          socialId: userID,
-          socialToken: accessToken,
-          socialType: socialType
-        }
-        try {
-          const response = await apiUser.loginWithSocial(payload);
-          const { status } = response;
-          if (status == 200) {
-            const { display_name } = response;
-            global.DisplayName = display_name;
-            const { idMixpanel, userId, userName } = jwtDecode(response.access_token);
-            if (!!idMixpanel && idMixpanel === Common.MixpanelToken) {
-              AnalyticsManager.identify(userId);
-              AnalyticsManager.trackWithProperties('Sign In', {
-                "mobile": Platform.OS,
-                "socialType": socialType
-              });
-              dataHelper.saveToken(response.access_token);
-            } else {
-              AnalyticsManager.createAlias(userId);
-              apiUser.updateMixpanelId({ token: response.access_token, mixpanelId: Common.MixpanelToken }).then(data => {
-                if (data && data.access_token) {
-                  AnalyticsManager.set(jwtDecode(data.access_token));
-                  AnalyticsManager.trackWithProperties('Sign Up', {
-                    "mobile": Platform.OS,
-                    "user": "OLD",
-                    "socialType": socialType
-                  });
-                  dataHelper.saveToken(data.access_token);
-                }
-              });
-            }
-            if (response.avatar != null) {
-              dataHelper.saveAvatar(response.avatar);
-            }
-
-            dataHelper.saveUserPost(JSON.stringify({ userName, password: '', socialType, socialId: userID, socialToken: accessToken, loginType: LOGIN_TYPE.SOCIAL, isPhonenumber: false }));
-            this.setState({ isLoging: false, errors: '' });
-            this.onSuccess(response.access_token);
-          } else {
-            this.myTimeErr = setTimeout(() => {
-              this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-              this.clearTimeError();
-            }, 2000);
-          }
-        } catch (error) {
-          this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-        }
-
-      }
-    })
-    //Create response callback.
-    // Create a graph request asking for user information with a callback to handle the response.
-    const infoRequest = new GraphRequest(
-      '/me',
-      null,
-      this._responseInfoCallback,
-    );
-    // Start the graph request.
-    new GraphRequestManager().addRequest(infoRequest).start();
-  }
-
-  signInMicrosoft = async () => {
-    this.setState({ isLoging: true });
-    try {
-      const result = await authorize(configMicrosoft);
-      const { accessToken, idToken } = result;
-      if (!accessToken && !idToken) {
-        this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-        return;
-      }
-      const { oid } = await jwtDecode(idToken);
-      const socialId = oid;
-      const socialType = 'MICROSOFT';
-      const socialToken = accessToken;
-      const payload = {
-        socialId,
-        socialToken,
-        socialType,
-        loginType: LOGIN_TYPE.SOCIAL
-      }
-      const response = await apiUser.loginWithSocial(payload);
-      this.handleSocialResponse(response, socialType, socialToken, socialId);
-    } catch (error) {
-      this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-      console.log("signInMicrosoft -> error", error)
-
-    }
-  }
-
-  handleSocialResponse = (response, socialType, socialToken, socialId) => {
-    const { status } = response;
-    if (status == 200) {
-      const { display_name } = response;
-      global.DisplayName = display_name;
-      const { idMixpanel, userId, userName } = jwtDecode(response.access_token);
-      if (!!idMixpanel && idMixpanel === Common.MixpanelToken) {
-        AnalyticsManager.identify(userId);
-        AnalyticsManager.trackWithProperties('Sign In', {
-          "mobile": Platform.OS,
-          "socialType": socialType
-        });
-        dataHelper.saveToken(response.access_token);
-      } else {
-        AnalyticsManager.createAlias(userId);
-        apiUser.updateMixpanelId({ token: response.access_token, mixpanelId: Common.MixpanelToken }).then(data => {
-          if (data && data.access_token) {
-            AnalyticsManager.set(jwtDecode(data.access_token));
-            AnalyticsManager.trackWithProperties('Sign Up', {
-              "mobile": Platform.OS,
-              "user": "OLD",
-              "socialType": socialType
-            });
-            dataHelper.saveToken(data.access_token);
-          }
-        });
-      }
-      if (response.avatar != null) {
-        dataHelper.saveAvatar(response.avatar);
-      }
-
-      dataHelper.saveUserPost(JSON.stringify({ userName: '', password: '', socialType, socialId: socialId, socialToken: socialToken, loginType: LOGIN_TYPE.SOCIAL }));
-      this.setState({ isLoging: false, errors: '' });
-      this.onSuccess(response.access_token);
-    } else {
-      this.myTimeErr = setTimeout(() => {
-        this.setState({ isLoging: false, errors: 'Đăng nhập thất bại, bạn vui lòng thử lại sau!' });
-        this.clearTimeError();
-      }, 2000);
-    }
-  }
-
   onSuccess = (access_token) => {
     const { GradeId, CreateBySchool, Role, codeApp = '' } = jwtDecode(access_token);
     this.setState({ isLoging: false });
     return authenRedirect(CreateBySchool, GradeId, Role, this.props.navigation);
   }
 
-  _handleValidation = () => {
-    var result = true;
-    const { errorEmpty } = this.state;
-    _.forEach(['phoneNumber', 'passWord'], item => {
-      if (_.isEmpty(this.state[item]) && item === 'phoneNumber') {
-        errorEmpty[item] = 'Tên đăng nhập không được để trống'
-        result = false;
-      } if (_.isEmpty(this.state[item]) && item === 'passWord') {
-        errorEmpty[item] = 'Mật khẩu không được để trống'
-        result = false;
-      }
-      this.setState({ errorEmpty });
-    });
-    return result;
-  }
-
-  checkLoginType(authorizationCode = "") {
-
+  onSignIn = (values, resetForm) => {
     Keyboard.dismiss();
-    const phone = this.state.phoneNumber;
-    const password = this.state.passWord;
-    let loginType = LOGIN_TYPE.PHONE;
-    const rememberMe = this.state.RememberMe;
-    const socialId = "";
-    const socialToken = "";
-    const socialType = "";
-    const authorization_code = authorizationCode;
-    const phoneNumber = Common.convertPhoneOldToNew(phone);
-
-    if (authorizationCode) {
-      this.loginApi({
-        userName: phoneNumber,
-        loginType: LOGIN_TYPE.APPLE,
-        password: "",
-        rememberMe,
-        socialId: "",
-        socialToken: "",
-        socialType: LOGIN_TYPE.APPLE,
-        authorization_code
-      });
-      return;
-    }
-
-    if (this._handleValidation()) {
-      // login bang email
-      if (!Common.validatePhoneNumberOld(phone)) {
-        NetInfo.fetch().then((connectionInfo) => {
-          if (connectionInfo.type !== 'none') {
-            this.setState({ isLoging: true }, () => {
-              loginType = LOGIN_TYPE.USERNAME;
-              // dang nhap bang username
-              const payload = {
-                userName: phoneNumber,
-                loginType: LOGIN_TYPE.USERNAME,
-                password,
-                rememberMe,
-                socialId,
-                socialToken,
-                socialType,
-                authorization_code
-              }
-              this.loginApi(payload);
-            });
-          } else {
-            this.setState({ isLoging: false, errors: '' });
-            try {
-              this.refs.toast.show('Không có kết nối internet', DURATION.LENGTH_LONG);
-            } catch (error) {
-              return;
-            }
-          }
-        });
-      } else {
-        // login bang so dien thoai
-        NetInfo.fetch().then((connectionInfo) => {
-          if (connectionInfo.type !== 'none') {
-            this.setState({ isLoging: true }, () => {
-              const payload = { phoneNumber, loginType, password, rememberMe, socialId, socialToken, socialType }
-              apiUser.loginPhoneV2(payload).then(response => {
-                if (response != "") {
-                  this.handleLoginSuccess({ response, payload });
-                } else {
-                  this.handleLoginFailure();
-                }
-              });
-            });
-          } else {
-            this.setState({ isLoging: false, errors: '' });
-            try {
-              this.refs.toast.show('Không có kết nối internet', DURATION.LENGTH_LONG);
-            } catch (error) {
-              return;
-            }
-          }
-        });
+    this._resetForm = resetForm;
+    const userName = values.username;
+    const password = values.password;
+    const { RememberMe } = this.state;
+    if (!Common.validatePhoneNumberOld(userName)) {
+      const payload = {
+        userName: userName,
+        loginType: LOGIN_TYPE.USERNAME,
+        password,
+        rememberMe: RememberMe,
+        socialId: '',
+        socialToken: '',
+        socialType: '',
+        authorization_code: ''
       }
+      this.signInUserName(payload);
+    } else {
+      const payload = {
+        phoneNumber: userName,
+        loginType: '',
+        password,
+        rememberMe: RememberMe,
+        socialId: '',
+        socialToken: '',
+        socialType: ''
+      };
+      this.signInWithPhone(payload);
     }
   }
 
-  loginApi = (payload) => {
-    apiUser.loginUserName(payload).then(response => {
-      if (response !== "") {
+  signInWithPhone = async (payload) => {
+    await this.setState({ isLoging: true });
+    apiUser.loginPhoneV2(payload).then(response => {
+      if (response != "") {
         this.handleLoginSuccess({ response, payload });
       } else {
         this.handleLoginFailure();
       }
     });
+  }
+
+  signInUserName = async (payload) => {
+    await this.setState({ isLoging: true });
+    let response = await apiUser.loginUserName(payload);
+    if (response !== "") {
+      this.handleLoginSuccess({ response, payload });
+    } else {
+      this.handleLoginFailure();
+    }
   }
 
   handleLoginFailure = () => {
@@ -488,7 +156,7 @@ class LoginWithPhoneScreen extends Component {
       } catch (error) {
         return;
       }
-    }, 2000);
+    }, 1000);
   }
 
   handleLoginSuccess = ({ response, payload }) => {
@@ -538,6 +206,9 @@ class LoginWithPhoneScreen extends Component {
       this.myTimeErr = setTimeout(() => {
         this.setState({ isLoging: false, errors: 'Tên đăng nhập hoặc mật khẩu không chính xác !' });
         this.clearTimeError();
+        if (this._resetForm) {
+          this._resetForm();
+        }
       }, 2000);
     }
   }
@@ -615,344 +286,110 @@ class LoginWithPhoneScreen extends Component {
   render() {
     const {
       container,
-      viewLogin,
-      backArrow,
-      textLink,
-      validationStyle
     } = authStyle;
     const {
       isShowKeybroad,
-      errorEmpty,
-      phoneNumber,
-      passWord,
-      errors
     } = this.state;
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={container}>
         <StatusBar />
-        <SafeAreaView style={container}>
-          <View style={[
-            backArrow,
-            {
-              paddingTop: Platform.OS === 'android'
-                ?
-                20
-                :
-                null
-            }]}>
-            <View style={styles.wrapTitle}>
-              <Text style={styles.txtTitle}>Đăng nhập</Text>
-            </View>
-          </View>
-          <KeyboardAwareScrollView
-            contentContainerStyle={styles.viewKeyboard}
-            showsVerticalScrollIndicator={false}
-          >
-            <View style={[{
-              alignItems: 'center',
-              marginTop: 0.02 * height
-            },
-            (errors) && { marginTop: 0 }
-            ]}
-            >
-              {/* <Image
-                source={require('../../asserts/images/image_login.png')}
-                resizeMode={'contain'}
-                style={styles.sizeImage}
-              /> */}
-              <Text style={styles.titleTea}>Giáo Viên</Text>
-              <Text style={styles.teaDesc}>
-                Ứng dụng hỗ trợ cho hoạt động dạy
-                và học trong các trường phổ thông
-              </Text>
-            </View>
-            <Text
-              style={[
-                validationStyle,
-                { marginBottom: 15 }
-              ]}
-            >
-              {this.state.errors}
+        <HeaderPrimary showLead={false} title={'Đăng nhập'} />
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.viewKeyboard}
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={styles.titleTea}>Giáo Viên</Text>
+          <Text style={styles.teaDesc}>
+            Ứng dụng hỗ trợ cho hoạt động dạy
+            và học trong các trường phổ thông
             </Text>
-            <View style={[viewLogin, { flex: 1 }]}>
-              <Text style={styles.labelUsername}>
-                Tên đăng nhập
-                </Text>
-              <FormInput
-                paddingTopContent={4}
-                borderRadius={100}
-                borderWidth={0.5}
-                borderColor={'#757575'}
-                onChangeText={text => this.setState({
-                  errors: '',
-                  phoneNumber: text,
-                  errorEmpty: [],
-                })}
-                value={this.state.phoneNumber}
-                placeholder={'eg.rog@gmail.com'}
-                keyboardType={'email-address'}
-                height={40}
-                bgColor='#FFF'
-              />
-              {(
-                errorEmpty.phoneNumber && !phoneNumber
-              )
-                &&
-                (
-                  <View>
-                    <Text style={styles.txtErrorEmpty} >
-                      {errorEmpty.phoneNumber}
-                    </Text></View>
-                )}
-              <Text style={styles.labelPass}>Mật khẩu</Text>
-              <FormInput
-                paddingTopContent={4}
-                height={40}
-                borderRadius={100}
-                borderWidth={0.5}
-                borderColor={'#757575'}
-                secureTextEntry={this.state.isSecureTextEntry}
-                onChangeText={text => this.setState({
-                  errors: '',
-                  passWord: text,
-                  errorEmpty: [],
-                })}
-                value={this.state.passWord}
-                placeholder={'********'}
-                isShowPassword={true}
-                actionIcon={AppIcon.icon_eye}
-                onSubmitEditing={Keyboard.dismiss}
-                isSecureTextEntry={this.state.isSecureTextEntry}
-                showPassword={() => this.showPassword()}
-                bgColor='#FFF'
-              />
-              {(
-                errorEmpty.passWord && !passWord
-              )
-                &&
-                (
-                  <View>
-                    <Text style={styles.txtErrorEmpty}>
-                      {errorEmpty.passWord}
-                    </Text>
-                  </View>)}
-              <View style={styles.wrapbottom}>
-                <TouchableOpacity
-                  style={styles.buttonRemember}
-                  onPress={() => this.handleRemember()}
-                >
-                  <View style={styles.wrapButtonRemember}>
-                    {this.state.RememberMe ?
-                      <Icon name="check" color={'#828282'} size={12} /> :
-                      <View />
-                    }
-                  </View>
-                  <Text style={styles.rememberLogin}>
-                    Ghi nhớ đăng nhập
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.handlerFogot()}>
-                  <Text style={[textLink, {
-                    textDecorationLine: 'underline',
-                    fontSize: 12,
-                    color: '#757575',
-                    fontFamily: 'Nunito-Regular'
-                  }]}>Quên mật khẩu</Text>
-                </TouchableOpacity>
-              </View>
-              {!this.state.isLoging ?
-                <Button
-                  center={true}
-                  btn={'rgb'}
-                  title="Đăng nhập"
-                  width={width - width / 5}
-                  circle={40}
-                  style={styles.btnLogin}
-                  styleTitle={styles.styleTitle}
-                  onPress={() => this.checkLoginType()}
+          <SizedBox height={20} />
+          <TextValidate errors={this.state.errors} />
+          <SizedBox height={20} />
+          <Formik
+            initialValues={{
+              username: __DEV__ ? this.state.phoneNumber : this.state.phoneNumber,
+              password: __DEV__ ?  this.state.passWord : this.state.passWord,
+            }}
+            enableReinitialize={true}
+            onSubmit={(values, { resetForm }) => this.onSignIn(values, resetForm)}
+            validationSchema={singInValidate}
+          >
+            {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+              <View>
+                <InputPrimary
+                  label={'Tên đăng nhập'}
+                  placeholder={'Nhập tên đăng nhập'}
+                  value={values.username}
+                  onChangeText={handleChange('username')}
+                  onBlur={() => setFieldTouched('username')}
+                  keyboardType={'phone-pad'}
+                  isValid={(touched.username && !errors.username)}
+                  error={(touched.username && errors.username) && errors.username}
                 />
-                :
-                <View style={styles.viewDotIn}>
-                  <DotIndicator color={'#54CEF5'} size={6} count={8} />
-                </View>
-              }
-              {/* {__DEV__ && <>
-                <View style={styles.wrapOr}>
-                  <View style={styles.lineHeight} />
-                  <Text style={styles.txtOr}> hoặc </Text>
-                  <View style={styles.lineHeight} />
-                </View>
-
-                <View style={styles.row}>
-                  <TouchableOpacity
-                    style={styles.wrapBtnGoogle}
-                    onPress={this.signInGoogle}
-                  >
-                    <Image source={AppIcon.icon_google} resizeMode={'contain'} style={{ marginHorizontal: 15 }} />
-                    <Text style={styles.txtBtnGoogle}>Đăng nhập Google</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.wrapBtnFacebook}
-                    onPress={this.signInFacebook}
-                  >
-                    <Image source={AppIcon.icon_face} resizeMode={'contain'} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.txtBtnFace}>Đăng nhập Facebook</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{ margin: 10 }} />
-              </>} */}
-            </View>
-            {/* {
-              Platform.OS === 'android' &&
-              <Footer
-                link={Messages.FOOTER_TITLE_SIGNIN}
-                onPress={this.gotoSignUp.bind(this)}
-              />
-            } */}
-            {/* <TouchableOpacity onPress={this.gotoSignUp.bind(this)}>
-              <Text style={{ marginBottom: 21, textAlign: 'center', color: '#56CCF2', textDecorationLine: 'underline', fontSize: 12, fontFamily: 'Nunito-Regular' }}>Đăng ký tài khooản</Text>
-            </TouchableOpacity> */}
-          </KeyboardAwareScrollView>
-          <Toast ref="toast" position={'bottom'} />
-        </SafeAreaView>
-        {/* <FreshchatComponent /> */}
-      </View>
+                <InputPrimary
+                  label={'Mật khẩu'}
+                  placeholder={'*******'}
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  secureTextEntry
+                  isValid={(touched.password && !errors.password)}
+                  error={(touched.password && errors.password) && errors.password}
+                />
+                <Row>
+                  <Checked
+                    checked={this.state.RememberMe}
+                    onPress={() => this.handleRemember()}
+                    label={'Ghi nhớ đăng nhập'}
+                  />
+                  <TextLink title={'Quên mật khẩu'} onPress={() => this.handlerFogot()} />
+                </Row>
+                <SizedBox height={20} />
+                {!this.state.isLoging ?
+                  <Button
+                    center={true}
+                    btn={'rgb'}
+                    title="Đăng nhập"
+                    width={width - 60}
+                    circle={40}
+                    style={styles.btnLogin}
+                    styleTitle={styles.styleTitle}
+                    onPress={handleSubmit}
+                  />
+                  :
+                  <View style={styles.viewDotIn}>
+                    <DotIndicator color={'#54CEF5'} size={6} count={8} />
+                  </View>
+                }
+              </View>
+            )}
+          </Formik>
+          <View style={{ flex: 1 }} />
+        </KeyboardAwareScrollView>
+        <Toast ref="toast" position={'bottom'} />
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row'
-  },
-  wrapbottom: {
-    marginTop: 10,
-    marginBottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  buttonRemember: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  wrapButtonRemember: {
-    width: 16,
-    height: 16,
-    borderWidth: 0.5,
-    borderColor: '#828282',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 11,
-    borderRadius: 5,
-  },
-  txtErrorEmpty: {
-    color: '#D22D3F',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 11,
-  },
-  txtTitle: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 16,
-    color: '#000',
-  },
-  wrapTitle: {
-    flex: 1,
-    alignItems: 'center'
-  },
   btnLogin: {
     backgroundColor: '#2D9CDB',
     height: 40,
     zIndex: 10,
-    borderRadius: 5,
+    borderRadius: 25,
     marginTop: 10
-  },
-  wrapOr: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: '2%'
-  },
-  lineHeight: {
-    borderColor: '#E0E0E0',
-    width: '30%',
-    borderWidth: 1,
-    borderRadius: 20,
-    alignSelf: 'center',
-    marginHorizontal: 5
-  },
-  wrapBtnGoogle: {
-    height: 40,
-    flex: 1,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginHorizontal: 5,
-    flexDirection: 'row',
-    backgroundColor: '#E3E3E3'
-  },
-  wrapBtnFacebook: {
-    height: 40,
-    flex: 1,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginHorizontal: 5,
-    flexDirection: 'row',
-    backgroundColor: '#395185'
-  },
-  txtBtnGoogle: {
-    fontSize: width > 380 ? 12 : 10,
-    fontFamily: 'Nunito-Regular',
-    color: '#1976D2'
-  },
-  txtBtnFace: {
-    fontSize: width > 380 ? 12 : 10,
-    fontFamily: 'Nunito-Regular',
-    color: '#FFF',
-  },
-  txtOr: {
-    color: '#C4C4C4',
-    fontSize: width > 380 ? 16 : 14,
-    fontFamily: 'Nunito-Regular'
   },
   viewKeyboard: {
     justifyContent: 'center',
-    alignItems: 'center',
     flexGrow: 1,
+    marginHorizontal: 25,
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
-  sizeImage: {
-    width: height / 4 * 981 / 617,
-    height: height / 4
-  },
-  txtDesc: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: 14,
-    color: '#56CCF2'
-  },
-  labelUsername: {
-    color: '#000',
-    fontFamily: 'Nunito',
-    fontSize: 15,
-    lineHeight: 20,
-    marginTop: 30,
-    marginLeft: 10
-  },
-  labelPass: {
-    paddingTop: 10,
-    color: '#000',
-    fontFamily: 'Nunito',
-    fontSize: 15,
-    lineHeight: 20,
-    marginLeft: 10
-  },
-  rememberLogin: {
-    color: '#828282',
-    fontSize: 12,
-    fontFamily: 'Nunito-Regular'
-  },
   styleTitle: {
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 14,
     color: '#FFF'
   },
@@ -961,6 +398,7 @@ const styles = StyleSheet.create({
     marginTop: 8
   },
   titleTea: {
+    alignSelf: 'center',
     fontFamily: "Nunito-Bold",
     fontSize: 28,
     lineHeight: 38,
@@ -973,7 +411,8 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
     color: "#757575",
-    width: 300
+    alignSelf: 'center',
+    width: 280
   }
 });
 

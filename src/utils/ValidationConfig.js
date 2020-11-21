@@ -34,6 +34,10 @@ export const username = yup
     .max(Max_Leng_Username, getMaxLengMessage(USERNAME, Max_Leng_Username))
     .required(getRequireMessage(USERNAME));
 
+export const usernameSignIn = yup
+    .string()
+    .required(getRequireMessage(USERNAME));
+
 export const password = yup
     .string()
     .min(Min_Leng_Password, getMinLengMessage(PASSWORD, Min_Leng_Password))
@@ -42,6 +46,10 @@ export const password = yup
         REG_MATH_UPPERCASE,
         getMatchesIncludeUpperCase(PASSWORD)
     )
+    .required(getRequireMessage(PASSWORD));
+
+export const passwordSignIn = yup
+    .string()
     .required(getRequireMessage(PASSWORD));
 
 export const rePassword = yup.string()

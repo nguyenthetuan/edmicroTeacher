@@ -45,7 +45,7 @@ export default InputPrimary = (props) => {
                 borderColor: this.getBorderColor()
             },
             props.containerStyle]}>
-            <Text style={[styles.labelStyle,
+            <Text numberOfLines={1} style={[styles.labelStyle,
             { color: this.getLabelColor() },
             props.labelStyle]}>{this.getLabel()}</Text>
             <TextInput
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         fontFamily: 'Nunito-Regular',
-        fontSize: 15
+        fontSize: 16
     },
     textInput: {
         flexDirection: 'row',

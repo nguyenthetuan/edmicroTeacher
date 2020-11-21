@@ -651,7 +651,7 @@ export default class ForgotPasswordScreen extends Component {
                 {
                   !this.state.isVerify ?
                     <View style={{ width: width - width / 5, alignSelf: 'center' }}>
-                      {/* <Text style={styles.txtTitleForm}>Số điện thoại</Text>
+                      <Text style={styles.txtTitleForm}>Số điện thoại</Text>
                       <FormInput
                         paddingTopContent={4}
                         height={50}
@@ -663,8 +663,8 @@ export default class ForgotPasswordScreen extends Component {
                         editable={this.state.isEditPhone}
                         value={this.state.phoneNumber}
                         placeholder={'eg.09x....'}
-                      /> */}
-                      <InputPrimary
+                      />
+                      {/* <InputPrimary
                         label={'Số điện thoại'}
                         placeholder={'09 xxxx'}
                         value={values.phoneNumber}
@@ -673,7 +673,7 @@ export default class ForgotPasswordScreen extends Component {
                         keyboardType={'phone-pad'}
                         isValid={(touched.phoneNumber && !errors.phoneNumber)}
                         error={(touched.phoneNumber && errors.phoneNumber) && errors.phoneNumber}
-                      />
+                      /> */}
                       {this.renderAccountSearch(accountSearch)}
 
                       {_.isEmpty(accountSearch) && <RippleButton
