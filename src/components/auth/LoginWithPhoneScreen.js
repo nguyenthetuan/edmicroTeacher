@@ -605,7 +605,11 @@ class LoginWithPhoneScreen extends Component {
   }
 
   check = () => {
-    this.props.navigation.navigate('Teacher', { statusbar: 'dark-content' });
+    this.props.navigation.navigate('Teacher',
+      {
+        statusbar: 'dark-content'
+      }
+    );
   }
 
   render() {
@@ -651,15 +655,17 @@ class LoginWithPhoneScreen extends Component {
             (errors) && { marginTop: 0 }
             ]}
             >
-              <Image
+              {/* <Image
                 source={require('../../asserts/images/image_login.png')}
                 resizeMode={'contain'}
                 style={styles.sizeImage}
-              />
-            </View>
-            <Text style={styles.txtDesc}>
-              Ứng dụng hỗ trợ giáo viên
+              /> */}
+              <Text style={styles.titleTea}>Giáo Viên</Text>
+              <Text style={styles.teaDesc}>
+                Ứng dụng hỗ trợ cho hoạt động dạy
+                và học trong các trường phổ thông
               </Text>
+            </View>
             <Text
               style={[
                 validationStyle,
@@ -674,16 +680,16 @@ class LoginWithPhoneScreen extends Component {
                 </Text>
               <FormInput
                 paddingTopContent={4}
-                borderRadius={5}
+                borderRadius={100}
                 borderWidth={0.5}
-                borderColor={'#333030'}
+                borderColor={'#757575'}
                 onChangeText={text => this.setState({
                   errors: '',
                   phoneNumber: text,
                   errorEmpty: [],
                 })}
                 value={this.state.phoneNumber}
-                placeholder={'Email hoặc số điện thoại'}
+                placeholder={'eg.rog@gmail.com'}
                 keyboardType={'email-address'}
                 height={40}
                 bgColor='#FFF'
@@ -702,9 +708,9 @@ class LoginWithPhoneScreen extends Component {
               <FormInput
                 paddingTopContent={4}
                 height={40}
-                borderRadius={5}
+                borderRadius={100}
                 borderWidth={0.5}
-                borderColor={'#333030'}
+                borderColor={'#757575'}
                 secureTextEntry={this.state.isSecureTextEntry}
                 onChangeText={text => this.setState({
                   errors: '',
@@ -712,7 +718,7 @@ class LoginWithPhoneScreen extends Component {
                   errorEmpty: [],
                 })}
                 value={this.state.passWord}
-                placeholder={'Mật khẩu'}
+                placeholder={'********'}
                 isShowPassword={true}
                 actionIcon={AppIcon.icon_eye}
                 onSubmitEditing={Keyboard.dismiss}
@@ -749,7 +755,7 @@ class LoginWithPhoneScreen extends Component {
                   <Text style={[textLink, {
                     textDecorationLine: 'underline',
                     fontSize: 12,
-                    color: '#56CCF2',
+                    color: '#757575',
                     fontFamily: 'Nunito-Regular'
                   }]}>Quên mật khẩu</Text>
                 </TouchableOpacity>
@@ -925,17 +931,20 @@ const styles = StyleSheet.create({
     color: '#56CCF2'
   },
   labelUsername: {
-    color: '#828282',
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    lineHeight: 19
+    color: '#000',
+    fontFamily: 'Nunito',
+    fontSize: 15,
+    lineHeight: 20,
+    marginTop: 30,
+    marginLeft: 10
   },
   labelPass: {
     paddingTop: 10,
-    color: '#828282',
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    lineHeight: 19
+    color: '#000',
+    fontFamily: 'Nunito',
+    fontSize: 15,
+    lineHeight: 20,
+    marginLeft: 10
   },
   rememberLogin: {
     color: '#828282',
@@ -950,6 +959,21 @@ const styles = StyleSheet.create({
   viewDotIn: {
     height: 20,
     marginTop: 8
+  },
+  titleTea: {
+    fontFamily: "Nunito-Bold",
+    fontSize: 28,
+    lineHeight: 38,
+    color: "#000"
+  },
+  teaDesc: {
+    fontFamily: "Nunito",
+    fontSize: 16,
+    lineHeight: 22,
+    color: "#000",
+    textAlign: "center",
+    color: "#757575",
+    width: 300
   }
 });
 

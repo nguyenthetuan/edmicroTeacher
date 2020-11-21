@@ -100,53 +100,53 @@ class Item extends React.Component {
 
         <TouchableOpacity onPress={this._handleClickDetail(payloadAssignment)}>
           <View style={styles.bodyTest}>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity>
-                <FastImage
-                  source={require('../../../asserts/icon/icClass.png')}
-                  style={{ height: 20, width: 20 }}
-                />
-                <Text style={styles.txtTestClass}>{gradeCode}</Text>
-              </TouchableOpacity>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'column' }}>
+              <View style={styles.flexSubject}>
                 <FastImage
                   source={Common.getIconSubject(subjectCode)}
-                  style={{ width: 20, height: 20, marginLeft: 15 }}
+                  style={{ width: 19, height: 19, alignItems: 'center' }}
                 />
                 <Text style={styles.txtQuestion}>{subjectCode}</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginLeft: 6,
-                }}>
+              <View style={styles.flexSenten}>
                 <FastImage
-                  source={require('../../../asserts/icon/icQuestion.png')}
-                  style={{ height: 20, width: 20 }}
+                  source={require('../../../asserts/icon/icon_sentenTea.png')}
+                  style={{ width: 20, height: 20, alignItems: 'center' }}
                 />
-                <Text style={styles.txtQuestion}>{item.totalQuestion}</Text>
+                <Text style={styles.txtQuestion}>10 Câu</Text>
               </View>
             </View>
-            <View style={{ flexDirection: 'row' }}>
-              <View
-                style={[
-                  styles.buttomPractice,
-                  {
-                    backgroundColor: item.assignmentType
-                      ? '#FD7900'
-                      : '#79BBEB',
-                  },
-                ]}>
+            <View style={{ flexDirection: 'column' }}>
+              <View style={styles.flexSenten}>
+                <FastImage
+                  source={require('../../../asserts/icon/icon_sentenTea.png')}
+                  style={{ width: 20, height: 20 }}
+                />
+                <Text style={styles.txtQuestion}>Lớp 10,11,12</Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'column' }}>
+              <View style={styles.flexParac}>
+                <FastImage
+                  source={require('../../../asserts/icon/icon_paracClass.png')}
+                  style={{ height: 20, width: 20 }}
+                />
                 <Text style={styles.txtButtomPractice}>
-                  {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'}
+                  {/* {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'} */}
+                  Bài tự luyện
                 </Text>
               </View>
               <View
-                style={[
-                  styles.buttomDelivered,
-                  { backgroundColor: item.status === 4 ? '#56BB73' : '#E0E0E0' },
-                ]}>
+                // style={[
+                //   styles.buttomDelivered,
+                //   { backgroundColor: item.status === 4 ? '#56BB73' : '#E0E0E0' },
+                // ]}
+                style={styles.flexToParac}
+              >
+                <FastImage
+                  source={require('../../../asserts/icon/icon_paracClass.png')}
+                  style={{ height: 20, width: 20 }}
+                />
                 <Text style={styles.txtButtomPractice}>
                   {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
                 </Text>
@@ -1283,6 +1283,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#000',
     marginLeft: 6,
+    alignSelf: 'center',
   },
   buttomPractice: {
     backgroundColor: '#79BBEB',
@@ -1290,10 +1291,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
+  flexParac: {
+    flexDirection: 'row'
+  },
+  flexToParac: {
+    flexDirection: 'row',
+    marginTop: 8.53
+  },
   txtButtomPractice: {
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito',
     fontSize: 10,
-    color: '#FFF',
+    lineHeight: 14,
+    color: '#000',
+    alignSelf: 'center',
+    marginHorizontal: 5
   },
   buttomDelivered: {
     backgroundColor: '#56BB73',
@@ -1408,6 +1419,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontFamily: 'Nunito-Regular',
     alignContent: 'flex-end'
+  },
+  flexSubject: {
+    flexDirection: 'row',
+  },
+  flexSenten: {
+    flexDirection: "row",
+    marginTop: 6
   }
 });
 
