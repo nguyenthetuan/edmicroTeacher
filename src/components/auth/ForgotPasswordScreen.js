@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert, Keyboard, StyleSheet, SafeAreaView, StatusBar, Dimensions, Platform, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Keyboard,
+  StyleSheet,
+  SafeAreaView,
+  StatusBar,
+  Dimensions,
+  FlatList
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 Icon.loadFont();
@@ -252,7 +263,15 @@ export default class ForgotPasswordScreen extends Component {
     const phoneCountry = "+84";
     const token = this.verificationId;
     // submit API 
-    ApiUser.changeFirebasePassword({ codeOTP, userName, password, phoneNumber, phoneCountry, token, projectId }).then(response => {
+    ApiUser.changeFirebasePassword({
+      codeOTP,
+      userName,
+      password,
+      phoneNumber,
+      phoneCountry,
+      token,
+      projectId
+    }).then(response => {
       const { status, message } = response;
       console.log(response);
       if (status == 200) {
@@ -267,11 +286,19 @@ export default class ForgotPasswordScreen extends Component {
         });
       } else {
         //
-        this.setState({ errors: message, codeOTP: '', isLoading: false, editableOTP: true, });
+        this.setState({
+          errors: message,
+          codeOTP: '',
+          isLoading: false,
+          editableOTP: true,
+        });
         this.otp.onClear();
       }
     }).catch(err => {
-      this.setState({ isLoading: false, editableOTP: true });
+      this.setState({
+        isLoading: false,
+        editableOTP: true
+      });
       console.log(err);
     });
   }
@@ -313,7 +340,10 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   _showPassword = type => {
-    const { statusPassWord, statusRePassWord } = this.state;
+    const {
+      statusPassWord,
+      statusRePassWord
+    } = this.state;
     switch (type) {
       case 1: {
         this.setState({
@@ -363,12 +393,23 @@ export default class ForgotPasswordScreen extends Component {
         console.log(res)
         if (!_.isEmpty(res[0])) {
           if (res.length > 1) {
-            this.setState({ accountSearch: res, isEditPhone: false })
+            this.setState({
+              accountSearch: res,
+              isEditPhone: false
+            })
           } else {
-            this.setState({ accountSearch: res, accountSelected: res[0], isEditPhone: false })
+            this.setState({
+              accountSearch: res,
+              accountSelected: res[0],
+              isEditPhone: false
+            })
           }
         } else {
-          this.setState({ errors: 'Số điện thoại này chưa được đăng kí !', isLoading: false, isEditPhone: true });
+          this.setState({
+            errors: 'Số điện thoại này chưa được đăng kí !',
+            isLoading: false,
+            isEditPhone: true
+          });
         }
       }
     });
@@ -377,16 +418,46 @@ export default class ForgotPasswordScreen extends Component {
   renderItemAccount = ({ item }) => {
     const uriAvatar = this.getAvatar(item.avatar);
     return (
-      <RippleButton onPress={() => { this.setState({ accountSelected: item }) }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
-          <View style={{ justifyContent: 'center', margin: 5 }}>
-            <View style={{ borderWidth: 0.5, borderColor: '#54CEF5', width: 40, height: 40, borderRadius: 50, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+      <RippleButton
+        onPress={() => {
+          this.setState({ accountSelected: item })
+        }}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginVertical: 10
+        }}>
+          <View style={{
+            justifyContent: 'center',
+            margin: 5
+          }}>
+            <View style={{
+              borderWidth: 0.5,
+              borderColor: '#54CEF5',
+              width: 40,
+              height: 40,
+              borderRadius: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+              overflow: 'hidden'
+            }}>
               {
                 uriAvatar
                   ?
-                  <Image source={{ uri: uriAvatar }} style={{ width: 40, height: 40 }} resizeMode={'contain'} />
+                  <Image
+                    source={{ uri: uriAvatar }}
+                    style={{ width: 40, height: 40 }}
+                    resizeMode={'contain'}
+                  />
                   :
-                  <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: '#54CEF5', justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: '#54CEF5',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}>
                     <Text style={{
                       fontFamily: 'Nunito-Bold', fontSize: 16, color: '#fff'
                     }}>{item.displayName ? item.displayName.substring(0, 1) : ''}</Text>
@@ -394,7 +465,13 @@ export default class ForgotPasswordScreen extends Component {
               }
             </View>
           </View>
-          <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14, marginStart: 25 }}>{item.displayName}</Text>
+          <Text style={{
+            fontFamily: 'Nunito-Bold',
+            fontSize: 14,
+            marginStart: 25
+          }}>{
+              item.displayName}
+          </Text>
         </View>
       </RippleButton>
     )
@@ -428,11 +505,21 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   renderEnterPass = () => {
-    const { password, repassword, statusRePassWord, statusPassWord, errorEmpty, accountSearch } = this.state;
+    const {
+      password,
+      repassword,
+      statusRePassWord,
+      statusPassWord,
+      errorEmpty,
+      accountSearch
+    } = this.state;
     if (!_.isEmpty(accountSearch)) {
       return (
         <View>
-          {errorEmpty.phoneNumber && (<View><Text style={styles.txtErrorEmpty} >{errorEmpty.phoneNumber}</Text></View>)}
+          {errorEmpty.phoneNumber &&
+            (<View><Text style={styles.txtErrorEmpty}>
+              {errorEmpty.phoneNumber}
+            </Text></View>)}
           <Text style={[styles.txtTitleForm]}>Mật khẩu</Text>
           <FormInput
             paddingTopContent={4}
@@ -442,9 +529,9 @@ export default class ForgotPasswordScreen extends Component {
               errorEmpty: [],
               errors: ''
             })}
-            borderWidth={0.5}
-            borderColor={'#54CEF5'}
-            borderRadius={5}
+            borderWidth={1}
+            borderColor={'#757575'}
+            borderRadius={100}
             value={password}
             placeholder={'Nhập Mật khẩu'}
             isShowPassword={true}
@@ -458,15 +545,15 @@ export default class ForgotPasswordScreen extends Component {
           <Text style={[styles.txtTitleForm, { marginTop: 20 }]}>Xác thực mật khẩu</Text>
           <FormInput
             paddingTopContent={4}
-            height={40}
+            height={45}
             onChangeText={text => this.setState({
               repassword: text,
               errorEmpty: [],
               errors: ''
             })}
-            borderWidth={0.5}
-            borderColor={'#54CEF5'}
-            borderRadius={5}
+            borderWidth={1}
+            borderColor={'#757575'}
+            borderRadius={100}
             value={repassword}
             placeholder={'Nhập lại Mật khẩu'}
             isShowPassword={true}
@@ -497,14 +584,37 @@ export default class ForgotPasswordScreen extends Component {
     }
     return;
   }
-
   render() {
-    const { phoneNumber, isShowKeybroad, password, repassword, statusRePassWord, statusPassWord, errorEmpty, accountSearch } = this.state;
-    const { wrapLogin, authItem, wrapIcon, backArrow, contentContainer,
-      textInput, textAction, buttonLogin, validationStyle, container } = authStyle;
+    const {
+      phoneNumber,
+      isShowKeybroad,
+      password,
+      repassword,
+      statusRePassWord,
+      statusPassWord,
+      errorEmpty,
+      accountSearch
+    } = this.state;
+    const {
+      wrapLogin,
+      authItem,
+      wrapIcon,
+      backArrow,
+      contentContainer,
+      textInput,
+      textAction,
+      buttonLogin,
+      validationStyle,
+      container
+    } = authStyle;
     return (
       <View
-        style={[container, { backgroundColor: '#FFF' }]}
+        style={[
+          container,
+          {
+            backgroundColor: '#FFF'
+          }
+        ]}
       >
         <StatusBar />
         <SafeAreaView style={container}>
@@ -532,7 +642,6 @@ export default class ForgotPasswordScreen extends Component {
             showsVerticalScrollIndicator={false}>
             <View style={[{ flex: 1 }]}>
               <View>
-
                 {/* <Text style={{ fontSize: 18, color: '#fff', marginBottom: 10 }}>Quên mật khẩu</Text> */}
                 <Text style={[validationStyle, {
                   marginBottom: 28,
@@ -542,18 +651,28 @@ export default class ForgotPasswordScreen extends Component {
                 {
                   !this.state.isVerify ?
                     <View style={{ width: width - width / 5, alignSelf: 'center' }}>
-                      <Text style={styles.txtTitleForm}>Số điện thoại</Text>
+                      {/* <Text style={styles.txtTitleForm}>Số điện thoại</Text>
                       <FormInput
                         paddingTopContent={4}
-                        height={40}
+                        height={50}
                         onChangeText={this.onChangeTextPhoneNumber}
-                        borderWidth={0.5}
-                        borderColor={'#54CEF5'}
+                        borderWidth={1}
+                        borderColor={'#757575'}
                         keyboardType={'phone-pad'}
-                        borderRadius={5}
+                        borderRadius={100}
                         editable={this.state.isEditPhone}
                         value={this.state.phoneNumber}
-                        placeholder={'Nhập số điện thoại'}
+                        placeholder={'eg.09x....'}
+                      /> */}
+                      <InputPrimary
+                        label={'Số điện thoại'}
+                        placeholder={'09 xxxx'}
+                        value={values.phoneNumber}
+                        onChangeText={handleChange('phoneNumber')}
+                        onBlur={() => setFieldTouched('phoneNumber')}
+                        keyboardType={'phone-pad'}
+                        isValid={(touched.phoneNumber && !errors.phoneNumber)}
+                        error={(touched.phoneNumber && errors.phoneNumber) && errors.phoneNumber}
                       />
                       {this.renderAccountSearch(accountSearch)}
 
@@ -582,7 +701,7 @@ export default class ForgotPasswordScreen extends Component {
                         keyboardType="numeric"
                         defaultValue={this.state.codeOTP}
                         editable={this.state.editableOTP}
-                        // secureTextEntry={this.state.secureTextEntry}
+                      // secureTextEntry={this.state.secureTextEntry}
                       />
                       {
                         !this.state.isLoading
@@ -623,32 +742,68 @@ export default class ForgotPasswordScreen extends Component {
             </View>
             <View>
               <View style={styles.wrapFooter}>
-                <Text style={{ color: '#54CEF5', fontSize: 12, fontFamily: 'Nunito-Regular' }}>Quay lại màn hình </Text>
+                <Text style={{
+                  color: '#757575',
+                  fontSize: 12,
+                  fontFamily: 'Nunito-Regular'
+                }}>
+                  Quay lại màn hình
+                       </Text>
                 <TouchableOpacity onPress={() => {
                   this.props.navigation.pop();
-                  this.props.navigation.navigate('V_SignIn', { statusbar: 'dark-content' });
+                  this.props.navigation.navigate('V_SignIn',
+                    {
+                      statusbar: 'dark-content'
+                    });
                 }}>
                   <Text style={{
-                    color: '#54CEF5', alignSelf: 'center', fontFamily: 'Nunito-Regular',
-                    fontSize: 12, textDecorationLine: 'underline'
+                    color: '#757575',
+                    alignSelf: 'center',
+                    fontFamily: 'Nunito-Regular',
+                    fontSize: 12,
+                    marginLeft: 3,
+                    textDecorationLine: 'underline'
                   }}>Đăng nhập</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </KeyboardAwareScrollView>
           <Toast ref="toast" position={'bottom'} />
-          <LoadingScreen isLoading={this.state.isLoading} bgColor={'transparent'} color={'transparent'} />
+          <LoadingScreen
+            isLoading={this.state.isLoading}
+            bgColor={'transparent'}
+            color={'transparent'}
+          />
         </SafeAreaView>
-        <FreshchatComponent/>
+        <FreshchatComponent />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  txtTitleForm: { marginTop: (height / width), fontFamily: 'Nunito-Bold', fontSize: 14, color: '#222222', lineHeight: 19, marginBottom: 3 },
-  txtTitle: { fontFamily: 'Nunito-Regular', fontSize: 16, color: '#000000', fontWeight: 'bold' },
-  btnBack: { tintColor: '#000', width: 30, height: 30, marginLeft: 10 },
+  txtTitleForm: {
+    marginTop: (height / width),
+    fontFamily: 'Nunito',
+    fontSize: 15,
+    lineHeight: 20,
+    color: '#000',
+    lineHeight: 19,
+    marginBottom: 3,
+    marginLeft: 10,
+  },
+  txtTitle: {
+    fontFamily: 'Nunito',
+    fontSize: 18,
+    lineHeight: 25,
+    color: '#979797',
+  },
+  btnBack: {
+    tintColor: '#000',
+    width: 30,
+    height: 25,
+    marginLeft: 10
+  },
   btnCreate: {
     backgroundColor: '#54CEF5',
     width: width - width / 5,
@@ -660,23 +815,39 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   btnLaylaimk: {
-    backgroundColor: '#54CEF5',
+    backgroundColor: '#2D9CDB',
     width: width - width / 5,
-    height: 40,
+    height: 50,
     alignSelf: 'center',
     marginTop: 20,
-    borderRadius: 5,
+    borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  txtDecsMK: { fontSize: 12, fontFamily: 'Nunito-Regular', color: "#ddd", position: 'absolute', bottom: -20, left: 5 },
-  imageBottom: { width: width, height: width * global.ratioImageBottom },
+  txtDecsMK: {
+    fontSize: 12,
+    fontFamily: 'Nunito-Regular',
+    color: "#ddd",
+    position: 'absolute',
+    bottom: -20,
+    left: 5
+  },
+  imageBottom: {
+    width: width,
+    height: width * global.ratioImageBottom
+  },
   buttonHide: {
     position: 'absolute',
     right: 5,
     bottom: 0
   },
-  wrapFooter: { position: 'absolute', flexDirection: 'row', bottom: 30, alignSelf: 'center', zIndex: 1 },
+  wrapFooter: {
+    position: 'absolute',
+    flexDirection: 'row',
+    bottom: 30,
+    alignSelf: 'center',
+    zIndex: 1
+  },
   textInputContainer: {
     width: width - width / 5,
     marginBottom: 0,
@@ -689,11 +860,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderWidth: 1,
     //  height: width*2/15,
-
   },
   txtErrorEmpty: {
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
     fontSize: 11,
   },
+  textAction: {
+    fontFamily: 'Nunito',
+    fontSize: 18,
+    lineHeight: 21
+  }
 })
