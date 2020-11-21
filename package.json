@@ -28,6 +28,7 @@
     "@react-native-firebase/auth": "^6.3.4",
     "@react-native-firebase/crashlytics": "^6.7.1",
     "@react-native-firebase/messaging": "^6.3.4",
+    "formik": "^2.2.5",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "lodash.debounce": "^4.0.8",
@@ -99,7 +100,8 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.2",
     "rn-fetch-blob": "^0.12.0",
-    "victory-native": "^34.1.0"
+    "victory-native": "^34.1.0",
+    "yup": "^0.30.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
