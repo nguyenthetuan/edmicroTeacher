@@ -12,6 +12,7 @@ import { result } from 'lodash';
 import _ from 'lodash';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import WarningModal from '../../modals/WarningModal';
 
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -60,7 +61,8 @@ export default class ConfigQuestion extends Component {
             question: [],
             hidePopupCreate: true,
             gradeCode: [],
-            subjectCode: []
+            subjectCode: [],
+            numberQuestion: 0,
         }
     }
 
@@ -117,6 +119,16 @@ export default class ConfigQuestion extends Component {
             totalPoint = Math.round(totalPoint * 10000) / 10000;
             this.setState({ eachQSPoint: newPoints, totalPoint: totalPoint });
         }
+        if (data[0] == 'warningWeb') {
+            let number = data[1];
+            this.setState({ numberQuestion: number }, () => {
+                this.displayWarning(true);
+            });
+        }
+    }
+
+    displayWarning(b) {
+        this.refs.warningModal.showModal();
     }
 
     onCheckTotal(newValue) {
@@ -677,6 +689,14 @@ export default class ConfigQuestion extends Component {
                     </TouchableWithoutFeedback>
                 </View>}
                 <Toast ref="toast" position={'center'} />
+                <WarningModal
+                    ref={'warningModal'}
+                    navigation={this.props.navigation}
+                    visible={this.state.visibleModalWarning}
+                    hideModal={() => this.displayWarning(false)}
+                    numberQuestion={this.state.numberQuestion}
+                    subjectId={'TOAN'}
+                />
             </View >
         )
     }

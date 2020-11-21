@@ -58,6 +58,9 @@ const renderHtmlListQuestionCopy = (data, points, renderCheckbox) => {
                 }
                 window.ReactNativeWebView.postMessage("newPoints---"+JSON.stringify(newPoints));
             }
+            function reportBug(numberQuestion) {
+                window.ReactNativeWebView.postMessage("warningWeb---"+numberQuestion);
+            }
         </script>
         <script>
             <!-- ios -->
@@ -132,12 +135,12 @@ const renderListquestion = (data, points, renderCheckbox) => {
                         <div style="margin-bottom: 10px;" id="abcd">${options[j].content}</div>
                 </div>`
         }
-        html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row;    padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">
+        html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row; padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">
             <p style="font-family: Nunito-regular;font-size: 10px;color: #FFF;">ID: ${item.questionNumber}</p>
             <div style="display: flex; flex-direction: row;">
                 <p style="font-family: Nunito-regular;font-size: 13px;color: #E0E0E0;margin-left: 16px;">Tạo bởi:${item.author}</p>
             </div>
-                <span style="padding-right: 5px, display: flex;flex-direction: row;" onclick="">
+                <span style="padding-right: 5px, display: flex;flex-direction: row;" onclick="reportBug(${item.questionNumber})">
                 <span style="color:#054B9E;font-size: 11px; margin-right: 3px;">Báo lỗi</span>
                 <i class="fa fa-warning" style="color:#FFF;font-size: 14px;"></i>
             </span>
