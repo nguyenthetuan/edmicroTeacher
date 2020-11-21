@@ -5,18 +5,23 @@ import AppIcon from '../../../utils/AppIcon';
 import TabBarTop from './TabBarTop';
 const { width, height } = Dimensions.get('window');
 export default class MissionDetailScreen extends Component {
+    goBack = () => {
+        this.props.navigation.pop(2);
+    }
     render() {
         const { isLoading, } = this.props;
         return (
             <View style={styles.contain}>
-                <SafeAreaView />
-                <HeaderNavigation color={'#FFF'} navigation={this.props.navigation} />
-                <Image source={AppIcon.pic_mission}
-                    resizeMode={'contain'}
-                    style={styles.styImgHeader} />
+                <View style={{ backgroundColor: '#2D9CDB' }}>
+                    <SafeAreaView />
+                    <HeaderNavigation color={'#FFF'} navigation={this.props.navigation} goBack={this.goBack} />
+                    <Image source={AppIcon.pic_mission}
+                        resizeMode={'contain'}
+                        style={styles.styImgHeader} />
+                </View>
                 {
                     isLoading ?
-                        <ActivityIndicator style={styles.styLoading} color={'#fff'} />
+                        <ActivityIndicator style={styles.styLoading} color={'#000'} />
                         :
                         <TabBarTop screenProps={this.props} />
                 }
@@ -28,7 +33,7 @@ export default class MissionDetailScreen extends Component {
 const styles = StyleSheet.create({
     contain: {
         flex: 1,
-        backgroundColor: '#2D9CDB'
+        backgroundColor: '#FFF'
     },
     styImgHeader: {
         alignSelf: 'center',
@@ -42,7 +47,7 @@ const styles = StyleSheet.create({
     },
     styLoading: {
         position: 'absolute',
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        width, height
+        width, height,
+        top: '15%'
     }
 })

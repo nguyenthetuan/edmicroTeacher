@@ -362,6 +362,7 @@ export default class DropdownStudent extends Component {
             key,
             accessible,
             onPress: () => this._onRowPress(item, index, separators),
+            disabled: this.props.status
         };
         if (TOUCHABLE_ELEMENTS.find(name => name === row.type.displayName)) {
             const props = { ...row.props };

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   ScrollView,
   Modal,
+  Platform
 } from 'react-native';
 import {
   RichEditor,
@@ -39,17 +40,17 @@ export default class RichTextExample extends Component {
   }
 
   onShow = htmlContent => {
-    this.setState({isVisible: true, htmlContent});
+    this.setState({ isVisible: true, htmlContent });
   };
 
   onDone = () => {
-    this.setState({disabled: !this.state.disabled});
+    this.setState({ disabled: !this.state.disabled });
   };
 
   onSend = async () => {
     let html = await this.richText.getContentHtml();
     console.log('RichTextExample -> onDone -> html', html);
-    await this.setState({isVisible: false});
+    await this.setState({ isVisible: false });
     this.props.onDone(html);
   };
 
@@ -63,18 +64,18 @@ export default class RichTextExample extends Component {
   }
 
   render() {
-    const {contentStyle, disabled, isVisible, htmlContent} = this.state;
-    const {backgroundColor, color, placeholderColor} = contentStyle;
-    const themeBg = {backgroundColor};
+    const { contentStyle, disabled, isVisible, htmlContent } = this.state;
+    const { backgroundColor, color, placeholderColor } = contentStyle;
+    const themeBg = { backgroundColor };
     return (
-      <Modal visible={isVisible} style={{flex: 1}}>
+      <Modal visible={isVisible} style={{ flex: 1 }}>
         <SafeAreaView />
         <View style={styles.container}>
           <View style={styles.styWrap}>
             <TouchableOpacity style={[styles.styWrapBtn]} onPress={this.onSend}>
               <Text style={styles.styTxtBtn}>Xong</Text>
             </TouchableOpacity>
-            <View style={{flex: 1}} />
+            <View style={{ flex: 1 }} />
             {/* <TouchableOpacity style={styles.styWrapBtn} onPress={this.onDone}>
               <Text style={styles.styTxtBtn}>{disabled ? 'Sửa' : 'Xong'}</Text>
             </TouchableOpacity> */}
@@ -87,7 +88,7 @@ export default class RichTextExample extends Component {
               containerStyle={themeBg}
               ref={r => (this.richText = r)}
               style={[styles.rich, themeBg]}
-              placeholder={'please input content'}
+              placeholder={'Viết mô tả cho nhiệm vụ này...'}
               initialContentHTML={htmlContent}
               disabled={disabled}
             />
@@ -98,7 +99,7 @@ export default class RichTextExample extends Component {
             getEditor={() => this.richText}
             iconTint={color}
             selectedIconTint={'#2095F2'}
-            selectedButtonStyle={{backgroundColor: 'transparent'}}
+            selectedButtonStyle={{ backgroundColor: 'transparent' }}
             onPressAddImage={this.onPressAddImage}
             actions={[
               defaultActions[1],
@@ -110,21 +111,21 @@ export default class RichTextExample extends Component {
               actions.heading4,
             ]} // default defaultActions
             iconMap={{
-              [actions.setStrikethrough]: ({tintColor}) => (
+              [actions.setStrikethrough]: ({ tintColor }) => (
                 <IconFontAwesome
                   name={'strikethrough'}
-                  style={[styles.tib, {color: tintColor}]}
+                  style={[styles.tib, { color: tintColor }]}
                 />
               ),
-              [actions.heading1]: ({tintColor}) => (
-                <Text style={[styles.tib, {color: tintColor}]}>H1</Text>
+              [actions.heading1]: ({ tintColor }) => (
+                <Text style={[styles.tib, { color: tintColor }]}>H1</Text>
               ),
-              [actions.heading4]: ({tintColor}) => (
-                <Text style={[styles.tib, {color: tintColor}]}>H3</Text>
+              [actions.heading4]: ({ tintColor }) => (
+                <Text style={[styles.tib, { color: tintColor }]}>H3</Text>
               ),
             }}
           />
-          <KeyboardSpacer />
+          {Platform.OS == 'ios' && <KeyboardSpacer />}
         </View>
       </Modal>
     );
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
   tib: {
     textAlign: 'center',
     fontSize: 18,
-    fontFamily:'Nunito-Regular'
+    fontFamily: 'Nunito-Regular'
   },
   styWrap: {
     flexDirection: 'row',

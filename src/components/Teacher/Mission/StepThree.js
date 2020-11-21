@@ -9,11 +9,11 @@ import {
   Dimensions,
   SectionList,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Toast, { DURATION } from 'react-native-easy-toast';
 import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import ItemSectionListPrac from './ItemSectionListPrac';
@@ -55,6 +55,7 @@ export default class StepThree extends Component {
   }
 
   handleNextStepFour = async () => {
+    Keyboard.dismiss();
     // this.props.navigation.navigate('StepFour');
     // this.props.screenProps.handleNextStep(3);
     // return;
@@ -96,11 +97,13 @@ export default class StepThree extends Component {
     if (response.status == 0) {
       this.props.navigation.navigate('StepFour');
       this.props.screenProps.handleNextStep(3);
+      this.props.screenProps.getAssignmentByMission({ token: this.token, _id: response._id });
       this.setState({ isLoading: false });
     }
   };
 
   handleNextStepTwo = () => {
+    Keyboard.dismiss();
     this.props.navigation.navigate('StepTwo');
     this.props.screenProps.handleNextStep(1);
   }
@@ -153,10 +156,11 @@ export default class StepThree extends Component {
       .value();
     return (
       <>
-        <Text>Tự luyện</Text>
-        <View>
+        <Text style={styles.styTxtLabel}>Tự luyện</Text>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.styWrapHeader}>
-            <Text style={[styles.styName, { flex: 1 }]}>Tên nhiệm vụ</Text>
+            <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
+            <View style={{ flex: 1 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={[styles.styName, { flexGrow: 1 }]}>Số lần</Text>
               <Text style={[styles.styName, { flexGrow: 1 }]}> | </Text>
@@ -191,8 +195,8 @@ export default class StepThree extends Component {
       .value();
     return (
       <>
-        <Text>Kiểm tra</Text>
-        <View>
+        <Text style={styles.styTxtLabel}>Kiểm tra</Text>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flexDirection: 'row' }}>
@@ -272,6 +276,7 @@ export default class StepThree extends Component {
                 html={htmlContent}
                 imagesMaxWidth={Dimensions.get('window').width}
               />
+              {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
             </TouchableOpacity>
           </View>
 
@@ -434,29 +439,8 @@ const styles = StyleSheet.create({
     width,
     height,
     top: -100
+  },
+  styTxtPlacehoder: {
+    color: '#999',
   }
 });
-
-const htmlContent = `
-    <h1>This HTML snippet is now rendered with native components !</h1>
-    <h2>Enjoy a webview-free and blazing fast application</h2>
-    <em style="textAlign: center;">Look at how happy this native cat is</em>
-`;
-const DATA = [
-  {
-    title: 'Main dishes',
-    data: ['Pizza', 'Burger', 'Risotto'],
-  },
-  {
-    title: 'Sides',
-    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
-  },
-  {
-    title: 'Drinks',
-    data: ['Water', 'Coke', 'Beer'],
-  },
-  {
-    title: 'Desserts',
-    data: ['Cheese Cake', 'Ice Cream'],
-  },
-];

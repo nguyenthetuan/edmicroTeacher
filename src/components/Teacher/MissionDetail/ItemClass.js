@@ -56,7 +56,7 @@ export default class ItemClass extends Component {
                 const response = await apiMission.assignedMission({ token, params });
                 if (response && response.success) {
                     this.setState({ status: 1 });
-                    this.props.onToast(response.message);
+                    this.props.onToast('Giao nhiêm vụ thành công');
                     setTimeout(() => {
                         this.props.getListMission({ token });
                         this.props.getAssignmentByMission({ token, _id: missionId });
@@ -85,6 +85,7 @@ export default class ItemClass extends Component {
                     <View style={styles.viewDate}>
                         <Text style={styles.txtTitleItemContent}>Kết thúc: </Text>
                         <TouchableOpacity
+                            disabled={status}
                             onPress={this.showDatePicker}
                             style={styles.btnDate}>
                             <Text numberOfLines={1} style={styles.txtContentItem}>
@@ -99,6 +100,7 @@ export default class ItemClass extends Component {
                             style={{ width: width - 32 - 54 - 80, height: 25 }}
                             dropdownStyle={{ width: width - 32 - 54 - 80 }}
                             options={item.students}
+                            status={status}
                         />
                     </View>
                     {status ?

@@ -11,6 +11,7 @@ import {
   Keyboard,
   TextInput,
   Dimensions,
+  Platform
 } from 'react-native';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
@@ -26,7 +27,7 @@ export default class StepOne extends Component {
     super(props);
     this.inputRefs = {};
     this.state = {
-      htmlContent,
+      htmlContent: '',
       valueClass: '',
       valueSubject: '',
       nameMission: '',
@@ -46,7 +47,7 @@ export default class StepOne extends Component {
 
   reset = () => {
     this.setState({
-      htmlContent,
+      htmlContent: '',
       valueClass: '',
       valueSubject: '',
       nameMission: '',
@@ -67,8 +68,8 @@ export default class StepOne extends Component {
   };
 
   handleNextStepTwo = () => {
+    Keyboard.dismiss();
     const { valueClass, valueSubject, nameMission, htmlContent } = this.state;
-    const gradeId = `C${valueClass.split(' ')[1]}`;
     if (
       _.isEmpty(valueClass) ||
       _.isEmpty(valueSubject) ||
@@ -77,6 +78,7 @@ export default class StepOne extends Component {
       this.refToast.show('Bạn chưa điền đầy đủ thông tin', 3000);
       return;
     }
+    const gradeId = `C${valueClass.split(' ')[1]}`;
     let { listSubject } = this.props.screenProps;
     let subjectId = '';
     subjectId = listSubject.find(item => item.name == valueSubject).code;
@@ -117,77 +119,79 @@ export default class StepOne extends Component {
       ...item,
     }));
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
-        <TextInput
-          placeholder={'Tên nhiệm vụ'}
-          placeholderTextColor={'#ccc'}
-          style={styles.styWrapInput}
-          value={nameMission}
-          onChangeText={nameMission => this.setState({ nameMission })}
-        />
+      <View style={styles.container}>
+        <ScrollView style={[styles.container, { paddingHorizontal: 0 }]}>
+          <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
+          <TextInput
+            placeholder={'Tên nhiệm vụ'}
+            placeholderTextColor={'#ccc'}
+            style={styles.styWrapInput}
+            value={nameMission}
+            onChangeText={nameMission => this.setState({ nameMission })}
+          />
 
-        <Text>Khối</Text>
-        <View style={styles.viewRNPicker}>
-          <RNPickerSelect
-            placeholder={{
-              label: '--- Chọn khối lớp ---',
-              value: null,
-            }}
-            items={listClass}
-            style={{ ...pickerSelectStyles }}
-            onValueChange={value => {
-              this.setState({ valueClass: value });
-            }}
-            value={valueClass}
-            ref={el => {
-              this.inputRefs.picker = el;
-            }}
-            hideIcon={true}
-          />
-          <Icon
-            name={'angle-down'}
-            size={25}
-            color={'#000'}
-            style={styles.icon}
-          />
-        </View>
+          <Text>Khối</Text>
+          <View style={styles.viewRNPicker}>
+            <RNPickerSelect
+              placeholder={{
+                label: '--- Chọn khối lớp ---',
+                value: null,
+              }}
+              items={listClass}
+              style={{ ...pickerSelectStyles }}
+              onValueChange={value => {
+                this.setState({ valueClass: value });
+              }}
+              value={valueClass}
+              ref={el => {
+                this.inputRefs.picker = el;
+              }}
+              hideIcon={true}
+            />
+            <Icon
+              name={'angle-down'}
+              size={25}
+              color={Platform.OS == 'android' ? '#FFF' : '#000'}
+              style={styles.icon}
+            />
+          </View>
 
-        <Text>Môn học</Text>
-        <View style={styles.viewRNPicker}>
-          <RNPickerSelect
-            placeholder={{
-              label: '--- Chọn môn học ---',
-              value: null,
-            }}
-            items={listSubject}
-            style={{ ...pickerSelectStyles }}
-            onValueChange={value => {
-              this.setState({ valueSubject: value });
-            }}
-            value={valueSubject}
-            ref={el => {
-              this.inputRefs.picker = el;
-            }}
-            hideIcon={true}
-          />
-          <Icon
-            name={'angle-down'}
-            size={25}
-            color={'#000'}
-            style={styles.icon}
-          />
-        </View>
+          <Text>Môn học</Text>
+          <View style={styles.viewRNPicker}>
+            <RNPickerSelect
+              placeholder={{
+                label: '--- Chọn môn học ---',
+                value: null,
+              }}
+              items={listSubject}
+              style={{ ...pickerSelectStyles }}
+              onValueChange={value => {
+                this.setState({ valueSubject: value });
+              }}
+              value={valueSubject}
+              ref={el => {
+                this.inputRefs.picker = el;
+              }}
+              hideIcon={true}
+            />
+            <Icon
+              name={'angle-down'}
+              size={25}
+              color={Platform.OS == 'android' ? '#FFF' : '#000'}
+              style={styles.icon}
+            />
+          </View>
 
-        <Text>Mô tả</Text>
-        <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
-          <HTML
-            html={htmlContent}
-            imagesMaxWidth={Dimensions.get('window').width}
-            baseFontStyle={{ color: '#000' }}
-          />
-        </TouchableOpacity>
-
+          <Text>Mô tả</Text>
+          <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
+            <HTML
+              html={htmlContent}
+              imagesMaxWidth={Dimensions.get('window').width}
+              baseFontStyle={{ color: '#000' }}
+            />
+            {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
+          </TouchableOpacity>
+        </ScrollView>
         <TouchableOpacity
           style={styles.styBtnNext}
           onPress={this.handleNextStepTwo}>
@@ -205,7 +209,7 @@ export default class StepOne extends Component {
           onDone={this.onDone}
         />
         <SafeAreaView />
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -230,6 +234,7 @@ const styles = StyleSheet.create({
     borderColor: '#efefef',
     borderRadius: 5,
     margin: 10,
+    padding: 10,
     minHeight: 200
   },
   viewRNPicker: {
@@ -258,13 +263,14 @@ const styles = StyleSheet.create({
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
   },
+  styTxtPlacehoder: {
+    color: '#999',
+  }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    paddingTop: 13,
     paddingHorizontal: 20,
-    paddingBottom: 12,
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',
@@ -280,18 +286,14 @@ const pickerSelectStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderRadius: 5,
     backgroundColor: '#446BA0',
-    color: '#000',
+    color: '#FFF',
     fontFamily: 'Nunito-Regular',
     borderWidth: 1,
     margin: 10,
     borderWidth: 1,
     borderColor: '#999',
-  },
+  }
 });
-
-const htmlContent = `
-    <h4 style="font-weight: 300;">Viết mô tả cho nhiệm vụ này...</h4>
-`;
 
 const listClass = [];
 

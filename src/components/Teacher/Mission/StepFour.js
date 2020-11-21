@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import AppIcon from '../../../utils/AppIcon';
 import dataHelper from '../../../utils/dataHelper';
+import Global from '../../../utils/Globals';
 const { width } = Dimensions.get('window');
 export default class StepFour extends Component {
 
@@ -15,8 +16,20 @@ export default class StepFour extends Component {
     }
 
     createMissionOther = () => {
+        this.reset();
         this.props.navigation.navigate('StepOne');
         this.props.screenProps.handleNextStep(0);
+    }
+
+    assignedMission = () => {
+        this.reset();
+        this.props.screenProps.navigation.navigate('MissionDetail', { statusbar: 'light-content' });
+    }
+
+    reset = () => {
+        Global.resetDataTestAdd();
+        Global.resetDataPracticeAdd();
+        this.props.screenProps.resetDataMission();
     }
 
     render() {
@@ -28,7 +41,7 @@ export default class StepFour extends Component {
                     <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#28a745' }]} onPress={this.createMissionOther}>
                         <Text style={styles.styTxtBtn}>Tạo nhiệm vụ khác</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.styBtn}>
+                    <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                         <Text style={styles.styTxtBtn}>Giao nhiệm vụ vừa tạo</Text>
                     </TouchableOpacity>
                 </View>
