@@ -23,12 +23,15 @@ export const singInValidate = yup.object().shape({
 export const singUpValidate = yup.object().shape({
     phoneNumber: phoneNumber,
     password: password,
-    rePassword: rePassword,
+    repassword: rePassword,
     displayName: displayName
 });
 
 export const forgotPasswordValidate = yup.object().shape({
+    password: password,
+    repassword: rePassword,
+});
+
+export const phoneNumberScheme = yup.object().shape({
     phoneNumber: phoneNumber,
-    // password: password,
-    // rePassword: rePassword
 });

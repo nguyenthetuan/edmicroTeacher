@@ -11,11 +11,9 @@ import {
   Dimensions,
   FlatList
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
-Icon.loadFont();
-import IconEntypo from 'react-native-vector-icons/Entypo';
-IconEntypo.loadFont();
+import { Formik } from 'formik';
+import InputPrimary from '../common-new/InputPrimary';
 import ApiUser from '../../services/apiUserHelper';
 import RippleButton from '../libs/RippleButton';
 import AppIcon from '../../utils/AppIcon';
@@ -36,6 +34,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AsyncStorage from '@react-native-community/async-storage';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import FreshchatComponent from '../../utils/FreshchatComponent';
+import { phoneNumberScheme, forgotPasswordValidate } from '../../utils/SchemaValidate';
+import { SizedBox } from '../common-new/Bootstrap';
 
 const { width, height } = Dimensions.get('window');
 export default class ForgotPasswordScreen extends Component {
@@ -67,6 +67,9 @@ export default class ForgotPasswordScreen extends Component {
       editableOTP: true,
       secureTextEntry: false
     };
+    this.phoneNumber = '';
+    this.password = '';
+    this.repassword = '';
     this.verificationId = null;
   }
 
@@ -132,10 +135,12 @@ export default class ForgotPasswordScreen extends Component {
     return result;
   }
 
-  verifyPhone() {
-    const { phoneNumber } = this.state;
+  verifyPhone(values) {
+    this.password = values.password;
+    this.repassword = values.repassword;
+    const phoneNumber = this.phoneNumber;
     const phone = Common.formatPhoneNumber(phoneNumber);
-    this._handleValidation() && this.checkPhoneNumber(phone);
+    this.checkPhoneNumber(phone);
   }
 
   loginWithPhone = async (phone) => {
@@ -246,8 +251,9 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   forgotAction() {
-    const { password, repassword, codeOTP, confirmResult, projectId, accountSelected } = this.state;
-    const phone = this.state.phoneNumber;
+    const { codeOTP, confirmResult, projectId, accountSelected } = this.state;
+    const password = this.password;
+    const phone = this.phoneNumber;
     const phoneNumber = Common.convertPhoneNumber(phone);
     if (codeOTP.trim().length <= 0) {
       this.setState({ errors: 'Mã OTP không được để trống !' });
@@ -382,8 +388,9 @@ export default class ForgotPasswordScreen extends Component {
     }
   }
 
-  handleSearchAccount = () => {
-    const { phoneNumber } = this.state;
+  handleSearchAccount = (values) => {
+    const { phoneNumber } = values;
+    this.phoneNumber = phoneNumber;
     if (phoneNumber.length < 10 || parseInt(phoneNumber) < 0 || isNaN(parseInt(phoneNumber))) {
       this.setState({ errors: 'Số điện thoại không hợp lệ !', isLoading: false });
       return;
@@ -515,71 +522,62 @@ export default class ForgotPasswordScreen extends Component {
     } = this.state;
     if (!_.isEmpty(accountSearch)) {
       return (
-        <View>
-          {errorEmpty.phoneNumber &&
-            (<View><Text style={styles.txtErrorEmpty}>
-              {errorEmpty.phoneNumber}
-            </Text></View>)}
-          <Text style={[styles.txtTitleForm]}>Mật khẩu</Text>
-          <FormInput
-            paddingTopContent={4}
-            height={40}
-            onChangeText={text => this.setState({
-              password: text,
-              errorEmpty: [],
-              errors: ''
-            })}
-            borderWidth={1}
-            borderColor={'#757575'}
-            borderRadius={100}
-            value={password}
-            placeholder={'Nhập Mật khẩu'}
-            isShowPassword={true}
-            actionIcon={AppIcon.icon_eye}
-            secureTextEntry={statusPassWord}
-            isSecureTextEntry={statusPassWord}
-            showPassword={() => this._showPassword(1)}
-            onSubmitEditing={Keyboard.dismiss}
-          />
-          {errorEmpty.password && (<View><Text style={styles.txtErrorEmpty} >{errorEmpty.password}</Text></View>)}
-          <Text style={[styles.txtTitleForm, { marginTop: 20 }]}>Xác thực mật khẩu</Text>
-          <FormInput
-            paddingTopContent={4}
-            height={45}
-            onChangeText={text => this.setState({
-              repassword: text,
-              errorEmpty: [],
-              errors: ''
-            })}
-            borderWidth={1}
-            borderColor={'#757575'}
-            borderRadius={100}
-            value={repassword}
-            placeholder={'Nhập lại Mật khẩu'}
-            isShowPassword={true}
-            actionIcon={AppIcon.icon_eye}
-            secureTextEntry={statusRePassWord}
-            isSecureTextEntry={statusRePassWord}
-            showPassword={() => this._showPassword(2)}
-            onSubmitEditing={Keyboard.dismiss}
-          />
-          {errorEmpty.repassword && (<View><Text style={styles.txtErrorEmpty} >{errorEmpty.repassword}</Text></View>)}
-          {
-            !this.state.isLoading
-              ?
-              <RippleButton
-                color={'#ddd'}
-                onPress={() => this.verifyPhone()}
-                style={styles.btnLaylaimk}>
-                <Text style={authStyle.textAction}>Đổi mật khẩu</Text>
-              </RippleButton>
-              :
-              <View style={{ height: 20, marginTop: 30, width: 320 }}>
-                <DotIndicator color={'#54CEF5'} size={6} count={8} />
-              </View>
-          }
+        <Formik
+          initialValues={{
+            password: __DEV__ ? this.state.password : this.state.password,
+            repassword: __DEV__ ? this.state.repassword : this.state.repassword,
+            phoneNumber: this.phoneNumber
+          }}
+          enableReinitialize={true}
+          onSubmit={(values, { resetForm }) => this.verifyPhone(values, resetForm)}
+          validationSchema={forgotPasswordValidate}
+        >
+          {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+            <View>
+              {errorEmpty.phoneNumber &&
+                (<View><Text style={styles.txtErrorEmpty}>
+                  {errorEmpty.phoneNumber}
+                </Text></View>)}
+              <SizedBox height={20} />
+              <InputPrimary
+                label={'Mật khẩu'}
+                placeholder={'Nhập Mật khẩu'}
+                value={values.password}
+                onChangeText={handleChange('password')}
+                onBlur={() => setFieldTouched('password')}
+                secureTextEntry
+                isValid={(touched.password && !errors.password)}
+                error={(touched.password && errors.password) && errors.password}
+              />
+              <InputPrimary
+                label={'Nhập lại Mật khẩu'}
+                placeholder={'Nhập lại Mật khẩu'}
+                value={values.repassword}
+                onChangeText={handleChange('repassword')}
+                onBlur={() => setFieldTouched('repassword')}
+                secureTextEntry
+                isValid={(touched.repassword && !errors.repassword)}
+                error={(touched.repassword && errors.repassword) && errors.repassword}
+              />
+              {
+                !this.state.isLoading
+                  ?
+                  <RippleButton
+                    color={'#ddd'}
+                    // onPress={() => this.verifyPhone()}
+                    onPress={handleSubmit}
+                    style={styles.btnLaylaimk}>
+                    <Text style={authStyle.textAction}>Đổi mật khẩu</Text>
+                  </RippleButton>
+                  :
+                  <View style={{ height: 20, marginTop: 30, width: 320 }}>
+                    <DotIndicator color={'#54CEF5'} size={6} count={8} />
+                  </View>
+              }
 
-        </View>
+            </View>
+          )}
+        </Formik>
       )
     }
     return;
@@ -650,39 +648,37 @@ export default class ForgotPasswordScreen extends Component {
                 }]}>{this.state.errors}</Text>
                 {
                   !this.state.isVerify ?
-                    <View style={{ width: width - width / 5, alignSelf: 'center' }}>
-                      <Text style={styles.txtTitleForm}>Số điện thoại</Text>
-                      <FormInput
-                        paddingTopContent={4}
-                        height={50}
-                        onChangeText={this.onChangeTextPhoneNumber}
-                        borderWidth={1}
-                        borderColor={'#757575'}
-                        keyboardType={'phone-pad'}
-                        borderRadius={100}
-                        editable={this.state.isEditPhone}
-                        value={this.state.phoneNumber}
-                        placeholder={'eg.09x....'}
-                      />
-                      {/* <InputPrimary
-                        label={'Số điện thoại'}
-                        placeholder={'09 xxxx'}
-                        value={values.phoneNumber}
-                        onChangeText={handleChange('phoneNumber')}
-                        onBlur={() => setFieldTouched('phoneNumber')}
-                        keyboardType={'phone-pad'}
-                        isValid={(touched.phoneNumber && !errors.phoneNumber)}
-                        error={(touched.phoneNumber && errors.phoneNumber) && errors.phoneNumber}
-                      /> */}
-                      {this.renderAccountSearch(accountSearch)}
-
-                      {_.isEmpty(accountSearch) && <RippleButton
-                        color={'#ddd'}
-                        onPress={this.handleSearchAccount}
-                        style={styles.btnLaylaimk}>
-                        <Text style={textAction}>Tìm kiếm tài khoản</Text>
-                      </RippleButton>}
-                    </View>
+                    <Formik
+                      initialValues={{
+                        phoneNumber: __DEV__ ? '0367851356' : this.state.phoneNumber,
+                      }}
+                      enableReinitialize={true}
+                      onSubmit={(values, { resetForm }) => this.handleSearchAccount(values, resetForm)}
+                      validationSchema={phoneNumberScheme}
+                    >
+                      {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+                        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+                          <InputPrimary
+                            label={'Số điện thoại'}
+                            placeholder={'eg.09x....'}
+                            value={values.phoneNumber}
+                            onChangeText={handleChange('phoneNumber')}
+                            onBlur={() => setFieldTouched('phoneNumber')}
+                            isValid={(touched.phoneNumber && !errors.phoneNumber)}
+                            error={(touched.phoneNumber && errors.phoneNumber) && errors.phoneNumber}
+                            editable={this.state.isEditPhone}
+                            keyboardType={'phone-pad'}
+                          />
+                          {this.renderAccountSearch(accountSearch)}
+                          {_.isEmpty(accountSearch) && <RippleButton
+                            color={'#ddd'}
+                            onPress={handleSubmit}
+                            style={styles.btnLaylaimk}>
+                            <Text style={textAction}>Tìm kiếm tài khoản</Text>
+                          </RippleButton>}
+                        </View>
+                      )}
+                    </Formik>
                     :
                     <View style={{ paddingHorizontal: width / 5 }}>
                       <Text style={{

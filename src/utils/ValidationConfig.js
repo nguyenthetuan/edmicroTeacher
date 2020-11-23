@@ -42,10 +42,10 @@ export const password = yup
     .string()
     .min(Min_Leng_Password, getMinLengMessage(PASSWORD, Min_Leng_Password))
     .max(Max_Leng_Password, getMaxLengMessage(PASSWORD, Max_Leng_Password))
-    .matches(
-        REG_MATH_UPPERCASE,
-        getMatchesIncludeUpperCase(PASSWORD)
-    )
+    // .matches(
+    //     REG_MATH_UPPERCASE,
+    //     getMatchesIncludeUpperCase(PASSWORD)
+    // )
     .required(getRequireMessage(PASSWORD));
 
 export const passwordSignIn = yup
@@ -65,10 +65,10 @@ export const confirmPassword = yup
     .string()
     .min(Min_Leng_Password, getMinLengMessage(CONFIRMPASSWORD, Min_Leng_Password))
     .max(Max_Leng_Password, getMaxLengMessage(CONFIRMPASSWORD, Max_Leng_Password))
-    .matches(
-        REG_MATH_UPPERCASE,
-        getMatchesIncludeUpperCase(CONFIRMPASSWORD)
-    )
+    // .matches(
+    //     REG_MATH_UPPERCASE,
+    //     getMatchesIncludeUpperCase(CONFIRMPASSWORD)
+    // )
     .required(getRequireMessage(CONFIRMPASSWORD));
 
 export const phoneNumber = yup.string()
