@@ -113,8 +113,9 @@ export default class itemClass extends Component {
                 style={styles.viewInfo}>
                 <View style={{ justifyContent: 'space-between' }}>
                   <View style={{ flexDirection: 'row' }}>
-                    <Image
-                      source={require('../../../asserts/icon/edu.png')}
+                    <FastImage
+                      source={Common.getIconSubject(item.subjectCode)}
+                      style={{ width: 21, height: 21, borderRadius: 20 }}
                     />
                     <Text style={styles.txtInfoDetail}>Môn Học</Text>
                     <Text style={[styles.indexOne, { marginLeft: 30 }]}>
@@ -124,6 +125,7 @@ export default class itemClass extends Component {
                   <View style={{ flexDirection: 'row', marginTop: 13 }}>
                     <Image
                       source={require('../../../asserts/icon/icon_excerciseClass.png')}
+                      style={{ width: 20, height: 20 }}
                     />
                     <Text style={styles.txtInfoDetail}>Số Bài Tập</Text>
                     <Text style={styles.txtFour}>{item.totalStudent}</Text>
@@ -131,16 +133,22 @@ export default class itemClass extends Component {
                 </View>
 
                 <View style={{ justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flexDirection: 'row', justifyContent:'space-between' }}>
                     <Image
                       source={require('../../../asserts/icon/icon_gradeClass.png')}
+                      style={{ width: 20, height: 20 }}
                     />
-                    <Text style={styles.txtRight}>Khối Lớp  </Text>
+                    <Text style={styles.txtRight}>Khối Lớp </Text>
                     <Text style={styles.txtThree}>{item.totalAssign}</Text>
                   </View>
-                  <View style={{ flexDirection: 'row', marginTop: 13 }}>
+                  <View style={{
+                    flexDirection: 'row',
+                    marginTop: 13,
+                    justifyContent: 'space-between'
+                  }}>
                     <Image
                       source={require('../../../asserts/icon/icon_popuClass.png')}
+                      style={{ width: 20, height: 20 }}
                     />
                     <Text style={styles.txtRightFoot}>Sĩ Số</Text>
                     <Text style={styles.indexTwo}>{item.rateSubmit} %</Text>
@@ -239,20 +247,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 10,
+    alignSelf: 'center',
   },
   txtRight: {
-    color: '#000',
+    color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 5,
     marginRight: 16,
+    alignSelf: 'center'
   },
   txtRightFoot: {
-    color: '#000',
+    color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 5,
     marginRight: 10,
+    alignSelf: 'center'
   },
   indexOne: {
     color: '#2D9CDB',
@@ -265,6 +276,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 25,
+    alignSelf: 'center'
   },
   txtFour: {
     color: '#FF6213',
@@ -285,7 +297,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 3,
   },
-  viewInfo:{
+  viewInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,

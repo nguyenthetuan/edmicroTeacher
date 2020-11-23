@@ -70,6 +70,11 @@ export default class ItemClass extends Component {
         }
     }
 
+    goToMissionStatisticsScreen = () => {
+        const { item } = this.props;
+        this.props.navigation.navigate('MissionStatisticsScreen', { _id: item.assignId });
+    }
+
     render() {
         const { item } = this.props;
         const dataItem = {
@@ -105,7 +110,7 @@ export default class ItemClass extends Component {
                     </View>
                     {status ?
                         // <TouchableOpacity
-                        //     onPress={this.onAssignment}
+                        //     onPress={this.goToMissionStatisticsScreen}
                         //     style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
                         //     <Text style={styles.txtAssignment}>Xem tiến độ</Text>
                         //     <Icon name={'check'} color={'#fff'} size={20} />

@@ -15,15 +15,15 @@ export default function LevelCompletion(props) {
     return Math.floor(number / 60) + 'm ' + Math.floor(number % 60) + 's';
   }
 
-  renderChartCircle = () => {
+  const renderChartCircle = () => {
     const { data } = props.screenProps;
     let count = 0;
     let total = 0;
 
-    if (data && data.data && data.data.students) {
-      total = data.data.students.length;
-      data.data.students.map(e => {
-        if (e.status === 4 || e.status === 6) {
+    if (data && data.length > 0) {
+      total = data.length;
+      data.map(e => {
+        if (e.data?.status) {
           count++;
         }
       })
@@ -99,31 +99,65 @@ export default function LevelCompletion(props) {
     });
   }
 
-  renderChartLevelComplete = () => {
+  const renderChartLevelComplete = () => {
     const { data } = props.screenProps;
     let dataChart = [];
     let avgPercentComplete = 0;
-    let avgTimeComplete = 0;
-
-    if (data && data.data && data.data.students) {
-      let totalPercentComplete = 0;
-      let totalTimeComplete = 0;
-
-      dataChart = data.data.students.map(e => {
-        let percentComplete = e.point / e.totalPoint * 100;
-        let averageTime = e.duration;
-        totalPercentComplete += percentComplete;
-        totalTimeComplete += averageTime;
-
-        return {
-          name: e.nameStudent,
-          percentComplete,
-          averageTime
+    if (data && data.length > 0) {
+      let totalPercentCompletePractice = 0;
+      let totalPercentCompleteTest = 0;
+      let name = '';
+      let id = '';
+      const dataChartTemp1 = data.map(e => {
+        if (e.data.listProblem.length > 0) {
+          const { listProblem } = e.data;
+          listProblem.map(item => {
+            if (item.isDone) {
+              totalPercentCompletePractice += 1;
+              name = item.problemName;
+              id = item.problemId;
+            }
+          })
         }
-      })
+        return {
+          id,
+          name,
+          totalPercentCompletePractice,
+        }
+      });
 
-      avgPercentComplete = (totalPercentComplete / data.data.students.length).toFixed(2);
-      avgTimeComplete = totalTimeComplete / data.data.students.length;
+      const dataChartTemp2 = data.map(e => {
+        if (e.data.listTest.length > 0) {
+          const { listTest } = e.data;
+          listTest.map(item => {
+            if (item.isDone) {
+              totalPercentCompleteTest += 1;
+              name = item.testName;
+              id = item.testId;
+            }
+          })
+        }
+        return {
+          id,
+          name,
+          totalPercentCompleteTest,
+        }
+      });
+
+      // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp1);
+      // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp2);
+
+      // avgPercentComplete = (totalPercentComplete / data.length).toFixed(2);
+
+      // let result = _.chain([...dataChartTemp1, ...dataChartTemp2])
+      //   // Group the elements of Array based on color property
+      //   .groupBy('id')
+      //   // key is group's name (color), value is the array of objects
+      //   .map((value, key) => ({ title: value[0].name, data: value }))
+      //   .value();
+
+      // console.log('result', result);
+
     }
 
     const widthChart = width / 4 * (dataChart.length + 0.5);
@@ -145,7 +179,7 @@ export default function LevelCompletion(props) {
               ],
               width: 220,
               height: 14
-            }}>Mức độ hoàn thành (%)</Text>
+            }}>Tỷ lệ hoàn thành nhiệm vụ(%)</Text>
           </View>
           <View style={{
             flex: 1,
@@ -268,20 +302,6 @@ export default function LevelCompletion(props) {
               }
             </View>}
           </View>
-          <View style={{ width: 14, height: 220 }}>
-            <Text style={{
-              fontFamily: 'Nunito-Regular',
-              fontSize: 9,
-              color: '#FF6213',
-              transform: [
-                { rotate: "90deg" },
-                { translateX: 200 },
-                { translateY: 102 }
-              ],
-              width: 220,
-              height: 14
-            }}>Thời gian</Text>
-          </View>
         </View>
         <View style={{ flex: 1, alignSelf: 'center', paddingBottom: 24 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingHorizontal: 5 }}>
@@ -289,27 +309,7 @@ export default function LevelCompletion(props) {
               <View style={[styles.dotTimeAverage, { backgroundColor: '#04C6F1' }]} />
               <Text style={styles.txtTimeAverage}>Mức độ hoàn thành trung bình {avgPercentComplete}%</Text>
             </View>
-            <View style={styles.viewTimeAverage}>
-              <View style={styles.dotTimeAverage} />
-              <Text style={styles.txtTimeAverage}>Thời gian trung bình : {convertNumberToTime(avgTimeComplete)}</Text>
-            </View>
           </View>
-
-          <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: 15 }}>
-            <View style={[styles.viewTimeAverage, { marginTop: 0 }]}>
-              <View style={[styles.dotTimeAverage, { backgroundColor: '#04C6F1' }]} />
-              <Text style={styles.txtTimeAverage}>Tỷ lệ đúng ≥ 70%</Text>
-            </View>
-            <View style={[styles.viewTimeAverage, { paddingHorizontal: 10, marginTop: 0 }]}>
-              <View style={[styles.dotTimeAverage, { backgroundColor: '#FFA500' }]} />
-              <Text style={styles.txtTimeAverage}>{`50% ≤ Tỷ lệ đúng < 70%`}</Text>
-            </View>
-            <View style={[styles.viewTimeAverage, { marginTop: 0 }]}>
-              <View style={[styles.dotTimeAverage, { backgroundColor: '#a55' }]} />
-              <Text style={styles.txtTimeAverage}> {`Tỷ lệ đúng < 50%`} </Text>
-            </View>
-          </View>
-
         </View>
         <View style={{ alignItems: 'center' }}>
           <Text style={styles.txtTitleChart}>Biểu đồ mức độ hoàn thành của học sinh</Text>
@@ -331,14 +331,14 @@ export default function LevelCompletion(props) {
               </View>
             )
             : (<ScrollView style={styles.container}>
-              <View style={{flex:1, justifyContent:'center'}}>
-                {this.renderChartCircle()}
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                {renderChartCircle()}
                 <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
                   <Text style={styles.txtTitleChart}>
                     Tỷ lệ học sinh tham gia làm bài
               </Text>
                 </View>
-                {this.renderChartLevelComplete()}
+                {renderChartLevelComplete()}
               </View>
             </ScrollView>)
       }
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     paddingTop: 25,
-    marginStart: width / 3 + (Platform.isPad?60:0)
+    marginStart: width / 3 + (Platform.isPad ? 60 : 0)
   },
   txtLeftChartCircle: {
     fontFamily: 'Nunito-Regular',

@@ -16,7 +16,6 @@ export default class itemExercise extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
     }
   }
 
@@ -79,7 +78,7 @@ export default class itemExercise extends Component {
           <View style={styles.topBody}>
             <View style={{
               flexDirection: 'row',
-              alignItems: 'center'
+              alignItems: 'center',
             }}>
               <MaterialCommunityIcons
                 name={'calendar-range'}
@@ -92,11 +91,18 @@ export default class itemExercise extends Component {
                 marginLeft: 5,
                 justifyContent: 'center'
               }}>
-                <Text style={styles.timeStart}>Bắt đầu</Text>
-                <Text style={styles.txtDate}>{moment(item.timeStart * 1000).format('DD/MM/YYYY')}</Text>
+                <Text style={styles.timeStart}>
+                  Bắt đầu
+                  </Text>
+                <Text style={styles.txtDate}>
+                  {moment(item.timeStart * 1000).format('DD/MM/YYYY')}
+                </Text>
               </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}>
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
@@ -109,56 +115,34 @@ export default class itemExercise extends Component {
               </View>
             </View>
           </View>
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 11
-          }}>
-            <View style={{ justifyContent: 'space-between',marginRight: -20 }}>
+          <View style={styles.topBody}>
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                width:"50%",
               }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Image
-                   source={require('../../../asserts/icon/icon_popuClass.png')}
-                   style={{width: 20, height: 20}}
-                   />
+                <Image
+                  source={require('../../../asserts/icon/icon_popuClass.png')}
+                  style={{ width: 20, height: 20 }}
+                />
+                <View style={styles.fleImaTxt}>
                   <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>
+                  <Text style={styles.txtFour}>{item.totalUser}</Text>
                 </View>
-                <Text style={styles.txtFour}>{item.totalUser}</Text>
               </View>
-              {/* <View style={{ flexDirection: 'row', marginTop: 14, alignItems: 'center' }}>
-                <Image source={require('../../../asserts/icon/share.png')} />
-                <Text style={styles.txtRightFoot}>Chia sẻ</Text>
-                <Text style={styles.indexTwo}>công khai</Text>
-              </View> */}
-            </View>
 
-            <View style={{ justifyContent: 'space-between', marginLeft:-20}}>
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                width:"50%"
               }}>
-                <View style={{ flexDirection: 'row'}}>
-                  <Image
-                   source={require('../../../asserts/icon/icon_submitExcer.png')} 
-                   style={{width: 20, height: 20}}
-                  />
+                <Image
+                  source={require('../../../asserts/icon/icon_submitExcer.png')}
+                  style={{ width: 20, height: 20 }}
+                />
+                <View style={styles.fleImaTxt}>
                   <Text style={styles.txtRight}>Nộp bài</Text>
+                  <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
                 </View>
-                <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
               </View>
-              {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 14, }}>
-                <Image source={require('../../../asserts/icon/edu.png')} />
-                <Text style={styles.txtClass}>Trạng thái</Text>
-                {this._Status(item.status)}
-              </View> */}
-            </View>
           </View>
 
         </View>
@@ -238,7 +222,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 10,
-    paddingBottom: 8,
     // paddingRight: width < 350 ? '15%' : '10%',
     // backgroundColor:'green'
   },
@@ -260,17 +243,18 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Nunito-Regular',
     alignSelf: 'center',
+    marginRight: 57,
   },
   txtInfoDetail: {
-    color: '#828282',
+    color: '#000',
     fontSize: 10,
-    marginLeft: 5,
-    alignSelf: 'center'
+    marginLeft: 8,
+    alignSelf: 'center',
   },
   txtFour: {
     fontSize: 10,
     color: '#FF6213',
-    marginLeft: 13,
+    paddingHorizontal: 25
   },
   txtRightFoot: {
     fontSize: 10,
@@ -279,12 +263,16 @@ const styles = StyleSheet.create({
   },
   txtThree: {
     fontSize: 10,
-    marginLeft: 15,
-    color: '#FF6213'
+    color: '#FF6213',
+    // paddingHorizontal: 28.3
   },
   indexTwo: {
     fontSize: 10,
     color: '#56CCF2',
     marginLeft: 15
+  },
+  fleImaTxt: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 });
