@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   btn: {
     alignItems: 'center',
     width: '90%',
-    marginTop: 18,
+    marginTop: 10,
     alignSelf: 'center',
   },
   txtbtn: {
@@ -295,6 +295,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    marginTop: 17
+
   }
 });
