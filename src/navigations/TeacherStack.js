@@ -25,7 +25,7 @@ import MissionStepByStep from '../containers/teacher/Mission/MissionSBSContainer
 import MissionDetailScreen from '../containers/teacher/Mission/MissionDetailContainer';
 import MissionPlayWebView from '../components/Teacher/MissionDetail/MissonPlayWebView';
 import MissonTestPlayWebView from '../components/Teacher/MissionDetail/MissonTestPlayWebView';
-
+import MissionStatisticsScreen from '../components/Teacher/MissionStatistics/MissionStatisticsScreen';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -125,6 +125,10 @@ const TeacherStack = createStackNavigator({
   },
   MissonTestPlayWebView: {
     screen: MissonTestPlayWebView,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MissionStatisticsScreen: {
+    screen: MissionStatisticsScreen,
     navigationOptions: { header: null, gesturesEnabled: true },
   }
 }, transition);
