@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Component } from 'react';
 import {
   Text,
   StyleSheet,
@@ -20,6 +20,7 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import Api from '../../../services/apiMission';
 
 const { width, height } = Dimensions.get('window');
 
@@ -104,160 +105,40 @@ const indexSelected = {
   class: 0,
 };
 
-export default function StatisticsPoints(props) {
-  const toast = useRef();
-  const [data, setData] = useState({
-    grade: [],
-    subject: [],
-    homework: [],
-    class: [],
-  });
-  const [isLoading, setIsLoading] = useState(true)
+export default class StatisticsPoints extends Component {
 
-  const onPressItemGrade = async (index) => {
-    indexSelected.grade = index;
+  state = {
+    data: []
+  }
 
-    const { token } = await dataHelper.getToken();
-    if (token) {
-      let listHomework = [];
-      let listClass = [];
+  componentDidMount() {
+    this.fetchData();
+  }
 
-      const resHomework = await apiHomework.getHomework({
-        token,
-        body: {
-          gradeCode: [data.grade[index].gradeId],
-          subjectCode:
-            indexSelected.subject > -1
-              ? [data.subject[indexSelected.subject].code]
-              : [],
-        },
-      });
-      if (resHomework && resHomework.data) {
-        indexSelected.homework = 0;
-        listHomework = resHomework.data;
-      }
-
-      if (listHomework.length) {
-        const status = {
-          ToDo: 0,
-          Doing: 1,
-          Submit: 2,
-          Done: 3,
-          NotOpen: 4,
-          Paused: 5,
-          TimeOut: 6,
-          TimeOutDontDo: 7,
-        };
-        const resClass = await apiHomework.getClass({
-          token,
-          classId: listHomework[0].assignmentId,
-          status: status.ToDo,
-          indexPage: 0,
-        });
-        if (resClass && resClass.data) {
-          indexSelected.class = 0;
-          listClass = resClass.data;
-        }
-      }
-
-      setData({
-        ...data,
-        homework: listHomework,
-        class: listClass,
-      });
-    }
-  };
-
-  const handleStatistic = async () => {
+  handleStatistic = async () => {
     if (data.class.length > 0) {
       const { token } = await dataHelper.getToken();
       if (token) {
-        props.fetchHomework({
+        this.props.fetchHomework({
           token,
           assignId: data.class[indexSelected.class].assignId,
         });
       }
     } else {
-      toast.current.show('Không tìm thấy lớp nào!');
+      // toast.current.show('Không tìm thấy lớp nào!');
     }
   };
 
-  const fetchData = async () => {
+  fetchData = async () => {
     const { token } = await dataHelper.getToken();
-    if (token) {
-      let listGrade = [];
-      let listSubject = [];
-      let listHomework = [];
-      let listClass = [];
-
-      const resGrade = await apiHomework.getGrade({ token });
-      if (resGrade) {
-        listGrade = resGrade;
-      }
-      const resSubject = await apiHomework.getSubject({ token });
-      if (resSubject) {
-        listSubject = resSubject;
-      }
-
-      const resHomework = await apiHomework.getHomework({ token, body: {} });
-      if (resHomework && resHomework.data) {
-        indexSelected.homework = 0;
-        listHomework = resHomework.data;
-      }
-      if (listHomework.length) {
-        const status = {
-          ToDo: 0,
-          Doing: 1,
-          Submit: 2,
-          Done: 3,
-          NotOpen: 4,
-          Paused: 5,
-          TimeOut: 6,
-          TimeOutDontDo: 7,
-        };
-
-        const resClass = await apiHomework.getClass({
-          token,
-          classId: listHomework[0].assignmentId,
-          status: status.ToDo,
-          indexPage: 0,
-        });
-        if (resClass && resClass.data) {
-          indexSelected.class = 0;
-          listClass = resClass.data;
-        }
-      }
-
-      const params = props.navigation.state.params;
-      if (params !== undefined && params.assignId) {
-        props.fetchReportAction({
-          token,
-          assignId: props.navigation.state.params.assignId,
-        }, 2000);
-      } else {
-        if (listClass.length) {
-          props.fetchHomework({
-            token,
-            assignId: listClass[0].assignId,
-          });
-        } else {
-          props.fetchHomework({
-            token,
-            assignId: '',
-          });
-        }
-      }
-
-      setData({
-        grade: listGrade,
-        subject: listSubject,
-        homework: listHomework,
-        class: listClass,
-      });
-    }
+    const { _id } = this.props.navigation.state.params;
+    const response = await Api.getMissionResult({ token, _id });
+    console.log("StatisticsPoints -> response", response);
+    const { listDetailStudent } = response;
+    this.setState({ data: listDetailStudent });
   };
 
-  const refreshData = async () => {
+  refreshData = async () => {
     setIsLoading(true);
     fetchData();
     setTimeout(() => {
@@ -265,42 +146,45 @@ export default function StatisticsPoints(props) {
     }, 1000);
   }
 
-  let timeEnd = props.data?.data.timeEnd;
-  timeEnd = convertTimeHMDMY(timeEnd);
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar />
-      <HeaderNavigation
-        title={'Thống kê bài tập'}
-        navigation={props.navigation}
-      />
-      <View style={styles.header}>
-        {
-          !isLoading ?
-            _.isEmpty(props.data) ?
-              null
-              : <View style={styles.wrapInfo}>
-                <Text style={styles.txtAssignment}>{props.data?.data.name || ''}</Text>
-                <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
-                <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
+  render() {
+    let timeEnd = this.props.data?.data.timeEnd;
+    timeEnd = convertTimeHMDMY(timeEnd);
+    const { data } = this.state;
+    return (
+      <SafeAreaView style={styles.container}>
+        <StatusBar />
+        <HeaderNavigation
+          title={'Thống kê nhiệm vụ'}
+          navigation={this.props.navigation}
+        />
+        <View style={styles.header}>
+          {
+            !true ?
+              _.isEmpty(this.props.data) ?
+                null
+                : <View style={styles.wrapInfo}>
+                  <Text style={styles.txtAssignment}>{this.props.data?.data.name || ''}</Text>
+                  <Text style={styles.txtTitle}>{this.props.data?.data.className || ''}</Text>
+                  <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
+                </View>
+              :
+              <View style={styles.wrapInfo}>
+                <ActivityIndicator size={'small'} color={'#2D9CDB'} />
               </View>
-            :
-            <View style={styles.wrapInfo}>
-              <ActivityIndicator size={'small'} color={'#2D9CDB'} />
-            </View>
-        }
-      </View>
-      <Tab
-        screenProps={{
-          onRefresh: handleStatistic,
-          data: props.data,
-          isLoading: isLoading,
-          refreshData: refreshData,
-        }}
-      />
-      <Toast ref={toast} position={'top'} />
-    </SafeAreaView>
-  );
+          }
+        </View>
+        <Tab
+          screenProps={{
+            onRefresh: this.handleStatistic,
+            data,
+            isLoading: false,
+            refreshData: this.refreshData,
+          }}
+        />
+        <Toast ref={'toast'} position={'top'} />
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

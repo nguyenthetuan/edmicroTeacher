@@ -137,6 +137,16 @@ export const checkPermission = async (token) => {
   const responseJson = await response.json();
   return responseJson;
 }
+// api mission result
+export const getMissionResult = async (payload) => {
+  const { token, _id } = payload;
+  const response = await fetch(`${API_BASE}school-online/mission/mission-result/${_id}`, {
+    method: 'GET',
+    headers: getHeaders(token),
+  });
+  const responseJson = await response.json();
+  return responseJson;
+}
 
 module.exports = {
   getCommonSubject,
@@ -150,5 +160,6 @@ module.exports = {
   assignedMission,
   getInfoPractice,
   getInfoTest,
-  checkPermission
+  checkPermission,
+  getMissionResult
 };
