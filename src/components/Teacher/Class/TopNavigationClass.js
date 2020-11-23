@@ -32,7 +32,7 @@ const Tab = createMaterialTopTabNavigator(
     tabBarOptions: {
       upperCaseLabel: false,
       pressOpacity: 0.5,
-      activeTintColor: '#828282',
+      activeTintColor: '#56CCF2',
       inactiveTintColor: '#C4C4C4',
       allowFontScaling: true,
       tabStyle: {
@@ -45,8 +45,8 @@ const Tab = createMaterialTopTabNavigator(
         backgroundColor: '#56CCF2',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        width: 65,
-        marginLeft:35,
+        // width: 65,
+        // marginLeft:35,
       },
       style: {
         backgroundColor: '#fff',
