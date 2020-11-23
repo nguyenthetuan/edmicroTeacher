@@ -323,7 +323,6 @@ class LoginWithPhoneScreen extends Component {
                   value={values.username}
                   onChangeText={handleChange('username')}
                   onBlur={() => setFieldTouched('username')}
-                  keyboardType={'phone-pad'}
                   isValid={(touched.username && !errors.username)}
                   error={(touched.username && errors.username) && errors.username}
                 />
