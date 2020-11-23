@@ -98,18 +98,18 @@ const initTab = createMaterialTopTabNavigator(
       style: {
         backgroundColor: '#FFF',
         borderBottomWidth: 2,
-        borderBottomColor: '#2D9CDB',
+        borderBottomColor: '#56CCF2',
         height: 40,
         elevation: 0,
         shadowOffset: { height: 0, width: 0 },
         justifyContent: 'space-between',
       },
       indicatorStyle: {
-        backgroundColor: '#2D9CDB',
+        backgroundColor: '#56CCF2',
         height: 5,
         width: Platform.isPad ? 200 : 80,
         borderBottomWidth: 1,
-        borderBottomColor: '#2D9CDB',
+        borderBottomColor: '#56CCF2', 
         borderBottomWidth: 1,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
@@ -573,12 +573,12 @@ const styles = StyleSheet.create({
   labelTab: {
     fontSize: 12,
     fontFamily: 'Nunito-Regular',
-    color: '#828282',
+    color: '#c4c4c4',
   },
   labelTabActive: {
     fontSize: 11,
     fontFamily: 'Nunito-Bold',
-    color: '#000',
+    color: '#56CCF2',
   },
   btnViewStatistic: {
     height: 20,

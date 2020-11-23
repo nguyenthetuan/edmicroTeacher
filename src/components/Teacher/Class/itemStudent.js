@@ -94,15 +94,15 @@ export default class ItemStudent extends React.Component {
                 </View>
                 <View style={styles.marProcess}>
                   {/* <ProgressBarClassic
-                    progress={rate ? rate > 100 ? 100 : rate : 0}
+                    progress={rate ? rate > 100 ? 100 : rate : 1}
                   // valueStyle={'balloon'}
                   /> */}
                   <ProgressBar
-                  progress={rate ? rate > 100 ? 100 : rate : 0}
-                  color="#56BB73"
-                  widthProps={width * 0.6}
-                  progressUnfilledColor="#E0E0E0"
-                />
+                    progress={rate ? rate > 100 ? 100 : rate : 1}
+                    color="#56BB73"
+                    widthProps={width * 0.6}
+                    progressUnfilledColor="#E0E0E0"
+                  />
                 </View>
               </View>
             </View>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     // justifyContent: "space-between",
     // marginRight:170
   },
-  marProcess:{
+  marProcess: {
     marginTop: 5,
   }
 })
