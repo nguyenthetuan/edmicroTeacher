@@ -42,16 +42,18 @@ const Tab = createMaterialTopTabNavigator(
       },
       indicatorStyle: {
         height: 5,
-        backgroundColor: '#F98E2F',
+        backgroundColor: '#56CCF2',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
+        width: 65,
+        marginLeft:35,
       },
       style: {
         backgroundColor: '#fff',
         elevation: 0,
         shadowOffset: {height: 0, width: 0},
         justifyContent: 'space-between',
-        borderBottomColor: '#F98E2F',
+        borderBottomColor: '#56CCF2',
         borderBottomWidth: 1,
         
       },

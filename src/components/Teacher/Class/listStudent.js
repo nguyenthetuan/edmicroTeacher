@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Image, Dimensions, Text } from 'react-native';
+import {
+View,
+StyleSheet,
+FlatList,
+ActivityIndicator,
+Image,
+Text
+} from 'react-native';
 import ItemStudent from './itemStudent';
 import RippleItem from '../../common-new/RippleItem';
 import dataHelper from '../../../utils/dataHelper';

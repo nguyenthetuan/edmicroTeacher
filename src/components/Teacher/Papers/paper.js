@@ -100,57 +100,86 @@ class Item extends React.Component {
 
         <TouchableOpacity onPress={this._handleClickDetail(payloadAssignment)}>
           <View style={styles.bodyTest}>
-            <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
               <View style={styles.flexSubject}>
                 <FastImage
                   source={Common.getIconSubject(subjectCode)}
-                  style={{ width: 19, height: 19, alignItems: 'center' }}
+                  style={{ width: 22, height: 22, marginLeft: 2, borderRadius: 20 }}
                 />
                 <Text style={styles.txtQuestion}>{subjectCode}</Text>
               </View>
               <View style={styles.flexSenten}>
                 <FastImage
                   source={require('../../../asserts/icon/icon_sentenTea.png')}
-                  style={{ width: 20, height: 20, alignItems: 'center' }}
+                  style={{ width: 25, height: 25 }}
                 />
-                <Text style={styles.txtQuestion}>10 Câu</Text>
+                <Text style={styles.txtQuestion}>{item.totalQuestion} câu</Text>
               </View>
             </View>
+
             <View style={{ flexDirection: 'column' }}>
               <View style={styles.flexSenten}>
                 <FastImage
                   source={require('../../../asserts/icon/icon_sentenTea.png')}
-                  style={{ width: 20, height: 20 }}
+                  style={{ width: 25, height: 25 }}
                 />
-                <Text style={styles.txtQuestion}>Lớp 10,11,12</Text>
+                <Text style={styles.txtQuestion}> Lớp {gradeCode}</Text>
               </View>
             </View>
+
             <View style={{ flexDirection: 'column' }}>
-              <View style={styles.flexParac}>
-                <FastImage
-                  source={require('../../../asserts/icon/icon_paracClass.png')}
-                  style={{ height: 20, width: 20 }}
-                />
-                <Text style={styles.txtButtomPractice}>
-                  {/* {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'} */}
-                  Bài tự luyện
-                </Text>
+              <View>
+                {
+                  item.assignmentType
+                    ?
+                    <View style={styles.flexParac}>
+                      <FastImage
+                        source={require('../../../asserts/icon/icon_examparacExamv3.png')}
+                        style={{ height: 25, width: 25 }}
+                      />
+                      <Text style={styles.txtButtomPractice}>
+                        {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'}
+                      </Text>
+                    </View>
+                    :
+                    <View style={styles.flexParac}>
+                      <FastImage
+                        source={require('../../../asserts/icon/icon_paracClass.png')}
+                        style={{ height: 25, width: 25 }}
+                      />
+                      <Text style={styles.txtButtomPractice}>
+                        {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'}
+                      </Text>
+                    </View>
+                }
               </View>
               <View
-                // style={[
-                //   styles.buttomDelivered,
-                //   { backgroundColor: item.status === 4 ? '#56BB73' : '#E0E0E0' },
-                // ]}
                 style={styles.flexToParac}
               >
-                <FastImage
-                  source={require('../../../asserts/icon/icon_paracClass.png')}
-                  style={{ height: 20, width: 20 }}
-                />
-                <Text style={styles.txtButtomPractice}>
-                  {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
-                </Text>
+                {item.status === 4
+                  ?
+                  <FastImage
+                    source={require('../../../asserts/icon/icon_paracComplete.png')}
+                    style={{ height: 25, width: 25 }}
+                  />
+                  :
+                  <FastImage
+                    source={require('../../../asserts/icon/icon_paractoFinish.png')}
+                    style={{ height: 25, width: 25 }}
+                  />
+                }
+                {item.status === 4
+                  ?
+                  <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
+                    {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
+                  </Text>
+                  :
+                  <Text style={[styles.txtButtomPractice, { color: item.stattus === 4 ? '#000' : '#c4c4c4' }]}>
+                    {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
+                  </Text>
+                }
               </View>
+
             </View>
           </View>
         </TouchableOpacity>
@@ -530,7 +559,7 @@ class Papers extends Component {
               <FastImage
                 source={require('../../../asserts/icon/refresh.png')}
                 resizeMode="contain"
-                style={{ height: 20, width: 20 }}
+                style={{ height: 25, width: 25 }}
               />
             </View>
           </RippleButton>
@@ -595,7 +624,7 @@ class Papers extends Component {
               <FastImage
                 source={require('../../../asserts/icon/refresh.png')}
                 resizeMode="contain"
-                style={{ height: 20, width: 20 }}
+                style={{ height: 25, width: 25 }}
               />
             </View>
           </RippleButton>
@@ -1257,6 +1286,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: 14,
     color: '#FFF',
+    alignSelf:'center',
   },
   itemTest: {
     borderRadius: 4,
@@ -1424,8 +1454,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   flexSenten: {
-    flexDirection: "row",
-    marginTop: 6
+    flexDirection: "row"
   }
 });
 
