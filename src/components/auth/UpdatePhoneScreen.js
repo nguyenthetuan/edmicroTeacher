@@ -365,6 +365,7 @@ export default class UpdatePhoneScreen extends Component {
             title={!this.state.inputOtpVisible ? 'Cập nhật số điện thoại' : 'Xác thực'}
             navigation={this.props.navigation}
             goBack={this.handleBtnBack(isShowKeybroad)}
+            color={'#979797'}
           />
           <KeyboardAwareScrollView
             contentContainerStyle={{
@@ -410,14 +411,14 @@ export default class UpdatePhoneScreen extends Component {
                       !inputOtpVisible
                         ?
                         <View style={{ alignItems: 'center', marginTop: 0.02 * height }}>
-                          <Image source={require('../../asserts/images/image_login.png')} />
+                          {/* <Image source={require('../../asserts/images/image_login.png')} /> */}
                         </View>
                         :
                         null
                     }
                     {
                       _.isEmpty(this.state.errors) ?
-                        <Text style={[validationStyle, { marginVertical: 20, width: width - width / 5, textAlign: 'center', color: '#000' }]}>{description}</Text>
+                        <Text style={[validationStyle, { marginVertical: 20, width: width - width / 5, textAlign: 'center', color: '#757575' }]}>{description}</Text>
                         :
                         <Text style={[validationStyle, { marginVertical: 20, width: width - width / 5, textAlign: 'center' }]}>{this.state.errors}</Text>
                     }
@@ -458,7 +459,9 @@ export default class UpdatePhoneScreen extends Component {
                           <Text style={{
                             marginBottom: 20, color: '#222222',
                             fontFamily: 'Nunito-Bold', fontSize: 15
-                          }}>Nhập mã OTP</Text>
+                          }}>
+                            Nhập mã OTP
+                            </Text>
                           <OTPTextView
                             ref={ref => this.otp = ref}
                             containerStyle={styles.textInputContainer}
@@ -485,7 +488,7 @@ export default class UpdatePhoneScreen extends Component {
                                 >
                                   <Text style={textAction}>Xác thực</Text>
                                 </RippleButton>
-                                <View style={{ marginTop: 30, flexDirection: 'row' }}>
+                                <View style={{ marginTop: 30, flexDirection: 'row', justifyContent:'space-around' }}>
                                   <Text style={{
                                     fontFamily: 'Nunito-Regular',
                                     fontSize: 13,
@@ -553,22 +556,22 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   btnCreate: {
-    backgroundColor: '#54CEF5',
+    backgroundColor: '#2D9CDB',
     width: width - width / 5,
     height: 40,
     alignSelf: 'center',
     marginTop: 50,
-    borderRadius: 5,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center'
   },
   btnLaylaimk: {
-    backgroundColor: '#54CEF5',
+    backgroundColor: '#2D9CDB',
     width: width - width / 5,
     height: 40,
     alignSelf: 'center',
     marginTop: 20,
-    borderRadius: 5,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -624,5 +627,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
     flexDirection: 'row',
     alignSelf: 'flex-end'
+  },  
+  textAction:{
+    marginTop: 14,
+    marginBottom:14
   }
 })

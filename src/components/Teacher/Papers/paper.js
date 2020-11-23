@@ -1484,6 +1484,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 19,
     textAlign: 'center',
+  },
+  flexSenten:{
+    flexDirection:'row'
   }
 });
 

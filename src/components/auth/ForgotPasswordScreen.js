@@ -687,7 +687,9 @@ export default class ForgotPasswordScreen extends Component {
                         fontFamily: 'Nunito-Bold',
                         fontSize: 15,
                         width: width - width / 5
-                      }}>Nhập mã OTP</Text>
+                      }}>
+                        Nhập mã OTP
+                        </Text>
                       <OTPTextView
                         ref={ref => this.otp = ref}
                         containerStyle={styles.textInputContainer}
