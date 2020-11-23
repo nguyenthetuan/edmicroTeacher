@@ -69,18 +69,18 @@ const ExerciseTab = createMaterialTopTabNavigator(
       style: {
         backgroundColor: 'transparent',
         borderBottomWidth: 1,
-        borderBottomColor: '#F98E2F',
+        borderBottomColor: '#56CCF2',
         height: 40,
         elevation: 0,
         shadowOffset: { height: 0, width: 0 },
         // justifyContent: 'space-between'
       },
       indicatorStyle: {
-        backgroundColor: '#F98E2F',
+        backgroundColor: '#56CCF2',
         height: 5,
         width: width / 2,
         borderBottomWidth: 1,
-        borderBottomColor: '#F98E2F',
+        borderBottomColor: '#56CCF2',
         borderBottomWidth: 1,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   labelTabActive: {
     fontSize: 12,
     fontFamily: 'Nunito-Bold',
-    color: '#F98E2F',
+    color: '#56CCF2',
   },
   btnAvatar: {
     height: 25,

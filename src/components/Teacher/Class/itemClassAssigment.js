@@ -35,7 +35,8 @@ export default class ItemClassAssigment extends Component {
 
   render() {
     const { item, subjectCode, assignmentId } = this.props;
-    const bg = Common.getBackroundSubject(subjectCode);
+    // const bg = Common.getBackroundSubject(subjectCode);
+    const bg = '#56CCF2';
     const rate =
       item.totalUserSubmit === 0 || item.totalUser === 0
         ? 0
@@ -89,7 +90,9 @@ export default class ItemClassAssigment extends Component {
               </Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Image source={require('../../../asserts/icon/person.png')} />
+              <Image
+                source={require('../../../asserts/icon/icon_popuClass.png')}
+              />
               <Text style={[styles.txtDate]}>{item.totalUser}</Text>
               <View
                 style={{
@@ -99,7 +102,7 @@ export default class ItemClassAssigment extends Component {
                   backgroundColor: '#E0E0E0',
                 }}></View>
               <Image
-                source={require('../../../asserts/icon/registration.png')}
+                source={require('../../../asserts/icon/icon_submitExcer.png')}
               />
               <Text style={[styles.txtDate, { paddingHorizontal: 5 }]}>
                 {item.totalUserSubmit}
@@ -121,7 +124,7 @@ export default class ItemClassAssigment extends Component {
                 style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <ProgressBar
                   progress={rate}
-                  color="#F16219"
+                  color="#28A745"
                   widthProps={width * 0.75}
                   progressUnfilledColor="#E0E0E0"
                 />
@@ -142,31 +145,34 @@ export default class ItemClassAssigment extends Component {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  paddingHorizontal: width / 8,
+                  paddingHorizontal: width / 4,
                   marginTop: 13,
+                  marginLeft: 10
                 }}>
                 <RippleButton
                   onPress={() => {
-                    this.props.navigation.navigate({routeName : 'MainHomeWork',key:'d', params: {
+                    this.props.navigation.navigate({
+                      routeName: 'MainHomeWork', key: 'd', params: {
 
-                      navigation: this.props.navigation,
-                      hideBackButtom: true,
-                      assignId: this.props.item.assignId,
-                      statusbar: 'dark-content',
-                    }});
+                        navigation: this.props.navigation,
+                        hideBackButtom: true,
+                        assignId: this.props.item.assignId,
+                        statusbar: 'dark-content',
+                      }
+                    });
                   }}>
                   <View style={styles.buttomRevew}>
                     <Text style={styles.txtbuttom}>Xem Báo Cáo</Text>
                   </View>
                 </RippleButton>
-                <RippleButton
+                {/* <RippleButton
                   //  onPress={() => this.props.navigation.navigate('MockExamDrawer', { assignId: item.assignId, classId: item.classId,assignmentId:assignmentId })}
-                  onPress={() => this.props.activeModal({ assignId: item.assignId, classId: item.classId,assignmentId:assignmentId })}
+                  onPress={() => this.props.activeModal({ assignId: item.assignId, classId: item.classId, assignmentId: assignmentId })}
                 >
                   <View style={styles.buttomTry}>
                     <Text style={styles.txtbuttom}>Làm Thử</Text>
                   </View>
-                </RippleButton>
+                </RippleButton> */}
               </View>
             </View>
           </View>
@@ -240,14 +246,15 @@ const styles = StyleSheet.create({
     marginLeft: width < 350 ? 0 : 5,
   },
   buttomRevew: {
-    backgroundColor: '#F4AD85',
+    backgroundColor: '#56CCF2',
     justifyContent: 'center',
     paddingHorizontal: 25,
-    borderRadius: 4,
+    borderRadius: 24,
     paddingVertical: 5,
   },
   txtbuttom: {
-    fontSize: 10,
+    fontSize: 11,
+    lineHeight: 15,
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },

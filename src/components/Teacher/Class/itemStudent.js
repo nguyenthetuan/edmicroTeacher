@@ -4,12 +4,14 @@ import {
   Text,
   StyleSheet,
   Image,
+  Dimensions
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import ProgressBarClassic from '../../libs/progessBarClassic';
 import Common from '../../../utils/Common';
 import moment from 'moment';
-
+import ProgressBar from '../../libs/ProgressBar';
+const { width, height } = Dimensions.get('window')
 export default class ItemStudent extends React.Component {
   constructor(props) {
     super(props);
@@ -90,10 +92,18 @@ export default class ItemStudent extends React.Component {
                       moment(item.lastTimeDoing * 1000).format('DD/MM/YYYY') || `Chưa làm`}
                   </Text>
                 </View>
-                <ProgressBarClassic
-                  progress={rate ? rate > 100 ? 100 : rate : 0}
+                <View style={styles.marProcess}>
+                  {/* <ProgressBarClassic
+                    progress={rate ? rate > 100 ? 100 : rate : 0}
                   // valueStyle={'balloon'}
+                  /> */}
+                  <ProgressBar
+                  progress={rate ? rate > 100 ? 100 : rate : 0}
+                  color="#56BB73"
+                  widthProps={width * 0.6}
+                  progressUnfilledColor="#E0E0E0"
                 />
+                </View>
               </View>
             </View>
           </View>
@@ -134,11 +144,15 @@ const styles = StyleSheet.create({
     color: '#2D9CDB',
     fontSize: 10,
     fontFamily: 'Nunito-Regular',
-    bottom: 0
+    marginLeft: 10,
   },
   flextime: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginRight:170
+    marginTop: 5
+    // justifyContent: "space-between",
+    // marginRight:170
+  },
+  marProcess:{
+    marginTop: 5,
   }
 })

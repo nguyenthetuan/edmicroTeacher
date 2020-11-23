@@ -11,7 +11,7 @@ import iconEng from '../asserts/icon/icon_eng10V3.png';
 import iconEngGRM from '../asserts/appIcon/ic_eng_grama_x60.png';
 import iconEngPT from '../asserts/icon/icon_tienganhThcsV3.png';
 import iconEducation from '../asserts/icon/icon_dgcdV3.png';
-import icDefault from '../asserts/appIcon/ic_default_x60.png';
+import icDefault from '../asserts/icon/icon_iconV3Default.png';
 import Icon_Tin_Hoc from '../asserts/appIcon/Icon_Tin_Hoc.png';
 import report1 from '../asserts/appIcon/report1.png';
 import report2 from '../asserts/appIcon/report2.png';
