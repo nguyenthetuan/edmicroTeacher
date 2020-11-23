@@ -8,7 +8,7 @@ import iconLite from '../asserts/icon/icon_vanV3.png';
 import iconHis from '../asserts/icon/icon_lichsuV3.png';
 import iconGeo from '../asserts/icon/icon_diaV3.png';
 import iconEng from '../asserts/icon/icon_eng10V3.png';
-import iconEngGRM from '../asserts/appIcon/ic_eng_grama_x60.png';
+import iconEngGRM from '../asserts/icon/icon_tienganhThcsV3.png';
 import iconEngPT from '../asserts/icon/icon_tienganhThcsV3.png';
 import iconEducation from '../asserts/icon/icon_dgcdV3.png';
 import icDefault from '../asserts/icon/icon_iconV3Default.png';
