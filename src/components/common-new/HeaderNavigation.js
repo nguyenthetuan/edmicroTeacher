@@ -36,7 +36,10 @@ export default class HeaderNavigation extends React.Component {
                 {isShow ?
                     <RippleButton onPress={this.onGoback}>
                         <View style={styles.button}>
-                            <Icon name="arrow-left" color={color || "#383838"} size={25} />
+                            {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
+                            <Image
+                                source={require('../../asserts/icon/icon_arrowLeftv3.png')}
+                            />
                         </View>
                     </RippleButton>
                     :

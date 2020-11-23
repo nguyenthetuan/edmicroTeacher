@@ -116,14 +116,15 @@ class ExcerciseDetail extends Component {
           title={name}
           navigation={navigation}
           actionIcon={avatar}
+          color={"#2D9CDB"}
         />
-        <View style={{ alignItems: 'center' }}>
+        {/* <View style={{ alignItems: 'center' }}>
           <Image
             source={require('../../../asserts/images/excerciseDetail.png')}
             style={styles.image}
             resizeMode="contain"
           />
-        </View>
+        </View> */}
         <ExcerciseTabOnline
           screenProps={{
             navigation: this.props.navigation,
