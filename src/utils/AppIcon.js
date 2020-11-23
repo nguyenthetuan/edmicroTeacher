@@ -31,7 +31,7 @@ import setting from '../asserts/appIcon/setting.png';
 import bottomChangeGrade from '../asserts/appIcon/bottomChangeGrade.png';
 import arrow_left_S_light from '../asserts/appIcon/arrow_left_S_light.png';
 import arrow_left from '../asserts/appIcon/arrow_left.png';
-// import icon_person from '../asserts/appIcon/icon_person.png';
+import icon_person from '../asserts/icon/person.png';
 import arrowRight from '../asserts/appIcon/arrowRight.png';
 import report_Icon from '../asserts/appIcon/report_Icon.png';
 import report_Icon_1 from '../asserts/appIcon/report_Icon_1.png';
@@ -110,7 +110,7 @@ module.exports = {
   bottomChangeGrade,
   arrow_left_S_light,
   arrow_left,
-  // icon_person,
+  icon_person,
   arrowRight,
   report_Icon,
   report_Icon_1,

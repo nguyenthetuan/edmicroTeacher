@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -24,9 +24,9 @@ import dataHelper from '../../utils/dataHelper';
 import apiService from '../../services/apiPracticeHelper';
 import PickerUtils from '../../utils/PickerUtils';
 import AppIcon from '../../utils/AppIcon';
-import {alertMessage} from '../../utils/Alert';
-import {styles} from 'react-native-material-ripple/styles';
-const {width, height} = Dimensions.get('window');
+import { alertMessage } from '../../utils/Alert';
+import { styles } from 'react-native-material-ripple/styles';
+const { width, height } = Dimensions.get('window');
 export default class WarningModal extends Component {
   constructor(props) {
     super(props);
@@ -116,13 +116,13 @@ export default class WarningModal extends Component {
 
   showModal = () => {
     if (!this.state.visible) {
-      this.setState({visible: true});
+      this.setState({ visible: true });
     }
   };
 
   hideModal = () => {
     if (this.state.visible) {
-      this.setState({visible: false});
+      this.setState({ visible: false });
     }
   };
 
@@ -141,7 +141,7 @@ export default class WarningModal extends Component {
   }
 
   sendError() {
-    const {text, typeError} = this.state;
+    const { text, typeError } = this.state;
     if (text.trim() === '') {
       Alert.alert(
         'Thông báo',
@@ -150,11 +150,11 @@ export default class WarningModal extends Component {
           {
             text: 'OK',
             onPress: () => {
-              this.setState({text: ''});
+              this.setState({ text: '' });
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } else if (text.length < 12 && text !== '') {
       Alert.alert(
@@ -166,7 +166,7 @@ export default class WarningModal extends Component {
             onPress: () => console.log('OK Pressed'),
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } else {
       const error = typeError;
@@ -180,7 +180,7 @@ export default class WarningModal extends Component {
       }
       dataHelper
         .getToken()
-        .then(({token}) => {
+        .then(({ token }) => {
           const gradeId = jwtDecode(token).GradeId;
           this.setState(
             {
@@ -198,7 +198,7 @@ export default class WarningModal extends Component {
                   subjectId,
                 )
                 .then(response => {
-                  const {msg, status} = response;
+                  const { msg, status } = response;
                   if (msg === 'OK' && status === 200) {
                     this.setState(
                       {
@@ -223,7 +223,7 @@ export default class WarningModal extends Component {
                               },
                             },
                           ],
-                          {cancelable: false},
+                          { cancelable: false },
                         );
                       },
                     );
@@ -256,26 +256,26 @@ export default class WarningModal extends Component {
         color={'white'}
         visible={this.state.visible}
         hideModal={() => {
-          this.setState({text: '', isButtonVisible: true});
+          this.setState({ text: '', isButtonVisible: true });
           this.hideModal();
         }}
         screen>
         <StatusBar barStyle={'dark-content'} />
         <HeaderModal
           hideModal={() => {
-            this.setState({text: '', isButtonVisible: true});
+            this.setState({ text: '', isButtonVisible: true });
             this.hideModal();
           }}
           title={`Báo lỗi câu hỏi`}
           color={'#000'}
           bgColor={'#FFF'}
         />
-        <View backgroundColor={'#FFF'} style={{width, height}}>
+        <View backgroundColor={'#FFF'} style={{ width, height }}>
           <ScrollView scrollEnabled={false} style={styles1.viewScroll}>
             {this.state.isMouting && (
-              <View style={{height: 900}}>
-                <View style={{padding: 20}}>
-                  <View style={{flexDirection: 'row'}}>
+              <View style={{ height: 900 }}>
+                <View style={{ padding: 20 }}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Text style={styles1.txtPLL}>Phân loại lỗi: </Text>
                   </View>
                   <View style={styles1.viewRNPicker}>
@@ -285,9 +285,9 @@ export default class WarningModal extends Component {
                         value: null,
                       }}
                       items={this.state.warningList}
-                      style={{...pickerSelectStyles}}
+                      style={{ ...pickerSelectStyles }}
                       onValueChange={value => {
-                        this.setState({typeError: value});
+                        this.setState({ typeError: value });
                       }}
                       value={Number.parseInt(this.state.typeError)}
                       ref={el => {
@@ -334,7 +334,7 @@ export default class WarningModal extends Component {
                       placeholder={`Nội dung Lỗi bạn gặp phải`}
                       placeholderTextColor={'#999'}
                       numberOfLines={4}
-                      onChangeText={text => this.setState({text})}
+                      onChangeText={text => this.setState({ text })}
                       value={this.state.text}
                       textAlignVertical={'top'}
                     />
@@ -383,7 +383,7 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 const styles1 = StyleSheet.create({
-  viewScroll: {flex: 1, backgroundColor: 'transparent'},
+  viewScroll: { flex: 1, backgroundColor: 'transparent' },
   txtPLL: {
     marginVertical: 10,
     color: '#828282',
@@ -408,7 +408,7 @@ const styles1 = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: 16,
   },
-  iconEdit: {position: 'absolute', zIndex: 2, padding: 7, right: 4},
+  iconEdit: { position: 'absolute', zIndex: 2, padding: 7, right: 4 },
   txtInputCont: {
     backgroundColor: 'white',
     paddingLeft: 10,
