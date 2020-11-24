@@ -90,7 +90,7 @@ export default class itemClass extends Component {
                 <ProgressBar
                   progress={item.rateSubmit}
                   color="#56BB73"
-                  widthProps={width * 0.75}
+                  widthProps={width * 0.73}
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
@@ -117,10 +117,13 @@ export default class itemClass extends Component {
                       source={Common.getIconSubject(item.subjectCode)}
                       style={{ width: 21, height: 21, borderRadius: 20 }}
                     />
-                    <Text style={styles.txtInfoDetail}>Môn Học</Text>
-                    <Text style={[styles.indexOne, { marginLeft: 30 }]}>
-                      {item.gradeId.slice(1, 3)}
+                    <View style={styles.showSubjectCode}>
+                      <Text style={styles.txtInfoDetail}>
+                        Môn Học
                     </Text>
+                      <Text numberOfLines={2}
+                        style={styles.txtQuestion}>{item.subjectCode}</Text>
+                    </View>
                   </View>
                   <View style={{ flexDirection: 'row', marginTop: 13 }}>
                     <Image
@@ -128,18 +131,20 @@ export default class itemClass extends Component {
                       style={{ width: 20, height: 20 }}
                     />
                     <Text style={styles.txtInfoDetail}>Số Bài Tập</Text>
-                    <Text style={styles.txtFour}>{item.totalStudent}</Text>
+                    <Text style={styles.txtThree}>{item.totalAssign}</Text>
                   </View>
                 </View>
 
                 <View style={{ justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row', justifyContent:'space-between' }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Image
                       source={require('../../../asserts/icon/icon_gradeClass.png')}
                       style={{ width: 20, height: 20 }}
                     />
                     <Text style={styles.txtRight}>Khối Lớp </Text>
-                    <Text style={styles.txtThree}>{item.totalAssign}</Text>
+                    <Text style={[styles.indexOne, { marginLeft: 30 }]}>
+                      {item.gradeId.slice(1, 3)}
+                    </Text>
                   </View>
                   <View style={{
                     flexDirection: 'row',
@@ -151,7 +156,7 @@ export default class itemClass extends Component {
                       style={{ width: 20, height: 20 }}
                     />
                     <Text style={styles.txtRightFoot}>Sĩ Số</Text>
-                    <Text style={styles.indexTwo}>{item.rateSubmit} %</Text>
+                    <Text style={styles.indexTwo}>{item.totalStudent}</Text>
                   </View>
                 </View>
               </View>
@@ -246,7 +251,7 @@ const styles = StyleSheet.create({
     color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    marginLeft: 10,
+    marginLeft: 5,
     alignSelf: 'center',
   },
   txtRight: {
@@ -261,15 +266,15 @@ const styles = StyleSheet.create({
     color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    marginLeft: 5,
-    marginRight: 10,
+    // marginLeft: 5,
+    marginRight: 48,
     alignSelf: 'center'
   },
   indexOne: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    marginLeft: 16,
+    // marginLeft: 16,
   },
   txtThree: {
     color: '#2D9CDB',
@@ -280,9 +285,8 @@ const styles = StyleSheet.create({
   },
   txtFour: {
     color: '#FF6213',
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito',
     fontSize: 12,
-    marginLeft: 16,
   },
   indexTwo: {
     color: '#FF6213',
@@ -306,6 +310,19 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-
+  },
+  txtQuestion: {
+    fontFamily: 'Nunito',
+    fontSize: 10,
+    lineHeight: 14,
+    color: "blue",
+    alignSelf: 'center',
+    marginTop: 1,
+    textAlign: 'right',
+    width: 50,
+  },
+  showSubjectCode: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });

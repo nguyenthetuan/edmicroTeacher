@@ -82,7 +82,8 @@ class Item extends React.Component {
               styles.topTest,
               { backgroundColor: Common.getBackroundSubject(subjectCode) },
             ]}>
-            <Text style={styles.txtName}>{item.name}</Text>
+            <Text numberOfLines={1}
+              style={styles.txtName}>{item.name}</Text>
             <View
               style={{
                 alignItems: 'center',
@@ -104,9 +105,9 @@ class Item extends React.Component {
               <View style={styles.flexSubject}>
                 <FastImage
                   source={Common.getIconSubject(subjectCode)}
-                  style={{ width: 22, height: 22, marginLeft: 2, borderRadius: 20 }}
+                  style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 20 }}
                 />
-                <Text style={styles.txtQuestion}>{subjectCode}</Text>
+                <Text style={styles.txtQuestion}> {subjectCode}</Text>
               </View>
               <View style={styles.flexSenten}>
                 <FastImage
@@ -123,7 +124,7 @@ class Item extends React.Component {
                   source={require('../../../asserts/icon/icon_sentenTea.png')}
                   style={{ width: 25, height: 25 }}
                 />
-                <Text style={styles.txtQuestion}> Lớp {gradeCode}</Text>
+                <Text style={styles.txtQuestion}>Lớp {gradeCode}</Text>
               </View>
             </View>
 
@@ -1081,7 +1082,11 @@ class Papers extends Component {
         ]}>
         {this._renderClass()}
         {this._renderSubject()}
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+          alignItems: 'center'
+        }}>
           <View>
             <TextInput
               placeholder='Nhập tên bài tập'
@@ -1186,16 +1191,24 @@ class Papers extends Component {
                   listSubjects={listSubjects}
                   data={dataSelected}
                 />
-              ) : null}
-              {visibleModalEditName ? (
-                <ModalEditName
-                  onVisible={visible => this.onVisibleModalEditName(visible)}
-                  onUpdateItem={item => this.onUpdateItem(item)}
-                  listGrades={listGrades}
-                  listSubjects={listSubjects}
-                  data={dataSelected}
-                />
-              ) : null}
+              )
+                :
+                null
+              }
+              {visibleModalEditName
+                ?
+                (
+                  <ModalEditName
+                    onVisible={visible => this.onVisibleModalEditName(visible)}
+                    onUpdateItem={item => this.onUpdateItem(item)}
+                    listGrades={listGrades}
+                    listSubjects={listSubjects}
+                    data={dataSelected}
+                  />
+                )
+                :
+                null
+              }
             </View>
           )}
       </SafeAreaView>
@@ -1310,8 +1323,10 @@ const styles = StyleSheet.create({
   txtName: {
     fontFamily: 'Nunito-Bold',
     fontSize: 14,
+    lineHeight:19,
     color: '#FFF',
-    alignSelf:'center',
+    alignSelf: 'center',
+    width: "90%"
   },
   itemTest: {
     borderRadius: 4,
@@ -1334,10 +1349,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   txtQuestion: {
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito',
     fontSize: 10,
+    lineHeight:14,
     color: '#000',
-    marginLeft: 6,
+    marginLeft: 5,
     alignSelf: 'center',
   },
   buttomPractice: {
@@ -1485,8 +1501,8 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-  flexSenten:{
-    flexDirection:'row'
+  flexSenten: {
+    flexDirection: 'row'
   }
 });
 
