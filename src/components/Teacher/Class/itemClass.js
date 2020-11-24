@@ -63,10 +63,7 @@ export default class itemClass extends Component {
       <View style={[styles.container, { borderColor: bg }]}>
         <View style={{ flex: 1 }}>
           <View style={[styles.top, { backgroundColor: bg }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {/* <View style={{ height: 26, width: 26, borderRadius: 13, borderColor: '#FFF', borderWidth: .5, alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={Common.getIconSubject(item.subjectCode)} style={{ width: 25, height: 25 }} resizeMode='contain' />
-              </View> */}
+            <View style={styles.titleName}>
               <Text style={styles.name}>{item.name}</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
@@ -79,11 +76,7 @@ export default class itemClass extends Component {
           <View style={styles.body}>
             <View style={{ marginTop: 5 }}>
               <Text
-                style={{
-                  fontSize: 12,
-                  color: '#000',
-                  fontFamily: 'Nunito-Regular',
-                }}>
+                style={styles.viewSubmit}>
                 Tỉ lệ nộp bài
               </Text>
               <View style={styles.progressBar}>
@@ -94,14 +87,7 @@ export default class itemClass extends Component {
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: '#56BB73',
-                    fontFamily: 'Nunito-Regular',
-                    marginLeft: 10,
-                    position: 'absolute',
-                    right: 0,
-                  }}>
+                  style={styles.rateSub}>
                   {item.rateSubmit} %
                 </Text>
               </View>
@@ -115,7 +101,7 @@ export default class itemClass extends Component {
                   <View style={{ flexDirection: 'row' }}>
                     <FastImage
                       source={Common.getIconSubject(item.subjectCode)}
-                      style={{ width: 21, height: 21, borderRadius: 20 }}
+                      style={styles.getIcon}
                     />
                     <View style={styles.showSubjectCode}>
                       <Text style={styles.txtInfoDetail}>
@@ -125,7 +111,7 @@ export default class itemClass extends Component {
                         style={styles.txtQuestion}>{item.subjectCode}</Text>
                     </View>
                   </View>
-                  <View style={{ flexDirection: 'row', marginTop: 13 }}>
+                  <View style={styles.viewImageExcer}>
                     <Image
                       source={require('../../../asserts/icon/icon_excerciseClass.png')}
                       style={{ width: 20, height: 20 }}
@@ -134,26 +120,21 @@ export default class itemClass extends Component {
                     <Text style={styles.txtThree}>{item.totalAssign}</Text>
                   </View>
                 </View>
-
                 <View style={{ justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View style={styles.iconClass}>
                     <Image
-                      source={require('../../../asserts/icon/icon_gradeClass.png')}
-                      style={{ width: 20, height: 20 }}
+                      source={require('../../../asserts/icon/icon_gradeClass1.png')}
+                      style={{ width: 22, height: 22 }}
                     />
                     <Text style={styles.txtRight}>Khối Lớp </Text>
                     <Text style={[styles.indexOne, { marginLeft: 30 }]}>
                       {item.gradeId.slice(1, 3)}
                     </Text>
                   </View>
-                  <View style={{
-                    flexDirection: 'row',
-                    marginTop: 13,
-                    justifyContent: 'space-between'
-                  }}>
+                  <View style={styles.iconPopu}>
                     <Image
                       source={require('../../../asserts/icon/icon_popuClass.png')}
-                      style={{ width: 20, height: 20 }}
+                      style={{ width: 19, height: 19 }}
                     />
                     <Text style={styles.txtRightFoot}>Sĩ Số</Text>
                     <Text style={styles.indexTwo}>{item.totalStudent}</Text>
@@ -283,11 +264,6 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     alignSelf: 'center'
   },
-  txtFour: {
-    color: '#FF6213',
-    fontFamily: 'Nunito',
-    fontSize: 12,
-  },
   indexTwo: {
     color: '#FF6213',
     fontFamily: 'Nunito-Regular',
@@ -323,6 +299,41 @@ const styles = StyleSheet.create({
   },
   showSubjectCode: {
     flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  titleName: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  viewSubmit: {
+    fontSize: 12,
+    color: '#000',
+    fontFamily: 'Nunito-Regular',
+  },
+  rateSub: {
+    fontSize: 12,
+    color: '#F16219',
+    fontFamily: 'Nunito-Regular',
+    marginLeft: 10,
+    position: 'absolute',
+    right: 0
+  },
+  getIcon: {
+    width: 21,
+    height: 21,
+    borderRadius: 20
+  },
+  viewImageExcer: {
+    flexDirection: 'row',
+    marginTop: 13
+  },
+  iconClass: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  iconPopu: {
+    flexDirection: 'row',
+    marginTop: 13,
     justifyContent: 'space-between'
   }
 });

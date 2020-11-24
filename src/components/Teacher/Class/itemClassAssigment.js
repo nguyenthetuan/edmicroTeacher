@@ -34,7 +34,11 @@ export default class ItemClassAssigment extends Component {
   };
 
   render() {
-    const { item, subjectCode, assignmentId } = this.props;
+    const {
+      item,
+      subjectCode,
+      assignmentId
+    } = this.props;
     // const bg = Common.getBackroundSubject(subjectCode);
     const bg = '#56CCF2';
     const rate =
@@ -51,14 +55,14 @@ export default class ItemClassAssigment extends Component {
               flex: 1,
             }}>
             <Text style={styles.name}>{item.className}</Text>
-            <View style={{ flexDirection: 'row' }}>
+            {/* <View style={{ flexDirection: 'row' }}>
               <Text style={styles.textStatus}>{this._Status(item.status)}</Text>
               {item.status === 1 ? (
                 <View style={styles.iconStatus} />
               ) : (
                   <View style={styles.iconStatusOne} />
                 )}
-            </View>
+            </View> */}
           </View>
         </View>
 
@@ -93,67 +97,38 @@ export default class ItemClassAssigment extends Component {
               <Image
                 source={require('../../../asserts/icon/icon_popuClass.png')}
               />
-              <Text style={[styles.txtDate]}>{item.totalUser}</Text>
-              <View
-                style={{
-                  height: '100%',
-                  width: 1,
-                  marginHorizontal: 3,
-                  backgroundColor: '#E0E0E0',
-                }}></View>
-              <Image
-                source={require('../../../asserts/icon/icon_submitExcer.png')}
-              />
-              <Text style={[styles.txtDate, { paddingHorizontal: 5 }]}>
-                {item.totalUserSubmit}
+              <Text style={styles.txtDate}>
+                {item.totalUserSubmit}/
+                {item.totalUser}
               </Text>
             </View>
           </View>
 
-          <View style={{ marginTop: 5 }}>
+          <View style={{ marginTop: 12 }}>
             <Text
-              style={{
-                fontSize: 12,
-                color: '#000',
-                fontFamily: 'Nunito-Regular',
-              }}>
+              style={styles.toucSub}>
               Tỉ lệ nộp bài
             </Text>
             <View style={styles.progressBar}>
               <View
-                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                style={styles.proView}>
                 <ProgressBar
                   progress={rate}
                   color="#28A745"
-                  widthProps={width * 0.75}
+                  widthProps={width * 0.73}
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: '#F16219',
-                    fontFamily: 'Nunito-Regular',
-                    marginLeft: 10,
-                    position: 'absolute',
-                    right: 0,
-                    top: 0,
-                  }}>
+                  style={styles.viewRate}>
                   {rate} %
                 </Text>
               </View>
               <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: width / 4,
-                  marginTop: 13,
-                  marginLeft: 10
-                }}>
+                style={styles.ripButton}>
                 <RippleButton
                   onPress={() => {
                     this.props.navigation.navigate({
                       routeName: 'MainHomeWork', key: 'd', params: {
-
                         navigation: this.props.navigation,
                         hideBackButtom: true,
                         assignId: this.props.item.assignId,
@@ -162,7 +137,9 @@ export default class ItemClassAssigment extends Component {
                     });
                   }}>
                   <View style={styles.buttomRevew}>
-                    <Text style={styles.txtbuttom}>Xem Báo Cáo</Text>
+                    <Text style={styles.txtbuttom}>
+                      Xem Báo Cáo
+                      </Text>
                   </View>
                 </RippleButton>
                 {/* <RippleButton
@@ -243,19 +220,21 @@ const styles = StyleSheet.create({
     color: '#4F4F4F',
     fontSize: 12,
     fontFamily: 'Nunito-Regular',
-    marginLeft: width < 350 ? 0 : 5,
+    marginLeft: 5,
+    // marginLeft: width < 350 ? 0 : 5,
   },
   buttomRevew: {
     backgroundColor: '#56CCF2',
     justifyContent: 'center',
-    paddingHorizontal: 25,
+    paddingHorizontal: 35,
     borderRadius: 24,
-    paddingVertical: 5,
+    paddingVertical: 8,
+    marginBottom: 10
   },
   txtbuttom: {
     fontSize: 11,
     lineHeight: 15,
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito-Bold',
     color: '#FFF',
   },
   buttomTry: {
@@ -269,4 +248,29 @@ const styles = StyleSheet.create({
     marginTop: 5,
     justifyContent: 'space-between',
   },
+  proView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  toucSub: {
+    fontSize: 12,
+    color: '#000',
+    fontFamily: 'Nunito-Regular',
+  },
+  viewRate: {
+    fontSize: 12,
+    color: '#F16219',
+    fontFamily: 'Nunito-Regular',
+    marginLeft: 10,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  ripButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: width / 4,
+    marginTop: 13,
+    marginLeft: 10
+  }
 });
