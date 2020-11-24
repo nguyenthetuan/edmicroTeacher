@@ -61,6 +61,7 @@ export default class UpdatePlan extends Component {
             navigation={navigation}
             actionIcon={''}
             title={title}
+            color={'#2D9CDB'}
           />
           <View style={[styles.body]}>
             <TextInput
@@ -114,16 +115,17 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2D9CDB',
-    marginTop: 70,
-    paddingVertical: 8,
+    marginTop: 64,
     width: '50%',
-    borderRadius: 4
+    borderRadius: 25
   },
   txtBtn: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily: 'Nunito-Regular'
+    lineHeight: 21,
+    fontFamily: 'Nunito-Bold',
+    marginTop: 14,
+    marginBottom:14
   },
   styActivity: {
     position: 'absolute',

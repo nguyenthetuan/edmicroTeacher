@@ -48,7 +48,6 @@ export default class itemExercise extends Component {
           <Text style={styles.name}>{item.name}</Text>
         </View>
         <View style={styles.body}>
-
           <View style={styles.topBody}>
             <View style={styles.flexAll}>
               <MaterialCommunityIcons
@@ -86,16 +85,18 @@ export default class itemExercise extends Component {
                 color={'#EB5757'}
                 style={{ marginRight: 8 }}
               />
-              <View style={{ flexDirection: 'row', paddingBottom: 3, marginLeft: 0 }}>
+              <View style={styles.viewEnd}>
                 <Text style={styles.timeStart}>Kết thúc</Text>
-                <Text style={styles.txtDate1}>{moment(item.timeEnd * 1000).format('DD/MM/YYYY')}</Text>
+                <Text style={styles.txtDate1}>
+                  {moment(item.timeEnd * 1000).format('DD/MM/YYYY')}
+                </Text>
               </View>
             </View>
             <View style={styles.viewIcon}>
               <View style={styles.fleImaTxt1}>
                 <Image
                   source={require('../../../asserts/icon/icon_submitExcer.png')}
-                  style={{ width: 20, height: 20, marginLeft: 1 }}
+                  style={styles.flexiconSub}
                 />
                 <Text style={styles.txtRight}>Nộp bài</Text>
                 <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
   txtThree: {
     fontSize: 10,
     color: '#FF6213',
-    alignSelf:'center'
+    alignSelf: 'center'
   },
   indexTwo: {
     fontSize: 10,
@@ -260,6 +261,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop:16
+    marginTop: 16
+  },
+  viewEnd: {
+    flexDirection: 'row',
+    paddingBottom: 3,
+    marginLeft: 0
+  },
+  flexiconSub: {
+    width: 20,
+    height: 20,
+    marginLeft: 1
   }
 });
