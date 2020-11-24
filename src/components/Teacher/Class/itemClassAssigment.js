@@ -226,16 +226,18 @@ const styles = StyleSheet.create({
   buttomRevew: {
     backgroundColor: '#56CCF2',
     justifyContent: 'center',
-    paddingHorizontal: 35,
+    // paddingHorizontal: 35,
     borderRadius: 24,
     paddingVertical: 8,
-    marginBottom: 10
+    marginBottom: 8
   },
   txtbuttom: {
     fontSize: 11,
     lineHeight: 15,
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
+    marginLeft:21,
+    marginRight:28,
   },
   buttomTry: {
     backgroundColor: '#7E96EC',
