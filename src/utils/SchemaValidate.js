@@ -6,6 +6,7 @@ import {
     passwordSignIn,
     password,
     rePassword,
+    reNewPassword,
     confirmPassword,
     firstName,
     lastName,
@@ -34,4 +35,10 @@ export const forgotPasswordValidate = yup.object().shape({
 
 export const phoneNumberScheme = yup.object().shape({
     phoneNumber: phoneNumber,
+});
+
+export const changePasswordValidate = yup.object().shape({
+    passwordOld: passwordSignIn,
+    passwordNew: password,
+    passwordNewAgain: reNewPassword
 });

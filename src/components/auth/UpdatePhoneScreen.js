@@ -51,7 +51,7 @@ export default class UpdatePhoneScreen extends Component {
       isLoading: false,
       phoneNumber: '',
       // inputOtpVisible: true,
-      inputOtpVisible: true,
+      inputOtpVisible: false,
       errors: '',
       codeOTP: '',
       projectId: 'onluyen-a2989',

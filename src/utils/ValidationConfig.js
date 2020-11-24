@@ -61,6 +61,16 @@ export const rePassword = yup.string()
         )
     }).required(getRequireMessage(CONFIRMPASSWORD));
 
+
+export const reNewPassword = yup.string()
+    .when("passwordNew", {
+        is: val => (val && val.length > 0 ? true : false),
+        then: yup.string().oneOf(
+            [yup.ref("passwordNew")],
+            "Cả hai mật khẩu cần phải giống nhau"
+        )
+    }).required(getRequireMessage(CONFIRMPASSWORD));
+
 export const confirmPassword = yup
     .string()
     .min(Min_Leng_Password, getMinLengMessage(CONFIRMPASSWORD, Min_Leng_Password))
