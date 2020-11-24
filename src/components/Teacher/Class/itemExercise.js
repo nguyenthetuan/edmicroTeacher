@@ -46,52 +46,17 @@ export default class itemExercise extends Component {
       <View style={styles.container}>
         <View style={styles.top}>
           <Text style={styles.name}>{item.name}</Text>
-          {/* <View style={{
-            position: 'absolute',
-            right: 3,
-            top: 5
-          }}>
-            {item.status === 1
-              ?
-              <View
-                style={{
-                  height: 7,
-                  width: 7,
-                  borderRadius: 3.5,
-                  backgroundColor: '#91EDC6',
-                  marginRight: 5
-                }}
-              />
-              :
-              <View
-                style={{
-                  height: 7,
-                  width: 7,
-                  borderRadius: 3.5,
-                  backgroundColor: '#E0E0E0',
-                  marginRight: 5
-                }}
-              />}
-          </View> */}
         </View>
         <View style={styles.body}>
+
           <View style={styles.topBody}>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+            <View style={styles.flexAll}>
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
                 color={'#0E5FCD'}
               />
-              <View style={{
-                flexDirection: 'row',
-                paddingBottom: 5,
-                marginLeft: 5,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
+              <View style={styles.txtStart}>
                 <Text style={styles.timeStart}>
                   Bắt đầu
                   </Text>
@@ -100,10 +65,21 @@ export default class itemExercise extends Component {
                 </Text>
               </View>
             </View>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center'
-            }}>
+
+            <View style={styles.viewIcon}>
+              <Image
+                source={require('../../../asserts/icon/icon_popuClass.png')}
+                style={{ width: 20, height: 20 }}
+              />
+              <View style={styles.fleImaTxt}>
+                <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>
+                <Text style={styles.txtFour}>{item.totalUser}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.topBody}>
+            <View style={styles.flexAll}>
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
@@ -112,42 +88,21 @@ export default class itemExercise extends Component {
               />
               <View style={{ flexDirection: 'row', paddingBottom: 3, marginLeft: 0 }}>
                 <Text style={styles.timeStart}>Kết thúc</Text>
-                <Text style={styles.txtDate}>{moment(item.timeEnd * 1000).format('DD/MM/YYYY')}</Text>
+                <Text style={styles.txtDate1}>{moment(item.timeEnd * 1000).format('DD/MM/YYYY')}</Text>
               </View>
             </View>
-          </View>
-          <View style={styles.topBody}>
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                width:"50%"
-              }}>
-                <Image
-                  source={require('../../../asserts/icon/icon_popuClass.png')}
-                  style={{ width: 20, height: 20 }}
-                />
-                <View style={styles.fleImaTxt}>
-                  <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>
-                  <Text style={styles.txtFour}>{item.totalUser}</Text>
-                </View>
-              </View>
-
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                width:"50%"
-              }}>
+            <View style={styles.viewIcon}>
+              <View style={styles.fleImaTxt1}>
                 <Image
                   source={require('../../../asserts/icon/icon_submitExcer.png')}
-                  style={{ width: 20, height: 20, marginLeft:40}}
+                  style={{ width: 20, height: 20, marginLeft: 1 }}
                 />
-                <View style={styles.fleImaTxt}>
-                  <Text style={styles.txtRight}>Nộp bài</Text>
-                  <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
-                </View>
+                <Text style={styles.txtRight}>Nộp bài</Text>
+                <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
               </View>
+            </View>
+
+
           </View>
 
         </View>
@@ -210,7 +165,9 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#FFF',
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   timeStart: {
     fontSize: 10,
@@ -223,10 +180,14 @@ const styles = StyleSheet.create({
     color: '#0E5FCD',
     marginLeft: 5
   },
+  txtDate1: {
+    fontSize: 10,
+    color: '#EB5757',
+    marginLeft: 5
+  },
   topBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 10
+    flexDirection: 'column',
+    paddingTop: 10,
   },
   txtClass: {
     fontSize: 10,
@@ -241,16 +202,17 @@ const styles = StyleSheet.create({
     right: 0
   },
   txtRight: {
-    marginLeft: 10,
+    marginLeft: 9.5,
     color: '#000000',
     fontSize: 10,
     fontFamily: 'Nunito-Regular',
     alignSelf: 'center',
-    marginRight: 57,
+    marginRight: 50,
   },
   txtInfoDetail: {
     color: '#000',
     fontSize: 10,
+    marginLeft: 8,
     alignSelf: 'center',
   },
   txtFour: {
@@ -267,7 +229,7 @@ const styles = StyleSheet.create({
   txtThree: {
     fontSize: 10,
     color: '#FF6213',
-    // paddingHorizontal: 28.3
+    alignSelf:'center'
   },
   indexTwo: {
     fontSize: 10,
@@ -278,5 +240,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
+  fleImaTxt1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  flexAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5
+  },
+  txtStart: {
+    flexDirection: 'row',
+    paddingBottom: 5,
+    marginLeft: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  viewIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop:16
+  }
 });
