@@ -89,7 +89,8 @@ export default class itemExercise extends Component {
                 flexDirection: 'row',
                 paddingBottom: 5,
                 marginLeft: 5,
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignItems: 'center'
               }}>
                 <Text style={styles.timeStart}>
                   Bắt đầu
@@ -119,6 +120,8 @@ export default class itemExercise extends Component {
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
+                justifyContent: 'space-between',
+                width:"50%"
               }}>
                 <Image
                   source={require('../../../asserts/icon/icon_popuClass.png')}
@@ -133,10 +136,12 @@ export default class itemExercise extends Component {
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
+                justifyContent: 'space-between',
+                width:"50%"
               }}>
                 <Image
                   source={require('../../../asserts/icon/icon_submitExcer.png')}
-                  style={{ width: 20, height: 20 }}
+                  style={{ width: 20, height: 20, marginLeft:40}}
                 />
                 <View style={styles.fleImaTxt}>
                   <Text style={styles.txtRight}>Nộp bài</Text>
@@ -221,9 +226,7 @@ const styles = StyleSheet.create({
   topBody: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 10,
-    // paddingRight: width < 350 ? '15%' : '10%',
-    // backgroundColor:'green'
+    paddingTop: 10
   },
   txtClass: {
     fontSize: 10,
@@ -248,13 +251,13 @@ const styles = StyleSheet.create({
   txtInfoDetail: {
     color: '#000',
     fontSize: 10,
-    marginLeft: 8,
     alignSelf: 'center',
   },
   txtFour: {
     fontSize: 10,
     color: '#FF6213',
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
+    marginRight: 16
   },
   txtRightFoot: {
     fontSize: 10,
@@ -274,5 +277,6 @@ const styles = StyleSheet.create({
   fleImaTxt: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+  },
+
 });
