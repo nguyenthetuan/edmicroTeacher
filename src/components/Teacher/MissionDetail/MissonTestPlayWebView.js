@@ -106,7 +106,12 @@ export default class MissonPlayWebView extends PureComponent {
     }
 
     render() {
-        const { testId, token, myInjectedJs, isLoading } = this.state;
+        const {
+            testId,
+            token,
+            myInjectedJs,
+            isLoading
+        } = this.state;
         return (
             <View style={{ flex: 1 }}>
                 <SafeAreaView />

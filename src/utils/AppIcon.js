@@ -85,6 +85,11 @@ import pic_mission from '../asserts/images/pic_mission.png';
 import task_test from '../asserts/icon/task_test.png';
 import icon_practice from '../asserts/icon/icon_practice.png';
 import icon_handing from '../asserts/icon/icon_handing.png';
+import icon_gradeClass1 from '../asserts/icon/icon_gradeClass1.png';
+import icon_teacherV3Exam from '../asserts/icon/icon_teacherV3Exam.png';
+import icon_paracClass from '../asserts/icon/icon_paracClass.png';
+import icon_paracComplete from  '../asserts/icon/icon_paracComplete.png';
+import image_createCompleteV3 from '../asserts/images/image_createCompleteV3.png';
 module.exports = {
   logo_onluyen,
   // icon_google,
@@ -154,5 +159,10 @@ module.exports = {
   pic_mission,
   task_test,
   icon_practice,
-  icon_handing
+  icon_handing,
+  icon_gradeClass1,
+  icon_teacherV3Exam,
+  icon_paracClass,
+  icon_paracComplete,
+  image_createCompleteV3
 };

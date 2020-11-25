@@ -71,7 +71,7 @@ export default class ItemSectionListPrac extends Component {
         <Text style={styles.styName} numberOfLines={2}>
           {item.name || item.testName}
         </Text>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
           {isTest && <TextInput
             ref={ref => this.refScore = ref}
             placeholder={'0'}
@@ -110,6 +110,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
+    borderColor: "#828282",
+    borderWidth:0.5,
+    borderBottomLeftRadius:8,
+    borderBottomRightRadius:8,
   },
   styInput: {
     alignSelf: 'flex-end',
@@ -126,11 +130,14 @@ const styles = StyleSheet.create({
   },
   styName: {
     fontFamily: 'Nunito-Regular',
+    color: '#828282',
     flex: 1,
   },
   styIcon: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#FF4457',
+    marginLeft: 8,
+    marginRight: -6,
   },
   styWrapIcon: {
     alignSelf: 'center',

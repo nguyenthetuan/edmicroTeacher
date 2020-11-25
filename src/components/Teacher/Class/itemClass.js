@@ -108,7 +108,7 @@ export default class itemClass extends Component {
                         Môn Học
                     </Text>
                       <Text numberOfLines={2}
-                        style={styles.txtQuestion}>{item.subjectCode}</Text>
+                        style={styles.txtQuestion}>{item.subjectName}</Text>
                     </View>
                   </View>
                   <View style={styles.viewImageExcer}>
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   txtQuestion: {
     fontFamily: 'Nunito',
-    fontSize: 10,
+    fontSize: 11,
     lineHeight: 14,
     color: "blue",
     alignSelf: 'center',

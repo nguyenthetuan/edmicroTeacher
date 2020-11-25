@@ -71,6 +71,7 @@ export default class MissionStepByStep extends Component {
           navigation={this.props.navigation}
           actionIcon={false}
           goBack={this.goBack}
+          color={'#979797'}
         />
         <View style={{ backgroundColor: '#fff' }}>
           <StepIndicator
@@ -105,23 +106,24 @@ const customStyles = {
   currentStepIndicatorSize: 30,
   separatorStrokeWidth: 2,
   currentStepStrokeWidth: 2,
-  stepStrokeCurrentColor: '#62ACE1',
+  stepStrokeCurrentColor: '#56CCF2',
   stepStrokeWidth: 1,
-  stepStrokeFinishedColor: '#62ACE1',
-  stepStrokeUnFinishedColor: '#aaaaaa',
-  separatorFinishedColor: '#62ACE1',
-  separatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorFinishedColor: '#62ACE1',
+  stepStrokeFinishedColor: '#56CCF2',
+  stepStrokeUnFinishedColor: '#56CCF2',
+  separatorFinishedColor: '#56CCF2',
+  separatorUnFinishedColor: '#56CCF2',
+  stepIndicatorFinishedColor: '#56CCF2',
   stepIndicatorUnFinishedColor: '#ffffff',
   stepIndicatorCurrentColor: '#ffffff',
   stepIndicatorLabelFontSize: 12,
   currentStepIndicatorLabelFontSize: 12,
-  stepIndicatorLabelCurrentColor: '#62ACE1',
+  stepIndicatorLabelCurrentColor: '#56CCF2',
   stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-  labelColor: '#999999',
+  stepIndicatorLabelUnFinishedColor: '#56CCF2',
+  labelColor: '#757575',
+  labelActive:'#56CCF2',
   labelSize: 12,
-  currentStepLabelColor: '#62ACE1',
+  currentStepLabelColor: '#56CCF2',
   labelFontFamily: 'Nunito-Regular',
   labelAlign: 'center',
 };

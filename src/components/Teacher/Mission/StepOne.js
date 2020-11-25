@@ -111,7 +111,12 @@ export default class StepOne extends Component {
   };
 
   render() {
-    const { htmlContent, valueClass, valueSubject, nameMission } = this.state;
+    const {
+      htmlContent,
+      valueClass,
+      valueSubject,
+      nameMission
+    } = this.state;
     let { listSubject } = this.props.screenProps;
     listSubject = listSubject.map(item => ({
       label: item.name,
@@ -120,17 +125,22 @@ export default class StepOne extends Component {
     }));
     return (
       <View style={styles.container}>
-        <ScrollView style={[styles.container, { paddingHorizontal: 0 }]}>
+        <ScrollView style={[styles.container,
+        {
+          paddingHorizontal: 0, marginTop: 20
+        }]}>
           <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
           <TextInput
             placeholder={'Tên nhiệm vụ'}
-            placeholderTextColor={'#ccc'}
+            placeholderTextColor={'#979797'}
             style={styles.styWrapInput}
             value={nameMission}
             onChangeText={nameMission => this.setState({ nameMission })}
-          />
+          >
+            {/* <Image source={AppIcon} /> */}
+          </TextInput>
 
-          <Text>Khối</Text>
+          <Text style={styles.styTxtLabel}>Khối</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
               placeholder={{
@@ -156,7 +166,7 @@ export default class StepOne extends Component {
             />
           </View>
 
-          <Text>Môn học</Text>
+          <Text style={styles.styTxtLabel}>Môn học</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
               placeholder={{
@@ -182,7 +192,7 @@ export default class StepOne extends Component {
             />
           </View>
 
-          <Text>Mô tả</Text>
+          <Text style={styles.styTxtLabel}>Mô tả</Text>
           <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
             <HTML
               html={htmlContent}
@@ -196,12 +206,6 @@ export default class StepOne extends Component {
           style={styles.styBtnNext}
           onPress={this.handleNextStepTwo}>
           <Text style={styles.styTxtBtnNext}>Bước tiếp theo</Text>
-          <Icon
-            name={'angle-right'}
-            size={25}
-            color={'#fff'}
-            style={styles.icon}
-          />
         </TouchableOpacity>
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
         <ModalEditor
@@ -223,7 +227,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#999',
+    borderColor: '#979797',
     margin: 10,
     color: '#000',
   },
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     overflow: 'hidden',
-    borderColor: '#efefef',
+    borderColor: '#979797',
     borderRadius: 5,
     margin: 10,
     padding: 10,
@@ -248,23 +252,32 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   styBtnNext: {
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#62ACE1',
-    marginVertical: 10,
-    borderRadius: 5,
+    backgroundColor: '#2D9CDB',
+    borderRadius: 25,
+    marginBottom: 10,
+    marginLeft: 27,
+    marginRight: 27
   },
   styTxtBtnNext: {
     color: '#FFF',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 16,
+    fontFamily: 'Nunito-Bold',
+    fontSize: 18,
+    lineHeight: 21,
+    alignItems: 'center',
+    alignSelf: 'center',
+    fontWeight: "500",
+    marginTop: 14,
+    marginBottom: 14
   },
   styTxtLabel: {
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito',
+    color: "#000",
+    fontSize: 14,
+    lineHeight: 19,
+    marginLeft: 10
   },
   styTxtPlacehoder: {
-    color: '#999',
+    color: '#979797',
   }
 });
 
@@ -277,7 +290,7 @@ const pickerSelectStyles = StyleSheet.create({
     height: 35,
     margin: 10,
     borderWidth: 1,
-    borderColor: '#999',
+    borderColor: '#979797',
   },
   inputAndroid: {
     paddingTop: 13,

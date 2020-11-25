@@ -79,13 +79,9 @@ export default class StepTwo extends Component {
         <TouchableOpacity
           style={styles.styBtnNext}
           onPress={this.handleNextStepThree}>
-          <Text style={styles.styTxtBtnNext}>Bước tiếp theo</Text>
-          <Icon
-            name={'angle-right'}
-            size={25}
-            color={'#fff'}
-            style={styles.icon}
-          />
+          <Text style={styles.styTxtBtnNext}>
+            Bước tiếp theo
+            </Text>
         </TouchableOpacity>
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
       </View>
@@ -104,17 +100,22 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   styBtnNext: {
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#62ACE1',
-    marginVertical: 10,
-    borderRadius: 5,
+    backgroundColor: '#2D9CDB',
+    borderRadius: 25,
+    marginBottom: 10,
+    marginLeft: 27,
+    marginRight: 27
   },
   styTxtBtnNext: {
     color: '#FFF',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 16,
+    fontFamily: 'Nunito-Bold',
+    fontSize: 18,
+    lineHeight: 21,
+    alignItems: 'center',
+    alignSelf: 'center',
+    fontWeight: "500",
+    marginTop: 14,
+    marginBottom: 14
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Bold',
