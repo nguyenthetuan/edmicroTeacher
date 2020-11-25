@@ -36,31 +36,40 @@ export default class ItemMission extends Component {
         onPress={this.goToMissionDetail}
       >
         <View style={styles.styWrapHeader}>
-          <Text style={styles.styTxtHeader}>{data.title}</Text>
+          <Text
+            numberOfLines={1}
+            style={styles.styTxtHeader}>
+            {data.title}
+          </Text>
+          <Text style={styles.txtTime}>{timeCreateAt}</Text>
         </View>
         <View style={styles.styFlexDirRow}>
           <View>
-            {this.renderElement(AppIcon.iconClassActive, data.gradeName)}
+            <View style={styles.imageSize}>
+              {this.renderElement(
+                AppIcon.icon_gradeClass1, data.gradeName
+                )}
+            </View>
             {this.renderElement(
-              AppIcon.task_test,
+              AppIcon.icon_teacherV3Exam,
               'Bài kiểm tra',
               data.countTest,
             )}
           </View>
-          <View>
+          <View style={styles.viewCount}>
             {this.renderElement(
               getIconSubject(data.subjectCode),
               data.subjectName,
-            )}
+            )}        
             {this.renderElement(
-              AppIcon.icon_practice,
+              AppIcon.icon_paracClass,
               'Bài tự luyện',
               data.countPractice,
             )}
           </View>
           <View>
-            {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)}
-            {this.renderElement(AppIcon.icon_handing, textDelivered)}
+            {this.renderElement(AppIcon.icon_paracComplete, textDelivered)}
+            {/* {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)} */}
           </View>
         </View>
       </TouchableOpacity>
@@ -73,16 +82,22 @@ const styles = StyleSheet.create({
     borderColor: '#7E96EC',
     margin: 5,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 4,
   },
   styWrapHeader: {
     padding: 8,
     backgroundColor: '#7E96EC',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   styTxtHeader: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12
+    fontSize: 14,
+    lineHeight: 19,
+    // width: "98%",
+    flexDirection: "row",
+    justifyContent: 'space-between'
   },
   styFlexDirRow: {
     flexDirection: 'row',
@@ -99,4 +114,21 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  viewCount: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center'
+  },
+  txtTime: {
+    fontFamily: "Nunito-Regular",
+    fontSize: 11,
+    lineHeight: 15,
+    alignSelf: "center",
+    color: "#FFF"
+  },
+  imageSize:{
+    // width: 20,
+    // height: 20
+  }
 });
