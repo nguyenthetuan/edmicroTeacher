@@ -34,7 +34,6 @@ export default class itemExercise extends Component {
         return (<View style={styles.statusHide}>
           <Text style={[styles.txtActive, { color: '#E0E0E0' }]}>Đang đóng</Text>
         </View>);
-
       default: break;
     }
   }
@@ -261,7 +260,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 16
+    marginTop: 10
   },
   viewEnd: {
     flexDirection: 'row',
