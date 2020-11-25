@@ -1,193 +1,40 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
   StyleSheet,
-  FlatList,
-  ScrollView,
-  Modal,
   Text,
   Platform,
   Dimensions,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   ActivityIndicator,
   Animated,
   SafeAreaView,
+  FlatList
 } from 'react-native';
-import RippleButton from '../../common-new/RippleButton';
-import RippleItem from '../../common-new/RippleItem';
 import ModalEditConfig from './modalEditConfig';
 import _ from 'lodash';
-import Common from '../../../utils/Common';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import ModalEditName from './ModalEditName';
 import { connect } from 'react-redux';
 import { setListGrades, setListSubject } from '../../../actions/paperAction';
 import Globals from '../../../utils/Globals';
-import * as Animatable from 'react-native-animatable';
 import HeaderMain from '../../common-new/HeaderMain';
-import FastImage from 'react-native-fast-image';
 import { alertDeletePaper } from '../../../utils/Alert';
 import { TextInput } from 'react-native-gesture-handler';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-
+import ClassItem from './ClassItem';
+import SubjectItem from './SubjectItem';
+import ItemListTest from './ItemListTest';
+import ModalClass from './ModalClass';
+import ModalSubject from './ModalSubject';
+import ModalOption from './ModalOption';
+import ModalAddPaper from './ModalAddPaper';
 const NAVBAR_HEIGHT = 220;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
 const { width, height } = Dimensions.get('window');
-
-class Item extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  _handleClickDetail = payloadAssignment => () => {
-    this.props.onOpenModal(payloadAssignment, false);
-  };
-
-  shouldComponentUpdate = (prevProps, nextState) => {
-    if (this.props.item != prevProps.item) {
-      return true;
-    }
-    return false;
-  };
-
-  render() {
-    const item = this.props.item;
-    const subjectCode =
-      item.subjectCode && item.subjectCode.length > 0
-        ? item.subjectCode[0]
-        : '';
-    let gradeCode =
-      item.gradeCode && item.gradeCode.length > 0 ? item.gradeCode[0] : '';
-    gradeCode = gradeCode.substring(1);
-    const payloadAssignment = {
-      gradeCode,
-      subjectCode,
-    };
-
-    return (
-      <View
-        style={[
-          styles.itemTest,
-          { borderColor: Common.getBackroundSubject(subjectCode) },
-        ]}
-        onPress={this._handleClickDetail(payloadAssignment)}>
-        <TouchableOpacity
-          onPress={() => this.props.onOpenModal(payloadAssignment)}>
-          <View
-            style={[
-              styles.topTest,
-              { backgroundColor: Common.getBackroundSubject(subjectCode) },
-            ]}>
-            <Text numberOfLines={1}
-              style={styles.txtName}>{item.name}</Text>
-            <View
-              style={{
-                alignItems: 'center',
-                width: 30,
-                justifyContent: 'center',
-              }}>
-              <FastImage
-                style={{ width: 4, height: 12 }}
-                source={require('../../../asserts/icon/icEdit.png')}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={this._handleClickDetail(payloadAssignment)}>
-          <View style={styles.bodyTest}>
-            <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-              <View style={styles.flexSubject}>
-                <FastImage
-                  source={Common.getIconSubject(subjectCode)}
-                  style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 20 }}
-                />
-                <Text style={styles.txtQuestion}> {subjectCode}</Text>
-              </View>
-              <View style={styles.flexSenten}>
-                <FastImage
-                  source={require('../../../asserts/icon/icon_sentenTea.png')}
-                  style={{ width: 25, height: 25 }}
-                />
-                <Text style={styles.txtQuestion}>{item.totalQuestion} câu</Text>
-              </View>
-            </View>
-
-            <View style={{ flexDirection: 'column' }}>
-              <View style={styles.flexSenten}>
-                <FastImage
-                  source={require('../../../asserts/icon/icon_sentenTea.png')}
-                  style={{ width: 25, height: 25 }}
-                />
-                <Text style={styles.txtQuestion}>Lớp {gradeCode}</Text>
-              </View>
-            </View>
-
-            <View style={{ flexDirection: 'column' }}>
-              <View>
-                {
-                  item.assignmentType
-                    ?
-                    <View style={styles.flexParac}>
-                      <FastImage
-                        source={require('../../../asserts/icon/icon_examparacExamv3.png')}
-                        style={{ height: 25, width: 25 }}
-                      />
-                      <Text style={styles.txtButtomPractice}>
-                        {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'}
-                      </Text>
-                    </View>
-                    :
-                    <View style={styles.flexParac}>
-                      <FastImage
-                        source={require('../../../asserts/icon/icon_paracClass.png')}
-                        style={{ height: 25, width: 25 }}
-                      />
-                      <Text style={styles.txtButtomPractice}>
-                        {item.assignmentType ? 'Bài kiểm tra' : 'Bài tự luyện'}
-                      </Text>
-                    </View>
-                }
-              </View>
-              <View
-                style={styles.flexToParac}
-              >
-                {item.status === 4
-                  ?
-                  <FastImage
-                    source={require('../../../asserts/icon/icon_paracComplete.png')}
-                    style={{ height: 25, width: 25 }}
-                  />
-                  :
-                  <FastImage
-                    source={require('../../../asserts/icon/icon_paractoFinish.png')}
-                    style={{ height: 25, width: 25 }}
-                  />
-                }
-                {item.status === 4
-                  ?
-                  <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
-                    {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
-                  </Text>
-                  :
-                  <Text style={[styles.txtButtomPractice, { color: item.stattus === 4 ? '#000' : '#c4c4c4' }]}>
-                    {item.status === 4 ? 'Đã giao' : 'Chưa giao'}
-                  </Text>
-                }
-              </View>
-
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
 class Papers extends Component {
   constructor(props) {
     super(props);
@@ -210,21 +57,8 @@ class Papers extends Component {
       hideLoadMore: false,
       visibleModalEditName: false,
       textSearch: '',
-
       scrollAnim,
       offsetAnim,
-      clampedScroll: Animated.diffClamp(
-        Animated.add(
-          scrollAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1],
-            extrapolateLeft: 'clamp',
-          }),
-          offsetAnim,
-        ),
-        0,
-        NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
-      ),
       payloadAssignment: null,
       animation: 'fadeInUpBig',
       assignmentContentType: 0,
@@ -235,30 +69,11 @@ class Papers extends Component {
     Globals.updatePaper = this.refreshData.bind(this);
   }
 
-  _clampedScrollValue = 0;
-  _offsetValue = 0;
-  _scrollValue = 0;
-
   refreshData = async () => {
     this.getData();
   };
   componentDidMount() {
     this.getData();
-    this.state.scrollAnim.addListener(({ value }) => {
-      const diff = value - this._scrollValue;
-      this._scrollValue = value;
-      this._clampedScrollValue = Math.min(
-        Math.max(this._clampedScrollValue + diff, 0),
-        NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
-      );
-    });
-    this.state.offsetAnim.addListener(({ value }) => {
-      this._offsetValue = value;
-    });
-    // this.didFocusSubscription = this.props.navigation.addListener(
-    //   'didFocus',
-    //   this.getData,
-    // );
   }
 
   getData = async () => {
@@ -352,40 +167,11 @@ class Papers extends Component {
               listPapers: resPapers.data,
               loading: false,
               hideLoadMore: true,
-            },
-            () => this._onMomentumScrollEnd(),
+            }
           );
         }
       },
     );
-  };
-
-  componentWillUnmount() {
-    this.state.scrollAnim.removeAllListeners();
-    this.state.offsetAnim.removeAllListeners();
-    // this.didFocusSubscription.remove();
-  }
-
-  _onScrollEndDrag = () => {
-    this._scrollEndTimer = setTimeout(this._onMomentumScrollEnd, 250);
-  };
-
-  _onMomentumScrollBegin = () => {
-    clearTimeout(this._scrollEndTimer);
-  };
-
-  _onMomentumScrollEnd = () => {
-    const toValue =
-      this._scrollValue > NAVBAR_HEIGHT &&
-        this._clampedScrollValue > (NAVBAR_HEIGHT - STATUS_BAR_HEIGHT) / 2
-        ? this._offsetValue + NAVBAR_HEIGHT
-        : this._offsetValue - NAVBAR_HEIGHT;
-
-    Animated.timing(this.state.offsetAnim, {
-      toValue,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
   };
 
   onGetPapers = async () => {
@@ -467,27 +253,18 @@ class Papers extends Component {
     });
   };
 
-  activeClass = item => {
+  activeClass = async item => {
     const { gradeActive } = this.state;
-    const index = _.indexOf(gradeActive, item.gradeId);
-    index < 0
-      ? this.setState(
-        {
-          gradeActive: [...gradeActive, ...[item.gradeId]],
-          loading: true,
-        },
-        () => this.onGetPapers(),
-      )
-      : this.setState(
-        {
-          gradeActive: [
-            ...gradeActive.slice(0, index),
-            ...gradeActive.slice(index + 1),
-          ],
-          loading: true,
-        },
-        () => this.onGetPapers(),
-      );
+    const index = _.indexOf(gradeActive, item.gradeId || item);
+    if (index < 0) {
+      gradeActive.push(item.gradeId)
+      await this.setState({ gradeActive, loading: true });
+      this.onGetPapers();
+      return;
+    }
+    gradeActive.splice(index, 1);
+    await this.setState({ gradeActive, loading: true });
+    this.onGetPapers();
   };
 
   refreshClass = () => {
@@ -498,27 +275,18 @@ class Papers extends Component {
     this.onGetPapers();
   };
 
-  activeSubject = item => {
+  activeSubject = async item => {
     const { subjectActive } = this.state;
-    const index = _.indexOf(subjectActive, item.code);
-    index < 0
-      ? this.setState(
-        {
-          subjectActive: [...subjectActive, ...[item.code]],
-          loading: true,
-        },
-        () => this.onGetPapers(),
-      )
-      : this.setState(
-        {
-          subjectActive: [
-            ...subjectActive.slice(0, index),
-            ...subjectActive.slice(index + 1),
-          ],
-          loading: true,
-        },
-        () => this.onGetPapers(),
-      );
+    const index = _.indexOf(subjectActive, item.code || item);
+    if (index < 0) {
+      subjectActive.push(item.code);
+      await this.setState({ subjectActive, loading: true });
+      this.onGetPapers()
+      return;
+    }
+    subjectActive.splice(index, 1)
+    await this.setState({ subjectActive, loading: true });
+    this.onGetPapers()
   };
 
   refreshSubject = () => {
@@ -549,132 +317,6 @@ class Papers extends Component {
     );
   };
 
-  _renderClass = () => {
-    const { gradeActive, listGrades } = this.state;
-    return (
-      <View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={styles.txtClass}>Khối lớp</Text>
-          <RippleButton onPress={() => this.refreshClass()}>
-            <View style={{ padding: 5 }}>
-              <FastImage
-                source={require('../../../asserts/icon/refresh.png')}
-                resizeMode="contain"
-                style={{ height: 25, width: 25 }}
-              />
-            </View>
-          </RippleButton>
-        </View>
-        <View style={{ marginTop: 12 }}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <FastImage
-              style={{ width: 25 }}
-              source={require('../../../asserts/images/iconHome.png')}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-            <FlatList
-              data={listGrades}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => {
-                return !_.includes(gradeActive, item.gradeId) ? (
-                  <RippleButton
-                    style={Platform.OS === 'ios' ? styles.buttomClass : null}
-                    onPress={() => this.activeClass(item)}>
-                    <View
-                      style={
-                        Platform.OS === 'android' ? styles.buttomClass : null
-                      }>
-                      <Text style={styles.txtItem}>{item.name}</Text>
-                    </View>
-                  </RippleButton>
-                ) : (
-                    <RippleButton
-                      style={Platform.OS === 'ios' ? styles.buttomActive : null}
-                      onPress={() => this.activeClass(item)}>
-                      <View
-                        style={
-                          Platform.OS === 'android' ? styles.buttomActive : null
-                        }>
-                        <Text style={styles.txtItemActive}>{item.name}</Text>
-                      </View>
-                    </RippleButton>
-                  );
-              }}
-              removeClippedSubviews={false}
-              horizontal
-            />
-          </ScrollView>
-        </View>
-      </View>
-    );
-  };
-
-  _renderSubject = () => {
-    const { subjectActive, listSubjects } = this.state;
-    return (
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 10,
-          }}>
-          <Text style={styles.txtClass}>Môn học</Text>
-          <RippleButton onPress={() => this.refreshSubject()}>
-            <View style={{ padding: 5 }}>
-              <FastImage
-                source={require('../../../asserts/icon/refresh.png')}
-                resizeMode="contain"
-                style={{ height: 25, width: 25 }}
-              />
-            </View>
-          </RippleButton>
-        </View>
-        <View style={{ marginTop: 6 }}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <FastImage
-              style={{ width: 25 }}
-              source={require('../../../asserts/icon/subject.png')}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-            <FlatList
-              data={listSubjects}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => {
-                return !_.includes(subjectActive, item.code) ? (
-                  <RippleButton
-                    style={Platform.OS === 'ios' ? styles.buttomClass : null}
-                    onPress={() => this.activeSubject(item)}>
-                    <View
-                      style={
-                        Platform.OS === 'android' ? styles.buttomClass : null
-                      }>
-                      <Text style={styles.txtItem}>{item.name}</Text>
-                    </View>
-                  </RippleButton>
-                ) : (
-                    <RippleButton
-                      style={Platform.OS === 'ios' ? styles.buttomActive : null}
-                      onPress={() => this.activeSubject(item)}>
-                      <View
-                        style={
-                          Platform.OS === 'android' ? styles.buttomActive : null
-                        }>
-                        <Text style={styles.txtItemActive}>{item.name}</Text>
-                      </View>
-                    </RippleButton>
-                  );
-              }}
-              removeClippedSubviews={false}
-              horizontal
-              snapToEnd={true}
-            />
-          </ScrollView>
-        </View>
-      </View>
-    );
-  };
-
   OpenModalEdit = () => {
     this.setButton(this.button2, () => {
       this.setState({ popover: true });
@@ -682,7 +324,15 @@ class Papers extends Component {
   };
 
   _listTestEmpty = () => {
-    return (
+    const { loading } = this.state;
+    return (loading ?
+      <ActivityIndicator
+        animating
+        size={'small'}
+        style={{ flex: 1 }}
+        color="#F98E2F"
+      />
+      :
       <View style={styles.viewNotFound}>
         <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
       </View>
@@ -746,9 +396,6 @@ class Papers extends Component {
 
   _handleClickDetail = index => () => {
     const {
-      listPapers,
-      visibleEdit,
-      loading,
       dataSelected,
       payloadAssignment,
     } = this.state;
@@ -812,122 +459,6 @@ class Papers extends Component {
     });
   };
 
-  _renderListTest = () => {
-    const {
-      listPapers,
-      visibleEdit,
-      loading,
-      dataSelected,
-      payloadAssignment,
-      animation,
-      assignmentContentType,
-    } = this.state;
-    return (
-      <View style={{ flex: 1 }}>
-        {
-          <Animated.FlatList
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}
-            data={listPapers}
-            keyExtractor={(item, index) => index.toString()}
-            extraData={listPapers}
-            ListEmptyComponent={this._listTestEmpty}
-            ListFooterComponent={this._listTestFooter}
-            renderItem={({ item, index }) => (
-              <Item item={item} onOpenModal={this._onOpenModal(item)} />
-            )}
-            initialNumToRender={12}
-            windowSize={24}
-            scrollEventThrottle={1}
-            onMomentumScrollBegin={this._onMomentumScrollBegin}
-            onMomentumScrollEnd={this._onMomentumScrollEnd}
-            onScrollEndDrag={this._onScrollEndDrag}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }],
-              { useNativeDriver: true },
-            )}
-            ListHeaderComponent={this.renderHeaderFlastList()}
-          />
-        }
-        <Modal visible={visibleEdit} transparent={true}>
-          <TouchableWithoutFeedback onPressOut={this._handleCloseModal}>
-            <View style={styles.containerModal}>
-              <TouchableWithoutFeedback>
-                <Animatable.View
-                  style={styles.wrapModal}
-                  animation={animation}
-                  duration={500}>
-                  <View>
-                    <RippleItem onPress={this._handleClickDetail(1)}>
-                      <View style={styles.wrapElementModal}>
-                        <Image
-                          source={require('../../../asserts/icon/icDetail.png')}
-                        />
-                        <Text style={styles.txtModalDetail}>Chi tiết</Text>
-                      </View>
-                    </RippleItem>
-                    {assignmentContentType !== 1 && (
-                      <RippleItem onPress={this._handleClickDetail(2)}>
-                        <View style={styles.wrapElementModal}>
-                          <Image
-                            source={require('../../../asserts/icon/icBackup.png')}
-                          />
-                          <Text style={styles.txtModalDetail}>Tạo bản sao</Text>
-                        </View>
-                      </RippleItem>
-                    )}
-                    <RippleItem onPress={() => this._OpenModal(3)}>
-                      <View style={styles.wrapElementModal}>
-                        <Image
-                          source={require('../../../asserts/icon/icEditName.png')}
-                        />
-                        <Text style={styles.txtModalDetail}>Sửa tên</Text>
-                      </View>
-                    </RippleItem>
-                    <RippleItem onPress={() => this._OpenModal(4)}>
-                      <View style={styles.wrapElementModal}>
-                        <Image
-                          source={require('../../../asserts/icon/icConfig.png')}
-                        />
-                        <Text style={styles.txtModalDetail}>Sửa cấu hình</Text>
-                      </View>
-                    </RippleItem>
-                    {dataSelected && dataSelected.status !== 4 && (
-                      <RippleItem onPress={this.deletePaper}>
-                        <View style={styles.wrapElementModal}>
-                          <Image
-                            source={require('../../../asserts/icon/icDelete.png')}
-                          />
-                          <Text style={styles.txtModalDetail}>Xoá bài tập</Text>
-                        </View>
-                      </RippleItem>
-                    )}
-                    <RippleItem onPress={this._handleClickDetail(4)}>
-                      <View style={styles.wrapElementModal}>
-                        <Image
-                          source={require('../../../asserts/icon/icRegistration.png')}
-                        />
-                        <Text style={styles.txtModalDetail}>Giao bài tập</Text>
-                      </View>
-                    </RippleItem>
-                    <RippleItem onPress={this._handleClickDetail(7)}>
-                      <View style={styles.wrapElementModal}>
-                        <Image
-                          source={require('../../../asserts/icon/icMarkingPoint.png')}
-                        />
-                        <Text style={styles.txtModalDetail}>Chấm điểm</Text>
-                      </View>
-                    </RippleItem>
-                  </View>
-                </Animatable.View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-      </View>
-    );
-  };
-
   onPress = () => {
     this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('QuestionLibrary', {
@@ -961,80 +492,6 @@ class Papers extends Component {
   }
 
   closeModal = () => this.setState({ visibleModalAdd: false });
-
-  _renderModalAddPaper = () => {
-    const { visibleModalAdd } = this.state;
-    return (
-      <Modal
-        visible={visibleModalAdd}
-        transparent={true}
-        animationType={'fade'}>
-        <View
-          // duration={500}
-          style={styles.containerModal}>
-          <View style={styles.contentModal}>
-            <View style={styles.topModal}>
-              <Text style={styles.txtTitleModal}>Tạo bộ đề</Text>
-              <View style={{ position: 'absolute', right: 5, top: 3 }}>
-                <RippleButton onPress={this.closeModal}>
-                  <Image
-                    source={require('../../../asserts/icon/icCloseModal.png')}
-                    style={{ height: 22, width: 22 }}
-                  />
-                </RippleButton>
-              </View>
-            </View>
-            <Text style={styles.textTilteModal}>Hãy chọn loại bộ đề muốn tạo</Text>
-            <View style={{ width: '100%', alignItems: 'center' }}>
-              <Image
-                source={require('../../../asserts/icon/icPersonModalCloud.png')}
-                style={{ width: width * 0.5, height: width * 0.26 }}
-                resizeMode="contain"
-              />
-            </View>
-            <View style={styles.bodyModal}>
-              <View style={styles.buttomMoadal}>
-                <RippleButton onPress={() => this.onPress()}>
-                  <View style={styles.buttomMoadal}>
-                    <Image
-                      source={require('../../../asserts/icon/cloud.png')}
-                    />
-                    <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
-                  </View>
-                </RippleButton>
-              </View>
-
-              <View style={styles.buttomMoadal}>
-                <RippleButton onPress={this.onPressCopy}>
-                  <View style={styles.buttomMoadal}>
-                    <Image
-                      source={require('../../../asserts/icon/icon-saochepbode.png')}
-                    />
-                    <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
-                  </View>
-                </RippleButton>
-              </View>
-              <View style={styles.buttomMoadal}>
-                <RippleButton onPress={this.onPressUploadPDF}>
-                  <View style={styles.buttomMoadal}>
-                    <Image
-                      source={require('../../../asserts/icon/dowload.png')}
-                    />
-                    <Text style={styles.txtUpload}>Upload file .PDF</Text>
-                  </View>
-                </RippleButton>
-              </View>
-            </View>
-            {/* <View style={styles.footerModal}>
-              <Text style={styles.txtFooterModal}>
-                Hãy chọn loại bộ đề bạn muốn tạo{' '}
-              </Text>
-            </View> */}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
 
   onVisibleModalEdit = visible => {
     this.setState({
@@ -1070,32 +527,31 @@ class Papers extends Component {
   }
 
   renderHeaderFlastList() {
-    const { textSearch } = this.state;
+    const {
+      textSearch,
+      gradeActive,
+      subjectActive,
+      listSubjects
+    } = this.state;
     return (
-      <View
-        style={[
-          styles.navbar,
-          // {
-          //   transform: [{ translateY: navbarTranslate }],
-          //   opacity: navbarOpacity,
-          // },
-        ]}>
-        {this._renderClass()}
-        {this._renderSubject()}
+      <View style={styles.navbar}>
+        <ClassItem
+          gradeActive={gradeActive}
+          refModalClass={this.refModalClass}
+          activeClass={this.activeClass}
+        />
+        <SubjectItem
+          subjectActive={subjectActive}
+          listSubjects={listSubjects}
+          refModalSubject={this.refModalSubject}
+          activeSubject={this.activeSubject}
+        />
         <View style={{
           justifyContent: 'space-between',
           flexDirection: 'row',
           alignItems: 'center'
         }}>
           <View>
-            <TextInput
-              placeholder='Nhập tên bài tập'
-              placeholderTextColor='#C4C4C4'
-              style={styles.searchPaper}
-              value={textSearch}
-              onChangeText={text => this.setState({ textSearch: text.toLowerCase() })}
-              onEndEditing={() => this.searchPaper()}
-            />
             <TouchableOpacity
               onPress={() => this.searchPaper()}
               style={{
@@ -1108,6 +564,14 @@ class Papers extends Component {
               <EvilIcons name="search" size={20} color="#C4C4C4" />
             </TouchableOpacity>
           </View>
+          <TextInput
+            placeholder='Nhập tên bài tập'
+            placeholderTextColor='#C4C4C4'
+            style={styles.searchPaper}
+            value={textSearch}
+            onChangeText={text => this.setState({ textSearch: text.toLowerCase() })}
+            onEndEditing={() => this.searchPaper()}
+          />
           <TouchableOpacity
             style={styles.buttonAdd}
             onPress={this._handleAddPaper}>
@@ -1124,178 +588,105 @@ class Papers extends Component {
 
   render() {
     const {
+      loading,
+      animation,
+      listGrades,
+      listPapers,
+      visibleEdit,
+      gradeActive,
+      listSubjects,
+      dataSelected,
+      subjectActive,
+      visibleModalAdd,
       visibleModalEdit,
       visibleModalEditName,
-      listGrades,
-      dataSelected,
-      listSubjects,
-      clampedScroll,
-      loading,
+      assignmentContentType,
     } = this.state;
-    const { avatarSource } = this.props;
-    const navbarTranslate = clampedScroll.interpolate({
-      inputRange: [0, NAVBAR_HEIGHT - STATUS_BAR_HEIGHT],
-      outputRange: [0, -(NAVBAR_HEIGHT - STATUS_BAR_HEIGHT)],
-      extrapolate: 'clamp',
-    });
-    const navbarOpacity = clampedScroll.interpolate({
-      inputRange: [0, NAVBAR_HEIGHT - STATUS_BAR_HEIGHT],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    });
     const { user } = this.props;
-
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMain {...user} navigation={this.props.navigation} />
-        {loading ? (
-          <ActivityIndicator
-            animating
-            size={'small'}
-            style={{ flex: 1 }}
-            color="#F98E2F"
+
+        <View style={[styles.fill, { paddingHorizontal: 16 }]}>
+          <FlatList
+            data={listPapers}
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item, index) => index.toString()}
+            // extraData={listPapers}
+            ListEmptyComponent={this._listTestEmpty}
+            // ListFooterComponent={this._listTestFooter}
+            renderItem={({ item, index }) => (
+              <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+            )}
+            initialNumToRender={12}
+            windowSize={24}
+            scrollEventThrottle={1}
+            ListHeaderComponent={this.renderHeaderFlastList()}
           />
-        ) : (
-            <View style={{ flex: 1 }}>
-              <View style={[styles.fill, { paddingHorizontal: 16 }]}>
-                {this._renderListTest()}
-                {/* <Animated.View
-                  style={[
-                    styles.navbar,
-                    {
-                      transform: [{ translateY: navbarTranslate }],
-                      opacity: navbarOpacity,
-                    },
-                  ]}>
-                  {this._renderClass()}
-                  {this._renderSubject()}
-                  <View style={{ alignItems: 'flex-end' }}>
-                    <TouchableOpacity
-                      style={styles.buttonAdd}
-                      onPress={this._handleAddPaper}>
-                      <Image
-                        source={require('../../../asserts/icon/icAdd.png')}
-                        style={{ marginTop: 3 }}
-                      />
-                      <Text style={styles.txtAdd}>Thêm bộ đề</Text>
-                    </TouchableOpacity>
-                  </View>
-                </Animated.View> */}
-              </View>
-              {this._renderModalAddPaper()}
-              {visibleModalEdit ? (
-                <ModalEditConfig
-                  onVisible={visible => this.onVisibleModalEdit(visible)}
-                  onUpdateItem={item => this.onUpdateItem(item)}
-                  listGrades={listGrades}
-                  listSubjects={listSubjects}
-                  data={dataSelected}
-                />
-              )
-                :
-                null
-              }
-              {visibleModalEditName
-                ?
-                (
-                  <ModalEditName
-                    onVisible={visible => this.onVisibleModalEditName(visible)}
-                    onUpdateItem={item => this.onUpdateItem(item)}
-                    listGrades={listGrades}
-                    listSubjects={listSubjects}
-                    data={dataSelected}
-                  />
-                )
-                :
-                null
-              }
-            </View>
-          )}
+        </View>
+
+        {visibleModalEdit ? (
+          <ModalEditConfig
+            onVisible={visible => this.onVisibleModalEdit(visible)}
+            onUpdateItem={item => this.onUpdateItem(item)}
+            listGrades={listGrades}
+            listSubjects={listSubjects}
+            data={dataSelected}
+          />
+        )
+          :
+          null
+        }
+
+        {visibleModalEditName
+          ?
+          (
+            <ModalEditName
+              onVisible={visible => this.onVisibleModalEditName(visible)}
+              onUpdateItem={item => this.onUpdateItem(item)}
+              listGrades={listGrades}
+              listSubjects={listSubjects}
+              data={dataSelected}
+            />
+          )
+          :
+          null
+        }
+        <ModalClass
+          ref={ref => this.refModalClass = ref}
+          gradeActive={gradeActive}
+          listGrades={listGrades}
+          activeClass={this.activeClass}
+        />
+        <ModalSubject
+          ref={ref => this.refModalSubject = ref}
+          subjectActive={subjectActive}
+          listSubjects={listSubjects}
+          activeSubject={this.activeSubject}
+        />
+        <ModalAddPaper
+          onPress={this.onPress}
+          closeModal={this.closeModal}
+          onPressCopy={this.onPressCopy}
+          visibleModalAdd={visibleModalAdd}
+          onPressUploadPDF={this.onPressUploadPDF}
+        />
+        <ModalOption
+          visibleEdit={visibleEdit}
+          _handleCloseModal={this._handleCloseModal}
+          _handleClickDetail={this._handleClickDetail}
+          _OpenModal={this._OpenModal}
+          animation={animation}
+          assignmentContentType={assignmentContentType}
+          dataSelected={dataSelected}
+        />
       </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  containerModal: {
-    height: 200,
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: Platform.select({
-      ios: 'rgba(0,0,0,0.3)',
-      android: 'rgba(0,0,0,0.6)',
-    }),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    elevation: 24,
-    zIndex: 10,
-  },
-  stylepopover: {
-    width: 365,
-    height: 50,
-    borderRadius: 6,
-    borderWidth: 0.5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 0,
-    position: 'absolute',
-  },
-  contentModal: {
-    backgroundColor: '#FFF',
-    marginHorizontal: 16,
-    borderRadius: 5,
-    overflow: 'hidden',
-    paddingBottom: 15,
-  },
-  buttomMoadal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  txtClass: {
-    color: '#000',
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  buttomClass: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#C4C4C4',
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-  },
-  buttomActive: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#0085FF',
-    backgroundColor: '#89EAFF',
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-    paddingHorizontal: 5,
-    paddingVertical: 3,
-  },
-  txtItem: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-    color: '#828282',
-  },
-  txtItemActive: {
-    fontFamily: 'Nunito-Bold',
-    fontWeight: 'bold',
-    fontSize: 12,
-    color: '#000',
-  },
   buttonAdd: {
     backgroundColor: '#7E96EC',
     justifyContent: 'center',
@@ -1312,115 +703,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFF',
     marginLeft: 8,
-  },
-  topTest: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 12,
-    paddingVertical: 2,
-    height: 30,
-  },
-  txtName: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    lineHeight:19,
-    color: '#FFF',
-    alignSelf: 'center',
-    width: "90%"
-  },
-  itemTest: {
-    borderRadius: 4,
-    borderWidth: 1,
-    overflow: 'hidden',
-    marginTop: 22,
-  },
-  bodyTest: {
-    paddingHorizontal: 11,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    paddingVertical: 14,
-  },
-  txtTestClass: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 10,
-    color: '#FFF',
-    position: 'absolute',
-    marginTop: 5,
-    alignSelf: 'center',
-  },
-  txtQuestion: {
-    fontFamily: 'Nunito',
-    fontSize: 10,
-    lineHeight:14,
-    color: '#000',
-    marginLeft: 5,
-    alignSelf: 'center',
-  },
-  buttomPractice: {
-    backgroundColor: '#79BBEB',
-    borderRadius: 2,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  flexParac: {
-    flexDirection: 'row'
-  },
-  flexToParac: {
-    flexDirection: 'row',
-    marginTop: 8.53
-  },
-  txtButtomPractice: {
-    fontFamily: 'Nunito',
-    fontSize: 10,
-    lineHeight: 14,
-    color: '#000',
-    alignSelf: 'center',
-    marginHorizontal: 5
-  },
-  buttomDelivered: {
-    backgroundColor: '#56BB73',
-    borderRadius: 2,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginLeft: 10,
-  },
-  topModal: {
-    backgroundColor: '#7E96EC',
-    paddingVertical: 5,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  txtTitleModal: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    color: '#FFF',
-    textTransform: 'uppercase',
-  },
-  bodyModal: {
-    marginTop: 10,
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'space-between',
-    marginHorizontal: 5,
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#DCDCDC',
-    borderRadius: 1,
-  },
-  txtUpload: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-    color: '#828282',
-    marginTop: 8,
-  },
-  footerModal: {
-    marginTop: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  txtFooterModal: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    color: '#FF6213',
   },
   viewNotFound: {
     marginTop: 100,
@@ -1449,34 +731,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     // paddingTop: NAVBAR_HEIGHT,
   },
-  wrapModal: {
-    backgroundColor: '#FFF',
-    borderRadius: 5,
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-    paddingVertical: 23,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-
-    elevation: 24,
-  },
-  wrapElementModal: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-  },
-  txtModalDetail: {
-    fontSize: 14,
-    fontFamily: 'Nunito-Regular',
-    marginLeft: 25,
-  },
   searchPaper: {
     height: 24,
     borderColor: '#C4C4C4',
@@ -1491,9 +745,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     alignContent: 'flex-end'
   },
-  flexSubject: {
-    flexDirection: 'row',
-  },
   textTilteModal: {
     fontFamily: 'Nunito-Regular',
     fontWeight: '700',
@@ -1501,9 +752,6 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-  flexSenten: {
-    flexDirection: 'row'
-  }
 });
 
 const mapStateToProps = state => {

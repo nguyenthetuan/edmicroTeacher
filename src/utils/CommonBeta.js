@@ -15,7 +15,7 @@ import gdcdIcon from '../asserts/icon/ggcd_icon.png';
 import mathImageHeader from '../asserts/appIcon/mathImageHeader.png';
 import Icon_Tin_Hoc from '../asserts/appIcon/Icon_Tin_Hoc.png';
 import iconGeo from '../asserts/appIcon/ic_georaphy_x60.png';
-
+import icon_not_know from '../asserts/appIcon/icon_not_know.png'
 const ArrayCodeYoutubeThayThang = [
     'VeFZhtp2MVU',
     'gb0ev--EE3Q',
@@ -140,7 +140,7 @@ const getIconSubject = (id) => {
         case AppConst.geoTHID: return iconGeo;
 
         default:
-            return liteIcon;
+            return icon_not_know;
     }
 };
 
