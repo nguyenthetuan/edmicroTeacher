@@ -554,9 +554,9 @@ PODS:
   - RNVectorIcons (7.1.0):
     - React
   - RSKImageCropper (3.0.0)
-  - SDWebImage (5.9.5):
-    - SDWebImage/Core (= 5.9.5)
-  - SDWebImage/Core (5.9.5)
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
@@ -964,7 +964,7 @@ SPEC CHECKSUMS:
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   RSKImageCropper: 81f449b4df96bdaf28e1ad6dcce28dcda2235458
-  SDWebImage: 0b2ba0d56479bf6a45ecddbfd5558bea93150d25
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   XCDYouTubeKit: c6747c622dd0b52c9e668c028f68097eeffaea39
@@ -974,4 +974,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 93d1a9b5c7fcb8fb7f5c9fdb4ce54351ede352ca
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.9.3
