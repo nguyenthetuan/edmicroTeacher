@@ -857,5 +857,12 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         fontFamily: 'Nunito-bold',
         fontSize: 14,
+    },
+    buttonOnPopupText: {  
+        borderWidth: 1,
+        borderRadius: 5,
+        width: 100,
+        height: 40,
+        backgroundColor:'#fff'
     }
-})
+}) 

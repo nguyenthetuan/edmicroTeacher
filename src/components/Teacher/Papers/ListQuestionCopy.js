@@ -7,6 +7,8 @@ import Common from '../../../utils/CommonBeta';
 import AppIcon from '../../../utils/AppIcon';
 import htmlHelper from '../../../utils/WebviewListQuestionCopy';
 import { WebView } from 'react-native-webview';
+import WarningModal from '../../modals/WarningModal';
+
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -21,6 +23,7 @@ export default class ListQuestionCopy extends Component {
         super(props);
         this.state = {
             data: null,
+            numberQuestion: 0,
         }
     }
 
@@ -56,6 +59,20 @@ export default class ListQuestionCopy extends Component {
         }
         console.log('knowledge0, knowledge1, knowledge2, knowledge3: ', knowledge0, knowledge1, knowledge2, knowledge3);
         this.setState({ knowledge0, knowledge1, knowledge2, knowledge3 });
+    }
+
+    displayWarning(b) {
+        this.refs.warningModal.showModal();
+    }
+
+    onHandleMessage(event) {
+        const data = event.nativeEvent.data.split('---');
+        if (data[0] == 'warningWeb') {
+            let number = data[1];
+            this.setState({ numberQuestion: number }, () => {
+                this.displayWarning(true);
+            });
+        }
     }
 
     copySubjectMatter = async () => {
@@ -160,6 +177,7 @@ export default class ListQuestionCopy extends Component {
                                 html: htmlHelper.renderHtmlListQuestionCopy(this.filterDataRender(data.questions)),
                                 baseUrl,
                             }}
+                            onMessage={this.onHandleMessage.bind(this)}
                             originWhitelist={['file://']}
                             scalesPageToFit={false}
                             javaScriptEnabled
@@ -167,6 +185,14 @@ export default class ListQuestionCopy extends Component {
                             startInLoadingState={true}
                         />
                     </View>
+                    <WarningModal
+                        ref={'warningModal'}
+                        navigation={this.props.navigation}
+                        visible={this.state.visibleModalWarning}
+                        hideModal={() => this.displayWarning(false)}
+                        numberQuestion={this.state.numberQuestion}
+                        subjectId={'TOAN'}
+                    />
                 </SafeAreaView>
             </View >
         )
