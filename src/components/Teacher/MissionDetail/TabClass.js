@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    FlatList
+} from 'react-native';
 import ItemClass from './ItemClass';
 import Toast, { DURATION } from 'react-native-easy-toast';
 export default class TabClass extends Component {
@@ -9,7 +14,13 @@ export default class TabClass extends Component {
         const missionId = missionDetail._id
         const status = missionDetail.status;
         return (
-            <ItemClass item={item} status={status} missionId={missionId} onToast={this.onToast} {...this.props.screenProps} />
+            <ItemClass
+                item={item}
+                status={status}
+                missionId={missionId}
+                onToast={this.onToast}
+                {...this.props.screenProps}
+            />
         )
     }
 
@@ -27,7 +38,10 @@ export default class TabClass extends Component {
                     renderItem={this.renderItem}
                     style={{ paddingTop: 10 }}
                 />
-                <Toast ref={ref => this.toastRef = ref} position={'center'} />
+                <Toast
+                    ref={ref => this.toastRef = ref}
+                    position={'center'}
+                />
             </View>
         );
     }

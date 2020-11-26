@@ -625,7 +625,6 @@ class Papers extends Component {
             ListHeaderComponent={this.renderHeaderFlastList()}
           />
         </View>
-
         {visibleModalEdit ? (
           <ModalEditConfig
             onVisible={visible => this.onVisibleModalEdit(visible)}

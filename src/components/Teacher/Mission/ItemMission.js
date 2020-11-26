@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'rea
 import AppIcon from '../../../utils/AppIcon';
 import { getIconSubject } from '../../../utils/Common';
 import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 const { width } = Dimensions.get('window');
 const modelStatus = {
   unDelivered: 0,// chưa giao bài.
@@ -12,10 +13,15 @@ export default class ItemMission extends Component {
 
   goToMissionDetail = () => {
     const { data, token } = this.props;
-    this.props.getAssignmentByMission({ token, _id: data._id });
-    this.props.navigation.navigate('MissionDetail', { statusbar: 'light-content' });
+    this.props.getAssignmentByMission({
+      token,
+      _id: data._id
+    });
+    this.props.navigation.navigate('MissionDetail',
+      {
+        statusbar: 'light-content'
+      });
   }
-
   renderElement = (img, txt1, txt2) => {
     return (
       <View style={styles.styFlexDirRow}>
@@ -25,7 +31,6 @@ export default class ItemMission extends Component {
       </View>
     );
   };
-
   render() {
     const { data } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
@@ -48,7 +53,7 @@ export default class ItemMission extends Component {
             <View style={styles.imageSize}>
               {this.renderElement(
                 AppIcon.icon_gradeClass1, data.gradeName
-                )}
+              )}
             </View>
             {this.renderElement(
               AppIcon.icon_teacherV3Exam,
@@ -60,16 +65,40 @@ export default class ItemMission extends Component {
             {this.renderElement(
               getIconSubject(data.subjectCode),
               data.subjectName,
-            )}        
+            )}
             {this.renderElement(
               AppIcon.icon_paracClass,
               'Bài tự luyện',
               data.countPractice,
             )}
           </View>
-          <View>
-            {this.renderElement(AppIcon.icon_paracComplete, textDelivered)}
+          <View style={styles.flexDiAction}>
+            {/* {this.renderElement(AppIcon.icon_paracComplete, textDelivered)} */}
+            <></>
             {/* {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)} */}
+            {data.status === modelStatus.unDelivered
+              ?
+              <FastImage
+                source={require('../../../asserts/icon/icon_paracComplete.png')}
+                style={{ height: 22, width: 22 }}
+              />
+              :
+              <FastImage
+                source={require('../../../asserts/icon/icon_paractoFinish.png')}
+                style={{ height: 22, width: 22 }}
+              />
+            }
+            {data.status === modelStatus.unDelivered
+              ?
+              <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
+                {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
+              </Text>
+              :
+              <Text style={[styles.txtButtomPractice,
+              { color: data.stattus === 4 ? '#000' : '#c4c4c4' }]}>
+                {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
+              </Text>
+            }
           </View>
         </View>
       </TouchableOpacity>
@@ -83,6 +112,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 1,
     borderRadius: 4,
+    marginTop: 15
   },
   styWrapHeader: {
     padding: 8,
@@ -103,16 +133,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     margin: 5,
+    marginLeft: 10,
     width: width / 3 - 20
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
     marginHorizontal: 3,
     fontSize: 12,
+    alignSelf: 'center'
   },
   styWrapImg: {
-    width: 20,
-    height: 20,
+    width: 22,
+    height: 22,
   },
   viewCount: {
     alignItems: 'center',
@@ -127,8 +159,21 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "#FFF"
   },
-  imageSize:{
+  imageSize: {
     // width: 20,
     // height: 20
-  }
+  },
+  flexDiAction: {
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    marginLeft: 10,
+    marginTop: 4
+    // justifyContent: 'space-between',
+  },
+  txtButtomPractice: {
+    fontFamily: 'Nunito',
+    alignSelf: 'center',
+    fontSize: 12,
+    marginLeft: 5
+  },
 });
