@@ -48,14 +48,17 @@ export default class ModalSubject extends Component {
                 <Modalize
                     ref={ref => this.modalizeRef = ref}
                     onClose={this.onClose}
-                    modalStyle={{ marginTop: height / 3 }}
                     scrollViewProps={
                         {
                             scrollEnabled: false
                         }
                     }
+                    threshold={height / 1.5}
+                    modalHeight={height / 1.5}
                 >
-                    <View style={styles.styWrapTitle}>
+                    <View
+                        style={styles.styWrapTitle}
+                    >
                         <Text style={styles.styTitle}>Chọn môn</Text>
                     </View>
                     <FlatList
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
     contain: {
         flex: 1,
         marginHorizontal: 10,
-        height: height - height / 3 - 40
+        height: height / 1.5 - 43
     },
     styTitle: {
         fontFamily: 'Nunito-Regular',
