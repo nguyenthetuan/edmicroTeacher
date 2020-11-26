@@ -670,7 +670,7 @@ export default class ConfigQuestion extends Component {
                                     style={{ width: 20, height: 20, marginLeft: 5 }}
                                 />
                             </View>
-                            <View style={{ width: '100%', padding: 20 }}>
+                            <View style={{ width: '100%', padding: 20, borderWidth: 1, borderColor: '#e5e5e5',top: 10 }}>
                                 <Text style={[styles.textInPopupCreate, { color: 'red', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
                                     <Text style={[styles.textInPopupCreate, { color: 'red' }]}>{data.questions.length} câu hỏi</Text>
@@ -858,11 +858,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-bold',
         fontSize: 14,
     },
-    buttonOnPopupText: {  
+    buttonOnPopupText: {
         borderWidth: 1,
         borderRadius: 5,
         width: 100,
         height: 40,
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     }
 }) 
