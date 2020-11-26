@@ -114,15 +114,16 @@ const renderListquestion = (data, points, renderCheckbox) => {
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
         let options = item.options;
-        html += `<div style="margin-top:15px" onclick="" >`
+        html += `<div style="margin-top:15px; border:1px solid #e5e5e5" onclick="">
+                    <div style="padding: 10px 10px 0px 10px;">`
         if (renderCheckbox) {
-            html += `<div style="display:flex;">
+            html += `<div style="display:flex">
                 <div style="font-size:15px; font-weight: 900">Câu ${i + 1}:</div>
                 <input type="number" id="point${i}" name="point" style="width: 40px; margin-top: -2px; margin-left: 20px" value="${points?.length ? points[i] : 0}" onblur="onBlur()">
-                <input style="position: absolute; right: 10px" type="checkbox" id="myCheck${i}" onclick="checkboxFunc('${i}')" name="checkbox">
+                <input style="position: absolute; right: 25px" type="checkbox" id="myCheck${i}" onclick="checkboxFunc('${i}')" name="checkbox">
             </div>`
         } else {
-            html += `<div style="display:flex;">
+            html += `<div style="display:flex">
                 <div style="font-size:15px; font-weight: 900">Câu ${i + 1}:</div>
             </div>`
         }
@@ -130,11 +131,12 @@ const renderListquestion = (data, points, renderCheckbox) => {
         html += `${item.content}`
         for (let j = 0; j < options.length; j++) {
             html +=
-                `<div style="display:flex;">                   
+                `<div style="display:flex; border-top: 1px solid #e5e5e5; align-items: center; height:35px; margin-bottom: 10px; padding-top: 7px">                   
                         <div style=" border-radius: 50%; background: #4ca4e8; color: #fff; width: 25px; height: 25px; line-height: 25px; text-align: center;"}>${ANSWER_OPTIONS[j]}</div>
-                        <div style="margin-bottom: 10px;" id="abcd">${options[j].content}</div>
+                        <div style="margin-bottom: -10px;" id="abcd">${options[j].content}</div>
                 </div>`
         }
+        html+='</div>'
         html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row; padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">
             <p style="font-family: Nunito-regular;font-size: 10px;color: #FFF;">ID: ${item.questionNumber}</p>
             <div style="display: flex; flex-direction: row;">
