@@ -92,6 +92,7 @@ import icon_paracComplete from  '../asserts/icon/icon_paracComplete.png';
 import image_createCompleteV3 from '../asserts/images/image_createCompleteV3.png';
 import icon_timeEndV3 from '../asserts/icon/icon_timeEndV3.png';
 import icon_missonToV3 from '../asserts/icon/icon_missonToV3.png';
+import icon_editNameMission from '../asserts/icon/icon_editNameMission.png';
 module.exports = {
   logo_onluyen,
   // icon_google,
@@ -168,5 +169,6 @@ module.exports = {
   icon_paracComplete,
   image_createCompleteV3,
   icon_timeEndV3,
-  icon_missonToV3
+  icon_missonToV3,
+  icon_editNameMission
 };
