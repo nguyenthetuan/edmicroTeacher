@@ -35,10 +35,13 @@ export default class StepFour extends Component {
     render() {
         return (
             <View style={styles.contain}>
-                <Image source={AppIcon.pic_mission} />
+                <Image source={AppIcon.image_createCompleteV3} style={{ marginTop: 50 }} />
                 <Text style={styles.styTxtAlert}>Tạo nhiệm vụ thành công! Bạn muốn làm gì tiếp theo?</Text>
                 <View style={styles.styWrapBtn}>
-                    <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#28a745' }]} onPress={this.createMissionOther}>
+                    <TouchableOpacity
+                        style={[styles.styBtn, { backgroundColor: '#28A745' }]}
+                        onPress={this.createMissionOther}
+                    >
                         <Text style={styles.styTxtBtn}>Tạo nhiệm vụ khác</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
@@ -56,28 +59,46 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     styBtn: {
-        borderRadius: 5,
-        padding: 10,
-        margin: 3,
-        alignItems: 'center',
-        backgroundColor: '#007bff',
-        width: width / 2 - 20
+        // borderRadius: 25,
+        // padding: 10,
+        // margin: 3,
+        // alignItems: 'center',
+        // backgroundColor: '#2D9CDB',
+        // width: width / 2 - 20,
+        backgroundColor: '#2D9CDB',
+        borderRadius: 25,
+        marginBottom: 10,
+        marginLeft: 27,
+        marginRight: 27,
+        paddingHorizontal:60
     },
     styWrapBtn: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         position: 'absolute',
         bottom: 20
     },
     styTxtAlert: {
         fontFamily: 'Nunito-Bold',
-        color: '#f86c6b',
+        color: '#28A745',
         fontSize: 16,
         textAlign: 'center',
         margin: 20,
     },
     styTxtBtn: {
+        // color: '#FFF',
+        // fontFamily: 'Nunito',
+        // fontWeight: "500",
+        // alignSelf: 'center',
+        // lineHeight: 21
         color: '#FFF',
-        fontFamily: 'Nunito-Regular',
+        fontFamily: 'Nunito-Bold',
+        fontSize: 18,
+        lineHeight: 21,
+        alignItems: 'center',
+        alignSelf: 'center',
+        fontWeight: "500",
+        marginTop: 14,
+        marginBottom: 14
     }
 })

@@ -58,7 +58,7 @@ export default class PracticeTab extends Component {
     return (
       <View style={styles.styHeaderList}>
         <Text style={styles.headerTextIndex}>{index + 1}</Text>
-        <View>
+        <View style={styles.alingSeft}>
           <Text style={styles.headerTextTitle}>
             {section.name || section.title}
           </Text>
@@ -141,24 +141,28 @@ const styles = StyleSheet.create({
   },
   styHeaderList: {
     padding: 10,
-    borderWidth: 1,
-    borderRadius: 5,
+    borderWidth: 0.5,
+    borderRadius: 4,
     marginVertical: 5,
-    borderColor: '#efefef',
+    borderColor: '#BDBDBD',
     flexDirection: 'row',
-    // alignItems: 'center',
+    marginTop: 16,
+    // marginLeft:16,
+    // marginRight:16,
   },
   headerTextIndex: {
     fontFamily: 'Nunito-Bold',
     fontSize: 20,
     color: '#999',
     marginHorizontal: 10,
+    alignSelf: 'center',
   },
   headerTextTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    color: '#000',
+    fontSize: 14,
+    color: '#424242',
     marginRight: 20,
+    marginLeft: 11
   },
   styWrapLoading: {
     position: 'absolute',
@@ -170,6 +174,11 @@ const styles = StyleSheet.create({
   styTxtSum: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: 10,
+    lineHeight: 14,
+    marginLeft: 11
   },
+  alingSeft: {
+    alignSelf: 'center',
+  }
 });

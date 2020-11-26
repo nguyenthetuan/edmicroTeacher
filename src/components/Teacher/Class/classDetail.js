@@ -51,6 +51,7 @@ class ClassDetail extends Component {
           title={title}
           actionIcon={source}
           navigation={navigation}
+          color={"#2D9CDB"}
         />
         {
           <View style={styles.body}>

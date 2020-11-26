@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions
+} from 'react-native';
 import RippleButton from '../../libs/RippleButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProgressBar from '../../libs/ProgressBar';
 import Common from '../../../utils/Common';
 import moment from 'moment';
@@ -58,10 +63,7 @@ export default class itemClass extends Component {
       <View style={[styles.container, { borderColor: bg }]}>
         <View style={{ flex: 1 }}>
           <View style={[styles.top, { backgroundColor: bg }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {/* <View style={{ height: 26, width: 26, borderRadius: 13, borderColor: '#FFF', borderWidth: .5, alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={Common.getIconSubject(item.subjectCode)} style={{ width: 25, height: 25 }} resizeMode='contain' />
-              </View> */}
+            <View style={styles.titleName}>
               <Text style={styles.name}>{item.name}</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
@@ -72,158 +74,74 @@ export default class itemClass extends Component {
             </View>
           </View>
           <View style={styles.body}>
-            <View style={styles.topBody}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 5,
-                }}>
-                <MaterialCommunityIcons
-                  name={'calendar-range'}
-                  size={23}
-                  color={'#0E5FCD'}
-                  style={{ marginTop: 0 }}
-                />
-                {item.timeStart && <Text style={styles.txtDate}>
-                  {moment(item.timeStart * 1000).format('DD/MM/YYYY')}
-                </Text>}
-                <MaterialCommunityIcons
-                  name={'calendar-range'}
-                  size={23}
-                  color={'#EB5757'}
-                  style={{ marginLeft: 30 }}
-                />
-                {item.timeEnd && <Text style={styles.txtDate}>
-                  {moment(item.timeEnd * 1000).format('DD/MM/YYYY')}
-                </Text>}
-              </View>
-              {!activeDetail && (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image source={require('../../../asserts/icon/person.png')} />
-                  <Text style={[styles.txtDate]}>{item.totalStudent}</Text>
-                  <View
-                    style={{
-                      height: '100%',
-                      width: 1,
-                      marginHorizontal: 3,
-                      backgroundColor: '#E0E0E0',
-                    }}
-                  />
-                  <Image
-                    source={require('../../../asserts/icon/registration.png')}
-                  />
-                  <Text style={[styles.txtDate, { paddingHorizontal: 5 }]}>
-                    {item.totalAssign}
-                  </Text>
-                </View>
-              )}
-            </View>
-
             <View style={{ marginTop: 5 }}>
               <Text
-                style={{
-                  fontSize: 12,
-                  color: '#000',
-                  fontFamily: 'Nunito-Regular',
-                }}>
+                style={styles.viewSubmit}>
                 Tỉ lệ nộp bài
               </Text>
               <View style={styles.progressBar}>
                 <ProgressBar
                   progress={item.rateSubmit}
-                  color="#F16219"
-                  widthProps={width * 0.75}
+                  color="#56BB73"
+                  widthProps={width * 0.73}
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: '#F16219',
-                    fontFamily: 'Nunito-Regular',
-                    marginLeft: 10,
-                    position: 'absolute',
-                    right: 0,
-                  }}>
+                  style={styles.rateSub}>
                   {item.rateSubmit} %
                 </Text>
               </View>
             </View>
 
             <View>
-              <RippleButton
-                onPress={() => this.setState({ activeDetail: !activeDetail })}>
-                <View>
-                  {!activeDetail && (
-                    <Text style={styles.txtDetail}>Xem Chi Tiết</Text>
-                  )}
-                  <View
-                    style={[
-                      { flexDirection: 'row', justifyContent: 'space-between' },
-                      activeDetail && { marginTop: 9, alignItems: 'flex-end' },
-                    ]}>
-                    <View style={styles.line} />
-                    {(!activeDetail && (
-                      <Image
-                        source={require('../../../asserts/icon/icondow.png')}
-                      />
-                    )) || (
-                        <Image source={require('../../../asserts/icon/up.png')} />
-                      )}
-                    <View style={styles.line} />
+              {/* {activeDetail && ( */}
+              <View
+                style={styles.viewInfo}>
+                <View style={{ justifyContent: 'space-between' }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <FastImage
+                      source={Common.getIconSubject(item.subjectCode)}
+                      style={styles.getIcon}
+                    />
+                    <View style={styles.showSubjectCode}>
+                      <Text style={styles.txtInfoDetail}>
+                        Môn Học
+                    </Text>
+                      <Text numberOfLines={2}
+                        style={styles.txtQuestion}>{item.subjectName}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.viewImageExcer}>
+                    <Image
+                      source={require('../../../asserts/icon/icon_excerciseClass.png')}
+                      style={{ width: 20, height: 20 }}
+                    />
+                    <Text style={styles.txtInfoDetail}>Số Bài Tập</Text>
+                    <Text style={styles.txtThree}>{item.totalAssign}</Text>
                   </View>
                 </View>
-              </RippleButton>
-              {activeDetail && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    flex: 1,
-                    paddingVertical: 15,
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    backgroundColor: 'rgba(190, 205, 255, 0.19)',
-                    borderBottomLeftRadius: 5,
-                    borderBottomRightRadius: 5,
-                  }}>
-                  <View style={{ justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Image
-                        source={require('../../../asserts/icon/edu.png')}
-                      />
-                      <Text style={styles.txtInfoDetail}>Khối Lớp</Text>
-                      <Text style={[styles.indexOne, { marginLeft: 30 }]}>
-                        {item.gradeId.slice(1, 3)}
-                      </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', marginTop: 13 }}>
-                      <Image
-                        source={require('../../../asserts/icon/person.png')}
-                      />
-                      <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>
-                      <Text style={styles.txtFour}>{item.totalStudent}</Text>
-                    </View>
+                <View style={{ justifyContent: 'space-between' }}>
+                  <View style={styles.iconClass}>
+                    <Image
+                      source={require('../../../asserts/icon/icon_gradeClass1.png')}
+                      style={{ width: 22, height: 22 }}
+                    />
+                    <Text style={styles.txtRight}>Khối Lớp </Text>
+                    <Text style={[styles.indexOne, { marginLeft: 30 }]}>
+                      {item.gradeId.slice(1, 3)}
+                    </Text>
                   </View>
-
-                  <View style={{ justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Image
-                        source={require('../../../asserts/icon/registration.png')}
-                      />
-                      <Text style={styles.txtRight}>Số Bài Tập</Text>
-                      <Text style={styles.txtThree}>{item.totalAssign}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', marginTop: 13 }}>
-                      <Image
-                        source={require('../../../asserts/icon/check.png')}
-                      />
-                      <Text style={styles.txtRightFoot}>Tỉ Lệ Nộp Bài</Text>
-                      <Text style={styles.indexTwo}>{item.rateSubmit} %</Text>
-                    </View>
+                  <View style={styles.iconPopu}>
+                    <Image
+                      source={require('../../../asserts/icon/icon_popuClass.png')}
+                      style={{ width: 19, height: 19 }}
+                    />
+                    <Text style={styles.txtRightFoot}>Sĩ Số</Text>
+                    <Text style={styles.indexTwo}>{item.totalStudent}</Text>
                   </View>
                 </View>
-              )}
+              </View>
+              {/* )} */}
               <RippleButton
                 onPress={() => this._classDetail(item)}
                 rippleDuration={150}
@@ -290,44 +208,16 @@ const styles = StyleSheet.create({
     marginTop: 9,
     justifyContent: 'space-between',
   },
-  topBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    paddingBottom: 12,
-  },
-  txtDate: {
-    color: '#4F4F4F',
-    fontSize: 12,
-    fontFamily: 'Nunito-Regular',
-    marginLeft: width < 350 ? 0 : 5,
-  },
   progressBar: {
     marginTop: 5,
     paddingRight: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  line: {
-    borderWidth: 1,
-    flex: 1,
-    height: 1,
-    width: '50%',
-    borderColor: '#E0E0E0',
-  },
-  txtDetail: {
-    textAlign: 'center',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 14,
-    color: '#828282',
-    marginTop: 5,
-    paddingBottom: 5,
-  },
   btn: {
     alignItems: 'center',
     width: '90%',
-    marginTop: 18,
+    marginTop: 10,
     alignSelf: 'center',
   },
   txtbtn: {
@@ -342,39 +232,37 @@ const styles = StyleSheet.create({
     color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    marginLeft: 10,
+    marginLeft: 5,
+    alignSelf: 'center',
   },
   txtRight: {
-    color: '#000',
+    color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 5,
     marginRight: 16,
+    alignSelf: 'center'
   },
   txtRightFoot: {
-    color: '#000',
+    color: '#828282',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    marginLeft: 5,
-    marginRight: 10,
+    // marginLeft: 5,
+    marginRight: 48,
+    alignSelf: 'center'
   },
   indexOne: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    marginLeft: 16,
+    // marginLeft: 16,
   },
   txtThree: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 25,
-  },
-  txtFour: {
-    color: '#FF6213',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-    marginLeft: 16,
+    alignSelf: 'center'
   },
   indexTwo: {
     color: '#FF6213',
@@ -389,4 +277,63 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 3,
   },
+  viewInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+    paddingVertical: 15,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+  txtQuestion: {
+    fontFamily: 'Nunito',
+    fontSize: 11,
+    lineHeight: 14,
+    color: "blue",
+    alignSelf: 'center',
+    marginTop: 1,
+    textAlign: 'right',
+    width: 50,
+  },
+  showSubjectCode: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  titleName: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  viewSubmit: {
+    fontSize: 12,
+    color: '#000',
+    fontFamily: 'Nunito-Regular',
+  },
+  rateSub: {
+    fontSize: 12,
+    color: '#F16219',
+    fontFamily: 'Nunito-Regular',
+    marginLeft: 10,
+    position: 'absolute',
+    right: 0
+  },
+  getIcon: {
+    width: 21,
+    height: 21,
+    borderRadius: 20
+  },
+  viewImageExcer: {
+    flexDirection: 'row',
+    marginTop: 13
+  },
+  iconClass: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  iconPopu: {
+    flexDirection: 'row',
+    marginTop: 13,
+    justifyContent: 'space-between'
+  }
 });

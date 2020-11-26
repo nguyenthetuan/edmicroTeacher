@@ -524,8 +524,8 @@ PODS:
   - RNFreshchatSDK (2.6.4):
     - FreshchatSDK (= 3.7.5)
     - React
-  - RNGestureHandler (1.8.0):
-    - React
+  - RNGestureHandler (1.9.0):
+    - React-Core
   - RNGoogleSignin (4.0.3):
     - GoogleSignIn (~> 5.0.0)
     - React
@@ -554,9 +554,9 @@ PODS:
   - RNVectorIcons (7.1.0):
     - React
   - RSKImageCropper (3.0.0)
-  - SDWebImage (5.9.4):
-    - SDWebImage/Core (= 5.9.4)
-  - SDWebImage/Core (5.9.4)
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
@@ -952,7 +952,7 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: b34063b906dd0c57a5d286dd743a40c90c8326c7
   RNFBMessaging: c55142d3b2d34d706bf12bd5eef9ef35254c2df1
   RNFreshchatSDK: 6b88f4ab0bc91ec403da51785d81f17cb759f2c0
-  RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
+  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNGoogleSignin: ccf71ee4b6cfd324fd788a41e457e2043838c0d9
   RNIap: 73ef1b1dc8b52fc411186585e81a8152ce0b4ecd
   RNImageCropPicker: 9d1a7eea4f8368fc479cbd2bf26459bd3c74d9aa
@@ -964,7 +964,7 @@ SPEC CHECKSUMS:
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   RSKImageCropper: 81f449b4df96bdaf28e1ad6dcce28dcda2235458
-  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   XCDYouTubeKit: c6747c622dd0b52c9e668c028f68097eeffaea39

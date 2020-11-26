@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+} from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
@@ -10,7 +16,6 @@ export default class itemExercise extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
     }
   }
 
@@ -29,7 +34,6 @@ export default class itemExercise extends Component {
         return (<View style={styles.statusHide}>
           <Text style={[styles.txtActive, { color: '#E0E0E0' }]}>Đang đóng</Text>
         </View>);
-
       default: break;
     }
   }
@@ -41,58 +45,64 @@ export default class itemExercise extends Component {
       <View style={styles.container}>
         <View style={styles.top}>
           <Text style={styles.name}>{item.name}</Text>
-          <View style={{ position: 'absolute', right: 3, top: 5 }}>
-            {item.status === 1 ? <View style={{ height: 7, width: 7, borderRadius: 3.5, backgroundColor: '#91EDC6', marginRight: 5 }} />
-              : <View style={{ height: 7, width: 7, borderRadius: 3.5, backgroundColor: '#E0E0E0', marginRight: 5 }} />}
-          </View>
         </View>
         <View style={styles.body}>
           <View style={styles.topBody}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialCommunityIcons name={'calendar-range'} size={23} color={'#0E5FCD'} />
-              <View style={{ flexDirection: 'row', paddingBottom: 5, marginLeft: 5, justifyContent: 'center', }}>
-                <Text style={styles.timeStart}>Bắt đầu</Text>
-                <Text style={styles.txtDate}>{moment(item.timeStart * 1000).format('DD/MM/YYYY')}</Text>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialCommunityIcons name={'calendar-range'} size={23} color={'#EB5757'} style={{ marginRight: 8 }} />
-              <View style={{ flexDirection: 'row', paddingBottom: 3, marginLeft: 0 }}>
-                <Text style={styles.timeStart}>Kết thúc</Text>
-                <Text style={styles.txtDate}>{moment(item.timeEnd * 1000).format('DD/MM/YYYY')}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 11 }}>
-            <View style={{ justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Image source={require('../../../asserts/icon/person.png')} />
-                  <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>
-                </View>
-                <Text style={styles.txtFour}>{item.totalUser}</Text>
-              </View>
-              <View style={{ flexDirection: 'row', marginTop: 14, alignItems: 'center' }}>
-                <Image source={require('../../../asserts/icon/share.png')} />
-                <Text style={styles.txtRightFoot}>Chia sẻ</Text>
-                <Text style={styles.indexTwo}>công khai</Text>
+            <View style={styles.flexAll}>
+              <MaterialCommunityIcons
+                name={'calendar-range'}
+                size={23}
+                color={'#0E5FCD'}
+              />
+              <View style={styles.txtStart}>
+                <Text style={styles.timeStart}>
+                  Bắt đầu
+                  </Text>
+                <Text style={styles.txtDate}>
+                  {moment(item.timeStart * 1000).format('DD/MM/YYYY')}
+                </Text>
               </View>
             </View>
 
-            <View style={{ justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Image source={require('../../../asserts/icon/check.png')} />
-                  <Text style={styles.txtRight}>Nộp bài</Text>
-                </View>
-                <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 14, }}>
-                <Image source={require('../../../asserts/icon/edu.png')} />
-                <Text style={styles.txtClass}>Trạng thái</Text>
-                {this._Status(item.status)}
+            <View style={styles.viewIcon}>
+              <Image
+                source={require('../../../asserts/icon/icon_popuClass.png')}
+                style={{ width: 20, height: 20 }}
+              />
+              <View style={styles.fleImaTxt}>
+                <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>
+                <Text style={styles.txtFour}>{item.totalUser}</Text>
               </View>
             </View>
+          </View>
+
+          <View style={styles.topBody}>
+            <View style={styles.flexAll}>
+              <MaterialCommunityIcons
+                name={'calendar-range'}
+                size={23}
+                color={'#EB5757'}
+                style={{ marginRight: 8 }}
+              />
+              <View style={styles.viewEnd}>
+                <Text style={styles.timeStart}>Kết thúc</Text>
+                <Text style={styles.txtDate1}>
+                  {moment(item.timeEnd * 1000).format('DD/MM/YYYY')}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.viewIcon}>
+              <View style={styles.fleImaTxt1}>
+                <Image
+                  source={require('../../../asserts/icon/icon_submitExcer.png')}
+                  style={styles.flexiconSub}
+                />
+                <Text style={styles.txtRight}>Nộp bài</Text>
+                <Text style={styles.txtThree}>{item.totalUserSubmit}</Text>
+              </View>
+            </View>
+
+
           </View>
 
         </View>
@@ -107,12 +117,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#F7B67C',
+    borderColor: '#56CCF2',
     paddingBottom: 18,
     marginHorizontal: 16,
   },
   top: {
-    backgroundColor: '#F7B67C',
+    backgroundColor: '#56CCF2',
     height: 24,
     flexDirection: 'row',
     alignItems: 'center',
@@ -155,27 +165,29 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#FFF',
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   timeStart: {
     fontSize: 10,
     fontFamily: 'Nunito-Regular',
-    color: '#828282'
+    color: '#828282',
+    alignSelf: 'center'
   },
   txtDate: {
     fontSize: 10,
     color: '#0E5FCD',
     marginLeft: 5
   },
+  txtDate1: {
+    fontSize: 10,
+    color: '#EB5757',
+    marginLeft: 5
+  },
   topBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    flexDirection: 'column',
     paddingTop: 10,
-    paddingBottom: 8,
-    // paddingRight: width < 350 ? '15%' : '10%',
-    // backgroundColor:'green'
   },
   txtClass: {
     fontSize: 10,
@@ -190,20 +202,24 @@ const styles = StyleSheet.create({
     right: 0
   },
   txtRight: {
-    marginLeft: 10,
+    marginLeft: 9.5,
     color: '#000000',
     fontSize: 10,
     fontFamily: 'Nunito-Regular',
+    alignSelf: 'center',
+    marginRight: 50,
   },
   txtInfoDetail: {
-    color: '#828282',
+    color: '#000',
     fontSize: 10,
-    marginLeft: 5,
+    marginLeft: 8,
+    alignSelf: 'center',
   },
   txtFour: {
     fontSize: 10,
     color: '#FF6213',
-    marginLeft: 13,
+    paddingHorizontal: 25,
+    marginRight: 16
   },
   txtRightFoot: {
     fontSize: 10,
@@ -212,12 +228,48 @@ const styles = StyleSheet.create({
   },
   txtThree: {
     fontSize: 10,
-    marginLeft: 15,
-    color: '#FF6213'
+    color: '#FF6213',
+    alignSelf: 'center'
   },
   indexTwo: {
     fontSize: 10,
     color: '#56CCF2',
     marginLeft: 15
+  },
+  fleImaTxt: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  fleImaTxt1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  flexAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5
+  },
+  txtStart: {
+    flexDirection: 'row',
+    paddingBottom: 5,
+    marginLeft: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  viewIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10
+  },
+  viewEnd: {
+    flexDirection: 'row',
+    paddingBottom: 3,
+    marginLeft: 0
+  },
+  flexiconSub: {
+    width: 20,
+    height: 20,
+    marginLeft: 1
   }
 });

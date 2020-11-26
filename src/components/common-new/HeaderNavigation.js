@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class HeaderNavigation extends React.Component {
     constructor(props) {
@@ -36,7 +35,11 @@ export default class HeaderNavigation extends React.Component {
                 {isShow ?
                     <RippleButton onPress={this.onGoback}>
                         <View style={styles.button}>
-                            <Icon name="arrow-left" color={color || "#383838"} size={25} />
+                            {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
+                            <Image
+                                style={{ tintColor: color }}
+                                source={require('../../asserts/icon/icon_arrowLeftv3.png')}
+                            />
                         </View>
                     </RippleButton>
                     :
