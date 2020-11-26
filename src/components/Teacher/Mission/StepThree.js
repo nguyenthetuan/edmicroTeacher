@@ -157,7 +157,7 @@ export default class StepThree extends Component {
     return (
       <View style={styles.ViewTable}>
         <Text style={styles.styTxtLabelParac}>Tự luyện</Text>
-        <View style={{ marginTop: 5 }}>
+        <View style={styles.borderAll}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName, { marginLeft: 12 }]}>Tên nhiệm vụ</Text>
             <View style={{ flex: 1 }} />
@@ -173,6 +173,7 @@ export default class StepThree extends Component {
               onPress={this.deleteRow(item)}
               item={item}
             />}
+            style={styles.sectionList}
           // renderSectionHeader={({ section: { title } }) => (
           //   <Text style={styles.styTxtHeader}>- {title}</Text>
           // )}
@@ -195,7 +196,7 @@ export default class StepThree extends Component {
     return (
       <View style={styles.ViewTable}>
         <Text style={styles.styTxtLabelParac}>Kiểm tra</Text>
-        <View style={{ marginTop: 5, }}>
+        <View style={styles.borderAll}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName, { marginLeft: 12 }]}>Tên nhiệm vụ</Text>
             <View style={{
@@ -215,6 +216,7 @@ export default class StepThree extends Component {
               onPress={this.deleteRow(item)}
               item={item}
             />}
+            style={styles.sectionList}
           // renderSectionHeader={({ section: { title } }) => (
           //   <Text style={styles.styTxtHeader}>- {title}</Text>
           // )}
@@ -258,27 +260,30 @@ export default class StepThree extends Component {
             />
           </View>
 
-          <View style={[styles.styWrapInfo, { marginVertical: 10 }]}>
-            <Text style={styles.styTxtInfo}>Khối</Text>
-            <TouchableOpacity style={styles.styWrapInfo}>
-              <View style={styles.flexIconVa}>
-                <Text style={styles.styWrapSubject}>{valueClass}</Text>
-                <Icon name={'angle-down'} color={'#000'} size={14}
-                  style={{ marginRight: 10, marginLeft: 5 }} />
-              </View>
-            </TouchableOpacity>
-
-            <View style={styles.styWrapInfo}>
-              <Text style={styles.styTxtInfo}>Môn học</Text>
+          <View style={styles.flexWrap}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.styTxtInfo}>Khối</Text>
               <TouchableOpacity style={styles.styWrapInfo}>
                 <View style={styles.flexIconVa}>
-                  <Text style={styles.styWrapSubject}>{valueSubject}</Text>
+                  <Text style={styles.styWrapSubject}>{valueClass}</Text>
                   <Icon name={'angle-down'} color={'#000'} size={14}
                     style={{ marginRight: 10, marginLeft: 5 }} />
                 </View>
               </TouchableOpacity>
+
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.styTxtInfo}>Môn học</Text>
+                <TouchableOpacity style={styles.styWrapInfo}>
+                  <View style={styles.flexIconVa}>
+                    <Text style={styles.styWrapSubject}>{valueSubject}</Text>
+                    <Icon name={'angle-down'} color={'#000'} size={14}
+                      style={{ marginRight: 10, marginLeft: 5 }} />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+
 
           <View>
             <Text style={styles.styTxtLabelMoTa}>Mô tả</Text>
@@ -355,7 +360,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 10,
     marginLeft: 27,
-    marginRight: 27
+    marginRight: 27,
+    marginTop: 20
   },
   styTxtBtnNext: {
     color: '#FFF',
@@ -397,9 +403,9 @@ const styles = StyleSheet.create({
   },
   styWrapSubject: {
     padding: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     borderRadius: 5,
-    minWidth: 80,
+    // minWidth: 80,
     textAlign: 'center',
     color: "#828282"
   },
@@ -407,7 +413,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 5
+    marginHorizontal: 10,
   },
   styTxtInfo: {
     fontFamily: 'Nunito',
@@ -415,6 +421,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     color: "#424242",
     marginLeft: 8,
+    alignSelf: 'center'
   },
   styWrapElement: {
     borderWidth: 1,
@@ -494,5 +501,20 @@ const styles = StyleSheet.create({
   ViewTable: {
     marginLeft: 10,
     marginRight: 10
+  },
+  borderAll: {
+    marginTop: 5,
+    borderWidth: 0.5,
+    borderColor: '#828282',
+    borderRadius: 5
+  },
+  sectionList: {
+    flex: 1,
+    padding: 1
+  },
+  flexWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop:10
   }
 });
