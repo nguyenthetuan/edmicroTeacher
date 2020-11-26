@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    Image
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DropdownStudent from '../Papers/DropdownStudent';
 Icon.loadFont();
@@ -8,6 +15,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import dataHelper from '../../../utils/dataHelper';
 import apiMission from '../../../services/apiMission';
+import AppIcon from '../../../utils/AppIcon';
 const { width, height } = Dimensions.get('screen');
 
 export default class ItemClass extends Component {
@@ -84,11 +92,25 @@ export default class ItemClass extends Component {
         return (
             <View style={styles.containerItem}>
                 <View style={styles.headerItem}>
-                    <Text style={styles.txtTitleItem} numberOfLines={1}>{item.className}</Text>
+                    <Text
+                        style={styles.txtTitleItem}
+                        numberOfLines={1}
+                    >
+                        {item.className}
+                    </Text>
                 </View>
                 <View style={styles.contentItem}>
                     <View style={styles.viewDate}>
-                        <Text style={styles.txtTitleItemContent}>Kết thúc: </Text>
+                        <View style={styles.iconTxt}>
+                            <Image source={AppIcon.icon_timeEndV3} style={styles.sizeIcon} />
+                            <Text style={styles.txtTitleItemContent}>Thời gian kết thúc: </Text>
+                        </View>
+                        <View style={styles.iconTxt1}>
+                            <Image source={AppIcon.icon_missonToV3} style={styles.sizeIcon} />
+                            <Text style={[styles.txtTitleItemContent, { marginRight: -8 }]}>Học sinh được giao: </Text>
+                        </View>
+                    </View>
+                    <View style={styles.viewDate1}>
                         <TouchableOpacity
                             disabled={status}
                             onPress={this.showDatePicker}
@@ -96,35 +118,33 @@ export default class ItemClass extends Component {
                             <Text numberOfLines={1} style={styles.txtContentItem}>
                                 {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
                         </TouchableOpacity>
-                    </View>
-                    <View style={styles.viewDate}>
-                        <Text style={styles.txtTitleItemContent}>Học sinh: </Text>
                         <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
-                            style={{ width: width - 32 - 54 - 80, height: 25 }}
+                            // style={{ width: width - 32 - 54 - 80, height: 25 }}
+                            style={styles.dropDown}
                             dropdownStyle={{ width: width - 32 - 54 - 80 }}
                             options={item.students}
                             status={status}
                         />
-                    </View>
-                    {status ?
-                        // <TouchableOpacity
-                        //     onPress={this.goToMissionStatisticsScreen}
-                        //     style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
-                        //     <Text style={styles.txtAssignment}>Xem tiến độ</Text>
-                        //     <Icon name={'check'} color={'#fff'} size={20} />
-                        // </TouchableOpacity>
-                        null
-                        :
-                        <TouchableOpacity
-                            onPress={this.onAssignment}
-                            style={styles.btnAssignment}>
-                            <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
-                            <Icon name={'check'} color={'#fff'} size={20} />
-                        </TouchableOpacity>
+                        {status ?
+                            // <TouchableOpacity
+                            //     onPress={this.goToMissionStatisticsScreen}
+                            //     style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
+                            //     <Text style={styles.txtAssignment}>Xem tiến độ</Text>
+                            //     <Icon name={'check'} color={'#fff'} size={20} />
+                            // </TouchableOpacity>
+                            null
+                            :
+                            <TouchableOpacity
+                                onPress={this.onAssignment}
+                                style={styles.btnAssignment}>
+                                <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
+                                <Icon name={'check'} color={'#fff'} size={12} style={styles.widthCheck} />
+                            </TouchableOpacity>
 
-                    }
+                        }
+                    </View>
                 </View>
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
@@ -143,11 +163,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#56CCF2',
         marginBottom: 16,
-        marginHorizontal: 16
+        marginHorizontal: 16,
+        marginTop: 15
     },
     headerItem: {
         height: 30,
-        backgroundColor: '#2D9CDB',
+        backgroundColor: '#56CCF2',
         justifyContent: 'center',
         alignItems: 'flex-start',
         paddingHorizontal: 10
@@ -159,20 +180,22 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize',
     },
     contentItem: {
-        paddingHorizontal: 26,
-        paddingVertical: 12
+        paddingVertical: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     txtTitleItemContent: {
         fontFamily: 'Nunito-Regular',
         fontSize: 12,
-        color: '#000',
-        width: 80
+        color: '#828282',
+        marginLeft: 5
+        // width: 80
     },
     btnAssignment: {
         alignSelf: 'flex-end',
-        marginTop: 10,
+        marginTop: 12,
         backgroundColor: '#56BB73',
-        borderRadius: 5,
+        borderRadius: 4,
         paddingVertical: 8,
         paddingHorizontal: 20,
         flexDirection: 'row',
@@ -181,7 +204,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: 14,
         color: '#fff',
-        marginRight: 10
+        marginRight: 10, 
+        marginLeft: 10,
     },
     checkAllow: {
         width: 14,
@@ -222,16 +246,41 @@ const styles = StyleSheet.create({
         color: '#DB3546'
     },
     viewDate: {
-        flexDirection: 'row',
-        marginTop: 10,
-        alignItems: 'center',
+        flexDirection: 'column'
+    },
+    viewDate1: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginRight: 10
     },
     btnDate: {
         height: 25,
         flex: 1,
-        backgroundColor: '#D9EBF5',
-        borderRadius: 5,
+        backgroundColor: '#F2F2F2',
+        borderRadius: 4,
         justifyContent: 'center',
         paddingHorizontal: 8
     },
+    iconTxt: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+    },
+    iconTxt1: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        marginTop: 20
+    },
+    sizeIcon: {
+        alignSelf: 'center',
+        marginLeft: 13
+    },
+    dropDown: {
+        marginTop: 10,
+        backgroundColor: '#F2F2F2'
+    },
+    widthCheck:{
+        marginRight:15,
+        alignSelf: 'center'
+    }
+
 })
