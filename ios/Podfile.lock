@@ -524,8 +524,8 @@ PODS:
   - RNFreshchatSDK (2.6.4):
     - FreshchatSDK (= 3.7.5)
     - React
-  - RNGestureHandler (1.8.0):
-    - React
+  - RNGestureHandler (1.9.0):
+    - React-Core
   - RNGoogleSignin (4.0.3):
     - GoogleSignIn (~> 5.0.0)
     - React
@@ -952,7 +952,7 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: b34063b906dd0c57a5d286dd743a40c90c8326c7
   RNFBMessaging: c55142d3b2d34d706bf12bd5eef9ef35254c2df1
   RNFreshchatSDK: 6b88f4ab0bc91ec403da51785d81f17cb759f2c0
-  RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
+  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNGoogleSignin: ccf71ee4b6cfd324fd788a41e457e2043838c0d9
   RNIap: 73ef1b1dc8b52fc411186585e81a8152ce0b4ecd
   RNImageCropPicker: 9d1a7eea4f8368fc479cbd2bf26459bd3c74d9aa
@@ -974,4 +974,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 93d1a9b5c7fcb8fb7f5c9fdb4ce54351ede352ca
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

@@ -59,12 +59,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     styBtn: {
-        borderRadius: 25,
-        padding: 10,
-        margin: 3,
-        alignItems: 'center',
+        // borderRadius: 25,
+        // padding: 10,
+        // margin: 3,
+        // alignItems: 'center',
+        // backgroundColor: '#2D9CDB',
+        // width: width / 2 - 20,
         backgroundColor: '#2D9CDB',
-        width: width / 2 - 20
+        borderRadius: 25,
+        marginBottom: 10,
+        marginLeft: 27,
+        marginRight: 27,
+        paddingHorizontal:60
     },
     styWrapBtn: {
         flexDirection: 'column',
@@ -80,10 +86,19 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     styTxtBtn: {
+        // color: '#FFF',
+        // fontFamily: 'Nunito',
+        // fontWeight: "500",
+        // alignSelf: 'center',
+        // lineHeight: 21
         color: '#FFF',
-        fontFamily: 'Nunito',
-        fontWeight: "500",
+        fontFamily: 'Nunito-Bold',
+        fontSize: 18,
+        lineHeight: 21,
+        alignItems: 'center',
         alignSelf: 'center',
-        lineHeight: 21
+        fontWeight: "500",
+        marginTop: 14,
+        marginBottom: 14
     }
 })
