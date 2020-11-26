@@ -329,7 +329,7 @@ class Papers extends Component {
       <ActivityIndicator
         animating
         size={'small'}
-        style={{ flex: 1 }}
+        style={{ height: height / 2 }}
         color="#F98E2F"
       />
       :
@@ -526,6 +526,15 @@ class Papers extends Component {
     this.setState({ loading: true, }, () => this.onGetPapers())
   }
 
+  onChangeText = text => {
+    this.setState({ textSearch: text.toLowerCase() });
+    if (this.timeSearch) {
+      clearTimeout(this.timeSearch);
+      this.timeSearch = null;
+    }
+    this.timeSearch = setTimeout(this.searchPaper, 1000);
+  }
+
   renderHeaderFlastList() {
     const {
       textSearch,
@@ -535,6 +544,7 @@ class Papers extends Component {
     } = this.state;
     return (
       <View style={styles.navbar}>
+
         <ClassItem
           gradeActive={gradeActive}
           refModalClass={this.refModalClass}
@@ -564,21 +574,21 @@ class Papers extends Component {
               <EvilIcons name="search" size={20} color="#C4C4C4" />
             </TouchableOpacity>
           </View>
-          <TextInput
-            placeholder='Nhập tên bài tập'
-            placeholderTextColor='#C4C4C4'
-            style={styles.searchPaper}
-            value={textSearch}
-            onChangeText={text => this.setState({ textSearch: text.toLowerCase() })}
-            onEndEditing={() => this.searchPaper()}
-          />
+          <View style={styles.styWrapSearch}>
+            <TextInput
+              placeholder='Tìm kiếm...'
+              placeholderTextColor='#C4C4C4'
+              style={styles.searchPaper}
+              value={textSearch}
+              onChangeText={this.onChangeText}
+            // onEndEditing={() => this.searchPaper()}
+            />
+            <EvilIcons name={'search'} size={20} color={'#C4C4C4'} />
+          </View>
           <TouchableOpacity
             style={styles.buttonAdd}
             onPress={this._handleAddPaper}>
-            <Image
-              source={require('../../../asserts/icon/icAdd.png')}
-              style={{ marginTop: 3 }}
-            />
+            <Image source={require('../../../asserts/icon/icAdd.png')} resizeMode={'contain'} />
             <Text style={styles.txtAdd}>Thêm bộ đề</Text>
           </TouchableOpacity>
         </View>
@@ -613,7 +623,7 @@ class Papers extends Component {
             contentContainerStyle={styles.contentContainer}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item, index) => index.toString()}
-            // extraData={listPapers}
+            extraData={listPapers}
             ListEmptyComponent={this._listTestEmpty}
             // ListFooterComponent={this._listTestFooter}
             renderItem={({ item, index }) => (
@@ -690,13 +700,13 @@ const styles = StyleSheet.create({
   buttonAdd: {
     backgroundColor: '#7E96EC',
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 25,
-    alignContent: 'center',
+    marginVertical: 20,
     padding: 3,
-    paddingLeft: 5,
-    paddingRight: 25,
-    borderRadius: 2,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    height: 30,
   },
   txtAdd: {
     fontFamily: 'Nunito-Regular',
@@ -732,18 +742,11 @@ const styles = StyleSheet.create({
     // paddingTop: NAVBAR_HEIGHT,
   },
   searchPaper: {
-    height: 24,
-    borderColor: '#C4C4C4',
-    borderWidth: 0.5,
-    width: width * 0.5,
-    borderRadius: 4,
-    paddingLeft: 5,
-    fontSize: 10,
-    paddingRight: 24,
+    height: 30,
+    fontSize: 14,
     color: '#000',
-    paddingVertical: 5,
     fontFamily: 'Nunito-Regular',
-    alignContent: 'flex-end'
+    flex: 1
   },
   textTilteModal: {
     fontFamily: 'Nunito-Regular',
@@ -752,6 +755,16 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
+  styWrapSearch: {
+    flexDirection: 'row',
+    borderColor: '#C4C4C4',
+    borderWidth: 0.5,
+    borderRadius: 4,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    flex: 1,
+    marginRight: 20
+  }
 });
 
 const mapStateToProps = state => {

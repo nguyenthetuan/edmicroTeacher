@@ -41,10 +41,7 @@ export default class ModalClass extends Component {
 
     render() {
         const { visible } = this.state;
-        const {
-            gradeActive,
-            listGrades
-        } = this.props;
+        const { listGrades } = this.props;
         return (
             <Modal visible={visible} transparent={true}>
                 <Modalize
@@ -56,6 +53,8 @@ export default class ModalClass extends Component {
                             scrollEnabled: false
                         }
                     }
+                    threshold={height / 1.5}
+                    modalHeight={height / 1.5}
                 >
                     <View style={styles.styWrapTitle}>
                         <Text style={styles.styTitle}>Chọn lớp</Text>
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     contain: {
         flex: 1,
         marginHorizontal: 10,
-        height: height - height / 3 - 40
+        height: height / 1.5 - 43
     },
     styTitle: {
         fontFamily: 'Nunito-Regular',
