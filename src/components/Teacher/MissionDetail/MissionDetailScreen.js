@@ -9,15 +9,20 @@ export default class MissionDetailScreen extends Component {
         this.props.navigation.pop(2);
     }
     render() {
-        const { isLoading, } = this.props;
+        const { isLoading,title } = this.props;
         return (
             <View style={styles.contain}>
-                <View style={{ backgroundColor: '#2D9CDB' }}>
+                <View style={{ backgroundColor: '#FFF' }}>
                     <SafeAreaView />
-                    <HeaderNavigation color={'#FFF'} navigation={this.props.navigation} goBack={this.goBack} />
-                    <Image source={AppIcon.pic_mission}
+                    <HeaderNavigation
+                        color={'#000'}
+                        navigation={this.props.navigation}
+                        goBack={this.goBack}
+                        title={title}
+                    />
+                    {/* <Image source={AppIcon.pic_mission}
                         resizeMode={'contain'}
-                        style={styles.styImgHeader} />
+                        style={styles.styImgHeader} /> */}
                 </View>
                 {
                     isLoading ?

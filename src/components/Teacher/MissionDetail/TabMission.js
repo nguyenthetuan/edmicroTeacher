@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, SectionList } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    ScrollView,
+    SectionList
+} from 'react-native';
 import HTML from 'react-native-render-html';
 import ItemPactice from './ItemPactice';
 import ItemTest from './ItemTest';
@@ -8,26 +14,24 @@ import ModalMockStart from './modalMockStart';
 import ModalMockStartTest from './modalMockStartTest';
 
 export default class TabMisson extends Component {
-
     state = {
         visible: false
     }
-
     showPractice = (data) => {
         this.refModalMockPractice.activeModal(data);
     };
-
     showTest = (data) => {
         this.refModalMockTest.activeModal(data);
     };
-
     renderSectionHeader = ({ section: { title } }) => (
         <View style={styles.styWrapElem}>
-            <Text style={styles.styTxtHeader} numberOfLines={1}>{title}</Text>
+            <Text
+                style={styles.styTxtHeader}
+                numberOfLines={1}>
+                {title}
+            </Text>
         </View>
     )
-
-
     renderPactice = () => {
         const { missionDetail } = this.props.screenProps;
         let { listProblem } = missionDetail;
@@ -66,14 +70,22 @@ export default class TabMisson extends Component {
             .value();
         return (
             <View style={{ backgroundColor: '#FFF' }}>
-                <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Kiểm tra</Text>
+                <Text style={[styles.styTxtHeader,
+                { color: '#000', marginHorizontal: 10 }]}
+                >
+                    Kiểm tra
+                    </Text>
                 <SectionList
                     sections={dataTemp}
                     keyExtractor={(item, index) => item + index}
                     renderItem={({ item }) => <ItemTest item={item} show={this.showTest} />}
                     renderSectionHeader={({ section: { title } }) => (
-                        <View style={[styles.styWrapElem, { backgroundColor: '#56CCF2' }]}>
-                            <Text style={styles.styTxtHeader}>{title}</Text>
+                        <View style={[styles.styWrapElem,
+                        { backgroundColor: '#56CCF2' }]}
+                        >
+                            <Text style={styles.styTxtHeader}>
+                                {title}
+                            </Text>
                         </View>
                     )}
                     renderSectionFooter={() => <View style={{ marginBottom: 10 }} />}
@@ -83,7 +95,10 @@ export default class TabMisson extends Component {
     }
 
     render() {
-        const { missionDetail, navigation } = this.props.screenProps;
+        const {
+            missionDetail,
+            navigation
+        } = this.props.screenProps;
         const { visible } = this.state;
         return (
             <View style={styles.contain}>

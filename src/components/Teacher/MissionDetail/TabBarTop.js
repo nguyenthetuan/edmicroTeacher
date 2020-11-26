@@ -20,29 +20,34 @@ const TabTop = createMaterialTopTabNavigator({
     },
 }, {
     activeTintColor: '#fff',
-    inactiveTintColor: '#C4C4C4',
+    inactiveTintColor: '#56CCF2',
     style: {
         backgroundColor: '#FFF',
     },
     tabBarOptions: {
         style: {
-            backgroundColor: '#2D9CDB',
-            elevation: 0
+            backgroundColor: '#fff',
+            elevation: 0,
+            marginTop: 10
         },
         tabStyle: {
             width: 120,
             height: 25,
             justifyContent: 'flex-start',
-            padding: 0
+            padding: 0,
         },
         labelStyle: {
-            fontFamily: 'Nunito-Regular'
+            fontFamily: 'Nunito-Bold',
+            color: '#56CCF2',
+            fontSize: 12,
+            lineHeight: 16,
+            textAlign: 'center',
         },
         indicatorStyle: {
-            backgroundColor: '#FFF',
+            backgroundColor: '#56CCF2',
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
-            height: 5
+            height: 5,
         },
         upperCaseLabel: false,
     }

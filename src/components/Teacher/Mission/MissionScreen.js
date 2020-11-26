@@ -74,13 +74,13 @@ export default class MissionScreen extends Component {
         <View style={styles.styWrapSearch}>
           <TextInput
             placeholder={'Tìm kiếm'}
-            placeholderTextColor={'#999'}
+            placeholderTextColor={'#757575'}
             style={styles.styTxtInput}
             onChangeText={this.handleSearch}
           />
           <IconAntDesign
             name={'search1'}
-            style={{ fontSize: 20, color: '#999' }}
+            style={styles.iconSearch}
           />
         </View>
         {isAccessMission && <TouchableOpacity
@@ -110,7 +110,10 @@ export default class MissionScreen extends Component {
 
   render() {
     const { user } = this.props;
-    const { positionY, listMissionSearch } = this.state;
+    const {
+      positionY,
+      listMissionSearch
+    } = this.state;
     const positionYDiff = Animated.diffClamp(positionY, 0, 150);
     const posY = positionYDiff.interpolate({
       inputRange: [0, 150],
@@ -120,7 +123,9 @@ export default class MissionScreen extends Component {
       <View style={styles.contain}>
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
         <View style={{ backgroundColor: '#fff' }}>
-          <HeaderMain {...user} navigation={this.props.navigation} />
+          <HeaderMain
+            {...user}
+            navigation={this.props.navigation} />
         </View>
         {/* <Animated.Image
           source={AppIcon.pic_mission}
@@ -159,7 +164,7 @@ const styles = StyleSheet.create({
   },
   styWrapSearch: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#DADADA',
     paddingHorizontal: 15,
     marginHorizontal: 10,
     marginTop: 10,
@@ -170,8 +175,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   styTxtInput: {
-    color: '#000',
+    color: '#757575',
     fontFamily: 'Nunito-Regular',
+    fontSize:10,
+    lineHeight:12,
+    alignSelf: 'center',
     flex: 1,
   },
   styWrapBtn: {
@@ -180,13 +188,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     padding: 7,
-    borderRadius: 3,
+    borderRadius: 2,
     marginHorizontal: 5,
-    marginTop: 10,
+    marginTop: 10
   },
   styTxtBtn: {
     color: '#FFF',
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito',
+    fontSize: 9,
+    lineHeight: 12,
+    marginLeft: 10,
+    marginRight: 10,
   },
   styWrapHeader: {
     flexDirection: 'row',
@@ -201,4 +213,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     color: '#999',
   },
+  iconSearch:{
+    marginRight:-8,
+    alignSelf:'center'
+  }
 });
