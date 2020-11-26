@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import {
-  Appearance,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   Keyboard,
   TextInput,
   Dimensions,
-  Platform
+  Platform,
+  Image
 } from 'react-native';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
@@ -21,6 +20,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import Global from '../../../utils/Globals';
+import AppIcon from '../../../utils/AppIcon';
 
 export default class StepOne extends Component {
   constructor(props) {
@@ -130,16 +130,18 @@ export default class StepOne extends Component {
           paddingHorizontal: 0, marginTop: 20
         }]}>
           <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
-          <TextInput
-            placeholder={'Tên nhiệm vụ'}
-            placeholderTextColor={'#979797'}
-            style={styles.styWrapInput}
-            value={nameMission}
-            onChangeText={nameMission => this.setState({ nameMission })}
-          >
-            {/* <Image source={AppIcon} /> */}
-          </TextInput>
-
+          <View style={styles.flexDri}>
+            <TextInput
+              placeholder={'Tên nhiệm vụ'}
+              placeholderTextColor={'#979797'}
+              style={styles.styWrapInput}
+              value={nameMission}
+              onChangeText={nameMission => this.setState({ nameMission })}
+            />
+            <TouchableOpacity style={styles.iconEdit}>
+              <Image source={AppIcon.icon_editNameMission} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.styTxtLabel}>Khối</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
@@ -251,6 +253,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     paddingRight: 20,
   },
+  iconEdit: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    marginTop:20,
+    paddingRight:20
+  },
   styBtnNext: {
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
@@ -305,6 +313,10 @@ const pickerSelectStyles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderColor: '#999',
+  },
+  flexDri: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 });
 
