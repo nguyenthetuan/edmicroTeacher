@@ -177,10 +177,11 @@ const styles = StyleSheet.create({
   styTxtInput: {
     color: '#757575',
     fontFamily: 'Nunito-Regular',
-    fontSize:10,
-    lineHeight:12,
+    fontSize: 10,
+    lineHeight: 12,
     alignSelf: 'center',
     flex: 1,
+    padding: 5
   },
   styWrapBtn: {
     backgroundColor: '#56BB73',
@@ -213,8 +214,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     color: '#999',
   },
-  iconSearch:{
-    marginRight:-8,
-    alignSelf:'center'
+  iconSearch: {
+    marginRight: -8,
+    alignSelf: 'center'
   }
 });
