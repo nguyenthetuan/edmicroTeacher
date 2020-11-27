@@ -4,7 +4,7 @@ import { View, Animated, Dimensions, StyleSheet } from 'react-native';
 import ShimePlaceholder from '../anim/ShimePlaceholder';
 const { width, height } = Dimensions.get('window');
 
-export default class LearnPlaceholder extends Component {
+export default class ListTaskPlaceHolder extends Component {
 
     constructor(props) {
         super(props);
