@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class ItemSectionListPrac extends Component {
 
@@ -82,16 +83,32 @@ export default class ItemSectionListPrac extends Component {
             onChangeText={this.changeTextScore}
             onEndEditing={this.onEndEditing}
           />}
-          <TextInput
-            ref={ref => this.refCount = ref}
-            placeholder={'0'}
-            value={item.countDone || count}
-            defaultValue={`${item.countDone || count}`}
-            style={styles.styInput}
-            keyboardType={'number-pad'}
-            onChangeText={this.changeTextCount}
-            onEndEditing={this.onEndEditing}
-          />
+          <View style={styles.viewCount}>
+            <TouchableOpacity style={styles.iconLeft}>
+              <Icon
+                name={'minus'}
+                size={8}
+                color={Platform.OS == 'android' ? '#FFF' : '#828282'}
+              />
+            </TouchableOpacity>
+            <TextInput
+              ref={ref => this.refCount = ref}
+              placeholder={'0'}
+              value={item.countDone || count}
+              defaultValue={`${item.countDone || count}`}
+              style={styles.styInput}
+              keyboardType={'number-pad'}
+              onChangeText={this.changeTextCount}
+              onEndEditing={this.onEndEditing}
+            />
+            <TouchableOpacity style={styles.iconRight}>
+              <Icon
+                name={'plus'}
+                size={8}
+                color={Platform.OS == 'android' ? '#FFF' : '#828282'}
+              />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={styles.styWrapIcon}
             onPress={this.props.onPress}
@@ -117,16 +134,15 @@ const styles = StyleSheet.create({
   },
   styInput: {
     alignSelf: 'flex-end',
-    borderWidth: 1,
-    // paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 3,
-    borderColor: '#999',
-    color: '#000',
+    color: '#fff',
     width: 25,
     fontSize: 12,
     textAlign: 'center',
     marginHorizontal: 10,
+    backgroundColor:'#6ED8FB',
+    alignSelf:'center'
   },
   styName: {
     fontFamily: 'Nunito-Regular',
@@ -142,4 +158,19 @@ const styles = StyleSheet.create({
   styWrapIcon: {
     alignSelf: 'center',
   },
+  viewCount: {
+    flexDirection: 'row',
+    backgroundColor: '#DFF7FF',
+    borderRadius: 4
+  },
+  iconLeft: {
+    alignSelf: 'center',
+    paddingHorizontal: 3,
+    marginLeft: 7,
+  },
+  iconRight: {
+    alignSelf: 'center',
+    paddingHorizontal: 5,
+    marginRight:7
+  }
 });
