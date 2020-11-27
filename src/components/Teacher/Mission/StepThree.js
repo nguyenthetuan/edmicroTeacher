@@ -162,7 +162,7 @@ export default class StepThree extends Component {
             <Text style={[styles.styName, { marginLeft: 12 }]}>Tên nhiệm vụ</Text>
             <View style={{ flex: 1 }} />
             <View style={{ flexDirection: 'row' }}>
-              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Số lần</Text>
+              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Hủy</Text>
             </View>
           </View>
@@ -203,8 +203,8 @@ export default class StepThree extends Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Điểm</Text>
-              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Số lần</Text>
+              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Điểm</Text>
+              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Hủy</Text>
             </View>
           </View>
@@ -271,7 +271,7 @@ export default class StepThree extends Component {
                 </View>
               </TouchableOpacity>
 
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.styTxtInfo}>Môn học</Text>
                 <TouchableOpacity style={styles.styWrapInfo}>
                   <View style={styles.flexIconVa}>
@@ -515,6 +515,6 @@ const styles = StyleSheet.create({
   flexWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop:10
+    marginTop: 10
   }
 });
