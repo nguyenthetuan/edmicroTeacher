@@ -163,7 +163,7 @@ export default class StepOne extends Component {
             <Icon
               name={'angle-down'}
               size={25}
-              color={Platform.OS == 'android' ? '#FFF' : '#000'}
+              color={Platform.OS == 'android' ? '#979797' : '#000'}
               style={styles.icon}
             />
           </View>
@@ -189,7 +189,7 @@ export default class StepOne extends Component {
             <Icon
               name={'angle-down'}
               size={25}
-              color={Platform.OS == 'android' ? '#FFF' : '#000'}
+              color={Platform.OS == 'android' ? '#979797' : '#000'}
               style={styles.icon}
             />
           </View>
@@ -306,8 +306,8 @@ const pickerSelectStyles = StyleSheet.create({
     paddingBottom: 12,
     borderBottomWidth: 1,
     borderRadius: 5,
-    backgroundColor: '#446BA0',
-    color: '#FFF',
+    backgroundColor: 'gray',
+    color: '#000',
     fontFamily: 'Nunito-Regular',
     borderWidth: 1,
     margin: 10,

@@ -127,7 +127,7 @@ export default class MissionScreen extends Component {
             {...user}
             navigation={this.props.navigation} />
         </View>
-        {/* <Animated.Image
+        <Animated.Image
           source={AppIcon.pic_mission}
           resizeMode={'contain'}
           style={{
@@ -135,7 +135,7 @@ export default class MissionScreen extends Component {
             zIndex: -1,
             transform: [{ translateY: posY }],
           }}
-        /> */}
+        />
         <Animated.View style={{ transform: [{ translateY: posY }] }}>
           <FlatList
             data={listMissionSearch}
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   styWrapHeader: {
     flexDirection: 'row',
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFF'
   },
   styWrapEmpty: {
     height: height / 2,
