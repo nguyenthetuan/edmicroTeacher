@@ -142,7 +142,6 @@ export default class ItemClass extends Component {
                                 <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
                                 <Icon name={'check'} color={'#fff'} size={12} style={styles.widthCheck} />
                             </TouchableOpacity>
-
                         }
                     </View>
                 </View>
@@ -251,7 +250,7 @@ const styles = StyleSheet.create({
     viewDate1: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginRight: 10
+        marginRight: 10,
     },
     btnDate: {
         height: 25,
