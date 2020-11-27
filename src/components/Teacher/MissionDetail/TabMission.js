@@ -108,7 +108,7 @@ export default class TabMisson extends Component {
                         missionDetail.description ?
                             <>
                                 <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Mô tả: </Text>
-                                <View style={styles.styWrapHtml}>
+                                <View style={styles.styWrapHtml} >
                                     <HTML html={missionDetail.description} />
                                 </View>
                             </>
@@ -152,12 +152,11 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     styWrapHtml: {
-        borderWidth: 1,
-        marginHorizontal: 10,
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-        marginTop: 5,
-        borderColor: '#56CCF2',
+        fontFamily: "Nunito",
+        fontSize: 14,
+        lineHeight: 19,
+        textAlign: 'center',
+        color: '#757575',
+        paddingHorizontal: 30
     }
 })

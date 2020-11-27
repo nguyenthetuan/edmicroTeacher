@@ -100,7 +100,7 @@ export default class ItemStudent extends React.Component {
                   <ProgressBar
                     progress={rate ? rate > 100 ? 100 : rate : 1}
                     color="#56BB73"
-                    widthProps={width * 0.6}
+                    widthProps={width - 150}
                     progressUnfilledColor="#E0E0E0"
                   />
                 </View>
