@@ -72,21 +72,23 @@ class Item extends Component {
             {item.testName}
           </Text>
         </View>
-        {isAdd ? (
-          <TouchableOpacity
-            style={styles.styWrapBtnAdd}
-            onPress={this.handleAdd(item)}>
-            <Icon name={'plus'} color={'#fff'} size={8} />
-            <Text style={styles.styTxtBtnAdd}>Thêm</Text>
-          </TouchableOpacity>
-        ) : (
+        <View style={styles.createAdd}>
+          {isAdd ? (
             <TouchableOpacity
-              style={styles.styWrapBtnDele}
-              onPress={this.handleDele(item)}>
-              <Icon name={'minus'} color={'#fff'} size={8} />
-              <Text style={styles.styTxtBtnAdd}>Hủy</Text>
+              style={styles.styWrapBtnAdd}
+              onPress={this.handleAdd(item)}>
+              <Icon name={'plus'} color={'#fff'} size={8} />
+              <Text style={styles.styTxtBtnAdd}>Thêm</Text>
             </TouchableOpacity>
-          )}
+          ) : (
+              <TouchableOpacity
+                style={styles.styWrapBtnDele}
+                onPress={this.handleDele(item)}>
+                <Icon name={'minus'} color={'#fff'} size={8} />
+                <Text style={styles.styTxtBtnAdd}>Hủy</Text>
+              </TouchableOpacity>
+            )}
+        </View>
       </View>
     );
   }
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 5
   },
   styTxtBtnAdd: {
     color: '#FFF',
@@ -130,27 +133,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#56BB73',
     marginLeft: 30
-
   },
   styWrapBtnDele: {
-    borderTopRightRadius:4,
-    borderBottomRightRadius:4,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
     backgroundColor: '#FF4457',
     // padding: 8,
-    paddingTop:10,
-    paddingBottom:10,
-    paddingLeft:15,
-    paddingRight:5,
-    flexDirection: 'row', 
+    paddingTop: 10,
+    paddingBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
   },
   colobg: {
     backgroundColor: '#fff',
-    width: '85%',
     padding: 5,
     borderColor: '#BDBDBD',
     borderWidth: 0.5,
     borderTopLeftRadius: 4,
-    borderBottomLeftRadius: 4
-  }
+    borderBottomLeftRadius: 4,
+    width: '85%'
+  },
+  createAdd: {
+    backgroundColor: '#56BB73',
+    width: '15%',
+  },
 });

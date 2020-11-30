@@ -69,7 +69,12 @@ export default class StepOne extends Component {
 
   handleNextStepTwo = () => {
     Keyboard.dismiss();
-    const { valueClass, valueSubject, nameMission, htmlContent } = this.state;
+    const {
+      valueClass,
+      valueSubject,
+      nameMission,
+      htmlContent
+    } = this.state;
     if (
       _.isEmpty(valueClass) ||
       _.isEmpty(valueSubject) ||
@@ -256,8 +261,8 @@ const styles = StyleSheet.create({
   iconEdit: {
     position: 'absolute',
     alignSelf: 'flex-end',
-    marginTop:20,
-    paddingRight:20
+    marginTop: 20,
+    paddingRight: 20
   },
   styBtnNext: {
     backgroundColor: '#2D9CDB',
