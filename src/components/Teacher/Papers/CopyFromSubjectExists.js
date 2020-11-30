@@ -23,6 +23,8 @@ import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import Common from '../../../utils/CommonBeta';
 import AppIcon from '../../../utils/AppIcon';
+import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
+
 
 let height = Dimensions.get('window').height;
 
@@ -35,7 +37,8 @@ export default class CopyFromSubjectExists extends Component {
             targetLearning: [],
             indexSelected: 0,
             subjectCode: [],
-            knowledgeUnits: null
+            knowledgeUnits: null,
+            isLoading: true
         }
     }
 
@@ -92,7 +95,6 @@ export default class CopyFromSubjectExists extends Component {
 
     async findPremadeLib() {
         const { token } = await dataHelper.getToken();
-        console.log("this.state.subjectCode: ", this.state.subjectCode);
         let curriculumCodes = [this.state.currentCurriculum];
         let pageIndex = 0;
         let searchKnowledgeUnitChild = true;
@@ -100,8 +102,9 @@ export default class CopyFromSubjectExists extends Component {
         let gradeCodes = null;
         let knowledgeUnits = this.state.knowledgeUnits;
         let name = '';
+        this.setState({ isLoading: true });
         const rp = await apiPapers.findPremadeLib({ token, curriculumCodes, pageIndex, searchKnowledgeUnitChild, subjectCodes, gradeCodes, knowledgeUnits, name });
-        this.setState({ listTask: !rp ? [] : rp });
+        this.setState({ listTask: !rp ? [] : rp, isLoading: false });
     }
 
     onPress(data) {
@@ -174,7 +177,7 @@ export default class CopyFromSubjectExists extends Component {
 
     render() {
         const { listSubjects } = this.props.navigation.state.params;
-        const { lerningTarget } = this.state;
+        const { lerningTarget, isLoading } = this.state;
         return (
             <View>
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
@@ -219,11 +222,12 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                     </View>
                     <View style={{ width: '100%', alignItems: 'center', height: height - 200 }}>
-                        <FlatList
+                        {!isLoading ? <FlatList
                             data={this.state.listTask}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={this.renderTask}
-                        />
+                        /> :
+                            <ListTaskPlaceHolder />}
                     </View>
                 </SafeAreaView>
             </View>
