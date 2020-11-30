@@ -177,8 +177,19 @@ export default class ModalCurriculum extends Component {
   };
 
   render() {
-    const { visible, dropdownVisible, selectItem, searchKey, data } = this.state;
-    const { title, widthItem, colum, value } = this.props;
+    const {
+      visible,
+      dropdownVisible,
+      selectItem,
+      searchKey,
+      data
+    } = this.state;
+    const {
+      title,
+      widthItem,
+      colum,
+      value
+    } = this.props;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
     return (
       <View style={{ flex: 1 }}>
@@ -215,11 +226,11 @@ export default class ModalCurriculum extends Component {
               <View style={styles.container}>
                 <TouchableWithoutFeedback >
                   <View style={{
-                  flexDirection: 'row', justifyContent: 'space-between',
-                  backgroundColor: '#2D9CDB',
-                  paddingHorizontal: 16,
-                  paddingVertical: 4
-                }}>
+                    flexDirection: 'row', justifyContent: 'space-between',
+                    backgroundColor: '#2D9CDB',
+                    paddingHorizontal: 16,
+                    paddingVertical: 4
+                  }}>
                     <TouchableOpacity
                       onPress={() => {
                         this.setState({

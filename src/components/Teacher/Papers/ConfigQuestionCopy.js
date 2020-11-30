@@ -528,52 +528,108 @@ export default class ConfigQuestion extends Component {
                                 color={'#fff'}
                                 // notRightButton={true}
                                 onRightAction={this.copySubject}
+                                title={data.name}
                             />
-                            <View>
-                                <Text style={styles.textName}>{data.name}</Text>
-                            </View>
                             <View style={styles.headerContent}>
-                                <View>
-                                    <Text style={styles.textHeader}>Tổng số câu: {data.questions.length}</Text>
-                                    <Text style={styles.textHeader}>Tổng số điểm: {this.state.totalPoint}</Text>
-                                </View>
-                                <View style={styles.bottomOfHeader}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, paddingHorizontal: 10, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onPressDecidePoint() }}>
-                                            <Image
-                                                source={require('../../../asserts/images/iconDiv.png')}
-                                                resizeMode="contain"
-                                                style={{ tintColor: 'blue' }}
-                                            />
-                                            <Text style={styles.textHeader}>Chia đều điểm</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, paddingHorizontal: 10, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onChangePosition() }}>
-                                            <Image
-                                                source={require('../../../asserts/appIcon/sort.png')}
-                                                resizeMode="contain"
-                                            />
-                                            <Text style={styles.textHeader}>Sắp xếp lại</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', borderWidth: 1, paddingHorizontal: 10, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}>
-                                            <Text style={styles.textHeader}>Chọn tất cả</Text>
-                                            <CheckBox
-                                                disabled={false}
-                                                value={this.state.toggleCheckBox}
-                                                onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
-                                                boxType="square"
-                                                style={{ width: 20, height: 20, marginLeft: 10 }}
-                                            />
+                                <View style={styles.headerContentLeft}>
+                                    <View style={styles.flexRow}>
+                                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                            <Text style={styles.textNormalName}>Môn: </Text>
+                                            <View style={{ height: 20, paddingHorizontal: 10, borderColor: '#fff' }}>
+                                                <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                            <Text style={styles.textNormalName}>Lớp: </Text>
+                                            <View style={{ height: 20, paddingHorizontal: 10, left: 4.5, borderColor: '#fff' }}>
+                                                <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
+                                            </View>
+                                        </View>
+                                        <TouchableOpacity
+                                            style={styles.rightHeader}
+                                            navigation={this.props.navigation}
+                                            onRightAction={this.copySubjectMatter}
+                                        >
+                                            <Text style={styles.txtRightHeader}>{`Lưu cấu hình`}</Text>
                                         </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, borderWidth: 1, borderRadius: 4, borderColor: "#fff", height: 30, justifyContent: 'center', alignItems: 'center', width: 150 }} onPress={() => { this.deleteCheckedQs() }}>
-                                        <MaterialCommunityIcons
-                                            name="delete-sweep"
-                                            size={23}
-                                            color="#DB3546"
-                                            style={{ left: -10 }}
-                                        />
-                                        <Text style={[styles.textHeader, { left: -10 }]}>Xóa câu đã chọn</Text>
-                                    </TouchableOpacity>
+                                    <View style={styles.totalCountQuest}>
+                                        <View style={styles.textIcon}>
+                                            <Image source={AppIcon.icon_questionWhiteV3} />
+                                            <Text
+                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center' }]}
+                                            >
+                                                Tổng số câu: {data.questions.length}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.textIcon}>
+                                            <Image source={AppIcon.icon_settingsWhiteV3} />
+                                            <Text
+                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center' }]}
+                                            >
+                                                Tổng số điểm: {this.state.totalPoint}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.bottomOfHeader}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                        <View style={styles.flexColumn}>
+                                            <TouchableOpacity
+                                                style={styles.actionTwo}
+                                                onPress={() => { this.onChangePosition() }}
+                                            >
+                                                <Image
+                                                    source={require('../../../asserts/appIcon/sort.png')}
+                                                    resizeMode="contain"
+                                                    style={{ tintColor: '#56CCF2' }}
+                                                />
+                                                <Text style={[styles.textHeader, { paddingLeft: 10 }]}>Sắp xếp lại</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}
+                                                onPress={() => { this.deleteCheckedQs() }}
+                                            >
+                                                <MaterialCommunityIcons
+                                                    name="delete-sweep"
+                                                    size={23}
+                                                    color="#828282"
+                                                />
+                                                <Text style={[styles.textHeader, { left: 5, right: 5 }]}>Xóa câu đã chọn</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                        <View style={styles.flexColumn}>
+                                            <TouchableOpacity
+                                                style={styles.actionOne}
+                                                onPress={() => { this.onPressDecidePoint() }}
+                                            >
+                                                <Image
+                                                    source={require('../../../asserts/images/iconDiv.png')}
+                                                    resizeMode="contain"
+                                                    style={{ tintColor: '#FDC214' }}
+                                                />
+                                                <Text style={styles.textHeader}>Chia điểm</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}
+                                                onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}
+                                            >
+                                                <CheckBox
+                                                    disabled={false}
+                                                    value={this.state.toggleCheckBox}
+                                                    onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
+                                                    boxType="square"
+                                                    style={{ width: 20, height: 20, marginLeft: 10 }}
+                                                />
+                                                <Text style={styles.textHeader}>Chọn tất cả</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                    </View>
+
+
                                 </View>
                             </View>
                         </View>
@@ -616,15 +672,19 @@ export default class ConfigQuestion extends Component {
                     </View>}
                 </SafeAreaView>
                 {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
-                    <TouchableWithoutFeedback style={styles.popUpCreate} onPress={() => { this.textInput.blur() }}>
+                    <TouchableWithoutFeedback
+                        style={styles.popUpCreate}
+                        onPress={() => { this.textInput.blur() }}
+                    >
                         <View style={[styles.popUpCreate, { borderWidth: 1 }]}>
-                            <View style={{ width: '100%', alignItems: 'center', zIndex: 1 }}>
-                                <Text style={[styles.textInPopupCreate, { marginTop: 30, fontSize: 16 }]}>Nhập tên bài kiểm tra</Text>
+                            <View style={{ width: '100%', paddingHorizontal: 20, zIndex: 1 }}>
+                                <Text style={[styles.textInPopupCreate, { marginTop: 30 }]}>Nhập tên bài kiểm tra</Text>
                                 <TextInput
-                                    style={{ width: '90%', height: 30, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, backgroundColor: '#fff' }}
+                                    style={styles.inputTitle}
                                     onChangeText={(value) => { this.onValueChangeNameTest(value) }}
                                     keyboardType={'default'}
                                     value={this.state.name}
+                                    placeholder={'Tên bài kiểm tra'}
                                     ref={(ref) => { this.textInput = ref }}
                                 />
                             </View>
@@ -642,7 +702,7 @@ export default class ConfigQuestion extends Component {
                                     containerStyle={{
                                         marginHorizontal: 0,
                                     }}
-                                    contentStyle={{ marginHorizontal: 0, borderWidth: 1 }}
+                                    contentStyle={{ marginHorizontal: 10, borderWidth: 1, borderColor: '#56CCF2' }}
                                     title="Dạng bài"
                                     data={type}
                                     onPressItem={(index) => this.onValueChangeTypeExam(index)}
@@ -660,24 +720,27 @@ export default class ConfigQuestion extends Component {
                                 />
                                 <Text style={[styles.textInPopupCreate, { top: 4, marginLeft: 5 }]}>phút</Text>
                             </View>}
-                            <View style={{ flexDirection: 'row', marginTop: 10, width: '100%', paddingHorizontal: 20 }}>
-                                <Text style={styles.textInPopupCreate}>Giải thích trắc nghiệm</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 21, width: '100%', paddingHorizontal: 20 }}>
+                                <Text style={[styles.textInPopupCreate, { alignSelf: 'center' }]}>Giải thích trắc nghiệm</Text>
                                 <CheckBox
                                     disabled={false}
                                     value={this.state.isExplain}
                                     onValueChange={(newValue) => { this.onTickCheckBoxExpand(newValue) }}
                                     boxType="square"
-                                    style={{ width: 20, height: 20, marginLeft: 5 }}
+                                    style={{ width: 30, height: 30, marginLeft: 24, alignSelf: 'center' }}
                                 />
                             </View>
-                            <View style={{ width: '100%', padding: 20 }}>
-                                <Text style={[styles.textInPopupCreate, { color: 'red', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
-                                    <Text style={[styles.textInPopupCreate, { color: 'red' }]}>{data.questions.length} câu hỏi</Text>
-                                    <Text style={[styles.textInPopupCreate, { color: 'red' }]}>{this.state.totalPoint} điểm</Text>
+                            <View style={styles.viewList}>
+                                <Text style={[styles.textInPopupCreate, { color: '#000', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+                                    <Text style={[styles.textInPopupCreate, { color: '#2D9CDB', alignSelf: 'center', marginRight: 30 }]}>{data.questions.length} câu</Text>
+                                    <Text style={[styles.textInPopupCreate, { color: '#FF6213', alignSelf: 'center', marginLeft: 10 }]}>{this.state.totalPoint} điểm</Text>
                                 </View>
                             </View>
-                            <TouchableOpacity style={{ width: 100, height: 40, borderRadius: 10, backgroundColor: '#007bff', position: 'absolute', bottom: 20, alignItems: 'center', justifyContent: 'center' }} onPress={() => { this.onPressCreate() }}>
+                            <TouchableOpacity
+                                style={styles.createPost}
+                                onPress={() => { this.onPressCreate() }}
+                            >
                                 <Text style={styles.buttonPopUpText}>Tạo bài</Text>
                             </TouchableOpacity>
                             <View style={{ width: 30, height: 30, borderRadius: 10, position: 'absolute', zIndex: 20, right: 5, top: 10 }}>
@@ -717,10 +780,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
     },
-    headerContentLeft: {
-        width: 150,
-        justifyContent: 'center',
-    },
     headerContentRight: {
         flex: 1,
         alignItems: 'center',
@@ -736,10 +795,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     textInPopupCreate: {
-        fontFamily: 'Nunito-bold',
+        fontFamily: 'Nunito',
         fontSize: 14,
-        fontWeight: '800',
-
+        lineHeight: 19,
+        color: '#000'
     },
     rightParams: {
         width: '40%',
@@ -766,33 +825,33 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     textHeader: {
-        fontSize: 11,
-        fontWeight: '800',
-        fontFamily: 'Nunito-bold',
-        color: '#fff',
+        fontSize: 14,
+        lineHeight: 19,
+        fontFamily: 'Nunito',
+        color: '#000',
         left: 5
     },
     buttomClass: {
         flex: 1,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor: '#C4C4C4',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 5,
         paddingVertical: 3,
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
         backgroundColor: '#FFF',
     },
     buttomActive: {
         flex: 1,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor: '#0085FF',
         backgroundColor: '#89EAFF',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 5,
+        marginHorizontal: 10,
         paddingHorizontal: 5,
         paddingVertical: 3,
     },
@@ -840,7 +899,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         marginTop: 0.1 * height,
-        backgroundColor: '#fafafa',
+        backgroundColor: '#fff',
         alignItems: 'center',
         paddingVertical: 20,
     },
@@ -854,15 +913,142 @@ const styles = StyleSheet.create({
     },
     buttonPopUpText: {
         color: '#fff',
-        fontWeight: '800',
+        fontWeight: '500',
         fontFamily: 'Nunito-bold',
-        fontSize: 14,
+        fontSize: 18,
+        lineHeight: 21,
+        marginLeft: 76,
+        marginRight: 76,
+        marginTop: 14,
+        marginBottom: 14
     },
-    buttonOnPopupText: {  
+    buttonOnPopupText: {
         borderWidth: 1,
         borderRadius: 5,
         width: 100,
         height: 40,
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
+    },
+    flexRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    textNormalName: {
+        fontSize: 14,
+        lineHeight: 19,
+        fontFamily: 'Nunito',
+        color: '#fff',
+    },
+    textNormal: {
+        fontSize: 16,
+        lineHeight: 22,
+        textAlign: 'center',
+        fontFamily: 'Nunito-bold',
+        color: '#fff',
+    },
+    rightHeader: {
+        alignSelf: 'center',
+        backgroundColor: '#FFD044',
+        borderRadius: 4,
+    },
+    txtRightHeader: {
+        paddingHorizontal: 13,
+        fontSize: 14,
+        lineHeight: 19,
+        fontFamily: 'Nunito-Bold',
+        color: '#FFF',
+        marginTop: 5.5,
+        marginBottom: 5.5,
+        marginLeft: 17,
+        marginRight: 17
+    },
+    headerContentLeft: {
+        flexDirection: 'column',
+        paddingHorizontal: 10,
+        flex: 1
+    },
+    totalCountQuest: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
+    },
+    textIcon: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10
+    },
+    actionOne: {
+        flexDirection: 'row',
+        marginRight: 10,
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        borderRadius: 4,
+        borderColor: "#fff",
+        backgroundColor: '#fff',
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    actionTwo: {
+        flexDirection: 'row',
+        marginRight: 10,
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        borderRadius: 4,
+        borderColor: "#fff",
+        backgroundColor: '#fff',
+        height: 30,
+        alignItems: 'center'
+    },
+    actionThree: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        borderRadius: 4,
+        borderColor: "#fff",
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    actionFour: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        marginRight: 10,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: "#fff",
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 150
+    },
+    flexColumn: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    inputTitle: {
+        height: 40,
+        borderWidth: 0.5,
+        borderColor: '#4776AD',
+        paddingHorizontal: 5,
+        borderRadius: 2,
+        marginTop: 10,
+        backgroundColor: '#fff'
+    },
+    viewList: {
+        width: '100%',
+        padding: 20,
+        marginTop: 40,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    createPost: {
+        backgroundColor: '#2D9CDB',
+        position: 'absolute',
+        bottom: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 25
     }
 }) 

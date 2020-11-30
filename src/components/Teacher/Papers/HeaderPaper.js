@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator
+} from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import AppIcon from '../../../utils/AppIcon';
 export default class HeaderPaper extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -26,7 +33,15 @@ export default class HeaderPaper extends React.PureComponent {
   }
 
   render() {
-    const { onRightAction, title, color, backgroundColor, loading, buttonRightText, notRightButton } = this.props;
+    const {
+      onRightAction,
+      title,
+      color,
+      backgroundColor,
+      loading,
+      buttonRightText,
+      notRightButton
+    } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
         <RippleButton onPress={this.onGoback}>
@@ -39,14 +54,27 @@ export default class HeaderPaper extends React.PureComponent {
             color: color || '#383838'
           }]}>{title}</Text>
         </View>
-        {!notRightButton && <TouchableOpacity
+        {/* {!notRightButton && <TouchableOpacity
           style={styles.rightHeader}
           onPress={onRightAction}>
           {loading ? <View style={styles.txtRightHeader}>
             <ActivityIndicator color='#fff' size='small' />
           </View>
             : <Text style={styles.txtRightHeader}>{buttonRightText || `Tạo bộ đề`}</Text>}
-        </TouchableOpacity>}
+        </TouchableOpacity>} */}
+        {!notRightButton
+          &&
+          <TouchableOpacity
+            onPress={onRightAction}
+            style={styles.octiconSetting}>
+            {loading ? <View style={styles.txtRightHeader}>
+              <ActivityIndicator color='#fff' size='small' />
+            </View>
+              :
+              <Image source={AppIcon.icon_octiconSettingsV3} />
+            }
+          </TouchableOpacity>
+        }
       </View>
     );
   }
@@ -105,4 +133,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },
+  octiconSetting: {
+    paddingRight: 5
+  }
 });
