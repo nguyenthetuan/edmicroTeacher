@@ -127,7 +127,7 @@ export default class MissionScreen extends Component {
             {...user}
             navigation={this.props.navigation} />
         </View>
-        <Animated.Image
+        {/* <Animated.Image
           source={AppIcon.pic_mission}
           resizeMode={'contain'}
           style={{
@@ -135,8 +135,8 @@ export default class MissionScreen extends Component {
             zIndex: -1,
             transform: [{ translateY: posY }],
           }}
-        />
-        <Animated.View style={{ transform: [{ translateY: posY }] }}>
+        /> */}
+        {/* <Animated.View style={{ transform: [{ translateY: posY }] }}> */}
           <FlatList
             data={listMissionSearch}
             keyExtractor={(item, index) => index.toString()}
@@ -151,7 +151,7 @@ export default class MissionScreen extends Component {
             showsVerticalScrollIndicator={false}
             windowSize={21}
           />
-        </Animated.View>
+        {/* </Animated.View> */}
       </View>
     );
   }

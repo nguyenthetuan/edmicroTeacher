@@ -8,10 +8,14 @@ import { alertLogout } from '../../utils/Alert';
 import HeaderMenu from '../../components/common-new/HeaderMenu';
 import AnalyticsManager from '../../utils/AnalyticsManager';
 import { Freshchat } from 'react-native-freshchat-sdk';
+import { APP_VERSION } from '../../constants/const';
 import SettingContact from '../../components/account-detail/ContactForm';
 import { connect } from 'react-redux';
 import MenuStyle from './MenuStyle';
 import { MenuItem } from './MenuItem';
+import starIcon from '../../asserts/appIcon/star.png';
+import updateIcon from '../../asserts/icon/icon_check_update.png';
+import Version from './Version';
 const rippleColor = '#999';
 
 class MenuTabTeacher extends Component {
@@ -108,12 +112,25 @@ class MenuTabTeacher extends Component {
                 rippleColor={rippleColor}
               />
               <MenuItem
+                onPress={() => this.handleClick(5)}
+                source={starIcon}
+                title={'Đánh giá ứng dụng'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
+                onPress={() => this.handleClick(5)}
+                source={updateIcon}
+                title={'Kiểm tra cập nhật'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
                 onPress={() => this.handleClick(6)}
                 source={AppIcon.logout}
                 title={'Đăng xuất'}
                 rippleColor={rippleColor}
               />
             </View>
+            <Version version={APP_VERSION} />
           </ScrollView>
         </View >
         <SettingContact

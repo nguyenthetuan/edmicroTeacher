@@ -72,6 +72,14 @@ const MenuStyle = StyleSheet.create({
         height: 16,
         tintColor: '#4776AD'
     },
+    textVersion: {
+        alignSelf: 'center',
+        marginHorizontal: 40,
+        marginVertical: 20,
+        color: '#999',
+        fontSize: 11,
+        fontFamily: 'Nunito-Regular'
+    }
 });
 
 module.exports = MenuStyle;
