@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Keyboard,
   Alert,
+  Text
 } from 'react-native';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import dataHelper from '../../../utils/dataHelper';
@@ -79,6 +80,10 @@ export default class MissionStepByStep extends Component {
             currentPosition={this.state.currentPosition}
             labels={labels}
             stepCount={4}
+            renderLabel={(e) => {
+              console.log(e);
+              return (<Text style={{ color: e.stepStatus == 'finished' || e.stepStatus == 'current' ? '#56CCF2' : '#757575' }}>{e.label}</Text>)
+            }}
           />
         </View>
         <TopTabMissionContain
@@ -89,7 +94,7 @@ export default class MissionStepByStep extends Component {
             data: this.state.data,
           }}
         />
-      </SafeAreaView>
+      </SafeAreaView >
     );
   }
 }
@@ -110,8 +115,8 @@ const customStyles = {
   stepStrokeWidth: 1,
   stepStrokeFinishedColor: '#56CCF2',
   stepStrokeUnFinishedColor: '#56CCF2',
-  separatorFinishedColor: '#56CCF2',
-  separatorUnFinishedColor: '#56CCF2',
+  separatorFinishedColor: '#c4c4c4',
+  separatorUnFinishedColor: '#c4c4c4',
   stepIndicatorFinishedColor: '#56CCF2',
   stepIndicatorUnFinishedColor: '#ffffff',
   stepIndicatorCurrentColor: '#ffffff',
@@ -121,7 +126,7 @@ const customStyles = {
   stepIndicatorLabelFinishedColor: '#ffffff',
   stepIndicatorLabelUnFinishedColor: '#56CCF2',
   labelColor: '#757575',
-  labelActive:'#56CCF2',
+  labelActive: '#56CCF2',
   labelSize: 12,
   currentStepLabelColor: '#56CCF2',
   labelFontFamily: 'Nunito-Regular',

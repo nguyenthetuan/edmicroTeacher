@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 5
   },
   styWrapBtnDele: {
     borderTopRightRadius:4,
@@ -96,8 +97,8 @@ const styles = StyleSheet.create({
     // padding: 8,
     paddingTop:10,
     paddingBottom:10,
-    paddingLeft:15,
-    paddingRight:5,
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row', 
     alignItems: 'center',
   },
@@ -127,15 +128,16 @@ const styles = StyleSheet.create({
     marginLeft: 30
   },
   createAdd: {
-    backgroundColor: '#56BB73'
+    backgroundColor: '#56BB73',
+    width: '15%',
   },
   colobg: {
     backgroundColor: '#fff',
-    width: '85%',
     padding: 5,
     borderColor: '#BDBDBD',
     borderWidth: 0.5,
     borderTopLeftRadius: 4,
-    borderBottomLeftRadius: 4
+    borderBottomLeftRadius: 4,
+    width:"85%"
   }
 });
