@@ -80,7 +80,8 @@ export default class Item extends Component {
                                     source={Common.getIconSubject(subjectCode)}
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 20 }}
                                 />
-                                <Text style={styles.txtQuestion}> {item.subjectCode}</Text>
+                                <Text style={styles.txtQuestion}> {item.subjectCode[0]}</Text>
+                                {/* <Text style={styles.txtQuestion}>{Common.getDisplaySubject(subjectCode)}</Text> */}
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
         color: '#000',
         marginLeft: 5,
         alignSelf: 'center',
+        width: 80
     },
     flexParac: {
         flexDirection: 'row'
