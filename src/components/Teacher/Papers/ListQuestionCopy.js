@@ -6,7 +6,7 @@ import {
     SafeAreaView,
     Dimensions,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator, Alert
 } from 'react-native';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -65,7 +65,10 @@ export default class ListQuestionCopy extends Component {
                     break;
             }
         }
-        console.log('knowledge0, knowledge1, knowledge2, knowledge3: ', knowledge0, knowledge1, knowledge2, knowledge3);
+        console.log(
+            'knowledge0, knowledge1, knowledge2, knowledge3: ',
+            knowledge0, knowledge1, knowledge2, knowledge3
+        );
         this.setState({ knowledge0, knowledge1, knowledge2, knowledge3 });
     }
 
@@ -87,7 +90,6 @@ export default class ListQuestionCopy extends Component {
         const data = this.state.data;
         const { token } = await dataHelper.getToken();
         const { listSubjects } = this.props.navigation.state.params;
-
         this.props.navigation.navigate('ConfigQuestionCopy', {
             nagigation: this.props.nagigation,
             statusbar: 'light-content',
@@ -110,7 +112,7 @@ export default class ListQuestionCopy extends Component {
                 <SafeAreaView style={styles.root}>
                     <View style={styles.header}>
                         <HeaderPaper
-                            title={'Bộ đề có sẵn'}
+                            // title={'Bộ đề có sẵn'}
                             navigation={this.props.navigation}
                             color={'#fff'}
                             buttonRightText={'Cấu hình bộ đề'}
@@ -134,8 +136,8 @@ export default class ListQuestionCopy extends Component {
                                     </View>
                                     <TouchableOpacity
                                         style={styles.rightHeader}
-                                        navigation={this.props.navigation}
-                                        onRightAction={this.copySubjectMatter}
+                                        // onPress={() => { this.}}
+                                        onPress={this.copySubjectMatter}
                                     >
                                         <Text style={styles.txtRightHeader}>{`Cấu hình bộ đề` || `Lưu cấu hình`}</Text>
                                     </TouchableOpacity>
@@ -226,7 +228,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         flex: 1,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginTop: 24
     },
     headerContentLeft: {
         // width: 150,

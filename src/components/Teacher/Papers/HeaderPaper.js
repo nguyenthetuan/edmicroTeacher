@@ -44,15 +44,18 @@ export default class HeaderPaper extends React.PureComponent {
     } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-        <RippleButton onPress={this.onGoback}>
-          <View style={styles.button}>
-            <Icon name="arrow-left" color={color || "#383838"} size={25} />
-          </View>
+        <RippleButton
+          onPress={this.onGoback}
+          style={styles.button}>
+          {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
+          <Image source={AppIcon.icon_arrowHeaderV3} style={styles.btnLeft} />
         </RippleButton>
         <View style={styles.viewTitle}>
-          <Text style={[styles.textTitleHeader, {
-            color: color || '#383838'
-          }]}>{title}</Text>
+          <Text
+            numberOfLines={1}
+            style={[styles.textTitleHeader, {
+              color: color || '#383838'
+            }]}>{title}</Text>
         </View>
         {/* {!notRightButton && <TouchableOpacity
           style={styles.rightHeader}
@@ -65,13 +68,16 @@ export default class HeaderPaper extends React.PureComponent {
         {!notRightButton
           &&
           <TouchableOpacity
-            onPress={onRightAction}
+            onPress={onRightAction} 
             style={styles.octiconSetting}>
-            {loading ? <View style={styles.txtRightHeader}>
-              <ActivityIndicator color='#fff' size='small' />
-            </View>
-              :
+            {loading
+              ?
+              // <View style={styles.txtRightHeader}>
+              //   <ActivityIndicator color='#fff' size='small' />
+              // </View>
               <Image source={AppIcon.icon_octiconSettingsV3} />
+              :
+              null
             }
           </TouchableOpacity>
         }
@@ -93,15 +99,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   button: {
-    width: 38,
-    height: 38,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: 'center'
   },
   textTitleHeader: {
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
-    fontSize: 16
+    fontSize: 16,
+    flex: 1
   },
   btnAvatar: {
     height: 38,
@@ -135,5 +139,9 @@ const styles = StyleSheet.create({
   },
   octiconSetting: {
     paddingRight: 5
+  },
+  btnLeft: {
+    width: 24,
+    height: 24,
   }
 });

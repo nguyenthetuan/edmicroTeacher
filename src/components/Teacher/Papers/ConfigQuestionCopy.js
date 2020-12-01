@@ -548,7 +548,7 @@ export default class ConfigQuestion extends Component {
                                         <TouchableOpacity
                                             style={styles.rightHeader}
                                             navigation={this.props.navigation}
-                                            onRightAction={this.copySubjectMatter}
+                                            onPress={this.config}
                                         >
                                             <Text style={styles.txtRightHeader}>{`Lưu cấu hình`}</Text>
                                         </TouchableOpacity>
@@ -580,12 +580,8 @@ export default class ConfigQuestion extends Component {
                                                 style={styles.actionTwo}
                                                 onPress={() => { this.onChangePosition() }}
                                             >
-                                                <Image
-                                                    source={require('../../../asserts/appIcon/sort.png')}
-                                                    resizeMode="contain"
-                                                    style={{ tintColor: '#56CCF2' }}
-                                                />
-                                                <Text style={[styles.textHeader, { paddingLeft: 10 }]}>Sắp xếp lại</Text>
+                                                <Image source={AppIcon.icon_actionOneV3} />
+                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Sắp xếp lại</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity
                                                 style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}
@@ -605,12 +601,8 @@ export default class ConfigQuestion extends Component {
                                                 style={styles.actionOne}
                                                 onPress={() => { this.onPressDecidePoint() }}
                                             >
-                                                <Image
-                                                    source={require('../../../asserts/images/iconDiv.png')}
-                                                    resizeMode="contain"
-                                                    style={{ tintColor: '#FDC214' }}
-                                                />
-                                                <Text style={styles.textHeader}>Chia điểm</Text>
+                                                <Image source={AppIcon.icon_actionTwoV3} />
+                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chia điểm</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity
                                                 style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}
@@ -621,15 +613,16 @@ export default class ConfigQuestion extends Component {
                                                     value={this.state.toggleCheckBox}
                                                     onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
                                                     boxType="square"
-                                                    style={{ width: 20, height: 20, marginLeft: 10 }}
+                                                    style={{
+                                                        width: 18,
+                                                        height: 18,
+                                                        marginLeft: 10,
+                                                    }}
                                                 />
-                                                <Text style={styles.textHeader}>Chọn tất cả</Text>
+                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chọn tất cả</Text>
                                             </TouchableOpacity>
                                         </View>
-
                                     </View>
-
-
                                 </View>
                             </View>
                         </View>
@@ -779,6 +772,7 @@ const styles = StyleSheet.create({
     headerContent: {
         flexDirection: 'row',
         flex: 1,
+        marginTop: 24
     },
     headerContentRight: {
         flex: 1,
@@ -1026,6 +1020,7 @@ const styles = StyleSheet.create({
     flexColumn: {
         flexDirection: 'column',
         justifyContent: 'space-between',
+        marginLeft: 10
     },
     inputTitle: {
         height: 40,

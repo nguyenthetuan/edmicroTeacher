@@ -1,21 +1,36 @@
 import AppConst from '../constants/appConst';
 
-import mathIcon from '../asserts/icon/math_icon.png';
-import phyIcon from '../asserts/icon/phy_icon.png';
-import chemIcon from '../asserts/icon/chem_icon.png';
-import biologyIcon from '../asserts/icon/biology_icon.png';
-import liteIcon from '../asserts/icon/lite_icon.png';
-import historyIcon from '../asserts/icon/history_icon.png';
-import geoIcon from '../asserts/icon/geo_icon.png';
-import enIcon1 from '../asserts/icon/en_icon1.png';
-import enIcon2 from '../asserts/icon/en_icon2.png';
-import enIcon3 from '../asserts/icon/en_icon3.png';
-import enIcon10 from '../asserts/icon/en10_icon.png';
-import gdcdIcon from '../asserts/icon/ggcd_icon.png';
-import mathImageHeader from '../asserts/appIcon/mathImageHeader.png';
+// import mathIcon from '../asserts/icon/math_icon.png';
+// import phyIcon from '../asserts/icon/phy_icon.png';
+// import chemIcon from '../asserts/icon/chem_icon.png';
+// import biologyIcon from '../asserts/icon/biology_icon.png';
+// import liteIcon from '../asserts/icon/lite_icon.png';
+// import historyIcon from '../asserts/icon/history_icon.png';
+// import geoIcon from '../asserts/icon/geo_icon.png';
+// import enIcon1 from '../asserts/icon/en_icon1.png';
+// import enIcon2 from '../asserts/icon/en_icon2.png';
+// import enIcon3 from '../asserts/icon/en_icon3.png';
+// import enIcon10 from '../asserts/icon/en10_icon.png';
+// import gdcdIcon from '../asserts/icon/ggcd_icon.png';
+// import mathImageHeader from '../asserts/appIcon/mathImageHeader.png';
+// import Icon_Tin_Hoc from '../asserts/appIcon/Icon_Tin_Hoc.png';
+// import iconGeo from '../asserts/appIcon/ic_georaphy_x60.png';
+// import icon_not_know from '../asserts/appIcon/icon_not_know.png'
+
+import iconMath from '../asserts/icon/icon_toanV3.png';
+import iconPhy from '../asserts/icon/icon_vatlyV3.png';
+import iconChem from '../asserts/icon/icon_hoaV3.png';
+import iconBio from '../asserts/icon/icon_sinhV3.png';
+import iconLite from '../asserts/icon/icon_vanV3.png';
+import iconHis from '../asserts/icon/icon_lichsuV3.png';
+import iconGeo from '../asserts/icon/icon_diaV3.png';
+import iconEng from '../asserts/icon/icon_eng10V3.png';
+import iconEngGRM from '../asserts/icon/icon_tienganhThcsV3.png';
+import iconEngPT from '../asserts/icon/icon_tienganhThcsV3.png';
+import iconEducation from '../asserts/icon/icon_dgcdV3.png';
+import icDefault from '../asserts/icon/icon_iconV3Default.png';
 import Icon_Tin_Hoc from '../asserts/appIcon/Icon_Tin_Hoc.png';
-import iconGeo from '../asserts/appIcon/ic_georaphy_x60.png';
-import icon_not_know from '../asserts/appIcon/icon_not_know.png'
+
 const ArrayCodeYoutubeThayThang = [
     'VeFZhtp2MVU',
     'gb0ev--EE3Q',
@@ -100,49 +115,67 @@ const checkIsNullWithZero = (val) => {
         return !!val
     }
 }
-
-const getIconSubject = (id) => {
+export const getIconSubject = (id) => {
     switch (id) {
-        case AppConst.mathID: return mathIcon;
-        case AppConst.mathVao10ID: return mathIcon;
-        case AppConst.mathThID: return mathIcon;
-
-
-        case AppConst.phyID: return phyIcon;
-        case AppConst.phyTHCSID: return phyIcon;
-
-        case AppConst.chemID: return chemIcon;
-        case AppConst.chemThID: return chemIcon;
-
-        case AppConst.bioID: return biologyIcon;
-
-        case AppConst.literID: return liteIcon;
-        case AppConst.literIDTHCS: return liteIcon;
-
-        case AppConst.hisID: return historyIcon;
-        case AppConst.hisTHID: return historyIcon;
-
-        case AppConst.geoID: return geoIcon;
-        case AppConst.geoTHID: return geoIcon;
-
-        case AppConst.engID: return enIcon;
-        case AppConst.engTHPTID: return enIcon3;
-        case AppConst.engTHPT2: return enIcon3;
-        case AppConst.engTHPT3: return enIcon10;
-        case AppConst.engGRM: return enIcon;
-        case AppConst.engTHCS: return enIcon2;
-        case AppConst.engID2: return enIcon2;
-
-        case AppConst.tinhocID: return Icon_Tin_Hoc;
-        case AppConst.gdcdID: return gdcdIcon;
-        case AppConst.gdcdTHID: return gdcdIcon;
-        case AppConst.geoID: return iconGeo;
-        case AppConst.geoTHID: return iconGeo;
-
-        default:
-            return icon_not_know;
+      case AppConst.mathID: return iconMath;
+      case AppConst.mathThID: return iconMath;
+      case AppConst.mathVao10ID: return iconMath;
+      case AppConst.phyID: return iconPhy;
+      case AppConst.phyTHCSID: return iconPhy;
+      case AppConst.chemID: return iconChem;
+      case AppConst.bioID: return iconBio;
+      case AppConst.literID: return iconLite;
+      case AppConst.literIDTHCS: return iconLite;
+      case AppConst.hisID: return iconHis;
+      case AppConst.hisTHID: return iconHis;
+      case AppConst.geoID: return iconGeo;
+      case AppConst.geoTHID: return iconGeo;
+      case AppConst.engID: return iconEng;
+      case AppConst.engTHPT3: return iconEng;
+      case AppConst.engID2: return iconEng;
+      case AppConst.engTHPTID: return iconEngPT;
+      case AppConst.engTHPT2: return iconEngPT;
+      case AppConst.engGRM: return iconEngGRM;
+      case AppConst.engTHCS: return iconEng;
+      case AppConst.gdcdID: return iconEducation;
+      case AppConst.gdcdTHID: return iconEducation;
+      case AppConst.tinhocID: return Icon_Tin_Hoc;
+      default:
+        return icDefault;
     }
-};
+  };
+// const getIconSubject = (id) => {
+//     switch (id) {
+//         case AppConst.mathID: return mathIcon;
+//         case AppConst.mathVao10ID: return mathIcon;
+//         case AppConst.mathThID: return mathIcon;
+//         case AppConst.phyID: return phyIcon;
+//         case AppConst.phyTHCSID: return phyIcon;
+//         case AppConst.chemID: return chemIcon;
+//         case AppConst.chemThID: return chemIcon;
+//         case AppConst.bioID: return biologyIcon;
+//         case AppConst.literID: return liteIcon;
+//         case AppConst.literIDTHCS: return liteIcon;
+//         case AppConst.hisID: return historyIcon;
+//         case AppConst.hisTHID: return historyIcon;
+//         case AppConst.geoID: return geoIcon;
+//         case AppConst.geoTHID: return geoIcon;
+//         case AppConst.engID: return enIcon;
+//         case AppConst.engTHPTID: return enIcon3;
+//         case AppConst.engTHPT2: return enIcon3;
+//         case AppConst.engTHPT3: return enIcon10;
+//         case AppConst.engGRM: return enIcon;
+//         case AppConst.engTHCS: return enIcon2;
+//         case AppConst.engID2: return enIcon2;
+//         case AppConst.tinhocID: return Icon_Tin_Hoc;
+//         case AppConst.gdcdID: return gdcdIcon;
+//         case AppConst.gdcdTHID: return gdcdIcon;
+//         case AppConst.geoID: return iconGeo;
+//         case AppConst.geoTHID: return iconGeo;
+//         default:
+//             return icon_not_know;
+//     }
+// };
 
 const getImageHeaderSubject = (id) => {
     switch (id) {

@@ -16,7 +16,7 @@ import Dropdown from '../Homework/Dropdown';
 import ModalCurriculum from '../Papers/modalCurriculum';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
-import Common from '../../../utils/CommonBeta';
+import Common from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
 
@@ -143,7 +143,7 @@ export default class CopyFromSubjectExists extends Component {
                     <View style={styles.pieceBody}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={Common.getIconSubject(item.subjectCode)}
+                                source={Common.getIconSubject(item.subjectCodes[0])}
                                 resizeMode="contain"
                                 style={{ height: 22, width: 22 }} />
                             <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
@@ -193,7 +193,7 @@ export default class CopyFromSubjectExists extends Component {
                             notRightButton={false}
                         />
                         <View style={styles.wrapDropdown}>
-                            <Image source={AppIcon.image_headerPaperV3} />
+                            <Image source={AppIcon.image_headerPaperV3} style={styles.imageHeaderLeft} />
                             <View style={styles.flexColumn}>
                                 <TextInput
                                     placeholder={'Tên bài kiểm tra'}
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'row',
         marginRight: 10,
-        marginTop: 10,
+        marginTop: 27
     },
     wrap2Dropdown: {
         width: '100%',
@@ -340,7 +340,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     flexColumn: {
-        flex: 1
+        flex: 1,
+        marginLeft: -5,
     },
     viewStatus: {
         width: '100%',
@@ -351,5 +352,8 @@ const styles = StyleSheet.create({
         marginLeft: -40,
         alignItems: 'center',
         alignSelf: 'center'
+    },
+    imageHeaderLeft: {
+        marginLeft: 10
     }
 })

@@ -100,6 +100,9 @@ import icon_questionV3 from '../asserts/icon/icon_questionV3.png';
 import icon_paperParacV3 from '../asserts/icon/icon_paperParacV3.png';
 import icon_questionWhiteV3 from '../asserts/icon/icon_questionWhiteV3.png';
 import icon_settingsWhiteV3 from '../asserts/icon/icon_settingsWhiteV3.png';
+import icon_arrowHeaderV3 from '../asserts/icon/icon_arrowHeaderV3.png';
+import icon_actionOneV3 from '../asserts/icon/icon_actionOneV3.png';
+import icon_actionTwoV3 from '../asserts/icon/icon_actionTwoV3.png';
 module.exports = {
   logo_onluyen,
   // icon_google,
@@ -184,5 +187,8 @@ module.exports = {
   icon_questionV3,
   icon_paperParacV3,
   icon_questionWhiteV3,
-  icon_settingsWhiteV3
+  icon_settingsWhiteV3,
+  icon_arrowHeaderV3,
+  icon_actionOneV3,
+  icon_actionTwoV3
 };
