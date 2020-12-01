@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    Dimensions,
+    TouchableOpacity,
+    ActivityIndicator
+} from 'react-native';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
@@ -107,64 +115,68 @@ export default class ListQuestionCopy extends Component {
                             color={'#fff'}
                             buttonRightText={'Cấu hình bộ đề'}
                             onRightAction={this.copySubjectMatter}
+                            title={data.name}
                         />
-                        <View>
-                            <Text style={styles.textName}>{data.name}</Text>
-                        </View>
                         <View style={styles.headerContent}>
                             <View style={styles.headerContentLeft}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Text style={styles.textNormal}>Môn: </Text>
-                                    <View style={{ height: 20, borderWidth: 1, paddingHorizontal: 10, borderColor: '#fff' }}>
-                                        <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
+                                <View style={styles.flexRow}>
+                                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                        <Text style={styles.textNormalName}>Môn: </Text>
+                                        <View style={{ height: 20, paddingHorizontal: 10, borderColor: '#fff' }}>
+                                            <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
+                                        </View>
                                     </View>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', top: 5 }}>
-                                    <Text style={styles.textNormal}>Lớp: </Text>
-                                    <View style={{ height: 20, borderWidth: 1, paddingHorizontal: 10, left: 4.5, borderColor: '#fff' }}>
-                                        <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
+                                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                        <Text style={styles.textNormalName}>Lớp: </Text>
+                                        <View style={{ height: 20, paddingHorizontal: 10, left: 4.5, borderColor: '#fff' }}>
+                                            <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
+                                        </View>
                                     </View>
+                                    <TouchableOpacity
+                                        style={styles.rightHeader}
+                                        navigation={this.props.navigation}
+                                        onRightAction={this.copySubjectMatter}
+                                    >
+                                        <Text style={styles.txtRightHeader}>{`Cấu hình bộ đề` || `Lưu cấu hình`}</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
+                            <View style={styles.headerLineTitle}>
+                                <Text style={styles.textTitle}>Loại câu hỏi</Text>
+                            </View>
                             <View style={styles.headerContentRight}>
-                                <View style={[styles.headerLineParams, { borderBottomWidth: 1, }]}>
-                                    <View style={[styles.leftParams, { borderWidth: 0, paddingHorizontal: 5 }]}>
-                                        <Text style={styles.textTitle}>Loại câu hỏi</Text>
-                                    </View>
-                                    <View style={[styles.rightParams, { borderWidth: 0 }]}>
-                                        <Text style={styles.textTitle}>Số câu</Text>
-                                    </View>
-                                </View>
                                 {!!this.state[`knowledge0`] && <View style={styles.headerLineParams}>
                                     <View style={styles.leftParams}>
-                                        <Text style={styles.textNormal}>{knowledgeText['0']}</Text>
+                                        <Text style={styles.textNormalName}>{knowledgeText['0']}</Text>
                                     </View>
                                     <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge0`]}</Text>
+                                        <Text style={styles.textNormal}>{this.state[`knowledge0`]} câu</Text>
                                     </View>
                                 </View>}
+                                <View style={styles.borderWidthColumn} />
                                 {!!this.state[`knowledge1`] && <View style={styles.headerLineParams}>
                                     <View style={styles.leftParams}>
-                                        <Text style={styles.textNormal}>{knowledgeText['1']}</Text>
+                                        <Text style={styles.textNormalName}>{knowledgeText['1']}</Text>
                                     </View>
                                     <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge1`]}</Text>
+                                        <Text style={styles.textNormal}>{this.state[`knowledge1`]} câu</Text>
                                     </View>
                                 </View>}
+                                <View style={styles.borderWidthColumn} />
                                 {!!this.state[`knowledge2`] && < View style={styles.headerLineParams}>
                                     <View style={styles.leftParams}>
-                                        <Text style={styles.textNormal}>{knowledgeText['2']}</Text>
+                                        <Text style={styles.textNormalName}>{knowledgeText['2']}</Text>
                                     </View>
                                     <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge2`]}</Text>
+                                        <Text style={styles.textNormal}>{this.state[`knowledge2`]} câu</Text>
                                     </View>
                                 </View>}
                                 {!!this.state[`knowledge3`] && <View style={styles.headerLineParams}>
                                     <View style={styles.leftParams}>
-                                        <Text style={styles.textNormal}>{knowledgeText['3']}</Text>
+                                        <Text style={styles.textNormalName}>{knowledgeText['3']}</Text>
                                     </View>
                                     <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge3`]}</Text>
+                                        <Text style={styles.textNormal}>{this.state[`knowledge3`]} câu</Text>
                                     </View>
                                 </View>}
                             </View>
@@ -211,56 +223,97 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5
     },
     headerContent: {
-        flexDirection: 'row',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         flex: 1,
+        paddingHorizontal: 10
     },
     headerContentLeft: {
-        width: 150,
+        // width: 150,
         justifyContent: 'center',
+        marginBottom: 10
     },
     headerContentRight: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 4,
         borderColor: '#fff',
         marginBottom: 10,
+        flexDirection: 'row',
+        paddingHorizontal: 15,
     },
     headerLineParams: {
+        borderColor: '#fff',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+    },
+    headerLineTitle: {
         height: 25,
-        flexDirection: 'row',
-        borderColor: '#fff'
+        borderColor: '#fff',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     leftParams: {
-        width: '60%',
-        height: 25,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
     rightParams: {
-        width: '40%',
-        height: 25,
         alignItems: 'center',
         justifyContent: 'center'
     },
     textTitle: {
         fontSize: 14,
+        lineHeight: 19,
         fontFamily: 'Nunito-bold',
-        fontWeight: '800',
         color: '#fff',
     },
     textNormal: {
-        fontSize: 13,
+        fontSize: 16,
+        lineHeight: 22,
+        textAlign: 'center',
         fontFamily: 'Nunito-bold',
         color: '#fff',
-        fontWeight: '800',
-        marginLeft: 5,
-
+    },
+    textNormalName: {
+        fontSize: 14,
+        lineHeight: 19,
+        fontFamily: 'Nunito',
+        color: '#fff',
     },
     textName: {
         fontSize: 14,
         fontWeight: '800',
         fontFamily: 'Nunito-bold',
         color: '#fff',
+    },
+    flexRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    txtRightHeader: {
+        paddingHorizontal: 13,
+        fontSize: 14,
+        lineHeight: 19,
+        fontFamily: 'Nunito-Bold',
+        color: '#FFF',
+        marginTop: 5.5,
+        marginBottom: 5.5,
+        marginLeft: 17,
+        marginRight: 17
+    },
+    rightHeader: {
+        alignSelf: 'center',
+        backgroundColor: '#FFD044',
+        borderRadius: 4,
+    },
+    borderWidthColumn: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        marginTop: 13,
+        marginBottom: 13,
+        borderColor: '#fff'
     }
 })

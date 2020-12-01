@@ -93,6 +93,13 @@ import image_createCompleteV3 from '../asserts/images/image_createCompleteV3.png
 import icon_timeEndV3 from '../asserts/icon/icon_timeEndV3.png';
 import icon_missonToV3 from '../asserts/icon/icon_missonToV3.png';
 import icon_editNameMission from '../asserts/icon/icon_editNameMission.png';
+import image_headerPaperV3 from '../asserts/images/image_headerPaperV3.png';
+import icon_octiconSettingsV3 from '../asserts/icon/icon_octiconSettingsV3.png';
+import icon_authorV3 from '../asserts/icon/icon_authorV3.png';
+import icon_questionV3 from '../asserts/icon/icon_questionV3.png';
+import icon_paperParacV3 from '../asserts/icon/icon_paperParacV3.png';
+import icon_questionWhiteV3 from '../asserts/icon/icon_questionWhiteV3.png';
+import icon_settingsWhiteV3 from '../asserts/icon/icon_settingsWhiteV3.png';
 module.exports = {
   logo_onluyen,
   // icon_google,
@@ -170,5 +177,12 @@ module.exports = {
   image_createCompleteV3,
   icon_timeEndV3,
   icon_missonToV3,
-  icon_editNameMission
+  icon_editNameMission,
+  image_headerPaperV3,
+  icon_octiconSettingsV3,
+  icon_authorV3,
+  icon_questionV3,
+  icon_paperParacV3,
+  icon_questionWhiteV3,
+  icon_settingsWhiteV3
 };

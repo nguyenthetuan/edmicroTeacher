@@ -4,16 +4,11 @@ import {
     Image,
     StyleSheet,
     FlatList,
-    ScrollView,
-    Modal,
     Text,
-    Platform,
     Dimensions,
     TouchableOpacity,
-    TouchableWithoutFeedback,
-    ActivityIndicator,
-    Animated,
     SafeAreaView,
+    TextInput
 } from 'react-native';
 import _ from 'lodash';
 import HeaderPaper from './HeaderPaper';
@@ -133,43 +128,51 @@ export default class CopyFromSubjectExists extends Component {
     renderTask = (data) => {
         let { item, index } = data;
         return (
-            <TouchableOpacity style={styles.singleTask} onPress={(item) => { this.onPressItemTask(data.item.id) }} key={index}>
+            <TouchableOpacity
+                style={styles.singleTask}
+                onPress={(item) => { this.onPressItemTask(data.item.id) }}
+                key={index}
+            >
                 <View style={styles.headerTask}>
-                    <Text style={styles.titleTask}>{item.name}</Text>
+                    <Text numberOfLines={1}
+                        style={styles.titleTask}>
+                        {item.name}
+                    </Text>
                 </View>
                 <View style={styles.bodyTask}>
-                    <View style={[styles.pieceBody, { width: '40%' }]}>
+                    <View style={styles.pieceBody}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={Common.getIconSubject(item.subjectCodes[0])}
+                                source={Common.getIconSubject(item.subjectCode)}
                                 resizeMode="contain"
-                                style={{ height: 20, width: 20 }} />
+                                style={{ height: 22, width: 22 }} />
                             <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={AppIcon.iconClassActive}
+                                source={AppIcon.icon_gradeClass1}
                                 resizeMode="contain"
-                                style={{ height: 20, width: 20 }} />
+                                style={{ height: 23, width: 23 }} />
                             <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
                         </View>
                     </View>
-                    <View style={[styles.pieceBody, { width: '60%' }]}>
+                    <View style={styles.pieceBody}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={AppIcon.totalQuestion}
+                                source={AppIcon.icon_questionV3}
                                 resizeMode="contain"
                                 style={{ height: 20, width: 20 }} />
                             <Text style={styles.textDetail}>Số câu hỏi: {item.totalQuestion}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={AppIcon.icon_person}
+                                source={AppIcon.icon_authorV3}
                                 resizeMode="contain"
                                 style={{ height: 20, width: 20 }} />
                             <Text style={styles.textDetail}>Tác giả: {item.author}</Text>
                         </View>
                     </View>
+                    <Image source={AppIcon.icon_paperParacV3} style={styles.paperParacV3} />
                 </View>
             </TouchableOpacity>
         )
@@ -187,46 +190,54 @@ export default class CopyFromSubjectExists extends Component {
                             title={'Bộ đề có sẵn'}
                             navigation={this.props.navigation}
                             color={'#fff'}
-                            notRightButton={true}
+                            notRightButton={false}
                         />
                         <View style={styles.wrapDropdown}>
-                            <View style={styles.wrap2Dropdown}>
-                                <Dropdown
-                                    containerStyle={{
-                                        flex: 1,
-                                        marginHorizontal: 0,
-                                    }}
-                                    contentStyle={{ marginHorizontal: 0 }}
-                                    title="Môn Học"
-                                    data={listSubjects}
-                                    onPressItem={(index) => this.onPressItemSubject(index)}
+                            <Image source={AppIcon.image_headerPaperV3} />
+                            <View style={styles.flexColumn}>
+                                <TextInput
+                                    placeholder={'Tên bài kiểm tra'}
+                                    placeholderTextColor={'#E0E0E0'}
+                                    style={styles.styWrapInput}
+                                // value={nameMission}
                                 />
-                                <Dropdown
-                                    containerStyle={{
-                                        flex: 1,
-                                        marginHorizontal: 0,
-                                    }}
-                                    contentStyle={{ marginHorizontal: 0 }}
-                                    title="Giáo trình"
-                                    data={this.state.lerningTarget}
-                                    onPressItem={(index) => this.onPressCurriculum(index)}
-                                    indexSelected={this.state.indexSelected}
+                                <View style={styles.wrap2Dropdown}>
+                                    <Dropdown
+                                        containerStyle={styles.styleDrop}
+                                        contentStyle={{ marginHorizontal: 0 }}
+                                        title="Môn Học"
+                                        data={listSubjects}
+                                        onPressItem={(index) => this.onPressItemSubject(index)}
+                                    />
+                                    <Dropdown
+                                        containerStyle={styles.styleDrop1}
+                                        contentStyle={{ marginHorizontal: 0 }}
+                                        title="Giáo trình"
+                                        data={this.state.lerningTarget}
+                                        onPressItem={(index) => this.onPressCurriculum(index)}
+                                        indexSelected={this.state.indexSelected}
+                                    />
+                                </View>
+                                <ModalCurriculum
+                                    title="Đơn vị kiến thức"
+                                    // height={this.state.height}
+                                    data={this.state.targetLearning}
+                                    onPress={(value) => this.onPress(value)}
                                 />
                             </View>
-                            <ModalCurriculum
-                                title="Đơn vị kiến thức"
-                                // height={this.state.height}
-                                data={this.state.targetLearning}
-                                onPress={(value) => this.onPress(value)}
-                            />
+
                         </View>
                     </View>
                     <View style={{ width: '100%', alignItems: 'center', height: height - 200 }}>
-                        {!isLoading ? <FlatList
-                            data={this.state.listTask}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={this.renderTask}
-                        /> :
+                        {!isLoading ?
+                            <View style={styles.viewStatus}>
+                                <FlatList
+                                    data={this.state.listTask}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    renderItem={this.renderTask}
+                                />
+                            </View>
+                            :
                             <ListTaskPlaceHolder />}
                     </View>
                 </SafeAreaView>
@@ -245,14 +256,16 @@ const styles = StyleSheet.create({
     header: {
         width: '100%',
         backgroundColor: '#56CCF2',
-        height: 150
+        height: height * 0.3
     },
     wrapDropdown: {
         width: '100%',
-        height: 100,
-        // justifyContent:'space-around',
-        // paddingHorizontal: 30,
-        paddingHorizontal: 20,
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        marginRight: 10,
+        marginTop: 10,
     },
     wrap2Dropdown: {
         width: '100%',
@@ -265,41 +278,78 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#56CCF2',
         borderRadius: 5,
     },
     headerTask: {
         width: '100%',
-        height: 40,
-        backgroundColor: '#2D9CDB',
+        // height: 40,
+        backgroundColor: '#56CCF2',
         flexWrap: 'nowrap',
         paddingHorizontal: 5,
         borderTopRightRadius: 5,
         borderTopLeftRadius: 5,
-        paddingVertical: 2
+        paddingVertical: 3
     },
     titleTask: {
-        lineHeight: 15,
+        fontFamily: 'Nunito-Bold',
+        lineHeight: 16,
         fontSize: 12,
-        fontFamily: 'Nunito',
         color: '#fff',
-        fontWeight: '600'
+        marginTop: 3,
+        marginBottom: 3,
+        marginLeft: 10.48
     },
     bodyTask: {
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
         flexDirection: 'row',
-        paddingHorizontal: 5
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        // backgroundColor:'red'
     },
     pieceBody: {
         width: '50%',
-        height: '100%',
     },
     textDetail: {
-        fontSize: 12,
+        fontSize: 10,
+        lineHeight: 14,
         fontFamily: 'Nunito',
-        color: 'blue',
-        fontWeight: '600',
+        color: '#000',
         marginLeft: 5,
+    },
+    styWrapInput: {
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#fff',
+        // margin: 10,
+        marginBottom: 16,
+        color: '#000',
+        backgroundColor: '#fff'
+    },
+    styleDrop: {
+        flex: 1,
+        marginHorizontal: 0,
+        marginBottom: 10
+    },
+    styleDrop1: {
+        flex: 1,
+        marginHorizontal: 0,
+        marginBottom: 10,
+        alignItems: 'flex-end',
+    },
+    flexColumn: {
+        flex: 1
+    },
+    viewStatus: {
+        width: '100%',
+        alignItems: 'center',
+        height: height - 200
+    },
+    paperParacV3: {
+        marginLeft: -40,
+        alignItems: 'center',
+        alignSelf: 'center'
     }
 })

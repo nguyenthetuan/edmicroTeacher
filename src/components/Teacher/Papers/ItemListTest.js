@@ -54,7 +54,9 @@ export default class Item extends Component {
                             { backgroundColor: Common.getBackroundSubject(subjectCode) },
                         ]}>
                         <Text numberOfLines={1}
-                            style={styles.txtName}>{item.name}</Text>
+                            style={styles.txtName}>
+                            {item.name}
+                        </Text>
                         <View
                             style={{
                                 alignItems: 'center',
@@ -78,7 +80,7 @@ export default class Item extends Component {
                                     source={Common.getIconSubject(subjectCode)}
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 20 }}
                                 />
-                                <Text style={styles.txtQuestion}> {subjectCode}</Text>
+                                <Text style={styles.txtQuestion}> {item.subjectCode}</Text>
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage
