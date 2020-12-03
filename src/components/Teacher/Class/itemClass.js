@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     // marginLeft: 16,
   },
   txtThree: {
-    color: '#2D9CDB',
+    color: '#F16219',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 25,
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
     fontSize: 11,
     lineHeight: 14,
-    color: "blue",
+    color: "#2D9CDB",
     alignSelf: 'center',
     marginTop: 2,
     textAlign: 'center',
