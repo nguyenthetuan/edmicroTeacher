@@ -184,11 +184,12 @@ export default class ListQuestionCopy extends Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{ width: '100%', height: height - 220, backgroundColor: 'red' }}>
+                    <View style={{ width: '100%', height: height - 220 }}>
                         <WebView
                             ref={(ref) => (this.webview = ref)}
                             source={{
-                                html: htmlHelper.renderHtmlListQuestionCopy(this.filterDataRender(data.questions)),
+                                html: htmlHelper.renderHtmlListQuestionCopy
+                                    (this.filterDataRender(data.questions)),
                                 baseUrl,
                             }}
                             onMessage={this.onHandleMessage.bind(this)}

@@ -114,6 +114,12 @@ module.exports = {
   gdcdTHID: 'GDCDTHCS',
 
   tinhocID: "TINHOC",
+  stemID : 'STEM',
+  amnhacID: 'AMNHAC',
+  gdqpID : "GDQP",
+  congngheID : "CONGNGHE",
+  mythuatID : "MYTHUAT",
+  gdtcID: "GDTC",
 
   apiKeyYoutube: 'AIzaSyDczErB0NZ2yQxjv_wa_sz4ckJAVMo0Vso',
   practiceModal: 'practice-modal',

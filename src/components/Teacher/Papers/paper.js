@@ -616,7 +616,6 @@ class Papers extends Component {
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMain {...user} navigation={this.props.navigation} />
-
         <View style={[styles.fill, { paddingHorizontal: 16 }]}>
           <FlatList
             data={listPapers}

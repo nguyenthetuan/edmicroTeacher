@@ -48,11 +48,14 @@ export default class HeaderPaper extends React.PureComponent {
           onPress={this.onGoback}
           style={styles.button}>
           {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
-          <Image source={AppIcon.icon_arrowHeaderV3} style={styles.btnLeft} />
+          {/* <Image source={AppIcon.icon_arrowHeaderV3} style={styles.btnLeft} /> */}
+          <Image
+            source={AppIcon.icon_arrowLeftv3}
+            style={{ tintColor: '#fff', alignSelf:'center'}}
+          />
         </RippleButton>
         <View style={styles.viewTitle}>
-          <Text
-            numberOfLines={1}
+          <Text numberOfLines={1}
             style={[styles.textTitleHeader, {
               color: color || '#383838'
             }]}>{title}</Text>
@@ -68,7 +71,7 @@ export default class HeaderPaper extends React.PureComponent {
         {!notRightButton
           &&
           <TouchableOpacity
-            onPress={onRightAction} 
+            onPress={onRightAction}
             style={styles.octiconSetting}>
             {loading
               ?
@@ -105,7 +108,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
     fontSize: 16,
-    flex: 1
+    flex: 1,
+    alignSelf:'center'
   },
   btnAvatar: {
     height: 38,
@@ -141,7 +145,6 @@ const styles = StyleSheet.create({
     paddingRight: 5
   },
   btnLeft: {
-    width: 24,
-    height: 24,
+    color: '#fff'
   }
 });
