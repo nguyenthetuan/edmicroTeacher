@@ -172,7 +172,6 @@ export default class StepOne extends Component {
               style={styles.icon}
             />
           </View>
-
           <Text style={styles.styTxtLabel}>Môn học</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
@@ -237,6 +236,7 @@ const styles = StyleSheet.create({
     borderColor: '#979797',
     margin: 10,
     color: '#000',
+    paddingLeft: 8
   },
   styWrapDes: {
     paddingHorizontal: 10,
@@ -290,13 +290,13 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   styTxtPlacehoder: {
-    color: '#979797',
+    color: '#979797'
   }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',

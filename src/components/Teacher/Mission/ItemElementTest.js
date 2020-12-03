@@ -135,10 +135,9 @@ const styles = StyleSheet.create({
     marginLeft: 30
   },
   styWrapBtnDele: {
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
+    // borderTopRightRadius: 4,
+    // borderBottomRightRadius: 4,
     backgroundColor: '#FF4457',
-    // padding: 8,
     paddingTop: 10,
     paddingBottom: 10,
     justifyContent: 'center',

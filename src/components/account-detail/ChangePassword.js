@@ -85,14 +85,19 @@ class ChangePassword extends Component {
   }
 
   render() {
-    const { passwordOld, errorEmpty, passwordNew, passwordNewAgain } = this.state;
+    const {
+      passwordOld,
+      errorEmpty,
+      passwordNew,
+      passwordNewAgain
+    } = this.state;
     return (
 
       <View style={[mainStyle.container, { backgroundColor: '#FFF' }]} >
         <HeaderNavigation
           navigation={this.props.navigation}
           title={TITLE_HEADER_PASSWORD}
-          bgColor={'#2F80ED'} colorIcon={'#FFF'}
+          bgColor={'#2D9CDB'} colorIcon={'#FFF'}
           styleTitle={styles.styleTitle}
           back={true}
         />
@@ -148,7 +153,7 @@ class ChangePassword extends Component {
                       center={true} btn={'rgb'}
                       title={BUTTON_UPDATE_PASS}
                       width={'100%'} circle={40}
-                      style={{ backgroundColor: '#55B619', height: 40 }}
+                      style={{ backgroundColor: '#2D9CDB', height: 40 }}
                       styleTitle={{ fontSize: 16, fontFamily: 'Nunito-Regular', }}
                       onPress={handleSubmit}
                     // onPress={this.changePassword.bind(this)}
