@@ -1,9 +1,9 @@
-import {Platform, Dimensions} from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import ListStudent from './listStudent';
 import ListExercise from './listExercise';
 import Plans from './plans';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {createAppContainer} from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation';
 
 const Tab = createMaterialTopTabNavigator(
   {
@@ -51,11 +51,11 @@ const Tab = createMaterialTopTabNavigator(
       style: {
         backgroundColor: '#fff',
         elevation: 0,
-        shadowOffset: {height: 0, width: 0},
+        shadowOffset: { height: 0, width: 0 },
         justifyContent: 'space-between',
         borderBottomColor: '#56CCF2',
         borderBottomWidth: 1,
-        
+
       },
       labelStyle: {
         fontSize: 12,

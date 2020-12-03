@@ -141,11 +141,11 @@ export default class CopyFromSubjectExists extends Component {
                 </View>
                 <View style={styles.bodyTask}>
                     <View style={styles.pieceBody}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
                                 source={Common.getIconSubject(item.subjectCodes[0])}
                                 resizeMode="contain"
-                                style={{ height: 22, width: 22 }} />
+                                style={{ height: 22, width: 22, borderRadius: 40, marginLeft:1 }} />
                             <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
@@ -156,8 +156,8 @@ export default class CopyFromSubjectExists extends Component {
                             <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
                         </View>
                     </View>
-                    <View style={styles.pieceBody}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                    <View style={[styles.pieceBody, { width: "60%" }]}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
                                 source={AppIcon.icon_questionV3}
                                 resizeMode="contain"
@@ -229,7 +229,8 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                     </View>
                     <View style={{ width: '100%', alignItems: 'center', height: height - 200 }}>
-                        {!isLoading ?
+                        {/* {!isLoading
+                         ? */}
                             <View style={styles.viewStatus}>
                                 <FlatList
                                     data={this.state.listTask}
@@ -237,8 +238,8 @@ export default class CopyFromSubjectExists extends Component {
                                     renderItem={this.renderTask}
                                 />
                             </View>
-                            :
-                            <ListTaskPlaceHolder />}
+                            {/* // :
+                            // <ListTaskPlaceHolder />} */}
                     </View>
                 </SafeAreaView>
             </View>
@@ -301,15 +302,13 @@ const styles = StyleSheet.create({
         marginLeft: 10.48
     },
     bodyTask: {
-        // width: '100%',
-        // height: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
-        // backgroundColor:'red'
+        paddingHorizontal: 10
     },
     pieceBody: {
-        width: '50%',
+        width: '40%',
+        marginTop: 10.5
     },
     textDetail: {
         fontSize: 10,
@@ -349,7 +348,7 @@ const styles = StyleSheet.create({
         height: height - 200
     },
     paperParacV3: {
-        marginLeft: -40,
+        marginLeft: -60,
         alignItems: 'center',
         alignSelf: 'center'
     },
