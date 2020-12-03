@@ -52,7 +52,7 @@ export default class itemExercise extends Component {
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
-                color={'#0E5FCD'}
+                color={'#56BB73'}
               />
               <View style={styles.txtStart}>
                 <Text style={styles.timeStart}>
@@ -81,7 +81,7 @@ export default class itemExercise extends Component {
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
-                color={'#EB5757'}
+                color={'#FF6213'}
                 style={{ marginRight: 8 }}
               />
               <View style={styles.viewEnd}>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 3,
-    paddingLeft: 11
+    paddingLeft: 16
   },
   status: {
     justifyContent: 'center',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#FFF',
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
@@ -177,12 +177,12 @@ const styles = StyleSheet.create({
   },
   txtDate: {
     fontSize: 10,
-    color: '#0E5FCD',
+    color: '#56BB73',
     marginLeft: 5
   },
   txtDate1: {
     fontSize: 10,
-    color: '#EB5757',
+    color: '#FF6213',
     marginLeft: 5
   },
   topBody: {
@@ -203,14 +203,14 @@ const styles = StyleSheet.create({
   },
   txtRight: {
     marginLeft: 9.5,
-    color: '#000000',
+    color: '#828282',
     fontSize: 10,
     fontFamily: 'Nunito-Regular',
     alignSelf: 'center',
     marginRight: 50,
   },
   txtInfoDetail: {
-    color: '#000',
+    color: '#828282',
     fontSize: 10,
     marginLeft: 8,
     alignSelf: 'center',
@@ -251,21 +251,20 @@ const styles = StyleSheet.create({
   },
   txtStart: {
     flexDirection: 'row',
-    paddingBottom: 5,
     marginLeft: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   viewIcon: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 10
+    marginTop: 12
   },
   viewEnd: {
-    flexDirection: 'row',
-    paddingBottom: 3,
-    marginLeft: 0
+    flexDirection: 'row', 
+    alignItems: 'center',
+    alignSelf: 'center'
   },
   flexiconSub: {
     width: 20,

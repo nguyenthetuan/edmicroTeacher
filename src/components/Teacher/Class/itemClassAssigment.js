@@ -77,7 +77,7 @@ export default class ItemClassAssigment extends Component {
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
-                color={'#0E5FCD'}
+                color={'#56BB73'}
                 style={{ marginTop: 0 }}
               />
               <Text style={styles.txtDate}>
@@ -86,7 +86,7 @@ export default class ItemClassAssigment extends Component {
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
-                color={'#EB5757'}
+                color={'#FF6213'}
                 style={{ marginLeft: 20 }}
               />
               <Text style={styles.txtDate}>
@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 14,
     fontFamily: 'Nunito-Bold',
-    marginLeft: 5,
   },
   textStatus: {
     fontSize: 12,
@@ -204,8 +203,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   body: {
-    paddingLeft: 10,
-    paddingRight: 5,
+    paddingLeft: 13,
+    paddingRight: 13,
     paddingBottom: 7,
     marginTop: 9,
     justifyContent: 'space-between',
@@ -225,7 +224,7 @@ const styles = StyleSheet.create({
     // marginLeft: width < 350 ? 0 : 5,
   },
   buttomRevew: {
-    backgroundColor: '#56CCF2',
+    backgroundColor: '#2D9CDB',
     alignSelf:'center',
     alignItems:'center',
     paddingHorizontal:10,
@@ -254,7 +253,7 @@ const styles = StyleSheet.create({
   },
   proView: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   toucSub: {
     fontSize: 12,

@@ -432,7 +432,7 @@ class QuestionLibrary extends Component {
           title={'Ngân hàng câu hỏi'}
           color={'white'}
           navigation={this.props.navigation}
-          actionIcon={require('../../../asserts/appIcon/icRight.png')}
+          actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')} 
           actionStyle={{ borderRadius: 0 }}
           onRightAction={() => this.configurationQuestion()}
         />
