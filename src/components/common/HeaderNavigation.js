@@ -34,7 +34,7 @@ export default class HeaderNavigation extends Component {
                         }}
                         style={mainStyle.iconContainer}
                     >
-                        <Image source={AppIcon.arrow_left_S_light} style={{ width: 30, height: 30, tintColor: colorIcon || '#444', }} tintColor={colorIcon || '#444'} resizeMode={'contain'}></Image>
+                        <Image source={AppIcon.icon_arrowLeftv3} style={{ width: 20, height: 20, tintColor: colorIcon || '#444', }} tintColor={colorIcon || '#444'} resizeMode={'contain'}></Image>
                     </RippleButton>
                 }
                 <View style={[mainStyle.headerTitle, styleTitle]}>
