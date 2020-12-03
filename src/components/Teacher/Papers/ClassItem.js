@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import _ from 'lodash';
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/AntDesign';
+import AppIcon from '../../../utils/AppIcon';
 export default class ClassItem extends Component {
 
     openModalClass = () => {
@@ -20,7 +21,7 @@ export default class ClassItem extends Component {
         return (
             <View style={styles.buttomActive}>
                 <RippleButton style={styles.styIcon} onPress={() => this.props.activeClass(item)}>
-                    <Icon name={'close'} size={15} />
+                <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
                 </RippleButton>
                 <Text style={styles.txtItemActive}>{name}</Text>
             </View>
@@ -130,5 +131,9 @@ const styles = StyleSheet.create({
         color: '#C4C4C4',
         marginHorizontal: 5,
         marginVertical: 10,
+    },
+    widthClose: {
+        width: 15,
+        height: 15
     }
 });

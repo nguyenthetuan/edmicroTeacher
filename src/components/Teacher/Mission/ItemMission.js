@@ -19,6 +19,7 @@ export default class ItemMission extends Component {
     });
     this.props.navigation.navigate('MissionDetail',
       {
+        title: data.title,
         statusbar: 'light-content'
       });
   }
@@ -32,7 +33,7 @@ export default class ItemMission extends Component {
     );
   };
   render() {
-    const { data } = this.props;
+    const { data, title,navigation } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
     const textDelivered = data.status == modelStatus.unDelivered ? 'Chưa giao' : 'Đã giao';
     return (
@@ -62,10 +63,10 @@ export default class ItemMission extends Component {
             )}
           </View>
           <View style={styles.viewCount}>
-            {this.renderElement(
-              getIconSubject(data.subjectCode),
-              data.subjectName,
-            )}
+              {this.renderElement(
+                getIconSubject(data.subjectCode),
+                 data.subjectName
+              )}
             {this.renderElement(
               AppIcon.icon_paracClass,
               'Bài tự luyện',
@@ -80,12 +81,12 @@ export default class ItemMission extends Component {
               ?
               <FastImage
                 source={require('../../../asserts/icon/icon_paracComplete.png')}
-                style={{ height: 22, width: 22 }}
+                style={{ height: 25, width: 25 }}
               />
               :
               <FastImage
                 source={require('../../../asserts/icon/icon_paractoFinish.png')}
-                style={{ height: 22, width: 22 }}
+                style={{ height: 25, width: 25 }}
               />
             }
             {data.status === modelStatus.unDelivered
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   styWrapImg: {
-    width: 22,
-    height: 22,
+    width: 25,
+    height: 25,
   },
   viewCount: {
     alignItems: 'center',

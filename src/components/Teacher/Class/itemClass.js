@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   },
   showSubjectCode: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   titleName: {
     flexDirection: 'row',
@@ -325,7 +325,8 @@ const styles = StyleSheet.create({
   getIcon: {
     width: 21,
     height: 21,
-    borderRadius: 20
+    borderRadius: 20,
+    marginLeft: -1,
   },
   viewImageExcer: {
     flexDirection: 'row',

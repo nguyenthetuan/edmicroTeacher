@@ -1,4 +1,5 @@
 import { ToastAndroid, Dimensions, Alert, Platform } from 'react-native';
+
 import Config from 'react-native-config';
 import iconMath from '../asserts/icon/icon_toanV3.png';
 import iconPhy from '../asserts/icon/icon_vatlyV3.png';
@@ -12,7 +13,12 @@ import iconEngGRM from '../asserts/icon/icon_tienganhThcsV3.png';
 import iconEngPT from '../asserts/icon/icon_tienganhThcsV3.png';
 import iconEducation from '../asserts/icon/icon_dgcdV3.png';
 import icDefault from '../asserts/icon/icon_iconV3Default.png';
-import Icon_Tin_Hoc from '../asserts/appIcon/Icon_Tin_Hoc.png';
+import Icon_Tin_Hoc from '../asserts/icon/icon_tinhocV3.png';
+import Icon_Am_Nhac from '../asserts/icon/icon_amnhacV3.png';
+import Icon_Khoa_Hoc from '../asserts/icon/icon_khoahocV3.png';
+import icon_quocphongV3 from '../asserts/icon/icon_quocphongV3.png';
+import icon_mythuatV3 from '../asserts/icon/icon_mythuatV3.png';
+
 import report1 from '../asserts/appIcon/report1.png';
 import report2 from '../asserts/appIcon/report2.png';
 import report3 from '../asserts/appIcon/report3.png';
@@ -64,6 +70,10 @@ export const getIconSubject = (id) => {
     case AppConst.gdcdID: return iconEducation;
     case AppConst.gdcdTHID: return iconEducation;
     case AppConst.tinhocID: return Icon_Tin_Hoc;
+    case AppConst.stemID: return Icon_Khoa_Hoc;
+    case AppConst.amnhacID: return Icon_Am_Nhac;
+    case AppConst.gdqpID: return icon_quocphongV3;
+    case AppConst.mythuatID: return icon_mythuatV3;
     default:
       return icDefault;
   }
@@ -93,7 +103,7 @@ const getIconSubjectForCompetition = (id) => {
     case AppConst.engTHCS: return icon_ComStep_anh;
     case AppConst.gdcdID: return icon_ComStep_GDCD;
     case AppConst.gdcdTHID: return icon_ComStep_GDCD;
-    // case AppConst.tinhocID: return Icon_Tin_Hoc;
+    case AppConst.tinhocID: return Icon_Tin_Hoc;
     default:
       return icon_ComStep_anh;
   }
@@ -665,7 +675,7 @@ export function roundToTwo(num) {
   return +(Math.round(num + "e+2") + "e-2");
 }
 
-export function roundToFour(num){
+export function roundToFour(num) {
   return +(Math.round(num + "e+4") + "e-4");
 }
 

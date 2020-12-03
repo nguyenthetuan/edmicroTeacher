@@ -29,7 +29,14 @@ export default class HeaderNavigation extends React.Component {
     }
 
     render() {
-        const { actionIcon, title, color, backgroundColor, isShow = true } = this.props;
+        const {
+            actionIcon,
+            title,
+            color,
+            backgroundColor,
+            isShow = true, 
+            data
+        } = this.props;
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
                 {isShow ?

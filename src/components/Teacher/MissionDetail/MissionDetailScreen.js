@@ -9,7 +9,8 @@ export default class MissionDetailScreen extends Component {
         this.props.navigation.pop(2);
     }
     render() {
-        const { isLoading,title } = this.props;
+        const { isLoading, navigation } = this.props;
+        const { title } = this.props.navigation.state.params;
         return (
             <View style={styles.contain}>
                 <View style={{ backgroundColor: '#FFF' }}>

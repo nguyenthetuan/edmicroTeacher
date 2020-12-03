@@ -9,10 +9,9 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import _ from 'lodash';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/AntDesign'
-
+import Icon from 'react-native-vector-icons/AntDesign';
+import AppIcon from '../../../utils/AppIcon';
 export default class SubjectItem extends Component {
-
     openModalSubject = () => {
         this.props.refModalSubject.onOpen()
     }
@@ -24,7 +23,7 @@ export default class SubjectItem extends Component {
         return (
             <View style={styles.buttomActive}>
                 <RippleButton style={styles.styIcon} onPress={() => this.props.activeSubject(item)}>
-                    <Icon name={'close'} size={15} />
+                    <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
                 </RippleButton>
                 <Text style={styles.txtItemActive}>{data.name}</Text>
             </View>
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     styIcon: {
         position: 'absolute',
         top: -8,
-        right: -8,
+        right: -8
     },
     styWrapClassIn: {
         flexDirection: 'row',
@@ -137,5 +136,9 @@ const styles = StyleSheet.create({
         color: '#C4C4C4',
         marginHorizontal: 5,
         marginVertical: 10,
+    },
+    widthClose: {
+        width: 15,
+        height: 15
     }
 });
