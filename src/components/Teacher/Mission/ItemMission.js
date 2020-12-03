@@ -20,7 +20,7 @@ export default class ItemMission extends Component {
     this.props.navigation.navigate('MissionDetail',
       {
         title: data.title,
-        statusbar: 'light-content'
+        statusbar: 'dark-content'
       });
   }
   renderElement = (img, txt1, txt2) => {

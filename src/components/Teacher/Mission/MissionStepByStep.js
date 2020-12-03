@@ -80,10 +80,10 @@ export default class MissionStepByStep extends Component {
             currentPosition={this.state.currentPosition}
             labels={labels}
             stepCount={4}
-            renderLabel={(e) => {
-              console.log(e);
-              return (<Text style={{ color: e.stepStatus == 'finished' || e.stepStatus == 'current' ? '#56CCF2' : '#757575' }}>{e.label}</Text>)
-            }}
+          // renderLabel={(e) => {
+          //   console.log(e);
+          //   return (<Text style={{ color: e.stepStatus == 'finished' || e.stepStatus == 'current' ? '#56CCF2' : '#757575' }}>{e.label}</Text>)
+          // }}
           />
         </View>
         <TopTabMissionContain
@@ -110,28 +110,26 @@ const customStyles = {
   stepIndicatorSize: 25,
   currentStepIndicatorSize: 30,
   separatorStrokeWidth: 2,
-  currentStepStrokeWidth: 2,
-  stepStrokeCurrentColor: '#56CCF2',
-  stepStrokeWidth: 1,
-  stepStrokeFinishedColor: '#56CCF2',
-  stepStrokeUnFinishedColor: '#56CCF2',
-  separatorFinishedColor: '#c4c4c4',
-  separatorUnFinishedColor: '#c4c4c4',
-  stepIndicatorFinishedColor: '#56CCF2',
+  currentStepStrokeWidth: 3,
+  stepStrokeCurrentColor: '#56ccf2',
+  stepStrokeWidth: 3,
+  stepStrokeFinishedColor: '#56ccf2',
+  stepStrokeUnFinishedColor: '#aaaaaa',
+  separatorFinishedColor: '#56ccf2',
+  separatorUnFinishedColor: '#aaaaaa',
+  stepIndicatorFinishedColor: '#56ccf2',
   stepIndicatorUnFinishedColor: '#ffffff',
   stepIndicatorCurrentColor: '#ffffff',
-  stepIndicatorLabelFontSize: 12,
-  currentStepIndicatorLabelFontSize: 12,
-  stepIndicatorLabelCurrentColor: '#56CCF2',
+  stepIndicatorLabelFontSize: 13,
+  currentStepIndicatorLabelFontSize: 13,
+  stepIndicatorLabelCurrentColor: '#56ccf2',
   stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: '#56CCF2',
-  labelColor: '#757575',
-  labelActive: '#56CCF2',
-  labelSize: 12,
-  currentStepLabelColor: '#56CCF2',
-  labelFontFamily: 'Nunito-Regular',
-  labelAlign: 'center',
-};
+  stepIndicatorLabelUnFinishedColor: '#aaaaaa',
+  labelColor: '#999999',
+  labelSize: 13,
+  currentStepLabelColor: '#56ccf2',
+  labelFontFamily: 'Nunito-Bold'
+}
 
 const topTabMission = createMaterialTopTabNavigator(
   {
