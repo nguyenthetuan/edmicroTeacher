@@ -20,6 +20,8 @@ import Icon_Am_Nhac from '../asserts/icon/icon_amnhacV3.png';
 import Icon_Khoa_Hoc from '../asserts/icon/icon_khoahocV3.png';
 import icon_quocphongV3 from '../asserts/icon/icon_quocphongV3.png';
 import icon_mythuatV3 from '../asserts/icon/icon_mythuatV3.png';
+import icon_gdtcV3 from '../asserts/icon/icon_gdtcV3.png';
+import icon_congngheV3 from '../asserts/icon/icon_congngheV3.png';
 import icDefault from '../asserts/icon/icon_iconV3Default.png';
 
 
@@ -55,6 +57,8 @@ const getIconSubject = (id) => {
         case AppConst.amnhacID: return Icon_Am_Nhac;
         case AppConst.gdqpID: return icon_quocphongV3;
         case AppConst.mythuatID: return icon_mythuatV3;
+        case AppConst.gdtcID: return icon_gdtcV3;
+        case AppConst.congngheID: return icon_congngheV3;
         default:
             return icDefault;
     }
