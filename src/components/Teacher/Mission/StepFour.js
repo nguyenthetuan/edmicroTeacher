@@ -23,7 +23,9 @@ export default class StepFour extends Component {
 
     assignedMission = () => {
         this.reset();
-        this.props.screenProps.navigation.navigate('MissionDetail', { statusbar: 'light-content' });
+        this.props.screenProps.navigation.navigate('MissionDetail', {
+            statusbar: 'dark-content'
+        });
     }
 
     reset = () => {
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 27,
         marginRight: 27,
-        paddingHorizontal:60
+        paddingHorizontal: 60
     },
     styWrapBtn: {
         flexDirection: 'column',

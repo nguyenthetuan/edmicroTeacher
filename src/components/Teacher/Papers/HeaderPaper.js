@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator
+} from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import AppIcon from '../../../utils/AppIcon';
 export default class HeaderPaper extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -26,27 +33,57 @@ export default class HeaderPaper extends React.PureComponent {
   }
 
   render() {
-    const { onRightAction, title, color, backgroundColor, loading, buttonRightText, notRightButton } = this.props;
+    const {
+      onRightAction,
+      title,
+      color,
+      backgroundColor,
+      loading,
+      buttonRightText,
+      notRightButton
+    } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-        <RippleButton onPress={this.onGoback}>
-          <View style={styles.button}>
-            <Icon name="arrow-left" color={color || "#383838"} size={25} />
-          </View>
+        <RippleButton
+          onPress={this.onGoback}
+          style={styles.button}>
+          {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
+          {/* <Image source={AppIcon.icon_arrowHeaderV3} style={styles.btnLeft} /> */}
+          <Image
+            source={AppIcon.icon_arrowLeftv3}
+            style={{ tintColor: '#fff', alignSelf:'center'}}
+          />
         </RippleButton>
         <View style={styles.viewTitle}>
-          <Text style={[styles.textTitleHeader, {
-            color: color || '#383838'
-          }]}>{title}</Text>
+          <Text numberOfLines={1}
+            style={[styles.textTitleHeader, {
+              color: color || '#383838'
+            }]}>{title}</Text>
         </View>
-        {!notRightButton && <TouchableOpacity
+        {/* {!notRightButton && <TouchableOpacity
           style={styles.rightHeader}
           onPress={onRightAction}>
           {loading ? <View style={styles.txtRightHeader}>
             <ActivityIndicator color='#fff' size='small' />
           </View>
             : <Text style={styles.txtRightHeader}>{buttonRightText || `Tạo bộ đề`}</Text>}
-        </TouchableOpacity>}
+        </TouchableOpacity>} */}
+        {!notRightButton
+          &&
+          <TouchableOpacity
+            onPress={onRightAction}
+            style={styles.octiconSetting}>
+            {loading
+              ?
+              // <View style={styles.txtRightHeader}>
+              //   <ActivityIndicator color='#fff' size='small' />
+              // </View>
+              <Image source={AppIcon.icon_octiconSettingsV3} />
+              :
+              null
+            }
+          </TouchableOpacity>
+        }
       </View>
     );
   }
@@ -65,15 +102,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   button: {
-    width: 38,
-    height: 38,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: 'center'
   },
   textTitleHeader: {
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
-    fontSize: 16
+    fontSize: 16,
+    flex: 1,
+    alignSelf:'center'
   },
   btnAvatar: {
     height: 38,
@@ -105,4 +141,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },
+  octiconSetting: {
+    paddingRight: 5
+  },
+  btnLeft: {
+    color: '#fff'
+  }
 });

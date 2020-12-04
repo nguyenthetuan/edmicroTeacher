@@ -623,7 +623,7 @@ export default class ForgotPasswordScreen extends Component {
               duration={200}
               onPress={this.handleBtnBack(isShowKeybroad)}
             >
-              <Image source={AppIcon.arrow_left_S_light} style={styles.btnBack} resizeMode={'contain'} />
+              <Image source={AppIcon.icon_arrowLeftv3} style={styles.btnBack} resizeMode={'contain'} />
             </RippleButton>
             <View style={{ flex: .9, alignItems: 'center' }}>
               <Text style={styles.txtTitle}>{!this.state.isVerify ? 'Quên mật khẩu' : 'Xác thực'}</Text>
@@ -705,18 +705,11 @@ export default class ForgotPasswordScreen extends Component {
                         !this.state.isLoading
                           ?
                           <View>
-                            <RippleButton
-                              size={180}
-                              onPress={() => this.forgotAction()}
-                              style={styles.btnCreate}
-                            >
-                              <Text style={textAction}>Xác thực</Text>
-                            </RippleButton>
-                            <View style={{ marginTop: 30, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'space-around' }}>
                               <Text style={{
                                 fontFamily: 'Nunito-Regular',
                                 fontSize: 13,
-                                color: '#999999'
+                                color: '#757575'
                               }}>Tôi không nhận được mã</Text>
                               <TouchableOpacity
                                 onPress={this.resendOTP}>
@@ -724,10 +717,17 @@ export default class ForgotPasswordScreen extends Component {
                                   marginStart: 17,
                                   fontFamily: 'Nunito-Bold',
                                   fontSize: 14,
-                                  color: '#54CEF5'
-                                }}>Gửi lại</Text>
+                                  color: '#2D9CDB'
+                                }}>Gửi lại OTP</Text>
                               </TouchableOpacity>
                             </View>
+                            <RippleButton
+                              size={180}
+                              onPress={() => this.forgotAction()}
+                              style={styles.btnCreate}
+                            >
+                              <Text style={textAction}>Xác thực</Text>
+                            </RippleButton>
                           </View>
                           :
                           <View style={{ height: 20, marginTop: 60, width: 320 }}>
@@ -798,19 +798,19 @@ const styles = StyleSheet.create({
   },
   btnBack: {
     tintColor: '#000',
-    width: 30,
-    height: 25,
+    width: 20,
+    height: 20,
     marginLeft: 10
   },
   btnCreate: {
-    backgroundColor: '#54CEF5',
+    backgroundColor: '#2D9CDB',
     width: width - width / 5,
     height: 40,
     alignSelf: 'center',
-    marginTop: 50,
-    borderRadius: 5,
+    marginTop: 280,
+    borderRadius: 25,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   btnLaylaimk: {
     backgroundColor: '#2D9CDB',
@@ -847,10 +847,10 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   textInputContainer: {
-    width: width - width / 5,
     marginBottom: 0,
     padding: 0,
-    fontSize: 10
+    fontSize: 10,
+    width: width - width / 8,
   },
   roundedTextInput: {
     margin: 0,

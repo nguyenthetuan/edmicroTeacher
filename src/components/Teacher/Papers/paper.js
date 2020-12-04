@@ -31,6 +31,8 @@ import ModalClass from './ModalClass';
 import ModalSubject from './ModalSubject';
 import ModalOption from './ModalOption';
 import ModalAddPaper from './ModalAddPaper';
+import { updateExamListAction } from '../../../actions/paperAction';
+
 const NAVBAR_HEIGHT = 220;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
@@ -468,6 +470,13 @@ class Papers extends Component {
     );
   };
 
+  componentDidUpdate() {
+    if (this.props.updateListExam) {
+      this.props.needUpdate(false);
+      this.getData();
+    }
+  }
+
   onPressUploadPDF = () => {
     const { listGrades, listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
@@ -614,11 +623,9 @@ class Papers extends Component {
     } = this.state;
     const { user } = this.props;
 
-    console.log("updateListExam: ", this.state.updateListExam);
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMain {...user} navigation={this.props.navigation} />
-
         <View style={[styles.fill, { paddingHorizontal: 16 }]}>
           <FlatList
             data={listPapers}
@@ -779,6 +786,7 @@ const mapDispatchToProps = dispatch => {
   return {
     saveGrades: listGrades => dispatch(setListGrades(listGrades)),
     saveSubject: listSubjects => dispatch(setListSubject(listSubjects)),
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   };
 };
 

@@ -62,6 +62,7 @@ class Class extends Component {
       isRefresh
     } = this.state;
     const { user } = this.props;
+    console.log(user);
     return (
       <>
         <StatusBar />

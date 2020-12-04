@@ -79,9 +79,11 @@ module.exports = {
   percent_completed: 'percent_completed',
   mathID: 'TOAN',
   mathThID: 'TOANTHCS',
+  mathThptID: 'TOANTHPT',
   mathHH: 'HOCHAY',
   mathVao10ID: 'TOANVAO10',
   mathPlayID: 'MATHPLAY',
+  mathJRID :'TOAN-JR',
 
   phyID: 'VATLY',
   phyTHCSID: 'VATLITHCS',
@@ -113,6 +115,13 @@ module.exports = {
   gdcdID: 'GDCD',
   gdcdTHID: 'GDCDTHCS',
 
+  tinhocID: "TINHOC",
+  stemID : 'STEM',
+  amnhacID: 'AMNHAC',
+  gdqpID : "GDQP",
+  congngheID : "CONGNGHE",
+  mythuatID : "MYTHUAT",
+  gdtcID: "GDTC",
   tinhocID: "TINHOC",
 
   khoahocID:"STEM",

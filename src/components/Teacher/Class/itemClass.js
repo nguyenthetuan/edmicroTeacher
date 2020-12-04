@@ -81,9 +81,11 @@ export default class itemClass extends Component {
               </Text>
               <View style={styles.progressBar}>
                 <ProgressBar
-                  progress={item.rateSubmit}
+                  progress={item.rateSubmit
+                    ? item.rateSubmit > 100
+                      ? 100 : item.rateSubmit : 1}
                   color="#56BB73"
-                  widthProps={width * 0.73}
+                  widthProps={width - 100}
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
@@ -107,7 +109,7 @@ export default class itemClass extends Component {
                       <Text style={styles.txtInfoDetail}>
                         Môn Học
                     </Text>
-                      <Text numberOfLines={2}
+                      <Text numberOfLines={1}
                         style={styles.txtQuestion}>{item.subjectName}</Text>
                     </View>
                   </View>
@@ -258,7 +260,7 @@ const styles = StyleSheet.create({
     // marginLeft: 16,
   },
   txtThree: {
-    color: '#2D9CDB',
+    color: '#F16219',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 25,
@@ -291,15 +293,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
     fontSize: 11,
     lineHeight: 14,
-    color: "blue",
+    color: "#2D9CDB",
     alignSelf: 'center',
-    marginTop: 1,
-    textAlign: 'right',
-    width: 50,
+    marginTop: 2,
+    textAlign: 'center',
+    width: 60,
+    marginLeft: 5,
+    alignSelf: 'center',
   },
   showSubjectCode: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   titleName: {
     flexDirection: 'row',
@@ -321,7 +325,8 @@ const styles = StyleSheet.create({
   getIcon: {
     width: 21,
     height: 21,
-    borderRadius: 20
+    borderRadius: 20,
+    marginLeft: -1,
   },
   viewImageExcer: {
     flexDirection: 'row',

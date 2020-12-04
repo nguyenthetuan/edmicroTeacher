@@ -128,14 +128,14 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     bodyModal: {
-        marginTop: 10,
+        marginTop: 20,
         flexDirection: 'row',
         alignContent: 'center',
         justifyContent: 'space-between',
         marginHorizontal: 5,
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#DCDCDC',
         borderRadius: 1,
+        marginLeft: 10,
+        marginRight: 10
     },
     txtUpload: {
         fontFamily: 'Nunito-Regular',
@@ -144,10 +144,13 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     textTilteModal: {
-        fontFamily: 'Nunito-Regular',
+        fontFamily: 'Nunito',
         fontWeight: '700',
+        color: '#828282',
         fontSize: 14,
         lineHeight: 19,
         textAlign: 'center',
+        marginTop: 10,
+        marginBottom: 10,
     },
 });

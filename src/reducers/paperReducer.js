@@ -37,7 +37,7 @@ export default function paperReducer(state = initState, action) {
         case Types.NEED_UPDATE_EXAM_LIST_ACTION:
             return {
                 ...state,
-                updateListExam: state.updateListExam
+                updateListExam: action.payload
             }
         default:
             return state;

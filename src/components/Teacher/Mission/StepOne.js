@@ -69,7 +69,12 @@ export default class StepOne extends Component {
 
   handleNextStepTwo = () => {
     Keyboard.dismiss();
-    const { valueClass, valueSubject, nameMission, htmlContent } = this.state;
+    const {
+      valueClass,
+      valueSubject,
+      nameMission,
+      htmlContent
+    } = this.state;
     if (
       _.isEmpty(valueClass) ||
       _.isEmpty(valueSubject) ||
@@ -163,11 +168,10 @@ export default class StepOne extends Component {
             <Icon
               name={'angle-down'}
               size={25}
-              color={Platform.OS == 'android' ? '#FFF' : '#000'}
+              color={Platform.OS == 'android' ? '#979797' : '#000'}
               style={styles.icon}
             />
           </View>
-
           <Text style={styles.styTxtLabel}>Môn học</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
@@ -189,7 +193,7 @@ export default class StepOne extends Component {
             <Icon
               name={'angle-down'}
               size={25}
-              color={Platform.OS == 'android' ? '#FFF' : '#000'}
+              color={Platform.OS == 'android' ? '#979797' : '#000'}
               style={styles.icon}
             />
           </View>
@@ -232,6 +236,7 @@ const styles = StyleSheet.create({
     borderColor: '#979797',
     margin: 10,
     color: '#000',
+    paddingLeft: 8
   },
   styWrapDes: {
     paddingHorizontal: 10,
@@ -256,8 +261,8 @@ const styles = StyleSheet.create({
   iconEdit: {
     position: 'absolute',
     alignSelf: 'flex-end',
-    marginTop:20,
-    paddingRight:20
+    marginTop: 20,
+    paddingRight: 20
   },
   styBtnNext: {
     backgroundColor: '#2D9CDB',
@@ -285,13 +290,13 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   styTxtPlacehoder: {
-    color: '#979797',
+    color: '#979797'
   }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',
@@ -306,8 +311,8 @@ const pickerSelectStyles = StyleSheet.create({
     paddingBottom: 12,
     borderBottomWidth: 1,
     borderRadius: 5,
-    backgroundColor: '#446BA0',
-    color: '#FFF',
+    backgroundColor: 'gray',
+    color: '#000',
     fontFamily: 'Nunito-Regular',
     borderWidth: 1,
     margin: 10,

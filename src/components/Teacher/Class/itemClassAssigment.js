@@ -77,7 +77,7 @@ export default class ItemClassAssigment extends Component {
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
-                color={'#0E5FCD'}
+                color={'#56BB73'}
                 style={{ marginTop: 0 }}
               />
               <Text style={styles.txtDate}>
@@ -86,7 +86,7 @@ export default class ItemClassAssigment extends Component {
               <MaterialCommunityIcons
                 name={'calendar-range'}
                 size={23}
-                color={'#EB5757'}
+                color={'#FF6213'}
                 style={{ marginLeft: 20 }}
               />
               <Text style={styles.txtDate}>
@@ -113,9 +113,9 @@ export default class ItemClassAssigment extends Component {
               <View
                 style={styles.proView}>
                 <ProgressBar
-                  progress={rate}
+                  progress={rate ? rate > 100 ? 100 : rate : 1}
                   color="#28A745"
-                  widthProps={width * 0.73}
+                  widthProps={width - 100}
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
@@ -135,12 +135,13 @@ export default class ItemClassAssigment extends Component {
                         statusbar: 'dark-content',
                       }
                     });
-                  }}>
-                  <View style={styles.buttomRevew}>
+                  }}
+                  style={styles.buttomRevew}
+                  >
                     <Text style={styles.txtbuttom}>
                       Xem Báo Cáo
                       </Text>
-                  </View>
+
                 </RippleButton>
                 {/* <RippleButton
                   //  onPress={() => this.props.navigation.navigate('MockExamDrawer', { assignId: item.assignId, classId: item.classId,assignmentId:assignmentId })}
@@ -181,7 +182,6 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 14,
     fontFamily: 'Nunito-Bold',
-    marginLeft: 5,
   },
   textStatus: {
     fontSize: 12,
@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   body: {
-    paddingLeft: 10,
-    paddingRight: 5,
+    paddingLeft: 13,
+    paddingRight: 13,
     paddingBottom: 7,
     marginTop: 9,
     justifyContent: 'space-between',
@@ -224,20 +224,21 @@ const styles = StyleSheet.create({
     // marginLeft: width < 350 ? 0 : 5,
   },
   buttomRevew: {
-    backgroundColor: '#56CCF2',
-    justifyContent: 'center',
-    // paddingHorizontal: 35,
+    backgroundColor: '#2D9CDB',
+    alignSelf:'center',
+    alignItems:'center',
+    paddingHorizontal:10,
     borderRadius: 24,
     paddingVertical: 8,
-    marginBottom: 8
+    marginBottom: 8,
   },
   txtbuttom: {
     fontSize: 11,
     lineHeight: 15,
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
-    marginLeft:21,
-    marginRight:28,
+    marginLeft: 21,
+    marginRight: 28
   },
   buttomTry: {
     backgroundColor: '#7E96EC',
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
   },
   proView: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   toucSub: {
     fontSize: 12,
@@ -267,11 +268,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
+    alignSelf:'center'
   },
   ripButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: width / 4,
+    alignSelf: 'center',
     marginTop: 13,
     marginLeft: 10
   }

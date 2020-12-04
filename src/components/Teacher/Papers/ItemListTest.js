@@ -54,7 +54,9 @@ export default class Item extends Component {
                             { backgroundColor: Common.getBackroundSubject(subjectCode) },
                         ]}>
                         <Text numberOfLines={1}
-                            style={styles.txtName}>{item.name}</Text>
+                            style={styles.txtName}>
+                            {item.name}
+                        </Text>
                         <View
                             style={{
                                 alignItems: 'center',
@@ -76,9 +78,10 @@ export default class Item extends Component {
                             <View style={styles.flexSubject}>
                                 <FastImage
                                     source={Common.getIconSubject(subjectCode)}
-                                    style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 20 }}
+                                    style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 40 }}
                                 />
                                 <Text style={styles.txtQuestion}> {Common.getDisplaySubject(subjectCode)}</Text>
+                                {/* <Text style={styles.txtQuestion}> {item.subjectCode[0]}</Text> */}
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage
@@ -200,6 +203,7 @@ const styles = StyleSheet.create({
         color: '#000',
         marginLeft: 5,
         alignSelf: 'center',
+        width: 80
     },
     flexParac: {
         flexDirection: 'row'

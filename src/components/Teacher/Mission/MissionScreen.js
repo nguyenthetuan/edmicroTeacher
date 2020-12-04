@@ -136,22 +136,22 @@ export default class MissionScreen extends Component {
             transform: [{ translateY: posY }],
           }}
         /> */}
-        <Animated.View style={{ transform: [{ translateY: posY }] }}>
-          <FlatList
-            data={listMissionSearch}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={this.renderItem}
-            ListHeaderComponent={this.renderHeader}
-            ListFooterComponent={<View style={{ height: 150 }} />}
-            ListEmptyComponent={this.renderEmpty}
-            stickyHeaderIndices={[0]}
-            onScroll={this.changePosition}
-            scrollEventThrottle={16}
-            keyboardDismissMode={'on-drag'}
-            showsVerticalScrollIndicator={false}
-            windowSize={21}
-          />
-        </Animated.View>
+        {/* <Animated.View style={{ transform: [{ translateY: posY }] }}> */}
+        <FlatList
+          data={listMissionSearch}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={this.renderItem}
+          ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={<View style={{ height: 150 }} />}
+          ListEmptyComponent={this.renderEmpty}
+          stickyHeaderIndices={[0]}
+          onScroll={this.changePosition}
+          scrollEventThrottle={16}
+          keyboardDismissMode={'on-drag'}
+          showsVerticalScrollIndicator={false}
+          windowSize={21}
+        />
+        {/* </Animated.View> */}
       </View>
     );
   }
@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
   styWrapSearch: {
     borderWidth: 1,
     borderColor: '#DADADA',
-    paddingHorizontal: 15,
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
     marginTop: 10,
     borderRadius: 3,
     flexDirection: 'row',
@@ -177,18 +177,18 @@ const styles = StyleSheet.create({
   styTxtInput: {
     color: '#757575',
     fontFamily: 'Nunito-Regular',
-    fontSize: 10,
-    lineHeight: 12,
+    fontSize: 12,
+    lineHeight: 16,
     alignSelf: 'center',
     flex: 1,
-    padding: 5
+    padding: 8
   },
   styWrapBtn: {
     backgroundColor: '#56BB73',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    padding: 7,
+    padding: 10,
     borderRadius: 2,
     marginHorizontal: 5,
     marginTop: 10
@@ -196,14 +196,14 @@ const styles = StyleSheet.create({
   styTxtBtn: {
     color: '#FFF',
     fontFamily: 'Nunito',
-    fontSize: 9,
-    lineHeight: 12,
+    fontSize: 12,
+    lineHeight: 14,
     marginLeft: 10,
     marginRight: 10,
   },
   styWrapHeader: {
     flexDirection: 'row',
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFF'
   },
   styWrapEmpty: {
     height: height / 2,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   iconSearch: {
-    marginRight: -8,
+    marginRight: -5,
     alignSelf: 'center'
   }
 });
