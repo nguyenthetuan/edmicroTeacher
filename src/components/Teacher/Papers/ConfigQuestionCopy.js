@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Image, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -13,6 +14,7 @@ import _ from 'lodash';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WarningModal from '../../modals/WarningModal';
+import { updateExamListAction } from '../../../actions/paperAction';
 
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -39,8 +41,7 @@ const type = [
         order: 1,
     }
 ]
-
-export default class ConfigQuestion extends Component {
+class ConfigQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -299,6 +300,7 @@ export default class ConfigQuestion extends Component {
                         id: response.id,
                     });
                     this.closePopupCreate();
+                    this.props.needUpdate(true);
                     this.props.navigation.navigate('CopyFromSubjectExists');
                 }
 
@@ -360,7 +362,6 @@ export default class ConfigQuestion extends Component {
         }
         this.setState({ assignmentType: va })
     }
-
     _renderGrade = () => {
         const { listGrades } = this.state;
         return (
@@ -1046,4 +1047,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 25
     }
-}) 
+})
+
+const mapStateToProps = state => {
+    return {
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ConfigQuestion);

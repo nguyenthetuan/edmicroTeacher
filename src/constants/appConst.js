@@ -79,9 +79,11 @@ module.exports = {
   percent_completed: 'percent_completed',
   mathID: 'TOAN',
   mathThID: 'TOANTHCS',
+  mathThptID: 'TOANTHPT',
   mathHH: 'HOCHAY',
   mathVao10ID: 'TOANVAO10',
   mathPlayID: 'MATHPLAY',
+  mathJRID :'TOAN-JR',
 
   phyID: 'VATLY',
   phyTHCSID: 'VATLITHCS',
@@ -120,6 +122,13 @@ module.exports = {
   congngheID : "CONGNGHE",
   mythuatID : "MYTHUAT",
   gdtcID: "GDTC",
+  tinhocID: "TINHOC",
+
+  khoahocID:"STEM",
+
+  mythuatID: 'MYTHUAT',
+
+  amnhacID:'AMNHAC',
 
   apiKeyYoutube: 'AIzaSyDczErB0NZ2yQxjv_wa_sz4ckJAVMo0Vso',
   practiceModal: 'practice-modal',
