@@ -117,6 +117,11 @@ export default class PracticeTab extends Component {
             <ActivityIndicator color={'#62ACE1'} />
           </View>
         )}
+        {
+          _.isEmpty(listCateTest)
+          &&
+          <Text style={[styles.headerTextTitle, { alignSelf: 'center', marginTop: 100 }]}>Không tìm thấy dữ liệu</Text>
+        }
         <Accordion
           sections={listCateTest}
           activeSections={this.state.activeSections}

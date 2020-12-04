@@ -1,4 +1,3 @@
-import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import PracticeTab from './PracticeTab';
@@ -29,12 +28,12 @@ const TabMissionType = createMaterialTopTabNavigator(
       },
       indicatorStyle: {
         backgroundColor: '#56CCF2',
-        height: 0.5, 
-        width:"25%",
-        alignItems:'center',
-        alignSelf:'center',
-        marginLeft:"10%",
-        borderRadius:10
+        height: 0.5,
+        width: "25%",
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginLeft: "10%",
+        borderRadius: 10
       },
       allowFontScaling: true,
       inactiveTintColor: '#828282',

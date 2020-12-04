@@ -14,6 +14,7 @@ import {
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import ItemSectionListPrac from './ItemSectionListPrac';
@@ -234,14 +235,6 @@ export default class StepThree extends Component {
       htmlContent,
       isLoading
     } = this.state;
-    const {
-      dataPracticeAdd,
-      dataTestAdd,
-    } = this.props.screenProps.data;
-    let isShowBtnNext = false;
-    try {
-      isShowBtnNext = dataPracticeAdd.length > 0 || dataTestAdd.length > 0;
-    } catch (error) { }
     return (
       <>
         <ScrollView
@@ -298,19 +291,19 @@ export default class StepThree extends Component {
           {this.renderPractice()}
           {this.renderTest()}
         </ScrollView>
-        {isShowBtnNext ?
+
+        <View style={styles.styWrapBtn}>
+          <TouchableOpacity
+            style={styles.styBtnBack}
+            onPress={this.handleNextStepTwo}>
+            <IconAntDesign name={'arrowleft'} style={styles.styTxtBtnNext} />
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.styBtnNext}
             onPress={this.handleNextStepFour}>
             <Text style={styles.styTxtBtnNext}>Bước tiếp theo</Text>
           </TouchableOpacity>
-          :
-          <TouchableOpacity
-            style={styles.styBtnNext}
-            onPress={this.handleNextStepTwo}>
-            <Text style={styles.styTxtBtnNext}>Chọn bộ đề</Text>
-          </TouchableOpacity>
-        }
+        </View>
         {isLoading && <ActivityIndicator style={styles.styWrapLoading} color={'#62ACE1'} />}
         <ModalEditor
           ref={ref => (this.modalEditor = ref)}
@@ -359,9 +352,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
     marginBottom: 10,
-    marginLeft: 27,
-    marginRight: 27,
-    marginTop: 20
+    marginLeft: 10,
+    marginTop: 20,
+    flex: 1
   },
   styTxtBtnNext: {
     color: '#FFF',
@@ -516,5 +509,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10
-  }
+  },
+  styWrapBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10
+  },
+  styBtnBack: {
+    backgroundColor: '#2D9CDB',
+    borderRadius: 25,
+    width: 50, height: 50,
+    marginTop: 20,
+  },
 });
