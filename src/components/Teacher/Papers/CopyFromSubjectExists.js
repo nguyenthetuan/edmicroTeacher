@@ -19,7 +19,7 @@ import dataHelper from '../../../utils/dataHelper';
 import Common from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
-
+import LearnPlaceholder from '../../shim/LearnPlaceholder';
 
 let height = Dimensions.get('window').height;
 
@@ -33,7 +33,7 @@ export default class CopyFromSubjectExists extends Component {
             indexSelected: 0,
             subjectCode: [],
             knowledgeUnits: null,
-            isLoading: true
+            isLoading: false
         }
     }
 
@@ -145,7 +145,7 @@ export default class CopyFromSubjectExists extends Component {
                             <Image
                                 source={Common.getIconSubject(item.subjectCodes[0])}
                                 resizeMode="contain"
-                                style={{ height: 22, width: 22, borderRadius: 40, marginLeft:1 }} />
+                                style={{ height: 22, width: 22, borderRadius: 40, marginLeft: 1 }} />
                             <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
@@ -156,7 +156,7 @@ export default class CopyFromSubjectExists extends Component {
                             <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
                         </View>
                     </View>
-                    <View style={[styles.pieceBody, { width: "60%" }]}>
+                    <View style={[styles.pieceBody, { width: "60%", }]}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
                                 source={AppIcon.icon_questionV3}
@@ -228,19 +228,20 @@ export default class CopyFromSubjectExists extends Component {
 
                         </View>
                     </View>
-                    <View style={{ width: '100%', alignItems: 'center', height: height - 200 }}>
-                        {/* {!isLoading
-                         ? */}
-                            <View style={styles.viewStatus}>
-                                <FlatList
-                                    data={this.state.listTask}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    renderItem={this.renderTask}
-                                />
-                            </View>
-                            {/* // :
-                            // <ListTaskPlaceHolder />} */}
-                    </View>
+                    {!isLoading
+                        ?
+                        <View style={styles.viewStatus}>
+                            <FlatList
+                                data={this.state.listTask}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={this.renderTask}
+                            />
+                        </View>
+                        :
+                        <View style={styles.viewStatus}>
+                            {isLoading && (<ListTaskPlaceHolder />)}
+                        </View>
+                    }
                 </SafeAreaView>
             </View>
         )
@@ -274,23 +275,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     singleTask: {
-        width: '95%',
         height: 100,
         alignSelf: 'center',
         marginTop: 10,
         borderWidth: 1,
         borderColor: '#56CCF2',
         borderRadius: 5,
+        // paddingLeft: 16,
+        // paddingRight: 16,
     },
     headerTask: {
-        width: '100%',
-        // height: 40,
         backgroundColor: '#56CCF2',
-        flexWrap: 'nowrap',
-        paddingHorizontal: 5,
         borderTopRightRadius: 5,
         borderTopLeftRadius: 5,
-        paddingVertical: 3
+        paddingVertical: 3,
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
@@ -299,16 +297,18 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginTop: 3,
         marginBottom: 3,
-        marginLeft: 10.48
+        marginLeft: 14,
+        width: 320
     },
     bodyTask: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10
+        // paddingHorizontal: 14
     },
     pieceBody: {
         width: '40%',
-        marginTop: 10.5
+        marginTop: 10.5,
+        paddingHorizontal: 14
     },
     textDetail: {
         fontSize: 10,
@@ -349,6 +349,7 @@ const styles = StyleSheet.create({
     },
     paperParacV3: {
         marginLeft: -60,
+        marginRight: 10,
         alignItems: 'center',
         alignSelf: 'center'
     },

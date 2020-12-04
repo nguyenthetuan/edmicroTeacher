@@ -11,7 +11,6 @@ import RippleButton from '../../common-new/RippleButton';
 import ProgressBar from '../../libs/ProgressBar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
-import Common from '../../../utils/Common';
 
 const { width, height } = Dimensions.get('window');
 

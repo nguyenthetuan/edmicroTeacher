@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     txtContentItem: {
         fontFamily: 'Nunito-Regular',
         fontSize: 12,
-        color: '#DB3546'
+        color: '#CF616C'
     },
     viewDate: {
         flexDirection: 'column'

@@ -3,18 +3,14 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
   SafeAreaView,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import ListClassAssigment from './listClassAssigment';
 import ListQuestion from './listQuestion';
 import { createAppContainer } from 'react-navigation';
-import dataHelper from '../../../utils/dataHelper';
-import { getAvatarSource } from '../../../utils/Common';
 import ModalMockExamStart from './modalMockExamStart';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { getSourceAvatar } from '../../../utils/Helper';
@@ -28,9 +24,13 @@ const ExerciseTab = createMaterialTopTabNavigator(
         title: 'Lớp Giao Bài',
         tabBarLabel: ({ focused }) => {
           return !focused ? (
-            <Text style={styles.labelTab}>Lớp Giao Bài </Text>
+            <Text style={styles.labelTab}>
+              Lớp Giao Bài
+            </Text>
           ) : (
-              <Text style={styles.labelTabActive}>Lớp Giao Bài</Text>
+              <Text style={styles.labelTabActive}>
+                Lớp Giao Bài
+              </Text>
             );
         },
       },

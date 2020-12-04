@@ -7,7 +7,7 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
 const { height } = Dimensions.get('window');
 export default class ItemElement extends Component {
@@ -91,15 +91,15 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   styWrapBtnDele: {
-    // borderTopRightRadius:4,
-    // borderBottomRightRadius:4,
+    // borderTopRightRadius: 4,
+    // borderBottomRightRadius: 4,
     backgroundColor: '#FF4457',
     // padding: 8,
-    paddingTop:10,
-    paddingBottom:10,
+    paddingTop: 9,
+    paddingBottom: 9,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
   },
   styTxtBtnAdd: {
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   styTxtName: {
-    color: '#007bff',
+    color: '#2D9CDB',
     fontFamily: 'Nunito-Bold',
     flex: 1,
     alignItems: 'center',
@@ -138,6 +138,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
-    width:"85%"
+    width: "85%"
   }
 });

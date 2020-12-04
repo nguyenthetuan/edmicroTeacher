@@ -67,7 +67,9 @@ export default class itemClass extends Component {
               <Text style={styles.name}>{item.name}</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.textStatus}>{this._Status(item.status)}</Text>
+              <Text style={styles.textStatus}>
+                {this._Status(item.status)}
+                </Text>
               {(item.status === 1 || item.status === 2) && (
                 <View style={styles.iconStatus} />
               )}

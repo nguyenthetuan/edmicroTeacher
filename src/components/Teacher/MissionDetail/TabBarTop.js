@@ -20,7 +20,7 @@ const TabTop = createMaterialTopTabNavigator({
     },
 }, {
     activeTintColor: '#fff',
-    inactiveTintColor: '#56CCF2',
+    inactiveTintColor: '#828282',
     style: {
         backgroundColor: '#FFF',
     },
