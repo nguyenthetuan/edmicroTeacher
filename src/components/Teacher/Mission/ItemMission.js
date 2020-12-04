@@ -6,8 +6,8 @@ import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 const { width } = Dimensions.get('window');
 const modelStatus = {
-  unDelivered: 0,// chưa giao bài.
-  delivered: 1,// đã giao bài.
+  unDelivered: 1,// chưa giao bài.
+  delivered: 0,// đã giao bài.
 }
 export default class ItemMission extends Component {
 
