@@ -4,6 +4,7 @@ const initState = {
     listGrade: [],
     listSubject: [],
     assignId: null,
+    updateListExam: false
 };
 
 export default function paperReducer(state = initState, action) {
@@ -32,6 +33,11 @@ export default function paperReducer(state = initState, action) {
             return {
                 ...state,
                 assignId: null
+            }
+        case Types.NEED_UPDATE_EXAM_LIST_ACTION:
+            return {
+                ...state,
+                updateListExam: state.updateListExam
             }
         default:
             return state;

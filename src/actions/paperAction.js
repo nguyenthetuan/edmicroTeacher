@@ -9,3 +9,5 @@ export const fetchDataAssignmentAction = (payload) => ({ type: Types.FETCH_ASSIG
 export const fetchDataAssignmentSuccess = (payload) => ({ type: Types.FETCH_ASSIGNMENT_DETAIL_SUCCESS_ACTION, payload });
 
 export const fetchDataAssignmentFailed = (payload) => ({ type: Types.FETCH_ASSIGNMENT_DETAIL_FAILED_ACTION, payload });
+
+export const updateExamListAction = (payload) => ({ type: Types.NEED_UPDATE_EXAM_LIST_ACTION, payload });

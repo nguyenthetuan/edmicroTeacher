@@ -78,7 +78,7 @@ export default class Item extends Component {
                                     source={Common.getIconSubject(subjectCode)}
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 20 }}
                                 />
-                                <Text style={styles.txtQuestion}> {subjectCode}</Text>
+                                <Text style={styles.txtQuestion}> {Common.getDisplaySubject(subjectCode)}</Text>
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage

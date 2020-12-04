@@ -613,6 +613,8 @@ class Papers extends Component {
       assignmentContentType,
     } = this.state;
     const { user } = this.props;
+
+    console.log("updateListExam: ", this.state.updateListExam);
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMain {...user} navigation={this.props.navigation} />
@@ -769,6 +771,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     user: state.user,
+    updateListExam: state.paper.updateListExam
   };
 };
 

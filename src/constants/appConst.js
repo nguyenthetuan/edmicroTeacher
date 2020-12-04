@@ -115,6 +115,12 @@ module.exports = {
 
   tinhocID: "TINHOC",
 
+  khoahocID:"STEM",
+
+  mythuatID: 'MYTHUAT',
+
+  amnhacID:'AMNHAC',
+
   apiKeyYoutube: 'AIzaSyDczErB0NZ2yQxjv_wa_sz4ckJAVMo0Vso',
   practiceModal: 'practice-modal',
   type_home_list: 'type_home_list',

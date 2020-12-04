@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Image, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -13,6 +14,7 @@ import _ from 'lodash';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WarningModal from '../../modals/WarningModal';
+import { updateExamListAction } from '../../../actions/paperAction';
 
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -39,8 +41,7 @@ const type = [
         order: 1,
     }
 ]
-
-export default class ConfigQuestion extends Component {
+class ConfigQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -299,6 +300,7 @@ export default class ConfigQuestion extends Component {
                         id: response.id,
                     });
                     this.closePopupCreate();
+                    this.props.needUpdate();
                     this.props.navigation.navigate('CopyFromSubjectExists');
                 }
 
@@ -670,7 +672,7 @@ export default class ConfigQuestion extends Component {
                                     style={{ width: 20, height: 20, marginLeft: 5 }}
                                 />
                             </View>
-                            <View style={{ width: '100%', padding: 20, borderWidth: 1, borderColor: '#e5e5e5',top: 10 }}>
+                            <View style={{ width: '100%', padding: 20, borderWidth: 1, borderColor: '#e5e5e5', top: 10 }}>
                                 <Text style={[styles.textInPopupCreate, { color: 'red', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }}>
                                     <Text style={[styles.textInPopupCreate, { color: 'red' }]}>{data.questions.length} câu hỏi</Text>
@@ -865,4 +867,20 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#fff'
     }
-}) 
+})
+
+const mapStateToProps = state => {
+    return {
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        needUpdate: () => dispatch(updateExamListAction()),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ConfigQuestion);

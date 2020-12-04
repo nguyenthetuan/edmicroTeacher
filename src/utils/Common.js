@@ -110,10 +110,14 @@ const getDisplaySubject = (id) => {
     case AppConst.hisID: return 'Lịch sử';
     case AppConst.geoID: return 'Địa lí';
     case AppConst.engID: return 'Tiếng Anh';
+    case AppConst.engID2: return 'Tiếng Anh';
     case AppConst.gdcdID: return 'Giáo Dục Công Dân';
     case AppConst.engTHPTID: return 'Tiếng Anh THPT';
     case AppConst.engGRM: return 'Ngữ Pháp Tiếng Anh';
     case AppConst.engTHCS: return 'Tiếng Anh THCS';
+    case AppConst.khoahocID: return 'Khoa Học';
+    case AppConst.mythuatID: return 'Mỹ Thuật';
+    case AppConst.amnhacID: return 'Âm Nhạc';
     default:
       return 'Unknown variable';
   }
