@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, View, Text } from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from "@react-native-community/datetimepicker";
+
 
 const Example = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -26,6 +27,7 @@ const Example = () => {
         mode="datetime"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        value={new Date()}
       />
     </View>
   );
