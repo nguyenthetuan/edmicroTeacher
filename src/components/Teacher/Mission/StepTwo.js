@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import TabMissionType from './TabMissionType';
 import Toast from 'react-native-easy-toast';
 import Global from '../../../utils/Globals';
+
+const { height, width, } = Dimensions.get('window');
 export default class StepTwo extends Component {
   constructor(props) {
     super(props);
@@ -61,6 +63,17 @@ export default class StepTwo extends Component {
     this.props.screenProps.handleNextStep(2, data);
   };
 
+  handleNextStepOne = () => {
+    const data = {
+      ...this.props.screenProps.data,
+    };
+    this.resetDataSelect();
+    Global.resetDataPracticeAdd();
+    Global.resetDataTestAdd();
+    this.props.navigation.goBack();
+    this.props.screenProps.handleNextStep(0, data);
+  }
+
   resetDataSelect = () => {
     this.setState({ dataPracticeAdd: [], dataTestAdd: [] });
   }
@@ -76,13 +89,20 @@ export default class StepTwo extends Component {
             changeDataTestAdd: this.changeDataTestAdd,
           }}
         />
-        <TouchableOpacity
-          style={styles.styBtnNext}
-          onPress={this.handleNextStepThree}>
-          <Text style={styles.styTxtBtnNext}>
-            Bước tiếp theo
+        <View style={styles.styWrapBtn}>
+          <TouchableOpacity
+            style={styles.styBtnBack}
+            onPress={this.handleNextStepOne}>
+            <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.styBtnNext}
+            onPress={this.handleNextStepThree}>
+            <Text style={styles.styTxtBtnNext}>
+              Bước tiếp theo
             </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
       </View>
     );
@@ -103,8 +123,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
     marginBottom: 10,
-    marginLeft: 27,
-    marginRight: 27
+    marginLeft: 10,
+    flex: 1
+  },
+  styBtnBack: {
+    backgroundColor: '#2D9CDB',
+    borderRadius: 25,
+    marginBottom: 10,
+    width: 50, height: 50
+  },
+  styWrapBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   styTxtBtnNext: {
     color: '#FFF',

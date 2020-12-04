@@ -17,6 +17,7 @@ import StepFour from './StepFour';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import Global from '../../../utils/Globals';
+import _ from 'lodash';
 export default class MissionStepByStep extends Component {
   token = null;
   state = {
@@ -38,7 +39,7 @@ export default class MissionStepByStep extends Component {
   };
 
   handleNextStep = (index, data) => {
-    if (index == 0) {
+    if (index == 0 && _.isEmpty(data)) {
       Global.resetStateStepOne();
       this.setState({ currentPosition: index, data: {} });
       return;
@@ -80,10 +81,6 @@ export default class MissionStepByStep extends Component {
             currentPosition={this.state.currentPosition}
             labels={labels}
             stepCount={4}
-          // renderLabel={(e) => {
-          //   console.log(e);
-          //   return (<Text style={{ color: e.stepStatus == 'finished' || e.stepStatus == 'current' ? '#56CCF2' : '#757575' }}>{e.label}</Text>)
-          // }}
           />
         </View>
         <TopTabMissionContain

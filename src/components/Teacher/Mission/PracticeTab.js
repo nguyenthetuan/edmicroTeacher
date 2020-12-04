@@ -112,6 +112,7 @@ export default class PracticeTab extends Component {
 
   render() {
     const { listCateHirachy } = this.props.screenProps;
+    console.log("🚀 ~ file: PracticeTab.js ~ line 115 ~ PracticeTab ~ render ~ listCateHirachy", listCateHirachy)
     const { isLoading } = this.state;
     return (
       <ScrollView style={styles.contain} showsVerticalScrollIndicator={false}>
@@ -120,6 +121,11 @@ export default class PracticeTab extends Component {
             <ActivityIndicator color={'#56CCF2'} />
           </View>
         )}
+        {
+          _.isEmpty(listCateHirachy)
+          &&
+          <Text style={[styles.headerTextTitle, { alignSelf: 'center', marginTop: 100 }]}>Không tìm thấy dữ liệu</Text>
+        }
         <Accordion
           sections={listCateHirachy}
           activeSections={this.state.activeSections}
