@@ -83,7 +83,7 @@ module.exports = {
   mathHH: 'HOCHAY',
   mathVao10ID: 'TOANVAO10',
   mathPlayID: 'MATHPLAY',
-  mathJRID :'TOAN-JR',
+  mathJRID: 'TOAN-JR',
 
   phyID: 'VATLY',
   phyTHCSID: 'VATLITHCS',
@@ -116,19 +116,19 @@ module.exports = {
   gdcdTHID: 'GDCDTHCS',
 
   tinhocID: "TINHOC",
-  stemID : 'STEM',
+  stemID: 'STEM',
   amnhacID: 'AMNHAC',
-  gdqpID : "GDQP",
-  congngheID : "CONGNGHE",
-  mythuatID : "MYTHUAT",
+  gdqpID: "GDQP",
+  congngheID: "CONGNGHE",
+  mythuatID: "MYTHUAT",
   gdtcID: "GDTC",
   tinhocID: "TINHOC",
 
-  khoahocID:"STEM",
+  khoahocID: "STEM",
 
   mythuatID: 'MYTHUAT',
 
-  amnhacID:'AMNHAC',
+  amnhacID: 'AMNHAC',
 
   apiKeyYoutube: 'AIzaSyDczErB0NZ2yQxjv_wa_sz4ckJAVMo0Vso',
   practiceModal: 'practice-modal',
