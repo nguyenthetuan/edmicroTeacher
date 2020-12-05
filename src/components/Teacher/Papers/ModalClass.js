@@ -7,11 +7,13 @@ import {
     Dimensions,
     FlatList,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    TouchableWithoutFeedback
 } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/Entypo';
+import AppIcon from '../../../utils/AppIcon';
 const { width, height } = Dimensions.get('window');
 
 export default class ModalClass extends Component {
@@ -58,6 +60,16 @@ export default class ModalClass extends Component {
                 >
                     <View style={styles.styWrapTitle}>
                         <Text style={styles.styTitle}>Chọn lớp</Text>
+                        {Platform.OS == 'android' &&
+                            < TouchableOpacity
+                                onPress={this.onClose}
+                            >
+                                <Image
+                                    source={AppIcon.close_img}
+                                    resizeMode={'stretch'}
+                                    style={styles.styClose}
+                                />
+                            </TouchableOpacity>}
                     </View>
                     <FlatList
                         data={listGrades}
@@ -68,7 +80,7 @@ export default class ModalClass extends Component {
                         showsVerticalScrollIndicator={false}
                     />
                 </Modalize>
-            </Modal>
+            </Modal >
         )
     }
 }
@@ -81,7 +93,8 @@ const styles = StyleSheet.create({
     },
     styTitle: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 16
+        fontSize: 16,
+        flex: 1
     },
     styCheck: {
         width: 20,
@@ -108,8 +121,13 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: 10,
         borderBottomWidth: 1,
-        borderColor: '#E0E0E0'
-    }
+        borderColor: '#E0E0E0',
+        flexDirection: 'row',
+    },
+    styClose: {
+        width: 25,
+        height: 25,
+      },
 });
 
 class Item extends Component {
