@@ -19,7 +19,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import ImagePickerCrop from 'react-native-image-crop-picker';
 import ImagePickerR from 'react-native-image-picker';
 import jwtDecode from 'jwt-decode';
-import DateTimePickerModal from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import apiHelper from '../../services/apiExamHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';

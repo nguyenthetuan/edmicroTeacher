@@ -12,7 +12,7 @@ import DropdownStudent from '../Papers/DropdownStudent';
 Icon.loadFont();
 import moment from 'moment';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import DateTimePickerModal from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import dataHelper from '../../../utils/dataHelper';
 import apiMission from '../../../services/apiMission';
@@ -151,7 +151,6 @@ export default class ItemClass extends Component {
                     mode="datetime"
                     onConfirm={this.handleConfirm}
                     onCancel={this.hideDatePicker}
-                    value={new Date()}
                 />}
             </View >
         );
