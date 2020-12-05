@@ -21,7 +21,7 @@ export default class ClassItem extends Component {
         return (
             <View style={styles.buttomActive}>
                 <RippleButton style={styles.styIcon} onPress={() => this.props.activeClass(item)}>
-                <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
+                    <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
                 </RippleButton>
                 <Text style={styles.txtItemActive}>{name}</Text>
             </View>
@@ -85,16 +85,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
     },
     buttomActive: {
-        borderWidth: 1,
-        borderColor: '#0085FF',
-        backgroundColor: '#89EAFF',
-        borderRadius: 3,
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 5,
-        marginVertical: 10,
-        paddingHorizontal: 5,
-        paddingVertical: 3,
     },
     txtItem: {
         fontFamily: 'Nunito-Regular',
@@ -106,6 +98,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 12,
         color: '#000',
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: '#0085FF',
+        backgroundColor: '#89EAFF',
+        borderRadius: 3,
+        marginHorizontal: 5,
+        marginVertical: 10,
+        paddingHorizontal: 5,
+        paddingVertical: 3,
     },
     styWrapClass: {
         marginTop: 12,
@@ -123,8 +124,11 @@ const styles = StyleSheet.create({
     },
     styIcon: {
         position: 'absolute',
-        top: -8,
-        right: -8,
+        top: 3,
+        alignSelf: 'flex-end',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        zIndex: 10,
     },
     styTxtEmpty: {
         fontFamily: 'Nunito-Regular',
@@ -134,6 +138,6 @@ const styles = StyleSheet.create({
     },
     widthClose: {
         width: 15,
-        height: 15
+        height: 15,
     }
 });

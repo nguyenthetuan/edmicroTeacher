@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { TouchableNativeFeedback, Platform } from 'react-native'
+import { TouchableOpacity, Platform } from 'react-native'
 import Ripple from 'react-native-material-ripple';
 import Color from '../../constants/colors';
 import Dimens from '../../constants/dimens';
 
 const TouchAndroid = (props) => {
   return (
-    <TouchableNativeFeedback
+    <TouchableOpacity
       onPress={() => {
         props.onPress();
       }}
-      background={TouchableNativeFeedback.Ripple('#ddd', false)}
+      style={[props.style]}
     >
       {props.children}
-    </TouchableNativeFeedback>
+    </TouchableOpacity>
   );
 }
 
