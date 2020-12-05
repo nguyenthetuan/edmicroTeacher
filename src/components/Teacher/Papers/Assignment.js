@@ -19,8 +19,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import DropdownStudent from './DropdownStudent';
 Icon.loadFont();
 import moment from 'moment';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from "@react-native-community/datetimepicker";
+
 import dataHelper from '../../../utils/dataHelper';
 import apiPapers from '../../../services/apiPapersTeacher';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -186,7 +186,9 @@ function Item(props) {
         mode="datetime"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        value={new Date()}
       />}
+
     </View >
   )
 }

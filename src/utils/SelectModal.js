@@ -95,7 +95,10 @@ class SelectModal extends Component {
                                             </Text>
                                         )}
                                         renderItem={({ item, index }) => {
-                                            const name = item.className || item.name || item.subjectName || item.studentName;
+                                            let name = item.className || item.name || item.subjectName || item.studentName;
+                                            if (item.testId) {
+                                                name = `${item.examName} ${item.name}`;
+                                            }
                                             const isSelected = indexSelected === index;
                                             return (
                                                 <TouchableOpacity

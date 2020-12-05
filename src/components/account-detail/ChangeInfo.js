@@ -19,7 +19,8 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import ImagePickerCrop from 'react-native-image-crop-picker';
 import ImagePickerR from 'react-native-image-picker';
 import jwtDecode from 'jwt-decode';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from "@react-native-community/datetimepicker";
+
 import apiHelper from '../../services/apiExamHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';
 import {
@@ -552,7 +553,7 @@ class ChangeInfo extends Component {
         {__DEV__ ? null : <DateTimePickerModal
           isVisible={this.state.isDateTimePickerVisible}
           mode="date"
-          date={new Date(this.state.Birthday)}
+          value={new Date(this.state.Birthday)}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />}
