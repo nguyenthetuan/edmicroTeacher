@@ -9,9 +9,11 @@ import {
     Dimensions,
     Text,
     TouchableWithoutFeedback,
+    Alert
 } from 'react-native';
 import Api from '../../../services/apiExamHelper';
 import dataHelper from '../../../utils/dataHelper';
+import Common from '../../../utils/Common';
 import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 export default class ModalMockExamStart extends Component {
@@ -21,6 +23,7 @@ export default class ModalMockExamStart extends Component {
         this.state = {
             visible: visible,
             data: {},
+            isLoading: false
         };
     }
 
@@ -28,28 +31,38 @@ export default class ModalMockExamStart extends Component {
         this.setState(
             {
                 visible: true,
+                isLoading: true
             },
             () => this.getInforMockExam(data),
         );
     };
 
     hideModal = () => {
-        this.setState({ visible: false });
+        this.setState({ visible: false, data: {}, isLoading: false });
     };
 
     getInforMockExam = async (data) => {
         try {
             const { token } = await dataHelper.getToken();
             const response = await Api.testInfo(token, data._id);
-            if (response) {
-                this.setState({ data: response });
+            if (response && response.testId) {
+                this.setState({ data: response, isLoading: false });
+            } else {
+                throw 'Có lỗi xảy ra';
             }
-        } catch (error) { }
+        } catch (error) {
+            Alert.alert(
+                'Thông báo',
+                'Có lỗi xảy ra. Vui lòng thử lại sau',
+                [
+                    { text: 'Thoát', onPress: this.hideModal }
+                ]
+            );
+        }
     };
 
     _startMockExam = async () => {
         const { testId, status } = this.state.data;
-        console.log("ModalMockExamStart -> testId", testId)
         if (status == 0) {
             const { token } = await dataHelper.getToken();
             await Api.testStart(token, testId);
@@ -59,7 +72,7 @@ export default class ModalMockExamStart extends Component {
     };
 
     render() {
-        const { visible, data } = this.state;
+        const { visible, data, isLoading } = this.state;
         return (
             <Modal visible={visible} transparent={true}>
                 <TouchableWithoutFeedback
@@ -68,7 +81,7 @@ export default class ModalMockExamStart extends Component {
                         <TouchableWithoutFeedback>
                             <View>
                                 <View style={styles.body}>
-                                    {!_.isEmpty(data) ? (
+                                    {!_.isEmpty(data) && !isLoading ? (
                                         <>
                                             <Text style={styles.name}>{data.title}</Text>
                                             <View style={styles.wrapTime}>
@@ -103,9 +116,9 @@ export default class ModalMockExamStart extends Component {
                                                             Thời gian làm bài
                                                         </Text>
                                                     </View>
-                                                    <View style={styles.stylLine} />
+                                                    <View style={[styles.stylLine, { width: '40%' }]} />
                                                     <Text style={styles.time}>
-                                                        {data.duration / 60} phút
+                                                        {Common.roundNumber(data.duration / 60)} phút
                                                     </Text>
                                                 </View>
                                             ) : null}
@@ -114,7 +127,8 @@ export default class ModalMockExamStart extends Component {
                                                     onPress={() => this._startMockExam()}
                                                     style={styles.btnStart}>
                                                     <Text style={styles.txtButon}>
-                                                        {true ? 'Bắt đầu' : 'Tiếp tục'}
+                                                        {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
+                                                        Làm thử
                                                     </Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity
@@ -146,11 +160,9 @@ const styles = StyleSheet.create({
     },
     body: {
         backgroundColor: '#fff',
-        minHeight: height / 3,
         borderRadius: 5,
-        justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 13,
+        padding: 13,
     },
     name: {
         fontSize: 18,

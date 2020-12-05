@@ -6,8 +6,8 @@ import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 const { width } = Dimensions.get('window');
 const modelStatus = {
-  unDelivered: 0,// chưa giao bài.
-  delivered: 1,// đã giao bài.
+  unDelivered: 1,// chưa giao bài.
+  delivered: 0,// đã giao bài.
 }
 export default class ItemMission extends Component {
 
@@ -33,7 +33,7 @@ export default class ItemMission extends Component {
     );
   };
   render() {
-    const { data, title,navigation } = this.props;
+    const { data, title, navigation } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
     const textDelivered = data.status == modelStatus.unDelivered ? 'Chưa giao' : 'Đã giao';
     return (
@@ -63,10 +63,10 @@ export default class ItemMission extends Component {
             )}
           </View>
           <View style={styles.viewCount}>
-              {this.renderElement(
-                getIconSubject(data.subjectCode),
-                 data.subjectName
-              )}
+            {this.renderElement(
+              getIconSubject(data.subjectCode),
+              data.subjectName
+            )}
             {this.renderElement(
               AppIcon.icon_paracClass,
               'Bài tự luyện',

@@ -10,15 +10,11 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import ModalLevelComplete from './modalLevelComplete';
-import dataHelper from '../../../utils/dataHelper';
-import { getAvatarSource } from '../../../utils/Common';
-import HeaderDetail from '../../common-new/HeaderDetail';
 const { width, height } = Dimensions.get('window');
 import TabTop from './TopNavigationClass';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { SafeAreaView } from 'react-navigation';
 import { getSourceAvatar } from '../../../utils/Helper';
-import FastImage from 'react-native-fast-image';
 
 class ClassDetail extends Component {
   constructor(props) {
@@ -41,8 +37,15 @@ class ClassDetail extends Component {
   };
 
   render() {
-    const { visible, idStudent, classID } = this.state;
-    const { navigation, user } = this.props;
+    const {
+      visible,
+      idStudent,
+      classID
+    } = this.state;
+    const {
+      navigation,
+      user
+    } = this.props;
     const { title } = this.props.navigation.state.params;
     const source = getSourceAvatar(user.userId);
     return (

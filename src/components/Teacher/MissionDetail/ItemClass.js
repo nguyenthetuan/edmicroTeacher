@@ -146,13 +146,13 @@ export default class ItemClass extends Component {
                         }
                     </View>
                 </View>
-                <DateTimePickerModal
+                {__DEV__ ? null : <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="datetime"
                     onConfirm={this.handleConfirm}
                     onCancel={this.hideDatePicker}
                     value={new Date()}
-                />
+                />}
             </View >
         );
     }
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: 14,
         color: '#fff',
-        marginRight: 10, 
+        marginRight: 10,
         marginLeft: 10,
     },
     checkAllow: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     txtContentItem: {
         fontFamily: 'Nunito-Regular',
         fontSize: 12,
-        color: '#DB3546'
+        color: '#CF616C'
     },
     viewDate: {
         flexDirection: 'column'
@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: '#F2F2F2'
     },
-    widthCheck:{
-        marginRight:15,
+    widthCheck: {
+        marginRight: 15,
         alignSelf: 'center'
     }
 

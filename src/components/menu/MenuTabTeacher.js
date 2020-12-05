@@ -130,8 +130,8 @@ class MenuTabTeacher extends Component {
                 rippleColor={rippleColor}
               />
             </View>
-            <Version version={APP_VERSION} />
           </ScrollView>
+          <Version version={APP_VERSION} />
         </View >
         <SettingContact
           modalVisible={modalVisible}

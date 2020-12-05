@@ -550,13 +550,13 @@ class ChangeInfo extends Component {
           </ScrollView>
         </View>
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
-        <DateTimePickerModal
+        {__DEV__ ? null : <DateTimePickerModal
           isVisible={this.state.isDateTimePickerVisible}
           mode="date"
           value={new Date(this.state.Birthday)}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
-        />
+        />}
         <Toast ref="toast" position={'bottom'} />
         <LoadingScreen
           isLoading={this.state.isUpdate}
