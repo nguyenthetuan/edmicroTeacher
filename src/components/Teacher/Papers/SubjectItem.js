@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
         borderColor: '#0085FF',
         backgroundColor: '#89EAFF',
         borderRadius: 3,
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 5,
         marginVertical: 10,
@@ -108,9 +109,19 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     styIcon: {
-        position: 'absolute',
-        top: -8,
-        right: -8
+        // position: 'absolute',
+        // top: -8,
+        // right: -8,
+
+        // alignSelf: 'flex-end',
+        // backgroundColor: 'red',
+        // marginRight: -10,
+        // marginTop: -10,
+        flex: 1,
+        // marginTop: -10,
+        alignSelf: 'flex-end',
+        // marginRight: -10
+
     },
     styWrapClassIn: {
         flexDirection: 'row',
@@ -139,6 +150,10 @@ const styles = StyleSheet.create({
     },
     widthClose: {
         width: 15,
-        height: 15
+        height: 15,
+        marginRight: -10,
+        marginTop: -10,
+        alignSelf: 'flex-end',
+        // position: 'relative',
     }
 });

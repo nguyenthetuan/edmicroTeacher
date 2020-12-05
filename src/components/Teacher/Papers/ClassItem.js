@@ -21,7 +21,7 @@ export default class ClassItem extends Component {
         return (
             <View style={styles.buttomActive}>
                 <RippleButton style={styles.styIcon} onPress={() => this.props.activeClass(item)}>
-                <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
+                    <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
                 </RippleButton>
                 <Text style={styles.txtItemActive}>{name}</Text>
             </View>
@@ -122,9 +122,18 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     styIcon: {
-        position: 'absolute',
-        top: -8,
-        right: -8,
+        // position: 'absolute',
+        // top: -8,
+        // right: -8,
+
+        // alignSelf: 'flex-end',
+        // backgroundColor: 'red',
+        // marginRight: -10,
+        // marginTop: -10,
+        flex: 1,
+        // marginTop: -10,
+        alignSelf: 'flex-end',
+        // marginRight: -10
     },
     styTxtEmpty: {
         fontFamily: 'Nunito-Regular',
@@ -134,6 +143,11 @@ const styles = StyleSheet.create({
     },
     widthClose: {
         width: 15,
-        height: 15
+        height: 15,
+        marginRight: -10,
+        marginTop: -10,
+        alignSelf: 'flex-end',
+        // position: 'relative',
+        
     }
 });

@@ -714,7 +714,7 @@ const styles = StyleSheet.create({
     padding: 3,
     paddingHorizontal: 10,
     borderRadius: 4,
-    height: 30,
+    height: 40,
   },
   txtAdd: {
     fontFamily: 'Nunito-Regular',
@@ -750,11 +750,11 @@ const styles = StyleSheet.create({
     // paddingTop: NAVBAR_HEIGHT,
   },
   searchPaper: {
-    height: 30,
+    height: 40,
     fontSize: 14,
     color: '#000',
     fontFamily: 'Nunito-Regular',
-    flex: 1
+    flex: 1,
   },
   textTilteModal: {
     fontFamily: 'Nunito-Regular',
