@@ -26,16 +26,23 @@ export default class ItemMission extends Component {
   renderElement = (img, txt1, txt2) => {
     return (
       <View style={styles.styFlexDirRow}>
-        <Image source={img} resizeMode={'contain'} style={styles.styWrapImg} />
+        <FastImage source={img} resizeMode={'contain'} style={styles.styWrapImg} />
         <Text style={styles.styTxtLabel} numberOfLines={1}>{txt1}</Text>
         <Text style={styles.styTxtLabel} numberOfLines={1}>{txt2}</Text>
       </View>
     );
   };
+
+  shouldComponentUpdate = (prevProps) => {
+    if (prevProps.data != this.props.data) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
-    const { data, title, navigation } = this.props;
+    const { data } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
-    const textDelivered = data.status == modelStatus.unDelivered ? 'Chưa giao' : 'Đã giao';
     return (
       <TouchableOpacity
         style={styles.contain}

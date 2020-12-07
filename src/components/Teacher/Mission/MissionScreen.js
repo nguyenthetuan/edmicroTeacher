@@ -141,15 +141,16 @@ export default class MissionScreen extends Component {
           data={listMissionSearch}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
+          initialNumToRender={6}
           ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={<View style={{ height: 150 }} />}
+          ListFooterComponent={<View style={{ height: 20 }} />}
           ListEmptyComponent={this.renderEmpty}
-          stickyHeaderIndices={[0]}
-          onScroll={this.changePosition}
-          scrollEventThrottle={16}
-          keyboardDismissMode={'on-drag'}
+          // stickyHeaderIndices={[0]}
+          // onScroll={this.changePosition}
+          // scrollEventThrottle={16}
+          // keyboardDismissMode={'on-drag'}
           showsVerticalScrollIndicator={false}
-          windowSize={21}
+          // windowSize={21}
         />
         {/* </Animated.View> */}
       </View>
