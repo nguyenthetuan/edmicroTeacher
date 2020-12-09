@@ -42,6 +42,8 @@ import logout from '../asserts/appIcon/logout_icon.png';
 import icon_eye from '../asserts/appIcon/icon_eye.png';
 import tickTrue from '../asserts/appIcon/tickTrue.png';
 import tickFalse from '../asserts/appIcon/tickFalse.png';
+import pencil_pdf from '../asserts/icon/pencilpdf.png';
+import search_pdf from '../asserts/icon/searchpdf.png';
 
 //ICON TABMAIN
 // import tuluyen from '../asserts/appIcon/ICON_TU_LUYEN.png';
@@ -159,7 +161,8 @@ module.exports = {
   iconExercise,
   icon_arrow_left,
   icon_arrow_down,
-
+  pencil_pdf,
+  search_pdf,
   iconHomeWorkActive,
   iconClassActive,
   icClassNonActive,

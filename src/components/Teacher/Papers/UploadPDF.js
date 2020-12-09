@@ -333,13 +333,13 @@ export default class UploadPDF extends Component {
   };
 
   onChangeTextDuration = (text) => {
-      this.setState({ duration: text });
+    this.setState({ duration: text });
   };
 
   onEnediting = () => {
     const { duration } = this.state;
-    if(duration === '0'){
-      this.setState({duration:'5'})
+    if (duration === '0') {
+      this.setState({ duration: '5' })
     }
   }
 
@@ -446,8 +446,9 @@ export default class UploadPDF extends Component {
         <HeaderPaper
           title={'Câu Hỏi PDF'}
           navigation={this.props.navigation}
-          color={'#fff'}
+          color={'#979797'}
           onRightAction={this.assignmentContent}
+          iconColor='#000'
         />
         {/* <View style={styles.topheader}>
           <RippleButton
@@ -475,21 +476,15 @@ export default class UploadPDF extends Component {
           </TouchableOpacity>
         </View> */}
         {/* End header */}
-        <View style={styles.viewPosition} />
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 10 }}>
           {/* start create Upload PDF */}
           <TouchableWithoutFeedback onPress={this._hideKeybroad}>
             <View
-              style={[styles.bodyHeader, { height: assignmentType ? 300 : 250 }]}>
-              <Image
-                source={require('../../../asserts/appIcon/headerQuestion.png')}
-                resizeMode="contain"
-                style={styles.imgHeader}
-              />
+              style={[styles.bodyHeader, { flex: 1 }]}>
               <View
                 style={{
                   flex: 1,
-                  paddingStart: width * 0.24,
+                  // paddingStart: width * 0.24,
                 }}>
                 <TextInput
                   value={name}
@@ -500,6 +495,40 @@ export default class UploadPDF extends Component {
                   placeholderTextColor={'#BDBDBD'}
                   style={styles.inputName}
                 />
+                <Text>Môn học</Text>
+                <Dropdown
+                  containerStyle={{
+                    marginHorizontal: 0,
+                  }}
+                  contentStyle={{ marginHorizontal: 0, borderWidth: 1, borderColor: '#C4C4C4', width: '100%' }}
+                  title="Môn Học"
+                  data={listSubjects}
+                  onPressItem={(index) => this.onPressItemSubject(index)}
+                />
+                <Text>Khối lớp</Text>
+                <Dropdown
+                  contentStyle={{ marginHorizontal: 0, borderWidth: 1, borderColor: '#C4C4C4', width: '100%' }}
+                  title="Khối lớp"
+                  data={listGrades}
+                  onPressItem={(index) => this.onPressItemGrade(index)}
+                />
+                <Text>Dạng bài</Text>
+                <Dropdown
+                  contentStyle={{ marginHorizontal: 0, borderWidth: 1, borderColor: '#C4C4C4', width: '100%' }}
+                  title="Dạng Bài"
+                  data={assignmentTypes}
+                  indexSelected={0}
+                  onPressItem={(index) =>
+                    this.onPressItemAssignmentType(index)
+                  }
+                />
+                <View style={{ width: '100%', flexDirection: "row", alignItems: 'center', alignSelf: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                  <View style={{ borderWidth: 0.5, height: 0, borderColor: '#C4C4C4', width: '10%' }} />
+                  <Text style={styles.txtNoteUploadPDF}>
+                    Lưu ý! Bộ đề và đáp án file PDF. Dung lượng không quá 5MB!
+                  </Text>
+                  <View style={{ borderWidth: 0.5, height: 0, borderColor: '#C4C4C4', width: '10%' }} />
+                </View>
                 <View
                   style={{
                     flex: 1,
@@ -509,34 +538,8 @@ export default class UploadPDF extends Component {
                     marginTop: 10,
                   }}>
                   <View>
-                    <Dropdown
-                      containerStyle={{
-                        flex: 1,
-                        marginHorizontal: 0,
-                      }}
-                      contentStyle={{ marginHorizontal: 0 }}
-                      title="Môn Học"
-                      data={listSubjects}
-                      onPressItem={(index) => this.onPressItemSubject(index)}
-                    />
-                    <Dropdown
-                      contentStyle={{ marginHorizontal: 0 }}
-                      containerStyle={{ flex: 1, marginHorizontal: 0 }}
-                      title="Khối"
-                      data={listGrades}
-                      onPressItem={(index) => this.onPressItemGrade(index)}
-                    />
                     {assignmentType ? (
-                      <View style={{ flex: 1, marginBottom: 10 }}>
-                        <Text
-                          style={{
-                            fontFamily: 'Nunito-Bold',
-                            fontSize: 12,
-                            color: '#fff',
-                            borderRadius: 1,
-                          }}>
-                          Thời gian(phút)
-                        </Text>
+                      <View style={{ flex: 1, marginBottom: 10, }}>
                         <TextInput
                           value={duration}
                           onChangeText={this.onChangeTextDuration}
@@ -547,17 +550,18 @@ export default class UploadPDF extends Component {
                           placeholder={'Nhập thời gian'}
                           placeholderTextColor={'#BDBDBD'}
                           style={styles.inputName}
-                          onEndEditing={() =>this.onEnediting()}
+                          onEndEditing={() => this.onEnediting()}
                         />
+                        <Text style={styles.textMinutes}>Phút</Text>
                       </View>
                     ) : null}
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       onPress={this.onPickPDF}
                       style={[styles.btnAddPDF]}>
                       <Text style={styles.txtAddPDF}>
                         {urlFilePDF ? 'Đổi' : 'Thêm'} bộ đề PDF
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <Text
                       style={{
                         fontFamily: 'Nunito-Bold',
@@ -568,35 +572,52 @@ export default class UploadPDF extends Component {
                       }}>
                       Loại bài tập
                     </Text>
-                    <TouchableOpacity
-                      onPress={() => this.setState({ typeQuestion: 0 })}
-                      style={[
-                        styles.btnAddPDF,
-                        this.state.typeQuestion === 0 && {
-                          backgroundColor: '#2D9CDB',
-                        },
-                      ]}>
-                      <Text
+                    <View style={styles.wrapButtonType}>
+                      <TouchableOpacity
+                        onPress={() => this.setState({ typeQuestion: 0 })}
                         style={[
-                          this.state.typeQuestion === 0
-                            ? styles.txtActive
-                            : styles.txtNoActive,
+                          styles.btnChooseType,
+                          this.state.typeQuestion === 0 && {
+                            backgroundColor: '#2D9CDB',
+                          },
                         ]}>
-                        Trắc nghiệm
-                      </Text>
-                    </TouchableOpacity>
+                        <Text
+                          style={[
+                            this.state.typeQuestion === 0
+                              ? styles.txtActive
+                              : styles.txtNoActive,
+                          ]}>
+                          Trắc nghiệm
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => this.setState({ typeQuestion: 1 })}
+                        style={[
+                          styles.btnChooseType, { left: 5 },
+                          this.state.typeQuestion === 1 && {
+                            backgroundColor: '#2D9CDB',
+                          },
+                        ]}>
+                        <Text
+                          style={[
+                            this.state.typeQuestion === 1
+                              ? styles.txtActive
+                              : styles.txtNoActive,
+                          ]}>
+                          Tự luận
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.wrapAreaUploadPDF}>
+                      <View style={styles.wrapMiniPDF}>
+
+                      </View>
+                      <View style={styles.wrapMiniPDF}>
+
+                      </View>
+                    </View>
                   </View>
-                  <View>
-                    <Dropdown
-                      contentStyle={{ marginHorizontal: 0 }}
-                      containerStyle={{ flex: 1 }}
-                      title="Dạng Bài"
-                      data={assignmentTypes}
-                      indexSelected={0}
-                      onPressItem={(index) =>
-                        this.onPressItemAssignmentType(index)
-                      }
-                    />
+                  {/* <View>
                     <InputNumberQuestion
                       containerStyle={[
                         { flex: 1, marginBottom: 25 },
@@ -615,37 +636,17 @@ export default class UploadPDF extends Component {
                         {urlFileAnswerPDF ? 'Đổi' : 'Thêm'} lời giải PDF
                       </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => this.setState({ typeQuestion: 1 })}
-                      style={[
-                        styles.btnAddPDF,
-                        { marginTop: 26 },
-                        this.state.typeQuestion === 1 && {
-                          backgroundColor: '#2D9CDB',
-                        },
-                      ]}>
-                      <Text
-                        style={[
-                          this.state.typeQuestion === 1
-                            ? styles.txtActive
-                            : styles.txtNoActive,
-                        ]}>
-                        Tự luận
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                  </View> */}
                 </View>
-                <Text style={styles.txtNoteUploadPDF}>
-                  Lưu ý! Bộ đề và đáp án file PDF. Dung lượng không quá 5MB!
-                </Text>
+
               </View>
             </View>
           </TouchableWithoutFeedback>
           {/* End create Upload PDF */}
 
           {/* Start setting question */}
-          <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-            <TouchableOpacity
+          <View style={{ flex: 1, backgroundColor: '#FFF', }}>
+            {/* <TouchableOpacity
               onPress={() => {
                 this.setState({ visibleViewAnswer: !visibleViewAnswer });
               }}
@@ -656,7 +657,7 @@ export default class UploadPDF extends Component {
                 size={20}
                 color="#000"
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <SelectAnswer
               ref={(ref) => (this.selectAnswer = ref)}
               isVisible={visibleViewAnswer}
@@ -871,7 +872,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   header: {
-    backgroundColor: '#56CCF2',
+    // backgroundColor: '#56CCF2',
   },
   imgHeader: {
     width: width * 0.24,
@@ -892,8 +893,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    height: 170,
-    backgroundColor: '#56CCF2',
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
@@ -1011,20 +1010,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  btnChooseType: {
+    width: width / 3,
+    backgroundColor: '#C4C4C4',
+    borderRadius: 2,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4
+  },
   txtAddPDF: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
   },
   txtNoActive: {
-    color: '#C4C4C4',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontFamily: 'Nunito-Bold',
+    fontSize: 14,
   },
   txtActive: {
     color: '#fff',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontFamily: 'Nunito-Bold',
+    fontSize: 14,
   },
   inputName: {
     height: 24,
@@ -1036,6 +1043,8 @@ const styles = StyleSheet.create({
     marginBottom: 7,
     borderRadius: 1,
     paddingVertical: 0,
+    borderColor: '#C4C4C4',
+    borderWidth: 1,
   },
   inputPoint: {
     borderWidth: 1,
@@ -1088,9 +1097,40 @@ const styles = StyleSheet.create({
   },
   viewPosition: {
     position: 'absolute',
-    backgroundColor: '#56CCF2',
+    // backgroundColor: '#56CCF2',
     width,
     height: height / 2,
     zIndex: -1,
   },
+  textMinutes: {
+    fontFamily: 'Nunito',
+    fontSize: 12,
+    fontWeight: '400',
+    position: 'absolute',
+    left: 130,
+    top: 5
+  },
+  wrapButtonType: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#C4C4C4',
+    width: 0.9 * width,
+  },
+  wrapAreaUploadPDF: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 0.9 * width,
+    height: 80,
+    justifyContent: 'space-between',
+    marginTop: 10
+  },
+  wrapMiniPDF: {
+    width: 150,
+    height: 80,
+    borderWidth: 0.5,
+    backgroundColor: 'rgba(86, 204, 242, 0.1)',
+    borderColor: '#56CCF2',
+    borderRadius: 5
+  }
 });
