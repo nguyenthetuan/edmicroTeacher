@@ -79,6 +79,10 @@ function Item(props) {
       props.onToast('Thời gian không hợp lệ!')
       return false
     }
+    if (timeEnd < Date.now()) {
+      props.onToast('Thời gian không hợp lệ!')
+      return false
+    }
     return true;
   }
 
