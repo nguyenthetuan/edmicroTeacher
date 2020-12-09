@@ -13,7 +13,6 @@ Icon.loadFont();
 import moment from 'moment';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
 import dataHelper from '../../../utils/dataHelper';
 import apiMission from '../../../services/apiMission';
 import AppIcon from '../../../utils/AppIcon';
@@ -23,7 +22,20 @@ export default class ItemClass extends Component {
     state = {
         status: this.props.status,
         isDatePickerVisible: false,
-        timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime()
+        timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
+        students: null,
+    }
+
+    async componentDidMount() {
+        const { token } = await dataHelper.getToken();
+        const _id = this.props.missionId;
+        if (this.props.status) {
+            apiMission.getAssignByMission({ token, _id }).then(rp => {
+                if (rp) {
+                    this.setState({ students: rp.classList[0].students });
+                }
+            })
+        }
     }
 
     showDatePicker = () => {
@@ -125,7 +137,7 @@ export default class ItemClass extends Component {
                             // style={{ width: width - 32 - 54 - 80, height: 25 }}
                             style={styles.dropDown}
                             dropdownStyle={{ width: width - 32 - 54 - 80 }}
-                            options={item.students}
+                            options={this.state.students || item.students}
                             status={status}
                         />
                         {status ?
