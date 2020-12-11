@@ -29,6 +29,9 @@ import MissionDetailScreen from '../containers/teacher/Mission/MissionDetailCont
 import MissionPlayWebView from '../components/Teacher/MissionDetail/MissonPlayWebView';
 import MissonTestPlayWebView from '../components/Teacher/MissionDetail/MissonTestPlayWebView';
 import MissionStatisticsScreen from '../components/Teacher/MissionStatistics/MissionStatisticsScreen';
+import ExchangeGiftScreen from '../components/gifts/ExchangeGiftScreen';
+import SaleGift from '../components/gifts/SaleGift';
+import GiftDetail from '../components/gifts/GiftDetail';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -144,6 +147,18 @@ const TeacherStack = createStackNavigator({
   },
   MissionStatisticsScreen: {
     screen: MissionStatisticsScreen,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  ExchangeGiftScreen: {
+    screen: ExchangeGiftScreen,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  SaleGift: {
+    screen: SaleGift,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  GiftDetail: {
+    screen: GiftDetail,
     navigationOptions: { header: null, gesturesEnabled: true },
   }
 }, transition);

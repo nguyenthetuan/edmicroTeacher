@@ -105,6 +105,7 @@ import icon_actionOneV3 from '../asserts/icon/icon_actionOneV3.png';
 import icon_actionTwoV3 from '../asserts/icon/icon_actionTwoV3.png';
 import icon_arrowLeftv3 from '../asserts/icon/icon_arrowLeftv3.png';
 import icon_closeItemV3 from '../asserts/icon/icon_closeItemV3.png';
+import icon_diamondV3 from '../asserts/icon/icon_diamondV3.png';
 module.exports = {
   logo_onluyen,
   // icon_google,
@@ -194,5 +195,6 @@ module.exports = {
   icon_actionOneV3,
   icon_actionTwoV3,
   icon_arrowLeftv3,
-  icon_closeItemV3
+  icon_closeItemV3,
+  icon_diamondV3
 };
