@@ -35,6 +35,7 @@ import AnalyticsManager from '../../../utils/AnalyticsManager';
 import Globals from '../../../utils/Globals';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import HeaderPaper from './HeaderPaper';
+import ModalSelectAnswers from './ModalSelectAnswers';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -56,6 +57,7 @@ export default class UploadPDF extends Component {
       urlFileAnswerPDF: '',
       loadingUpload: false,
       pathFileAnswerPDF: null,
+      indexSelecting: 0,
       assignmentTypes: [
         {
           id: 0,
@@ -72,19 +74,31 @@ export default class UploadPDF extends Component {
       assignmentType: 0,
       duration: '',
       typeQuestion: 0,
+      indexSelectingTL: 0,
     };
+  }
+
+  onClickItem = async (index, optionIdAnswer) => {
+    await this.setState({ indexSelecting: index, optionIdAnswer: optionIdAnswer || -1, showSelectAnswer: true });
+    await this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1);
+    console.log("showSelectAnswer: ", this.state.showSelectAnswer);
+    setTimeout(() => {
+      this.scrollview.scrollToEnd();
+    }, 0)
+  };
+
+  onClickItemTL = (index, optionIdAnswer) => { this.setState({ indexSelectingTL: index, optionIdAnswer: optionIdAnswer || -1 }); this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1) };
+
+  closeModalSelectAnswer = () => {
+    this.setState({ showSelectAnswer: false })
   }
 
   changeTotalQuestion = (totalQuestion) => {
     const { typeQuestion } = this.state;
     if (typeQuestion === 0) {
-      this.setState({ totalQuestion }, () => {
-        this.selectAnswer.onResetIndexSelect();
-      });
+      this.setState({ totalQuestion, indexSelecting: 0 });
     } else {
-      this.setState({ totalQuestionTL: totalQuestion }, () => {
-        this.selectAnswer.onResetIndexSelectTL();
-      });
+      this.setState({ totalQuestionTL: totalQuestion, indexSelectingTL: 0 });
     }
   };
 
@@ -98,12 +112,12 @@ export default class UploadPDF extends Component {
     }
   };
 
-  _onFullView = () => {
-    this.setState({ showModalFullPDF: true });
+  _onFullView = (type) => {
+    this.setState({ showModalFullPDF: true, typeShowFullPDF: type });
   };
 
   getNumColumns = () => {
-    return Math.floor((width - 16) / 46);
+    return Math.floor((width - 20) / 65);
   };
 
   onPickPDF = async () => {
@@ -162,6 +176,10 @@ export default class UploadPDF extends Component {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
+
+      let url = res.uri;
+      let split = url.split('/');
+      let name = split.pop();
 
       if (res) {
         this.setState({
@@ -364,15 +382,24 @@ export default class UploadPDF extends Component {
       viewFileFDF,
       urlFilePDF,
       urlFileAnswerPDF,
+      typeShowFullPDF,
     } = this.state;
     const { urlFile } = this.props.navigation.state.params;
+
+    let uri = urlFile;
+    if (typeShowFullPDF == 1) {
+      uri = urlFileAnswerPDF || urlFile;
+    } else {
+      uri = urlFilePDF || urlFile;
+    }
+
     return (
       <Modal animationType="fade" transparent={true} visible={showModalFullPDF}>
         <View style={{ flex: 1 }}>
           <Pdf
             ref={(ref) => (this.pdfFull = ref)}
             source={{
-              uri: (viewFileFDF ? urlFilePDF : urlFileAnswerPDF) || urlFile,
+              uri: uri,
               cache: true,
             }}
             onLoadComplete={(numberOfPages, filePath) => { }}
@@ -381,7 +408,7 @@ export default class UploadPDF extends Component {
             }}
             style={styles.pdf}
           />
-          <View>
+          {/* <View>
             <TouchableOpacity
               style={styles.buttomTop}
               onPress={() => {
@@ -410,13 +437,18 @@ export default class UploadPDF extends Component {
                 style={{ marginTop: 2, marginStart: 1 }}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </Modal>
     );
   };
 
   _hideKeybroad = () => Keyboard.dismiss();
+
+  onSelectAnswer = (answer) => {
+    console.log("UPloadPDF: ", answer);
+    this.selectAnswer.onSelectAnswer(answer);
+  }
 
   render() {
     const {
@@ -440,6 +472,7 @@ export default class UploadPDF extends Component {
     } = this.state;
     const numColumns = this.getNumColumns();
     const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
+    console.log("render UPLOADPDF: ", this.state.indexSelecting);
     return (
       <SafeAreaView style={styles.container}>
         {/* start header */}
@@ -476,9 +509,9 @@ export default class UploadPDF extends Component {
           </TouchableOpacity>
         </View> */}
         {/* End header */}
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 10 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 10 }} ref={ref => this.scrollview = ref}>
           {/* start create Upload PDF */}
-          <TouchableWithoutFeedback onPress={this._hideKeybroad}>
+          <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); this.closeModalSelectAnswer() }}>
             <View>
               <View
                 style={[styles.bodyHeader, { flex: 1 }]}>
@@ -606,11 +639,20 @@ export default class UploadPDF extends Component {
                         <View>
                           <Text>Bộ đề PDF</Text>
                           <View style={styles.wrapMiniPDF}>
+                            {!!urlFilePDF && <Pdf
+                              ref={(ref) => (this.pdf = ref)}
+                              source={{ uri: urlFilePDF, cache: true }}
+                              onLoadComplete={(numberOfPages, filePath) => { }}
+                              onError={(error) => {
+                                console.log(error);
+                              }}
+                              style={styles.pdf}
+                            />}
                             <View style={styles.wrapEndAreaUploadPDF}>
-                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF}>
+                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
                                 <Image source={AppIcon.search_pdf} />
                               </TouchableOpacity>
-                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF}>
+                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
                                 <Image source={AppIcon.pencil_pdf} />
                               </TouchableOpacity>
                             </View>
@@ -619,11 +661,20 @@ export default class UploadPDF extends Component {
                         <View>
                           <Text>Lời giải</Text>
                           <View style={styles.wrapMiniPDF}>
+                            {!!urlFileAnswerPDF && <Pdf
+                              ref={(ref) => (this.pdf = ref)}
+                              source={{ uri: urlFileAnswerPDF, cache: true }}
+                              onLoadComplete={(numberOfPages, filePath) => { }}
+                              onError={(error) => {
+                                console.log(error);
+                              }}
+                              style={styles.pdf}
+                            />}
                             <View style={styles.wrapEndAreaUploadPDF}>
-                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF}>
+                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(1) }}>
                                 <Image source={AppIcon.search_pdf} />
                               </TouchableOpacity>
-                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF}>
+                              <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickAnswerPDF}>
                                 <Image source={AppIcon.pencil_pdf} />
                               </TouchableOpacity>
                             </View>
@@ -649,17 +700,28 @@ export default class UploadPDF extends Component {
                       </Text>
                 </TouchableOpacity> */}
               </View>
-              <InputNumberQuestion
-                containerStyle={[
-                  { flex: 1, marginBottom: 25 },
-                  assignmentType && { marginBottom: 80 },
-                ]}
-                title="Số câu"
-                totalQuestion={
-                  typeQuestion === 0 ? totalQuestion : totalQuestionTL
-                }
-                onChange={this.changeTotalQuestion}
-              />
+              <View style={styles.wrapTotalQsNPoint}>
+                <View>
+                  <SelectAnswer
+                    ref={(ref) => (this.selectAnswer = ref)}
+                    isVisible={visibleViewAnswer}
+                    numColumns={numColumns}
+                    totalQuestion={totalQuestion}
+                    totalQuestionTL={totalQuestionTL}
+                    typeQuestion={typeQuestion}
+                    assignmentType={assignmentType}
+                    totalQuestion={
+                      typeQuestion === 0 ? totalQuestion : totalQuestionTL
+                    }
+                    onClickItem={this.onClickItem}
+                    onClickItemTL={this.onClickItemTL}
+                    onChange={this.changeTotalQuestion}
+                    indexSelecting={this.state.indexSelecting}
+                    indexSelectingTL={this.state.indexSelectingTl}
+                    showSelectAnswer={this.state.showSelectAnswer}
+                  />
+                </View>
+              </View>
             </View>
           </TouchableWithoutFeedback>
           {/* End create Upload PDF */}
@@ -678,15 +740,8 @@ export default class UploadPDF extends Component {
                 color="#000"
               />
             </TouchableOpacity> */}
-            <SelectAnswer
-              ref={(ref) => (this.selectAnswer = ref)}
-              isVisible={visibleViewAnswer}
-              numColumns={numColumns}
-              totalQuestion={totalQuestion}
-              totalQuestionTL={totalQuestionTL}
-              typeQuestion={typeQuestion}
-            />
-            <View
+
+            {/* <View
               style={{
                 flexDirection: 'row',
                 paddingHorizontal: 16,
@@ -734,8 +789,8 @@ export default class UploadPDF extends Component {
                 </View>
                 <Text style={styles.txtShowPDF}>Xem lời giải</Text>
               </TouchableOpacity>
-            </View>
-            <View style={[styles.viewPdf, { height: height / 2 }]}>
+            </View> */}
+            {/* <View style={[styles.viewPdf, { paddingBottom: this.state.showSelectAnswer ? 160 : 0 }]}>
               <View style={{ flex: 1 }}>
                 {viewFileFDF ?
                   <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -799,9 +854,7 @@ export default class UploadPDF extends Component {
                       </Text>
                           </View>
                         ) : (
-                            <Text style={styles.txtNotAdd}>
-                              {viewFileFDF ? 'Chưa thêm bộ đề' : 'Chưa thêm lời giải'}
-                            </Text>
+                            <></>
                           )}
                       </View>}
                   </View>
@@ -874,10 +927,19 @@ export default class UploadPDF extends Component {
                   </View>
                 }
               </View>
-            </View>
+            </View> */}
           </View>
           {/* End setting question */}
         </ScrollView>
+        <ModalSelectAnswers
+          ref={(ref) => { this.modalSelectAnswers = ref }}
+          indexSelecting={this.state.indexSelecting}
+          indexSelectingTL={this.state.indexSelectingTL}
+          onSelectAnswer={this.onSelectAnswer}
+          optionIdAnswer={this.state.optionIdAnswer}
+          showSelectAnswer={this.state.showSelectAnswer}
+          close={this.closeModalSelectAnswer}
+        />
         <Toast ref={ref => this.refToast = ref} position={'bottom'} />
         {this.renderModalFullViewPDF()}
         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
@@ -978,8 +1040,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pdf: {
-    width,
     flex: 1,
+    width: '100%',
   },
   btnZoomPDF: {
     backgroundColor: 'rgba(47, 47, 46, 0.5)',
@@ -1151,7 +1213,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     backgroundColor: 'rgba(86, 204, 242, 0.1)',
     borderColor: '#56CCF2',
-    borderRadius: 5
+    borderRadius: 5,
   },
   wrapEndAreaUploadPDF: {
     position: 'absolute',
@@ -1159,6 +1221,7 @@ const styles = StyleSheet.create({
     bottom: 6,
     height: 20,
     flexDirection: 'row-reverse',
+    zIndex: 2
   },
   buttonInSideAreaUploadPDF: {
     height: 20,
@@ -1170,5 +1233,11 @@ const styles = StyleSheet.create({
     borderWidth: .5,
     borderColor: '#56CCF2',
     backgroundColor: '#FFFFFF'
-  }
+  },
+  // wrapTotalQsNPoint: {
+  //   width: 0.9 * width,
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   alignSelf: 'center',
+  // }
 });

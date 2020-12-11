@@ -90,7 +90,7 @@ import icon_handing from '../asserts/icon/icon_handing.png';
 import icon_gradeClass1 from '../asserts/icon/icon_gradeClass1.png';
 import icon_teacherV3Exam from '../asserts/icon/icon_teacherV3Exam.png';
 import icon_paracClass from '../asserts/icon/icon_paracClass.png';
-import icon_paracComplete from  '../asserts/icon/icon_paracComplete.png';
+import icon_paracComplete from '../asserts/icon/icon_paracComplete.png';
 import image_createCompleteV3 from '../asserts/images/image_createCompleteV3.png';
 import icon_timeEndV3 from '../asserts/icon/icon_timeEndV3.png';
 import icon_missonToV3 from '../asserts/icon/icon_missonToV3.png';
@@ -107,8 +107,12 @@ import icon_actionOneV3 from '../asserts/icon/icon_actionOneV3.png';
 import icon_actionTwoV3 from '../asserts/icon/icon_actionTwoV3.png';
 import icon_arrowLeftv3 from '../asserts/icon/icon_arrowLeftv3.png';
 import icon_closeItemV3 from '../asserts/icon/icon_closeItemV3.png';
+import icon_minus from '../asserts/icon/icn_minus.png';
+import icon_plus from '../asserts/icon/icn_plus.png';
 module.exports = {
   logo_onluyen,
+  icon_minus,
+  icon_plus,
   // icon_google,
   ic_account,
   r_accuracy,
