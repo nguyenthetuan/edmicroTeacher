@@ -113,6 +113,17 @@ export default class UploadPDF extends Component {
   };
 
   _onFullView = (type) => {
+    if (type == 1) {
+      if (!this.state.urlFileAnswerPDF) {
+        this.toast.show('Chưa có tài liệu PDF');
+        return;
+      }
+    } else {
+      if (!this.state.urlFilePDF) {
+        this.toast.show('Chưa có tài liệu PDF');
+        return;
+      }
+    }
     this.setState({ showModalFullPDF: true, typeShowFullPDF: type });
   };
 
@@ -790,6 +801,7 @@ export default class UploadPDF extends Component {
                 <Text style={styles.txtShowPDF}>Xem lời giải</Text>
               </TouchableOpacity>
             </View> */}
+            <View style={[styles.viewPdf, { paddingBottom: this.state.showSelectAnswer ? 160 : 0 }]}></View>
             {/* <View style={[styles.viewPdf, { paddingBottom: this.state.showSelectAnswer ? 160 : 0 }]}>
               <View style={{ flex: 1 }}>
                 {viewFileFDF ?
