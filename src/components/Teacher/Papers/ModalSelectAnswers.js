@@ -20,7 +20,6 @@ export default class ModalSelectAnswers extends Component {
     }
 
     onSelectAnswer = (answer) => {
-        console.log("onSelectAnswer");
         this.props.onSelectAnswer(answer)
         this.setState({ optionIdAnswer: answer });
     }

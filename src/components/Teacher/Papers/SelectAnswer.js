@@ -75,16 +75,32 @@ export default class SelectAnswer extends Component {
       totalPoint += e.point;
     });
 
+    const { totalQuestionTL } = this.props;
+    const questionsTL = new Array(totalQuestionTL).fill({
+      index: 0,
+      point: +(10 / totalQuestionTL).toFixed(2),
+      optionIdAnswer: null,
+      typeAnswer: 3,
+      totalQption: 0,
+      textPoint: `${(10 / totalQuestionTL).toFixed(2)}`,
+    }).map((value, index) => { return { ...value, index } });
+    let totalPointTL = 0;
+    questionsTL.map(e => {
+      totalPointTL += e.point;
+    });
+
     this.setState({
+      questionsTL,
+      totalPoint,
       questions,
-      totalPoint
+      totalPointTL
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { totalQuestion, totalQuestionTL, typeQuestion } = this.props;
     const { totalPointTL, totalPoint } = this.state;
-    console.log(":indexSelecting: ", this.props.indexSelecting);
+
     if (typeQuestion === 1) {
       if (prevProps.totalQuestionTL !== totalQuestionTL) {
         const { questionsTL } = this.state;
@@ -162,7 +178,6 @@ export default class SelectAnswer extends Component {
   onClickItemTL = (index, optionIdAnswer) => this.props.onClickItemTL(index, optionIdAnswer);
 
   onSelectAnswer = (answer) => {
-    console.log("onSelectAnswer:", answer);
     const { questions } = this.state;
     const { indexSelecting } = this.props;
     const questionsTmp = questions;
@@ -295,52 +310,18 @@ export default class SelectAnswer extends Component {
     }
   }
 
-  renderListQuestion() {
-    const { questionsTL } = this.state;
-    let result = [];
-    for (let i = 0; i < questionsTmpTL.length; i++) {
-      let item = questionsTL[i];
-      let { indexSelecting } = this.props;
-      let isSelected = item.optionIdAnswer !== -1;
-      let isSelecting = indexSelecting === i;
-      let name = (i + 1) + this.getNameAnswer(item.optionIdAnswer);
-      result.push(
-        <TouchableOpacity
-          onPress={() => { this.onClickItemTL(i, item.optionIdAnswer) }}
-          style={{
-            width: 30,
-            height: 30,
-            borderRadius: 2,
-            borderColor: isSelecting ? '#56CCF2' : '#828282',
-            borderWidth: 1,
-            margin: 8,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#fff'
-          }}>
-          <Text style={{
-            fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
-            fontSize: 12,
-            color: '#000'
-          }}>{name}</Text>
-        </TouchableOpacity>
-      )
-    }
-  }
-
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
     const { questions, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPoint, totalPointTL } = this.state;
     const { indexSelecting, indexSelectingTL } = this.props;
-    console.log("indexSelecting:", indexSelecting);
     let optionIdAnswer = -1;
     const indexOfAnswer = _.indexOf(questions.map(e => e.index), this.props.indexSelecting);
-
     if (questions.length <= 0 || !isVisible || typeQuestion === 1 && questionsTL.length <= 0) {
       return null;
     } else {
       optionIdAnswer = questions[indexOfAnswer].optionIdAnswer;
     }
+
     return (
       <View>
         <View style={{
@@ -350,9 +331,6 @@ export default class SelectAnswer extends Component {
           paddingHorizontal: 16,
           alignItems: 'center',
         }}>
-          {/* {typeQuestion === 0 && <Text style={styles.totalAddQuestion}>Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
-            {totalAddQuestion}
-          </Text></Text>} */}
           <View>
             <Text style={styles.totalAddQuestion}>Tổng số câu</Text>
             <InputNumberQuestion

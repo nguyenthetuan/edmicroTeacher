@@ -81,7 +81,6 @@ export default class UploadPDF extends Component {
   onClickItem = async (index, optionIdAnswer) => {
     await this.setState({ indexSelecting: index, optionIdAnswer: optionIdAnswer || -1, showSelectAnswer: true });
     await this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1);
-    console.log("showSelectAnswer: ", this.state.showSelectAnswer);
     setTimeout(() => {
       this.scrollview.scrollToEnd();
     }, 0)
@@ -457,7 +456,6 @@ export default class UploadPDF extends Component {
   _hideKeybroad = () => Keyboard.dismiss();
 
   onSelectAnswer = (answer) => {
-    console.log("UPloadPDF: ", answer);
     this.selectAnswer.onSelectAnswer(answer);
   }
 
@@ -483,7 +481,6 @@ export default class UploadPDF extends Component {
     } = this.state;
     const numColumns = this.getNumColumns();
     const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
-    console.log("render UPLOADPDF: ", this.state.indexSelecting);
     return (
       <SafeAreaView style={styles.container}>
         {/* start header */}
@@ -721,9 +718,6 @@ export default class UploadPDF extends Component {
                     totalQuestionTL={totalQuestionTL}
                     typeQuestion={typeQuestion}
                     assignmentType={assignmentType}
-                    totalQuestion={
-                      typeQuestion === 0 ? totalQuestion : totalQuestionTL
-                    }
                     onClickItem={this.onClickItem}
                     onClickItemTL={this.onClickItemTL}
                     onChange={this.changeTotalQuestion}
