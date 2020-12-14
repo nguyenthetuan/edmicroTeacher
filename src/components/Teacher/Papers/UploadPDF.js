@@ -50,7 +50,7 @@ export default class UploadPDF extends Component {
     this.state = {
       visibleViewAnswer: true,
       totalQuestion: 10,
-      totalQuestionTL: 0,
+      totalQuestionTL: 10,
       showModalFullPDF: false,
       viewFileFDF: true,
       urlFilePDF: '',

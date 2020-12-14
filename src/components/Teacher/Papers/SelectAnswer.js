@@ -75,25 +75,9 @@ export default class SelectAnswer extends Component {
       totalPoint += e.point;
     });
 
-    const { totalQuestionTL } = this.props;
-    const questionsTL = new Array(totalQuestionTL).fill({
-      index: 0,
-      point: +(10 / totalQuestionTL).toFixed(2),
-      optionIdAnswer: null,
-      typeAnswer: 3,
-      totalQption: 0,
-      textPoint: `${(10 / totalQuestionTL).toFixed(2)}`,
-    }).map((value, index) => { return { ...value, index } });
-    let totalPointTL = 0;
-    questionsTL.map(e => {
-      totalPointTL += e.point;
-    });
-
     this.setState({
-      questionsTL,
       totalPoint,
       questions,
-      totalPointTL
     })
   }
 
@@ -102,6 +86,8 @@ export default class SelectAnswer extends Component {
     const { totalPointTL, totalPoint } = this.state;
 
     if (typeQuestion === 1) {
+      console.log("prevProps.totalQuestionTL: ", prevProps.totalQuestionTL);
+      console.log("totalQuestionTL: ", totalQuestionTL);
       if (prevProps.totalQuestionTL !== totalQuestionTL) {
         const { questionsTL } = this.state;
         let questionsTmpTL = questionsTL;
