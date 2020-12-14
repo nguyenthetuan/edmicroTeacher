@@ -13,8 +13,7 @@ import {
 } from 'react-native';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/AntDesign';
 import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import ItemSectionListPrac from './ItemSectionListPrac';
@@ -146,6 +145,14 @@ export default class StepThree extends Component {
     }
   };
 
+
+  handleNextStepTwo = () => {
+    Keyboard.dismiss();
+    this.props.navigation.navigate('StepTwo');
+    this.props.screenProps.handleNextStep(1);
+  }
+
+
   renderPractice = () => {
     let { dataPracticeAdd } = this.props.screenProps.data;
     if (dataPracticeAdd && dataPracticeAdd.length == 0) {
@@ -156,11 +163,11 @@ export default class StepThree extends Component {
       .map((value, key) => ({ title: value[0].problemHierachyName, data: value }))
       .value();
     return (
-      <View style={styles.ViewTable}>
-        <Text style={styles.styTxtLabelParac}>Tự luyện</Text>
-        <View style={styles.borderAll}>
+      <>
+        <Text style={styles.styTxtLabel}>Tự luyện</Text>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.styWrapHeader}>
-            <Text style={[styles.styName, { marginLeft: 12 }]}>Tên nhiệm vụ</Text>
+            <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flex: 1 }} />
             <View style={{ flexDirection: 'row' }}>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text>
@@ -174,13 +181,12 @@ export default class StepThree extends Component {
               onPress={this.deleteRow(item)}
               item={item}
             />}
-            style={styles.sectionList}
-          // renderSectionHeader={({ section: { title } }) => (
-          //   <Text style={styles.styTxtHeader}>- {title}</Text>
-          // )}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={styles.styTxtHeader}>- {title}</Text>
+            )}
           />
         </View>
-      </View>
+      </>
     );
   }
 
@@ -195,15 +201,12 @@ export default class StepThree extends Component {
       .map((value, key) => ({ title: value[0].title, data: value }))
       .value();
     return (
-      <View style={styles.ViewTable}>
-        <Text style={styles.styTxtLabelParac}>Kiểm tra</Text>
-        <View style={styles.borderAll}>
+      <>
+        <Text style={styles.styTxtLabel}>Kiểm tra</Text>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.styWrapHeader}>
-            <Text style={[styles.styName, { marginLeft: 12 }]}>Tên nhiệm vụ</Text>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
+            <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
+            <View style={{ flexDirection: 'row' }}>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Điểm</Text>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Hủy</Text>
@@ -217,13 +220,12 @@ export default class StepThree extends Component {
               onPress={this.deleteRow(item)}
               item={item}
             />}
-            style={styles.sectionList}
-          // renderSectionHeader={({ section: { title } }) => (
-          //   <Text style={styles.styTxtHeader}>- {title}</Text>
-          // )}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={styles.styTxtHeader}>- {title}</Text>
+            )}
           />
         </View>
-      </View>
+      </>
     );
   }
 
@@ -236,14 +238,13 @@ export default class StepThree extends Component {
       isLoading
     } = this.state;
     return (
-      <>
+      <View style={{ flex: 1, marginHorizontal: 10 }}>
         <ScrollView
-          style={{ marginHorizontal: 10, marginTop: 10 }}
+          style={{ marginTop: 10 }}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.flexNameMiss}>
-            <Text numberOfLines={2}
-              style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
+          <View>
+            <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
             <TextInput
               placeholder={'Tên nhiệm vụ'}
               placeholderTextColor={'#ccc'}
@@ -253,41 +254,29 @@ export default class StepThree extends Component {
             />
           </View>
 
-          <View style={styles.flexWrap}>
-            <View style={{ flexDirection: 'row' }}>
+          <View style={[styles.styWrapInfo, { marginVertical: 10 }]}>
+            <View style={styles.styWrapInfo}>
               <Text style={styles.styTxtInfo}>Khối</Text>
-              <TouchableOpacity style={styles.styWrapInfo}>
-                <View style={styles.flexIconVa}>
-                  <Text style={styles.styWrapSubject}>{valueClass}</Text>
-                  <Icon name={'angle-down'} color={'#000'} size={14}
-                    style={{ marginRight: 10, marginLeft: 5 }} />
-                </View>
-              </TouchableOpacity>
+              <Text style={styles.styWrapSubject}>{valueClass}</Text>
+            </View>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.styTxtInfo}>Môn học</Text>
-                <TouchableOpacity style={styles.styWrapInfo}>
-                  <View style={styles.flexIconVa}>
-                    <Text style={styles.styWrapSubject}>{valueSubject}</Text>
-                    <Icon name={'angle-down'} color={'#000'} size={14}
-                      style={{ marginRight: 10, marginLeft: 5 }} />
-                  </View>
-                </TouchableOpacity>
-              </View>
+            <View style={styles.styWrapInfo}>
+              <Text style={styles.styTxtInfo}>Môn học</Text>
+              <Text style={styles.styWrapSubject}>{valueSubject}</Text>
             </View>
           </View>
 
-
           <View>
-            <Text style={styles.styTxtLabelMoTa}>Mô tả</Text>
+            <Text>Mô tả</Text>
             <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
               <HTML
                 html={htmlContent}
                 imagesMaxWidth={Dimensions.get('window').width}
               />
-              {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Nhập...</Text> : null}
+              {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
             </TouchableOpacity>
           </View>
+
           {this.renderPractice()}
           {this.renderTest()}
         </ScrollView>
@@ -296,20 +285,23 @@ export default class StepThree extends Component {
           <TouchableOpacity
             style={styles.styBtnBack}
             onPress={this.handleNextStepTwo}>
-            <IconAntDesign name={'arrowleft'} style={styles.styTxtBtnNext} />
+            <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.styBtnNext}
             onPress={this.handleNextStepFour}>
-            <Text style={styles.styTxtBtnNext}>Bước tiếp theo</Text>
+            <Text style={styles.styTxtBtnNext}>
+              Bước tiếp theo
+            </Text>
           </TouchableOpacity>
         </View>
+
         {isLoading && <ActivityIndicator style={styles.styWrapLoading} color={'#62ACE1'} />}
         <ModalEditor
           ref={ref => (this.modalEditor = ref)}
           onDone={this.onDone}
         />
-      </>
+      </View>
     );
   }
 }
@@ -320,40 +312,26 @@ const styles = StyleSheet.create({
   },
   styWrapInput: {
     padding: 10,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#B5B5B5',
+    borderColor: '#999',
     margin: 10,
     color: '#000',
-    width: "70%",
-    alignSelf: 'center'
-    // backgroundColor: 'red'
   },
   styWrapDes: {
     padding: 10,
-    borderWidth: 0.5,
+    borderWidth: 1,
     overflow: 'hidden',
-    borderColor: '#828282',
+    borderColor: '#efefef',
     borderRadius: 5,
     margin: 10,
     minHeight: 100
-  },
-  viewRNPicker: {
-    backgroundColor: '#fff',
-    borderRadius: 50,
-    justifyContent: 'center',
-  },
-  icon: {
-    position: 'absolute',
-    alignSelf: 'flex-end',
-    paddingRight: 20,
   },
   styBtnNext: {
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
     marginBottom: 10,
     marginLeft: 10,
-    marginTop: 20,
     flex: 1
   },
   styTxtBtnNext: {
@@ -367,54 +345,36 @@ const styles = StyleSheet.create({
     marginTop: 14,
     marginBottom: 14
   },
+  styWrapBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  styBtnBack: {
+    backgroundColor: '#2D9CDB',
+    borderRadius: 25,
+    marginBottom: 10,
+    width: 50, height: 50
+  },
   styTxtLabel: {
-    fontFamily: 'Nunito-Bold',
-    color: "#000",
-    fontSize: 14,
-    lineHeight: 19,
-    marginLeft: 16,
-    alignSelf: 'center',
-    width: 95
-  },
-  styTxtLabelMoTa: {
-    fontFamily: 'Nunito-Bold',
-    color: "#000",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'left',
-    marginLeft: 10,
-    marginTop: 28
-  },
-  styTxtLabelParac: {
-    fontFamily: 'Nunito-Bold',
-    color: "#000",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'left',
-    // marginLeft: 10,
-    marginTop: 36
+    fontFamily: 'Nunito-Regular',
   },
   styWrapSubject: {
-    padding: 10,
-    marginHorizontal: 5,
+    borderWidth: 1,
+    padding: 5,
+    marginHorizontal: 10,
     borderRadius: 5,
-    // minWidth: 80,
+    borderColor: '#999',
+    minWidth: 80,
     textAlign: 'center',
-    color: "#828282"
   },
   styWrapInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
   },
   styTxtInfo: {
-    fontFamily: 'Nunito',
-    fontSize: 14,
-    lineHeight: 19,
-    color: "#424242",
-    marginLeft: 8,
-    alignSelf: 'center'
+    fontFamily: 'Nunito-Regular',
   },
   styWrapElement: {
     borderWidth: 1,
@@ -432,33 +392,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },
-  backTextWhite: {
-    color: '#FFF',
-  },
-  rowBack: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 15,
-  },
-  backRightBtn: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    width: 75,
-  },
-  backRightBtnLeft: {
-    backgroundColor: 'blue',
-    right: 75,
-  },
-  backRightBtnRight: {
-    backgroundColor: 'red',
-    right: 0,
-  },
   styTxtHeader: {
     color: '#1c4db2',
     marginTop: 5,
@@ -475,50 +408,5 @@ const styles = StyleSheet.create({
   },
   styTxtPlacehoder: {
     color: '#999',
-  },
-  flexNameMiss: {
-    flexDirection: 'row',
-    justifyContent: "space-between",
-    alignSelf: 'center',
-  },
-  flexIconVa: {
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    borderWidth: 0.5,
-    backgroundColor: '#DDDDDD',
-    borderColor: '#828282',
-    marginLeft: 10,
-    borderRadius: 4,
-    alignItems: 'center',
-  },
-  ViewTable: {
-    marginLeft: 10,
-    marginRight: 10
-  },
-  borderAll: {
-    marginTop: 5,
-    borderWidth: 0.5,
-    borderColor: '#828282',
-    borderRadius: 5
-  },
-  sectionList: {
-    flex: 1,
-    padding: 1
-  },
-  flexWrap: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10
-  },
-  styWrapBtn: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 10
-  },
-  styBtnBack: {
-    backgroundColor: '#2D9CDB',
-    borderRadius: 25,
-    width: 50, height: 50,
-    marginTop: 20,
-  },
+  }
 });
