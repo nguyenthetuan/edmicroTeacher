@@ -25,6 +25,13 @@ export default class ExchangeGiftScreen extends Component {
     //     );
     // };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+    }
+
     render() {
         const { navigation } = this.props;
         return (
@@ -68,7 +75,7 @@ export default class ExchangeGiftScreen extends Component {
                                         <Image
                                             source={require('../../asserts/icon/icon_coinCountV3.png')}
                                             style={{ alignSelf: 'center' }} />
-                                        <Text style={styles.countCoin}>40???</Text>
+                                        <Text style={styles.countCoin}>40</Text>
                                     </View>
                                     {/* </LinearGradient> */}
                                 </View>
@@ -110,7 +117,8 @@ export default class ExchangeGiftScreen extends Component {
                                             style={styles.widthIcon}
                                             source={require('../../asserts/icon/icon_coinCountV3.png')}
                                         />
-                                        <Text style={styles.txtNumber}>30</Text>
+                                        <Text numberOfLines={1}
+                                            style={styles.txtNumber}>30</Text>
                                     </View>
                                 </View>
                             </View>
@@ -252,7 +260,6 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#56CCF2',
         borderRadius: 10,
-        width: 70,
         marginLeft: 10,
     },
     txtTitle: {
@@ -268,7 +275,7 @@ const styles = StyleSheet.create({
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
-        marginRight: 15
+        marginRight: 15,
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -277,9 +284,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     widthIcon: {
-        width: 18,
-        height: 18,
+        width: 17,
+        height: 17,
         marginLeft: 16,
+        marginTop: 2,
+        marginBottom: 3
     },
     flexRight: {
         flexDirection: 'column',
@@ -288,3 +297,18 @@ const styles = StyleSheet.create({
 
 })
 
+
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        makeRequestProfile: payload => {
+            dispatch(userGiftAction(payload));
+        },
+    };
+};
