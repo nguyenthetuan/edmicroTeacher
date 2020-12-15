@@ -561,7 +561,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
   - Shimmer (1.0.2)
-  - XCDYouTubeKit (2.15.0)
+  - XCDYouTubeKit (2.15.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -967,7 +967,7 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
-  XCDYouTubeKit: c6747c622dd0b52c9e668c028f68097eeffaea39
+  XCDYouTubeKit: 5ad334d4657ab920adc5bd6c16f39db8c8ad8d24
   Yoga: 9db9ff2025ad21d1ac0a8b3c85d5ac4e7c29d525
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
