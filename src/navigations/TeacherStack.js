@@ -29,6 +29,7 @@ import MissionDetailScreen from '../containers/teacher/Mission/MissionDetailCont
 import MissionPlayWebView from '../components/Teacher/MissionDetail/MissonPlayWebView';
 import MissonTestPlayWebView from '../components/Teacher/MissionDetail/MissonTestPlayWebView';
 import MissionStatisticsScreen from '../components/Teacher/MissionStatistics/MissionStatisticsScreen';
+import FullViewPDFAssessment from '../components/Teacher/Papers/FullViewPDF';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -88,6 +89,10 @@ const TeacherStack = createStackNavigator({
   },
   UploadPDF: {
     screen: UploadPDF,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  FullViewPDFAssessment: {
+    screen: FullViewPDFAssessment,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   CopyFromSubjectExists: {

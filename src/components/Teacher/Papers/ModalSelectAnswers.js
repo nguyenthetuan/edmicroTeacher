@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Text, TextInput } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,6 +28,14 @@ export default class ModalSelectAnswers extends Component {
         this.props.close()
     }
 
+    onChangeText = (ponit) => {
+        this.props.onChangeText(ponit);
+    }
+
+    onEnediting = () => {
+        this.props.onEndEditing();
+    }
+
     render() {
         let { indexSelecting } = this.props;
         return (
@@ -37,7 +45,22 @@ export default class ModalSelectAnswers extends Component {
                         fontFamily: 'Nunito-Bold',
                         fontSize: 14,
                         color: '#fff',
+                        fontWeight: '700',
                     }}>Câu {indexSelecting + 1}</Text>
+                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', top: 10 }}>
+                        <Text style={{ fontSize: 14, fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
+                        <TextInput
+                            value={this.props.currentPoint}
+                            onChangeText={this.onChangeText}
+                            numberOfLines={1}
+                            returnKeyType={'done'}
+                            maxLength={4}
+                            keyboardType={'numeric'}
+                            placeholderTextColor={'#BDBDBD'}
+                            style={styles.inputPoint}
+                            onEndEditing={this.onEnediting}
+                        />
+                    </View>
                     <View style={{ flexDirection: 'row', marginTop: 30, height: 30, width: width, alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => this.onSelectAnswer(0)}
                             style={[styles.btnAnswer, {
@@ -111,4 +134,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#828282'
     },
+    inputPoint: {
+        height: 30,
+        width: 100,
+        backgroundColor: '#F8F8F8',
+        borderRadius: 2,
+        paddingHorizontal: 10,
+        color: 'red',
+        left: 10
+    }
 })

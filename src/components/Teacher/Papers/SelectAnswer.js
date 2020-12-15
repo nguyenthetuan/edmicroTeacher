@@ -160,8 +160,8 @@ export default class SelectAnswer extends Component {
     }
   }
 
-  onClickItem = (index, optionIdAnswer) => this.props.onClickItem(index, optionIdAnswer);
-  onClickItemTL = (index, optionIdAnswer) => this.props.onClickItemTL(index, optionIdAnswer);
+  onClickItem = (index, optionIdAnswer, point) => this.props.onClickItem(index, optionIdAnswer, point);
+  onClickItemTL = (index, optionIdAnswer, point) => this.props.onClickItemTL(index, optionIdAnswer, point);
 
   onSelectAnswer = (answer) => {
     const { questions } = this.state;
@@ -259,7 +259,9 @@ export default class SelectAnswer extends Component {
     })
   }
 
-  editPoint = (typeQuestion) => {
+  editPoint = () => {
+    const { typeQuestion } = this.props;
+
     if (typeQuestion === 0) {
       this.onEndEditingPoint();
     } else {
@@ -296,6 +298,15 @@ export default class SelectAnswer extends Component {
     }
   }
 
+  onChangeText = (point) => {
+    const { typeQuestion } = this.props;
+    if (typeQuestion === 0) {
+      this.onChangePoint(point);
+    } else {
+      this.onChangPointTL(point);
+    }
+  }
+
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
     const { questions, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPoint, totalPointTL } = this.state;
@@ -317,7 +328,7 @@ export default class SelectAnswer extends Component {
           paddingHorizontal: 16,
           alignItems: 'center',
         }}>
-          <View>
+          <View style={{ top: 10 }}>
             <Text style={styles.totalAddQuestion}>Tổng số câu</Text>
             <InputNumberQuestion
               containerStyle={[
@@ -363,7 +374,7 @@ export default class SelectAnswer extends Component {
                 returnKeyType={'done'}
                 maxLength={4}
                 keyboardType={'numeric'}
-                onChangeText={typeQuestion === 0 ? this.onChangePoint : this.onChangPointTL}
+                onChangeText={this.onChangeText}
                 onEndEditing={() => this.editPoint(typeQuestion)}
                 value={typeQuestion === 0 ? `${questions[this.props.indexSelecting].textPoint}` : `${questionsTL[this.props.indexSelectingTL].textPoint}`}
               />
@@ -386,7 +397,7 @@ export default class SelectAnswer extends Component {
               const name = (item.index + 1) + this.getNameAnswer(item.optionIdAnswer);
               return (
                 <TouchableOpacity
-                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer) }}
+                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer, questions[index].textPoint) }}
                   style={{
                     width: 45,
                     height: 45,
@@ -420,7 +431,7 @@ export default class SelectAnswer extends Component {
                 const name = (item.index + 1);
                 return (
                   <TouchableOpacity
-                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer) }}
+                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questions[index].textPoint) }}
                     style={{
                       width: 45,
                       height: 45,
@@ -444,53 +455,6 @@ export default class SelectAnswer extends Component {
             />
           }
         </View>
-        {/* <View style={styles.viewPointAndOption}>
-          {this.props.typeQuestion === 0 && <View style={{ alignItems: 'center' }}>
-            <Text style={{
-              fontFamily: 'Nunito-Bold',
-              fontSize: 14,
-              color: '#000'
-            }}>Đáp án câu {indexSelecting + 1}</Text>
-            <View style={{ flexDirection: 'row', marginTop: 3 }}>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(0)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 0 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 0 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 0 ? '#fff' : '#828282'
-                }]}>A</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(1)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 1 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 1 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 1 ? '#fff' : '#828282'
-                }]}>B</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(2)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 2 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 2 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 2 ? '#fff' : '#828282'
-                }]}>C</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(3)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 3 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 3 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 3 ? '#fff' : '#828282'
-                }]}>D</Text>
-              </TouchableOpacity>
-            </View>
-          </View>}
-        </View> */}
       </View>
     )
   }
