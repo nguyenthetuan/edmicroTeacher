@@ -28,7 +28,9 @@ export default class SaleGift extends Component {
                     style={styles.iconElip}
                 />
 
-                <TouchableOpacity style={styles.listSale}>
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('GiftDetail') }}
+                    style={styles.listSale}>
                     <View style={styles.flexLeft}>
                         <Image
                             source={require('../../asserts/icon/icon_bookTitle.png')}
@@ -39,13 +41,13 @@ export default class SaleGift extends Component {
                         <Text style={styles.txtTitle}>Sách kiến thức</Text>
                         <View style={{ flexDirection: 'row', marginTop: 16 }}>
                             <Text style={styles.txtMark}>Đổi điểm</Text>
-                                <View style={styles.changeCoin}>
-                                    <Image
-                                        style={styles.widthIcon}
-                                        source={require('../../asserts/icon/icon_coinCountV3.png')}
-                                    />
-                                    <Text style={styles.txtNumber}>30</Text>
-                                </View>
+                            <View style={styles.changeCoin}>
+                                <Image
+                                    style={styles.widthIcon}
+                                    source={require('../../asserts/icon/icon_coinCountV3.png')}
+                                />
+                                <Text style={styles.txtNumber}>30</Text>
+                            </View>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -99,9 +101,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderWidth: 0.5,
         borderColor: '#56CCF2',
-        borderRadius: 10,
-        width: 70,
-        marginLeft: 10,
+        borderRadius: 20,
+        marginLeft: 10
     },
     txtTitle: {
         fontFamily: 'Nunito-Bold',
@@ -116,7 +117,9 @@ const styles = StyleSheet.create({
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
-        marginRight: 15
+        marginRight: 15,
+        marginTop: 2,
+        marginBottom: 2,
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -128,6 +131,8 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         marginLeft: 16,
+        marginTop: 2,
+        marginBottom: 2
     },
     flexRight: {
         flexDirection: 'column',

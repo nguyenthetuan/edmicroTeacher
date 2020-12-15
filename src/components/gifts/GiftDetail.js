@@ -35,6 +35,10 @@ export default class GiftDetail extends Component {
                 <Text style={styles.titleCate}>
                     Sách kiến thức
                 </Text>
+                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing
+                and typesetting industry. Lorem Ipsum has been
+                the industry's standard dummy text ever since
+                    the 1500s</Text>
                 {/* <TouchableOpacity style={styles.listSale}>
                     <View style={styles.flexLeft}>
                         <Image
@@ -124,8 +128,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderWidth: 0.5,
         borderColor: '#56CCF2',
-        borderRadius: 10,
-        width: 70,
+        borderRadius: 20,
         marginLeft: 10,
         marginTop: 28,
         alignSelf: 'center',
@@ -142,8 +145,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#4776AD',
         alignSelf: 'center',
-        marginLeft: 5,
-        marginRight: 15
+        marginLeft: 10,
+        marginRight: 15,
+        marginTop: 2,
+        marginBottom: 2,
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -155,6 +160,8 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         marginLeft: 16,
+        marginTop: 2,
+        marginBottom: 2
     },
     flexRight: {
         flexDirection: 'column',
@@ -186,6 +193,15 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         marginLeft: 76,
         marginRight: 76,
+        fontSize: 16,
+    },
+    description: {
+        fontFamily: 'Nunito',
+        fontSize: 14,
+        lineHeight: 18,
+        color: "#000",
+        textAlign: 'center',
+        marginHorizontal: 50
     }
 })
 

@@ -68,7 +68,8 @@ export default class ExchangeGiftScreen extends Component {
                                         <Image
                                             source={require('../../asserts/icon/icon_coinCountV3.png')}
                                             style={{ alignSelf: 'center' }} />
-                                        <Text style={styles.countCoin}>40???</Text>
+                                        <Text numberOfLines={1}
+                                            style={styles.countCoin}>25</Text>
                                     </View>
                                     {/* </LinearGradient> */}
                                 </View>
@@ -110,7 +111,8 @@ export default class ExchangeGiftScreen extends Component {
                                             style={styles.widthIcon}
                                             source={require('../../asserts/icon/icon_coinCountV3.png')}
                                         />
-                                        <Text style={styles.txtNumber}>30</Text>
+                                        <Text numberOfLines={1}
+                                            style={styles.txtNumber}>30</Text>
                                     </View>
                                 </View>
                             </View>
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         color: '#fff',
         marginLeft: 17,
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     rowCoin: {
         flexDirection: 'row',
@@ -251,9 +253,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderWidth: 0.5,
         borderColor: '#56CCF2',
-        borderRadius: 10,
-        width: 70,
+        borderRadius: 20,
         marginLeft: 10,
+        marginRight: 110
     },
     txtTitle: {
         fontFamily: 'Nunito-Bold',
@@ -268,7 +270,9 @@ const styles = StyleSheet.create({
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
-        marginRight: 15
+        marginRight: 15,
+        marginTop: 2,
+        marginBottom: 2
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -280,6 +284,8 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         marginLeft: 16,
+        marginTop: 2,
+        marginBottom: 2
     },
     flexRight: {
         flexDirection: 'column',
