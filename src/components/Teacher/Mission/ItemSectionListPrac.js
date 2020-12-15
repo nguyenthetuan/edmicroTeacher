@@ -20,36 +20,38 @@ export default class ItemSectionListPrac extends Component {
 
   changeTextScore = (score) => {
     score = parseFloat(score) || '';
+    const { item } = this.props;
     if (score < 0 || score > 10) {
       Alert.alert('Thông báo', 'Điểm nhập nằm trong khoảng 0 đến 10', [
         {
           text: 'Đặt lại',
           onPress: () => {
+            item.markDone = '7';
             this.setState({ score: '7' });
           }
         }
       ]);
       return;
     }
-    const { item } = this.props;
     item.markDone = score;
     this.setState({ score });
   }
 
   changeTextCount = count => {
     count = parseInt(count) || '';
+    const { item } = this.props;
     if (count < 0) {
       Alert.alert('Thông báo', 'Số lần làm bài phải lớn hơn 0', [
         {
           text: 'Đặt lại',
           onPress: () => {
+            item.countDone = '1';
             this.setState({ count: '1' });
           }
         }
       ]);
       return;
     }
-    const { item } = this.props;
     item.countDone = count;
     this.setState({ count });
   }
@@ -62,6 +64,27 @@ export default class ItemSectionListPrac extends Component {
     if (count == '' || count == 0) {
       this.setState({ count: 1 });
     }
+  }
+
+  handlePlusCount = () => {
+    let { count } = this.state;
+    const { item } = this.props;
+    count = parseInt(count);
+    count++;
+    item.countDone = count;
+    this.setState({ count });
+  }
+
+  handleSubCount = () => {
+    let { count } = this.state;
+    const { item } = this.props;
+    count = parseInt(count);
+    count--;
+    if (count < 1) {
+      return;
+    }
+    item.countDone = count;
+    this.setState({ count });
   }
 
   render() {
@@ -84,7 +107,10 @@ export default class ItemSectionListPrac extends Component {
             onEndEditing={this.onEndEditing}
           />}
           <View style={styles.viewCount}>
-            <TouchableOpacity style={styles.iconLeft}>
+            <TouchableOpacity
+              style={styles.iconLeft}
+              onPress={this.handleSubCount}
+            >
               <Icon
                 name={'minus'}
                 size={8}
@@ -101,7 +127,10 @@ export default class ItemSectionListPrac extends Component {
               onChangeText={this.changeTextCount}
               onEndEditing={this.onEndEditing}
             />
-            <TouchableOpacity style={styles.iconRight}>
+            <TouchableOpacity
+              style={styles.iconRight}
+              onPress={this.handlePlusCount}
+            >
               <Icon
                 name={'plus'}
                 size={8}
@@ -141,8 +170,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     marginHorizontal: 10,
-    backgroundColor:'#6ED8FB',
-    alignSelf:'center'
+    backgroundColor: '#6ED8FB',
+    alignSelf: 'center'
   },
   styName: {
     fontFamily: 'Nunito-Regular',
@@ -171,6 +200,6 @@ const styles = StyleSheet.create({
   iconRight: {
     alignSelf: 'center',
     paddingHorizontal: 5,
-    marginRight:7
+    marginRight: 7
   }
 });
