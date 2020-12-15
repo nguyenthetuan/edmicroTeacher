@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
   View, FlatList,
   TouchableOpacity, Text, Platform, Dimensions, TextInput, StyleSheet,
-  Image,
+  Image, Modal
 } from 'react-native';
 import _ from 'lodash';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
+import InputNumberQuestion from './InputNumberQuestion';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -24,11 +25,11 @@ export default class SelectAnswer extends Component {
       totalAddQuestion: 0,
       totalPoint: totalPoint || 0,
 
-      indexSlelectingTL: 0,
+      indexSelectingTL: 0,
       questionsTL: [],
       totalAddQuestionTL: 0,
       totalPointTL: 0,
-
+      optionIdAnswer: -1,
       totalQuestionTL: totalQuestionTL || 0,
     }
   }
@@ -59,14 +60,6 @@ export default class SelectAnswer extends Component {
     }
   }
 
-  onResetIndexSelect = () => {
-    this.setState({ indexSelecting: 0 });
-  }
-
-  onResetIndexSelectTL = () => {
-    this.setState({ indexSlelectingTL: 0 });
-  }
-
   componentDidMount() {
     const { totalQuestion } = this.props;
     const questions = new Array(totalQuestion).fill({
@@ -77,15 +70,14 @@ export default class SelectAnswer extends Component {
       totalQption: 4,
       textPoint: `${(10 / totalQuestion).toFixed(2)}`,
     }).map((value, index) => { return { ...value, index } });
-
     let totalPoint = 0;
     questions.map(e => {
       totalPoint += e.point;
     });
 
     this.setState({
+      totalPoint,
       questions,
-      totalPoint
     })
   }
 
@@ -94,6 +86,8 @@ export default class SelectAnswer extends Component {
     const { totalPointTL, totalPoint } = this.state;
 
     if (typeQuestion === 1) {
+      console.log("prevProps.totalQuestionTL: ", prevProps.totalQuestionTL);
+      console.log("totalQuestionTL: ", totalQuestionTL);
       if (prevProps.totalQuestionTL !== totalQuestionTL) {
         const { questionsTL } = this.state;
         let questionsTmpTL = questionsTL;
@@ -166,11 +160,12 @@ export default class SelectAnswer extends Component {
     }
   }
 
-  onClickItem = (index) => this.setState({ indexSelecting: index });
-  onClickItemTL = (index) => this.setState({ indexSlelectingTL: index });
+  onClickItem = (index, optionIdAnswer, point) => this.props.onClickItem(index, optionIdAnswer, point);
+  onClickItemTL = (index, optionIdAnswer, point) => this.props.onClickItemTL(index, optionIdAnswer, point);
 
   onSelectAnswer = (answer) => {
-    const { indexSelecting, questions } = this.state;
+    const { questions } = this.state;
+    const { indexSelecting } = this.props;
     const questionsTmp = questions;
     let count = 0;
     questionsTmp[indexSelecting].optionIdAnswer = answer;
@@ -199,7 +194,8 @@ export default class SelectAnswer extends Component {
   }
 
   onChangePoint = (point) => {
-    const { indexSelecting, questions } = this.state;
+    const { questions } = this.state;
+    const { indexSelecting } = this.props;
     const questionsTmp = questions;
     questionsTmp[indexSelecting].textPoint = point;
 
@@ -209,17 +205,19 @@ export default class SelectAnswer extends Component {
   }
 
   onChangPointTL = (point) => {
-    const { indexSlelectingTL, questionsTL } = this.state;
+    const { questionsTL } = this.state;
+    const { indexSelectingTL } = this.props;
 
     const questionsTmpTL = questionsTL;
-    questionsTmpTL[indexSlelectingTL].textPoint = point;
+    questionsTmpTL[indexSelectingTL].textPoint = point;
     this.setState({
       questionsTL: questionsTmpTL
     })
   }
 
   onEndEditingPoint = () => {
-    const { indexSelecting, questions } = this.state;
+    const { questions } = this.state;
+    const { indexSelecting } = this.props;
     const questionsTmp = questions;
     let textPoint = questionsTmp[indexSelecting].textPoint;
     let pointTmp = parseFloat(textPoint);
@@ -240,16 +238,17 @@ export default class SelectAnswer extends Component {
   }
 
   onEndEditingPointTL = () => {
-    const { indexSlelectingTL, questionsTL } = this.state;
+    const { questionsTL } = this.state;
+    const { indexSelectingTL } = this.props;
     const questionsTmpTL = questionsTL;
-    let textPoint = questionsTmpTL[indexSlelectingTL].textPoint;
+    let textPoint = questionsTmpTL[indexSelectingTL].textPoint;
     let pointTmp = parseFloat(textPoint);
     if (!Number.isNaN(pointTmp)) {
       pointTmp = pointTmp % 1 === 1 ? (pointTmp > 10 ? 10 : parseInt(pointTmp)) : pointTmp;
     } else {
       pointTmp = 0;
     }
-    questionsTmpTL[indexSlelectingTL].point = pointTmp;
+    questionsTmpTL[indexSelectingTL].point = pointTmp;
     let totalPointTL = 0;
     questionsTmpTL.map(e => {
       totalPointTL += e.point;
@@ -260,7 +259,9 @@ export default class SelectAnswer extends Component {
     })
   }
 
-  editPoint = (typeQuestion) => {
+  editPoint = () => {
+    const { typeQuestion } = this.props;
+
     if (typeQuestion === 0) {
       this.onEndEditingPoint();
     } else {
@@ -297,88 +298,113 @@ export default class SelectAnswer extends Component {
     }
   }
 
+  onChangeText = (point) => {
+    const { typeQuestion } = this.props;
+    if (typeQuestion === 0) {
+      this.onChangePoint(point);
+    } else {
+      this.onChangPointTL(point);
+    }
+  }
+
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
-    const { questions, questionsTL, indexSelecting, indexSlelectingTL, totalAddQuestion, totalAddQuestionTL, totalPoint, totalPointTL } = this.state;
+    const { questions, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPoint, totalPointTL } = this.state;
+    const { indexSelecting, indexSelectingTL } = this.props;
     let optionIdAnswer = -1;
-    const indexOfAnswer = _.indexOf(questions.map(e => e.index), indexSelecting);
-
+    const indexOfAnswer = _.indexOf(questions.map(e => e.index), this.props.indexSelecting);
     if (questions.length <= 0 || !isVisible || typeQuestion === 1 && questionsTL.length <= 0) {
       return null;
     } else {
       optionIdAnswer = questions[indexOfAnswer].optionIdAnswer;
     }
+
     return (
       <View>
         <View style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           marginBottom: 15,
-          paddingHorizontal: 16
+          paddingHorizontal: 16,
+          alignItems: 'center',
         }}>
-          {/* {typeQuestion === 0 && <Text style={styles.totalAddQuestion}>Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
-            {totalAddQuestion}
-          </Text></Text>} */}
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-            <Text style={styles.totalAddQuestion}>Tổng điểm:</Text>
-            {typeQuestion === 0 ? <TextInput
-              style={[styles.inputPoint, { marginTop: 0, width: 60, marginLeft: 5 }]}
-              numberOfLines={1}
-              returnKeyType={'done'}
-              maxLength={4}
-              keyboardType={'numeric'}
-              onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
-              onEndEditing={() => this.pointSentence(typeQuestion)}
-              value={totalPoint && `${totalPoint}` || ''}
-            /> :
-              <TextInput
-                style={[styles.inputPoint, { marginTop: 0, width: 60, marginLeft: 5 }]}
+          <View style={{ top: 10 }}>
+            <Text style={styles.totalAddQuestion}>Tổng số câu</Text>
+            <InputNumberQuestion
+              containerStyle={[
+                { flex: 1, marginBottom: 25 },
+                this.props.assignmentType && { marginBottom: 80 },
+              ]}
+              totalQuestion={
+                this.props.totalQuestion
+              }
+              onChange={this.props.onChange}
+            />
+          </View>
+          <View style={{ justifyContent: 'space-evenly', height: 80 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
+              <Text style={styles.totalAddQuestion}>Tổng điểm:</Text>
+              {typeQuestion === 0 ? <TextInput
+                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
                 numberOfLines={1}
                 returnKeyType={'done'}
                 maxLength={4}
                 keyboardType={'numeric'}
-                onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
+                onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
                 onEndEditing={() => this.pointSentence(typeQuestion)}
-                value={totalPointTL && `${totalPointTL}` || ''}
-              />}
-            {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
+                value={totalPoint && `${totalPoint}` || ''}
+              /> :
+                <TextInput
+                  style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                  numberOfLines={1}
+                  returnKeyType={'done'}
+                  maxLength={4}
+                  keyboardType={'numeric'}
+                  onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
+                  onEndEditing={() => this.pointSentence(typeQuestion)}
+                  value={totalPointTL && `${totalPointTL}` || ''}
+                />}
+              {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
+              <Text style={styles.totalAddQuestion}>Điểm câu {typeQuestion === 0 ? this.props.indexSelecting + 1 : this.props.indexSelectingTL + 1}</Text>
+              <TextInput
+                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                numberOfLines={1}
+                returnKeyType={'done'}
+                maxLength={4}
+                keyboardType={'numeric'}
+                onChangeText={this.onChangeText}
+                onEndEditing={() => this.editPoint(typeQuestion)}
+                value={typeQuestion === 0 ? `${questions[this.props.indexSelecting].textPoint}` : `${questionsTL[this.props.indexSelectingTL].textPoint}`}
+              />
+            </View>
           </View>
         </View>
-        <View
-          style={{
-            marginBottom: 15,
-            paddingHorizontal: 16
-          }}
-        >
-          <Text style={styles.totalAddQuestion}>Tổng số điểm trắc nghiệm và tự luận <Text style={{ color: '#FF6213' }}>
-            {totalPoint + totalPointTL}
-          </Text></Text></View>
         <View style={{
-          maxHeight: 92,
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}>
           {typeQuestion === 0 ? <FlatList
-            contentContainerStyle={{ paddingHorizontal: 8 }}
+            contentContainerStyle={{ paddingHorizontal: 10, alignSelf: 'center', }}
             numColumns={numColumns}
             data={questions}
+            scrollEnabled={false}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => {
-              const { indexSelecting } = this.state;
               const isSelected = item.optionIdAnswer !== -1;
-              const isSelecting = indexSelecting === item.index;
+              const isSelecting = (this.props.showSelectAnswer && this.props.indexSelecting === item.index);
               const name = (item.index + 1) + this.getNameAnswer(item.optionIdAnswer);
               return (
                 <TouchableOpacity
-                  onPress={() => { this.onClickItem(item.index) }}
+                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer, questions[index].textPoint) }}
                   style={{
-                    width: 30,
-                    height: 30,
-                    borderRadius: 2,
+                    width: 45,
+                    height: 45,
+                    borderRadius: 5,
                     borderColor: isSelected || isSelecting ? '#56CCF2' : '#828282',
                     borderWidth: 1,
-                    margin: 8,
+                    margin: 10,
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: isSelected ? '#56CCF2' : '#fff'
@@ -386,6 +412,7 @@ export default class SelectAnswer extends Component {
                   <Text style={{
                     fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
                     fontSize: 12,
+                    fontWeight: '700',
                     color: isSelected ? '#fff' : '#000'
                   }}>{name}</Text>
                 </TouchableOpacity>
@@ -393,25 +420,25 @@ export default class SelectAnswer extends Component {
             }}
           /> :
             <FlatList
+              scrollEnabled={false}
               contentContainerStyle={{ paddingHorizontal: 8 }}
               numColumns={numColumns}
               data={questionsTL}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => {
-                const { indexSlelectingTL } = this.state;
                 const isSelected = item.optionIdAnswer !== -1;
-                const isSelecting = indexSlelectingTL === item.index;
+                const isSelecting = this.props.indexSelectingTL === item.index;
                 const name = (item.index + 1);
                 return (
                   <TouchableOpacity
-                    onPress={() => { this.onClickItemTL(item.index) }}
+                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questions[index].textPoint) }}
                     style={{
-                      width: 30,
-                      height: 30,
-                      borderRadius: 2,
+                      width: 45,
+                      height: 45,
+                      borderRadius: 5,
                       borderColor: isSelecting ? '#56CCF2' : '#828282',
                       borderWidth: 1,
-                      margin: 8,
+                      margin: 10,
                       justifyContent: 'center',
                       alignItems: 'center',
                       backgroundColor: '#fff'
@@ -419,80 +446,14 @@ export default class SelectAnswer extends Component {
                     <Text style={{
                       fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
                       fontSize: 12,
-                      color: '#000'
+                      color: '#000',
+                      fontWeight: '700',
                     }}>{name}</Text>
                   </TouchableOpacity>
                 )
               }}
             />
           }
-        </View>
-        <View style={styles.viewPointAndOption}>
-          <View>
-            <Text style={{
-              fontFamily: 'Nunito-Bold',
-              fontSize: 14,
-              color: '#000'
-            }}>Điểm câu {typeQuestion ===0?indexSelecting + 1:indexSlelectingTL+1}</Text>
-            <View>
-              <TextInput
-                style={styles.inputPoint}
-                numberOfLines={1}
-                returnKeyType={'done'}
-                maxLength={4}
-                keyboardType={'numeric'}
-                onChangeText={typeQuestion === 0 ? this.onChangePoint : this.onChangPointTL}
-                onEndEditing={() => this.editPoint(typeQuestion)}
-                value={typeQuestion === 0 ? `${questions[indexSelecting].textPoint}` : `${questionsTL[indexSlelectingTL].textPoint}`}
-              />
-              <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3, bottom: 6 }} />
-            </View>
-          </View>
-          {this.props.typeQuestion === 0 && <View style={{ alignItems: 'center' }}>
-            <Text style={{
-              fontFamily: 'Nunito-Bold',
-              fontSize: 14,
-              color: '#000'
-            }}>Đáp án câu {indexSelecting + 1}</Text>
-            <View style={{ flexDirection: 'row', marginTop: 3 }}>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(0)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 0 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 0 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 0 ? '#fff' : '#828282'
-                }]}>A</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(1)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 1 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 1 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 1 ? '#fff' : '#828282'
-                }]}>B</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(2)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 2 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 2 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 2 ? '#fff' : '#828282'
-                }]}>C</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.onSelectAnswer(3)}
-                style={[styles.btnAnswer, {
-                  backgroundColor: optionIdAnswer === 3 ? '#56CCF2' : '#fff',
-                  borderColor: optionIdAnswer === 3 ? '#2D9CDB' : '#828282'
-                }]}>
-                <Text style={[styles.txtAnswer, {
-                  color: optionIdAnswer === 3 ? '#fff' : '#828282'
-                }]}>D</Text>
-              </TouchableOpacity>
-            </View>
-          </View>}
         </View>
       </View>
     )
@@ -546,9 +507,7 @@ const styles = StyleSheet.create({
     marginEnd: 16
   },
   totalAddQuestion: {
-    fontSize: 12,
-    fontFamily: 'Nunito-Bold',
-    color: '#828282'
+    fontFamily: 'Nunito', fontWeight: '700', fontSize: 14
   },
   buttomTop: {
     backgroundColor: '#0091EA',

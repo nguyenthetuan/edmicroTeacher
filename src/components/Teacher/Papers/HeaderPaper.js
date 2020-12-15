@@ -40,7 +40,8 @@ export default class HeaderPaper extends React.PureComponent {
       backgroundColor,
       loading,
       buttonRightText,
-      notRightButton
+      notRightButton,
+      iconColor
     } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
@@ -51,7 +52,7 @@ export default class HeaderPaper extends React.PureComponent {
           {/* <Image source={AppIcon.icon_arrowHeaderV3} style={styles.btnLeft} /> */}
           <Image
             source={AppIcon.icon_arrowLeftv3}
-            style={{ tintColor: '#fff', alignSelf:'center'}}
+            style={{ tintColor: iconColor || '#fff', alignSelf:'center'}}
           />
         </RippleButton>
         <View style={styles.viewTitle}>
