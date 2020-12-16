@@ -354,7 +354,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
     marginTop: 20,
-    flex: 1
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center'
   },
   styTxtBtnNext: {
     color: '#FFF',
@@ -364,7 +366,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
-    marginTop: 14,
+    marginTop: 16,
     marginBottom: 14
   },
   styTxtLabel: {
