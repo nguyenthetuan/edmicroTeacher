@@ -50,8 +50,8 @@ class MenuTabTeacher extends Component {
       case 9: this.props.navigation.navigate('V_UpdatePhone', { statusbar: 'dark-content' }); break;
       case 12: this.setState({ modalVisible: true }); break;
       case 14: this.props.navigation.navigate('ChangePassword', { statusbar: 'light-content' }); break;
-      case 15: this.props.navigation.navigate('TermsOfUse', { status: 'light-content' }); break;
-      case 16: this.props.navigation.navigate('ExchangeGiftScreen', { status: 'light-content' }); break;
+      case 15: this.props.navigation.navigate('TermsOfUse', { statusbar: 'light-content' }); break;
+      case 16: this.props.navigation.navigate('ExchangeGiftScreen', { statusbar: 'light-content' }); break;
       default:
         break;
     }
@@ -95,6 +95,12 @@ class MenuTabTeacher extends Component {
                 rippleColor={rippleColor}
               />
               <MenuItem
+                onPress={() => this.handleClick(16)}
+                source={AppIcon.icon_diamondV3}
+                title={'Đổi quà'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
                 onPress={() => this.handleClick(9)}
                 source={require('../../asserts/appIcon/iconPhone.png')}
                 title={'Cập nhật số điện thoại'}
@@ -122,12 +128,6 @@ class MenuTabTeacher extends Component {
                 onPress={() => this.handleClick(5)}
                 source={updateIcon}
                 title={'Kiểm tra cập nhật'}
-                rippleColor={rippleColor}
-              />
-              <MenuItem
-                onPress={() => this.handleClick(16)}
-                source={AppIcon.icon_diamondV3}
-                title={'Đổi quà'}
                 rippleColor={rippleColor}
               />
               <MenuItem
