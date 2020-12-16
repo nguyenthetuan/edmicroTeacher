@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
 import LinearGradient from 'react-native-linear-gradient';
 import AppIcon from '../../utils/AppIcon';
+import TabOfferHis from '../gifts/tabTop/TabOfferHis';
 const { width, height } = Dimensions.get('window');
 export default class SaleGift extends Component {
     render() {
@@ -22,11 +23,7 @@ export default class SaleGift extends Component {
                     bgColor={'#2D9CDB'} colorIcon={'#FFF'}
                     back={true}
                 />
-                <Image
-                    source={require('../../asserts/icon/icon_elipHeaderV3.png')}
-                    resizeMode={'stretch'}
-                    style={styles.iconElip}
-                />
+                <TabOfferHis screenProps={this.props} />
 
                 <TouchableOpacity
                     onPress={() => { this.props.navigation.navigate('GiftDetail') }}
@@ -50,7 +47,7 @@ export default class SaleGift extends Component {
                             </View>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> 
 
             </View>
         )
@@ -71,6 +68,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         alignSelf: 'flex-end',
     },
+    
     listSale: {
         backgroundColor: '#fff',
         shadowColor: "#000",

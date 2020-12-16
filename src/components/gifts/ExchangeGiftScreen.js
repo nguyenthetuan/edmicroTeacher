@@ -25,6 +25,13 @@ export default class ExchangeGiftScreen extends Component {
     //     );
     // };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+    }
+
     render() {
         const { navigation } = this.props;
         return (
@@ -281,8 +288,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     widthIcon: {
-        width: 18,
-        height: 18,
+        width: 17,
+        height: 17,
         marginLeft: 16,
         marginTop: 2,
         marginBottom: 2
@@ -294,3 +301,18 @@ const styles = StyleSheet.create({
 
 })
 
+
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        makeRequestProfile: payload => {
+            dispatch(userGiftAction(payload));
+        },
+    };
+};

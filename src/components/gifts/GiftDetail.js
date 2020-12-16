@@ -70,7 +70,6 @@ export default class GiftDetail extends Component {
                 <TouchableOpacity style={styles.bgSubmit}>
                     <Text style={styles.txtSub}>Đổi quà</Text>
                 </TouchableOpacity>
-
             </View>
         )
     }
@@ -177,7 +176,8 @@ const styles = StyleSheet.create({
         fontFamily: "Nunito-Bold",
         fontSize: 16,
         alignSelf: 'center',
-        marginTop: 18
+        marginTop: 18,
+        textAlign: 'center',
     },
     bgSubmit: {
         backgroundColor: '#2D9CDB',
@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
     txtSub: {
         fontFamily: 'Nunito-Bold',
         color: '#fff',
+        fontSize: 16,
         marginTop: 14,
         marginBottom: 14,
         marginLeft: 76,

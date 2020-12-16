@@ -38,7 +38,6 @@ export default class CopyFromSubjectExists extends Component {
     }
 
     componentDidMount() {
-
     }
     async getDetailSubject(subjectCode) {
         const { token } = await dataHelper.getToken();
