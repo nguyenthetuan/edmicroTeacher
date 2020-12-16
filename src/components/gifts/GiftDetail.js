@@ -35,27 +35,12 @@ export default class GiftDetail extends Component {
                 <Text style={styles.titleCate}>
                     Sách kiến thức
                 </Text>
-                {/* <TouchableOpacity style={styles.listSale}>
-                    <View style={styles.flexLeft}>
-                        <Image
-                            source={require('../../asserts/icon/icon_bookTitle.png')}
-                            style={styles.sizeIcon}
-                        />
-                    </View>
-                    <View style={styles.flexRight}>
-                        <Text style={styles.txtTitle}>Sách kiến thức</Text>
-                        <View style={{ flexDirection: 'row', marginTop: 16 }}>
-                            <Text style={styles.txtMark}>Đổi điểm</Text>
-                            <View style={styles.changeCoin}>
-                                <Image
-                                    style={styles.widthIcon}
-                                    source={require('../../asserts/icon/icon_coinCountV3.png')}
-                                />
-                                <Text style={styles.txtNumber}>30</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity> */}
+                <Text style={styles.description}>
+                    Lorem Ipsum is simply dummy text of the printing
+                    and typesetting industry. Lorem Ipsum has been
+                    the industry's standard dummy text ever since
+                    the 1500s
+                </Text>
                 <View style={styles.changeCoin1}>
                     <Image
                         style={styles.widthIcon}
@@ -66,7 +51,6 @@ export default class GiftDetail extends Component {
                 <TouchableOpacity style={styles.bgSubmit}>
                     <Text style={styles.txtSub}>Đổi quà</Text>
                 </TouchableOpacity>
-
             </View>
         )
     }
@@ -125,7 +109,6 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#56CCF2',
         borderRadius: 10,
-        width: 70,
         marginLeft: 10,
         marginTop: 28,
         alignSelf: 'center',
@@ -143,7 +126,7 @@ const styles = StyleSheet.create({
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
-        marginRight: 15
+        marginRight: 15,
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -155,6 +138,9 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         marginLeft: 16,
+        alignSelf: 'center',
+        marginTop: 2,
+        marginBottom: 3
     },
     flexRight: {
         flexDirection: 'column',
@@ -170,7 +156,8 @@ const styles = StyleSheet.create({
         fontFamily: "Nunito-Bold",
         fontSize: 16,
         alignSelf: 'center',
-        marginTop: 18
+        marginTop: 18,
+        textAlign: 'center',
     },
     bgSubmit: {
         backgroundColor: '#2D9CDB',
@@ -182,10 +169,19 @@ const styles = StyleSheet.create({
     txtSub: {
         fontFamily: 'Nunito-Bold',
         color: '#fff',
+        fontSize: 16,
         marginTop: 14,
         marginBottom: 14,
         marginLeft: 76,
         marginRight: 76,
+    },
+    description: {
+        fontSize: 14,
+        fontFamily: 'Nunito',
+        textAlign: 'center',
+        marginHorizontal: 50,
+        color: '#000000',
+        marginTop: 4
     }
 })
 

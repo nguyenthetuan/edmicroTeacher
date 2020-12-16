@@ -219,6 +219,17 @@ const startMockExam = async ({token, assignmentId}) => {
   let responseJson = await response.json();
   return responseJson;
 };
+const userGift = async ({token}) => {
+  let response = await fetch(
+    `${API_BASE}/campaign/user`,
+    {
+      method: 'GET',
+      headers: getHeaders(token),
+    },
+  );
+  let responseJson = await response.json();
+  return responseJson;
+};
 
 module.exports = {
   getListClass,
@@ -239,5 +250,6 @@ module.exports = {
   getMastery,
   submitMockExam,
   startMockExam,
+  userGift,
   getDatailQuestionMockExam
 };

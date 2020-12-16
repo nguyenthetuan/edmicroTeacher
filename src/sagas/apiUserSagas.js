@@ -18,6 +18,7 @@ import {
   getFlashCardTheorySuccessAction, getFlashCardTheoryFaildAction, getFlashCardVideoSuccessAction, getFlashCardVideoFaildAction
 } from '../actions/userAction';
 import { fetchListProcessFaildAction, fetchListProcessSuccessAction } from '../actions/processAction';
+import { userGiftActionSuccessAction, userGiftActionFaildAction } from '../actions/userAction';
 
 function* fetchUserInfomation(action) {
   try {
@@ -134,6 +135,14 @@ function* fetchFlashCardVideo(action) {
     yield put(getFlashCardVideoFaildAction(error));
   }
 }
+function* userGift(action) {
+  try {
+    let response = yield ApiHelper.userGift(action.payload);
+    yield put(userGiftActionSuccessAction(response));
+  } catch (error) {
+    yield put(userGiftActionFaildAction(error));
+  }
+}
 
 
 export function* watchApiUser() {
@@ -150,4 +159,5 @@ export function* watchApiUser() {
   yield takeEvery(Types.FETCH_CHART_CONTRIBUTION_ACTION, fetchChartContribution);
   yield takeEvery(Types.FETCH_FLASH_CARD_THEORY_ACTION, fetchFlashCardTheory);
   yield takeEvery(Types.FETCH_FLASH_CARD_VIDEO_ACTION, fetchFlashCardVideo);
+  yield takeEvery(Types.USER_GIFT_ACTION, userGift);
 }
