@@ -15,11 +15,7 @@ export default class HistoryGift extends Component {
         const { user } = this.props.screenProps;
         const isColor = item.point > user.totalExpPoint;
         return (
-            <TouchableOpacity
-                // onPress={() => {
-                //     this.props.screenProps.navigation.navigate('GiftDetail',
-                //         { status: 'light-content' })
-                // }}
+            <View
                 style={styles.listSale}>
                 <View style={styles.flexLeft}>
                     <Image
@@ -44,7 +40,7 @@ export default class HistoryGift extends Component {
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity >
+            </View >
         );
     };
 
