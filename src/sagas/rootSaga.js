@@ -4,12 +4,14 @@ import { watchApiHomeworkTeacher } from './apiHomeworkTeacherSaga';
 import { watchApiPaperTeacher } from './apiPaperSaga';
 import { watchApiReport } from './apiReportSaga';
 import { watchApiMission } from './apiMissionSaga';
+import { watchApiGift } from './apiGiftSaga';
 export default function* rootSaga() {
   yield all([
     fork(watchApiUser),
     fork(watchApiHomeworkTeacher),
     fork(watchApiPaperTeacher),
     fork(watchApiReport),
-    fork(watchApiMission)
+    fork(watchApiMission),
+    fork(watchApiGift)
   ])
 }
