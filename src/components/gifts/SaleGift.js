@@ -80,17 +80,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    backbg: {
-        backgroundColor: '#2D9CDB',
-        height: height * 0.3
-    },
-    iconElip: {
-        width: 150,
-        height: height * 0.2,
-        color: '#fff',
-        alignSelf: 'flex-end',
-    },
-
     listSale: {
         backgroundColor: '#fff',
         shadowColor: "#000",

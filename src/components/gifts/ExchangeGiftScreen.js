@@ -118,10 +118,6 @@ class ExchangeGiftScreen extends Component {
                                         <View style={styles.description}>
                                             <Text numberOfLines={1}
                                                 style={styles.txtName}>{user.displayName}</Text>
-                                            {/* <LinearGradient
-                                        colors={['rgba(255, 255, 255, 0.63)', 'rgba(255, 255, 255, 0)']}
-                                        style={styles.rowCoin}
-                                    > */}
                                             <View style={styles.rowCoin}>
                                                 <Image
                                                     source={require('../../asserts/icon/icon_coinCountV3.png')}
@@ -132,7 +128,6 @@ class ExchangeGiftScreen extends Component {
                                                     {user.totalExpPoint}
                                                 </Text>
                                             </View>
-                                            {/* </LinearGradient> */}
                                         </View>
                                     </View>
                                     <Image

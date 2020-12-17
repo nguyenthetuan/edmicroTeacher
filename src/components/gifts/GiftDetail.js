@@ -43,12 +43,6 @@ export default class GiftDetail extends Component {
                     bgColor={'#2D9CDB'} colorIcon={'#FFF'}
                     back={true}
                 />
-                {/* <Image
-                    source={require('../../asserts/icon/icon_elipHeaderV3.png')}
-                    resizeMode={'stretch'}
-                    style={styles.iconElip}
-                /> */}
-
                 <Image
                     source={{ uri: dataGift.image }}
                     style={styles.contrain}
@@ -81,42 +75,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    backbg: {
-        backgroundColor: '#2D9CDB',
-        height: height * 0.3
-    },
-    iconElip: {
-        width: 150,
-        height: height * 0.2,
-        color: '#fff',
-        alignSelf: 'flex-end',
-    },
-    listSale: {
-        backgroundColor: '#fff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5.84,
-        elevation: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginLeft: 16,
-        marginTop: 16,
-        marginRight: 16,
-        borderRadius: 4
-    },
-    flexLeft: {
-        width: '30%'
-    },
-    sizeIcon: {
-        marginTop: 10,
-        marginBottom: 10,
-        alignSelf: 'center',
-        marginLeft: -20
-    },
     changeCoin: {
         flexDirection: 'row',
         borderWidth: 0.5,
@@ -134,13 +92,6 @@ const styles = StyleSheet.create({
         marginTop: 28,
         alignSelf: 'center',
     },
-    txtTitle: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: 14,
-        lineHeight: 16,
-        color: '#000',
-        marginTop: 16
-    },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
         fontSize: 14,
@@ -151,22 +102,12 @@ const styles = StyleSheet.create({
         marginTop: 2,
         marginBottom: 2,
     },
-    txtMark: {
-        fontFamily: 'Nunito',
-        fontSize: 12,
-        color: '#828282',
-        alignSelf: 'center'
-    },
     widthIcon: {
         width: 20,
         height: 20,
         marginLeft: 16,
         marginTop: 2,
         marginBottom: 2
-    },
-    flexRight: {
-        flexDirection: 'column',
-        width: "70%"
     },
     contrain: {
         alignSelf: 'center',
