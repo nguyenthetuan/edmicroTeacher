@@ -18,6 +18,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { setProfileUserAction } from '../../../actions/userAction';
 import { getUserByToken } from '../../../utils/Helper';
 import HeaderMain from '../../common-new/HeaderMain';
+import ClassHolder from '../../shim/ClassHolder';
 
 class Class extends Component {
   constructor(props) {
@@ -79,12 +80,13 @@ class Class extends Component {
               isRefresh={isRefresh}
             />
           ) : (
-              <ActivityIndicator
-                animating
-                size={'small'}
-                style={{ flex: 1 }}
-                color="#F98E2F"
-              />
+              <ClassHolder />
+              //  <ActivityIndicator
+              //       animating
+              //       size={'small'}
+              //       style={{ flex: 1 }}
+              //       color="#F98E2F"
+              //     /> 
             )}
         </SafeAreaView>
       </>
