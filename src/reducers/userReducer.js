@@ -13,6 +13,7 @@ const initState = {
   CreateBySchool: '',
   AvatarSource: '',
   userName: '',
+  data: [],
 };
 
 export default function userReducer(state = initState, action) {

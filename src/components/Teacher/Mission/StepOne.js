@@ -269,7 +269,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 10,
     marginLeft: 27,
-    marginRight: 27
+    marginRight: 27,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   styTxtBtnNext: {
     color: '#FFF',
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
-    marginTop: 14,
+    marginTop: 16,
     marginBottom: 14
   },
   styTxtLabel: {

@@ -11,13 +11,29 @@ import * as Types from '../constants/type';
 import ApiHelper from '../services/apiUserHelper';
 import { showResultConfirmAction } from '../actions/modalAction';
 import {
-  fetchListGradeSuccessAction, fetchListGradeFaildAction, updateUserProfileSuccessAction,
-  updateUserProfileFaildAction, fetchUserInfomationSuccessAction, fetchUserInfomationFaildAction,
-  fetchStatisticChartSuccessAction, fetchStatisticChartFaildAction, getMateryUserSuccessAction, getMateryUserFaildAction,
-  getChartBuySubjectIdSuccessAction, getChartBuySubjectIdFaildAction, getChartContributiondFaildAction, getChartContributiondSuccessAction,
-  getFlashCardTheorySuccessAction, getFlashCardTheoryFaildAction, getFlashCardVideoSuccessAction, getFlashCardVideoFaildAction
+  fetchListGradeSuccessAction,
+  fetchListGradeFaildAction,
+  updateUserProfileSuccessAction,
+  updateUserProfileFaildAction,
+  fetchUserInfomationSuccessAction,
+  fetchUserInfomationFaildAction,
+  fetchStatisticChartSuccessAction,
+  fetchStatisticChartFaildAction,
+  getMateryUserSuccessAction,
+  getMateryUserFaildAction,
+  getChartBuySubjectIdSuccessAction,
+  getChartBuySubjectIdFaildAction,
+  getChartContributiondFaildAction,
+  getChartContributiondSuccessAction,
+  getFlashCardTheorySuccessAction,
+  getFlashCardTheoryFaildAction,
+  getFlashCardVideoSuccessAction,
+  getFlashCardVideoFaildAction
 } from '../actions/userAction';
-import { fetchListProcessFaildAction, fetchListProcessSuccessAction } from '../actions/processAction';
+import {
+  fetchListProcessFaildAction,
+  fetchListProcessSuccessAction
+} from '../actions/processAction';
 
 function* fetchUserInfomation(action) {
   try {
