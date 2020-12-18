@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import OfferGift from '../OfferGift';
 import HistoryGift from '../HistoryGift';
-
+const { width, height } = Dimensions.get('window');
 const TabTop = createMaterialTopTabNavigator({
     OfferGift: {
         screen: OfferGift,
@@ -28,13 +28,13 @@ const TabTop = createMaterialTopTabNavigator({
         style: {
             backgroundColor: '#fff',
             elevation: 0,
-            marginTop: 10
+            marginTop: 10,
+            marginLeft: width - (width / 1.5),
         },
         tabStyle: {
-            width: 200,
+            width: width / 3,
             height: 25,
             justifyContent: 'flex-start',
-            alignSelf: 'center',
             padding: 0,
         },
         labelStyle: {

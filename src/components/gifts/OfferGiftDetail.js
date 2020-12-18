@@ -11,7 +11,8 @@ import HeaderNavigation from '../common/HeaderNavigation';
 import * as Api from '../../services/apiGift';
 import dataHelper from '../../utils/dataHelper';
 const { width, height } = Dimensions.get('window');
-export default class GiftDetail extends Component {
+
+export default class OfferGiftDetail extends Component {
 
 
     componentDidMount() {
@@ -23,11 +24,11 @@ export default class GiftDetail extends Component {
         const { dataGift } = this.props.navigation.state.params;
         const params = {
             giftId: dataGift.receiveGift,
-            address: {
-                name: "string",
-                phoneNumber: "string",
-                email: "string",
-                address: "string"
+            "address": {
+                "name": "string",
+                "phoneNumber": "string",
+                "email": "string",
+                "address": "string"
             }
         }
         const response = await Api.giftExchange({ token, params });

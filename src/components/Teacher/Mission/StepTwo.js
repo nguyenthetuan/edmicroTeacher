@@ -124,7 +124,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 10,
     marginLeft: 10,
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   styBtnBack: {
     backgroundColor: '#2D9CDB',
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
-    marginTop: 14,
+    marginTop: 16,
     marginBottom: 14
   },
   styTxtLabel: {

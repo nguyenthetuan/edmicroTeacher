@@ -42,21 +42,6 @@ export default function userReducer(state = initState, action) {
         ...state,
         timeCached: action.payload.timeCached
       }
-    case Types.USER_GIFT_ACTION:
-      return {
-        ...state
-      }
-    case Types.USER_GIFT_SUCCESS_ACTION:
-      return {
-        ...state,
-        userGift: action.data
-      }
-    case Types.USER_GIFT_FAILD_ACTION:
-      return {
-        ...state,
-        userGift: {}
-      }
-
     default:
       return state;
   }
