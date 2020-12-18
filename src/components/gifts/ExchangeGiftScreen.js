@@ -33,7 +33,7 @@ class ExchangeGiftScreen extends Component {
 
     handleClickItem = item => () => {
         const { user } = this.props;
-        const isGoto = item.point > user.totalExpPoint;
+        const isGoto = item.point > user.totalEDPoint;
         if (isGoto) {
             Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
             return;
@@ -46,7 +46,7 @@ class ExchangeGiftScreen extends Component {
 
     renderItem = ({ item, index }) => {
         const { user } = this.props;
-        const isColor = item.point > user.totalExpPoint;
+        const isColor = item.point > user.totalEDPoint;
         item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
             <TouchableOpacity
@@ -113,7 +113,7 @@ class ExchangeGiftScreen extends Component {
                                 <Text
                                     numberOfLines={1}
                                     style={styles.countCoin}>
-                                    {formatNumber(parseInt(user.totalExpPoint))}
+                                    {formatNumber(parseInt(user.totalEDPoint))}
                                 </Text>
                             </View>
                         </View>

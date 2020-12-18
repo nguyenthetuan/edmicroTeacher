@@ -15,7 +15,7 @@ export default class HistoryGift extends Component {
 
     renderItem = ({ item, index }) => {
         const { user } = this.props.screenProps;
-        const isColor = item.point > user.totalExpPoint;
+        const isColor = item.point > user.totalEDPoint;
         item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
             <View

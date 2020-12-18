@@ -65,7 +65,7 @@ class HeaderMenu extends React.PureComponent {
             <Text
               style={{ color: '#FFF', fontSize: 14, fontFamily: 'Nunito-Bold', marginHorizontal: 5 }}
             >
-              {formatNumber(parseInt(userGift.totalExpPoint))}
+              {formatNumber(parseInt(userGift.totalEDPoint))}
             </Text>
           </View>
         </View>

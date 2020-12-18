@@ -19,7 +19,7 @@ class SaleGift extends Component {
 
     renderItem = ({ item, index }) => {
         const { user } = this.props;
-        const isColor = item.point > user.totalExpPoint;
+        const isColor = item.point > user.totalEDPoint;
         const { listGift } = this.props.navigation.state.params;
         return (
             <TouchableOpacity

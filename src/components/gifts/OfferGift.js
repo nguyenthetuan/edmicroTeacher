@@ -15,7 +15,7 @@ export default class OfferGift extends Component {
 
     handleClickItem = item => () => {
         const { user } = this.props.screenProps;
-        const isGoto = item.point > user.totalExpPoint;
+        const isGoto = item.point > user.totalEDPoint;
         if (isGoto) {
             Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
             return;
@@ -28,7 +28,7 @@ export default class OfferGift extends Component {
 
     renderItem = ({ item }) => {
         const { user } = this.props.screenProps;
-        const isColor = item.point > user.totalExpPoint;
+        const isColor = item.point > user.totalEDPoint;
         item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
             <TouchableOpacity
