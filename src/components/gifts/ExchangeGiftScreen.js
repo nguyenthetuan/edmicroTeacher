@@ -45,8 +45,8 @@ class ExchangeGiftScreen extends Component {
                 <View style={styles.flexLeft}>
                     <Image
                         source={{
-                             uri: item.image 
-                            }}
+                            uri: item.image
+                        }}
                         style={styles.sizeIcon}
                         resizeMode={'contain'}
                     />
@@ -135,7 +135,7 @@ class ExchangeGiftScreen extends Component {
                                     <Image
                                         source={require('../../asserts/icon/icon_elipHeaderV3.png')}
                                         resizeMode={'stretch'}
-                                        style={styles.iconElip}
+                                        style={styles.iconElip2}
                                     />
                                 </View>
                             </LinearGradient>
@@ -171,6 +171,11 @@ const styles = StyleSheet.create({
         height: height * 0.19,
         marginLeft: -50
     },
+    iconElip2: {
+        width: 150,
+        height: height * 0.19,
+        marginLeft: -20
+    },
     cardUser: {
         borderRadius: 4,
         borderWidth: 1,
@@ -190,7 +195,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginTop: 13,
         marginRight: 15,
-        marginBottom: -10
+        flexGrow: 1
     },
     icon_diamondV3: {
         alignSelf: 'center',
