@@ -50,7 +50,7 @@ class MenuTabTeacher extends Component {
       case 9: this.props.navigation.navigate('V_UpdatePhone', { statusbar: 'dark-content' }); break;
       case 12: this.setState({ modalVisible: true }); break;
       case 14: this.props.navigation.navigate('ChangePassword', { statusbar: 'light-content' }); break;
-      case 15: this.props.navigation.navigate('TermsOfUse', { statusbar: 'light-content' }); break;
+      case 15: this.props.navigation.navigate('TermsOfUse', { statusbar: 'dark-content' }); break;
       case 16: this.props.navigation.navigate('ExchangeGiftScreen', { statusbar: 'light-content' }); break;
       default:
         break;

@@ -385,7 +385,7 @@ class Papers extends Component {
           listGrades,
           listSubjects,
           urlFile: res.listFile[0],
-          statusbar: 'light-content',
+          statusbar: 'dark-content',
         });
       }
     } catch (error) { }
@@ -484,7 +484,7 @@ class Papers extends Component {
         nagigation: this.props.nagigation,
         listGrades,
         listSubjects,
-        statusbar: 'light-content',
+        statusbar: 'dark-content',
       }),
     );
   };
