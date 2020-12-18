@@ -6,6 +6,7 @@ import {
     Dimensions,
     Image,
     TouchableOpacity,
+    TextInput
 } from 'react-native';
 import HeaderNavigation from '../common/HeaderNavigation';
 import * as Api from '../../services/apiGift';
@@ -61,6 +62,30 @@ export default class OfferGiftDetail extends Component {
                     />
                     <Text style={styles.txtNumber}>{dataGift.point}</Text>
                 </View>
+                <View style={styles.formSub}>
+                    <Text style={styles.toSend}>Số điện thoại người nhận</Text>
+                </View>
+                <View style={styles.flexInput}>
+                    <TextInput
+                        placeholderTextColor={'#979797'}
+                        style={styles.styWrapInput}
+                    />
+                    <View style={styles.iconEdit} >
+                        <Image source={require('../../asserts/icon/icon_phoneFormV3.png')} />
+                    </View>
+                </View>
+                <View style={styles.formSub}>
+                    <Text style={styles.toSend2}>Địa chỉ người nhận</Text>
+                </View>
+                <View style={styles.flexInput1}>
+                    <TextInput
+                        placeholderTextColor={'#979797'}
+                        style={styles.styWrapInput}
+                    />
+                    <View style={styles.iconEdit} >
+                        <Image source={require('../../asserts/icon/icon_addressV3.png')} />
+                    </View>
+                </View>
                 <TouchableOpacity
                     style={styles.bgSubmit}
                     onPress={this.giftExchange}
@@ -114,6 +139,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 100,
         height: 100,
+        borderRadius:20,
         marginTop: 28
     },
     titleCate: {
@@ -128,7 +154,7 @@ const styles = StyleSheet.create({
         borderColor: 25,
         alignSelf: 'center',
         borderRadius: 25,
-        marginTop: 58
+        marginTop: 20
     },
     txtSub: {
         fontFamily: 'Nunito-Bold',
@@ -147,6 +173,47 @@ const styles = StyleSheet.create({
         color: "#000",
         textAlign: 'center',
         marginHorizontal: 50
+    },
+    formSub: {
+        marginHorizontal: 16,
+        marginTop: 44
+    },
+    toSend: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: 12,
+        lineHeight: 17,
+        color: '#828282'
+    },
+    toSend2: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: 12,
+        lineHeight: 17,
+        color: '#828282',
+        marginTop: -30
+    },
+    styWrapInput: {
+        padding: 10,
+        borderWidth: 0.5,
+        borderRadius: 5,
+        borderColor: '#56CCF2',
+        margin: 10,
+        color: '#000',
+        paddingLeft: 8
+    },
+    iconEdit: {
+        position: 'absolute',
+        alignSelf: 'flex-start',
+        marginTop: 20,
+        marginLeft: 25
+    },
+    flexInput: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    flexInput1: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: -10
     }
 })
 
