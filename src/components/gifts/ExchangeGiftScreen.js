@@ -7,7 +7,8 @@ import {
     Image,
     TouchableOpacity,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
@@ -16,6 +17,7 @@ import AppIcon from '../../utils/AppIcon';
 import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
 import dataHelper from '../../utils/dataHelper';
 import { getSourceAvatar } from '../../utils/Helper';
+import { imageDefault, formatNumber } from '../../utils/Common';
 const { width, height } = Dimensions.get('window');
 class ExchangeGiftScreen extends Component {
     componentDidMount() {
@@ -29,18 +31,27 @@ class ExchangeGiftScreen extends Component {
         this.props.getListHistoryGift({ token, page: 0 });
     }
 
+    handleClickItem = item => () => {
+        const { user } = this.props;
+        const isGoto = item.point > user.totalExpPoint;
+        if (isGoto) {
+            Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
+            return;
+        }
+        this.props.navigation.navigate('GiftDetail',
+            {
+                status: 'light-content',
+                dataGift: item
+            })
+    }
+
     renderItem = ({ item, index }) => {
         const { user } = this.props;
         const isColor = item.point > user.totalExpPoint;
+        item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
             <TouchableOpacity
-                onPress={() => {
-                    this.props.navigation.navigate('GiftDetail',
-                        {
-                            status: 'light-content',
-                            dataGift: item
-                        })
-                }}
+                onPress={this.handleClickItem(item)}
                 style={styles.listSale}>
                 <View style={styles.flexLeft}>
                     <Image
@@ -61,7 +72,7 @@ class ExchangeGiftScreen extends Component {
                             <Text
                                 numberOfLines={1}
                                 style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
-                            >{item.point}</Text>
+                            >{formatNumber(parseInt(item.point))}</Text>
                         </View>
                     </View>
                 </View>
@@ -69,13 +80,61 @@ class ExchangeGiftScreen extends Component {
         );
     };
 
+    renderHeader = () => {
+        const {
+            navigation,
+            user,
+        } = this.props;
+        const { uri } = getSourceAvatar(user.userId);
+        return (
+            <LinearGradient
+                colors={['#56CCF2', '#20BDFF']}
+                style={styles.cardUser}
+            >
+                <TouchableOpacity
+                    style={styles.sale}
+                    onPress={() => { navigation.navigate('SaleGift', { statusbar: 'light-content' }); }}
+                >
+                    <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
+                    <Text style={styles.txtDiamond}>Ưu đãi</Text>
+                </TouchableOpacity>
+                <View style={styles.flexSpace}>
+                    <View style={styles.viewUser}>
+                        <View style={styles.avatar}>
+                            <Image source={AppIcon.icon_diamondV3} style={styles.sizeAvar} />
+                            <Image source={{ uri }} style={styles.afterAvar} />
+                        </View>
+                        <View style={styles.description}>
+                            <Text numberOfLines={1}
+                                style={styles.txtName}>{user.displayName}</Text>
+                            <View style={styles.rowCoin}>
+                                <Image
+                                    source={require('../../asserts/icon/icon_coinCountV3.png')}
+                                    style={{ alignSelf: 'center' }} />
+                                <Text
+                                    numberOfLines={1}
+                                    style={styles.countCoin}>
+                                    {formatNumber(parseInt(user.totalExpPoint))}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    <Image
+                        source={require('../../asserts/icon/icon_elipHeaderV3.png')}
+                        resizeMode={'stretch'}
+                        style={styles.iconElip}
+                    />
+                </View>
+            </LinearGradient>
+        );
+    }
+
     render() {
         const {
             navigation,
             isLoading,
-            user,
-            listGift } = this.props;
-        const { uri } = getSourceAvatar(user.userId);
+            listGift
+        } = this.props;
         return (
             <View style={[styles.container]} >
                 <HeaderNavigation
@@ -89,64 +148,24 @@ class ExchangeGiftScreen extends Component {
                     <ActivityIndicator color={'#2D9CDB'}
                         size={'small'}
                         style={styles.ActivityIndicator} />
-                    : <>
+                    :
+                    <>
                         <View style={styles.backbg}>
                             <Image
                                 source={require('../../asserts/icon/icon_elipHeaderV3.png')}
                                 resizeMode={'stretch'}
                                 style={styles.iconElip}
                             />
-                            <LinearGradient
-                                colors={['#56CCF2', '#20BDFF']} style={styles.cardUser}
-                            >
-                                <TouchableOpacity style={styles.sale} onPress={() => {
-                                    navigation.navigate('SaleGift',
-                                        {
-                                            statusbar: 'light-content',
-                                            // listGift: item
-                                        });
-                                }}>
-                                    <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
-                                    <Text style={styles.txtDiamond}>Ưu đãi</Text>
-                                </TouchableOpacity>
-                                <View style={styles.flexSpace}>
-                                    <View style={styles.viewUser}>
-                                        <View style={styles.avatar}>
-                                            <Image source={AppIcon.icon_diamondV3} style={styles.sizeAvar} />
-                                            <Image source={{ uri }} style={styles.afterAvar} />
-                                        </View>
-                                        <View style={styles.description}>
-                                            <Text numberOfLines={1}
-                                                style={styles.txtName}>{user.displayName}</Text>
-                                            <View style={styles.rowCoin}>
-                                                <Image
-                                                    source={require('../../asserts/icon/icon_coinCountV3.png')}
-                                                    style={{ alignSelf: 'center' }} />
-                                                <Text
-                                                    numberOfLines={1}
-                                                    style={styles.countCoin}>
-                                                    {user.totalExpPoint}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                    <Image
-                                        source={require('../../asserts/icon/icon_elipHeaderV3.png')}
-                                        resizeMode={'stretch'}
-                                        style={styles.iconElip}
-                                    />
-                                </View>
-                            </LinearGradient>
                         </View>
                         <FlatList
                             data={listGift}
-                            keyExtractor={(item, index) => String(index)}
+                            keyExtractor={(item, index) => index.toString()}
                             renderItem={this.renderItem}
-                            style={{
-                                marginTop: height * 0.2 / 2,
-                            }}
+                            ListHeaderComponent={this.renderHeader}
+                            stickyHeaderIndices={[0]}
                         />
-                    </>}
+                    </>
+                }
             </View>
         )
     }
@@ -155,24 +174,28 @@ class ExchangeGiftScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF'
     },
     backbg: {
         backgroundColor: '#2D9CDB',
-        height: height * 0.2,
-        zIndex: 99,
-        elevation: 99
+        height: height / 3,
+        width,
+        zIndex: -1,
+        elevation: 0,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10
     },
     iconElip: {
         width: 150,
-        height: height * 0.2,
+        height: 100,
         marginLeft: -50
     },
     cardUser: {
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#fff',
-        marginTop: -120,
         marginHorizontal: 16,
     },
     sale: {

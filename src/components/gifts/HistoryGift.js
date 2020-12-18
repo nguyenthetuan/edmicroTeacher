@@ -7,6 +7,8 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
+import moment from 'moment';
+import { imageDefault } from '../../utils/Common';
 
 import Toast, { DURATION } from 'react-native-easy-toast';
 export default class HistoryGift extends Component {
@@ -14,6 +16,7 @@ export default class HistoryGift extends Component {
     renderItem = ({ item, index }) => {
         const { user } = this.props.screenProps;
         const isColor = item.point > user.totalExpPoint;
+        item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
             <View
                 style={styles.listSale}>
@@ -25,7 +28,7 @@ export default class HistoryGift extends Component {
                     />
                 </View>
                 <View style={styles.flexRight}>
-                    <Text style={styles.txtTitle}>{item.description}</Text>
+                    <Text style={styles.txtTitle}>{item.giftName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 16 }}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
@@ -39,6 +42,7 @@ export default class HistoryGift extends Component {
                             >{item.point}</Text>
                         </View>
                     </View>
+                    <Text style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}>{moment(item.time).format('HH:MM - DD/MM/YYYY')}</Text>
                 </View>
             </View >
         );
@@ -56,7 +60,6 @@ export default class HistoryGift extends Component {
                     data={listHistory}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={this.renderItem}
-                    style={{ paddingTop: 10 }}
                 />
                 <Toast
                     ref={ref => this.toastRef = ref}

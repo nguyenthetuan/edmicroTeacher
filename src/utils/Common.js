@@ -626,6 +626,23 @@ const randomContent = () => {
   return content[Math.floor(Math.random() * content.length)];
 }
 
+export const imageDefault = 'https://thailamlandscape.vn/wp-content/uploads/2017/10/no-image.png';
+
+export function formatNumber(number) {
+  if (!number) {
+    return 0;
+  }
+  number = number.toFixed(2) + '';
+  let x = number.split('.');
+  let x1 = x[0];
+  let rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + '.' + '$2');
+  }
+  return x1;
+}
+
+
 /**
  * 
  * @param {*} isAcess 
@@ -728,5 +745,7 @@ module.exports = {
   HEIGHT_TOPBAR,
   AlertNoti,
   roundToTwo,
-  roundToFour
+  roundToFour,
+  imageDefault,
+  formatNumber
 };

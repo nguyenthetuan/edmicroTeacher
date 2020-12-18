@@ -6,24 +6,34 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
+    Alert
 } from 'react-native';
-
+import { imageDefault } from '../../utils/Common';
 import Toast from 'react-native-easy-toast';
 export default class OfferGift extends Component {
+
+
+    handleClickItem = item => () => {
+        const { user } = this.props.screenProps;
+        const isGoto = item.point > user.totalExpPoint;
+        if (isGoto) {
+            Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
+            return;
+        }
+        this.props.screenProps.navigation.navigate('OfferGiftDetail',
+            {
+                status: 'light-content',
+                dataGift: item
+            })
+    }
 
     renderItem = ({ item }) => {
         const { user } = this.props.screenProps;
         const isColor = item.point > user.totalExpPoint;
-        const { dataGift } = this.props;
+        item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
             <TouchableOpacity
-                onPress={() => {
-                    this.props.screenProps.navigation.navigate('OfferGiftDetail',
-                        {
-                            status: 'light-content',
-                            dataGift: item
-                        })
-                }}
+                onPress={this.handleClickItem(item)}
                 style={styles.listSale}>
                 <View style={styles.flexLeft}>
                     <Image
@@ -40,6 +50,7 @@ export default class OfferGift extends Component {
                             <Image
                                 style={styles.widthIcon}
                                 source={require('../../asserts/icon/icon_coinGiftV3.png')}
+                                resizeMode={'contain'}
                             />
                             <Text
                                 numberOfLines={1}
