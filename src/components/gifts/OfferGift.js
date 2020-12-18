@@ -20,11 +20,10 @@ export default class OfferGift extends Component {
             Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
             return;
         }
-        this.props.screenProps.navigation.navigate('OfferGiftDetail',
-            {
-                status: 'light-content',
-                dataGift: item
-            })
+        this.props.screenProps.navigation.navigate('GiftDetail', {
+            status: 'light-content',
+            dataGift: item
+        });
     }
 
     renderItem = ({ item }) => {

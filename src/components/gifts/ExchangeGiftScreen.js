@@ -38,11 +38,10 @@ class ExchangeGiftScreen extends Component {
             Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
             return;
         }
-        this.props.navigation.navigate('GiftDetail',
-            {
-                status: 'light-content',
-                dataGift: item
-            })
+        this.props.navigation.navigate('GiftDetail', {
+            status: 'light-content',
+            dataGift: item
+        });
     }
 
     renderItem = ({ item, index }) => {
