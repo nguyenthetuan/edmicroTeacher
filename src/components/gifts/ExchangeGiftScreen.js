@@ -101,13 +101,14 @@ class ExchangeGiftScreen extends Component {
                             <LinearGradient
                                 colors={['#56CCF2', '#20BDFF']} style={styles.cardUser}
                             >
-                                <TouchableOpacity style={styles.sale} onPress={() => {
-                                    navigation.navigate('SaleGift',
-                                        {
-                                            statusbar: 'light-content',
-                                            // listGift: item
-                                        });
-                                }}>
+                                <TouchableOpacity style={styles.sale}
+                                    onPress={() => {
+                                        navigation.navigate('SaleGift',
+                                            {
+                                                statusbar: 'light-content',
+                                                // listGift: item
+                                            });
+                                    }}>
                                     <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
                                     <Text style={styles.txtDiamond}>Ưu đãi</Text>
                                 </TouchableOpacity>
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     iconElip2: {
         width: 150,
         height: height * 0.19,
-        marginLeft: -20
+        marginLeft: -50
     },
     cardUser: {
         borderRadius: 4,
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginTop: 13,
         marginRight: 15,
-        flexGrow: 1
+        // flexGrow: 1
     },
     icon_diamondV3: {
         alignSelf: 'center',
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     },
     flexSpace: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     sizeAvar: {
         alignSelf: 'center',
@@ -258,7 +259,6 @@ const styles = StyleSheet.create({
     },
     viewUser: {
         flexDirection: 'row',
-        marginTop: -20
     },
     afterAvar: {
         marginTop: -80,
