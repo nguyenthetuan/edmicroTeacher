@@ -26,7 +26,7 @@ export default class HistoryGift extends Component {
                 </View>
                 <View style={styles.flexRight}>
                     <Text style={styles.txtTitle}>{item.description}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 16 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
                             <Image
@@ -102,8 +102,11 @@ const styles = StyleSheet.create({
     },
     sizeIcon: {
         alignSelf: 'center',
-        width: 100,
-        height: 100
+        width: 75,
+        height: 75,
+        borderRadius: 16,
+        marginTop: 10,
+        marginBottom: 10,
     },
     changeCoin: {
         flexDirection: 'row',
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 16,
         color: '#000',
-        marginTop: 16
+        marginTop: 20
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
@@ -147,5 +150,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: "70%",
         marginLeft: 10,
+        justifyContent: 'space-between'
     }
 })
