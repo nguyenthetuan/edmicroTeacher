@@ -76,7 +76,7 @@ export default class GiftDetail extends Component {
                 <View style={styles.formSub}>
                     <Text style={styles.toSend2}>Địa chỉ người nhận</Text>
                 </View>
-                <View style={styles.flexInput}>
+                <View style={styles.flexInput1}>
                     <TextInput
                         placeholderTextColor={'#979797'}
                         style={styles.styWrapInput}
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         width: 120,
         height: 120,
         marginTop: 28,
-        borderRadius: 25,
+        borderRadius: 23,
     },
     titleCate: {
         fontFamily: "Nunito-Bold",
@@ -209,6 +209,11 @@ const styles = StyleSheet.create({
     flexInput: {
         flexDirection: 'column',
         justifyContent: 'space-between',
+    },
+    flexInput1: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: -10
     }
 })
 
