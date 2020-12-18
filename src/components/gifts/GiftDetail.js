@@ -18,26 +18,23 @@ import { formatNumber } from '../../utils/Common';
 import IconFeather from 'react-native-vector-icons/Feather';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
 class GiftDetail extends Component {
 
     state = {
         formData: {}
     }
 
-    componentDidMount() {
-        const { dataGift } = this.props.navigation.state.params;
-    }
-
     giftExchange = async () => {
-        if (this.checkInput()) {
+        const { dataGift } = this.props.navigation.state.params;
+        if (dataGift.receiveGift == 'DELIVERY' && this.checkInput()) {
             return;
         }
         const { token } = await dataHelper.getToken();
-        const { dataGift } = this.props.navigation.state.params;
         const { formData } = this.state;
         const { user } = this.props;
         const params = {
-            giftId: dataGift.receiveGift,
+            giftId: dataGift.id,
             address: {
                 name: user.displayName,
                 phoneNumber: formData['phoneNumber'],
@@ -45,12 +42,28 @@ class GiftDetail extends Component {
                 address: formData['address']
             }
         };
-        const response = await Api.giftExchange({ token, params });
-        console.log("🚀 ~ file: GiftDetail.js ~ line 49 ~ GiftDetail ~ giftExchange= ~ response", response)
-        if (_.isEmpty(response.result)) {
-            Alert.alert('Thông báo', response.errorMessage[0]);
-            return;
-        }
+        Alert.alert('Thông báo', 'Bạn có chắc muốn đổi thưởng?', [
+            {
+                text: 'Xác nhận',
+                onPress: async () => {
+                    const response = await Api.giftExchange({ token, params });
+                    if (_.isEmpty(response.result)) {
+                        Alert.alert('Thông báo', response.errorMessage[0]);
+                        return;
+                    }
+                    Alert.alert('Thông báo', 'Đổi thưởng thành công', [
+                        { text: 'Đóng', onPress: this.props.navigation.goBack }
+                    ]);
+                    this.props.makeRequestProfile({ token });
+                    this.props.getListGiftAction({ token, page: 0 });
+                    this.props.getListHistoryGift({ token, page: 0 });
+                }
+            },
+            {
+                text: 'Quay lại',
+            }
+        ])
+
     }
 
     onChangeText = key => value => {
@@ -182,7 +195,15 @@ const mapStateToProp = (state) => {
     }
 }
 
-export default connect(mapStateToProp, null)(GiftDetail);
+const mapDispatchToProps = dispatch => {
+    return {
+        makeRequestProfile: payload => dispatch(userGiftAction(payload)),
+        getListGiftAction: payload => dispatch(getListGiftAction(payload)),
+        getListHistoryGift: payload => dispatch(getListHistoryAction(payload))
+    };
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(GiftDetail);
 
 const styles = StyleSheet.create({
     container: {
