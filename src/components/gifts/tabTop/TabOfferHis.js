@@ -27,9 +27,10 @@ const TabTop = createMaterialTopTabNavigator({
     tabBarOptions: {
         style: {
             backgroundColor: '#fff',
-            elevation: 0,
             marginTop: 10,
             marginLeft: width - (width / 1.5),
+            elevation: 0,
+            shadowOffset: { height: 0, width: 0 },
         },
         tabStyle: {
             width: width / 3,
@@ -55,30 +56,3 @@ const TabTop = createMaterialTopTabNavigator({
 });
 
 export default createAppContainer(TabTop)
-
-const styles = StyleSheet.create({
-    styNode: {
-        width: 110,
-        height: 5,
-        backgroundColor: '#FFF',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
-    },
-    styWrapNode: {
-        justifyContent: 'center',
-        marginHorizontal: 2
-    },
-    row: {
-        flexDirection: 'row'
-    },
-    styTxtNode: {
-        color: '#C4C4C4',
-        textAlign: 'center',
-        fontFamily: 'Nunito-Regular'
-    },
-    styTxtNodeActive: {
-        color: '#FFF',
-        textAlign: 'center',
-        fontFamily: 'Nunito-Bold'
-    }
-})

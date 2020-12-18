@@ -16,6 +16,7 @@ import dataHelper from '../../../utils/dataHelper';
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setProfileUserAction } from '../../../actions/userAction';
+import { userGiftAction } from '../../../actions/giftAction';
 import { getUserByToken } from '../../../utils/Helper';
 import HeaderMain from '../../common-new/HeaderMain';
 import ClassHolder from '../../shim/ClassHolder';
@@ -36,6 +37,7 @@ class Class extends Component {
       const { token } = await dataHelper.getToken();
       const payload = getUserByToken(token);
       this.props.makeRequestProfile(payload);
+      this.props.userGiftAction({ token });
       const response = await Api.getListClass({ token });
       this.setState({
         isLoading: false,
@@ -124,6 +126,7 @@ const mapDispatchToProps = dispatch => {
     makeRequestProfile: payload => {
       dispatch(setProfileUserAction(payload));
     },
+    userGiftAction: payload => dispatch(userGiftAction(payload)),
   };
 };
 

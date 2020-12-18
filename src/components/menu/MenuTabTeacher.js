@@ -73,7 +73,7 @@ class MenuTabTeacher extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, userGift } = this.props;
     const { modalVisible } = this.state;
     return (
       <React.Fragment>
@@ -81,6 +81,7 @@ class MenuTabTeacher extends Component {
         <View style={MenuStyle.container} >
           <HeaderMenu
             {...user}
+            userGift={userGift}
             navigation={this.props.navigation}
             handleClick={(n) => this.handleClick(n)}
           />
@@ -151,7 +152,8 @@ class MenuTabTeacher extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    userGift: state.gift.user
   }
 }
 
