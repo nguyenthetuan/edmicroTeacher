@@ -48,7 +48,7 @@ export default class InputNumberQuestion extends Component {
   decrease = () => {
     const { onChange } = this.props;
     const { total } = this.state;
-    if (total < 100 && total !== 0) {
+    if (total < 100 && total !== 1) {
       this.setState({
         total: total - 1
       }, () => onChange(total - 1))

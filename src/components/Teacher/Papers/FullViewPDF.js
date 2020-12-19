@@ -6,12 +6,6 @@ import Pdf from 'react-native-pdf';
 export default class FullViewPDFAssessment extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
-    }
-
-    componentDidMount() {
     }
 
     render() {
@@ -34,9 +28,6 @@ export default class FullViewPDFAssessment extends Component {
                     style={styles.pdf}
                 />
             </SafeAreaView>
-            // <View style={styles.container}>
-
-            // </View>
         )
     }
 }
