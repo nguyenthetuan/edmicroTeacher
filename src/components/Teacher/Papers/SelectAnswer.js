@@ -353,6 +353,7 @@ export default class SelectAnswer extends Component {
                 onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
                 onEndEditing={() => this.pointSentence(typeQuestion)}
                 value={totalPoint && `${totalPoint}` || ''}
+                editable={false}
               /> :
                 <TextInput
                   style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
@@ -363,6 +364,7 @@ export default class SelectAnswer extends Component {
                   onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
                   onEndEditing={() => this.pointSentence(typeQuestion)}
                   value={totalPointTL && `${totalPointTL}` || ''}
+                  editable={false}
                 />}
               {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
             </View>
@@ -377,6 +379,7 @@ export default class SelectAnswer extends Component {
                 onChangeText={this.onChangeText}
                 onEndEditing={() => this.editPoint(typeQuestion)}
                 value={typeQuestion === 0 ? `${questions[this.props.indexSelecting].textPoint}` : `${questionsTL[this.props.indexSelectingTL].textPoint}`}
+                editable={false}
               />
             </View>
           </View>

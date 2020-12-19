@@ -114,6 +114,7 @@ export default class InputNumberQuestion extends Component {
             onChangeText={this.onChangeText}
             onEndEditing={this.onEndEditing}
             returnKeyType={'done'}
+            editable={false}
           />
           <TouchableOpacity
             onPress={this.increase}
