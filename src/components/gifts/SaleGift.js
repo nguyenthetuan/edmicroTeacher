@@ -6,6 +6,7 @@ import {
     Dimensions,
     Image,
     TouchableOpacity,
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
@@ -13,7 +14,52 @@ import LinearGradient from 'react-native-linear-gradient';
 import AppIcon from '../../utils/AppIcon';
 import TabOfferHis from '../gifts/tabTop/TabOfferHis';
 const { width, height } = Dimensions.get('window');
-export default class SaleGift extends Component {
+class SaleGift extends Component {
+
+
+    renderItem = ({ item, index }) => {
+        const { user } = this.props;
+        const isColor = item.point > user.totalEDPoint;
+        const { listGift } = this.props.navigation.state.params;
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.navigation.navigate('GiftDetail',
+                        {
+                            status: 'light-content',
+                            listGift: item
+                        })
+                }}
+                style={styles.listSale}>
+                <View style={styles.flexLeft}>
+                    <Image
+                        source={{ uri: item.image }}
+                        style={styles.sizeIcon}
+                        resizeMode={'contain'}
+                    />
+                </View>
+                <View style={styles.flexRight}>
+                    <Text style={styles.txtTitle}>{item.description}</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 16 }}>
+                        <Text style={styles.txtMark}>Đổi điểm</Text>
+                        <View style={styles.changeCoin}>
+                            <Image
+                                style={styles.widthIcon}
+                                source={require('../../asserts/icon/icon_coinCountV3.png')}
+                            />
+                            <Text
+                                numberOfLines={1}
+                                style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
+                            >
+                                {item.point}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity >
+        );
+    };
+
     render() {
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
@@ -25,28 +71,6 @@ export default class SaleGift extends Component {
                 />
                 <TabOfferHis screenProps={this.props} />
 
-                {/* <TouchableOpacity style={styles.listSale}>
-                    <View style={styles.flexLeft}>
-                        <Image
-                            source={require('../../asserts/icon/icon_bookTitle.png')}
-                            style={styles.sizeIcon}
-                        />
-                    </View>
-                    <View style={styles.flexRight}>
-                        <Text style={styles.txtTitle}>Sách kiến thức</Text>
-                        <View style={{ flexDirection: 'row', marginTop: 16 }}>
-                            <Text style={styles.txtMark}>Đổi điểm</Text>
-                                <View style={styles.changeCoin}>
-                                    <Image
-                                        style={styles.widthIcon}
-                                        source={require('../../asserts/icon/icon_coinCountV3.png')}
-                                    />
-                                    <Text style={styles.txtNumber}>30</Text>
-                                </View>
-                        </View>
-                    </View>
-                </TouchableOpacity> */}
-
             </View>
         )
     }
@@ -56,17 +80,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    backbg: {
-        backgroundColor: '#2D9CDB',
-        height: height * 0.3
-    },
-    iconElip: {
-        width: 150,
-        height: height * 0.2,
-        color: '#fff',
-        alignSelf: 'flex-end',
-    },
-    
     listSale: {
         backgroundColor: '#fff',
         shadowColor: "#000",
@@ -97,9 +110,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderWidth: 0.5,
         borderColor: '#56CCF2',
-        borderRadius: 10,
-        width: 70,
-        marginLeft: 10,
+        borderRadius: 20,
+        marginLeft: 10
     },
     txtTitle: {
         fontFamily: 'Nunito-Bold',
@@ -114,7 +126,9 @@ const styles = StyleSheet.create({
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
-        marginRight: 15
+        marginRight: 15,
+        marginTop: 2,
+        marginBottom: 2,
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -126,6 +140,8 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         marginLeft: 16,
+        marginTop: 2,
+        marginBottom: 2
     },
     flexRight: {
         flexDirection: 'column',
@@ -133,3 +149,12 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = (state) => {
+    return {
+        listGift: state.gift.listGift,
+        listHistory: state.gift.listHistory,
+        user: state.gift.user,
+    }
+}
+
+export default connect(mapStateToProps, null)(SaleGift)

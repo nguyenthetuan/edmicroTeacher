@@ -6,95 +6,208 @@ import {
     Dimensions,
     Image,
     TouchableOpacity,
+    TextInput,
+    ScrollView,
+    KeyboardAvoidingView,
+    Alert
 } from 'react-native';
-import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
-import LinearGradient from 'react-native-linear-gradient';
-import AppIcon from '../../utils/AppIcon';
-const { width, height } = Dimensions.get('window');
-export default class GiftDetail extends Component {
+import * as Api from '../../services/apiGift';
+import dataHelper from '../../utils/dataHelper';
+import { formatNumber } from '../../utils/Common';
+import IconFeather from 'react-native-vector-icons/Feather';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
+class GiftDetail extends Component {
+
+    state = {
+        formData: {}
+    }
+
+    giftExchange = async () => {
+        const { dataGift } = this.props.navigation.state.params;
+        if (dataGift.receiveGift == 'DELIVERY' && this.checkInput()) {
+            return;
+        }
+        const { token } = await dataHelper.getToken();
+        const { formData } = this.state;
+        const { user } = this.props;
+        const params = {
+            giftId: dataGift.id,
+            address: {
+                name: user.displayName,
+                phoneNumber: formData['phoneNumber'],
+                email: formData['email'],
+                address: formData['address']
+            }
+        };
+        Alert.alert('Thông báo', 'Bạn có chắc muốn đổi thưởng?', [
+            {
+                text: 'Xác nhận',
+                onPress: async () => {
+                    const response = await Api.giftExchange({ token, params });
+                    if (_.isEmpty(response.result)) {
+                        Alert.alert('Thông báo', response.errorMessage[0]);
+                        return;
+                    }
+                    Alert.alert('Thông báo', 'Đổi thưởng thành công', [
+                        { text: 'Đóng', onPress: this.props.navigation.goBack }
+                    ]);
+                    this.props.makeRequestProfile({ token });
+                    this.props.getListGiftAction({ token, page: 0 });
+                    this.props.getListHistoryGift({ token, page: 0 });
+                }
+            },
+            {
+                text: 'Quay lại',
+            }
+        ])
+
+    }
+
+    onChangeText = key => value => {
+        const { formData } = this.state;
+        formData[key] = value;
+        this.setState({ formData })
+    }
+
+    checkInput = () => {
+        const { formData } = this.state;
+        if (_.isEmpty(formData['phoneNumber']) || formData['phoneNumber'].trim() == '') {
+            formData['phoneNumber'] = '';
+            this.setState({ formData });
+            Alert.alert('Thông báo', 'Bạn chưa điền số điện thoại');
+            return true;
+        }
+        if (_.isEmpty(formData['address']) || formData['address'].trim() == '') {
+            formData['address'] = '';
+            this.setState({ formData });
+            Alert.alert('Thông báo', 'Bạn chưa điền địa chỉ');
+            return true;
+        }
+        if (_.isEmpty(formData['email']) || formData['email'].trim() == '') {
+            formData['email'] = '';
+            this.setState({ formData });
+            Alert.alert('Thông báo', 'Bạn chưa điền Email');
+            return true;
+        }
+        return false;
+    }
+
     render() {
+        const { dataGift } = this.props.navigation.state.params;
+        const { formData } = this.state;
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
                 <HeaderNavigation
-                    title={'Sách kiến thức'}
+                    title={dataGift.name}
                     navigation={this.props.navigation}
                     bgColor={'#2D9CDB'} colorIcon={'#FFF'}
                     back={true}
                 />
-                {/* <Image
-                    source={require('../../asserts/icon/icon_elipHeaderV3.png')}
-                    resizeMode={'stretch'}
-                    style={styles.iconElip}
-                /> */}
+                <KeyboardAvoidingView style={{ flex: 1 }} behavior={'padding'}>
+                    <ScrollView
+                        keyboardDismissMode={'on-drag'}
+                    >
+                        <Image
+                            source={{ uri: dataGift.image }}
+                            style={styles.contrain}
+                        />
+                        <Text style={styles.titleCate}>
+                            {dataGift.name}
+                        </Text>
+                        <Text style={styles.description}>
+                            {dataGift.description}
+                        </Text>
+                        <View style={styles.changeCoin1}>
+                            <Image
+                                style={styles.widthIcon}
+                                source={require('../../asserts/icon/icon_coinGiftV3.png')}
+                            />
+                            <Text style={styles.txtNumber}>{formatNumber(parseInt(dataGift.point))}</Text>
+                        </View>
+                        {dataGift.receiveGift == 'DELIVERY' && <>
+                            <FormInput
+                                lable={'Số điện thoại người nhận'}
+                                placeholder={'+8490 3456789'}
+                                icon={'phone'}
+                                keyboardType='phone-pad'
+                                onChangeText={this.onChangeText('phoneNumber')}
+                                value={formData['phoneNumber']}
+                            />
 
-                <Image
-                    source={require('../../asserts/icon/icon_bookTitle.png')}
-                    style={styles.contrain}
-                />
-                <Text style={styles.titleCate}>
-                    Sách kiến thức
-                </Text>
-                <Text style={styles.description}>
-                    Lorem Ipsum is simply dummy text of the printing
-                    and typesetting industry. Lorem Ipsum has been
-                    the industry's standard dummy text ever since
-                    the 1500s
-                </Text>
-                <View style={styles.changeCoin1}>
-                    <Image
-                        style={styles.widthIcon}
-                        source={require('../../asserts/icon/icon_coinCountV3.png')}
-                    />
-                    <Text style={styles.txtNumber}>50</Text>
-                </View>
-                <TouchableOpacity style={styles.bgSubmit}>
-                    <Text style={styles.txtSub}>Đổi quà</Text>
-                </TouchableOpacity>
-            </View>
+                            <FormInput
+                                lable={'Địa chỉ người nhận'}
+                                placeholder={'Lý thường Kiệt, Hà Nội'}
+                                icon={'map-pin'}
+                                onChangeText={this.onChangeText('address')}
+                                value={formData['address']}
+                            />
+
+                            <FormInput
+                                lable={'Email người nhận'}
+                                placeholder={'onluyenvn@gmail.com'}
+                                icon={'mail'}
+                                onChangeText={this.onChangeText('email')}
+                                value={formData['email']}
+                            />
+                        </>}
+
+                        <TouchableOpacity
+                            style={styles.bgSubmit}
+                            onPress={this.giftExchange}
+                        >
+                            <Text style={styles.txtSub}>Đổi quà</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                </KeyboardAvoidingView>
+            </View >
         )
     }
 }
 
+class FormInput extends Component {
+    render() {
+        const { lable, placeholder, icon, keyboardType, onChangeText, value } = this.props;
+        return (
+            <View style={{ marginHorizontal: 15, marginTop: 10 }}>
+                <Text style={styles.styLabel}>{lable}</Text>
+                <View style={styles.styInput}>
+                    <IconFeather name={icon} style={styles.styIcon} />
+                    <TextInput
+                        placeholder={placeholder}
+                        style={{ color: '#000', fontFamily: 'Nunito-Regular', flex: 1 }}
+                        keyboardType={keyboardType ? keyboardType : 'default'}
+                        onChangeText={onChangeText}
+                        value={value}
+                        placeholderTextColor={'#c2c2c2'}
+                    />
+                </View>
+            </View>
+        );
+    }
+}
+
+const mapStateToProp = (state) => {
+    return {
+        user: state.gift.user,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        makeRequestProfile: payload => dispatch(userGiftAction(payload)),
+        getListGiftAction: payload => dispatch(getListGiftAction(payload)),
+        getListHistoryGift: payload => dispatch(getListHistoryAction(payload))
+    };
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(GiftDetail);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1
-    },
-    backbg: {
-        backgroundColor: '#2D9CDB',
-        height: height * 0.3
-    },
-    iconElip: {
-        width: 150,
-        height: height * 0.2,
-        color: '#fff',
-        alignSelf: 'flex-end',
-    },
-    listSale: {
-        backgroundColor: '#fff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5.84,
-        elevation: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginLeft: 16,
-        marginTop: 16,
-        marginRight: 16,
-        borderRadius: 4
-    },
-    flexLeft: {
-        width: '30%'
-    },
-    sizeIcon: {
-        marginTop: 10,
-        marginBottom: 10,
-        alignSelf: 'center',
-        marginLeft: -20
     },
     changeCoin: {
         flexDirection: 'row',
@@ -108,49 +221,35 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderWidth: 0.5,
         borderColor: '#56CCF2',
-        borderRadius: 10,
+        borderRadius: 20,
         marginLeft: 10,
         marginTop: 28,
         alignSelf: 'center',
-    },
-    txtTitle: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: 14,
-        lineHeight: 16,
-        color: '#000',
-        marginTop: 16
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
         fontSize: 14,
         color: '#4776AD',
         alignSelf: 'center',
-        marginLeft: 5,
+        marginLeft: 10,
         marginRight: 15,
-    },
-    txtMark: {
-        fontFamily: 'Nunito',
-        fontSize: 12,
-        color: '#828282',
-        alignSelf: 'center'
+        marginTop: 2,
+        marginBottom: 2,
     },
     widthIcon: {
-        width: 18,
-        height: 18,
+        width: 20,
+        height: 20,
         marginLeft: 16,
-        alignSelf: 'center',
         marginTop: 2,
-        marginBottom: 3
-    },
-    flexRight: {
-        flexDirection: 'column',
-        width: "70%"
+        marginBottom: 2
     },
     contrain: {
         alignSelf: 'center',
         width: 100,
         height: 100,
-        marginTop: 28
+        marginTop: 28,
+        borderWidth: 1,
+        borderColor: '#c4c4c4'
     },
     titleCate: {
         fontFamily: "Nunito-Bold",
@@ -164,7 +263,7 @@ const styles = StyleSheet.create({
         borderColor: 25,
         alignSelf: 'center',
         borderRadius: 25,
-        marginTop: 58
+        marginTop: 20
     },
     txtSub: {
         fontFamily: 'Nunito-Bold',
@@ -176,12 +275,30 @@ const styles = StyleSheet.create({
         marginRight: 76,
     },
     description: {
-        fontSize: 14,
         fontFamily: 'Nunito',
+        fontSize: 14,
+        lineHeight: 18,
+        color: "#000",
         textAlign: 'center',
-        marginHorizontal: 50,
-        color: '#000000',
-        marginTop: 4
+        marginHorizontal: 50
+    },
+    styInput: {
+        padding: 10,
+        borderRadius: 5,
+        borderColor: '#56CCF2',
+        borderWidth: 0.7,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    styLabel: {
+        fontFamily: 'Nunito-Bold',
+        marginVertical: 5,
+        color: '#828282'
+    },
+    styIcon: {
+        color: '#56CCF2',
+        fontSize: 16,
+        marginRight: 10
     }
 })
 

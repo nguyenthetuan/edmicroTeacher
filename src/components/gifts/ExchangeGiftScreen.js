@@ -6,125 +6,167 @@ import {
     Dimensions,
     Image,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
 import LinearGradient from 'react-native-linear-gradient';
 import AppIcon from '../../utils/AppIcon';
+import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
+import dataHelper from '../../utils/dataHelper';
+import { getSourceAvatar } from '../../utils/Helper';
+import { imageDefault, formatNumber } from '../../utils/Common';
 const { width, height } = Dimensions.get('window');
-export default class ExchangeGiftScreen extends Component {
-
-    // renderItem = ({ item, index }) => {
-    //     return (
-    //         <View style={styles.listSale}>
-    //             <View>
-    //                 <Image source={require('../../asserts/icon/icon_bookTitle.png')} />
-    //             </View>
-    //         </View>
-    //     );
-    // };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: []
-        }
+class ExchangeGiftScreen extends Component {
+    componentDidMount() {
+        this.getDataInfo();
     }
 
-    render() {
-        const { navigation } = this.props;
+    getDataInfo = async () => {
+        const { token } = await dataHelper.getToken();
+        this.props.makeRequestProfile({ token });
+        this.props.getListGiftAction({ token, page: 0 });
+        this.props.getListHistoryGift({ token, page: 0 });
+    }
+
+    handleClickItem = item => () => {
+        const { user } = this.props;
+        const isGoto = item.point > user.totalEDPoint;
+        if (isGoto) {
+            Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
+            return;
+        }
+        this.props.navigation.navigate('GiftDetail', {
+            status: 'light-content',
+            dataGift: item
+        });
+    }
+
+    renderItem = ({ item, index }) => {
+        const { user } = this.props;
+        const isColor = item.point > user.totalEDPoint;
+        item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
-            <View style={[styles.container, { backgroundColor: '#FFF' }]} >
-                <View style={styles.backbg}>
-                    <HeaderNavigation
-                        title={'Đổi quà'}
-                        navigation={this.props.navigation}
-                        bgColor={'transparent'} colorIcon={'#FFF'}
-                        styleTitle={styles.styleTitle}
-                        back={true}
+            <TouchableOpacity
+                onPress={this.handleClickItem(item)}
+                style={styles.listSale}>
+                <View style={styles.flexLeft}>
+                    <Image
+                        source={{
+                            uri: item.image
+                        }}
+                        style={styles.sizeIcon}
+                        resizeMode={'contain'}
                     />
+                </View>
+                <View style={styles.flexRight}>
+                    <Text style={styles.txtTitle}>{item.name}</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
+                        <Text style={styles.txtMark}>Đổi điểm</Text>
+                        <View style={styles.changeCoin}>
+                            <Image
+                                style={styles.widthIcon}
+                                source={require('../../asserts/icon/icon_coinGiftV3.png')}
+                            />
+                            <Text
+                                numberOfLines={1}
+                                style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
+                            >{formatNumber(parseInt(item.point))}</Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity >
+        );
+    };
+
+    renderHeader = () => {
+        const {
+            navigation,
+            user,
+        } = this.props;
+        const { uri } = getSourceAvatar(user.userId);
+        return (
+            <LinearGradient
+                colors={['#56CCF2', '#20BDFF']}
+                style={styles.cardUser}
+            >
+                <TouchableOpacity
+                    style={styles.sale}
+                    onPress={() => { navigation.navigate('SaleGift', { statusbar: 'light-content' }); }}
+                >
+                    <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
+                    <Text style={styles.txtDiamond}>Ưu đãi</Text>
+                </TouchableOpacity>
+                <View style={styles.flexSpace}>
+                    <View style={styles.viewUser}>
+                        <View style={styles.avatar}>
+                            <Image source={AppIcon.icon_diamondV3} style={styles.sizeAvar} />
+                            <Image source={{ uri }} style={styles.afterAvar} />
+                        </View>
+                        <View style={styles.description}>
+                            <Text numberOfLines={1}
+                                style={styles.txtName}>{user.displayName}</Text>
+                            <View style={styles.rowCoin}>
+                                <Image
+                                    source={require('../../asserts/icon/icon_coinCountV3.png')}
+                                    style={{ alignSelf: 'center' }} />
+                                <Text
+                                    numberOfLines={1}
+                                    style={styles.countCoin}>
+                                    {formatNumber(parseInt(user.totalEDPoint))}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
                     <Image
                         source={require('../../asserts/icon/icon_elipHeaderV3.png')}
                         resizeMode={'stretch'}
                         style={styles.iconElip}
                     />
-                    <LinearGradient
-                        colors={['#56CCF2', '#20BDFF']} style={styles.cardUser}
-                    >
-                        <TouchableOpacity style={styles.sale} onPress={() => {
-                            this.props.navigation.navigate('SaleGift',
-                                { status: 'light-content' });
-                        }}>
-                            <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
-                            <Text style={styles.txtDiamond}>Ưu đãi</Text>
-                        </TouchableOpacity>
-                        <View style={styles.flexSpace}>
-                            <View style={styles.viewUser}>
-                                <View style={styles.avatar}>
-                                    <Image source={AppIcon.icon_diamondV3} style={styles.sizeAvar} />
-                                    <Image source={require('../../asserts/icon/icon_afterbgAvar.png')} style={styles.afterAvar} />
-                                </View>
-                                <View style={styles.description}>
-                                    <Text style={styles.txtName}>Trịnh Đình Quang</Text>
-                                    {/* <LinearGradient
-                                        colors={['rgba(255, 255, 255, 0.63)', 'rgba(255, 255, 255, 0)']}
-                                        style={styles.rowCoin}
-                                    > */}
-                                    <View style={styles.rowCoin}>
-                                        <Image
-                                            source={require('../../asserts/icon/icon_coinCountV3.png')}
-                                            style={{ alignSelf: 'center' }} />
-                                        <Text style={styles.countCoin}>40</Text>
-                                    </View>
-                                    {/* </LinearGradient> */}
-                                </View>
-                            </View>
+                </View>
+            </LinearGradient>
+        );
+    }
+
+    render() {
+        const {
+            navigation,
+            isLoading,
+            listGift
+        } = this.props;
+        return (
+            <View style={[styles.container]} >
+                <HeaderNavigation
+                    title={'Đổi quà'}
+                    navigation={navigation}
+                    bgColor={'#2D9CDB'}
+                    colorIcon={'#FFF'}
+                    back={true}
+                />
+                {isLoading ?
+                    <ActivityIndicator color={'#2D9CDB'}
+                        size={'small'}
+                        style={styles.ActivityIndicator} />
+                    :
+                    <>
+                        <View style={styles.backbg}>
                             <Image
                                 source={require('../../asserts/icon/icon_elipHeaderV3.png')}
                                 resizeMode={'stretch'}
                                 style={styles.iconElip}
                             />
-
                         </View>
-                    </LinearGradient>
-
-                    <View>
-                        {/* <FlatList
-                            // testID={this.props.testID}
-                            // data={this.state.dataSource}
-                            keyExtractor={(item, index) => String(index)}
+                        <FlatList
+                            data={listGift}
+                            keyExtractor={(item, index) => index.toString()}
                             renderItem={this.renderItem}
-                        /> */}
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.navigate('GiftDetail',
-                                    { status: 'light-content' })
-                            }}
-                            style={styles.listSale}>
-                            <View style={styles.flexLeft}>
-                                <Image
-                                    source={require('../../asserts/icon/icon_bookTitle.png')}
-                                    style={styles.sizeIcon}
-                                />
-                            </View>
-                            <View style={styles.flexRight}>
-                                <Text style={styles.txtTitle}>Sách kiến thức</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 16 }}>
-                                    <Text style={styles.txtMark}>Đổi điểm</Text>
-                                    <View style={styles.changeCoin}>
-                                        <Image
-                                            style={styles.widthIcon}
-                                            source={require('../../asserts/icon/icon_coinCountV3.png')}
-                                        />
-                                        <Text numberOfLines={1}
-                                            style={styles.txtNumber}>30</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                            ListHeaderComponent={this.renderHeader}
+                            stickyHeaderIndices={[0]}
+                        />
+                    </>
+                }
             </View>
         )
     }
@@ -132,25 +174,30 @@ export default class ExchangeGiftScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     backbg: {
         backgroundColor: '#2D9CDB',
-        height: height * 0.3
+        height: height / 3.8,
+        width,
+        zIndex: -1,
+        elevation: 0,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10
     },
     iconElip: {
         width: 150,
-        height: height * 0.2,
-        color: '#fff',
-        alignSelf: 'flex-end',
+        height: 100,
+        marginLeft: -50
     },
     cardUser: {
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#fff',
-        marginTop: -160,
-        marginLeft: 16,
-        marginRight: 16,
+        marginHorizontal: 16,
     },
     sale: {
         flexDirection: 'row',
@@ -163,7 +210,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignSelf: 'flex-end',
         marginTop: 13,
-        marginRight: 15
+        marginRight: 15,
+        // flexGrow: 1
     },
     icon_diamondV3: {
         alignSelf: 'center',
@@ -178,24 +226,24 @@ const styles = StyleSheet.create({
         marginLeft: 9,
     },
     avatar: {
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         borderWidth: 5,
         borderColor: '#FFF',
         borderRadius: 50,
         marginLeft: 14,
-        marginTop: 50
+        marginTop: 10,
+        marginBottom: 10
     },
     flexSpace: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     sizeAvar: {
         alignSelf: 'center',
         justifyContent: 'center',
-        alignSelf: 'center',
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
         borderRadius: 50,
         backgroundColor: '#FF6213'
     },
@@ -203,7 +251,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito',
         fontSize: 18,
         lineHeight: 25,
-        color: '#fff'
+        color: '#fff',
     },
     countCoin: {
         fontFamily: 'Nunito-Bold',
@@ -211,7 +259,7 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         color: '#fff',
         marginLeft: 17,
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     rowCoin: {
         flexDirection: 'row',
@@ -220,14 +268,18 @@ const styles = StyleSheet.create({
     description: {
         flexDirection: 'column',
         marginLeft: 24,
-        marginTop: 100
+        marginTop: 30,
+        marginRight: 10,
+        width: 190,
     },
     viewUser: {
         flexDirection: 'row',
     },
     afterAvar: {
-        marginTop: -100,
-        marginLeft: -30,
+        marginTop: -80,
+        width: 80,
+        height: 80,
+        borderRadius: 90
     },
     listSale: {
         backgroundColor: '#fff',
@@ -250,32 +302,38 @@ const styles = StyleSheet.create({
         width: '30%'
     },
     sizeIcon: {
+        alignSelf: 'center',
+        width: 75,
+        height: 75,
+        borderRadius: 16,
         marginTop: 10,
         marginBottom: 10,
-        alignSelf: 'center',
-        marginLeft: -20
     },
     changeCoin: {
         flexDirection: 'row',
         borderWidth: 0.5,
         borderColor: '#56CCF2',
-        borderRadius: 10,
+        borderRadius: 20,
         marginLeft: 10,
+        marginRight: 100
     },
     txtTitle: {
         fontFamily: 'Nunito-Bold',
         fontSize: 14,
         lineHeight: 16,
         color: '#000',
-        marginTop: 16
+        marginTop: 20
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: 12,
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
         marginRight: 15,
+        marginTop: 2,
+        marginBottom: 2,
+        paddingRight: 10
     },
     txtMark: {
         fontFamily: 'Nunito',
@@ -284,15 +342,24 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     widthIcon: {
-        width: 17,
-        height: 17,
+        width: 20,
+        height: 20,
         marginLeft: 16,
         marginTop: 2,
-        marginBottom: 3
+        marginBottom: 2,
+        alignSelf: 'center'
     },
     flexRight: {
         flexDirection: 'column',
-        width: "70%"
+        width: "70%",
+        marginLeft: 10,
+        justifyContent: 'space-between',
+    },
+    ActivityIndicator: {
+        flex: 1
+    },
+    gadient: {
+        height: 10,
     }
 
 })
@@ -301,14 +368,18 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        user: state.user,
+        user: state.gift.user,
+        listGift: state.gift.listGift,
+        isLoading: state.gift.isLoading
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        makeRequestProfile: payload => {
-            dispatch(userGiftAction(payload));
-        },
+        makeRequestProfile: payload => dispatch(userGiftAction(payload)),
+        getListGiftAction: payload => dispatch(getListGiftAction(payload)),
+        getListHistoryGift: payload => dispatch(getListHistoryAction(payload))
     };
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExchangeGiftScreen);

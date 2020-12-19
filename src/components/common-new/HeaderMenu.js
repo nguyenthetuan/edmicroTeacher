@@ -4,6 +4,7 @@ import RippleButton from '../common-new/RippleButton';
 import AppIcon from '../../utils/AppIcon';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from './Avatar';
+import { formatNumber } from '../../utils/Common';
 
 class HeaderMenu extends React.PureComponent {
   constructor(props) {
@@ -21,12 +22,12 @@ class HeaderMenu extends React.PureComponent {
   }
 
   render() {
-    const { phoneNumber, userName, displayName, userId, timeCached } = this.props;
+    const { phoneNumber, userName, displayName, userId, timeCached, userGift } = this.props;
     const source = getSourceAvatar(userId, timeCached);
     return (
       <View style={styles.wrapUser}>
         <View style={styles.wrapInfo}>
-          <Avatar 
+          <Avatar
             source={source}
             size={50}
           />
@@ -56,6 +57,15 @@ class HeaderMenu extends React.PureComponent {
             ) : null}
             <Text style={styles.txtInfo} numberOfLines={1}>
               {userName}
+            </Text>
+          </View>
+          <View style={{ flex: 1 }} />
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <Image source={require('../../asserts/appIcon/icon_point_gift.png')} resizeMode={'contain'} style={{ width: 25, height: 25 }} />
+            <Text
+              style={{ color: '#FFF', fontSize: 14, fontFamily: 'Nunito-Bold', marginHorizontal: 5 }}
+            >
+              {formatNumber(parseInt(userGift.totalEDPoint))}
             </Text>
           </View>
         </View>

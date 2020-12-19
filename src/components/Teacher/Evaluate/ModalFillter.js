@@ -52,7 +52,6 @@ export default class ModalFillter extends Component {
       testIndex,
     } = payload;
     const { isShowModal } = this.state;
-    console.log("tests: ", JSON.stringify(tests));
     return (
       <Modal
         visible={isShowModal}

@@ -50,8 +50,8 @@ class MenuTabTeacher extends Component {
       case 9: this.props.navigation.navigate('V_UpdatePhone', { statusbar: 'dark-content' }); break;
       case 12: this.setState({ modalVisible: true }); break;
       case 14: this.props.navigation.navigate('ChangePassword', { statusbar: 'light-content' }); break;
-      case 15: this.props.navigation.navigate('TermsOfUse', { status: 'light-content' }); break;
-      case 16: this.props.navigation.navigate('ExchangeGiftScreen', { status: 'light-content' }); break;
+      case 15: this.props.navigation.navigate('TermsOfUse', { statusbar: 'dark-content' }); break;
+      case 16: this.props.navigation.navigate('ExchangeGiftScreen', { statusbar: 'light-content' }); break;
       default:
         break;
     }
@@ -73,7 +73,7 @@ class MenuTabTeacher extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, userGift } = this.props;
     const { modalVisible } = this.state;
     return (
       <React.Fragment>
@@ -81,6 +81,7 @@ class MenuTabTeacher extends Component {
         <View style={MenuStyle.container} >
           <HeaderMenu
             {...user}
+            userGift={userGift}
             navigation={this.props.navigation}
             handleClick={(n) => this.handleClick(n)}
           />
@@ -92,6 +93,12 @@ class MenuTabTeacher extends Component {
                 onPress={() => this.handleClick(1)}
                 source={AppIcon.info_account}
                 title={'Hồ sơ cá nhân'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
+                onPress={() => this.handleClick(16)}
+                source={AppIcon.icon_diamondV3}
+                title={'Đổi quà'}
                 rippleColor={rippleColor}
               />
               <MenuItem
@@ -125,12 +132,6 @@ class MenuTabTeacher extends Component {
                 rippleColor={rippleColor}
               />
               <MenuItem
-                onPress={() => this.handleClick(16)}
-                source={AppIcon.icon_diamondV3}
-                title={'Đổi quà'}
-                rippleColor={rippleColor}
-              />
-              <MenuItem
                 onPress={() => this.handleClick(6)}
                 source={AppIcon.logout}
                 title={'Đăng xuất'}
@@ -151,7 +152,8 @@ class MenuTabTeacher extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    userGift: state.gift.user
   }
 }
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import OfferGift from '../OfferGift';
 import HistoryGift from '../HistoryGift';
-
+const { width, height } = Dimensions.get('window');
 const TabTop = createMaterialTopTabNavigator({
     OfferGift: {
         screen: OfferGift,
@@ -27,14 +27,15 @@ const TabTop = createMaterialTopTabNavigator({
     tabBarOptions: {
         style: {
             backgroundColor: '#fff',
+            marginTop: 10,
+            marginLeft: width - (width / 1.5),
             elevation: 0,
-            marginTop: 10
+            shadowOffset: { height: 0, width: 0 },
         },
         tabStyle: {
-            width: 200,
+            width: width / 3,
             height: 25,
             justifyContent: 'flex-start',
-            alignSelf: 'center',
             padding: 0,
         },
         labelStyle: {
@@ -55,30 +56,3 @@ const TabTop = createMaterialTopTabNavigator({
 });
 
 export default createAppContainer(TabTop)
-
-const styles = StyleSheet.create({
-    styNode: {
-        width: 110,
-        height: 5,
-        backgroundColor: '#FFF',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
-    },
-    styWrapNode: {
-        justifyContent: 'center',
-        marginHorizontal: 2
-    },
-    row: {
-        flexDirection: 'row'
-    },
-    styTxtNode: {
-        color: '#C4C4C4',
-        textAlign: 'center',
-        fontFamily: 'Nunito-Regular'
-    },
-    styTxtNodeActive: {
-        color: '#FFF',
-        textAlign: 'center',
-        fontFamily: 'Nunito-Bold'
-    }
-})
