@@ -14,8 +14,6 @@ import dataHelper from '../../utils/dataHelper';
 const { width, height } = Dimensions.get('window');
 
 export default class OfferGiftDetail extends Component {
-
-
     componentDidMount() {
         const { dataGift } = this.props.navigation.state.params;
     }

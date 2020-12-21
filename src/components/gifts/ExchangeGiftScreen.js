@@ -63,7 +63,7 @@ class ExchangeGiftScreen extends Component {
                 </View>
                 <View style={styles.flexRight}>
                     <Text style={styles.txtTitle}>{item.name}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
+                    <View style={styles.btnChange}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
                             <Image
@@ -94,7 +94,10 @@ class ExchangeGiftScreen extends Component {
             >
                 <TouchableOpacity
                     style={styles.sale}
-                    onPress={() => { navigation.navigate('SaleGift', { statusbar: 'light-content' }); }}
+                    onPress={() => {
+                        navigation.navigate('SaleGift',
+                            { statusbar: 'light-content' });
+                    }}
                 >
                     <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
                     <Text style={styles.txtDiamond}>Ưu đãi</Text>
@@ -360,6 +363,11 @@ const styles = StyleSheet.create({
     },
     gadient: {
         height: 10,
+    },
+    btnChange: {
+        flexDirection: 'row',
+        marginTop: 16,
+        marginBottom: 16
     }
 
 })
