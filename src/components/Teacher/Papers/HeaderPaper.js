@@ -41,7 +41,8 @@ export default class HeaderPaper extends React.PureComponent {
       loading,
       buttonRightText,
       notRightButton,
-      iconColor
+      iconColor,
+      marginLeft
     } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
@@ -58,7 +59,8 @@ export default class HeaderPaper extends React.PureComponent {
         <View style={styles.viewTitle}>
           <Text numberOfLines={1}
             style={[styles.textTitleHeader, {
-              color: color || '#383838'
+              color: color || '#383838',
+              left: marginLeft || 0
             }]}>{title}</Text>
         </View>
         {/* {!notRightButton && <TouchableOpacity
