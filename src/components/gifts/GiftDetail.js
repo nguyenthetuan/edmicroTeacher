@@ -18,13 +18,16 @@ import { formatNumber } from '../../utils/Common';
 import IconFeather from 'react-native-vector-icons/Feather';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
-class GiftDetail extends Component {
+import {
+    userGiftAction,
+    getListGiftAction,
+    getListHistoryAction
+} from '../../actions/giftAction';
 
+class GiftDetail extends Component {
     state = {
         formData: {}
     }
-
     giftExchange = async () => {
         const { dataGift } = this.props.navigation.state.params;
         if (dataGift.receiveGift == 'DELIVERY' && this.checkInput()) {
@@ -125,7 +128,9 @@ class GiftDetail extends Component {
                                 style={styles.widthIcon}
                                 source={require('../../asserts/icon/icon_coinGiftV3.png')}
                             />
-                            <Text style={styles.txtNumber}>{formatNumber(parseInt(dataGift.point))}</Text>
+                            <Text style={styles.txtNumber}>
+                                {formatNumber(parseInt(dataGift.point))}
+                            </Text>
                         </View>
                         {dataGift.receiveGift == 'DELIVERY' && <>
                             <FormInput
@@ -169,9 +174,16 @@ class GiftDetail extends Component {
 
 class FormInput extends Component {
     render() {
-        const { lable, placeholder, icon, keyboardType, onChangeText, value } = this.props;
+        const {
+            lable,
+            placeholder,
+            icon,
+            keyboardType,
+            onChangeText,
+            value
+        } = this.props;
         return (
-            <View style={{ marginHorizontal: 15, marginTop: 10 }}>
+            <View style={styles.viewForm}>
                 <Text style={styles.styLabel}>{lable}</Text>
                 <View style={styles.styInput}>
                     <IconFeather name={icon} style={styles.styIcon} />
@@ -299,6 +311,10 @@ const styles = StyleSheet.create({
         color: '#56CCF2',
         fontSize: 16,
         marginRight: 10
+    },
+    viewForm: {
+        marginHorizontal: 15,
+        marginTop: 10
     }
 })
 

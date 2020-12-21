@@ -16,7 +16,6 @@ import TabOfferHis from '../gifts/tabTop/TabOfferHis';
 const { width, height } = Dimensions.get('window');
 class SaleGift extends Component {
 
-
     renderItem = ({ item, index }) => {
         const { user } = this.props;
         const isColor = item.point > user.totalEDPoint;
@@ -70,7 +69,6 @@ class SaleGift extends Component {
                     back={true}
                 />
                 <TabOfferHis screenProps={this.props} />
-
             </View>
         )
     }

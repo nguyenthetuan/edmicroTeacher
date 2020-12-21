@@ -42,7 +42,9 @@ export default class HistoryGift extends Component {
                             >{item.point}</Text>
                         </View>
                     </View>
-                    <Text style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}>{moment(item.time).format('HH:MM - DD/MM/YYYY')}</Text>
+                    <Text style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}>
+                        {moment(item.time).format('HH:MM - DD/MM/YYYY')}
+                    </Text>
                 </View>
             </View >
         );
@@ -74,15 +76,6 @@ const styles = StyleSheet.create({
     contain: {
         flex: 1,
     },
-    backbg: {
-        backgroundColor: '#2D9CDB',
-    },
-    iconElip: {
-        width: 150,
-        color: '#fff',
-        alignSelf: 'flex-end',
-    },
-
     listSale: {
         backgroundColor: '#fff',
         shadowColor: "#000",
