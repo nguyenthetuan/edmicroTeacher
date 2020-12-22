@@ -26,7 +26,7 @@ export default function Dropdown(props) {
           selectModal.current.onShowModal();
         }}
         style={[styles.styBtn, contentStyle]}>
-        <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
+        <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
           {isData
             ? data[indexSelected].className || data[indexSelected].name || ''
             : title}
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     width: width / 3,
     height: 30,
     backgroundColor: '#fff',
-    borderRadius: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 5,
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
   styTxt: {
     flex: 1,
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: 14,
     color: '#2D9CDB',
     paddingHorizontal: 6,
   },
