@@ -71,7 +71,8 @@ export default class StepThree extends Component {
     dataPracticeAdd = dataPracticeAdd.map(item => ({
       countDone: item.countDone || 1,
       percentDone: 100,
-      problemId: item.problemCode
+      problemId: item.problemCode,
+      percentCount: item.percentCount || 100
     }));
 
     dataTestAdd = dataTestAdd.map(item => ({
@@ -170,7 +171,7 @@ export default class StepThree extends Component {
             <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flex: 1 }} />
             <View style={{ flexDirection: 'row' }}>
-              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text>
+              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 10 }]}>Tỷ lệ hoàn thành</Text>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Hủy</Text>
             </View>
           </View>
@@ -208,7 +209,7 @@ export default class StepThree extends Component {
             <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flexDirection: 'row' }}>
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Điểm</Text>
-              <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text>
+              {/* <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5, marginRight: 23 }]}>Số lần</Text> */}
               <Text style={[styles.styName, { flexGrow: 1, paddingHorizontal: 5 }]}>Hủy</Text>
             </View>
           </View>
@@ -330,12 +331,13 @@ const styles = StyleSheet.create({
   styBtnNext: {
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
-    marginBottom: 10,
     marginLeft: 10,
     marginTop: 20,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 50,
+    bottom: 10
   },
   styTxtBtnNext: {
     color: '#FFF',
@@ -350,13 +352,14 @@ const styles = StyleSheet.create({
   },
   styWrapBtn: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   styBtnBack: {
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
-    marginBottom: 10,
-    width: 50, height: 50
+    // marginBottom: 10,
+    width: 50, height: 50,
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
