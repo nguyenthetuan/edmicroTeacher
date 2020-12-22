@@ -171,6 +171,7 @@ class ConfigQuestion extends Component {
             break;
           case 2:
             typeThree = ++typeThree;
+            break;
           default:
             break;
         }
@@ -264,22 +265,16 @@ class ConfigQuestion extends Component {
           return !item.isActive ? (
             <RippleButton
               key={`a${index}`}
-              style={Platform.OS === 'ios' ? styles.buttomClass : null}
+              style={styles.buttomClass}
               onPress={() => this.activeGrade(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomClass : null}>
-                <Text style={styles.txtItem}>{item.name}</Text>
-              </View>
+              <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
               <RippleButton
                 key={`b${index}`}
-                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                style={styles.buttomActive}
                 onPress={() => this.activeGrade(item)}>
-                <View
-                  style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                  <Text style={styles.txtItemActive}>{item.name}</Text>
-                </View>
+                <Text style={styles.txtItemActive}>{item.name}</Text>
               </RippleButton>
             );
         }}
@@ -331,22 +326,16 @@ class ConfigQuestion extends Component {
           return !item.isActive ? (
             <RippleButton
               key={`c${index}`}
-              style={Platform.OS === 'ios' ? styles.buttomClass : null}
+              style={styles.buttomClass}
               onPress={() => this.activeSubject(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomClass : null}>
-                <Text style={styles.txtItem}>{item.name}</Text>
-              </View>
+              <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
               <RippleButton
                 key={`d${index}`}
-                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                style={styles.buttomActive}
                 onPress={() => this.activeSubject(item)}>
-                <View
-                  style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                  <Text style={styles.txtItemActive}>{item.name}</Text>
-                </View>
+                <Text style={styles.txtItemActive}>{item.name}</Text>
               </RippleButton>
             );
         }}
@@ -529,7 +518,7 @@ class ConfigQuestion extends Component {
                 newQuestions[idx] = tmp;
               }
             }
-            if(index < questions.length){
+            if (index < questions.length) {
               this.setState({
                 questions: newQuestions,
                 arrayQuestion: [],

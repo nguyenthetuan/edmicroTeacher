@@ -53,6 +53,7 @@ export default class ClassItem extends Component {
                         />
                         <RippleButton
                             onPress={this.openModalClass}
+                            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                         >
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}

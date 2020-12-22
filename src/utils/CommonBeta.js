@@ -7,15 +7,12 @@ import biologyIcon from '../asserts/icon/icon_sinhV3.png';
 import liteIcon from '../asserts/icon/icon_vanV3.png';
 import historyIcon from '../asserts/icon/icon_lichsuV3.png';
 import geoIcon from '../asserts/icon/icon_diaV3.png';
-import enIcon1 from '../asserts/icon/icon_eng10V3.png';
 import enIcon2 from '../asserts/icon/icon_tienganhThcsV3.png';
 import enIcon3 from '../asserts/icon/icon_tienganhThcsV3.png';
 import enIcon10 from '../asserts/icon/icon_eng10V3.png';
 import gdcdIcon from '../asserts/icon/icon_dgcdV3.png';
 import mathImageHeader from '../asserts/appIcon/mathImageHeader.png';
 import Icon_Tin_Hoc from '../asserts/icon/icon_tinhocV3.png';
-import iconGeo from '../asserts/appIcon/ic_georaphy_x60.png';
-import icon_not_know from '../asserts/appIcon/icon_not_know.png'
 import Icon_Am_Nhac from '../asserts/icon/icon_amnhacV3.png';
 import Icon_Khoa_Hoc from '../asserts/icon/icon_khoahocV3.png';
 import icon_quocphongV3 from '../asserts/icon/icon_quocphongV3.png';
@@ -51,8 +48,6 @@ const getIconSubject = (id) => {
         case AppConst.tinhocID: return Icon_Tin_Hoc;
         case AppConst.gdcdID: return gdcdIcon;
         case AppConst.gdcdTHID: return gdcdIcon;
-        case AppConst.geoID: return iconGeo;
-        case AppConst.geoTHID: return iconGeo;
         case AppConst.stemID: return Icon_Khoa_Hoc;
         case AppConst.amnhacID: return Icon_Am_Nhac;
         case AppConst.gdqpID: return icon_quocphongV3;
