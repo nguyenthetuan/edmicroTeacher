@@ -8,7 +8,8 @@ import {
     Dimensions,
     TouchableOpacity,
     SafeAreaView,
-    TextInput
+    TextInput,
+    TouchableWithoutFeedback
 } from 'react-native';
 import _ from 'lodash';
 import HeaderPaper from './HeaderPaper';
@@ -181,9 +182,9 @@ export default class CopyFromSubjectExists extends Component {
         const { listSubjects } = this.props.navigation.state.params;
         const { lerningTarget, isLoading } = this.state;
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
-                <SafeAreaView style={styles.root}>
+                <View style={styles.root}>
                     <View style={styles.header}>
                         <HeaderPaper
                             title={'Bộ đề có sẵn'}
@@ -247,7 +248,7 @@ export default class CopyFromSubjectExists extends Component {
                             {isLoading && (<ListTaskPlaceHolder />)}
                         </View>
                     }
-                </SafeAreaView>
+                </View>
             </View>
         )
     }

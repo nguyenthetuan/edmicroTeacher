@@ -135,15 +135,6 @@ const styles = StyleSheet.create({
     contain: {
         flex: 1,
     },
-    backbg: {
-        backgroundColor: '#2D9CDB',
-    },
-    iconElip: {
-        width: 150,
-        color: '#fff',
-        alignSelf: 'flex-end',
-    },
-
     listSale: {
         backgroundColor: '#fff',
         shadowColor: "#000",
@@ -166,8 +157,11 @@ const styles = StyleSheet.create({
     },
     sizeIcon: {
         alignSelf: 'center',
-        width: 100,
-        height: 100
+        width: 75,
+        height: 75,
+        borderRadius: 16,
+        marginTop: 10,
+        marginBottom: 10,
     },
     changeCoin: {
         flexDirection: 'row',
@@ -181,7 +175,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 16,
         color: '#000',
-        marginTop: 16
+        marginTop: 20
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',

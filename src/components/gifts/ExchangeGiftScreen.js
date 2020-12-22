@@ -54,14 +54,16 @@ class ExchangeGiftScreen extends Component {
                 style={styles.listSale}>
                 <View style={styles.flexLeft}>
                     <Image
-                        source={{ uri: item.image }}
+                        source={{
+                            uri: item.image
+                        }}
                         style={styles.sizeIcon}
                         resizeMode={'contain'}
                     />
                 </View>
                 <View style={styles.flexRight}>
-                    <Text style={styles.txtTitle}>{item.description}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 16 }}>
+                    <Text style={styles.txtTitle}>{item.name}</Text>
+                    <View style={styles.btnChange}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
                             <Image
@@ -92,7 +94,10 @@ class ExchangeGiftScreen extends Component {
             >
                 <TouchableOpacity
                     style={styles.sale}
-                    onPress={() => { navigation.navigate('SaleGift', { statusbar: 'light-content' }); }}
+                    onPress={() => {
+                        navigation.navigate('SaleGift',
+                            { statusbar: 'light-content' });
+                    }}
                 >
                     <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
                     <Text style={styles.txtDiamond}>Ưu đãi</Text>
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
     },
     backbg: {
         backgroundColor: '#2D9CDB',
-        height: height / 3,
+        height: height / 3.8,
         width,
         zIndex: -1,
         elevation: 0,
@@ -208,7 +213,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignSelf: 'flex-end',
         marginTop: 13,
-        marginRight: 15
+        marginRight: 15,
+        // flexGrow: 1
     },
     icon_diamondV3: {
         alignSelf: 'center',
@@ -223,24 +229,24 @@ const styles = StyleSheet.create({
         marginLeft: 9,
     },
     avatar: {
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         borderWidth: 5,
         borderColor: '#FFF',
         borderRadius: 50,
         marginLeft: 14,
-        marginTop: 50,
+        marginTop: 10,
         marginBottom: 10
     },
     flexSpace: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     sizeAvar: {
         alignSelf: 'center',
         justifyContent: 'center',
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
         borderRadius: 50,
         backgroundColor: '#FF6213'
     },
@@ -265,8 +271,7 @@ const styles = StyleSheet.create({
     description: {
         flexDirection: 'column',
         marginLeft: 24,
-        marginTop: 100,
-        marginBottom: 10,
+        marginTop: 30,
         marginRight: 10,
         width: 190,
     },
@@ -274,9 +279,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     afterAvar: {
-        marginTop: -90,
-        width: 90,
-        height: 90,
+        marginTop: -80,
+        width: 80,
+        height: 80,
         borderRadius: 90
     },
     listSale: {
@@ -301,8 +306,11 @@ const styles = StyleSheet.create({
     },
     sizeIcon: {
         alignSelf: 'center',
-        width: 100,
-        height: 100
+        width: 75,
+        height: 75,
+        borderRadius: 16,
+        marginTop: 10,
+        marginBottom: 10,
     },
     changeCoin: {
         flexDirection: 'row',
@@ -317,7 +325,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 16,
         color: '#000',
-        marginTop: 16
+        marginTop: 20
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
@@ -348,9 +356,18 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: "70%",
         marginLeft: 10,
+        justifyContent: 'space-between',
     },
     ActivityIndicator: {
         flex: 1
+    },
+    gadient: {
+        height: 10,
+    },
+    btnChange: {
+        flexDirection: 'row',
+        marginTop: 16,
+        marginBottom: 16
     }
 
 })

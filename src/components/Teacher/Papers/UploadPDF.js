@@ -442,6 +442,7 @@ export default class UploadPDF extends Component {
           onRightAction={this.assignmentContent}
           iconColor='#000'
           notRightButton={true}
+          marginLeft={-25}
         />
         <TouchableOpacity style={styles.buttonCreateAssessment} onPress={this.assignmentContent}>
           <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
