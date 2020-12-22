@@ -134,9 +134,9 @@ export default class ItemClass extends Component {
                         <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
-                            // style={{ width: width - 32 - 54 - 80, height: 25 }}
+                            // style={{ width: width - 32 - 54 - 90, marginTop: 10, }}
                             style={styles.dropDown}
-                            dropdownStyle={{ width: width - 32 - 54 - 80 }}
+                            dropdownStyle={{ width: width - 32 - 54 - 100 }}
                             options={this.state.students || item.students}
                             status={status}
                         />
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     },
     dropDown: {
         marginTop: 10,
-        backgroundColor: '#F2F2F2'
+        backgroundColor: '#F2F2F2',
     },
     widthCheck: {
         marginRight: 15,
