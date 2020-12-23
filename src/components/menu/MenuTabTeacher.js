@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform, ScrollView, SafeAreaView } from "react-native";
+import { View, Platform, ScrollView, SafeAreaView, Linking } from "react-native";
 import dataHelper from '../../utils/dataHelper';
 import global from '../../utils/Globals';
 import AppIcon from '../../utils/AppIcon';
@@ -29,14 +29,15 @@ class MenuTabTeacher extends Component {
   rateApp() {
     const { navigation } = this.props;
     let link = Platform.OS === 'ios' ? ITUNES_APPLE_APP : GOOGLE_PLAY_APP;
-    navigation.navigate({
-      routeName: 'Webviews',
-      params: {
-        title: 'App Store',
-        link: link,
-        statusbar: 'light-content'
-      }
-    });
+    Linking.openURL(link);
+    // navigation.navigate({
+    //   routeName: 'Webviews',
+    //   params: {
+    //     title: 'App Store',
+    //     link: link,
+    //     statusbar: 'light-content'
+    //   }
+    // });
   }
 
   handleClick(type) {
