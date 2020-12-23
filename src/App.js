@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, TextInput} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 import {Provider} from 'react-redux';
+import codePush from "react-native-code-push";
 import store from './store/index';
 import sagaMiddleware from './middleware/sagaMiddleWare';
 import rootSaga from './sagas/rootSaga';
@@ -16,7 +17,7 @@ import ConfigNotification from './utils/ConfigNotification';
 
 // enableScreens(); // crash webview back
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.initMixpanel();
@@ -100,3 +101,7 @@ export default class App extends Component {
 }
 
 sagaMiddleware.run(rootSaga);
+
+const MyApp = codePush(App);
+
+export default MyApp;

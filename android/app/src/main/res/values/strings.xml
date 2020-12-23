@@ -1,4 +1,5 @@
 <resources>
     <!-- <string name="app_name">Trường học</string> -->
     <string name="facebook_app_id">2928576693858785</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">_zklF-s3GscWoSHWiOLeamXroc8C4x4HLwe6s</string>
 </resources>
