@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -17,10 +17,10 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class ModalConfigPaper extends Component {
   constructor(props) {
@@ -72,7 +72,7 @@ export default class ModalConfigPaper extends Component {
   };
 
   componentDidMount() {
-    const {data, listGrades, listSubjects} = this.props;
+    const { data, listGrades, listSubjects } = this.props;
     if (data) {
       let listGradeTmp = listGrades;
       let listSubjectTmp = listSubjects;
@@ -115,19 +115,19 @@ export default class ModalConfigPaper extends Component {
     return arr;
   };
 
-  setText = ({key, text}) => {
+  setText = ({ key, text }) => {
     var stateCopy = Object.assign({}, this.state);
     stateCopy[key] = text;
     this.setState(stateCopy);
   };
 
   activeGrade = item => {
-    const {gradeCode} = this.state;
-    const {listGrades} = this.props;
+    const { gradeCode } = this.state;
+    const { listGrades } = this.props;
 
     let gradeCodeTmp = gradeCode;
     let listGradeTmp = listGrades.map(e => {
-      return {...e, isActive: false};
+      return { ...e, isActive: false };
     });
 
     const index = _.indexOf(gradeCodeTmp, item.gradeId);
@@ -135,9 +135,9 @@ export default class ModalConfigPaper extends Component {
     index < 0
       ? (gradeCodeTmp = [...gradeCodeTmp, ...[item.gradeId]])
       : (gradeCodeTmp = [
-          ...gradeCodeTmp.slice(0, index),
-          ...gradeCodeTmp.slice(index + 1),
-        ]);
+        ...gradeCodeTmp.slice(0, index),
+        ...gradeCodeTmp.slice(index + 1),
+      ]);
 
     gradeCodeTmp
       .sort((a, b) => parseInt(b.substring(1)) - parseInt(a.substring(1)))
@@ -156,32 +156,28 @@ export default class ModalConfigPaper extends Component {
   };
 
   _renderGrade = () => {
-    const {listGrades} = this.state;
+    const { listGrades } = this.state;
     return (
       <FlatList
-        style={{marginTop: 8}}
+        style={{ marginTop: 8 }}
         data={listGrades}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return !item.isActive ? (
             <RippleButton
-              style={Platform.OS === 'ios' ? styles.buttomClass : null}
+              style={styles.buttomClass}
               onPress={() => this.activeGrade(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomClass : null}>
-                <Text style={styles.txtItem}>{item.name}</Text>
-              </View>
+              <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
-            <RippleButton
-              style={Platform.OS === 'ios' ? styles.buttomActive : null}
-              onPress={() => this.activeGrade(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                <Text style={styles.txtItemActive}>{item.name}</Text>
-              </View>
-            </RippleButton>
-          );
+              <RippleButton
+                style={styles.buttomActive}
+                onPress={() => this.activeGrade(item)}>
+                <View>
+                  <Text style={styles.txtItemActive}>{item.name}</Text>
+                </View>
+              </RippleButton>
+            );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -191,21 +187,21 @@ export default class ModalConfigPaper extends Component {
   };
 
   activeSubject = item => {
-    const {subjectCode} = this.state;
-    const {listSubjects} = this.props;
+    const { subjectCode } = this.state;
+    const { listSubjects } = this.props;
 
     let subjectCodeTmp = subjectCode;
     let listSubjectsTmp = listSubjects.map(e => {
-      return {...e, isActive: false};
+      return { ...e, isActive: false };
     });
 
     const index = _.indexOf(subjectCodeTmp, item.code);
     index < 0
       ? (subjectCodeTmp = [...subjectCodeTmp, ...[item.code]])
       : (subjectCodeTmp = [
-          ...subjectCodeTmp.slice(0, index),
-          ...subjectCodeTmp.slice(index + 1),
-        ]);
+        ...subjectCodeTmp.slice(0, index),
+        ...subjectCodeTmp.slice(index + 1),
+      ]);
 
     subjectCodeTmp.map(subjectId => {
       const i = _.indexOf(listSubjectsTmp.map(e => e.code), subjectId);
@@ -222,32 +218,31 @@ export default class ModalConfigPaper extends Component {
   };
 
   _renderSubject = () => {
-    const {listSubjects} = this.state;
+    const { listSubjects } = this.state;
     return (
       <FlatList
-        style={{marginTop: 8}}
+        style={{ marginTop: 8 }}
         data={listSubjects}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return !item.isActive ? (
             <RippleButton
-              style={Platform.OS === 'ios' ? styles.buttomClass : null}
+              style={styles.buttomClass}
               onPress={() => this.activeSubject(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomClass : null}>
+              <View>
                 <Text style={styles.txtItem}>{item.name}</Text>
               </View>
             </RippleButton>
           ) : (
-            <RippleButton
-              style={Platform.OS === 'ios' ? styles.buttomActive : null}
-              onPress={() => this.activeSubject(item)}>
-              <View
-                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                <Text style={styles.txtItemActive}>{item.name}</Text>
-              </View>
-            </RippleButton>
-          );
+              <RippleButton
+                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                onPress={() => this.activeSubject(item)}>
+                <View
+                  style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                  <Text style={styles.txtItemActive}>{item.name}</Text>
+                </View>
+              </RippleButton>
+            );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -257,8 +252,8 @@ export default class ModalConfigPaper extends Component {
   };
 
   _validate = () => {
-    const {name, time, gradeCode, subjectCode} = this.state;
-    const {data} = this.props;
+    const { name, time, gradeCode, subjectCode } = this.state;
+    const { data } = this.props;
 
     if (name.trim() === '') {
       this.refs.toast.show(
@@ -288,8 +283,8 @@ export default class ModalConfigPaper extends Component {
 
   onUpdate = async () => {
     if (this._validate()) {
-      const {data} = this.props;
-      const {name, time, gradeCode, subjectCode} = this.state;
+      const { data } = this.props;
+      const { name, time, gradeCode, subjectCode } = this.state;
       const body = {
         ...data,
         assignmentId: data.assignmentId,
@@ -311,9 +306,9 @@ export default class ModalConfigPaper extends Component {
         message: 'Đang cấu hình lại bộ đề...',
       });
 
-      const {token} = await dataHelper.getToken();
+      const { token } = await dataHelper.getToken();
       if (token) {
-        const response = await apiPapers.updateInfo({token, body});
+        const response = await apiPapers.updateInfo({ token, body });
         if (response && response.status === 1) {
           this.setState({
             loading: false,
@@ -331,8 +326,8 @@ export default class ModalConfigPaper extends Component {
   };
 
   render() {
-    const {name, loading, time, success, message, updating} = this.state;
-    const {data} = this.props;
+    const { name, loading, time, success, message, updating } = this.state;
+    const { data } = this.props;
 
     return (
       <Modal visible={true} transparent={true}>
@@ -361,18 +356,12 @@ export default class ModalConfigPaper extends Component {
                       {loading && (
                         <ActivityIndicator size="small" color="#56CCF2" />
                       )}
-                      <Text
-                        style={{
-                          color: '#000',
-                          fontSize: 12,
-                          fontFamily: 'Nunito-Bold',
-                          marginTop: 4,
-                        }}>
+                      <Text style={[styles.styTxtLabel, { marginTop: 4 }]}>
                         {message}
                       </Text>
                       {!loading && (
                         <RippleButton
-                          style={{marginTop: 10}}
+                          style={{ marginTop: 10 }}
                           onPress={() => {
                             this.props.onVisible(false);
                           }}>
@@ -383,71 +372,16 @@ export default class ModalConfigPaper extends Component {
                       )}
                     </View>
                   ) : (
-                    <View
-                      style={{
-                        backgroundColor: '#FFF',
-                        paddingHorizontal: 16,
-                        paddingVertical: 13,
-                      }}>
-                      <View>
-                        <Text
-                          style={{
-                            color: '#000',
-                            fontSize: 12,
-                            fontFamily: 'Nunito-Bold',
-                          }}>
-                          Tên bài tập
+                      <View
+                        style={{
+                          backgroundColor: '#FFF',
+                          paddingHorizontal: 16,
+                          paddingVertical: 13,
+                        }}>
+                        <View>
+                          <Text style={styles.styTxtLabel}>
+                            Tên bài tập
                         </Text>
-                        <View
-                          style={{
-                            backgroundColor: '#D9EBF5',
-                            borderRadius: 4,
-                            marginTop: 8,
-                            justifyContent: 'center',
-                            height: 35,
-                          }}>
-                          <TextInput
-                            numberOfLines={1}
-                            value={name}
-                            style={styles.txtTexinput}
-                            onChangeText={text =>
-                              this.setText({key: 'name', text})
-                            }
-                          />
-                        </View>
-                      </View>
-                      <View style={{marginTop: 8}}>
-                        <Text
-                          style={{
-                            color: '#000',
-                            fontSize: 12,
-                            fontFamily: 'Nunito-Bold',
-                          }}>
-                          Khối lớp
-                        </Text>
-                        {this._renderGrade()}
-                      </View>
-                      <View style={{marginTop: 8}}>
-                        <Text
-                          style={{
-                            color: '#000',
-                            fontSize: 12,
-                            fontFamily: 'Nunito-Bold',
-                          }}>
-                          Môn học
-                        </Text>
-                        {this._renderSubject()}
-                      </View>
-                      {data && data.assignmentType ? (
-                        <View style={{marginTop: 8}}>
-                          <Text
-                            style={{
-                              color: '#000',
-                              fontSize: 12,
-                              fontFamily: 'Nunito-Bold',
-                            }}>
-                            Thời gian (phút)
-                          </Text>
                           <View
                             style={{
                               backgroundColor: '#D9EBF5',
@@ -457,32 +391,67 @@ export default class ModalConfigPaper extends Component {
                               height: 35,
                             }}>
                             <TextInput
-                              value={time}
+                              numberOfLines={1}
+                              value={name}
                               style={styles.txtTexinput}
                               onChangeText={text =>
-                                this.setText({key: 'time', text})
+                                this.setText({ key: 'name', text })
                               }
                             />
                           </View>
                         </View>
-                      ) : null}
-                      <View style={styles.footer}>
-                        <RippleButton
-                          onPress={() => this.props.onVisible(false)}>
-                          <View style={styles.buttomCancel}>
-                            <Text style={styles.txtButtom}>Huỷ</Text>
+                        <View style={{ marginTop: 8 }}>
+                          <Text style={styles.styTxtLabel}>
+                            Khối lớp
+                        </Text>
+                          {this._renderGrade()}
+                        </View>
+                        <View style={{ marginTop: 8 }}>
+                          <Text style={styles.styTxtLabel}>
+                            Môn học
+                        </Text>
+                          {this._renderSubject()}
+                        </View>
+                        {data && data.assignmentType ? (
+                          <View style={{ marginTop: 8 }}>
+                            <Text style={styles.styTxtLabel}>
+                              Thời gian (phút)
+                          </Text>
+                            <View
+                              style={{
+                                backgroundColor: '#D9EBF5',
+                                borderRadius: 4,
+                                marginTop: 8,
+                                justifyContent: 'center',
+                                height: 35,
+                              }}>
+                              <TextInput
+                                value={time}
+                                style={styles.txtTexinput}
+                                onChangeText={text =>
+                                  this.setText({ key: 'time', text })
+                                }
+                              />
+                            </View>
                           </View>
-                        </RippleButton>
-                        <View style={{marginStart: 40}}>
-                          <RippleButton onPress={this.onUpdate}>
-                            <View style={styles.buttomSave}>
-                              <Text style={styles.txtButtom}>Lưu</Text>
+                        ) : null}
+                        <View style={styles.footer}>
+                          <RippleButton
+                            onPress={() => this.props.onVisible(false)}>
+                            <View style={styles.buttomCancel}>
+                              <Text style={styles.txtButtom}>Huỷ</Text>
                             </View>
                           </RippleButton>
+                          <View style={{ marginStart: 40 }}>
+                            <RippleButton onPress={this.onUpdate}>
+                              <View style={styles.buttomSave}>
+                                <Text style={styles.txtButtom}>Lưu</Text>
+                              </View>
+                            </RippleButton>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  )}
+                    )}
                 </View>
               </TouchableWithoutFeedback>
             </Animated.View>
@@ -584,4 +553,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#828282',
   },
+  styTxtLabel: {
+    color: '#000',
+    fontSize: 12,
+    fontFamily: 'Nunito-Bold',
+  }
 });

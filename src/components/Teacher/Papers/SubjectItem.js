@@ -52,7 +52,10 @@ export default class SubjectItem extends Component {
                             showsHorizontalScrollIndicator={false}
                             ListEmptyComponent={<Text style={styles.styTxtEmpty}>Chọn môn</Text>}
                         />
-                        <RippleButton onPress={this.openModalSubject}>
+                        <RippleButton
+                            onPress={this.openModalSubject}
+                            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        >
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
                                 resizeMode={'contain'}
