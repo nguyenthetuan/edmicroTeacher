@@ -90,7 +90,7 @@ export default class EditConfig extends Component {
         const { listSubjects } = this.state;
         return (
             <FlatList
-                style={{ marginTop: 8, flexWrap: 'wrap', display: 'flex', width: width }}
+                style={{ marginTop: 8, width: width }}
                 data={listSubjects}
                 keyExtractor={(item, index) => index.toString()}
                 contentContainerStyle={{ flexWrap: 'wrap', display: 'flex', width: width, paddingHorizontal: 0.05 * width }}
@@ -311,87 +311,89 @@ export default class EditConfig extends Component {
                     navigation={this.props.navigation}
                     color={"#fff"}
                 />
-                <View style={styles.wrapContent}>
-                    <View>
-                        <Text style={styles.styTxtLabel}>
-                            Tên bài tập
+                <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+                    <View style={styles.wrapContent}>
+                        <View>
+                            <Text style={styles.styTxtLabel}>
+                                Tên bài tập
                           </Text>
-                        <View
-                            style={{
-                                borderRadius: 4,
-                                marginTop: 8,
-                                justifyContent: 'center',
-                                height: 40,
-                                borderWidth: .5,
-                                borderColor: '#56CCF2',
-                                marginHorizontal: 15
-                            }}>
-                            <TextInput
-                                numberOfLines={1}
-                                value={name}
-                                style={styles.txtTexinput}
-                                onChangeText={text =>
-                                    this.setText({ key: 'name', text })
-                                }
-                            />
-                        </View>
-                        <View style={{ marginTop: 8 }}>
-                            <Text style={styles.styTxtLabel}>
-                                Khối lớp
-                        </Text>
-                            {this._renderGrade()}
-                        </View>
-                        <View style={{ marginTop: 8 }}>
-                            <Text style={styles.styTxtLabel}>
-                                Môn học
-                        </Text>
-                            {this._renderSubject()}
-                        </View>
-                        {data && data.assignmentType ? (
+                            <View
+                                style={{
+                                    borderRadius: 4,
+                                    marginTop: 8,
+                                    justifyContent: 'center',
+                                    height: 40,
+                                    borderWidth: .5,
+                                    borderColor: '#56CCF2',
+                                    marginHorizontal: 15
+                                }}>
+                                <TextInput
+                                    numberOfLines={1}
+                                    value={name}
+                                    style={styles.txtTexinput}
+                                    onChangeText={text =>
+                                        this.setText({ key: 'name', text })
+                                    }
+                                />
+                            </View>
                             <View style={{ marginTop: 8 }}>
                                 <Text style={styles.styTxtLabel}>
-                                    Thời gian
-                                </Text>
-                                <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
-                                    <View
-                                        style={{
-                                            borderRadius: 4,
-                                            marginTop: 8,
-                                            width: 60,
-                                            height: 30,
-                                            justifyContent: 'center',
-                                            borderColor: '#56CCF2',
-                                            borderWidth: 0.5
-                                        }}>
-                                        <TextInput
-                                            value={time}
-                                            style={styles.txtTexinput}
-                                            onChangeText={text =>
-                                                this.setText({ key: 'time', text })
-                                            }
-                                        />
-                                    </View>
-                                    <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
-                                </View>
+                                    Khối lớp
+                        </Text>
+                                {this._renderGrade()}
                             </View>
-                        ) : null}
-                        <View style={styles.footer}>
-                            <RippleButton
-                                onPress={() => this.props.onVisible(false)}>
-                                <View style={styles.buttomCancel}>
-                                    <Text style={styles.txtButtom}>Huỷ</Text>
+                            <View style={{ marginTop: 8 }}>
+                                <Text style={styles.styTxtLabel}>
+                                    Môn học
+                        </Text>
+                                {this._renderSubject()}
+                            </View>
+                            {data && data.assignmentType ? (
+                                <View style={{ marginTop: 8 }}>
+                                    <Text style={styles.styTxtLabel}>
+                                        Thời gian
+                                </Text>
+                                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
+                                        <View
+                                            style={{
+                                                borderRadius: 4,
+                                                marginTop: 8,
+                                                width: 60,
+                                                height: 30,
+                                                justifyContent: 'center',
+                                                borderColor: '#56CCF2',
+                                                borderWidth: 0.5
+                                            }}>
+                                            <TextInput
+                                                value={time}
+                                                style={styles.txtTexinput}
+                                                onChangeText={text =>
+                                                    this.setText({ key: 'time', text })
+                                                }
+                                            />
+                                        </View>
+                                        <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
+                                    </View>
                                 </View>
-                            </RippleButton>
-                            <View style={{ marginStart: 40 }}>
-                                <RippleButton onPress={this.onUpdate}>
-                                    <View style={styles.buttomSave}>
-                                        <Text style={styles.txtButtom}>Lưu</Text>
+                            ) : null}
+                            <View style={styles.footer}>
+                                <RippleButton
+                                    onPress={() => this.props.onVisible(false)}>
+                                    <View style={styles.buttomCancel}>
+                                        <Text style={styles.txtButtom}>Huỷ</Text>
                                     </View>
                                 </RippleButton>
+                                <View style={{ marginStart: 40 }}>
+                                    <RippleButton onPress={this.onUpdate}>
+                                        <View style={styles.buttomSave}>
+                                            <Text style={styles.txtButtom}>Lưu</Text>
+                                        </View>
+                                    </RippleButton>
+                                </View>
                             </View>
                         </View>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             </SafeAreaView>
         )
     }
