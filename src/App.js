@@ -15,6 +15,8 @@ import RootAppNavigator from './navigations/RootNavigator';
 import {StatusBar, Platform} from 'react-native';
 import ConfigNotification from './utils/ConfigNotification';
 
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
+
 // enableScreens(); // crash webview back
 
 class App extends Component {
@@ -102,6 +104,6 @@ class App extends Component {
 
 sagaMiddleware.run(rootSaga);
 
-const MyApp = codePush(App);
+const MyApp = codePush(codePushOptions)(App);
 
 export default MyApp;
