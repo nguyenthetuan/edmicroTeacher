@@ -2428,7 +2428,7 @@
 			};
 			name = DebugProd;
 		};
-		84AACAD925185052002AFD00 /* ReleaseProd */ = {
+		84AACAD925185052002AFD00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2479,11 +2479,11 @@
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = ReleaseProd;
+			name = Release;
 		};
-		84AACADA25185052002AFD00 /* ReleaseProd */ = {
+		84AACADA25185052002AFD00 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF92B838983DF24CBF53DA54 /* Pods-school.releaseprod.xcconfig */;
+			baseConfigurationReference = CDE6CABFC373A31F55CCE2DB /* Pods-school.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2616,11 +2616,11 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = ReleaseProd;
+			name = Release;
 		};
-		84AACADB25185052002AFD00 /* ReleaseProd */ = {
+		84AACADB25185052002AFD00 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E53A36FC859F92A8CD303F2C /* Pods-school-schoolTests.releaseprod.xcconfig */;
+			baseConfigurationReference = 41AEE4B047E816FB0D7D051D /* Pods-school-schoolTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2638,11 +2638,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school.app/school";
 			};
-			name = ReleaseProd;
+			name = Release;
 		};
-		84AACADC25185052002AFD00 /* ReleaseProd */ = {
+		84AACADC25185052002AFD00 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E414E2BD7691FF293E51059B /* Pods-school-tvOS.releaseprod.xcconfig */;
+			baseConfigurationReference = 4C8014327CDAAD4454D90621 /* Pods-school-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2669,11 +2669,11 @@
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
-			name = ReleaseProd;
+			name = Release;
 		};
-		84AACADD25185052002AFD00 /* ReleaseProd */ = {
+		84AACADD25185052002AFD00 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34E660FD29F91791E13F738A /* Pods-school-tvOSTests.releaseprod.xcconfig */;
+			baseConfigurationReference = 0DC6E97260B669E863EF9945 /* Pods-school-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2697,7 +2697,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/school-tvOS.app/school-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
-			name = ReleaseProd;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -2709,7 +2709,7 @@
 				84AACAD625185048002AFD00 /* DebugProd */,
 				84AACACC25185026002AFD00 /* DebugStaging */,
 				00E356F71AD99517003FC87E /* ReleaseDev */,
-				84AACADB25185052002AFD00 /* ReleaseProd */,
+				84AACADB25185052002AFD00 /* Release */,
 				84AACAD12518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2722,7 +2722,7 @@
 				84AACAD525185048002AFD00 /* DebugProd */,
 				84AACACB25185026002AFD00 /* DebugStaging */,
 				13B07F951A680F5B00A75B9A /* ReleaseDev */,
-				84AACADA25185052002AFD00 /* ReleaseProd */,
+				84AACADA25185052002AFD00 /* Release */,
 				84AACAD02518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2735,7 +2735,7 @@
 				84AACAD725185048002AFD00 /* DebugProd */,
 				84AACACD25185026002AFD00 /* DebugStaging */,
 				2D02E4981E0B4A5E006451C7 /* ReleaseDev */,
-				84AACADC25185052002AFD00 /* ReleaseProd */,
+				84AACADC25185052002AFD00 /* Release */,
 				84AACAD22518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2748,7 +2748,7 @@
 				84AACAD825185048002AFD00 /* DebugProd */,
 				84AACACE25185026002AFD00 /* DebugStaging */,
 				2D02E49A1E0B4A5E006451C7 /* ReleaseDev */,
-				84AACADD25185052002AFD00 /* ReleaseProd */,
+				84AACADD25185052002AFD00 /* Release */,
 				84AACAD32518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2761,7 +2761,7 @@
 				84AACAD425185048002AFD00 /* DebugProd */,
 				84AACACA25185026002AFD00 /* DebugStaging */,
 				83CBBA211A601CBA00E9B192 /* ReleaseDev */,
-				84AACAD925185052002AFD00 /* ReleaseProd */,
+				84AACAD925185052002AFD00 /* Release */,
 				84AACACF2518503C002AFD00 /* ReleaseStaging */,
 			);
 			defaultConfigurationIsVisible = 0;
