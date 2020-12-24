@@ -1,6 +1,4 @@
-import { API_BASE, getHeaders } from '../constants/setting';
-import _ from 'lodash';
-const API_GIFT = 'https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/';
+import { getHeaders, API_GIFT } from '../constants/setting';
 
 export const getInfoGiftUser = async ({ token }) => {
     const response = await fetch(`${API_GIFT}campaign/user`, {

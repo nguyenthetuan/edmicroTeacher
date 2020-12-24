@@ -23,10 +23,11 @@ import {
     getListGiftAction,
     getListHistoryAction
 } from '../../actions/giftAction';
-
+import ModalCard from './ModalCard';
 class GiftDetail extends Component {
     state = {
-        formData: {}
+        formData: {},
+        resultGift: 'Mã thẻ XXXXXXX'
     }
     giftExchange = async () => {
         const { dataGift } = this.props.navigation.state.params;
@@ -50,6 +51,7 @@ class GiftDetail extends Component {
                 text: 'Xác nhận',
                 onPress: async () => {
                     const response = await Api.giftExchange({ token, params });
+                    console.log("🚀 ~ file: GiftDetail.js ~ line 54 ~ GiftDetail ~ onPress: ~ response", response)
                     if (_.isEmpty(response.result)) {
                         Alert.alert('Thông báo', response.errorMessage[0]);
                         return;
@@ -57,6 +59,7 @@ class GiftDetail extends Component {
                     Alert.alert('Thông báo', 'Đổi thưởng thành công', [
                         { text: 'Đóng', onPress: this.props.navigation.goBack }
                     ]);
+                    this.setState({ resultGift: response.result });
                     this.props.makeRequestProfile({ token });
                     this.props.getListGiftAction({ token, page: 0 });
                     this.props.getListHistoryGift({ token, page: 0 });
@@ -100,7 +103,8 @@ class GiftDetail extends Component {
 
     render() {
         const { dataGift } = this.props.navigation.state.params;
-        const { formData } = this.state;
+        const { formData, resultGift } = this.state;
+        dataGift.resultGift = resultGift;
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
                 <HeaderNavigation
@@ -167,6 +171,7 @@ class GiftDetail extends Component {
                         </TouchableOpacity>
                     </ScrollView>
                 </KeyboardAvoidingView>
+                {/* <ModalCard dataGift={dataGift} /> */}
             </View >
         )
     }
