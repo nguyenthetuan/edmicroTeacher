@@ -13,5 +13,6 @@ module.exports = {
     API_BASE: Config.API_BASE,
     API_BASE_OAUTH: Config.API_BASE_OAUTH,
     API_PROVIDER: Config.API_PROVIDER,
+    API_GIFT: Config.API_GIFT,
     getHeaders
 };
