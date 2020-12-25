@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, TextInput} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 import {Provider} from 'react-redux';
+import codePush from "react-native-code-push";
 import store from './store/index';
 import sagaMiddleware from './middleware/sagaMiddleWare';
 import rootSaga from './sagas/rootSaga';
@@ -14,9 +15,11 @@ import RootAppNavigator from './navigations/RootNavigator';
 import {StatusBar, Platform} from 'react-native';
 import ConfigNotification from './utils/ConfigNotification';
 
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
+
 // enableScreens(); // crash webview back
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.initMixpanel();
@@ -100,3 +103,7 @@ export default class App extends Component {
 }
 
 sagaMiddleware.run(rootSaga);
+
+const MyApp = codePush(codePushOptions)(App);
+
+export default MyApp;

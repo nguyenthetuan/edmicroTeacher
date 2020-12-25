@@ -40,6 +40,8 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>FirebaseScreenReportingEnabled</key>
 	<false/>
+	<key>CodePushDeploymentKey</key>
+	<string>zCbLoOyC_5Xh__A9bcG1a39H7W-gjHdf4GgUL</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

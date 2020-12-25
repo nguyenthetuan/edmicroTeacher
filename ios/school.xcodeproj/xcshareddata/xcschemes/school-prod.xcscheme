@@ -79,7 +79,7 @@
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "ReleaseProd"
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -108,7 +108,7 @@
       buildConfiguration = "DebugProd">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "ReleaseProd"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
       <PreActions>
          <ExecutionAction
