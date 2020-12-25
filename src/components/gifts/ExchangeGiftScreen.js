@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     FlatList,
     ActivityIndicator,
-    Alert
+    Alert,
+    SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
@@ -133,6 +134,14 @@ class ExchangeGiftScreen extends Component {
         );
     }
 
+    renderEmpty = () => {
+        return (
+            <View style={styles.styWrapEmpty}>
+                <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
+            </View>
+        )
+    }
+
     render() {
         const {
             navigation,
@@ -167,9 +176,12 @@ class ExchangeGiftScreen extends Component {
                             renderItem={this.renderItem}
                             ListHeaderComponent={this.renderHeader}
                             stickyHeaderIndices={[0]}
+                            showsVerticalScrollIndicator={false}
+                            ListEmptyComponent={this.renderEmpty}
                         />
                     </>
                 }
+                <SafeAreaView />
             </View>
         )
     }
@@ -368,6 +380,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 16,
         marginBottom: 16
+    },
+    styWrapEmpty: {
+        height: height / 2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    styTxtEmpty: {
+        fontFamily: 'Nunito-Regular',
+        color: '#828282',
+        letterSpacing: 0.5,
+        fontSize: 16
     }
 
 })

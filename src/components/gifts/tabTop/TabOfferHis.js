@@ -6,16 +6,16 @@ import OfferGift from '../OfferGift';
 import HistoryGift from '../HistoryGift';
 const { width, height } = Dimensions.get('window');
 const TabTop = createMaterialTopTabNavigator({
-    OfferGift: {
-        screen: OfferGift,
-        navigationOptions: {
-            title: 'Đề xuất',
-        }
-    },
     HistoryGift: {
         screen: HistoryGift,
         navigationOptions: {
             title: 'Lịch sử đổi quà'
+        }
+    },
+    OfferGift: {
+        screen: OfferGift,
+        navigationOptions: {
+            title: 'Đề xuất',
         }
     },
 }, {
