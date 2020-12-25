@@ -33,7 +33,6 @@ import FullViewPDFAssessment from '../components/Teacher/Papers/FullViewPDF';
 import ExchangeGiftScreen from '../components/gifts/ExchangeGiftScreen';
 import SaleGift from '../components/gifts/SaleGift';
 import GiftDetail from '../components/gifts/GiftDetail';
-import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -167,10 +166,6 @@ const TeacherStack = createStackNavigator({
     screen: GiftDetail,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
-  OfferGiftDetail: {
-    screen: OfferGiftDetail,
-    navigationOptions: { header: null, gesturesEnabled: true },
-  }
 }, transition);
 
 export default TeacherStack;

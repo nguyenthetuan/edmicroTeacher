@@ -60,14 +60,28 @@ class HeaderMenu extends React.PureComponent {
             </Text>
           </View>
           <View style={{ flex: 1 }} />
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={require('../../asserts/appIcon/icon_point_gift.png')} resizeMode={'contain'} style={{ width: 25, height: 25 }} />
-            <Text
-              style={{ color: '#FFF', fontSize: 14, fontFamily: 'Nunito-Bold', marginHorizontal: 5 }}
-            >
-              {parseInt(userGift.totalEDPoint / 1000) + 'k'}
-            </Text>
-          </View>
+          {
+            userGift.totalEDPoint
+              ?
+              <View style={styles.styWrapEDPoint}>
+                <Image
+                  source={require('../../asserts/appIcon/icon_point_gift.png')}
+                  resizeMode={'contain'}
+                  style={{ width: 25, height: 25 }}
+                />
+                <Text
+                  style={styles.styTxtEDPoint}
+                >
+                  {
+                    userGift.totalEDPoint > 1000
+                      ?
+                      parseFloat(userGift.totalEDPoint / 1000) + 'k'
+                      :
+                      userGift.totalEDPoint}
+                </Text>
+              </View>
+              : null
+          }
         </View>
         <View
           style={[styles.changeClass]}
@@ -110,7 +124,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: '#fff',
-    borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -158,4 +171,15 @@ const styles = StyleSheet.create({
     color: '#C4C4C4',
     marginTop: 2,
   },
+  styTxtEDPoint: {
+    color: '#FFF',
+    fontSize: 14,
+    fontFamily: 'Nunito-Bold',
+    marginHorizontal: 5
+  },
+  styWrapEDPoint: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

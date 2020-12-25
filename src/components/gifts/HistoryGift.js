@@ -7,12 +7,14 @@ import {
     TouchableOpacity,
     Image,
     Modal,
-    TouchableWithoutFeedback
+    Linking
 } from 'react-native';
 import moment from 'moment';
 import { imageDefault } from '../../utils/Common';
 import Icon from 'react-native-vector-icons/Feather';
 import Toast, { DURATION } from 'react-native-easy-toast';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import { copyToClipboard } from '../../utils/Common';
 export default class HistoryGift extends Component {
 
     renderItem = ({ item, index }) => {
@@ -22,7 +24,7 @@ export default class HistoryGift extends Component {
         return (
             <TouchableOpacity
                 style={styles.listSale}
-                onPress={() => this.refModalCard.changeStateVisible(item)}
+                onPress={this.handleClickItem(item)}
             >
                 <View style={styles.flexLeft}>
                     <Image
@@ -56,6 +58,13 @@ export default class HistoryGift extends Component {
         );
     };
 
+    handleClickItem = item => () => {
+        if (item.receiveGift == 'NOW') {
+            this.refModalCard.changeStateVisible(item);
+            return;
+        }
+    }
+
     onToast = (text) => {
         this.toastRef.show(text, 3000)
     }
@@ -68,8 +77,12 @@ export default class HistoryGift extends Component {
                     data={listHistory}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={this.renderItem}
+                    showsVerticalScrollIndicator={false}
                 />
-                <ModalCard ref={ref => this.refModalCard = ref} />
+                <ModalCard
+                    ref={ref => this.refModalCard = ref}
+                    refsToast={() => this.toastRef.show('Copy thành công')}
+                />
                 <Toast
                     ref={ref => this.toastRef = ref}
                     position={'center'}
@@ -86,17 +99,55 @@ class ModalCard extends Component {
         item: {}
     }
 
-    changeStateVisible = item => {
+    changeStateVisible = (item = {}) => {
         const { visible } = this.state;
         this.setState({ visible: !visible, item });
     }
 
+    handleRechargeNow = () => {
+        const { item } = this.state;
+        let phoneNumber = '';
+        let code = item.gift;
+        code = code.replace(/[ -]+/g, '');
+        if (Platform.OS !== 'android') {
+            phoneNumber = `telprompt:*100*${code}\%23`;
+        }
+        else {
+            phoneNumber = `tel://*100*${code}\%23`;
+        }
+        Linking.canOpenURL(phoneNumber)
+            .then(supported => {
+                if (!supported) {
+                    Alert.alert('Phone number is not available');
+                } else {
+                    return Linking.openURL(phoneNumber);
+                }
+            })
+            .catch(err => console.log('err', err));
+    }
+
+    onclickCopyToClipboard = () => {
+        const { item } = this.state;
+        const isCopy = copyToClipboard(item.gift);
+        if (isCopy) {
+            this.props.refsToast();
+        }
+    }
+
     render() {
         const { visible, item } = this.state;
+        item.gift = '123456789'
         return (
             <Modal visible={visible} transparent={true} >
                 <View style={styles.styWrapModal}>
                     <View style={styles.styWrapContent}>
+                        <TouchableOpacity
+                            style={{ alignSelf: 'flex-end' }}
+                            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                            onPress={this.changeStateVisible}
+                        >
+                            <IconAntDesign name={'closecircleo'} style={{ fontSize: 20 }} />
+                        </TouchableOpacity>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.styWrapImg}>
                                 <Image
@@ -113,14 +164,17 @@ class ModalCard extends Component {
                             </View>
                         </View>
                         <View style={styles.stWrapGiftCode}>
-                            <Text style={{ flex: 1 }}>{item.gift}</Text>
-                            <TouchableOpacity>
+                            <Text style={{ flex: 1, letterSpacing: 0.5, fontFamily: 'Nunito-Regular' }}>{item.gift}</Text>
+                            <TouchableOpacity
+                                onPress={this.onclickCopyToClipboard}
+                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            >
                                 <Icon name={'copy'} style={{ color: '#828282', fontSize: 20 }} />
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
                             style={{ alignSelf: 'flex-end' }}
-                            onPress={() => alert(1)}
+                            onPress={this.handleRechargeNow}
                         >
                             <Text style={styles.styTxtBtn}>Nạp ngay</Text>
                         </TouchableOpacity>
@@ -213,8 +267,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     styWrapContent: {
-        minHeight: 150,
-        width: 300,
+        minHeight: 200,
+        width: 350,
         backgroundColor: '#fff',
         borderRadius: 10,
         padding: 10

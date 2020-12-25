@@ -5,15 +5,27 @@ import {
     Modal,
     Image,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform,
+    Linking
 } from 'react-native';
 import { formatNumber } from '../../utils/Common';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Feather';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { copyToClipboard } from '../../utils/Common';
 import Toast, { DURATION } from 'react-native-easy-toast';
 
 export default class ModalCard extends Component {
+
+    state = {
+        visibleModalCard: false
+    }
+
+    onVisibleModalCard = () => {
+        const { visibleModalCard } = this.state;
+        this.setState({ visibleModalCard: !visibleModalCard });
+    }
 
     onclickCopyToClipboard = () => {
         const { dataGift } = this.props;
@@ -25,15 +37,41 @@ export default class ModalCard extends Component {
     }
 
     handleRechargeNow = () => {
-
+        const { dataGift } = this.props;
+        let phoneNumber = '';
+        let code = dataGift.resultGift;
+        code = code.replace(/[ -]+/g, '');
+        if (Platform.OS !== 'android') {
+            phoneNumber = `telprompt:*100*${code}\%23`;
+        }
+        else {
+            phoneNumber = `tel://*100*${code}\%23`;
+        }
+        Linking.canOpenURL(phoneNumber)
+            .then(supported => {
+                if (!supported) {
+                    Alert.alert('Phone number is not available');
+                } else {
+                    return Linking.openURL(phoneNumber);
+                }
+            })
+            .catch(err => console.log('err', err));
     }
 
     render() {
         const { dataGift } = this.props;
+        const { visibleModalCard } = this.state;
         return (
-            <Modal visible={false} transparent={true}>
+            <Modal visible={visibleModalCard} transparent={true}>
                 <View style={styles.contain}>
                     <View style={styles.styWrapCont}>
+                        <TouchableOpacity
+                            style={{ alignSelf: 'flex-end', margin: 5 }}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            onPress={this.onVisibleModalCard}
+                        >
+                            <IconAntDesign name={'closecircleo'} style={{ fontSize: 20 }} />
+                        </TouchableOpacity>
                         <View style={styles.styWrapHead}>
                             <View style={styles.styWrapImg}>
                                 <Image
@@ -51,7 +89,7 @@ export default class ModalCard extends Component {
                             </View>
                         </View>
                         <View style={styles.styWrapCode}>
-                            <Text>{dataGift.resultGift}</Text>
+                            <Text style={styles.styCode}>{dataGift.resultGift}</Text>
                             <TouchableOpacity
                                 onPress={this.onclickCopyToClipboard}
                             >
@@ -82,7 +120,7 @@ const styles = StyleSheet.create({
     styWrapCont: {
         borderRadius: 10,
         minHeight: 200,
-        width: '90%',
+        width: 350,
         backgroundColor: '#FFF',
         shadowColor: "#000",
         shadowOffset: {
@@ -128,10 +166,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 5,
         justifyContent: 'space-between',
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        alignItems: 'center'
     },
     styTxtBtn: {
-        fontWeight: 'bold',
+        fontFamily: 'Nunito-Bold',
+        fontWeight: '800',
         color: '#FF6213',
         margin: 5
     },
@@ -141,5 +181,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#FF6213',
         margin: 10
+    },
+    styCode: {
+        fontFamily: 'Nunito-Regular',
+        letterSpacing: 0.5
     }
 })

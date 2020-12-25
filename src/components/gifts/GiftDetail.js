@@ -24,10 +24,14 @@ import {
     getListHistoryAction
 } from '../../actions/giftAction';
 import ModalCard from './ModalCard';
+import { DotIndicator } from 'react-native-indicators';
+
 class GiftDetail extends Component {
     state = {
         formData: {},
-        resultGift: 'Mã thẻ XXXXXXX'
+        resultGift: '1234567812345678',
+        visibleModalCard: false,
+        isLoading: false
     }
     giftExchange = async () => {
         const { dataGift } = this.props.navigation.state.params;
@@ -50,16 +54,21 @@ class GiftDetail extends Component {
             {
                 text: 'Xác nhận',
                 onPress: async () => {
+                    await this.setState({ isLoading: true });
                     const response = await Api.giftExchange({ token, params });
-                    console.log("🚀 ~ file: GiftDetail.js ~ line 54 ~ GiftDetail ~ onPress: ~ response", response)
+                    await this.setState({ isLoading: false });
                     if (_.isEmpty(response.result)) {
                         Alert.alert('Thông báo', response.errorMessage[0]);
                         return;
                     }
-                    Alert.alert('Thông báo', 'Đổi thưởng thành công', [
-                        { text: 'Đóng', onPress: this.props.navigation.goBack }
-                    ]);
-                    this.setState({ resultGift: response.result });
+                    await this.setState({ resultGift: response.result });
+                    if (dataGift.receiveGift == 'NOW') {
+                        this.refModalCard.onVisibleModalCard();
+                    } else {
+                        Alert.alert('Thông báo', 'Đổi thưởng thành công', [
+                            { text: 'Đóng', onPress: this.props.navigation.goBack }
+                        ]);
+                    }
                     this.props.makeRequestProfile({ token });
                     this.props.getListGiftAction({ token, page: 0 });
                     this.props.getListHistoryGift({ token, page: 0 });
@@ -103,7 +112,7 @@ class GiftDetail extends Component {
 
     render() {
         const { dataGift } = this.props.navigation.state.params;
-        const { formData, resultGift } = this.state;
+        const { formData, resultGift, visibleModalCard, isLoading } = this.state;
         dataGift.resultGift = resultGift;
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
@@ -139,11 +148,12 @@ class GiftDetail extends Component {
                         {dataGift.receiveGift == 'DELIVERY' && <>
                             <FormInput
                                 lable={'Số điện thoại người nhận'}
-                                placeholder={'+8490 3456789'}
+                                placeholder={'+84903456789'}
                                 icon={'phone'}
                                 keyboardType='phone-pad'
                                 onChangeText={this.onChangeText('phoneNumber')}
                                 value={formData['phoneNumber']}
+                                letterSpacing={0.5}
                             />
 
                             <FormInput
@@ -163,15 +173,28 @@ class GiftDetail extends Component {
                             />
                         </>}
 
-                        <TouchableOpacity
-                            style={styles.bgSubmit}
-                            onPress={this.giftExchange}
-                        >
-                            <Text style={styles.txtSub}>Đổi quà</Text>
-                        </TouchableOpacity>
+                        {isLoading
+                            ?
+                            <View style={{ marginTop: 40 }}>
+                                <DotIndicator color={'#2D9CDB'} size={6} count={8} />
+                            </View>
+                            :
+                            <TouchableOpacity
+                                style={styles.bgSubmit}
+                                onPress={this.giftExchange}
+                            >
+                                <Text style={styles.txtSub}>Đổi quà</Text>
+                            </TouchableOpacity>
+
+                        }
+
                     </ScrollView>
                 </KeyboardAvoidingView>
-                {/* <ModalCard dataGift={dataGift} /> */}
+                <ModalCard
+                    ref={ref => this.refModalCard = ref}
+                    dataGift={dataGift}
+                    visible={visibleModalCard}
+                />
             </View >
         )
     }
@@ -185,7 +208,8 @@ class FormInput extends Component {
             icon,
             keyboardType,
             onChangeText,
-            value
+            value,
+            letterSpacing
         } = this.props;
         return (
             <View style={styles.viewForm}>
@@ -194,7 +218,7 @@ class FormInput extends Component {
                     <IconFeather name={icon} style={styles.styIcon} />
                     <TextInput
                         placeholder={placeholder}
-                        style={{ color: '#000', fontFamily: 'Nunito-Regular', flex: 1 }}
+                        style={{ color: '#000', fontFamily: 'Nunito-Regular', flex: 1, letterSpacing }}
                         keyboardType={keyboardType ? keyboardType : 'default'}
                         onChangeText={onChangeText}
                         value={value}

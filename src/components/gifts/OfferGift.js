@@ -74,6 +74,7 @@ export default class OfferGift extends Component {
                     data={listGift}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={this.renderItem}
+                    showsVerticalScrollIndicator={false}
                 />
                 <Toast
                     ref={ref => this.toastRef = ref}

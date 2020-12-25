@@ -167,6 +167,7 @@ class ExchangeGiftScreen extends Component {
                             renderItem={this.renderItem}
                             ListHeaderComponent={this.renderHeader}
                             stickyHeaderIndices={[0]}
+                            showsVerticalScrollIndicator={false}
                         />
                     </>
                 }

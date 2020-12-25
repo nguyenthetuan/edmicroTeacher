@@ -3,23 +3,17 @@ import {
     View,
     Text,
     StyleSheet,
-    Dimensions,
     Image,
     TouchableOpacity,
-    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
-import LinearGradient from 'react-native-linear-gradient';
-import AppIcon from '../../utils/AppIcon';
 import TabOfferHis from '../gifts/tabTop/TabOfferHis';
-const { width, height } = Dimensions.get('window');
 class SaleGift extends Component {
 
-    renderItem = ({ item, index }) => {
+    renderItem = ({ item }) => {
         const { user } = this.props;
         const isColor = item.point > user.totalEDPoint;
-        const { listGift } = this.props.navigation.state.params;
         return (
             <TouchableOpacity
                 onPress={() => {
