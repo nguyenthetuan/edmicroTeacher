@@ -8,7 +8,7 @@ import {
 import _ from 'lodash';
 import Common from '../../../utils/Common';
 import FastImage from 'react-native-fast-image';
-
+import moment from 'moment';
 export default class Item extends Component {
     constructor(props) {
         super(props);
@@ -85,7 +85,7 @@ export default class Item extends Component {
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage
-                                    source={require('../../../asserts/icon/icon_sentenTea.png')}
+                                    source={require('../../../asserts/icon/icon_remakeParacV3.png')}
                                     style={{ width: 25, height: 25 }}
                                 />
                                 <Text style={styles.txtQuestion}>{item.totalQuestion} câu</Text>
@@ -95,10 +95,25 @@ export default class Item extends Component {
                         <View style={{ flexDirection: 'column' }}>
                             <View style={styles.flexSenten}>
                                 <FastImage
-                                    source={require('../../../asserts/icon/icon_sentenTea.png')}
+                                    source={require('../../../asserts/icon/icon_remakeClassV3.png')}
                                     style={{ width: 25, height: 25 }}
                                 />
                                 <Text style={styles.txtQuestion}>Lớp {gradeCode}</Text>
+                            </View>
+                            <View style={[styles.flexSenten, { marginTop: 10 }]}>
+                                <FastImage
+                                    source={require('../../../asserts/icon/icon_clockTimeV3.png')}
+                                    style={{ width: 25, height: 25 }}
+                                />
+                                <Text style={styles.txtQuestion}>
+                                    {
+                                        item.assignmentType
+                                            ?
+                                            item.duration / 60 + ' ' + 'phút'
+                                            :
+                                            `Không giới hạn`
+                                    }
+                                </Text>
                             </View>
                         </View>
 
@@ -109,7 +124,7 @@ export default class Item extends Component {
                                         ?
                                         <View style={styles.flexParac}>
                                             <FastImage
-                                                source={require('../../../asserts/icon/icon_examparacExamv3.png')}
+                                                source={require('../../../asserts/icon/icon_remakeHatV3.png')}
                                                 style={{ height: 25, width: 25 }}
                                             />
                                             <Text style={styles.txtButtomPractice}>
@@ -134,7 +149,7 @@ export default class Item extends Component {
                                 {item.status === 4
                                     ?
                                     <FastImage
-                                        source={require('../../../asserts/icon/icon_paracComplete.png')}
+                                        source={require('../../../asserts/icon/icon_toSendV3.png')}
                                         style={{ height: 25, width: 25 }}
                                     />
                                     :

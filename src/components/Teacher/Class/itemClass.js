@@ -69,7 +69,7 @@ export default class itemClass extends Component {
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.textStatus}>
                 {this._Status(item.status)}
-                </Text>
+              </Text>
               {(item.status === 1 || item.status === 2) && (
                 <View style={styles.iconStatus} />
               )}
@@ -117,8 +117,8 @@ export default class itemClass extends Component {
                   </View>
                   <View style={styles.viewImageExcer}>
                     <Image
-                      source={require('../../../asserts/icon/icon_excerciseClass.png')}
-                      style={{ width: 20, height: 20 }}
+                      source={require('../../../asserts/icon/icon_remakeParacV3.png')}
+                      style={{ width: 23, height: 23 }}
                     />
                     <Text style={styles.txtInfoDetail}>Số Bài Tập</Text>
                     <Text style={styles.txtThree}>{item.totalAssign}</Text>
@@ -127,7 +127,7 @@ export default class itemClass extends Component {
                 <View style={{ justifyContent: 'space-between' }}>
                   <View style={styles.iconClass}>
                     <Image
-                      source={require('../../../asserts/icon/icon_gradeClass1.png')}
+                      source={require('../../../asserts/icon/icon_remakeClassV3.png')}
                       style={{ width: 22, height: 22 }}
                     />
                     <Text style={styles.txtRight}>Khối Lớp </Text>
@@ -137,8 +137,8 @@ export default class itemClass extends Component {
                   </View>
                   <View style={styles.iconPopu}>
                     <Image
-                      source={require('../../../asserts/icon/icon_popuClass.png')}
-                      style={{ width: 19, height: 19 }}
+                      source={require('../../../asserts/icon/icon_remakePeopleV3.png')}
+                      style={{ width: 22, height: 22 }}
                     />
                     <Text style={styles.txtRightFoot}>Sĩ Số</Text>
                     <Text style={styles.indexTwo}>{item.totalStudent}</Text>
@@ -233,14 +233,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   txtInfoDetail: {
-    color: '#828282',
+    color: '#000',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 5,
     alignSelf: 'center',
   },
   txtRight: {
-    color: '#828282',
+    color: '#000',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     marginLeft: 5,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   txtRightFoot: {
-    color: '#828282',
+    color: '#000',
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
     // marginLeft: 5,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     width: 21,
     height: 21,
     borderRadius: 20,
-    marginLeft: -1,
+    marginLeft: 1
   },
   viewImageExcer: {
     flexDirection: 'row',

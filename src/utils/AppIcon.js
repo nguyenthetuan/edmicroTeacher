@@ -113,6 +113,12 @@ import icon_diamondV3 from '../asserts/icon/icon_diamondV3.png';
 import icon_heroiconV3 from '../asserts/icon/icon_heroiconV3.png';
 import icon_dagiaoV3 from '../asserts/icon/icon_dagiaoV3.png';
 import icon_chuagiaoV3 from '../asserts/icon/icon_chuagiaoV3.png';
+import icon_clockTimeV3 from '../asserts/icon/icon_clockTimeV3.png';
+import icon_remakeClassV3 from '../asserts/icon/icon_remakeClassV3.png';
+import icon_remakeParacV3 from '../asserts/icon/icon_remakeParacV3.png';
+import icon_remakePeopleV3 from '../asserts/icon/icon_remakePeopleV3.png';
+import icon_toSendV3 from '../asserts/icon/icon_toSendV3.png';
+import icon_remakeHatV3 from '../asserts/icon/icon_remakeHatV3.png';
 module.exports = {
   logo_onluyen,
   icon_minus,
@@ -209,5 +215,11 @@ module.exports = {
   icon_diamondV3,
   icon_heroiconV3,
   icon_dagiaoV3,
-  icon_chuagiaoV3
+  icon_chuagiaoV3,
+  icon_clockTimeV3,
+  icon_remakeClassV3,
+  icon_remakeParacV3,
+  icon_remakePeopleV3,
+  icon_toSendV3,
+  icon_remakeHatV3
 };
