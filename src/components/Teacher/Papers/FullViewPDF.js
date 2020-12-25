@@ -9,11 +9,11 @@ export default class FullViewPDFAssessment extends Component {
     }
 
     render() {
-        const { urlFilePDF } = this.props.navigation.state.params;
+        const { urlFilePDF, text } = this.props.navigation.state.params;
         return (
             <SafeAreaView style={styles.container}>
                 <HeaderPaper
-                    title={'Bộ đề PDF'}
+                    title={text}
                     navigation={this.props.navigation}
                     color={'#979797'}
                     iconColor='#000'
