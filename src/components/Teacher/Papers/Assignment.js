@@ -30,6 +30,7 @@ import { MaterialKeyBoard } from '../../common/Material';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import ModalSelectStudent from './ModalSelectStudent';
 const { width, height } = Dimensions.get('screen');
 
 const Stage = {
@@ -38,7 +39,7 @@ const Stage = {
 }
 
 function Item(props) {
-  const dropdownStudent = useRef();
+  const pickStudent = useRef();
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
 
@@ -54,11 +55,21 @@ function Item(props) {
   );
   const [isCheck, setCheck] = useState(item.permissionViewResult === 1);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [showPickSutdent, setShowPickSutdent] = useState(false);
+  const [buttonText, setButtonText] = useState('Tất cả học sinh');
 
   const showDatePicker = (stage) => {
     setStage(stage);
     setDatePickerVisibility(true);
   };
+
+  const handlePickStudent = (text) => {
+    setShowPickSutdent(!showPickSutdent);
+    if (text) {
+      // alert(text);
+      setButtonText(text);
+    }
+  }
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
@@ -96,7 +107,7 @@ function Item(props) {
         data: [{
           classId: item.classCode,
           permissionViewResult: isCheck ? 1 : 0,
-          students: dropdownStudent.current.students()
+          students: pickStudent.current.students()
         }]
       }
 
@@ -161,12 +172,35 @@ function Item(props) {
         </View>
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Học sinh</Text>
-          <DropdownStudent
+          {/* <DropdownStudent
             ref={dropdownStudent}
             dataItem={item}
             style={{ width: width - 32, marginTop: 8, height: 40, }}
             dropdownStyle={{ width: width - 32 }}
             options={item.students}
+          /> */}
+          <TouchableOpacity onPress={() => { handlePickStudent() }} style={{ width: width - 32, marginTop: 8, height: 40, borderWidth: 1, borderRadius: 5, backgroundColor: 'rgba(86, 204, 242, 0.2)', borderColor: '#56CCF2', justifyContent: 'center' }}>
+            <View style={{
+              width: 40,
+              height: 40,
+              backgroundColor: '#56CCF2',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              right: 0
+            }}>
+              <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+            </View>
+            <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
+          </TouchableOpacity>
+          <ModalSelectStudent
+            ref={pickStudent}
+            dataItem={item}
+            style={{ width: width - 32, marginTop: 8, height: 40, }}
+            dropdownStyle={{ width: width - 32 }}
+            options={item.students}
+            visibleModal={showPickSutdent}
+            handlePickStudent={handlePickStudent}
           />
         </View>
         <TouchableOpacity

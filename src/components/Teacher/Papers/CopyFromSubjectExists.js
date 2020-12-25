@@ -8,7 +8,8 @@ import {
     Dimensions,
     TouchableOpacity,
     SafeAreaView,
-    TextInput
+    TextInput,
+    TouchableWithoutFeedback
 } from 'react-native';
 import _ from 'lodash';
 import HeaderPaper from './HeaderPaper';
@@ -19,7 +20,7 @@ import dataHelper from '../../../utils/dataHelper';
 import Common from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
-import LearnPlaceholder from '../../shim/LearnPlaceholder';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
 let height = Dimensions.get('window').height;
 
@@ -194,12 +195,18 @@ export default class CopyFromSubjectExists extends Component {
                         <View style={styles.wrapDropdown}>
                             <Image source={AppIcon.image_headerPaperV3} style={styles.imageHeaderLeft} />
                             <View style={styles.flexColumn}>
-                                <TextInput
-                                    placeholder={'Tên bài kiểm tra'}
-                                    placeholderTextColor={'#E0E0E0'}
-                                    style={styles.styWrapInput}
-                                // value={nameMission}
-                                />
+                                <View style={styles.styWrapInput}>
+                                    <TextInput
+                                        placeholder={'Tên bài kiểm tra'}
+                                        placeholderTextColor={'#c4c4c4'}
+                                        style={{ color: '#000', flex: 1, fontSize: 14 }}
+                                    // value={nameMission}
+                                    />
+                                    <IconAntDesign
+                                        name={'search1'}
+                                        style={styles.iconSearch}
+                                    />
+                                </View>
                                 <View style={styles.wrap2Dropdown}>
                                     <Dropdown
                                         containerStyle={styles.styleDrop}
@@ -318,13 +325,11 @@ const styles = StyleSheet.create({
     },
     styWrapInput: {
         padding: 5,
-        borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#fff',
-        // margin: 10,
         marginBottom: 16,
-        color: '#000',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        flexDirection: "row",
+        alignItems: 'center',
     },
     styleDrop: {
         flex: 1,
@@ -354,5 +359,9 @@ const styles = StyleSheet.create({
     },
     imageHeaderLeft: {
         marginLeft: 10
+    },
+    iconSearch: {
+        alignSelf: 'center',
+        color: '#828282'
     }
 })

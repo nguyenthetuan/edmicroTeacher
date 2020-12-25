@@ -135,7 +135,7 @@ export default class StepOne extends Component {
           paddingHorizontal: 0, marginTop: 20
         }]}>
           <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
-          <View style={styles.flexDri}>
+          <View style={{ justifyContent: 'center' }}>
             <TextInput
               placeholder={'Tên nhiệm vụ'}
               placeholderTextColor={'#979797'}
@@ -250,8 +250,10 @@ const styles = StyleSheet.create({
   },
   viewRNPicker: {
     backgroundColor: '#fff',
-    borderRadius: 50,
+    borderRadius: 5,
+    borderColor: '#828282',
     justifyContent: 'center',
+    borderWidth: Platform.OS == 'android' ? 1 : 0,
   },
   icon: {
     position: 'absolute',
@@ -308,23 +310,12 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: '#979797',
   },
   inputAndroid: {
-    paddingTop: 13,
-    paddingHorizontal: 20,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
     borderRadius: 5,
-    backgroundColor: 'gray',
     color: '#000',
     fontFamily: 'Nunito-Regular',
     borderWidth: 1,
-    margin: 10,
-    borderWidth: 1,
     borderColor: '#999',
   },
-  flexDri: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  }
 });
 
 const listClass = [];

@@ -222,11 +222,15 @@ export default class ModalCurriculum extends Component {
           </View>
 
           <Modal visible={visible} transparent={true}>
-            <TouchableWithoutFeedback style={[styles.container, { height: this.props.height }]} onPress={() => this._closeModal()}>
+            <TouchableWithoutFeedback
+              style={[styles.container, { height: this.props.height }]}
+              onPress={() => this._closeModal()}
+            >
               <View style={styles.container}>
                 <TouchableWithoutFeedback >
                   <View style={{
-                    flexDirection: 'row', justifyContent: 'space-between',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                     backgroundColor: '#2D9CDB',
                     paddingHorizontal: 16,
                     paddingVertical: 4
@@ -360,6 +364,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    borderRadius: 5,
+    overflow: 'hidden'
   },
   wrapElementSelect: {
     maxWidth: '50%',

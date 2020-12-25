@@ -35,6 +35,7 @@ import SaleGift from '../components/gifts/SaleGift';
 import GiftDetail from '../components/gifts/GiftDetail';
 import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
 import StatisticScreen from '../components/statistics/StatisticScreen';
+import EditConfig from '../components/Teacher/Papers/EditConfig';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -175,7 +176,15 @@ const TeacherStack = createStackNavigator({
   StatisticScreen: {
     screen: StatisticScreen,
     navigationOptions: { header: null, gesturesEnabled: true },
-  }
+  },
+  EditConfig: {
+    screen: EditConfig,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  // WebViews:{
+  //   screen: AppStoreScreen,
+  //   navigationOptions: { header: null, gesturesEnabled: true },
+  // }
 }, transition);
 
 export default TeacherStack;

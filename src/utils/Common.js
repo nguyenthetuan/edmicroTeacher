@@ -1,5 +1,5 @@
-import { ToastAndroid, Dimensions, Alert, Platform } from 'react-native';
-
+import { ToastAndroid, Dimensions, Alert, Platform,Clipboard } from 'react-native';
+// import Clipboard from '@react-native-community/clipboard';
 import Config from 'react-native-config';
 import iconMath from '../asserts/icon/icon_toanV3.png';
 import iconPhy from '../asserts/icon/icon_vatlyV3.png';
@@ -704,6 +704,14 @@ export function roundToFour(num) {
   return +(Math.round(num + "e+4") + "e-4");
 }
 
+export const copyToClipboard = (text) => {
+  if (typeof text === 'string') {
+    Clipboard.setString(text);
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   getIconSubject,
   getIconSubjectForCompetition,
@@ -747,5 +755,6 @@ module.exports = {
   roundToTwo,
   roundToFour,
   imageDefault,
-  formatNumber
+  formatNumber,
+  copyToClipboard
 };

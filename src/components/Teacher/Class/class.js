@@ -43,7 +43,11 @@ class Class extends Component {
         isLoading: false,
         data: response && response,
       });
-    } catch (error) { }
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
+     }
   }
 
   _getData = async () => {
