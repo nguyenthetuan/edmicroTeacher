@@ -123,7 +123,7 @@ export default class ModalSelectStudent extends Component {
         const { options } = this.props;
 
         this.setState({
-            // buttonText: options.length ? `${options.length} học sinh` : 'Tất cả học sinh',
+            buttonText: options.length ? `${options.length} học sinh` : 'Tất cả học sinh',
             listSelected: options
         });
     }
