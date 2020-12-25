@@ -6,10 +6,13 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
-    Alert
+    Alert,
+    Dimensions
 } from 'react-native';
 import { imageDefault } from '../../utils/Common';
 import Toast from 'react-native-easy-toast';
+const { width, height } = Dimensions.get('window');
+
 export default class OfferGift extends Component {
 
 
@@ -43,7 +46,7 @@ export default class OfferGift extends Component {
                 </View>
                 <View style={styles.flexRight}>
                     <Text style={styles.txtTitle}>{item.description}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 16,marginBottom: 16 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
                             <Image
@@ -66,6 +69,14 @@ export default class OfferGift extends Component {
         this.toastRef.show(text, 3000)
     }
 
+    renderEmpty = () => {
+        return (
+            <View style={styles.styWrapEmpty}>
+                <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
+            </View>
+        )
+    }
+
     render() {
         const { listGift } = this.props.screenProps;
         return (
@@ -75,6 +86,7 @@ export default class OfferGift extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={this.renderItem}
                     showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={this.renderEmpty}
                 />
                 <Toast
                     ref={ref => this.toastRef = ref}
@@ -161,5 +173,16 @@ const styles = StyleSheet.create({
         width: "70%",
         marginLeft: 10,
         justifyContent: 'space-between',
-    }
+    },
+    styWrapEmpty: {
+        height: height / 2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    styTxtEmpty: {
+        fontFamily: 'Nunito-Regular',
+        color: '#828282',
+        letterSpacing: 0.5,
+        fontSize: 16
+    },
 })

@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
+    SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
@@ -63,6 +64,7 @@ class SaleGift extends Component {
                     back={true}
                 />
                 <TabOfferHis screenProps={this.props} />
+                <SafeAreaView />
             </View>
         )
     }

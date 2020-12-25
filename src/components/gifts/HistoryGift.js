@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Image,
     Modal,
-    Linking
+    Linking,
+    Dimensions,
 } from 'react-native';
 import moment from 'moment';
 import { imageDefault } from '../../utils/Common';
@@ -15,6 +16,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { copyToClipboard } from '../../utils/Common';
+const { width, height } = Dimensions.get('window');
+
 export default class HistoryGift extends Component {
 
     renderItem = ({ item, index }) => {
@@ -69,6 +72,14 @@ export default class HistoryGift extends Component {
         this.toastRef.show(text, 3000)
     }
 
+    renderEmpty = () => {
+        return (
+            <View style={styles.styWrapEmpty}>
+                <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
+            </View>
+        )
+    }
+
     render() {
         const { listHistory } = this.props.screenProps;
         return (
@@ -78,6 +89,7 @@ export default class HistoryGift extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={this.renderItem}
                     showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={this.renderEmpty}
                 />
                 <ModalCard
                     ref={ref => this.refModalCard = ref}
@@ -136,7 +148,6 @@ class ModalCard extends Component {
 
     render() {
         const { visible, item } = this.state;
-        item.gift = '123456789'
         return (
             <Modal visible={visible} transparent={true} >
                 <View style={styles.styWrapModal}>
@@ -164,7 +175,7 @@ class ModalCard extends Component {
                             </View>
                         </View>
                         <View style={styles.stWrapGiftCode}>
-                            <Text style={{ flex: 1, letterSpacing: 0.5, fontFamily: 'Nunito-Regular' }}>{item.gift}</Text>
+                            <Text style={styles.styTxtGift}>{item.gift}</Text>
                             <TouchableOpacity
                                 onPress={this.onclickCopyToClipboard}
                                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -303,5 +314,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FF6213',
         margin: 5
+    },
+    styWrapEmpty: {
+        height: height / 2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    styTxtEmpty: {
+        fontFamily: 'Nunito-Regular',
+        color: '#828282',
+        letterSpacing: 0.5,
+        fontSize: 16
+    },
+    styTxtGift: {
+        flex: 1,
+        letterSpacing: 0.5,
+        fontFamily: 'Nunito-Regular'
     }
 })
