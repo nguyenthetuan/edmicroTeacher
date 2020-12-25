@@ -60,11 +60,11 @@ export default class ItemMission extends Component {
           <View>
             <View style={styles.imageSize}>
               {this.renderElement(
-                AppIcon.icon_gradeClass1, data.gradeName
+                AppIcon.icon_remakeClassV3, data.gradeName
               )}
             </View>
             {this.renderElement(
-              AppIcon.icon_teacherV3Exam,
+              AppIcon.icon_remakeHatV3,
               'Bài kiểm tra',
               data.countTest,
             )}
@@ -87,7 +87,7 @@ export default class ItemMission extends Component {
             {data.status === modelStatus.unDelivered
               ?
               <FastImage
-                source={require('../../../asserts/icon/icon_paracComplete.png')}
+                source={require('../../../asserts/icon/icon_toSendV3.png')}
                 style={{ height: 25, width: 25 }}
               />
               :
