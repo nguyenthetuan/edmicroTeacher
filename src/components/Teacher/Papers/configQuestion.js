@@ -618,6 +618,9 @@ class ConfigQuestion extends Component {
           onRightAction={() => this.config()}
           loading={loading}
         />
+        <TouchableOpacity style={styles.buttonCreateAssessment} onPress={this.config}>
+          <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
+        </TouchableOpacity>
         <ScrollView
           contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
           ref={'ScrollView'}>
@@ -1320,4 +1323,22 @@ const styles = StyleSheet.create({
   btnSwitch: {
     marginRight: 15,
   },
+  buttonCreateAssessment: {
+    width: 80,
+    height: 20,
+    borderRadius: 5,
+    backgroundColor: '#F49A31',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 20,
+    top: Platform.OS == 'ios' ? 28 : 7,
+    zIndex: 2,
+  },
+  textCreateAssessment: {
+    fontFamily: 'Nunito',
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#fff',
+  }
 });

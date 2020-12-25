@@ -53,10 +53,11 @@ function Item(props) {
       ? item.timeEnd * 1000
       : new Date().getTime()
   );
+  let student = item.students.length;
   const [isCheck, setCheck] = useState(item.permissionViewResult === 1);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [showPickSutdent, setShowPickSutdent] = useState(false);
-  const [buttonText, setButtonText] = useState('Tất cả học sinh');
+  const [buttonText, setButtonText] = useState(student ? `${student} học sinh` : 'Tất cả học sinh');
 
   const showDatePicker = (stage) => {
     setStage(stage);
@@ -146,12 +147,18 @@ function Item(props) {
       </View> */}
       <View style={styles.contentItem}>
         <View style={styles.viewName}>
+          <Text style={styles.txtTitleItemContent}>Lớp</Text>
+          <View style={styles.inputName}>
+            <Text numberOfLines={1} style={styles.txtContentItem}>{props.item.name}</Text>
+          </View>
+        </View>
+        <View style={[styles.viewName, { top: 10 }]}>
           <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
           <View style={styles.inputName}>
             <Text numberOfLines={1} style={styles.txtContentItem}>{props.dataItem.name}</Text>
           </View>
         </View>
-        <View style={styles.viewDate}>
+        <View style={[styles.viewDate, { top: 5 }]}>
           <Text style={styles.txtTitleItemContent}>Bắt đầu</Text>
           <TouchableOpacity
             disabled={item.timeStart}
