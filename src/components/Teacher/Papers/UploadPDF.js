@@ -971,7 +971,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 20,
-    top: 25
+    top: Platform.OS == 'ios'? 25: 7,
+    zIndex: 2,
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
