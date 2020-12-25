@@ -34,6 +34,7 @@ import ExchangeGiftScreen from '../components/gifts/ExchangeGiftScreen';
 import SaleGift from '../components/gifts/SaleGift';
 import GiftDetail from '../components/gifts/GiftDetail';
 import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
+import EditConfig from '../components/Teacher/Papers/EditConfig';
 
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -170,6 +171,10 @@ const TeacherStack = createStackNavigator({
   },
   OfferGiftDetail: {
     screen: OfferGiftDetail,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  EditConfig: {
+    screen: EditConfig,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   // WebViews:{
