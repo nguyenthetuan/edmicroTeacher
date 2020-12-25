@@ -33,6 +33,9 @@ import FullViewPDFAssessment from '../components/Teacher/Papers/FullViewPDF';
 import ExchangeGiftScreen from '../components/gifts/ExchangeGiftScreen';
 import SaleGift from '../components/gifts/SaleGift';
 import GiftDetail from '../components/gifts/GiftDetail';
+import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
+import StatisticScreen from '../components/statistics/StatisticScreen';
+import EditConfig from '../components/Teacher/Papers/EditConfig';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -166,6 +169,22 @@ const TeacherStack = createStackNavigator({
     screen: GiftDetail,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
+  OfferGiftDetail: {
+    screen: OfferGiftDetail,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  StatisticScreen: {
+    screen: StatisticScreen,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  EditConfig: {
+    screen: EditConfig,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  // WebViews:{
+  //   screen: AppStoreScreen,
+  //   navigationOptions: { header: null, gesturesEnabled: true },
+  // }
 }, transition);
 
 export default TeacherStack;

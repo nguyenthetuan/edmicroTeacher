@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform, ScrollView, SafeAreaView } from "react-native";
+import { View, Platform, ScrollView, SafeAreaView, Linking } from "react-native";
 import dataHelper from '../../utils/dataHelper';
 import global from '../../utils/Globals';
 import AppIcon from '../../utils/AppIcon';
@@ -29,21 +29,27 @@ class MenuTabTeacher extends Component {
   rateApp() {
     const { navigation } = this.props;
     let link = Platform.OS === 'ios' ? ITUNES_APPLE_APP : GOOGLE_PLAY_APP;
-    navigation.navigate({
-      routeName: 'Webviews',
-      params: {
-        title: 'App Store',
-        link: link,
-        statusbar: 'light-content'
-      }
-    });
+    Linking.openURL(link);
+    // navigation.navigate({
+    //   routeName: 'Webviews',
+    //   params: {
+    //     title: 'App Store',
+    //     link: link,
+    //     statusbar: 'light-content'
+    //   }
+    // });
   }
 
   handleClick(type) {
     this.props.navigation.closeDrawer();
     switch (type) {
-      case 1: this.props.navigation.navigate('ChangInfo', { statusbar: 'light-content', previousScreen: this.props.navigation.state.routeName }); break;
+      case 1: this.props.navigation.navigate('ChangInfo', {
+        statusbar:
+          'light-content', previousScreen: this.props.navigation.state.routeName
+      });
+        break;
       case 2: this.props.navigation.navigate('ChangeGrade', { statusbar: 'dark-content' }); break;
+      case 3: this.props.navigation.navigate('StatisticScreen', { statusbar: 'dark-content' }); break;
       case 5: this.rateApp(); break;
       case 6: this.logout(); break;
       case 8: this.props.navigation.navigate('SettingScreen', { statusbar: 'light-content' }); break;
@@ -99,6 +105,12 @@ class MenuTabTeacher extends Component {
                 onPress={() => this.handleClick(16)}
                 source={AppIcon.icon_diamondV3}
                 title={'Đổi quà'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
+                onPress={() => this.handleClick(3)}
+                source={require('../../asserts/icon/icon_staticV3.png')}
+                title={'Thống kê'}
                 rippleColor={rippleColor}
               />
               <MenuItem

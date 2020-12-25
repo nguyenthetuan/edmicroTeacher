@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
     borderColor: '#828282',
     justifyContent: 'center',
     borderWidth: Platform.OS == 'android' ? 1 : 0,
-    marginHorizontal: 10
   },
   icon: {
     position: 'absolute',

@@ -160,7 +160,7 @@ export default class DropdownStudent extends Component {
                 style={{
                     height: 24,
                     flex: 1,
-                    backgroundColor: '#D9EBF5',
+                    backgroundColor: 'rgba(86, 204, 242, 0.2)',
                     borderRadius: 5,
                     alignItems: 'center',
                     flexDirection: 'row',
@@ -177,13 +177,13 @@ export default class DropdownStudent extends Component {
                         paddingHorizontal: 8,
                     }}>{buttonText}</Text>
                 <View style={{
-                    width: 24,
-                    height: 24,
-                    backgroundColor: '#9EDCFF',
+                    width: 40,
+                    height: 40,
+                    backgroundColor: '#56CCF2',
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <Icon name={showDropdown ? "chevron-up" : "chevron-down"} color={'#fff'} size={12} />
+                    <Icon name={showDropdown ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
                 </View>
             </TouchableOpacity>
         );

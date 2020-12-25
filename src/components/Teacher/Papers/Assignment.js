@@ -30,6 +30,7 @@ import { MaterialKeyBoard } from '../../common/Material';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import ModalSelectStudent from './ModalSelectStudent';
 const { width, height } = Dimensions.get('screen');
 
 const Stage = {
@@ -38,7 +39,7 @@ const Stage = {
 }
 
 function Item(props) {
-  const dropdownStudent = useRef();
+  const pickStudent = useRef();
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
 
@@ -54,11 +55,21 @@ function Item(props) {
   );
   const [isCheck, setCheck] = useState(item.permissionViewResult === 1);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [showPickSutdent, setShowPickSutdent] = useState(false);
+  const [buttonText, setButtonText] = useState('Tất cả học sinh');
 
   const showDatePicker = (stage) => {
     setStage(stage);
     setDatePickerVisibility(true);
   };
+
+  const handlePickStudent = (text) => {
+    setShowPickSutdent(!showPickSutdent);
+    if (text) {
+      // alert(text);
+      setButtonText(text);
+    }
+  }
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
@@ -96,7 +107,7 @@ function Item(props) {
         data: [{
           classId: item.classCode,
           permissionViewResult: isCheck ? 1 : 0,
-          students: dropdownStudent.current.students()
+          students: pickStudent.current.students()
         }]
       }
 
@@ -130,9 +141,9 @@ function Item(props) {
 
   return (
     <View style={styles.containerItem}>
-      <View style={styles.headerItem}>
+      {/* <View style={styles.headerItem}>
         <Text style={styles.txtTitleItem}>{props.item.name}</Text>
-      </View>
+      </View> */}
       <View style={styles.contentItem}>
         <View style={styles.viewName}>
           <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
@@ -145,7 +156,7 @@ function Item(props) {
           <TouchableOpacity
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#cccccc' : '#D9ebf5' }]}>
+            style={[styles.btnDate, { backgroundColor: item.timeStart ? 'rgba(86, 204, 242, 0.2)' : '#fa915c' }]}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
@@ -161,12 +172,35 @@ function Item(props) {
         </View>
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Học sinh</Text>
-          <DropdownStudent
+          {/* <DropdownStudent
             ref={dropdownStudent}
             dataItem={item}
-            style={{ width: width - 32 - 54 - 80 }}
-            dropdownStyle={{ width: width - 32 - 54 - 80 }}
+            style={{ width: width - 32, marginTop: 8, height: 40, }}
+            dropdownStyle={{ width: width - 32 }}
             options={item.students}
+          /> */}
+          <TouchableOpacity onPress={() => { handlePickStudent() }} style={{ width: width - 32, marginTop: 8, height: 40, borderWidth: 1, borderRadius: 5, backgroundColor: 'rgba(86, 204, 242, 0.2)', borderColor: '#56CCF2', justifyContent: 'center' }}>
+            <View style={{
+              width: 40,
+              height: 40,
+              backgroundColor: '#56CCF2',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              right: 0
+            }}>
+              <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+            </View>
+            <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
+          </TouchableOpacity>
+          <ModalSelectStudent
+            ref={pickStudent}
+            dataItem={item}
+            style={{ width: width - 32, marginTop: 8, height: 40, }}
+            dropdownStyle={{ width: width - 32 }}
+            options={item.students}
+            visibleModal={showPickSutdent}
+            handlePickStudent={handlePickStudent}
           />
         </View>
         <TouchableOpacity
@@ -174,7 +208,7 @@ function Item(props) {
           style={styles.btnCheckAllow}>
           <View style={styles.checkAllow}>
             {
-              isCheck ? <Icon name="check" color={'#56CCF2'} size={10} /> : null
+              isCheck ? <Icon name="check" color={'#56CCF2'} size={18} /> : null
             }
           </View>
           <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
@@ -231,14 +265,14 @@ export default class Assignment extends Component {
     }
   }
 
-  _renderListHeader = () => {
-    return (
-      <View style={styles.viewListHeader}>
-        <Image source={require('../../../asserts/images/img_assignment.png')}
-          style={styles.imgListHeader} />
-      </View>
-    )
-  }
+  // _renderListHeader = () => {
+  //   return (
+  //     <View style={styles.viewListHeader}>
+  //       <Image source={require('../../../asserts/images/img_assignment.png')}
+  //         style={styles.imgListHeader} />
+  //     </View>
+  //   )
+  // }
 
   _renderListEmpty = () => {
     const { loading } = this.state;
@@ -282,7 +316,7 @@ export default class Assignment extends Component {
           data={data}
           style={{ backgroundColor: '#fff' }}
           keyExtractor={(item, index) => index.toString()}
-          ListHeaderComponent={this._renderListHeader}
+          // ListHeaderComponent={this._renderListHeader}
           ListEmptyComponent={this._renderListEmpty}
           renderItem={({ item, index }) => {
             return <Item
@@ -347,10 +381,8 @@ const styles = StyleSheet.create({
   },
   containerItem: {
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#56CCF2',
     marginBottom: 16,
-    marginHorizontal: 16
+    marginTop: 16
   },
   headerItem: {
     height: 30,
@@ -365,33 +397,37 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize'
   },
   contentItem: {
-    paddingHorizontal: 26,
+    paddingHorizontal: 16,
     paddingVertical: 12
   },
   txtTitleItemContent: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
-    color: '#000',
-    width: 80
+    fontSize: 14,
+    lineHeight: 19,
+    color: '#828282',
   },
   btnAssignment: {
-    alignSelf: 'flex-end',
-    marginTop: 11,
-    width: 80,
-    height: 20,
-    backgroundColor: '#56CCF2',
-    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 40,
+    backgroundColor: '#2D9CDB',
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center'
   },
   txtAssignment: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-    color: '#fff'
+    fontFamily: 'Nunito-Bold',
+    fontSize: 18,
+    lineHeight: 21,
+    fontWeight: '500',
+    color: '#fff',
+    marginLeft: 76,
+    marginRight: 76,
+    marginTop: 14,
+    marginBottom: 14
   },
   checkAllow: {
-    width: 14,
-    height: 14,
+    width: 20,
+    height: 20,
     borderWidth: 1,
     borderColor: '#56CCF2',
     alignItems: 'center',
@@ -400,45 +436,52 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   btnCheckAllow: {
-    marginStart: 80,
     flexDirection: 'row',
-    marginTop: 10,
-    alignItems: 'center'
+    marginTop: 18,
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+
   },
   txtCheckAllow: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 10,
-    color: '#828282'
+    fontSize: 14,
+    lineHeight: 19,
+    color: '#2D9CDB'
   },
   viewName: {
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: 'column',
   },
   inputName: {
-    height: 24,
+    height: 40,
     flex: 1,
-    backgroundColor: '#cccccc',
+    backgroundColor: '#fff',
     borderRadius: 5,
     justifyContent: 'center',
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
+    marginTop: 8,
+    borderWidth: 0.5,
+    borderColor: '#56CCF2',
   },
   txtContentItem: {
     fontFamily: 'Nunito-Regular',
     fontSize: 12,
-    color: '#2D9CDB'
+    color: '#2D9CDB',
+    marginLeft: 10
   },
   viewDate: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginTop: 10,
-    alignItems: 'center'
   },
   btnDate: {
-    height: 24,
+    height: 40,
     flex: 1,
-    backgroundColor: '#D9EBF5',
+    backgroundColor: 'rgba(86, 204, 242, 0.2)',
     borderRadius: 5,
     justifyContent: 'center',
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
+    marginTop: 8,
+    borderWidth: 0.5,
+    borderColor: '#56CCF2'
   },
   viewNotFound: {
     marginTop: 100,

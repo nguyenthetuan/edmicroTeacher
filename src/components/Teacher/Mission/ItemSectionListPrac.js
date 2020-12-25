@@ -15,9 +15,10 @@ export default class ItemSectionListPrac extends Component {
 
   state = {
     score: '7',
-    count: 1
+    count: 1,
+    percentCount: 100
   }
-
+  
   changeTextScore = (score) => {
     score = parseFloat(score) || '';
     const { item } = this.props;
@@ -37,59 +38,64 @@ export default class ItemSectionListPrac extends Component {
     this.setState({ score });
   }
 
-  changeTextCount = count => {
-    count = parseInt(count) || '';
+  changeTextCount = percentCount => {
+    percentCount = parseInt(percentCount) || '';
     const { item } = this.props;
-    if (count < 0) {
+    if (percentCount < 0) {
       Alert.alert('Thông báo', 'Số lần làm bài phải lớn hơn 0', [
         {
           text: 'Đặt lại',
           onPress: () => {
             item.countDone = '1';
-            this.setState({ count: '1' });
+            item.percentCount = '1',
+              this.setState({ percentCount: '1' });
           }
         }
       ]);
       return;
     }
-    item.countDone = count;
-    this.setState({ count });
+    item.percentCount = percentCount;
+    this.setState({ percentCount });
   }
 
   onEndEditing = () => {
-    const { score, count } = this.state;
+    const { score, percentCount } = this.state;
     if (score == '' || score == 0) {
       this.setState({ score: 7 });
     }
-    if (count == '' || count == 0) {
-      this.setState({ count: 1 });
+    if (percentCount == '' || percentCount == 0) {
+      this.setState({ percentCount: 1 });
     }
   }
 
   handlePlusCount = () => {
-    let { count } = this.state;
+    let { percentCount } = this.state;
     const { item } = this.props;
-    count = parseInt(count);
-    count++;
-    item.countDone = count;
-    this.setState({ count });
+    percentCount = parseInt(percentCount);
+    if (percentCount === 100) {
+      return;
+    }
+    percentCount++;
+    item.percentCount = percentCount;
+    console.log("handlePlusCount:" , JSON.stringify(item));
+    this.setState({ percentCount });
   }
 
   handleSubCount = () => {
-    let { count } = this.state;
+    let { percentCount } = this.state;
     const { item } = this.props;
-    count = parseInt(count);
-    count--;
-    if (count < 1) {
+    percentCount = parseInt(percentCount);
+    percentCount--;
+    if (percentCount < 1) {
       return;
     }
-    item.countDone = count;
-    this.setState({ count });
+    item.percentCount = percentCount;
+    this.setState({ percentCount });
   }
 
   render() {
     const { item, isTest } = this.props;
-    const { score, count } = this.state;
+    const { score, percentCount } = this.state;
     return (
       <View style={styles.styWrapElement}>
         <Text style={styles.styName} numberOfLines={2}>
@@ -106,7 +112,7 @@ export default class ItemSectionListPrac extends Component {
             onChangeText={this.changeTextScore}
             onEndEditing={this.onEndEditing}
           />}
-          <View style={styles.viewCount}>
+          {!isTest && <View style={styles.viewCount}>
             <TouchableOpacity
               style={styles.iconLeft}
               onPress={this.handleSubCount}
@@ -120,8 +126,8 @@ export default class ItemSectionListPrac extends Component {
             <TextInput
               ref={ref => this.refCount = ref}
               placeholder={'0'}
-              value={item.countDone || count}
-              defaultValue={`${item.countDone || count}`}
+              value={item.percentCount || percentCount}
+              defaultValue={`${item.percentCount || percentCount}`}
               style={styles.styInput}
               keyboardType={'number-pad'}
               onChangeText={this.changeTextCount}
@@ -137,7 +143,7 @@ export default class ItemSectionListPrac extends Component {
                 color={Platform.OS == 'android' ? '#FFF' : '#828282'}
               />
             </TouchableOpacity>
-          </View>
+          </View>}
           <TouchableOpacity
             style={styles.styWrapIcon}
             onPress={this.props.onPress}
@@ -169,7 +175,7 @@ const styles = StyleSheet.create({
     width: 25,
     fontSize: 12,
     textAlign: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 25,
     backgroundColor: '#6ED8FB',
     alignSelf: 'center'
   },

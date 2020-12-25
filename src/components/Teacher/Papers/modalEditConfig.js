@@ -381,7 +381,7 @@ export default class ModalConfigPaper extends Component {
                         <View>
                           <Text style={styles.styTxtLabel}>
                             Tên bài tập
-                        </Text>
+                          </Text>
                           <View
                             style={{
                               backgroundColor: '#D9EBF5',

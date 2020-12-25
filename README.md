@@ -48,3 +48,15 @@
     org.gradle.parallel=true
     FLIPPER_VERSION=0.41.0
     ```
+
+
+#### Fix Image Xcode 12
+- (void)displayLayer:(CALayer *)layer
+{
+  if (_currentFrame) {
+    layer.contentsScale = self.animatedImageScale;
+    layer.contents = (__bridge id)_currentFrame.CGImage;
+  }else {
+      [super displayLayer:layer];
+  }
+}

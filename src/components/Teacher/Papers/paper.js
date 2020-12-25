@@ -310,7 +310,14 @@ class Papers extends Component {
             this.onVisibleModalEditName(true);
             break;
           case 4:
-            this.onVisibleModalEdit(true);
+            // this.onVisibleModalEdit(true);
+            this.props.navigation.navigate('EditConfig', {
+              statusbar: 'light-content',
+              data: this.state.dataSelected,
+              listGrades: this.state.listGrades,
+              listSubjects: this.state.listSubjects,
+              onUpdateItem: (item) => { this.onUpdateItem(item) }
+            });
             break;
           default:
             break;
