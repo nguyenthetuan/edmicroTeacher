@@ -312,87 +312,91 @@ export default class EditConfig extends Component {
                     color={"#fff"}
                 />
                 <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-                    <View style={styles.wrapContent}>
-                        <View>
-                            <Text style={styles.styTxtLabel}>
-                                Tên bài tập
+                    <ScrollView
+                        style={{backgroundColor:'#fff'}}
+                    >
+                        <View style={styles.wrapContent}>
+                            <View>
+                                <Text style={styles.styTxtLabel}>
+                                    Tên bài tập
                           </Text>
-                            <View
-                                style={{
-                                    borderRadius: 4,
-                                    marginTop: 8,
-                                    justifyContent: 'center',
-                                    height: 40,
-                                    borderWidth: .5,
-                                    borderColor: '#56CCF2',
-                                    marginHorizontal: 15
-                                }}>
-                                <TextInput
-                                    numberOfLines={1}
-                                    value={name}
-                                    style={styles.txtTexinput}
-                                    onChangeText={text =>
-                                        this.setText({ key: 'name', text })
-                                    }
-                                />
-                            </View>
-                            <View style={{ marginTop: 8 }}>
-                                <Text style={styles.styTxtLabel}>
-                                    Khối lớp
-                        </Text>
-                                {this._renderGrade()}
-                            </View>
-                            <View style={{ marginTop: 8 }}>
-                                <Text style={styles.styTxtLabel}>
-                                    Môn học
-                        </Text>
-                                {this._renderSubject()}
-                            </View>
-                            {data && data.assignmentType ? (
+                                <View
+                                    style={{
+                                        borderRadius: 4,
+                                        marginTop: 8,
+                                        justifyContent: 'center',
+                                        height: 40,
+                                        borderWidth: .5,
+                                        borderColor: '#56CCF2',
+                                        marginHorizontal: 15
+                                    }}>
+                                    <TextInput
+                                        numberOfLines={1}
+                                        value={name}
+                                        style={styles.txtTexinput}
+                                        onChangeText={text =>
+                                            this.setText({ key: 'name', text })
+                                        }
+                                    />
+                                </View>
                                 <View style={{ marginTop: 8 }}>
                                     <Text style={styles.styTxtLabel}>
-                                        Thời gian
-                                </Text>
-                                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
-                                        <View
-                                            style={{
-                                                borderRadius: 4,
-                                                marginTop: 8,
-                                                width: 60,
-                                                height: 30,
-                                                justifyContent: 'center',
-                                                borderColor: '#56CCF2',
-                                                borderWidth: 0.5
-                                            }}>
-                                            <TextInput
-                                                value={time}
-                                                style={styles.txtTexinput}
-                                                onChangeText={text =>
-                                                    this.setText({ key: 'time', text })
-                                                }
-                                            />
-                                        </View>
-                                        <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
-                                    </View>
+                                        Khối lớp
+                        </Text>
+                                    {this._renderGrade()}
                                 </View>
-                            ) : null}
-                            <View style={styles.footer}>
-                                <RippleButton
-                                    onPress={() => this.props.onVisible(false)}>
-                                    <View style={styles.buttomCancel}>
-                                        <Text style={styles.txtButtom}>Huỷ</Text>
+                                <View style={{ marginTop: 8 }}>
+                                    <Text style={styles.styTxtLabel}>
+                                        Môn học
+                        </Text>
+                                    {this._renderSubject()}
+                                </View>
+                                {data && data.assignmentType ? (
+                                    <View style={{ marginTop: 8 }}>
+                                        <Text style={styles.styTxtLabel}>
+                                            Thời gian
+                                </Text>
+                                        <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
+                                            <View
+                                                style={{
+                                                    borderRadius: 4,
+                                                    marginTop: 8,
+                                                    width: 60,
+                                                    height: 30,
+                                                    justifyContent: 'center',
+                                                    borderColor: '#56CCF2',
+                                                    borderWidth: 0.5
+                                                }}>
+                                                <TextInput
+                                                    value={time}
+                                                    style={styles.txtTexinput}
+                                                    onChangeText={text =>
+                                                        this.setText({ key: 'time', text })
+                                                    }
+                                                />
+                                            </View>
+                                            <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
+                                        </View>
                                     </View>
-                                </RippleButton>
-                                <View style={{ marginStart: 40 }}>
-                                    <RippleButton onPress={this.onUpdate}>
-                                        <View style={styles.buttomSave}>
-                                            <Text style={styles.txtButtom}>Lưu</Text>
+                                ) : null}
+                                <View style={styles.footer}>
+                                    <RippleButton
+                                        onPress={() => this.props.onVisible(false)}>
+                                        <View style={styles.buttomCancel}>
+                                            <Text style={styles.txtButtom}>Huỷ</Text>
                                         </View>
                                     </RippleButton>
+                                    <View style={{ marginStart: 40 }}>
+                                        <RippleButton onPress={this.onUpdate}>
+                                            <View style={styles.buttomSave}>
+                                                <Text style={styles.txtButtom}>Lưu</Text>
+                                            </View>
+                                        </RippleButton>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
+                    </ScrollView>
                 </TouchableWithoutFeedback>
             </SafeAreaView>
         )
@@ -471,8 +475,8 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         marginRight: 10,
         marginBottom: 10,
-        paddingHorizontal: 5,
-        maxHeight: 30
+        paddingHorizontal: 10,
+        height: 35
     },
     buttomClassActive: {
         borderWidth: 1,
@@ -481,11 +485,11 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
         marginRight: 10,
         marginBottom: 10,
-        paddingVertical: 3,
-        maxHeight: 30
+        paddingVertical: 5,
+        height: 35
     },
     buttomGrade: {
         borderWidth: 1,
@@ -493,11 +497,12 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 3,
+        paddingVertical: 5,
         paddingHorizontal: 5,
         width: '15%',
         marginBottom: 10,
-        marginHorizontal: 0.05 * width
+        marginHorizontal: 0.05 * width,
+        height: 35
     },
     buttomActive: {
         borderWidth: 1,
@@ -510,7 +515,8 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         width: '15%',
         marginBottom: 10,
-        marginHorizontal: 0.05 * width
+        marginHorizontal: 0.05 * width,
+        height: 35
     },
     txtItemActive: {
         fontFamily: 'Nunito-Bold',
