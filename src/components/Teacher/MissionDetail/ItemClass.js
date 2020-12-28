@@ -17,12 +17,17 @@ import dataHelper from '../../../utils/dataHelper';
 import apiMission from '../../../services/apiMission';
 import AppIcon from '../../../utils/AppIcon';
 const { width, height } = Dimensions.get('screen');
+import { connect } from 'react-redux';
+import {
+    fetchListMission,
+} from '../../../actions/missionAction';
 
-export default class ItemClass extends Component {
+class ItemClass extends Component {
     state = {
         status: this.props.status,
         isDatePickerVisible: false,
-        timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
+        // timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
+        timeEnd: new Date().getTime() + 190000,
         students: null,
     }
 
@@ -70,11 +75,14 @@ export default class ItemClass extends Component {
                 endTime: moment(timeEnd).unix(),
                 startTime: 0,
                 missionId: missionId,
-                students: this.dropdownStudent.students(),
+                studentId: this.dropdownStudent.students(),
             }
             const { token } = await dataHelper.getToken();
             try {
                 const response = await apiMission.assignedMission({ token, params });
+
+                console.log("params: ", JSON.stringify(params));
+
                 if (response && response.success) {
                     this.setState({ status: 1 });
                     this.props.onToast('Giao nhiêm vụ thành công');
@@ -168,6 +176,22 @@ export default class ItemClass extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getListMission: payload => dispatch(fetchListMission(payload)),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ItemClass);
 
 const styles = StyleSheet.create({
     containerItem: {
