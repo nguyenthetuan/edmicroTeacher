@@ -269,6 +269,7 @@ const styles = StyleSheet.create({
   flexiconSub: {
     width: 20,
     height: 20,
-    marginLeft: 1
+    marginLeft: 1,
+    tintColor: '#2D9CDB'
   }
 });
