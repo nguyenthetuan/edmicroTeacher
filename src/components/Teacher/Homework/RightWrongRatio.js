@@ -5,7 +5,6 @@ import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
-  console.log('data', props.screenProps.data)
   const data = !!props.screenProps.data && !_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
     return a.localeCompare(b);
   }).map(k => props.screenProps?.data?.data?.questionResult[k]) : [];
@@ -62,6 +61,7 @@ export default function RightWrongRatio(props) {
                         <Line x1="1" y1="20" x2={`${widthChart}`} y2="20" stroke="#C4C4C4" strokeWidth="0.5" />
                         {
                           data.map((e, i) => {
+                            console.log("🚀 ~ file: RightWrongRatio.js ~ line 64 ~ data.map ~ e", e)
                             // const total = e.countSkip + e.countRight + e.countWrong;
 
                             // const x2 = 40 * (i + 1) - 10;
@@ -69,8 +69,9 @@ export default function RightWrongRatio(props) {
                             // const y2Wrong = e.countWrong ? ((e.countWrong / total) * 200) + 20 : 20;
                             // const lineChart = [];
 
-                            const total = e.countDoing;
-                            const countSkip = total - (e.countRight + e.countWrong);
+                            const total = e.countSkip + e.countRight + e.countWrong;
+                            // const countSkip = total - (e.countRight + e.countWrong);
+                            const countSkip = e.countSkip;
                             const x2 = 40 * (i + 1) - 10;
                             const y2Skip = countSkip ? 220 - ((countSkip / total) * 200) : 219;
                             const y2Wrong = e.countWrong ? ((e.countWrong / total) * 200) + 20 : 20;

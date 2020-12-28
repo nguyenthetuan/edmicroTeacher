@@ -105,7 +105,7 @@ export default class TabMisson extends Component {
                 <ScrollView>
                     <View style={{ height: 10 }} />
                     {
-                        missionDetail.description ?
+                        missionDetail?.description ?
                             <>
                                 <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Mô tả: </Text>
                                 <View style={styles.styWrapHtml} >
