@@ -18,6 +18,7 @@ export default class MissonPlayWebView extends PureComponent {
         this.state = {
             problemId: this.props.navigation.state.params.problemId,
             stepIdNow: this.props.navigation.state.params.stepIdNow,
+            subjectId: this.props.navigation.state.params.subjectId,
             token: null,
             myInjectedJs: '',
             isLoading: true
@@ -25,7 +26,7 @@ export default class MissonPlayWebView extends PureComponent {
     }
 
     componentDidMount() {
-        const { problemId, stepIdNow } = this.state;
+        const { problemId, stepIdNow, subjectId } = this.state;
         if (Platform.OS === 'android') this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.onBackPressed.bind(this));
 
         dataHelper.getToken().then(({ token }) => {
@@ -33,7 +34,7 @@ export default class MissonPlayWebView extends PureComponent {
             let tk = window.localStorage.getItem('token');
             if (tk != '${token}') {
                 window.localStorage.setItem('token', '${token}');
-                window.location.href='https://app.onluyen.vn/practices/step/TOAN/${problemId}/${stepIdNow}';
+                window.location.href='https://app.onluyen.vn/practices/step/${subjectId}/${problemId}/${stepIdNow}';
                 window.ReactNativeWebView.postMessage("loginDone");
             }
             var oldURL = "";
@@ -112,7 +113,8 @@ export default class MissonPlayWebView extends PureComponent {
             stepIdNow,
             token,
             myInjectedJs,
-            isLoading
+            isLoading,
+            subjectId
         } = this.state;
         return (
             <View style={{ flex: 1 }}>
@@ -125,7 +127,7 @@ export default class MissonPlayWebView extends PureComponent {
                         javaScriptEnabled={true}
                         injectedJavaScript={myInjectedJs}
                         onMessage={this._onMessage.bind(this)}
-                        source={{ uri: `https://app.onluyen.vn/practices/step/TOAN/${problemId}/${stepIdNow}` }}
+                        source={{ uri: `https://app.onluyen.vn/practices/step/${subjectId}/${problemId}/${stepIdNow}` }}
                     />
                 }
             </View>

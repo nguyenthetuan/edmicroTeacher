@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Imag
 import { PieChart } from 'react-native-chart-kit';
 import { Svg, Line, Rect } from 'react-native-svg';
 import _ from 'lodash';
-
+import Common from '../../../utils/Common';
 const { width, height } = Dimensions.get('window');
 
 const chartConfig = {
@@ -57,9 +57,7 @@ export default function LevelCompletion(props) {
           </View>
           <View style={styles.viewPercentChartCircle}>
             <Text style={styles.txtPercentChartCircle}>
-              {data && (count / total * 100) % 1 === 0
-                ? (count / total * 100)
-                : Math.round((count / total * 100)) || 0}%
+              {data && Common.roundNumberOne(count / total * 100)}%
                             </Text>
           </View>
         </View>
@@ -331,7 +329,7 @@ export default function LevelCompletion(props) {
               </View>
             )
             : (<ScrollView style={styles.container}>
-              <View style={{flex:1, justifyContent:'center'}}>
+              <View style={{ flex: 1, justifyContent: 'center' }}>
                 {this.renderChartCircle()}
                 <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
                   <Text style={styles.txtTitleChart}>
@@ -354,7 +352,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     paddingTop: 25,
-    marginStart: width / 3 + (Platform.isPad?60:0)
+    marginStart: width / 3 + (Platform.isPad ? 60 : 0)
   },
   txtLeftChartCircle: {
     fontFamily: 'Nunito-Regular',
