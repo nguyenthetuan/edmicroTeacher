@@ -66,8 +66,8 @@ export default class itemExercise extends Component {
 
             <View style={styles.viewIcon}>
               <Image
-                source={require('../../../asserts/icon/icon_popuClass.png')}
-                style={{ width: 20, height: 20 }}
+                source={require('../../../asserts/icon/icon_remakePeopleV3.png')}
+                style={{ width: 22, height: 22 }}
               />
               <View style={styles.fleImaTxt}>
                 <Text style={styles.txtInfoDetail}>Số Học Sinh</Text>

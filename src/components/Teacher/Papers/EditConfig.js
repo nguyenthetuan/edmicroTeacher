@@ -313,7 +313,7 @@ export default class EditConfig extends Component {
                 />
                 <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
                     <ScrollView
-                        style={{backgroundColor:'#fff'}}
+                        style={{ backgroundColor: '#fff' }}
                     >
                         <View style={styles.wrapContent}>
                             <View>
@@ -406,7 +406,8 @@ export default class EditConfig extends Component {
 const styles = StyleSheet.create({
     safeView: {
         flex: 1,
-        backgroundColor: '#2D9CDB'
+        backgroundColor: '#2D9CDB',
+        marginBottom: -50
     },
     wrapContent: {
         flex: 1,
@@ -441,7 +442,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 16,
         justifyContent: 'space-evenly',
-        marginTop: 20
+        marginTop: 50
     },
     buttomCancel: {
         backgroundColor: '#FF6213',

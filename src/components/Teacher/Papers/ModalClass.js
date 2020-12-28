@@ -163,7 +163,7 @@ class Item extends Component {
         return (
             <View style={[styles.styWrapElement, { margin: 5, }]}>
                 <TouchableOpacity onPress={this.onCheck} style={styles.styWrapElement}>
-                    <Image source={require('../../../asserts/appIcon/icon_class.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
+                    <Image source={require('../../../asserts/icon/icon_remakeClassV3.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
                     <Text style={styles.styTxtClass}>{item.name}</Text>
                 </TouchableOpacity>
                 <RippleButton onPress={this.onCheck}>

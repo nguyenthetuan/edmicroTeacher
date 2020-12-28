@@ -151,8 +151,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   styWrapImg: {
-    width: 25,
-    height: 25,
+    width: 22,
+    height: 22,
+    borderRadius: 22
   },
   viewCount: {
     alignItems: 'center',
