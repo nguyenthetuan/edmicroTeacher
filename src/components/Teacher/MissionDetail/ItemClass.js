@@ -26,8 +26,8 @@ class ItemClass extends Component {
     state = {
         status: this.props.status,
         isDatePickerVisible: false,
-        // timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
-        timeEnd: new Date().getTime() + 190000,
+        timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
+        // timeEnd: new Date().getTime() + 190000,
         students: null,
     }
 
@@ -80,8 +80,6 @@ class ItemClass extends Component {
             const { token } = await dataHelper.getToken();
             try {
                 const response = await apiMission.assignedMission({ token, params });
-
-                console.log("params: ", JSON.stringify(params));
 
                 if (response && response.success) {
                     this.setState({ status: 1 });
