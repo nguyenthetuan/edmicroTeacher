@@ -176,7 +176,6 @@ class MainScreen extends Component {
       scores,
     };
     const { user } = this.props;
-    console.log("main screen");
     return (
       <SafeAreaView style={styles.container}>
         <HeaderMain {...user} navigation={this.props.navigation} />

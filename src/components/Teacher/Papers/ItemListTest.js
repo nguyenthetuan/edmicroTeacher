@@ -105,7 +105,8 @@ export default class Item extends Component {
                                     source={require('../../../asserts/icon/icon_clockTimeV3.png')}
                                     style={{ width: 25, height: 25 }}
                                 />
-                                <Text style={styles.txtQuestion}>
+                                <Text numberOfLines={2}
+                                  style={styles.txtQuestion}>
                                     {
                                         item.assignmentType
                                             ?
@@ -213,12 +214,12 @@ const styles = StyleSheet.create({
     },
     txtQuestion: {
         fontFamily: 'Nunito',
-        fontSize: 10,
+        fontSize: 12,
         lineHeight: 14,
         color: '#000',
         marginLeft: 5,
         alignSelf: 'center',
-        width: 80
+        // width: 80
     },
     flexParac: {
         flexDirection: 'row'
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
     },
     txtButtomPractice: {
         fontFamily: 'Nunito',
-        fontSize: 10,
+        fontSize: 12,
         lineHeight: 14,
         color: '#000',
         alignSelf: 'center',

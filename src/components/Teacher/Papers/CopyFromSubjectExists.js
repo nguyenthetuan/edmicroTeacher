@@ -47,7 +47,6 @@ export default class CopyFromSubjectExists extends Component {
                 token: token,
                 subjectCode: subjectCode,
             });
-            console.log("response:L ", JSON.stringify(response));
             if (_.isEmpty(response)) {
                 await this.setState({ lerningTarget: [], currentCurriculum: '' });
                 this.findPremadeLib();

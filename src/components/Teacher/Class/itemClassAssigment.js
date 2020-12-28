@@ -94,7 +94,7 @@ export default class ItemClassAssigment extends Component {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image
-                source={require('../../../asserts/icon/icon_popuClass.png')}
+                source={require('../../../asserts/icon/icon_remakePeopleV3.png')}
               />
               <Text style={styles.txtDate}>
                 {item.totalUserSubmit}/
@@ -138,7 +138,7 @@ export default class ItemClassAssigment extends Component {
                   style={styles.buttomRevew}
                   >
                     <Text style={styles.txtbuttom}>
-                      Xem Báo Cáo
+                      Xem báo cáo
                       </Text>
 
                 </RippleButton>

@@ -220,7 +220,11 @@ PODS:
   - OpenSSL-Universal/Static (1.0.2.20)
   - Permission-Notifications (2.2.0):
     - RNPermissions
+<<<<<<< ios/Podfile.lock
   - PromisesObjC (1.2.11)
+=======
+  - PromisesObjC (1.2.12)
+>>>>>>> ios/Podfile.lock
   - Protobuf (3.14.0)
   - QBImagePickerController (3.4.0)
   - RCTRequired (0.62.0)
@@ -564,9 +568,15 @@ PODS:
   - RNVectorIcons (7.1.0):
     - React
   - RSKImageCropper (3.0.1)
+<<<<<<< ios/Podfile.lock
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
+=======
+  - SDWebImage (5.10.1):
+    - SDWebImage/Core (= 5.10.1)
+  - SDWebImage/Core (5.10.1)
+>>>>>>> ios/Podfile.lock
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
@@ -988,6 +998,7 @@ SPEC CHECKSUMS:
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   RSKImageCropper: 617b4976e4a0ca18f3ce84f6cfa5945e574b51a3
+<<<<<<< ios/Podfile.lock
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
