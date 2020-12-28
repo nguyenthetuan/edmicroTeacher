@@ -5,6 +5,7 @@ import { getIconSubject } from '../../../utils/Common';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 const { width } = Dimensions.get('window');
+import Common from '../../../utils/Common';
 const modelStatus = {
   unDelivered: 1,// chưa giao bài.
   delivered: 0,// đã giao bài.
@@ -72,7 +73,7 @@ export default class ItemMission extends Component {
           <View style={styles.viewCount}>
             {this.renderElement(
               getIconSubject(data.subjectCode),
-              data.subjectName
+              Common.getDisplaySubject(data.subjectCode)
             )}
             {this.renderElement(
               AppIcon.icon_paracClass,
