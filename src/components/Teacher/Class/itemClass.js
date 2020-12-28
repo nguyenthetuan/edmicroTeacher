@@ -109,7 +109,7 @@ export default class itemClass extends Component {
                     />
                     <View style={styles.showSubjectCode}>
                       <Text style={styles.txtInfoDetail}>
-                        Môn Học
+                        Môn học
                     </Text>
                       <Text numberOfLines={1}
                         style={styles.txtQuestion}>{item.subjectName}</Text>
@@ -120,7 +120,7 @@ export default class itemClass extends Component {
                       source={require('../../../asserts/icon/icon_remakeParacV3.png')}
                       style={{ width: 23, height: 23 }}
                     />
-                    <Text style={styles.txtInfoDetail}>Số Bài Tập</Text>
+                    <Text style={styles.txtInfoDetail}>Số bài tập</Text>
                     <Text style={styles.txtThree}>{item.totalAssign}</Text>
                   </View>
                 </View>
@@ -130,7 +130,7 @@ export default class itemClass extends Component {
                       source={require('../../../asserts/icon/icon_remakeClassV3.png')}
                       style={{ width: 22, height: 22 }}
                     />
-                    <Text style={styles.txtRight}>Khối Lớp </Text>
+                    <Text style={styles.txtRight}>Khối lớp </Text>
                     <Text style={[styles.indexOne, { marginLeft: 30 }]}>
                       {item.gradeId.slice(1, 3)}
                     </Text>
@@ -140,7 +140,7 @@ export default class itemClass extends Component {
                       source={require('../../../asserts/icon/icon_remakePeopleV3.png')}
                       style={{ width: 22, height: 22 }}
                     />
-                    <Text style={styles.txtRightFoot}>Sĩ Số</Text>
+                    <Text style={styles.txtRightFoot}>Sĩ số</Text>
                     <Text style={styles.indexTwo}>{item.totalStudent}</Text>
                   </View>
                 </View>

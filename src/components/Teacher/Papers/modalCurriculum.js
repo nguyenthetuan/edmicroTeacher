@@ -22,6 +22,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import AppIcon from '../../../utils/AppIcon';
 import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 let heightTextInput = 0,
@@ -204,17 +205,18 @@ export default class ModalCurriculum extends Component {
                   <Text style={styles.txtSelectItem} numberOfLines={1}>
                     {selectItem.name}
                   </Text>
-                  <Text style={{ color: '#757575', fontSize: 10 }}>x</Text>
+                  {/* <Text style={{ color: '#757575', fontSize: 10 }}>x</Text> */}
+                  <Image source={AppIcon.close_img} style={styles.clickClose} />
                 </TouchableOpacity>
               </View>
             ) : (
                 <View />
               )}
-            <TouchableOpacity >
+            <TouchableOpacity>
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
-                  size={16}
+                  size={18}
                   color="#fff"
                 />
               </View>
@@ -246,7 +248,7 @@ export default class ModalCurriculum extends Component {
                       <MaterialCommunityIcons
                         name="arrow-left"
                         color="#FFF"
-                        size={20}
+                        size={30}
                       />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', }}>
@@ -349,10 +351,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
+    marginTop: 3,
+    marginBottom: 3
   },
   icDow: {
-    width: 24,
-    height: 24,
+    width: 35,
+    height: 35,
     backgroundColor: '#AAE5F9',
     borderRadius: 1,
     justifyContent: 'center',
@@ -372,6 +376,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#E0E0E0',
     marginLeft: 3,
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 5
   },
   wrapEmpty: {
     flex: 1,
@@ -388,4 +395,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingRight: 10,
   },
+  clickClose: {
+    width: 12,
+    height: 12,
+    marginRight: -5,
+    marginTop: -5
+  }
 });
