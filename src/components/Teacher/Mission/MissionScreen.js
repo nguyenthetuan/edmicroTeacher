@@ -150,7 +150,7 @@ export default class MissionScreen extends Component {
           // scrollEventThrottle={16}
           // keyboardDismissMode={'on-drag'}
           showsVerticalScrollIndicator={false}
-          // windowSize={21}
+        // windowSize={21}
         />
         {/* </Animated.View> */}
       </View>
