@@ -8,7 +8,7 @@ PODS:
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
-  - CocoaAsyncSocket (7.6.4)
+  - CocoaAsyncSocket (7.6.5)
   - CocoaLibEvent (1.0.0)
   - CodePush (6.4.1):
     - Base64 (~> 1.1)
@@ -220,8 +220,8 @@ PODS:
   - OpenSSL-Universal/Static (1.0.2.20)
   - Permission-Notifications (2.2.0):
     - RNPermissions
-  - PromisesObjC (1.2.11)
-  - Protobuf (3.13.0)
+  - PromisesObjC (1.2.12)
+  - Protobuf (3.14.0)
   - QBImagePickerController (3.4.0)
   - RCTRequired (0.62.0)
   - RCTTypeSafety (0.62.0):
@@ -563,16 +563,16 @@ PODS:
     - React
   - RNVectorIcons (7.1.0):
     - React
-  - RSKImageCropper (3.0.0)
-  - SDWebImage (5.10.0):
-    - SDWebImage/Core (= 5.10.0)
-  - SDWebImage/Core (5.10.0)
+  - RSKImageCropper (3.0.1)
+  - SDWebImage (5.10.1):
+    - SDWebImage/Core (= 5.10.1)
+  - SDWebImage/Core (5.10.1)
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
   - Shimmer (1.0.2)
   - SSZipArchive (2.2.3)
-  - XCDYouTubeKit (2.15.1)
+  - XCDYouTubeKit (2.15.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -879,7 +879,7 @@ SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
-  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   CodePush: 352a7efabd0a7079a1138a5c6f677baedb0dedf9
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
@@ -925,8 +925,8 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
   Permission-Notifications: 572d4e94121e57dbecc71a0933abd8ed61108e92
-  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
-  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  Protobuf: 0cde852566359049847168e51bd1c690e0f70056
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RCTRequired: 0873f5bdb1762d2b9b1ae16a01c4f91d6ee3b6dd
   RCTTypeSafety: a605e0cc0e4220f6e65896bd9e675073c2978f35
@@ -987,12 +987,12 @@ SPEC CHECKSUMS:
   RNSound: da030221e6ac7e8290c6b43f2b5f2133a8e225b0
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
-  RSKImageCropper: 81f449b4df96bdaf28e1ad6dcce28dcda2235458
-  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  RSKImageCropper: 617b4976e4a0ca18f3ce84f6cfa5945e574b51a3
+  SDWebImage: f66a16b95183b92ed6b965ad21d33167bc07612d
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
-  XCDYouTubeKit: 5ad334d4657ab920adc5bd6c16f39db8c8ad8d24
+  XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
   Yoga: 9db9ff2025ad21d1ac0a8b3c85d5ac4e7c29d525
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717

@@ -261,7 +261,8 @@ const styles = StyleSheet.create({
     },
     bgHeader: {
         paddingTop: 20,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        flex :1
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',

@@ -105,7 +105,8 @@ export default class Item extends Component {
                                     source={require('../../../asserts/icon/icon_clockTimeV3.png')}
                                     style={{ width: 25, height: 25 }}
                                 />
-                                <Text style={styles.txtQuestion}>
+                                <Text numberOfLines={2}
+                                  style={styles.txtQuestion}>
                                     {
                                         item.assignmentType
                                             ?
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
         color: '#000',
         marginLeft: 5,
         alignSelf: 'center',
-        width: 80
+        // width: 80
     },
     flexParac: {
         flexDirection: 'row'
