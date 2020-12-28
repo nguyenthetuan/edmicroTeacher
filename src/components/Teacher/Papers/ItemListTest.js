@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     },
     txtQuestion: {
         fontFamily: 'Nunito',
-        fontSize: 10,
+        fontSize: 12,
         lineHeight: 14,
         color: '#000',
         marginLeft: 5,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     },
     txtButtomPractice: {
         fontFamily: 'Nunito',
-        fontSize: 10,
+        fontSize: 12,
         lineHeight: 14,
         color: '#000',
         alignSelf: 'center',

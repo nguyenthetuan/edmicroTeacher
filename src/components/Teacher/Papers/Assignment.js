@@ -163,7 +163,7 @@ function Item(props) {
           <TouchableOpacity
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? 'rgba(86, 204, 242, 0.2)' : '#fa915c' }]}>
+            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#fa915c' }]}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
@@ -186,16 +186,8 @@ function Item(props) {
             dropdownStyle={{ width: width - 32 }}
             options={item.students}
           /> */}
-          <TouchableOpacity onPress={() => { handlePickStudent() }} style={{ width: width - 32, marginTop: 8, height: 40, borderWidth: 1, borderRadius: 5, backgroundColor: 'rgba(86, 204, 242, 0.2)', borderColor: '#56CCF2', justifyContent: 'center' }}>
-            <View style={{
-              width: 40,
-              height: 40,
-              backgroundColor: '#56CCF2',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              right: 0
-            }}>
+          <TouchableOpacity onPress={() => { handlePickStudent() }} style={styles.dropZuCha}>
+            <View style={styles.borDropRight}>
               <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
             </View>
             <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
@@ -502,4 +494,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#828282',
   },
+  dropZuCha: {
+    width: width - 32,
+    marginTop: 8,
+    height: 40,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    backgroundColor: 'rgba(86, 204, 242, 0.2)',
+    borderColor: '#56CCF2',
+    justifyContent: 'center'
+  },
+  borDropRight: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#56CCF2',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 0,
+    borderBottomRightRadius: 5,
+    borderTopRightRadius: 5
+  }
 })
