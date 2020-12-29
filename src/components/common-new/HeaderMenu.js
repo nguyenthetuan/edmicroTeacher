@@ -61,7 +61,7 @@ class HeaderMenu extends React.PureComponent {
           </View>
           <View style={{ flex: 1 }} />
           {
-            userGift.totalEDPoint
+            userGift?.totalEDPoint
               ?
               <View style={styles.styWrapEDPoint}>
                 <Image
@@ -73,11 +73,11 @@ class HeaderMenu extends React.PureComponent {
                   style={styles.styTxtEDPoint}
                 >
                   {
-                    userGift.totalEDPoint > 1000
+                    userGift?.totalEDPoint > 1000
                       ?
-                      parseFloat(userGift.totalEDPoint / 1000) + 'k'
+                      parseFloat(userGift?.totalEDPoint / 1000) + 'k'
                       :
-                      userGift.totalEDPoint}
+                      userGift?.totalEDPoint}
                 </Text>
               </View>
               : null
