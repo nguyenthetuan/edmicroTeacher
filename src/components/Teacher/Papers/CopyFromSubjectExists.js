@@ -198,7 +198,7 @@ export default class CopyFromSubjectExists extends Component {
                                     <TextInput
                                         placeholder={'Tên bài kiểm tra'}
                                         placeholderTextColor={'#c4c4c4'}
-                                        style={{ color: '#000', flex: 1, fontSize: 14 }}
+                                        style={{ color: '#000', flex: 1, fontSize: 14, backgroundColor:'#fff', paddingVertical: 0, }}
                                     // value={nameMission}
                                     />
                                     <IconAntDesign
@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: "row",
         alignItems: 'center',
+        height: 30
     },
     styleDrop: {
         flex: 1,
