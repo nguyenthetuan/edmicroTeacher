@@ -80,7 +80,7 @@ export default class Item extends Component {
                                     source={Common.getIconSubject(subjectCode)}
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 40 }}
                                 />
-                                <Text style={styles.txtQuestion}> {Common.getDisplaySubject(subjectCode)}</Text>
+                                <Text style={[styles.txtQuestion, { width: 80 }]}> {Common.getDisplaySubject(subjectCode)}</Text>
                                 {/* <Text style={styles.txtQuestion}> {item.subjectCode[0]}</Text> */}
                             </View>
                             <View style={styles.flexSenten}>
@@ -106,7 +106,7 @@ export default class Item extends Component {
                                     style={{ width: 25, height: 25 }}
                                 />
                                 <Text numberOfLines={2}
-                                  style={styles.txtQuestion}>
+                                    style={[styles.txtQuestion, { width: 100 }]}>
                                     {
                                         item.assignmentType
                                             ?
