@@ -63,9 +63,9 @@ export default class ModalMockExamStart extends Component {
   };
 
   _startMockExam = async () => {
-    const { problemId, stepIdNow } = this.state.data;
+    const { problemId, stepIdNow, subjectId } = this.state.data;
     this.hideModal();
-    this.props.navigation.navigate('MissionPlayWebView', { problemId, stepIdNow, statusbar: 'dark-content' });
+    this.props.navigation.navigate('MissionPlayWebView', { problemId, stepIdNow, subjectId, statusbar: 'dark-content' });
   };
 
   render() {

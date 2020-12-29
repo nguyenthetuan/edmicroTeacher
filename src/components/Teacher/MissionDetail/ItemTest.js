@@ -8,6 +8,10 @@ export default function ItemTest(props) {
             props.show({ _id: item.testId });
         }}>
             <Text style={styles.styTxt} numberOfLines={1}>{item.testName}</Text>
+            <View style={[styles.styWrapCount, { backgroundColor: '#FD9F4C' }]}>
+                <Text style={styles.styCount}>{item.markDone}đ</Text>
+            </View>
+            <View style={{ width: 10 }} />
             <View style={styles.styWrapCount}>
                 <Text style={styles.styCount}>{item.countDone}</Text>
             </View>
