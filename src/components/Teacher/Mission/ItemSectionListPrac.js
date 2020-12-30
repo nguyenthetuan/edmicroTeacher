@@ -77,7 +77,6 @@ export default class ItemSectionListPrac extends Component {
     }
     percentCount++;
     item.percentCount = percentCount;
-    console.log("handlePlusCount:" , JSON.stringify(item));
     this.setState({ percentCount });
   }
 
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 3,
     color: '#fff',
-    width: 25,
+    width: 30,
     fontSize: 12,
     textAlign: 'center',
     marginHorizontal: 25,
