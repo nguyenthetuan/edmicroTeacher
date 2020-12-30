@@ -294,10 +294,13 @@ const renderHtmlQuestionDetail = (
       id="point${dataStandard.questionId}" 
       style="
         margin-right: 10px; 
-        width: 40px; 
+        max-width: 50px; 
+        width: 40px;
         text-align: center; 
         float: right;
-        border: 0.5px solid #828282;
+        margin-top: 3px;
+        padding: 0px 4px 0px 4px;
+        border: 1px solid #828282;
         border-radius: 4px;
         background-color: #FFF;" 
         placeholder="Điểm"
