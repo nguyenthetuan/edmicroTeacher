@@ -109,7 +109,7 @@ export default class ListQuestionCopy extends Component {
         return (
             <View>
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
-                <SafeAreaView style={styles.root}>
+                {/* <View style={styles.root}> */}
                     <View style={styles.header}>
                         <HeaderPaper
                             // title={'Bộ đề có sẵn'}
@@ -124,13 +124,13 @@ export default class ListQuestionCopy extends Component {
                                 <View style={styles.flexRow}>
                                     <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                         <Text style={styles.textNormalName}>Môn: </Text>
-                                        <View style={{ height: 20, paddingHorizontal: 10, borderColor: '#fff' }}>
+                                        <View style={{ height: 20, paddingHorizontal: 0, borderColor: '#fff' }}>
                                             <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
                                         </View>
                                     </View>
                                     <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                         <Text style={styles.textNormalName}>Lớp: </Text>
-                                        <View style={{ height: 20, paddingHorizontal: 10, left: 4.5, borderColor: '#fff' }}>
+                                        <View style={{ height: 20, paddingHorizontal: 0, left: 4.5, borderColor: '#fff' }}>
                                             <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
                                         </View>
                                     </View>
@@ -208,7 +208,7 @@ export default class ListQuestionCopy extends Component {
                         numberQuestion={this.state.numberQuestion}
                         subjectId={'TOAN'}
                     />
-                </SafeAreaView>
+                {/* </View> */}
             </View >
         )
     }
@@ -285,6 +285,7 @@ const styles = StyleSheet.create({
         lineHeight: 19,
         fontFamily: 'Nunito',
         color: '#fff',
+        top: 2,
     },
     textName: {
         fontSize: 14,

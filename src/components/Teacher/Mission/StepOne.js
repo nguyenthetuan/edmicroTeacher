@@ -154,6 +154,7 @@ export default class StepOne extends Component {
                 label: '--- Chọn khối lớp ---',
                 value: null,
               }}
+              underlineColorAndroid="rgba(0,0,0,0)"
               items={listClass}
               style={{ ...pickerSelectStyles }}
               onValueChange={value => {
@@ -175,6 +176,7 @@ export default class StepOne extends Component {
           <Text style={styles.styTxtLabel}>Môn học</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
+              underlineColorAndroid="rgba(0,0,0,0)"
               placeholder={{
                 label: '--- Chọn môn học ---',
                 value: null,
@@ -236,7 +238,8 @@ const styles = StyleSheet.create({
     borderColor: '#979797',
     margin: 10,
     color: '#000',
-    paddingLeft: 8
+    paddingLeft: 8,
+    height: 45,
   },
   styWrapDes: {
     paddingHorizontal: 10,
@@ -251,9 +254,12 @@ const styles = StyleSheet.create({
   viewRNPicker: {
     backgroundColor: '#fff',
     borderRadius: 5,
-    borderColor: '#828282',
+    borderColor: Platform.OS == 'android' ? '#828282' : '#979797',
     justifyContent: 'center',
-    borderWidth: Platform.OS == 'android' ? 1 : 0,
+    // borderWidth: Platform.OS == 'android' ? 1 : 0,
+    borderWidth: 1,
+    height: 45,
+    marginHorizontal: Platform.OS == 'android' ? 10 : 10,
   },
   icon: {
     position: 'absolute',
@@ -306,15 +312,17 @@ const pickerSelectStyles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     height: 35,
     margin: 10,
-    borderWidth: 1,
-    borderColor: '#979797',
+    // borderWidth: 1,
+    // borderColor: '#979797',
   },
   inputAndroid: {
     borderRadius: 5,
     color: '#000',
+    // backgroundColor:'red',
+    height: 44,
     fontFamily: 'Nunito-Regular',
-    borderWidth: 1,
-    borderColor: '#999',
+    // borderWidth: 1,
+    // borderColor: '#999',
   },
 });
 

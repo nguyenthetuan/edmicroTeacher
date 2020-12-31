@@ -239,7 +239,7 @@ export default class StepThree extends Component {
       isLoading
     } = this.state;
     return (
-      <View style={{ flex: 1, marginHorizontal: 10 }}>
+      <View style={{ flex: 1, marginHorizontal: 10, backgroundColor:'red' }}>
         <ScrollView
           style={{ marginTop: 10 }}
           showsVerticalScrollIndicator={false}
@@ -281,7 +281,6 @@ export default class StepThree extends Component {
           {this.renderPractice()}
           {this.renderTest()}
         </ScrollView>
-
         <View style={styles.styWrapBtn}>
           <TouchableOpacity
             style={styles.styBtnBack}
@@ -297,11 +296,11 @@ export default class StepThree extends Component {
           </TouchableOpacity>
         </View>
 
-        {isLoading && <ActivityIndicator style={styles.styWrapLoading} color={'#62ACE1'} />}
         <ModalEditor
           ref={ref => (this.modalEditor = ref)}
           onDone={this.onDone}
         />
+        {isLoading && <ActivityIndicator style={styles.styWrapLoading} color={'#62ACE1'} />}
       </View>
     );
   }

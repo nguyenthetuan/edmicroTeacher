@@ -520,7 +520,7 @@ class ConfigQuestion extends Component {
         return (
             <View >
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
-                <SafeAreaView style={styles.root}>
+                <View >
                     <View style={styles.header} >
                         <View onPress={() => { this.onPressRoot() }} style={styles.header}>
                             <HeaderPaper
@@ -536,13 +536,13 @@ class ConfigQuestion extends Component {
                                     <View style={styles.flexRow}>
                                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                             <Text style={styles.textNormalName}>Môn: </Text>
-                                            <View style={{ height: 20, paddingHorizontal: 10, borderColor: '#fff' }}>
+                                            <View style={{ height: 20, paddingHorizontal: 2, borderColor: '#fff' }}>
                                                 <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                             <Text style={styles.textNormalName}>Lớp: </Text>
-                                            <View style={{ height: 20, paddingHorizontal: 10, left: 4.5, borderColor: '#fff' }}>
+                                            <View style={{ height: 20, paddingHorizontal: 2, left: 4.5, borderColor: '#fff' }}>
                                                 <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
                                             </View>
                                         </View>
@@ -558,7 +558,7 @@ class ConfigQuestion extends Component {
                                         <View style={styles.textIcon}>
                                             <Image source={AppIcon.icon_questionWhiteV3} />
                                             <Text
-                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center' }]}
+                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center', top: -2 }]}
                                             >
                                                 Tổng số câu: {data.questions.length}
                                             </Text>
@@ -566,7 +566,7 @@ class ConfigQuestion extends Component {
                                         <View style={styles.textIcon}>
                                             <Image source={AppIcon.icon_settingsWhiteV3} />
                                             <Text
-                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center' }]}
+                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center', top: -2 }]}
                                             >
                                                 Tổng số điểm: {this.state.totalPoint}
                                             </Text>
@@ -664,7 +664,7 @@ class ConfigQuestion extends Component {
                         </TouchableOpacity>
 
                     </View>}
-                </SafeAreaView>
+                </View>
                 {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
                     <TouchableWithoutFeedback
                         style={styles.popUpCreate}
@@ -934,6 +934,7 @@ const styles = StyleSheet.create({
         lineHeight: 19,
         fontFamily: 'Nunito',
         color: '#fff',
+        top: 2
     },
     textNormal: {
         fontSize: 16,
