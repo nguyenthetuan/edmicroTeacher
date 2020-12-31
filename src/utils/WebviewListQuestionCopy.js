@@ -119,7 +119,7 @@ const renderListquestion = (data, points, renderCheckbox) => {
         if (renderCheckbox) {
             html += `<div style="display:flex">
                 <div style="font-size:15px; font-weight: 900">Câu ${i + 1}:</div>
-                <input type="number" id="point${i}" name="point" style="width: 40px; margin-top: -2px; margin-left: 20px" value="${points?.length ? points[i] : 0}" onblur="onBlur()">
+                <input type="number" id="point${i}" name="point" style="width: 40px; margin-top: -2px; margin-left: 20px; border: 1px solid #828282; padding: 0px 4px 0px 4px; border-radius: 4px;" value="${points?.length ? points[i] : 0}" onblur="onBlur()">
                 <input style="position: absolute; right: 25px" type="checkbox" id="myCheck${i}" onclick="checkboxFunc('${i}')" name="checkbox">
             </div>`
         } else {
