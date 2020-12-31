@@ -217,6 +217,7 @@ class ConfigQuestion extends Component {
         var errors = [];
         var result = true;
         _.forEach(['gradeCode', 'subjectCode', 'name'], item => {
+            console.log(item, ' :', this.state[item]);
             if (_.isEmpty(this.state[item])) {
                 switch (item) {
                     case 'gradeCode': {
@@ -549,7 +550,7 @@ class ConfigQuestion extends Component {
                                         <TouchableOpacity
                                             style={styles.rightHeader}
                                             navigation={this.props.navigation}
-                                            onPress={this.config}
+                                            onPress={this.copySubject}
                                         >
                                             <Text style={styles.txtRightHeader}>{`Lưu cấu hình`}</Text>
                                         </TouchableOpacity>

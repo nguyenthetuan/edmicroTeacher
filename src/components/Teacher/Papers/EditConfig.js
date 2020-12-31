@@ -105,10 +105,9 @@ export default class EditConfig extends Component {
                         </RippleButton>
                     ) : (
                             <RippleButton
-                                style={Platform.OS === 'ios' ? styles.buttomClassActive : null}
+                                style={Platform.OS === 'ios' ? styles.buttomClassActive : styles.buttomClassActive}
                                 onPress={() => this.activeSubject(item)}>
-                                <View
-                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                <View>
                                     <Text style={styles.txtItemActive}>{item.name}</Text>
                                 </View>
                             </RippleButton>
@@ -437,6 +436,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#2D9CDB',
         fontFamily: 'Nunito-Regular',
+        padding: 0
     },
     footer: {
         flexDirection: 'row',
