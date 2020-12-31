@@ -172,7 +172,7 @@ class StatisticScreen extends Component {
                                                 ?
                                                 (mission.totalStudentComplete / mission.percentComplete)
                                                     > 100 ? 100 : (mission.totalStudentComplete / mission.percentComplete) : 1}
-                                            progress={20}
+                                            // progress={20}
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     bgHeader: {
         paddingTop: 20,
         backgroundColor: '#fff',
-        flex :1
+        flex: 1
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         color: '#000',
         marginLeft: 16,
-        marginTop: 20
+        marginTop: 20,
     },
     bodyTask: {
         backgroundColor: '#FAFAFA',
@@ -412,6 +412,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.30,
         shadowRadius: 4.65,
         elevation: 5,
+        flex: 1
     },
     sum: {
         alignSelf: 'flex-end',
