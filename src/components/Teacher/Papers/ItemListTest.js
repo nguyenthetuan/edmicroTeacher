@@ -106,7 +106,7 @@ export default class Item extends Component {
                                     style={{ width: 25, height: 25 }}
                                 />
                                 <Text numberOfLines={2}
-                                    style={[styles.txtQuestion, { width: 100 }]}>
+                                    style={[styles.txtQuestion]}>
                                     {
                                         item.assignmentType
                                             ?
@@ -118,7 +118,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column' }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 10 }}>
                             <View>
                                 {
                                     item.assignmentType
