@@ -609,92 +609,93 @@ class ConfigQuestion extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView />
-        <HeaderPaper
-          title={'Cấu hình câu hỏi'}
-          color={'white'}
-          navigation={this.props.navigation}
-          actionIcon={require('../../../asserts/appIcon/icRight.png')}
-          actionStyle={{ borderRadius: 0 }}
-          onRightAction={() => this.config()}
-          loading={loading}
-        />
-        <TouchableOpacity style={styles.buttonCreateAssessment} onPress={this.config}>
-          <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
-        </TouchableOpacity>
-        <ScrollView
-          contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
-          ref={'ScrollView'}>
-          <View>
-            <View style={styles.bodyHeader}>
-              <View style={{ flex: 1 }}>
-                <View>
-                  {!_.isEmpty(listGrades) && (
-                    <View style={{ marginTop: 14 }}>
-                      <Text
-                        style={[
-                          styles.txtTitleGrade,
-                          errors.gradeCode && { color: '#EB5757' },
-                        ]}>
-                        Khối
-                      </Text>
-                      {this._renderGrade()}
-                    </View>
-                  )}
-                  {!_.isEmpty(listSubjects) && (
-                    <View style={{ marginTop: 14 }}>
-                      <Text
-                        style={[
-                          styles.txtTitleGrade,
-                          errors.subjectCode && { color: '#EB5757' },
-                        ]}>
-                        Môn học
-                      </Text>
-                      {this._renderSubject()}
-                    </View>
-                  )}
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: width < 380 ? 0.01 * width : 0.042 * width,
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}>
+        <SafeAreaView>
+          <HeaderPaper
+            title={'Cấu hình câu hỏi'}
+            color={'white'}
+            navigation={this.props.navigation}
+            actionIcon={require('../../../asserts/appIcon/icRight.png')}
+            actionStyle={{ borderRadius: 0 }}
+            onRightAction={() => this.config()}
+            loading={loading}
+          />
+          <TouchableOpacity style={styles.buttonCreateAssessment} onPress={this.config}>
+            <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
+          </TouchableOpacity>
+          <ScrollView
+            contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
+            ref={'ScrollView'}>
+            <View>
+              <View style={styles.bodyHeader}>
+                <View style={{ flex: 1 }}>
                   <View>
-                    <Text style={styles.txtTitle}>Dạng bài kiểm tra</Text>
-                    <Dropdown
-                      title="Dạng bài"
-                      data={[
-                        { name: 'Bài tự luyện', code: 1 },
-                        { name: 'Bài kiểm tra', code: 0 },
-                      ]}
-                      containerStyle={{ marginLeft: -20 }}
-                      indexSelected={assignmentType}
-                      onPressItem={index =>
-                        this.setState({ assignmentType: index })
-                      }
-                    />
+                    {!_.isEmpty(listGrades) && (
+                      <View style={{ marginTop: 14 }}>
+                        <Text
+                          style={[
+                            styles.txtTitleGrade,
+                            errors.gradeCode && { color: '#EB5757' },
+                          ]}>
+                          Khối
+                      </Text>
+                        {this._renderGrade()}
+                      </View>
+                    )}
+                    {!_.isEmpty(listSubjects) && (
+                      <View style={{ marginTop: 14 }}>
+                        <Text
+                          style={[
+                            styles.txtTitleGrade,
+                            errors.subjectCode && { color: '#EB5757' },
+                          ]}>
+                          Môn học
+                      </Text>
+                        {this._renderSubject()}
+                      </View>
+                    )}
                   </View>
-
-                  {assignmentType !== 0 && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: width < 380 ? 0.01 * width : 0.042 * width,
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
                     <View>
-                      <Text style={styles.txtTitleGrade}>Thời gian(Phút)</Text>
-                      <TextInput
-                        style={styles.pickTime}
-                        onChangeText={text => {
-                          this.setState({ duration: parseInt(text) || '' });
-                        }}
-                        value={
-                          (typeof duration.toString() !== NaN &&
-                            duration.toString()) ||
-                          ''
+                      <Text style={styles.txtTitle}>Dạng bài kiểm tra</Text>
+                      <Dropdown
+                        title="Dạng bài"
+                        data={[
+                          { name: 'Bài tự luyện', code: 1 },
+                          { name: 'Bài kiểm tra', code: 0 },
+                        ]}
+                        containerStyle={{ marginLeft: -20 }}
+                        indexSelected={assignmentType}
+                        onPressItem={index =>
+                          this.setState({ assignmentType: index })
                         }
-                        numeric
-                        keyboardType={'numeric'}
-                        onBlur={this.unFocusTime}
                       />
+                    </View>
 
-                      {/* <View style={{ position: 'absolute', right: 10, top: -5, zIndex: 2, backgroundColor: 'red' }}>
+                    {assignmentType !== 0 && (
+                      <View>
+                        <Text style={styles.txtTitleGrade}>Thời gian(Phút)</Text>
+                        <TextInput
+                          style={styles.pickTime}
+                          onChangeText={text => {
+                            this.setState({ duration: parseInt(text) || '' });
+                          }}
+                          value={
+                            (typeof duration.toString() !== NaN &&
+                              duration.toString()) ||
+                            ''
+                          }
+                          numeric
+                          keyboardType={'numeric'}
+                          onBlur={this.unFocusTime}
+                        />
+
+                        {/* <View style={{ position: 'absolute', right: 10, top: -5, zIndex: 2, backgroundColor: 'red' }}>
                         <TouchableOpacity onPress={() => this.setState({ duration: duration + 1 })}>
                           <FontAwesome name='sort-up' style={{ marginTop: 10, position: 'absolute', top: 0 }} />
                         </TouchableOpacity>
@@ -702,172 +703,172 @@ class ConfigQuestion extends Component {
                           <FontAwesome name='sort-down' style={{ marginTop: 10, position: 'absolute', buttom: 0 }} />
                         </TouchableOpacity>
                       </View> */}
+                      </View>
+                    )}
+                    <View
+                      style={{
+                        marginTop: 0,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          color: '#FFFEFE',
+                          fontFamily: 'Nunito-Bold',
+                          fontSize: 12,
+                          marginLeft: 5,
+                          marginRight: 15,
+                          marginBottom: 5,
+                        }}>
+                        Giải thích
+                    </Text>
+                      <SwitchButton
+                        stylebtnOnOff={styles.btnSwitch}
+                        isCheck={isExplain}
+                        onPress={() => {
+                          this.setState({ isExplain: !isExplain });
+                        }}
+                      />
                     </View>
-                  )}
+                  </View>
+
                   <View
                     style={{
-                      marginTop: 0,
-                      justifyContent: 'center',
-                      alignItems: 'center',
+                      marginTop: width < 380 ? 0.01 * width : 0.042 * width,
                     }}>
                     <Text
-                      style={{
-                        color: '#FFFEFE',
-                        fontFamily: 'Nunito-Bold',
-                        fontSize: 12,
-                        marginLeft: 5,
-                        marginRight: 15,
-                        marginBottom: 5,
-                      }}>
-                      Giải thích
-                    </Text>
-                    <SwitchButton
-                      stylebtnOnOff={styles.btnSwitch}
-                      isCheck={isExplain}
-                      onPress={() => {
-                        this.setState({ isExplain: !isExplain });
-                      }}
+                      style={[
+                        { color: '#FFF', fontSize: 12, fontFamily: 'Nunito-Bold' },
+                        errors.name && { color: '#EB5757' },
+                      ]}>
+                      Nhập tên bài kiểm tra
+                  </Text>
+                    <FormInput
+                      styleInput={{ marginBottom: 10 }}
+                      paddingTopContent={4}
+                      height={30}
+                      borderRadius={5}
+                      borderWidth={0.5}
+                      borderColor={'#54CEF5'}
+                      onChangeText={text =>
+                        this.setState({
+                          name: text,
+                          errors: [],
+                        })
+                      }
+                      value={name}
+                      isShowPassword={true}
+                      onSubmitEditing={Keyboard.dismiss}
+                      isSecureTextEntry={this.state.isSecureTextEntry}
+                      showPassword={() => this.showPassword()}
+                      bgColor="#FFF"
                     />
                   </View>
                 </View>
-
+              </View>
+              <View style={styles.footer}>
                 <View
-                  style={{
-                    marginTop: width < 380 ? 0.01 * width : 0.042 * width,
-                  }}>
-                  <Text
-                    style={[
-                      { color: '#FFF', fontSize: 12, fontFamily: 'Nunito-Bold' },
-                      errors.name && { color: '#EB5757' },
-                    ]}>
-                    Nhập tên bài kiểm tra
-                  </Text>
-                  <FormInput
-                    styleInput={{ marginBottom: 10 }}
-                    paddingTopContent={4}
-                    height={30}
-                    borderRadius={5}
-                    borderWidth={0.5}
-                    borderColor={'#54CEF5'}
-                    onChangeText={text =>
-                      this.setState({
-                        name: text,
-                        errors: [],
-                      })
-                    }
-                    value={name}
-                    isShowPassword={true}
-                    onSubmitEditing={Keyboard.dismiss}
-                    isSecureTextEntry={this.state.isSecureTextEntry}
-                    showPassword={() => this.showPassword()}
-                    bgColor="#FFF"
-                  />
+                  style={[
+                    styles.bodyFooter,
+                    { borderBottomWidth: 1, borderBottomColor: '#E0E0E0' },
+                  ]}>
+                  <Text style={styles.txtFooterheder}>Loại câu hỏi</Text>
+                  <Text style={styles.txtFooterheder}>Số câu</Text>
+                  <Text style={styles.txtFooterheder}>Điểm</Text>
                 </View>
+                {!_.isEmpty(questions) ? (
+                  <View style={styles.bodyFooter}>
+                    {/* tiêu đề */}
+                    <View>
+                      {this.getTotalTypeQuestion(questions).typeOne !== 0 && (
+                        <Text style={styles.txtTitleFooter}>Nhận biết</Text>
+                      )}
+                      {this.getTotalTypeQuestion(questions).typeTwo !== 0 && (
+                        <Text style={styles.txtTitleFooter}>Thông hiều</Text>
+                      )}
+                      {this.getTotalTypeQuestion(questions).typeThree !== 0 && (
+                        <Text style={styles.txtTitleFooter}>Vận dụng</Text>
+                      )}
+                      {this.getTotalTypeQuestion(questions).typeFour !== 0 && (
+                        <Text style={styles.txtTitleFooter}>Vận dụng cao</Text>
+                      )}
+                    </View>
+
+                    {/* Số câu */}
+                    <View>
+                      {/* Nhận biết */}
+                      {this.getTotalTypeQuestion(questions).typeOne !== 0 && (
+                        <Text style={styles.txtIndexOne}>
+                          {this.getTotalTypeQuestion(questions).typeOne}
+                        </Text>
+                      )}
+                      {/* Thông hiều */}
+                      {this.getTotalTypeQuestion(questions).typeTwo !== 0 && (
+                        <Text style={styles.txtIndexOne}>
+                          {this.getTotalTypeQuestion(questions).typeTwo}
+                        </Text>
+                      )}
+                      {/* Vận dụng */}
+                      {this.getTotalTypeQuestion(questions).typeThree !== 0 && (
+                        <Text style={styles.txtIndexOne}>
+                          {this.getTotalTypeQuestion(questions).typeThree}
+                        </Text>
+                      )}
+                      {/* Vận dụng cao */}
+                      {this.getTotalTypeQuestion(questions).typeFour !== 0 && (
+                        <Text style={styles.txtIndexOne}>
+                          {this.getTotalTypeQuestion(questions).typeFour}
+                        </Text>
+                      )}
+                    </View>
+
+                    {/* Điểm */}
+                    <View>
+                      {/* Nhận biết */}
+                      {this.getTotalPointQuestion(questions).pointOne !== 0 && (
+                        <Text style={styles.txtIndexTwo}>
+                          {this.getTotalPointQuestion(questions).pointOne}
+                        </Text>
+                      )}
+                      {/* Thông hiều */}
+                      {this.getTotalPointQuestion(questions).pointTwo !== 0 && (
+                        <Text style={styles.txtIndexTwo}>
+                          {this.getTotalPointQuestion(questions).pointTwo}
+                        </Text>
+                      )}
+                      {/* Vận dụng */}
+                      {this.getTotalPointQuestion(questions).pointThree !== 0 && (
+                        <Text style={styles.txtIndexTwo}>
+                          {this.getTotalPointQuestion(questions).pointThree}
+                        </Text>
+                      )}
+                      {/* Vận dụng cao */}
+                      {this.getTotalPointQuestion(questions).pointFour !== 0 && (
+                        <Text style={styles.txtIndexTwo}>
+                          {this.getTotalPointQuestion(questions).pointFour}
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                ) : null}
               </View>
             </View>
-            <View style={styles.footer}>
-              <View
-                style={[
-                  styles.bodyFooter,
-                  { borderBottomWidth: 1, borderBottomColor: '#E0E0E0' },
-                ]}>
-                <Text style={styles.txtFooterheder}>Loại câu hỏi</Text>
-                <Text style={styles.txtFooterheder}>Số câu</Text>
-                <Text style={styles.txtFooterheder}>Điểm</Text>
-              </View>
-              {!_.isEmpty(questions) ? (
-                <View style={styles.bodyFooter}>
-                  {/* tiêu đề */}
-                  <View>
-                    {this.getTotalTypeQuestion(questions).typeOne !== 0 && (
-                      <Text style={styles.txtTitleFooter}>Nhận biết</Text>
-                    )}
-                    {this.getTotalTypeQuestion(questions).typeTwo !== 0 && (
-                      <Text style={styles.txtTitleFooter}>Thông hiều</Text>
-                    )}
-                    {this.getTotalTypeQuestion(questions).typeThree !== 0 && (
-                      <Text style={styles.txtTitleFooter}>Vận dụng</Text>
-                    )}
-                    {this.getTotalTypeQuestion(questions).typeFour !== 0 && (
-                      <Text style={styles.txtTitleFooter}>Vận dụng cao</Text>
-                    )}
-                  </View>
-
-                  {/* Số câu */}
-                  <View>
-                    {/* Nhận biết */}
-                    {this.getTotalTypeQuestion(questions).typeOne !== 0 && (
-                      <Text style={styles.txtIndexOne}>
-                        {this.getTotalTypeQuestion(questions).typeOne}
-                      </Text>
-                    )}
-                    {/* Thông hiều */}
-                    {this.getTotalTypeQuestion(questions).typeTwo !== 0 && (
-                      <Text style={styles.txtIndexOne}>
-                        {this.getTotalTypeQuestion(questions).typeTwo}
-                      </Text>
-                    )}
-                    {/* Vận dụng */}
-                    {this.getTotalTypeQuestion(questions).typeThree !== 0 && (
-                      <Text style={styles.txtIndexOne}>
-                        {this.getTotalTypeQuestion(questions).typeThree}
-                      </Text>
-                    )}
-                    {/* Vận dụng cao */}
-                    {this.getTotalTypeQuestion(questions).typeFour !== 0 && (
-                      <Text style={styles.txtIndexOne}>
-                        {this.getTotalTypeQuestion(questions).typeFour}
-                      </Text>
-                    )}
-                  </View>
-
-                  {/* Điểm */}
-                  <View>
-                    {/* Nhận biết */}
-                    {this.getTotalPointQuestion(questions).pointOne !== 0 && (
-                      <Text style={styles.txtIndexTwo}>
-                        {this.getTotalPointQuestion(questions).pointOne}
-                      </Text>
-                    )}
-                    {/* Thông hiều */}
-                    {this.getTotalPointQuestion(questions).pointTwo !== 0 && (
-                      <Text style={styles.txtIndexTwo}>
-                        {this.getTotalPointQuestion(questions).pointTwo}
-                      </Text>
-                    )}
-                    {/* Vận dụng */}
-                    {this.getTotalPointQuestion(questions).pointThree !== 0 && (
-                      <Text style={styles.txtIndexTwo}>
-                        {this.getTotalPointQuestion(questions).pointThree}
-                      </Text>
-                    )}
-                    {/* Vận dụng cao */}
-                    {this.getTotalPointQuestion(questions).pointFour !== 0 && (
-                      <Text style={styles.txtIndexTwo}>
-                        {this.getTotalPointQuestion(questions).pointFour}
-                      </Text>
-                    )}
-                  </View>
-                </View>
-              ) : null}
-            </View>
-          </View>
-          <View style={{ backgroundColor: '#FFF', flex: 1 }}>
-            <View style={{ paddingHorizontal: 16, marginBottom: 20 }}>
-              <View style={styles.topBodyHeader}>
-                <Text style={styles.addQuestion}>
-                  Tổng số câu {questions.length}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 6,
-                  }}>
-                  <Text style={styles.totalAddQuestion}>
-                    Tổng điểm:{roundToTwo(totalPoint)}
+            <View style={{ backgroundColor: '#FFF', flex: 1 }}>
+              <View style={{ paddingHorizontal: 16, marginBottom: 20 }}>
+                <View style={styles.topBodyHeader}>
+                  <Text style={styles.addQuestion}>
+                    Tổng số câu {questions.length}
                   </Text>
-                  {/* <TextInput
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 6,
+                    }}>
+                    <Text style={styles.totalAddQuestion}>
+                      Tổng điểm:{roundToTwo(totalPoint)}
+                    </Text>
+                    {/* <TextInput
                     editable={false}
                     style={[
                       styles.inputPoint,
@@ -884,223 +885,224 @@ class ConfigQuestion extends Component {
                     // onEndEditing={() => this.pointSentence()}
                     value={(totalPoint && `${totalPoint}`) || ''}
                   /> */}
-                  {/* <Image
+                    {/* <Image
                     source={require('../../../asserts/icon/editPoint.png')}
                     style={{ position: 'absolute', right: 3 }}
                   /> */}
+                  </View>
                 </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginTop: 12,
-                  height: 60,
-                }}>
-                <TouchableOpacity
-                  style={{ flexDirection: 'row', alignItems: 'center' }}
-                  onPress={this.deleteQuestion}>
-                  <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
-                  <MaterialCommunityIcons
-                    name="delete-sweep"
-                    size={23}
-                    color="#DB3546"
-                  />
-                </TouchableOpacity>
-                <View style={[{ justifyContent: 'flex-end' }]}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginTop: 12,
+                    height: 60,
+                  }}>
                   <TouchableOpacity
-                    style={[
-                      {
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginHorizontal: 17,
-                      },
-                    ]}
-                    onPress={() => this.setState({ activeSort: !activeSort })}>
-                    <Text style={styles.txtDeleteChoose}>Sắp xếp lại</Text>
-                    <Image
-                      source={require('../../../asserts/appIcon/sort.png')}
-                      resizeMode="contain"
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    onPress={this.deleteQuestion}>
+                    <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
+                    <MaterialCommunityIcons
+                      name="delete-sweep"
+                      size={23}
+                      color="#DB3546"
                     />
                   </TouchableOpacity>
-                  {activeSort && (
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        zIndex: 10,
-                        position: 'absolute',
-                        bottom: -25,
-                        left: 20,
-                        top: 15,
-                      }}>
-                      <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <TouchableOpacity
-                          style={[
-                            styles.buttonMove,
-                            { height: Platform.OS === 'ios' ? 20.5 : 22 },
-                          ]}
-                          onPress={() => this._moveQuestion()}>
-                          <Text style={{ fontSize: 11 }}>Đến</Text>
-                        </TouchableOpacity>
-                        <View
-                          style={{ marginTop: Platform.OS === 'ios' ? 5 : 5 }}>
-                          <FormInput
-                            style={{
-                              borderTopRightRadius: 4,
-                              borderBottomRightRadius: 4,
-                              paddingBottom: 4,
-                              paddingHorizontal: 2,
-                            }}
-                            styleInput={{ paddingBottom: 10 }}
-                            width={45}
-                            height={Platform.OS === 'ios' ? 20.5 : 22}
-                            borderWidth={0.5}
-                            borderColor={'#828282'}
-                            onChangeText={text =>
-                              this.setState({
-                                position: parseInt(text),
-                              })
-                            }
-                            value={!!this.state.position.toString()}
-                            onSubmitEditing={Keyboard.dismiss}
-                            bgColor="#F0F0F0"
-                            keyboardType={'numeric'}
-                            maxLength={3}
-                          />
-                        </View>
-                      </View>
-                    </View>
-                  )}
-                </View>
-
-                <TouchableOpacity
-                  style={{ flexDirection: 'row', alignItems: 'center', right: 0 }}
-                  onPress={this.handleTickAll}>
-                  <Text style={styles.txtDeleteChoose}>Tất cả</Text>
-                  <View
-                    style={{
-                      backgroundColor: '#F0F0F0',
-                      height: 16,
-                      width: 16,
-                      borderWidth: 0.5,
-                      borderColor: '#828282',
-                      borderRadius: 3,
-                    }}>
-                    {this.state.allQuestion && (
+                  <View style={[{ justifyContent: 'flex-end' }]}>
+                    <TouchableOpacity
+                      style={[
+                        {
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginHorizontal: 17,
+                        },
+                      ]}
+                      onPress={() => this.setState({ activeSort: !activeSort })}>
+                      <Text style={styles.txtDeleteChoose}>Sắp xếp lại</Text>
                       <Image
-                        source={require('../../../asserts/appIcon/tick.png')}
+                        source={require('../../../asserts/appIcon/sort.png')}
                         resizeMode="contain"
                       />
+                    </TouchableOpacity>
+                    {activeSort && (
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          zIndex: 10,
+                          position: 'absolute',
+                          bottom: -25,
+                          left: 20,
+                          top: 15,
+                        }}>
+                        <View
+                          style={{ flexDirection: 'row', alignItems: 'center' }}>
+                          <TouchableOpacity
+                            style={[
+                              styles.buttonMove,
+                              { height: Platform.OS === 'ios' ? 20.5 : 22 },
+                            ]}
+                            onPress={() => this._moveQuestion()}>
+                            <Text style={{ fontSize: 11 }}>Đến</Text>
+                          </TouchableOpacity>
+                          <View
+                            style={{ marginTop: Platform.OS === 'ios' ? 5 : 5 }}>
+                            <FormInput
+                              style={{
+                                borderTopRightRadius: 4,
+                                borderBottomRightRadius: 4,
+                                paddingBottom: 4,
+                                paddingHorizontal: 2,
+                              }}
+                              styleInput={{ paddingBottom: 10 }}
+                              width={45}
+                              height={Platform.OS === 'ios' ? 20.5 : 22}
+                              borderWidth={0.5}
+                              borderColor={'#828282'}
+                              onChangeText={text =>
+                                this.setState({
+                                  position: parseInt(text),
+                                })
+                              }
+                              value={!!this.state.position.toString()}
+                              onSubmitEditing={Keyboard.dismiss}
+                              bgColor="#F0F0F0"
+                              keyboardType={'numeric'}
+                              maxLength={3}
+                            />
+                          </View>
+                        </View>
+                      </View>
                     )}
                   </View>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={{ flexDirection: 'row', alignItems: 'center' }}
-                  onPress={() => this.setState({ totalPoint: 10 }, () => this.updateScore())}>
-                  <Text style={styles.txtDeleteChoose}>Chia đều điểm</Text>
-                  <View style={{ marginLeft: 5 }}>
-                    <Image
-                      source={require('../../../asserts/images/iconDiv.png')}
-                      resizeMode="contain"
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <WebView
-              onMessage={this.onHandleMessage.bind(this)}
-              source={{
-                html: MathJaxLibs.renderHtmlQuestionDetail(
-                  questions,
-                  'TOAN',
-                  arrayQuestion,
-                  totalPoint,
-                ),
-                baseUrl,
-              }}
-              subjectId={'TOAN'}
-              originWhitelist={['file://']}
-              scalesPageToFit={false}
-              javaScriptEnabled
-              ref={ref => (this.webview = ref)}
-              showsVerticalScrollIndicator={false}
-              scrollEnabled={false}
-              startInLoadingState
-              injectedJavaScript={webViewScript}
-            />
-            <WarningModal
-              ref={'warningModal'}
-              navigation={this.props.navigation}
-              visible={this.state.visibleModalWarning}
-              hideModal={() => this.displayWarning(false)}
-              numberQuestion={this.state.numberQuestion}
-              subjectId={'TOAN'}
-            />
-          </View>
-          <SafeAreaView />
-        </ScrollView>
-        <TouchableOpacity
-          style={styles.buttomTop}
-          onPress={() => this._onTop()}>
-          <Image
-            source={require('../../../asserts/appIcon/icUp.png')}
-            resizeMode="stretch"
-            style={{ height: 20, width: 20 }}
-          />
-          <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-        </TouchableOpacity>
-        <Modal visible={isModal} transparent={true}>
-          <TouchableWithoutFeedback
-            onPress={() => this.setState({ isModal: false })}>
-            <View style={styles.containerModal}>
-              <TouchableWithoutFeedback>
-                <View style={[styles.bodyModal]}>
+
                   <TouchableOpacity
-                    style={{
-                      alignSelf: 'flex-end',
-                      marginRight: 10,
-                      marginTop: 10,
-                      position: 'absolute',
-                      right: 0,
-                      top: 0,
-                      zIndex: 2,
-                    }}
-                    onPress={() => this.setState({ isModal: false })}>
-                    <Image
-                      source={require('../../../asserts/icon/icCloseModal.png')}
-                      style={{ tintColor: '#828282' }}
-                    />
+                    style={{ flexDirection: 'row', alignItems: 'center', right: 0 }}
+                    onPress={this.handleTickAll}>
+                    <Text style={styles.txtDeleteChoose}>Tất cả</Text>
+                    <View
+                      style={{
+                        backgroundColor: '#F0F0F0',
+                        height: 16,
+                        width: 16,
+                        borderWidth: 0.5,
+                        borderColor: '#828282',
+                        borderRadius: 3,
+                      }}>
+                      {this.state.allQuestion && (
+                        <Image
+                          source={require('../../../asserts/appIcon/tick.png')}
+                          resizeMode="contain"
+                        />
+                      )}
+                    </View>
                   </TouchableOpacity>
-                  {isLoadingModal ? (
-                    <ActivityIndicator
-                      color="red"
-                      style={{ justifyContent: 'center', alignItems: 'center' }}
-                    />
-                  ) : (
-                      <WebView
-                        ref={ref => (this.webview = ref)}
-                        source={{
-                          html: html.renderMatarialDetail(htmlContent, urlMedia),
-                          baseUrl,
-                        }}
-                        subjectId={'TOAN'}
-                        originWhitelist={['file://']}
-                        scalesPageToFit={false}
-                        javaScriptEnabled
-                        showsVerticalScrollIndicator={false}
-                        startInLoadingState={false}
-                        style={{ backgroundColor: '#fff' }}
-                      />
-                    )}
                 </View>
-              </TouchableWithoutFeedback>
+                <View>
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    onPress={() => this.setState({ totalPoint: 10 }, () => this.updateScore())}>
+                    <Text style={styles.txtDeleteChoose}>Chia đều điểm</Text>
+                    <View style={{ marginLeft: 5 }}>
+                      <Image
+                        source={require('../../../asserts/images/iconDiv.png')}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <WebView
+                onMessage={this.onHandleMessage.bind(this)}
+                source={{
+                  html: MathJaxLibs.renderHtmlQuestionDetail(
+                    questions,
+                    'TOAN',
+                    arrayQuestion,
+                    totalPoint,
+                  ),
+                  baseUrl,
+                }}
+                subjectId={'TOAN'}
+                originWhitelist={['file://']}
+                scalesPageToFit={false}
+                javaScriptEnabled
+                ref={ref => (this.webview = ref)}
+                showsVerticalScrollIndicator={false}
+                scrollEnabled={false}
+                startInLoadingState
+                injectedJavaScript={webViewScript}
+              />
+              <WarningModal
+                ref={'warningModal'}
+                navigation={this.props.navigation}
+                visible={this.state.visibleModalWarning}
+                hideModal={() => this.displayWarning(false)}
+                numberQuestion={this.state.numberQuestion}
+                subjectId={'TOAN'}
+              />
             </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+            <SafeAreaView />
+          </ScrollView>
+          <TouchableOpacity
+            style={styles.buttomTop}
+            onPress={() => this._onTop()}>
+            <Image
+              source={require('../../../asserts/appIcon/icUp.png')}
+              resizeMode="stretch"
+              style={{ height: 20, width: 20 }}
+            />
+            <Text style={{ color: '#FAFAFA' }}>TOP</Text>
+          </TouchableOpacity>
+          <Modal visible={isModal} transparent={true}>
+            <TouchableWithoutFeedback
+              onPress={() => this.setState({ isModal: false })}>
+              <View style={styles.containerModal}>
+                <TouchableWithoutFeedback>
+                  <View style={[styles.bodyModal]}>
+                    <TouchableOpacity
+                      style={{
+                        alignSelf: 'flex-end',
+                        marginRight: 10,
+                        marginTop: 10,
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        zIndex: 2,
+                      }}
+                      onPress={() => this.setState({ isModal: false })}>
+                      <Image
+                        source={require('../../../asserts/icon/icCloseModal.png')}
+                        style={{ tintColor: '#828282' }}
+                      />
+                    </TouchableOpacity>
+                    {isLoadingModal ? (
+                      <ActivityIndicator
+                        color="red"
+                        style={{ justifyContent: 'center', alignItems: 'center' }}
+                      />
+                    ) : (
+                        <WebView
+                          ref={ref => (this.webview = ref)}
+                          source={{
+                            html: html.renderMatarialDetail(htmlContent, urlMedia),
+                            baseUrl,
+                          }}
+                          subjectId={'TOAN'}
+                          originWhitelist={['file://']}
+                          scalesPageToFit={false}
+                          javaScriptEnabled
+                          showsVerticalScrollIndicator={false}
+                          startInLoadingState={false}
+                          style={{ backgroundColor: '#fff' }}
+                        />
+                      )}
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+        </SafeAreaView>
         <Toast ref={ref => (this.refToast = ref)} position={'bottom'} />
       </View>
     );
@@ -1332,7 +1334,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 20,
-    top: Platform.OS == 'ios' ? 28 : 7,
+    top: Platform.OS == 'ios' ? 7 : 7,
     zIndex: 2,
   },
   textCreateAssessment: {
