@@ -90,7 +90,8 @@ const initTab = createMaterialTopTabNavigator(
         borderBottomWidth: 1,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
-        marginLeft: width < 350 ? 10 : 30,
+        // marginLeft: width < 350 ? 20 : 50,
+        marginLeft: Platform.isPad ? (width / 2 - 200) / 2 : (width / 2 - 80) / 2,
       },
     },
   },
@@ -134,8 +135,8 @@ export default class StatisticsPoints extends Component {
     const { _id } = this.props.navigation.state.params;
     const response = await Api.getMissionResult({ token, _id });
     console.log("StatisticsPoints -> response", response);
-    const { listDetailStudent } = response;
-    this.setState({ data: listDetailStudent });
+    const { listDetailStudent, assignDetail } = response;
+    this.setState({ data: listDetailStudent, assignDetail: assignDetail });
   };
 
   refreshData = async () => {
@@ -147,9 +148,9 @@ export default class StatisticsPoints extends Component {
   }
 
   render() {
-    let timeEnd = this.props.data?.data.timeEnd;
+    const { data, assignDetail } = this.state;
+    let timeEnd = assignDetail?.endTime * 1000;
     timeEnd = convertTimeHMDMY(timeEnd);
-    const { data } = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar />
@@ -159,18 +160,18 @@ export default class StatisticsPoints extends Component {
         />
         <View style={styles.header}>
           {
-            !true ?
-              _.isEmpty(this.props.data) ?
-                null
-                : <View style={styles.wrapInfo}>
-                  <Text style={styles.txtAssignment}>{this.props.data?.data.name || ''}</Text>
-                  <Text style={styles.txtTitle}>{this.props.data?.data.className || ''}</Text>
-                  <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
-                </View>
-              :
-              <View style={styles.wrapInfo}>
-                <ActivityIndicator size={'small'} color={'#2D9CDB'} />
+            // !true ?
+            _.isEmpty(assignDetail) ?
+              null
+              : <View style={styles.wrapInfo}>
+                {/* <Text style={styles.txtAssignment}>{data.assignDetail?.data.name || ''}</Text> */}
+                <Text style={styles.txtTitle}>{assignDetail?.className || ''}</Text>
+                <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
               </View>
+            // :
+            // <View style={styles.wrapInfo}>
+            //   <ActivityIndicator size={'small'} color={'#2D9CDB'} />
+            // </View>
           }
         </View>
         <Tab

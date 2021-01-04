@@ -224,6 +224,7 @@ export default function StudentDetail(props) {
         }
     }
 
+
     const handleRework = (studentId) => {
         Alert.alert(
             'Thông báo',
@@ -261,23 +262,24 @@ export default function StudentDetail(props) {
     }
 
     renderItem = ({ item, index }) => {
+        console.log("item, index: ", JSON.stringify({ item, index }));
         const progress = getProcess(item);
-        const status = getStatus(item,point);
+        const status = getStatus(item, point);
         return (
             <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }]}>
                 <View style={styles.viewAvatar}>
                     {
-                        item.avatar && !item.avatar.includes('no-avatar')
+                        item.student.userAvatar && !item.student.userAvatar.includes('no-avatar')
                             ?
-                            <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                            <Image source={{ uri: item.student.userAvatar.indexOf('http') != 0 ? `http:${item.student.userAvatar}` : item.student.userAvatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                             :
-                            <Text style={styles.txtAvatar}>{nameToAvatar(item.nameStudent)}</Text>
+                            <Text style={styles.txtAvatar}>{nameToAvatar(item.student.userDisplayName)}</Text>
                     }
                     <View style={[styles.dotOnline, { backgroundColor: '#E0E0E0' }]} />
                 </View>
                 <View style={styles.contentItem}>
                     <Text style={[styles.txtStatus, { color: status.color }]}>{status.title}</Text>
-                    <Text style={styles.txtNameItem}>{item.nameStudent}</Text>
+                    <Text style={styles.txtNameItem}>{item.student.userDisplayName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <ProgressBar
                             progress={progress || 0}
@@ -331,7 +333,7 @@ export default function StudentDetail(props) {
             </View>
         )
     }
-
+    console.log("dataDetail: ", dataDetail);
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
             {
@@ -348,10 +350,10 @@ export default function StudentDetail(props) {
                         : (<View style={styles.container}>
                             <FlatList
                                 showsVerticalScrollIndicator={false}
-                                data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
+                                data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data : []}
                                 keyExtractor={(item, index) => index.toString()}
                                 extraData={props.data}
-                                renderItem={this.renderItem}
+                                renderItem={renderItem}
                             />
                             {
                                 dataDetail ? <ModalDetail
