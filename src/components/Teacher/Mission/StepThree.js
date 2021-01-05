@@ -239,7 +239,7 @@ export default class StepThree extends Component {
       isLoading
     } = this.state;
     return (
-      <View style={{ flex: 1, marginHorizontal: 10, backgroundColor:'red' }}>
+      <View style={{ flex: 1, marginHorizontal: 10 }}>
         <ScrollView
           style={{ marginTop: 10 }}
           showsVerticalScrollIndicator={false}

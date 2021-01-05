@@ -306,7 +306,6 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    paddingHorizontal: 10,
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',
