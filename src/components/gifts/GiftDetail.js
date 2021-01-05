@@ -131,7 +131,7 @@ class GiftDetail extends Component {
                             style={styles.contrain}
                         />
                         <Text style={styles.titleCate}>
-                            {dataGift.name}
+                            {dataGift.giftName}
                         </Text>
                         <Text style={styles.description}>
                             {dataGift.description}
