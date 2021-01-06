@@ -105,52 +105,98 @@ export default function LevelCompletion(props) {
     let dataChart = [];
     let avgPercentComplete = 0;
     if (data && data.length > 0) {
-      let totalPercentCompletePractice = 0;
-      let totalPercentCompleteTest = 0;
+      let totalCompletePractice = 0;
+      let totalCompleteTest = 0;
       let name = '';
       let id = '';
-      const dataChartTemp1 = data.map(e => {
+      let arrayCurrentId = [];
+      let dataTemp1 = {};
+      let dataTemp2 = {};
+      let dataChartTemp2 = [];
+      data.map((e, index) => {
         if (e.data.listProblem.length > 0) {
           const { listProblem } = e.data;
           listProblem.map(item => {
+            name = item.problemName;
+            id = item.problemId;
+            if (arrayCurrentId.indexOf(id) >= 0) {
+              dataTemp1[id].total += 1;
+              if (item.isDone) {
+                dataTemp1[id].doneCount += 1;
+              }
+            } else {
+              arrayCurrentId.push(id);
+              let doneCount = 0;
+              if (item.isDone) {
+                doneCount = 1;
+              }
+              dataTemp1[id] = { id, name, total: 1, doneCount };
+            }
             if (item.isDone) {
-              totalPercentCompletePractice += 1;
-              name = item.problemName;
-              id = item.problemId;
+              totalCompletePractice += 1;
             }
           })
         }
-        return {
-          id,
-          name,
-          totalPercentCompletePractice,
-        }
       });
+      let dataChartTemp1 = [];
+      dataChartTemp1 = Object.values(dataTemp1).map(item => {
+        console.log("item: ", JSON.stringify(item));
+        let name = item.name;
+        let id = item.id;
+        let percentComplete = item.doneCount / item.total;
+        return {
+          name, id, percentComplete
+        }
+      })
 
-      const dataChartTemp2 = data.map(e => {
+
+
+      data.map(e => {
         if (e.data.listTest.length > 0) {
           const { listTest } = e.data;
           listTest.map(item => {
+            name = item.problemName;
+            id = item.problemId;
+            if (arrayCurrentId.indexOf(id) >= 0) {
+              dataTemp2[id].total += 1;
+              if (item.isDone) {
+                dataTemp2[id].doneCount += 1;
+              }
+            } else {
+              arrayCurrentId.push(id);
+              let doneCount = 0;
+              if (item.isDone) {
+                doneCount = 1;
+              }
+              dataTemp2[id] = { id, name, total: 1, doneCount };
+            }
             if (item.isDone) {
-              totalPercentCompleteTest += 1;
-              name = item.testName;
-              id = item.testId;
+              totalCompleteTest += 1;
             }
           })
         }
-        return {
-          id,
-          name,
-          totalPercentCompleteTest,
-        }
       });
 
+      dataChartTemp2 = Object.values(dataTemp2).map(item => {
+        console.log("item: ", JSON.stringify(item));
+        let name = item.name;
+        let id = item.id;
+        let percentComplete = item.doneCount / item.total;
+        return {
+          name, id, percentComplete
+        }
+      })
+
       dataChart = dataChartTemp1.concat(dataChartTemp2);
+
+      dataChart.map(item => {
+
+      })
 
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp1);
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp2);
 
-      avgPercentComplete = ((totalPercentCompletePractice + totalPercentCompleteTest) / data.length).toFixed(4) * 100/2;
+      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length).toFixed(4) * 100 / 2;
 
       // let result = _.chain([...dataChartTemp1, ...dataChartTemp2])
       //   // Group the elements of Array based on color property
@@ -167,7 +213,6 @@ export default function LevelCompletion(props) {
     const maxTime = Math.max(...dataChart.map(e => e.averageTime));
 
     dataChart = dataChart.sort((a, b) => compareName(a.name, b.name))
-    console.log('dataChart: ', JSON.stringify(dataChart));
     return (
       <View>
         <View style={styles.containerChart}>
@@ -237,8 +282,9 @@ export default function LevelCompletion(props) {
                   }
                   {
                     dataChart.map((e, i) => {
+                      console.log("e.percentComplete: ", e.percentComplete);
                       const x = width / 4 * (i + 1);
-                      const y2 = e.percentComplete ? 220 - ((e.percentComplete / 100) * 200) : 219;
+                      const y2 = e.percentComplete ? 220 - ((e.percentComplete) * 220) : 219;
                       const stroke = e.percentComplete >= 70 ? '#04C6F1' : (e.percentComplete < 50 ? '#a55' : '#FFA500');
                       return (
                         <Line
@@ -247,7 +293,7 @@ export default function LevelCompletion(props) {
                       )
                     })
                   }
-                  {
+                  {/* {
                     dataChart.map((e, i) => {
                       const x1 = i === 0 ? 1 : (width / 4 * i);
                       const y1 = i === 0 || maxTime === 0 ? 219 : 220 - ((dataChart[i - 1].averageTime / maxTime) * 200);
@@ -263,7 +309,7 @@ export default function LevelCompletion(props) {
                           strokeDasharray="1.5 3" />
                       )
                     })
-                  }
+                  } */}
                 </Svg>
                 <View style={{ flexDirection: 'row', height: 20 }}>
                   {

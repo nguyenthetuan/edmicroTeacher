@@ -284,7 +284,6 @@ export default function StudentDetail(props) {
     }
 
     renderItem = ({ item, index }) => {
-        console.log("item, index: ", JSON.stringify({ item, index }));
         const progress = getProcess(item);
         const status = getStatus(item, point);
         return (
