@@ -47,12 +47,18 @@ class ItemClass extends Component {
         }
     }
 
-    handlePickStudent = async (text) => {
+    handlePickStudent = async (students) => {
         await this.setState({ showPickSutdent: !this.state.showPickSutdent });
-        if (text) {
-            const { students } = this.state;
+        if (students) {
+            // const { students } = this.state;
             // let students = item.students.length;
-            this.setState({ buttonText: students ? `${students} học sinh` : 'Tất cả học sinh' });
+            this.setState({ buttonText: students ? `${students}` : 'Tất cả học sinh' });
+        }
+    }
+
+    changeStatebuttonText = (students) => {
+        if (students) {
+            this.setState({ buttonText: students ? `${students}` : 'Tất cả học sinh' });
         }
     }
 
@@ -150,9 +156,7 @@ class ItemClass extends Component {
                             <Text numberOfLines={1} style={styles.txtContentItem}>
                                 {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
                         </TouchableOpacity>
-
-                        {/* <TouchableOpacity onPress={() => { this.handlePickStudent() }}> */}
-                        <DropdownStudent
+                        {/* <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
                             style={styles.dropDown}
@@ -160,15 +164,13 @@ class ItemClass extends Component {
                             dropdownStyle={{ width: width - 32 - 54 - 100 }}
                             options={this.state.students || item.students}
                             status={status}
-                        />
-                        {/* // </TouchableOpacity> */}
-
+                        /> */}
                         <TouchableOpacity onPress={() => { this.handlePickStudent() }}
                             style={styles.dropZuCha}>
                             <View style={styles.borDropRight}>
                                 <Icon name={this.showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
                             </View>
-                            <Text style={{ color: '#2D9CDB', left: 15 }}>{this.state.buttonText}</Text>
+                            <Text style={{ color: '#2D9CDB', left: 15 }}>{this.state.buttonText || item.students.length + ' học sinh'}</Text>
                         </TouchableOpacity>
 
                         <ModalSelectStudent
@@ -180,7 +182,8 @@ class ItemClass extends Component {
                             options={this.state.students || item.students}
                             status={status}
                             visibleModal={this.state.showPickSutdent}
-                            handlePickStudent={() => this.handlePickStudent()}
+                            handlePickStudent={this.handlePickStudent}
+                            changeStatebuttonText={this.changeStatebuttonText}
                         />
                         {status ?
                             // <TouchableOpacity

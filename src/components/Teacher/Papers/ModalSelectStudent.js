@@ -204,7 +204,7 @@ export default class ModalSelectStudent extends Component {
         return <TouchableHighlight {...preservedProps}>{row}</TouchableHighlight>;
     };
 
-    _onRowPress(rowData, rowID, highlightRow) {
+    async _onRowPress(rowData, rowID, highlightRow) {
         const { onSelect, renderButtonText, onDropdownWillHide } = this.props;
         const { listSelected, data } = this.state;
         let listSelectedTmp = listSelected;
@@ -214,10 +214,13 @@ export default class ModalSelectStudent extends Component {
             : listSelectedTmp = [...listSelectedTmp.slice(0, index), ...listSelectedTmp.slice(index + 1)];
         if (!onSelect || onSelect(rowID, rowData) !== false) {
             highlightRow.highlight(rowID);
-            this.setState({
+            await this.setState({
                 buttonText: !listSelectedTmp.length || listSelectedTmp.length === data.length ? 'Tất cả học sinh' : `${listSelectedTmp.length} học sinh`,
                 listSelected: listSelectedTmp
             });
+            if (typeof (this.props.changeStatebuttonText) == 'function') {
+                this.props.changeStatebuttonText(this.state.buttonText);
+            }
         }
         // if (!onDropdownWillHide || onDropdownWillHide() !== false) {
         //     this.setState({
