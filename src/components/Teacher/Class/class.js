@@ -47,7 +47,7 @@ class Class extends Component {
       this.setState({
         isLoading: false,
       });
-     }
+    }
   }
 
   _getData = async () => {
@@ -69,31 +69,18 @@ class Class extends Component {
       isRefresh
     } = this.state;
     const { user } = this.props;
-    console.log(user);
     return (
       <>
         <StatusBar />
         <SafeAreaView style={styles.container}>
-          <HeaderMain
-            {...user}
+          <ListClass
+            isLoading={isLoading}
+            user={user}
+            data={data}
             navigation={this.props.navigation}
+            onRefresh={this._getData}
+            isRefresh={isRefresh}
           />
-          {!isLoading ? (
-            <ListClass
-              data={data}
-              navigation={this.props.navigation}
-              onRefresh={this._getData}
-              isRefresh={isRefresh}
-            />
-          ) : (
-              <ClassHolder />
-              //  <ActivityIndicator
-              //       animating
-              //       size={'small'}
-              //       style={{ flex: 1 }}
-              //       color="#F98E2F"
-              //     /> 
-            )}
         </SafeAreaView>
       </>
     );
