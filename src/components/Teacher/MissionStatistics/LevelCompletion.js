@@ -101,6 +101,7 @@ export default function LevelCompletion(props) {
 
   const renderChartLevelComplete = () => {
     const { data } = props.screenProps;
+    console.log("data: ", JSON.stringify(data));
     let dataChart = [];
     let avgPercentComplete = 0;
     if (data && data.length > 0) {
@@ -144,10 +145,12 @@ export default function LevelCompletion(props) {
         }
       });
 
+      dataChart = dataChartTemp1.concat(dataChartTemp2);
+
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp1);
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp2);
 
-      // avgPercentComplete = (totalPercentComplete / data.length).toFixed(2);
+      avgPercentComplete = ((totalPercentCompletePractice + totalPercentCompleteTest) / data.length).toFixed(4) * 100/2;
 
       // let result = _.chain([...dataChartTemp1, ...dataChartTemp2])
       //   // Group the elements of Array based on color property
@@ -163,7 +166,8 @@ export default function LevelCompletion(props) {
     const widthChart = width / 4 * (dataChart.length + 0.5);
     const maxTime = Math.max(...dataChart.map(e => e.averageTime));
 
-    dataChart = dataChart.sort((a, b) => this.compareName(a.name, b.name))
+    dataChart = dataChart.sort((a, b) => compareName(a.name, b.name))
+    console.log('dataChart: ', JSON.stringify(dataChart));
     return (
       <View>
         <View style={styles.containerChart}>
@@ -214,7 +218,7 @@ export default function LevelCompletion(props) {
                   <Line x1="0" y1="10" x2="0" y2="220" stroke="#000" strokeWidth="2" />
                   <Line x1="0" y1="220" x2={`${widthChart}`} y2="220" stroke="#000" strokeWidth="2" />
 
-                  <Line x1="0" y1="5" x2={`${widthChart}`} y2="5" stroke="#04C6F1" strokeWidth="3" strokeLinecap="round" />
+                  {/* <Line x1="0" y1="5" x2={`${widthChart}`} y2="5" stroke="#04C6F1" strokeWidth="3" strokeLinecap="round" /> */}
 
                   <Line x1="1" y1="180" x2={`${widthChart}`} y2="180" stroke="#C4C4C4" strokeWidth="0.5" />
                   <Line x1="1" y1="140" x2={`${widthChart}`} y2="140" stroke="#C4C4C4" strokeWidth="0.5" />

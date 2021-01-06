@@ -27,7 +27,29 @@ const nameToAvatar = (name) => {
 }
 
 const getProcess = (item) => {
-    return (item.point / item.totalPoint) * 100;
+    let totalCount = item.data.listProblem.length;
+    let countDone = 0;
+    const listProblem = item.data.listProblem;
+    for (let i = 0; i < listProblem.length; i++) {
+        if (listProblem[i].isDone) {
+            countDone++;
+        }
+    }
+    console.log("countDone: ", countDone);
+    console.log("totalCount: ", totalCount);
+    return (countDone / totalCount) * 100;
+}
+
+const getProcessDone = (item) => {
+    let countDone = 0;
+    const listProblem = item.data.listProblem;
+    for (let i = 0; i < listProblem.length; i++) {
+        if (listProblem[i].isDone) {
+            countDone++;
+        }
+    }
+
+    return countDone;
 }
 
 const getStatus = (item, point) => {
@@ -275,7 +297,7 @@ export default function StudentDetail(props) {
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.student.userDisplayName)}</Text>
                     }
-                    <View style={[styles.dotOnline, { backgroundColor: '#E0E0E0' }]} />
+                    {/* <View style={[styles.dotOnline, { backgroundColor: '#E0E0E0' }]} /> */}
                 </View>
                 <View style={styles.contentItem}>
                     <Text style={[styles.txtStatus, { color: status.color }]}>{status.title}</Text>
@@ -293,12 +315,12 @@ export default function StudentDetail(props) {
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1 }}>
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
-                            <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
+                            <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length}</Text>
                         </View>
-                        {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
-                            <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
+                        <View style={{ flexDirection: 'row', marginEnd: 7 }}>
+                            <Text style={styles.txtTitleItem}>Kết quả nhiệm vụ</Text>
                             <Text style={styles.txtPoint}>{status.result||point}</Text>
-                        </View> */}
+                        </View>
                     </View>
                     {
                         item.status === 4
