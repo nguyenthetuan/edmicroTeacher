@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  StatusBar,
   Animated,
   RefreshControl,
   FlatList

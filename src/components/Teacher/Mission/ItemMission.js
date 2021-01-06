@@ -119,12 +119,14 @@ const styles = StyleSheet.create({
   contain: {
     borderColor: '#7E96EC',
     margin: 5,
+    marginHorizontal: 16,
     borderWidth: 1,
     borderRadius: 4,
     marginTop: 15
   },
   styWrapHeader: {
     padding: 8,
+    paddingHorizontal: 16,
     backgroundColor: '#7E96EC',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -141,8 +143,9 @@ const styles = StyleSheet.create({
   styFlexDirRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    margin: 5,
-    marginLeft: 10,
+    marginVertical: 5,
+    marginHorizontal: 0,
+    marginLeft: 5,
     width: width / 3 - 20
   },
   styTxtLabel: {
