@@ -101,7 +101,6 @@ export default function LevelCompletion(props) {
 
   const renderChartLevelComplete = () => {
     const { data } = props.screenProps;
-    console.log("data: ", JSON.stringify(data));
     let dataChart = [];
     let avgPercentComplete = 0;
     if (data && data.length > 0) {
@@ -140,7 +139,6 @@ export default function LevelCompletion(props) {
       });
       let dataChartTemp1 = [];
       dataChartTemp1 = Object.values(dataTemp1).map(item => {
-        console.log("item: ", JSON.stringify(item));
         let name = item.name;
         let id = item.id;
         let percentComplete = item.doneCount / item.total;
@@ -178,7 +176,6 @@ export default function LevelCompletion(props) {
       });
 
       dataChartTemp2 = Object.values(dataTemp2).map(item => {
-        console.log("item: ", JSON.stringify(item));
         let name = item.name;
         let id = item.id;
         let percentComplete = item.doneCount / item.total;
@@ -282,7 +279,6 @@ export default function LevelCompletion(props) {
                   }
                   {
                     dataChart.map((e, i) => {
-                      console.log("e.percentComplete: ", e.percentComplete);
                       const x = width / 4 * (i + 1);
                       const y2 = e.percentComplete ? 220 - ((e.percentComplete) * 220) : 219;
                       const stroke = e.percentComplete >= 70 ? '#04C6F1' : (e.percentComplete < 50 ? '#a55' : '#FFA500');
@@ -296,9 +292,9 @@ export default function LevelCompletion(props) {
                   {/* {
                     dataChart.map((e, i) => {
                       const x1 = i === 0 ? 1 : (width / 4 * i);
-                      const y1 = i === 0 || maxTime === 0 ? 219 : 220 - ((dataChart[i - 1].averageTime / maxTime) * 200);
+                      const y1 = i === 0 || maxTime === 0 ? 219 : 220 - ((dataChart[i - 1].averageTime / maxTime) * 220);
                       const x2 = width / 4 * (i + 1);
-                      const y2 = e.averageTime || maxTime !== 0 ? 220 - ((e.averageTime / maxTime) * 200) : 219;
+                      const y2 = e.averageTime || maxTime !== 0 ? 220 - ((e.averageTime / maxTime) * 220) : 219;
                       return (
                         <Line
                           key={`d${i.toString()}`}
