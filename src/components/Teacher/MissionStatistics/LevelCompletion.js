@@ -147,8 +147,6 @@ export default function LevelCompletion(props) {
         }
       })
 
-
-
       data.map(e => {
         if (e.data.listTest.length > 0) {
           const { listTest } = e.data;
@@ -203,7 +201,7 @@ export default function LevelCompletion(props) {
       //   .value();
 
       // console.log('result', result);
-
+      
     }
 
     const widthChart = width / 4 * (dataChart.length + 0.5);

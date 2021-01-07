@@ -35,8 +35,6 @@ const getProcess = (item) => {
             countDone++;
         }
     }
-    console.log("countDone: ", countDone);
-    console.log("totalCount: ", totalCount);
     return (countDone / totalCount) * 100;
 }
 

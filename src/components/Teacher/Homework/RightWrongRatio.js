@@ -80,7 +80,6 @@ export default function RightWrongRatio(props) {
                             if (total === 0) {
                               return null
                             }
-
                             lineChart.push(<Line
                               key={`b${i.toString()}`}
                               x1={`${x2}`} y1="219"
@@ -96,9 +95,7 @@ export default function RightWrongRatio(props) {
                               x1={`${x2}`} y1="20"
                               x2={`${x2}`} y2={`${y2Wrong}`}
                               stroke="#FF3D3D" strokeWidth="20" />);
-
                             return lineChart;
-
                           })
                         }
                       </Svg>
