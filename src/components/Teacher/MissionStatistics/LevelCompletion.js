@@ -201,9 +201,9 @@ export default function LevelCompletion(props) {
       //   .value();
 
       // console.log('result', result);
-      
-    }
 
+    }
+    
     const widthChart = width / 4 * (dataChart.length + 0.5);
     const maxTime = Math.max(...dataChart.map(e => e.averageTime));
 

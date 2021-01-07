@@ -16,6 +16,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import dataHelper from '../../../utils/dataHelper';
 import apiMission from '../../../services/apiMission';
 import AppIcon from '../../../utils/AppIcon';
+import ModalSelectStudent from '../Papers/ModalSelectStudent';
 const { width, height } = Dimensions.get('screen');
 import { connect } from 'react-redux';
 import {
@@ -29,6 +30,9 @@ class ItemClass extends Component {
         timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
         // timeEnd: new Date().getTime() + 190000,
         students: null,
+        showPickSutdent: false,
+        // buttonText: this.students ? `${this.students} học sinh` : 'Tất cả học sinh',
+        buttonText: ''
     }
 
     async componentDidMount() {
@@ -40,6 +44,21 @@ class ItemClass extends Component {
                     this.setState({ students: rp.classList[0].students });
                 }
             })
+        }
+    }
+
+    handlePickStudent = async (students) => {
+        await this.setState({ showPickSutdent: !this.state.showPickSutdent });
+        if (students) {
+            // const { students } = this.state;
+            // let students = item.students.length;
+            this.setState({ buttonText: students ? `${students}` : 'Tất cả học sinh' });
+        }
+    }
+
+    changeStatebuttonText = (students) => {
+        if (students) {
+            this.setState({ buttonText: students ? `${students}` : 'Tất cả học sinh' });
         }
     }
 
@@ -137,14 +156,34 @@ class ItemClass extends Component {
                             <Text numberOfLines={1} style={styles.txtContentItem}>
                                 {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
                         </TouchableOpacity>
-                        <DropdownStudent
+                        {/* <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
-                            // style={{ width: width - 32 - 54 - 90, marginTop: 10, }}
                             style={styles.dropDown}
+                            // onPress={this.handlePickStudent()}
                             dropdownStyle={{ width: width - 32 - 54 - 100 }}
                             options={this.state.students || item.students}
                             status={status}
+                        /> */}
+                        <TouchableOpacity onPress={() => { this.handlePickStudent() }}
+                            style={styles.dropZuCha}>
+                            <View style={styles.borDropRight}>
+                                <Icon name={this.showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+                            </View>
+                            <Text style={{ color: '#2D9CDB', left: 15 }}>{this.state.buttonText || item.students.length + ' học sinh'}</Text>
+                        </TouchableOpacity>
+
+                        <ModalSelectStudent
+                            ref={ref => this.dropdownStudent = ref}
+                            dataItem={dataItem}
+                            // style={{ width: width - 32 - 54 - 90, marginTop: 10, }}
+                            style={{ width: width - 32, marginTop: 8, height: 40, }}
+                            dropdownStyle={{ width: width - 32 }}
+                            options={this.state.students || item.students}
+                            status={status}
+                            visibleModal={this.state.showPickSutdent}
+                            handlePickStudent={this.handlePickStudent}
+                            changeStatebuttonText={this.changeStatebuttonText}
                         />
                         {status ?
                             <TouchableOpacity
@@ -314,6 +353,26 @@ const styles = StyleSheet.create({
     widthCheck: {
         marginRight: 15,
         alignSelf: 'center'
+    },
+    dropZuCha: {
+        width: width - 32 - 54 - 150,
+        marginTop: 8,
+        height: 25,
+        // borderWidth: 0.5,
+        borderRadius: 5,
+        backgroundColor: 'rgba(86, 204, 242, 0.3)',
+        borderColor: '#56CCF2',
+        justifyContent: 'center'
+    },
+    borDropRight: {
+        width: 30,
+        height: 25,
+        backgroundColor: '#56CCF2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 0,
+        borderBottomRightRadius: 5,
+        borderTopRightRadius: 5
     }
-
 })

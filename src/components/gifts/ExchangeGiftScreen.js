@@ -63,7 +63,7 @@ class ExchangeGiftScreen extends Component {
                     />
                 </View>
                 <View style={styles.flexRight}>
-                    <Text style={styles.txtTitle}>{item.name}</Text>
+                    <Text style={styles.txtTitle}>{item.giftName}</Text>
                     <View style={styles.btnChange}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>

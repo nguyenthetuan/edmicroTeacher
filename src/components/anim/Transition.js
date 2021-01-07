@@ -17,7 +17,7 @@ module.exports = {
       const width = layout.initWidth;
       const translateX = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [width, 0, 0],
+        outputRange: [width, 0, -width / 4],
       });
 
       const opacity = position.interpolate({

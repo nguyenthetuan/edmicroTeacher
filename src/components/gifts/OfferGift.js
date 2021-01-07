@@ -45,7 +45,7 @@ export default class OfferGift extends Component {
                     />
                 </View>
                 <View style={styles.flexRight}>
-                    <Text style={styles.txtTitle}>{item.description}</Text>
+                    <Text style={styles.txtTitle}>{item.giftName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
