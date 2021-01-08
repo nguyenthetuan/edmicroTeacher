@@ -268,6 +268,10 @@ export default class UploadPDF extends Component {
         this.toast.show('Chưa nhập thời gian kiểm tra!');
         return;
       }
+      if (assignmentType && duration && duration < 1) {
+        this.toast.show('Thời gian kiểm tra phải lớn hơn 1 phút!');
+        return;
+      }
       const list = this.selectAnswer.getListQuestions();
       if (list.data.length === 0) {
         this.toast.show('Chưa có câu hỏi nào!');
