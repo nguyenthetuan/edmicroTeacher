@@ -4,6 +4,7 @@ import SignIn from '../components/auth/LoginWithPhoneScreen';
 import Forgot from '../components/auth/ForgotPasswordScreen';
 import transition from '../components/anim/Transition';
 import Orientation from 'react-native-orientation';
+import { Platform } from 'react-native';
 
 Orientation.lockToPortrait();
 
@@ -26,6 +27,6 @@ const AuthStack = createStackNavigator({
       header: null
     }
   },
-}, transition);
+}, Platform.OS == 'android' && transition);
 
 export default AuthStack;

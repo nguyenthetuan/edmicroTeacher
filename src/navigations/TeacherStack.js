@@ -36,6 +36,7 @@ import GiftDetail from '../components/gifts/GiftDetail';
 import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
 import StatisticScreen from '../components/statistics/StatisticScreen';
 import EditConfig from '../components/Teacher/Papers/EditConfig';
+import { Platform } from 'react-native';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -185,6 +186,6 @@ const TeacherStack = createStackNavigator({
   //   screen: AppStoreScreen,
   //   navigationOptions: { header: null, gesturesEnabled: true },
   // }
-}, transition);
+}, Platform.OS == 'android' && transition);
 
 export default TeacherStack;

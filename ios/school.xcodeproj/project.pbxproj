@@ -1221,6 +1221,8 @@
 				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1931,6 +1933,8 @@
 				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -2490,6 +2494,7 @@
 				CODE_SIGN_ENTITLEMENTS = school/school.entitlements;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 8ACC6ZKPHX;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",

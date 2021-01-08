@@ -32,6 +32,10 @@ import ModalSubject from './ModalSubject';
 import ModalOption from './ModalOption';
 import ModalAddPaper from './ModalAddPaper';
 import { updateExamListAction } from '../../../actions/paperAction';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+
+const { Value, timing } = Animated;
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const NAVBAR_HEIGHT = 220;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -42,7 +46,7 @@ class Papers extends Component {
     super(props);
     const scrollAnim = new Animated.Value(0);
     const offsetAnim = new Animated.Value(0);
-
+    this._scroll_y = new Value(0)
     this.state = {
       enableModalConfig: false,
       visibleEdit: false,
@@ -65,6 +69,7 @@ class Papers extends Component {
       animation: 'fadeInUpBig',
       assignmentContentType: 0,
     };
+
 
     this._indexPage = 0;
     this._pageSize = 50;
@@ -630,27 +635,59 @@ class Papers extends Component {
     } = this.state;
     const { user } = this.props;
 
+    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
+    const _header_opacity = _diff_clamp_scroll_y.interpolate({
+      inputRange: [0, 50],
+      outputRange: [1, 1],
+      extrapolate: 'clamp'
+    })
+    let translateY = _diff_clamp_scroll_y.interpolate({
+      inputRange: [0, 330],
+      outputRange: [0, -330],
+      extrapolate: 'clamp',
+    });
+
     return (
       <SafeAreaView style={styles.fill}>
-        <HeaderMain {...user} navigation={this.props.navigation} />
-        <View style={[styles.fill, { paddingHorizontal: 16 }]}>
-          <FlatList
-            data={listPapers}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => index.toString()}
-            extraData={listPapers}
-            ListEmptyComponent={this._listTestEmpty}
-            // ListFooterComponent={this._listTestFooter}
-            renderItem={({ item, index }) => (
-              <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-            )}
-            initialNumToRender={12}
-            windowSize={24}
-            scrollEventThrottle={1}
-            ListHeaderComponent={this.renderHeaderFlastList()}
-          />
-        </View>
+        <Animated.View
+          style={[
+            styles.header,
+            {
+              transform: [{ translateY: translateY }],
+              opacity: _header_opacity
+            }
+          ]}
+        >
+          <HeaderMain {...user} navigation={this.props.navigation} />
+          {this.renderHeaderFlastList()}
+        </Animated.View>
+        <AnimatedFlatList
+          style={{ paddingHorizontal: 16, paddingTop: 270 }}
+          data={listPapers}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => index.toString()}
+          extraData={listPapers}
+          ListEmptyComponent={this._listTestEmpty}
+          // ListFooterComponent={this._listTestFooter}
+          ListFooterComponent={<View style={{ height: 280 }} />}
+          renderItem={({ item, index }) => (
+            <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+          )}
+          initialNumToRender={12}
+          windowSize={24}
+          scrollEventThrottle={1}
+          // ListHeaderComponent={this.renderHeaderFlastList()}
+          bounces={false}
+          scrollEventThrottle={1}
+          onScroll={Animated.event([
+            {
+              nativeEvent: { contentOffset: { y: this._scroll_y } }
+            }
+          ],
+            { useNativeDriver: true }
+          )}
+        />
         {visibleModalEdit ? (
           <ModalEditConfig
             onVisible={visible => this.onVisibleModalEdit(visible)}
@@ -749,9 +786,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: NAVBAR_HEIGHT,
-    paddingTop: STATUS_BAR_HEIGHT,
+    paddingTop: 10,
     backgroundColor: '#fff',
-    // paddingHorizontal: 16,
+    paddingHorizontal: 16,
   },
   contentContainer: {
     // paddingTop: NAVBAR_HEIGHT,
@@ -779,7 +816,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginRight: 20
-  }
+  },
+  header: {
+    height: 285,
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    top: isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 0,
+    zIndex: 1,
+    backgroundColor: '#fff',
+    zIndex: 1
+  },
 });
 
 const mapStateToProps = state => {
