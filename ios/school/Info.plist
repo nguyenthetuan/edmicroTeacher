@@ -34,14 +34,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>zCbLoOyC_5Xh__A9bcG1a39H7W-gjHdf4GgUL</string>
 	<key>FacebookAppID</key>
 	<string>2928576693858785</string>
 	<key>FacebookDisplayName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>FirebaseScreenReportingEnabled</key>
 	<false/>
-	<key>CodePushDeploymentKey</key>
-	<string>zCbLoOyC_5Xh__A9bcG1a39H7W-gjHdf4GgUL</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

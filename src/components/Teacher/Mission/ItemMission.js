@@ -4,6 +4,7 @@ import AppIcon from '../../../utils/AppIcon';
 import { getIconSubject } from '../../../utils/Common';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import dataHelper from '../../../utils/dataHelper';
 const { width } = Dimensions.get('window');
 import Common from '../../../utils/Common';
 const modelStatus = {
@@ -12,8 +13,9 @@ const modelStatus = {
 }
 export default class ItemMission extends Component {
 
-  goToMissionDetail = () => {
-    const { data, token } = this.props;
+  goToMissionDetail = async () => {
+    const { data } = this.props;
+    const { token } = await dataHelper.getToken();
     this.props.getAssignmentByMission({
       token,
       _id: data._id

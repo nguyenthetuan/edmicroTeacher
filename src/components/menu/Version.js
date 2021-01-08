@@ -4,6 +4,9 @@ import MenuStyle from './MenuStyle';
 
 export default function Version(props) {
     return (
-        <Text style={MenuStyle.textVersion}>Version : {props.version}</Text>
+        <View>
+            <Text style={MenuStyle.textVersion}>Version : {props.version}</Text>
+            <Text style={{ fontFamily: 'Nunito-Regular', color: '#979797', fontSize: 12, marginBottom: 10, alignSelf: 'center' }}>Build Number : 1</Text>
+        </View>
     );
 }

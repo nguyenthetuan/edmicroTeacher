@@ -33,8 +33,8 @@ export default class TabMisson extends Component {
         </View>
     )
     renderPactice = () => {
-        const { missionDetail } = this.props.screenProps;
-        let { listProblem } = missionDetail;
+        const { missionDetail = {} } = this.props.screenProps;
+        let { listProblem = [] } = missionDetail;
         if (_.isEmpty(listProblem)) {
             return null;
         }
@@ -58,8 +58,8 @@ export default class TabMisson extends Component {
     }
 
     renderTest = () => {
-        const { missionDetail } = this.props.screenProps;
-        let { listTest } = missionDetail;
+        const { missionDetail = {} } = this.props.screenProps;
+        let { listTest = [] } = missionDetail;
         if (_.isEmpty(listTest)) {
             return null;
         }
@@ -96,9 +96,10 @@ export default class TabMisson extends Component {
 
     render() {
         const {
-            missionDetail,
+            missionDetail = {},
             navigation
         } = this.props.screenProps;
+        console.log(missionDetail);
         const { visible } = this.state;
         return (
             <View style={styles.contain}>

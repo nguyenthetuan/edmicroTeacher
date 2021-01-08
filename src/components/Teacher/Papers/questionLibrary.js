@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -11,6 +11,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  Animated,
   ScrollView
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
@@ -40,11 +41,15 @@ let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
   baseUrl = 'web/';
 }
+
+const { Value, timing } = Animated;
+const AnimatedWebView = Animated.createAnimatedComponent(WebView);
 const { width, height } = Dimensions.get('window');
 
 class QuestionLibrary extends Component {
   constructor(props) {
     super(props);
+    this._scroll_y = new Value(0);
     this.state = {
       dropdownVisible: false,
       totalAddQuestion: 0,
@@ -126,7 +131,7 @@ class QuestionLibrary extends Component {
 
   getDetailMatarial = async () => {
     const { idMatarial } = this.state;
-    this.setState({isLoadingModal:true})
+    this.setState({ isLoadingModal: true })
     const { token } = await dataHelper.getToken();
     const response = await apiPapers.getMatarialDetail({ token, idMatarial })
     if (response) {
@@ -425,6 +430,19 @@ class QuestionLibrary extends Component {
       { name: 'Vận dụng', code: '2' },
       { name: 'Vận dụng cao', code: '3' },
     ];
+
+    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
+    const _header_opacity = _diff_clamp_scroll_y.interpolate({
+      inputRange: [0, 50],
+      outputRange: [1, 1],
+      extrapolate: 'clamp'
+    })
+    let translateY = _diff_clamp_scroll_y.interpolate({
+      inputRange: [0, 330],
+      outputRange: [0, -330],
+      extrapolate: 'clamp',
+    });
+
     return (
       <View style={styles.container}>
         <SafeAreaView />
@@ -432,7 +450,7 @@ class QuestionLibrary extends Component {
           title={'Ngân hàng câu hỏi'}
           color={'white'}
           navigation={this.props.navigation}
-          actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')} 
+          actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
           actionStyle={{ borderRadius: 0 }}
           onRightAction={() => this.configurationQuestion()}
         />
@@ -567,12 +585,12 @@ class QuestionLibrary extends Component {
                   {isLoadingModal && htmlContent ?
                     <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
                     :
-                    htmlContent===null ?
+                    htmlContent === null ?
                       <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
                         <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                        <TouchableOpacity 
-                        style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
-                        onPress={()=>this.getDetailMatarial()}
+                        <TouchableOpacity
+                          style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
+                          onPress={() => this.getDetailMatarial()}
                         >
                           <Text style={{ color: '#fff' }}>Tải lại</Text>
                         </TouchableOpacity>
