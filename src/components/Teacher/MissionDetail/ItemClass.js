@@ -186,13 +186,12 @@ class ItemClass extends Component {
                             changeStatebuttonText={this.changeStatebuttonText}
                         />
                         {status ?
-                            // <TouchableOpacity
-                            //     onPress={this.goToMissionStatisticsScreen}
-                            //     style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
-                            //     <Text style={styles.txtAssignment}>Xem tiến độ</Text>
-                            //     <Icon name={'check'} color={'#fff'} size={20} />
-                            // </TouchableOpacity>
-                            null
+                            <TouchableOpacity
+                                onPress={this.goToMissionStatisticsScreen}
+                                style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
+                                <Text style={styles.txtAssignment}>Xem tiến độ</Text>
+                                <Icon name={'check'} color={'#fff'} size={20} />
+                            </TouchableOpacity>
                             :
                             <TouchableOpacity
                                 onPress={this.onAssignment}
