@@ -308,23 +308,25 @@ export default class Assignment extends Component {
           navigation={this.props.navigation}
           goBack={() => this._handleGoBack()}
         />
-        <FlatList
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-          data={data}
-          style={{ backgroundColor: '#fff' }}
-          keyExtractor={(item, index) => index.toString()}
-          // ListHeaderComponent={this._renderListHeader}
-          ListEmptyComponent={this._renderListEmpty}
-          renderItem={({ item, index }) => {
-            return <Item
-              item={item}
-              navigation={this.props.navigation}
-              onToast={(text) => this.onToast(text)}
-              dataItem={dataItem}
-            />
-          }}
-        />
+        <View style={{ flex: 1, backgroundColor: '#56CCF2' }}>
+          <FlatList
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            data={data}
+            style={{ backgroundColor: '#fff' }}
+            keyExtractor={(item, index) => index.toString()}
+            // ListHeaderComponent={this._renderListHeader}
+            ListEmptyComponent={this._renderListEmpty}
+            renderItem={({ item, index }) => {
+              return <Item
+                item={item}
+                navigation={this.props.navigation}
+                onToast={(text) => this.onToast(text)}
+                dataItem={dataItem}
+              />
+            }}
+          />
+        </View>
         <Toast ref="toast" position={'bottom'} />
         <SafeAreaView />
       </View >
@@ -380,7 +382,7 @@ const styles = StyleSheet.create({
   containerItem: {
     borderRadius: 5,
     marginBottom: 16,
-    marginTop: 16
+    marginTop: 16,
   },
   headerItem: {
     height: 30,
@@ -396,7 +398,7 @@ const styles = StyleSheet.create({
   },
   contentItem: {
     paddingHorizontal: 16,
-    paddingVertical: 12
+    paddingVertical: 12,
   },
   txtTitleItemContent: {
     fontFamily: 'Nunito-Bold',
