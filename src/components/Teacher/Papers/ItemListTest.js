@@ -27,10 +27,13 @@ export default class Item extends Component {
 
     render() {
         const item = this.props.item;
-        const subjectCode =
+        let subjectCode =
             item.subjectCode && item.subjectCode.length > 0
                 ? item.subjectCode[0]
                 : '';
+        if(item.subjectCode.length > 1) {
+            subjectCode = 'LIENMONHOC'
+        }
         let gradeCode =
             item.gradeCode && item.gradeCode.length > 0 ? item.gradeCode[0] : '';
         gradeCode = gradeCode.substring(1);

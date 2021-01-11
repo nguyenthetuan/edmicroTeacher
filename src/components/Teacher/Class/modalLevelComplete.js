@@ -35,6 +35,12 @@ export default class ModalLevelComplete extends Component {
     const { data } = this.state;
     const { assignmentTimeline } = data;
     let widthChart = (width / 4) * (data.assignmentTimeline.length + 0.5);
+    if(Platform.OS === 'android') {
+      if(widthChart > 9000) {
+        widthChart = 9000;
+      }
+    }
+    console.log("🚀 ~ file: modalLevelComplete.js ~ line 38 ~ ModalLevelComplete ~ _renderLevelComplete ~ widthChart", widthChart)
     const maxTime = !_.isEmpty(data.assignmentTimeline)
       ? Math.max(...data.assignmentTimeline.map((e, i) => e.timeDoing))
       : 0;
@@ -277,7 +283,7 @@ export default class ModalLevelComplete extends Component {
                     {data.assignmentTimeline.map((e, i) => {
                       return (
                         <Text
-                          key={`e${i.toString()}`}
+                          key={`f${i.toString()}`}
                           numberOfLines={1}
                           style={{
                             position: 'absolute',
@@ -312,7 +318,7 @@ export default class ModalLevelComplete extends Component {
                 ].map((e, i) => {
                   return (
                     <Text
-                      key={`f${i.toString()}`}
+                      key={`g${i.toString()}`}
                       style={{
                         marginTop: i === 0 ? 15 : 90,
                         fontFamily: 'Nunito-Regular',
