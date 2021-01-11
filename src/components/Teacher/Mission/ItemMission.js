@@ -48,10 +48,14 @@ export default class ItemMission extends Component {
     const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
     return (
       <TouchableOpacity
-        style={styles.contain}
+        style={[styles.contain, {
+          borderColor: Common.getBackroundSubject(data.subjectCode)
+        }]}
         onPress={this.goToMissionDetail}
       >
-        <View style={styles.styWrapHeader}>
+        <View style={[styles.styWrapHeader, {
+          backgroundColor: Common.getBackroundSubject(data.subjectCode),
+        }]}>
           <Text
             numberOfLines={1}
             style={styles.styTxtHeader}>

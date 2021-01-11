@@ -334,10 +334,10 @@ export default function LevelCompletion(props) {
                 {this.renderChartCircle()}
                 <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
                   <Text style={styles.txtTitleChart}>
-                    Tỷ lệ học sinh tham gia làm bài1
+                    Tỷ lệ học sinh tham gia làm bài
               </Text>
                 </View>
-                {/* {this.renderChartLevelComplete()} */}
+                {this.renderChartLevelComplete()}
               </View>
             </ScrollView>)
       }

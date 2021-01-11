@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Platform, ScrollView, SafeAreaView, Linking } from "react-native";
+import codePush from "react-native-code-push";
 import dataHelper from '../../utils/dataHelper';
 import global from '../../utils/Globals';
 import AppIcon from '../../utils/AppIcon';
@@ -78,6 +79,14 @@ class MenuTabTeacher extends Component {
     });
   }
 
+  onButtonPress() {
+    this.props.navigation.closeDrawer();
+    codePush.sync({
+      updateDialog: true,
+      installMode: codePush.InstallMode.IMMEDIATE
+    });
+  }
+
   render() {
     const { user, userGift } = this.props;
     const { modalVisible } = this.state;
@@ -137,6 +146,14 @@ class MenuTabTeacher extends Component {
                 title={'Đánh giá ứng dụng'}
                 rippleColor={rippleColor}
               />
+              {user?.userId == "5f6ec0d787047800015deb9b" &&
+                <MenuItem
+                  onPress={() => this.onButtonPress()}
+                  source={updateIcon}
+                  title={'Kiểm tra cập nhật'}
+                  rippleColor={rippleColor}
+                />
+              }
               <MenuItem
                 onPress={() => this.handleClick(5)}
                 source={updateIcon}
