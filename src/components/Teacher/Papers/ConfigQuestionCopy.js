@@ -300,9 +300,18 @@ class ConfigQuestion extends Component {
                         token,
                         id: response.id,
                     });
+                    console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 303 ~ ConfigQuestion ~ config= ~ res", res)
                     this.closePopupCreate();
                     this.props.needUpdate(true);
-                    this.props.navigation.navigate('CopyFromSubjectExists');
+                    // this.props.navigation.navigate('CopyFromSubjectExists');
+                    this.props.navigation.navigate('Assignment', {
+                        item: res,
+                        payloadAssignment: {
+                            gradeCode: res.gradeCode,
+                            subjectCode: res.subjectCode,
+                        },
+                        statusbar: 'light-content',
+                    });
                 }
 
             } catch (error) {

@@ -248,7 +248,7 @@ class Assignment extends Component {
     if (token) {
       const response = await apiPapers.getAssignment({
         token,
-        assignmentId: dataItem.id
+        assignmentId: dataItem.id || dataItem.assignmentId
       })
       if (response && response.status === 1) {
         this.setState({

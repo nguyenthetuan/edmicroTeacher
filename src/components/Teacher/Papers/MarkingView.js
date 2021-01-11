@@ -859,7 +859,7 @@ class MarkingView extends Component {
                         borderColor={'#828282'}
                         onChangeText={text => this.onChangeTextScore(text)}
                         value={point}
-                        keyboardType={'email-address'}
+                        keyboardType={'numeric'}
                         height={28}
                         bgColor='#FFF'
                         styleInput={styles.point}
