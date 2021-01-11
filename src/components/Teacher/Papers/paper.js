@@ -742,6 +742,7 @@ class Papers extends Component {
           animation={animation}
           assignmentContentType={assignmentContentType}
           dataSelected={dataSelected}
+          deletePaper={this.deletePaper}
         />
       </SafeAreaView>
     );

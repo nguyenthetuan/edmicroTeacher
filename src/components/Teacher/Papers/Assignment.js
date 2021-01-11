@@ -30,6 +30,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import ModalSelectStudent from './ModalSelectStudent';
+import { connect } from 'react-redux';
+import { updateExamListAction } from '../../../actions/paperAction';
+
 const { width, height } = Dimensions.get('screen');
 
 const Stage = {
@@ -49,8 +52,8 @@ function Item(props) {
   );
   const [timeEnd, setTimeEnd] = useState(
     item.timeEnd
-      ? item.timeEnd * 1000
-      : new Date().getTime()
+      ? new Date().getTime() + 200000000000
+      : new Date().getTime() + 200000000000
   );
   let student = item.students.length;
   const [isCheck, setCheck] = useState(item.permissionViewResult === 1);
@@ -120,6 +123,7 @@ function Item(props) {
           })
           if (response && response.status === 1) {
             props.onToast('Giao bài thành công!');
+            props.needUpdate(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
             AnalyticsManager.trackWithProperties('School Teacher', {
               action: 'ASSIGNMENT',
@@ -228,7 +232,7 @@ function Item(props) {
   )
 }
 
-export default class Assignment extends Component {
+class Assignment extends Component {
   state = {
     loading: true,
     data: []
@@ -244,7 +248,7 @@ export default class Assignment extends Component {
     if (token) {
       const response = await apiPapers.getAssignment({
         token,
-        assignmentId: dataItem.id
+        assignmentId: dataItem.id || dataItem.assignmentId
       })
       if (response && response.status === 1) {
         this.setState({
@@ -308,31 +312,47 @@ export default class Assignment extends Component {
           navigation={this.props.navigation}
           goBack={() => this._handleGoBack()}
         />
-        <View style={{ flex: 1, backgroundColor: '#56CCF2' }}>
-          <FlatList
-            bounces={false}
-            showsVerticalScrollIndicator={false}
-            data={data}
-            style={{ backgroundColor: '#fff' }}
-            keyExtractor={(item, index) => index.toString()}
-            // ListHeaderComponent={this._renderListHeader}
-            ListEmptyComponent={this._renderListEmpty}
-            renderItem={({ item, index }) => {
-              return <Item
-                item={item}
-                navigation={this.props.navigation}
-                onToast={(text) => this.onToast(text)}
-                dataItem={dataItem}
-              />
-            }}
-          />
-        </View>
+        <FlatList
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          data={data}
+          style={{ backgroundColor: '#fff' }}
+          keyExtractor={(item, index) => index.toString()}
+          // ListHeaderComponent={this._renderListHeader}
+          ListEmptyComponent={this._renderListEmpty}
+          renderItem={({ item, index }) => {
+            return <Item
+              item={item}
+              navigation={this.props.navigation}
+              onToast={(text) => this.onToast(text)}
+              dataItem={dataItem}
+              needUpdate={this.props.needUpdate}
+            />
+          }}
+        />
         <Toast ref="toast" position={'bottom'} />
         <SafeAreaView />
       </View >
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Assignment);
+
 
 const styles = StyleSheet.create({
   container: {
@@ -382,7 +402,7 @@ const styles = StyleSheet.create({
   containerItem: {
     borderRadius: 5,
     marginBottom: 16,
-    marginTop: 16,
+    marginTop: 16
   },
   headerItem: {
     height: 30,
@@ -398,7 +418,7 @@ const styles = StyleSheet.create({
   },
   contentItem: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 12
   },
   txtTitleItemContent: {
     fontFamily: 'Nunito-Bold',

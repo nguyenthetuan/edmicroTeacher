@@ -300,9 +300,18 @@ class ConfigQuestion extends Component {
                         token,
                         id: response.id,
                     });
+                    console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 303 ~ ConfigQuestion ~ config= ~ res", res)
                     this.closePopupCreate();
                     this.props.needUpdate(true);
-                    this.props.navigation.navigate('CopyFromSubjectExists');
+                    // this.props.navigation.navigate('CopyFromSubjectExists');
+                    this.props.navigation.navigate('Assignment', {
+                        item: res,
+                        payloadAssignment: {
+                            gradeCode: res.gradeCode,
+                            subjectCode: res.subjectCode,
+                        },
+                        statusbar: 'light-content',
+                    });
                 }
 
             } catch (error) {
@@ -375,7 +384,7 @@ class ConfigQuestion extends Component {
                     return !item.isActive ? (
                         <RippleButton
                             key={`a${index}`}
-                            style={Platform.OS === 'ios' ? styles.buttomClass : null}
+                            style={Platform.OS === 'ios' ? styles.buttomClass : { height: 30 }}
                             onPress={() => this.activeGrade(item)}>
                             <View
                                 style={Platform.OS === 'android' ? styles.buttomClass : null}>
@@ -385,7 +394,7 @@ class ConfigQuestion extends Component {
                     ) : (
                             <RippleButton
                                 key={`b${index}`}
-                                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
                                 onPress={() => this.activeGrade(item)}>
                                 <View
                                     style={Platform.OS === 'android' ? styles.buttomActive : null}>
@@ -413,7 +422,7 @@ class ConfigQuestion extends Component {
                     return !item.isActive ? (
                         <RippleButton
                             key={`c${index}`}
-                            style={Platform.OS === 'ios' ? styles.buttomClass : null}
+                            style={Platform.OS === 'ios' ? styles.buttomClass : { height: 30 }}
                             onPress={() => this.activeSubject(item)}>
                             <View
                                 style={Platform.OS === 'android' ? styles.buttomClass : null}>
@@ -423,7 +432,7 @@ class ConfigQuestion extends Component {
                     ) : (
                             <RippleButton
                                 key={`d${index}`}
-                                style={Platform.OS === 'ios' ? styles.buttomActive : null}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
                                 onPress={() => this.activeSubject(item)}>
                                 <View
                                     style={Platform.OS === 'android' ? styles.buttomActive : null}>
@@ -838,6 +847,7 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 10,
         backgroundColor: '#FFF',
+        height: 30
     },
     buttomActive: {
         flex: 1,
@@ -850,6 +860,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         paddingHorizontal: 5,
         paddingVertical: 3,
+        height: 30
+
     },
     bottomOfHeader: {
         position: 'absolute',

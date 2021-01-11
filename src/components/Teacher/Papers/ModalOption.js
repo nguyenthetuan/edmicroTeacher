@@ -66,7 +66,7 @@ export default class ModalOption extends PureComponent {
                                                 <Image
                                                     source={require('../../../asserts/icon/icDelete.png')}
                                                 />
-                                                <Text style={styles.txtModalDetail}>Xoá bài tập</Text>
+                                                <Text style={styles.txtModalDetail}>Xóa bài tập</Text>
                                             </View>
                                         </RippleItem>
                                     )}
