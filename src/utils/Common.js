@@ -110,7 +110,6 @@ const getIconSubjectForCompetition = (id) => {
 };
 
 const getDisplaySubject = (id) => {
-console.log("🚀 ~ file: Common.js ~ line 113 ~ getDisplaySubject ~ id", id)
   switch (id) {
     case AppConst.mathID: return 'Toán';
     case AppConst.phyID: return 'Vật lí';
