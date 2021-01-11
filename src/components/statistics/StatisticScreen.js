@@ -20,6 +20,7 @@ import {
 const { width } = Dimensions.get('window');
 import AppIcon from '../../utils/AppIcon';
 import ProgressBar from '../libs/ProgressBar';
+import { SafeAreaView } from 'react-navigation';
 class StatisticScreen extends Component {
     constructor(props) {
         super(props);
@@ -47,16 +48,21 @@ class StatisticScreen extends Component {
             isLoading
         } = this.props;
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 {isLoading
                     ?
                     <ActivityIndicator size='small' color='gray' style={styles.isLoading} />
                     :
-                    <ScrollView style={{ flex: 1 }}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        style={{ flex: 1 }}>
                         <View style={styles.bgHeader}>
                             <HeaderNavigation
                                 navigation={this.props.navigation}
                                 color={'#000'}
+                                title={'Thống kê'}
+                                back={true}
                             />
                         </View>
                         <Text style={styles.titleTask}>
@@ -116,12 +122,12 @@ class StatisticScreen extends Component {
                                         progressUnfilledColor="#BDBDBD"
                                     />
                                     <Text style={styles.rateSub}>
-                                        {(listClass.totalStudentOnline / listClass.totalStudent) * 100} %
-                             </Text>
+                                        {listClass.totalStudentOnline ?
+                                            ((listClass.totalStudentOnline / listClass.totalStudent) * 100)
+                                            : 0
+                                        } %
+                                    </Text>
                                 </View>
-                                <TouchableOpacity style={styles.showInfo}>
-                                    <Text style={styles.txtShowInfo}>Xem chi tiết</Text>
-                                </TouchableOpacity>
                             </View>
                         </View>
 
@@ -178,12 +184,13 @@ class StatisticScreen extends Component {
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {(mission.totalStudentComplete / mission.percentComplete) * 100} %
-                                    </Text>
+                                            {mission.totalStudentComplete ?
+                                                ((mission.totalStudentComplete / mission.percentComplete) * 100)
+                                                : 0
+                                            } %
+
+                                        </Text>
                                     </View>
-                                    <TouchableOpacity style={styles.showInfo}>
-                                        <Text style={styles.txtShowInfo}>Xem chi tiết</Text>
-                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
@@ -191,7 +198,7 @@ class StatisticScreen extends Component {
                             <Text style={styles.titleTask}>
                                 Bài tập trong tuần
                               </Text>
-                            <View style={styles.shadow}>
+                            <View style={[styles.shadow, { marginBottom: 10 }]}>
                                 <View style={styles.bodyTask}>
                                     <Text style={styles.txtTask}>Thống kê bài tập trong tuần</Text>
                                     <Text numberOfLines={1}
@@ -200,7 +207,7 @@ class StatisticScreen extends Component {
                                         <View style={{ flexDirection: 'row', width: '40%' }}>
                                             <View style={styles.flexLeft2}>
                                                 <Text numberOfLines={1}
-                                                    style={styles.sumBig}>{assignment.totalAssign}</Text>
+                                                    style={styles.sumBig}>{assignment.totalAssignment}</Text>
                                             </View>
                                             <Text style={styles.sum}>Tổng</Text>
                                         </View>
@@ -216,7 +223,7 @@ class StatisticScreen extends Component {
                                         </View>
                                         <View style={styles.countRight}>
                                             <View style={[styles.flexIcon, { paddingRight: 26, justifyContent: 'space-between', width: '90%' }]}>
-                                                <Text style={styles.numberBig}>{assignment.totalAssignment}</Text>
+                                                <Text style={styles.numberBig}>{assignment.totalAssign}</Text>
                                                 <Text numberOfLines={1}
                                                     style={styles.mission}>Bài tập</Text>
                                             </View>
@@ -230,25 +237,27 @@ class StatisticScreen extends Component {
                                     <Text style={[styles.status, { color: '#000', marginTop: 26 }]}>Hoàn thành</Text>
                                     <View style={styles.progressBar}>
                                         <ProgressBar
-                                            // progress={(assignment.totalComplete / assignment.totalComplete) * 100}
-                                            progress={10}
+                                            progress={(assignment.percentComplete / assignment.totalComplete)
+                                                ?
+                                                (assignment.percentComplete / assignment.totalComplete)
+                                                    > 100 ? 100 : (assignment.percentComplete / assignment.totalComplete) : 1}
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {(assignment.totalComplete / assignment.percentComplete) * 100} %
+                                            {assignment.percentComplete ?
+                                                ((assignment.percentComplete / assignment.totalComplete) * 100)
+                                                : 0
+                                            } %
                                          </Text>
                                     </View>
-                                    <TouchableOpacity style={styles.showInfo}>
-                                        <Text style={styles.txtShowInfo}>Xem chi tiết</Text>
-                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
                     </ScrollView>
                 }
-            </View>
+            </SafeAreaView>
         )
     }
 }
@@ -257,10 +266,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: 20
     },
     bgHeader: {
-        paddingTop: 20,
         backgroundColor: '#fff',
         flex: 1
     },
@@ -377,7 +384,8 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: 27
+        marginLeft: 27,
+        marginBottom: 15
     },
     rateSub: {
         fontSize: 12,
@@ -385,23 +393,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         position: 'absolute',
         right: 20
-    },
-    showInfo: {
-        backgroundColor: "#56BB73",
-        borderRadius: 20,
-        marginTop: 20,
-        alignSelf: 'center',
-        marginBottom: 12
-    },
-    txtShowInfo: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 21,
-        color: '#fff',
-        marginLeft: 41.5,
-        marginRight: 41.5,
-        marginTop: 6,
-        marginBottom: 6,
     },
     shadow: {
         shadowColor: "#000",
