@@ -21,10 +21,12 @@ import _ from 'lodash';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { connect } from 'react-redux';
+import { updateExamListAction } from '../../../actions/paperAction';
 
 const { width } = Dimensions.get('window');
 
-export default class EditConfig extends Component {
+class EditConfig extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -267,6 +269,7 @@ export default class EditConfig extends Component {
             if (data.assignmentType) {
                 body['duration'] = parseInt(time) * 60;
             }
+            console.log("🚀 ~ file: EditConfig.js ~ line 269 ~ EditConfig ~ onUpdate= ~ body", body)
 
             this.setState({
                 updating: true,
@@ -283,6 +286,7 @@ export default class EditConfig extends Component {
                         message: 'Thành công!',
                     });
                     this.props.navigation.state.params.onUpdateItem(body);
+                    this.props.needUpdate(true);
                     this.props.navigation.goBack();
                 } else {
                     this.setState({
@@ -401,6 +405,22 @@ export default class EditConfig extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(EditConfig);
 
 const styles = StyleSheet.create({
     safeView: {
