@@ -81,7 +81,6 @@ export default class Item extends Component {
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 40 }}
                                 />
                                 <Text style={[styles.txtQuestion, { width: 80 }]}> {Common.getDisplaySubject(subjectCode)}</Text>
-                                {/* <Text style={styles.txtQuestion}> {item.subjectCode[0]}</Text> */}
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage
@@ -92,7 +91,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column' }}>
+                        <View style={{ flexDirection: 'column', flex: 1}}>
                             <View style={styles.flexSenten}>
                                 <FastImage
                                     source={require('../../../asserts/icon/icon_remakeClassV3.png')}
@@ -118,7 +117,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 30, flex: 1, }}>
                             <View>
                                 {
                                     item.assignmentType
@@ -211,6 +210,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         paddingVertical: 14,
+        backgroundColor:'#fff',
+        flex: 1,
     },
     txtQuestion: {
         fontFamily: 'Nunito',

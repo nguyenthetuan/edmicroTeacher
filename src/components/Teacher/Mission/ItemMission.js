@@ -124,9 +124,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderWidth: 1,
     borderRadius: 4,
-    marginTop: 15
+    marginTop: 15,
+    flex: 1,
+    // backgroundColor: '#fff'
   },
   styWrapHeader: {
+    flex: 1,
     padding: 8,
     paddingHorizontal: 16,
     backgroundColor: '#7E96EC',
@@ -148,13 +151,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 0,
     marginLeft: 5,
-    width: width / 3 - 20
+    width: width / 3 - 15,
+    flex: 1
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
     marginHorizontal: 3,
     fontSize: 12,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    color: "#000"
   },
   styWrapImg: {
     width: 22,
@@ -165,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   txtTime: {
     fontFamily: "Nunito-Regular",
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'flex-start',
     marginLeft: 10,
-    marginTop: 4
+    marginTop: 4,
     // justifyContent: 'space-between',
   },
   txtButtomPractice: {
