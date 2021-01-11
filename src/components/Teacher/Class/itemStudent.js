@@ -93,16 +93,14 @@ export default class ItemStudent extends React.Component {
                   </Text>
                 </View>
                 <View style={styles.marProcess}>
-                  {/* <ProgressBarClassic
-                    progress={rate ? rate > 100 ? 100 : rate : 1}
-                  // valueStyle={'balloon'}
-                  /> */}
                   <ProgressBar
                     progress={rate ? rate > 100 ? 100 : rate : 1}
                     color="#56BB73"
-                    widthProps={width - 150}
+                    widthProps={width - 190}
                     progressUnfilledColor="#E0E0E0"
                   />
+                  <Text numberOfLines={1}
+                    style={styles.countToDo}>{item.totalDoing}/{item.totalAssign} bài</Text>
                 </View>
               </View>
             </View>
@@ -154,5 +152,17 @@ const styles = StyleSheet.create({
   },
   marProcess: {
     marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+    width: width * 0.2,
+  },
+  countToDo: {
+    fontFamily: "Nunito",
+    fontSize: 12,
+    color: '#2D9CDB',
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
   }
 })
