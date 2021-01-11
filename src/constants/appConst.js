@@ -123,6 +123,7 @@ module.exports = {
   mythuatID: "MYTHUAT",
   gdtcID: "GDTC",
   tinhocID: "TINHOC",
+  lienmonhocID: "LIENMONHOC",
 
   khoahocID: "STEM",
 

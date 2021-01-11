@@ -110,6 +110,7 @@ const getIconSubjectForCompetition = (id) => {
 };
 
 const getDisplaySubject = (id) => {
+console.log("🚀 ~ file: Common.js ~ line 113 ~ getDisplaySubject ~ id", id)
   switch (id) {
     case AppConst.mathID: return 'Toán';
     case AppConst.phyID: return 'Vật lí';
@@ -132,6 +133,7 @@ const getDisplaySubject = (id) => {
     case AppConst.mathThptID: return 'Toán THPT';
     case AppConst.mathJRID: return 'Toán';
     case AppConst.gdqpID: return 'Giáo Dục Quốc Phòng';
+    case AppConst.lienmonhocID: return 'Liên môn học';
     default:
       return 'Unknown variable';
   }
