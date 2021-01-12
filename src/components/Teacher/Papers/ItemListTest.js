@@ -31,7 +31,7 @@ export default class Item extends Component {
             item.subjectCode && item.subjectCode.length > 0
                 ? item.subjectCode[0]
                 : '';
-        if(item.subjectCode.length > 1) {
+        if (item.subjectCode.length > 1) {
             subjectCode = 'LIENMONHOC'
         }
         let gradeCode =
@@ -41,6 +41,7 @@ export default class Item extends Component {
             gradeCode,
             subjectCode,
         };
+        console.log("🚀 ~ file: ItemListTest.js ~ line 44 ~ Item ~ render ~ subjectCode", subjectCode)
 
         return (
             <View
@@ -94,7 +95,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column', flex: 1}}>
+                        <View style={{ flexDirection: 'column', flex: 1 }}>
                             <View style={styles.flexSenten}>
                                 <FastImage
                                     source={require('../../../asserts/icon/icon_remakeClassV3.png')}
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         paddingVertical: 14,
-        backgroundColor:'#fff',
+        backgroundColor: '#fff',
         flex: 1,
     },
     txtQuestion: {
