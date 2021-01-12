@@ -99,7 +99,6 @@ export default function LevelCompletion(props) {
 
   renderChartLevelComplete = () => {
     const { data } = props.screenProps;
-    console.log("data: ", JSON.stringify(data));
     let dataChart = [];
     let avgPercentComplete = 0;
     let avgTimeComplete = 0;
@@ -128,7 +127,7 @@ export default function LevelCompletion(props) {
     const widthChart = width / 4 * (dataChart.length + 0.5);
     const maxTime = Math.max(...dataChart.map(e => e.averageTime));
 
-    dataChart = dataChart.sort((a, b) => this.compareName(a.name, b.name))
+    dataChart = dataChart.sort((a, b) => compareName(a.name, b.name))
     return (
       <View>
         <View style={styles.containerChart}>
@@ -331,13 +330,13 @@ export default function LevelCompletion(props) {
             )
             : (<ScrollView style={styles.container}>
               <View style={{ flex: 1, justifyContent: 'center' }}>
-                {this.renderChartCircle()}
+                {renderChartCircle()}
                 <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
                   <Text style={styles.txtTitleChart}>
                     Tỷ lệ học sinh tham gia làm bài
               </Text>
                 </View>
-                {this.renderChartLevelComplete()}
+                {renderChartLevelComplete()}
               </View>
             </ScrollView>)
       }

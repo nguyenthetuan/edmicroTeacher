@@ -262,7 +262,7 @@ export default function StudentDetail(props) {
 
     renderItem = ({ item, index }) => {
         const progress = getProcess(item);
-        const status = getStatus(item,point);
+        const status = getStatus(item, point);
         return (
             <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }]}>
                 <View style={styles.viewAvatar}>
@@ -351,7 +351,7 @@ export default function StudentDetail(props) {
                                 data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
                                 keyExtractor={(item, index) => index.toString()}
                                 extraData={props.data}
-                                renderItem={this.renderItem}
+                                renderItem={renderItem}
                             />
                             {
                                 dataDetail ? <ModalDetail

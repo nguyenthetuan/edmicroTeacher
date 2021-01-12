@@ -41,8 +41,6 @@ export default class Item extends Component {
             gradeCode,
             subjectCode,
         };
-        console.log("🚀 ~ file: ItemListTest.js ~ line 44 ~ Item ~ render ~ subjectCode", subjectCode)
-
         return (
             <View
                 style={[
