@@ -109,7 +109,7 @@ const initTab = createMaterialTopTabNavigator(
         height: 5,
         width: Platform.isPad ? 200 : 80,
         borderBottomWidth: 1,
-        borderBottomColor: '#56CCF2', 
+        borderBottomColor: '#56CCF2',
         borderBottomWidth: 1,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
@@ -288,6 +288,7 @@ export default function StatisticsPoints(props) {
   const handleStatistic = async () => {
     if (data.class.length > 0) {
       const { token } = await dataHelper.getToken();
+      console.log("handleStatistic: ", props);
       if (token) {
         props.fetchHomework({
           token,
@@ -374,7 +375,7 @@ export default function StatisticsPoints(props) {
     }
   };
 
-  const refreshData =  async () =>{
+  const refreshData = async () => {
     setIsLoading(true);
     fetchData();
     setTimeout(() => {

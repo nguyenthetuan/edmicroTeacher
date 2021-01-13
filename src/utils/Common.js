@@ -122,6 +122,7 @@ const getDisplaySubject = (id) => {
     case AppConst.engID: return 'Tiếng Anh';
     case AppConst.engID2: return 'Tiếng Anh';
     case AppConst.gdcdID: return 'Giáo Dục Công Dân';
+    case AppConst.gdtcID: return 'Giáo Dục Thể Chất';
     case AppConst.engTHPTID: return 'Tiếng Anh THPT';
     case AppConst.engGRM: return 'Ngữ Pháp Tiếng Anh';
     case AppConst.engTHCS: return 'Tiếng Anh THCS';
