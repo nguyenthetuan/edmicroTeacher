@@ -80,8 +80,8 @@ export default class UploadPDF extends Component {
   }
 
   onClickItem = async (index, optionIdAnswer, point) => {
-    await this.setState({ indexSelecting: index, optionIdAnswer: optionIdAnswer || -1, showSelectAnswer: true, currentPoint: point });
-    await this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1);
+    await this.setState({ indexSelecting: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
+    await this.modalSelectAnswers.setIdAnswer(isNaN(optionIdAnswer) ? -1 : optionIdAnswer);
     setTimeout(() => {
       this.scrollview.scrollToEnd();
     }, 0)
