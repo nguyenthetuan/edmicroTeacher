@@ -57,7 +57,7 @@ export default class ModalSelectAnswers extends Component {
                             numberOfLines={1}
                             returnKeyType={'done'}
                             maxLength={4}
-                            keyboardType={'numeric'}
+                            keyboardType={'numbers-and-punctuation'}
                             placeholderTextColor={'#BDBDBD'}
                             style={styles.inputPoint}
                             onEndEditing={this.onEnediting}
