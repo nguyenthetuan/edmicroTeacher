@@ -467,7 +467,9 @@ export default function StatisticsPoints(props) {
     props.navigation.state.params.hideBackButtom;
 
   let timeEnd = props.data?.data.timeEnd;
-  timeEnd = convertTimeHMDMY(timeEnd);
+  console.log("🚀 ~ file: MainScreen.js ~ line 470 ~ StatisticsPoints ~ props.data", props.data);
+  // timeEnd = convertTimeHMDMY(timeEnd);
+  timeEnd = convertTimeHMDMY(Date.now()/1000);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -514,7 +516,8 @@ export default function StatisticsPoints(props) {
               : <View style={styles.wrapInfo}>
                 <Text style={styles.txtAssignment}>{props.data?.data.name || ''}</Text>
                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
-                <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
+                {/* <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text> */}
+                <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả ({timeEnd})</Text>
               </View>
             :
             <View style={styles.wrapInfo}>
