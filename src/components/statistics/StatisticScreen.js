@@ -77,7 +77,7 @@ class StatisticScreen extends Component {
                                         <Text numberOfLines={2}
                                             style={styles.number}>
                                             {
-                                                (listClass && listClass.data.length) > 0
+                                                (listClass && listClass?.data.length) > 0
                                                     ? (listClass?.data[0].totalClass) : 0
                                             } Lớp
                                             </Text>
@@ -85,7 +85,7 @@ class StatisticScreen extends Component {
                                             <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
                                             <Text style={styles.countGroup}>
                                                 {
-                                                    (listClass && listClass.data.length) > 0
+                                                    (listClass && listClass?.data.length) > 0
                                                         ? (listClass?.data[0].totalStudent) : 0
                                                 }
                                             </Text>
@@ -103,7 +103,7 @@ class StatisticScreen extends Component {
                                             <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
                                             <Text style={styles.countGroup}>
                                                 {
-                                                    (listClass && listClass.data.length) > 0
+                                                    (listClass && listClass?.data.length) > 0
                                                         ? (listClass?.data[1].totalStudent) : 0
                                                 }
                                             </Text>
@@ -174,18 +174,16 @@ class StatisticScreen extends Component {
                                     <Text style={[styles.status, { color: '#000', marginTop: 26 }]}>Hoàn thành</Text>
                                     <View style={styles.progressBar}>
                                         <ProgressBar
-                                            progress={(mission.totalStudentComplete / mission.percentComplete)
-                                                ?
-                                                (mission.totalStudentComplete / mission.percentComplete)
-                                                    > 100 ? 100 : (mission.totalStudentComplete / mission.percentComplete) : 1}
-                                            // progress={20}
+                                            progress={mission.totalMissionAssign ?
+                                                (mission.totalMissionAssign / mission.totalMission * 100) : 1
+                                            }
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {mission.totalStudentComplete ?
-                                                ((mission.totalStudentComplete / mission.percentComplete) * 100)
+                                            {mission.totalMissionAssign ?
+                                                Math.ceil((mission.totalMissionAssign / mission.totalMission) * 100)
                                                 : 0
                                             } %
 
@@ -237,17 +235,16 @@ class StatisticScreen extends Component {
                                     <Text style={[styles.status, { color: '#000', marginTop: 26 }]}>Hoàn thành</Text>
                                     <View style={styles.progressBar}>
                                         <ProgressBar
-                                            progress={(assignment.percentComplete / assignment.totalComplete)
-                                                ?
-                                                (assignment.percentComplete / assignment.totalComplete)
-                                                    > 100 ? 100 : (assignment.percentComplete / assignment.totalComplete) : 1}
+                                            progress={assignment.totalAssign ?
+                                                (assignment.totalAssign / assignment.totalAssignment * 100) : 1
+                                            }
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {assignment.percentComplete ?
-                                                ((assignment.percentComplete / assignment.totalComplete) * 100)
+                                            {assignment.totalAssign ?
+                                                Math.floor((assignment.totalAssign / assignment.totalAssignment) * 100)
                                                 : 0
                                             } %
                                          </Text>
