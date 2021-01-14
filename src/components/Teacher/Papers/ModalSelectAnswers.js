@@ -99,8 +99,8 @@ export default class ModalSelectAnswers extends Component {
                             }]}>D</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.close}
-                            style={{ width: 90, height: 30, position: 'absolute', right: 40, backgroundColor: '#FFFFFF', borderRadius: 4, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontWeight: '700', fontFamily: 'Nunito', fontSize: 14, color: '#56BB73' }}>OK</Text>
+                            style={styles.styWrapOk}>
+                            <Text style={styles.styTxtOk}>OK</Text>
                         </TouchableOpacity>
                     </View>
                 </View>}
@@ -135,15 +135,27 @@ const styles = StyleSheet.create({
         color: '#828282'
     },
     inputPoint: {
-        height: 30,
         width: 100,
         backgroundColor: '#F8F8F8',
         borderRadius: 2,
-        paddingHorizontal: 10,
+        paddingStart: 10,
+        padding: 8,
         color: 'red',
         left: 10,
-        paddingVertical: 0,
-        margin: 0,
-        borderWidth: 0,
+    },
+    styWrapOk: {
+        padding: 5,
+        paddingHorizontal: 30,
+        position: 'absolute',
+        right: 40,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    styTxtOk: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: 14,
+        color: '#56BB73'
     }
 })
