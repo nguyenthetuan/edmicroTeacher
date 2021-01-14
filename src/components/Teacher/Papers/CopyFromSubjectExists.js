@@ -198,7 +198,7 @@ export default class CopyFromSubjectExists extends Component {
                                     <TextInput
                                         placeholder={'Tên bài kiểm tra'}
                                         placeholderTextColor={'#c4c4c4'}
-                                        style={{ color: '#000', flex: 1, fontSize: 14, backgroundColor:'#fff', paddingVertical: 0, }}
+                                        style={{ color: '#000', flex: 1, fontSize: 14, backgroundColor: '#fff', paddingVertical: 0, }}
                                     // value={nameMission}
                                     />
                                     <IconAntDesign
@@ -215,7 +215,7 @@ export default class CopyFromSubjectExists extends Component {
                                         onPressItem={(index) => this.onPressItemSubject(index)}
                                     />
                                     <Dropdown
-                                        containerStyle={styles.styleDrop1}
+                                        containerStyle={styles.styleDrop}
                                         contentStyle={{ marginHorizontal: 0 }}
                                         title="Giáo trình"
                                         data={this.state.lerningTarget}
@@ -269,10 +269,10 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        alignSelf: 'center',
         flexDirection: 'row',
+        alignItems: 'flex-end',
+        flex: 1,
         marginRight: 10,
-        marginTop: 27
     },
     wrap2Dropdown: {
         width: '100%',
