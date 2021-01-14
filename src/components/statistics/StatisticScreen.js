@@ -123,7 +123,7 @@ class StatisticScreen extends Component {
                                     />
                                     <Text style={styles.rateSub}>
                                         {listClass.totalStudentOnline ?
-                                            ((listClass.totalStudentOnline / listClass.totalStudent) * 100)
+                                            Math.ceil((listClass.totalStudentOnline / listClass.totalStudent) * 100)
                                             : 0
                                         } %
                                     </Text>
