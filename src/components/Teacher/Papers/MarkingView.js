@@ -432,10 +432,10 @@ class MarkingView extends Component {
 
   publicedScore = async () => {
     const isErr = this.checkScore();
-    if (isErr) {
+    const { selectedValueClass, listClassAssigned, listStudentAssigned } = this.state;
+    if (isErr || listStudentAssigned.length === 0) {
       return;
     }
-    const { selectedValueClass, listClassAssigned } = this.state;
     const assignId = _.find(
       listClassAssigned,
       e => e.classId === selectedValueClass,
@@ -565,15 +565,15 @@ class MarkingView extends Component {
   };
 
   tabHomework() {
-    const {currentIndex,assignmentDetailCheck}=this.state;
+    const { currentIndex, assignmentDetailCheck } = this.state;
     let explan = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
-    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
-    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
+      assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userOptionText[0] : ''
+      : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userOptionText[0] : '';
     let urlMedia = assignmentDetailCheck.data.data[currentIndex]?.dataMaterial ?
-    assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer : ''
-    : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer : '';
+      assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0].userImageAnswer : ''
+      : assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer ? assignmentDetailCheck.data.data[currentIndex]?.dataStandard.userImageAnswer : '';
     return (
-      <View style={{ flex: 1 , paddingHorizontal:16,}}>
+      <View style={{ flex: 1, paddingHorizontal: 16, }}>
         <WebView
           style={{
             backgroundColor: 'transparent',

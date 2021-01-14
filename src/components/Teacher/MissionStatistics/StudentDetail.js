@@ -247,7 +247,7 @@ export default function StudentDetail(props) {
 
     const handleRework = (studentId) => {
         Alert.alert(
-            'Thông báo',
+            'Thông báo 2',
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
                 { text: 'Không', onPress: () => { }, style: 'cancel' },

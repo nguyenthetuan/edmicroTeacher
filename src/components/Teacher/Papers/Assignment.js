@@ -52,8 +52,8 @@ function Item(props) {
   );
   const [timeEnd, setTimeEnd] = useState(
     item.timeEnd
-      ? new Date().getTime() + 200000000000
-      : new Date().getTime() + 200000000000
+      ? item.timeEnd * 1000
+      : new Date().getTime()
   );
   let student = item.students.length;
   const [isCheck, setCheck] = useState(item.permissionViewResult === 1);

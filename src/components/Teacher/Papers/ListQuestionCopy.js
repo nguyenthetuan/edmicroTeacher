@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flex: 1,
         paddingHorizontal: 10,
-        marginTop: 24
+        marginTop: 10
     },
     headerContentLeft: {
         // width: 150,

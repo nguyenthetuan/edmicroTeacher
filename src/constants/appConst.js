@@ -114,6 +114,7 @@ module.exports = {
 
   gdcdID: 'GDCD',
   gdcdTHID: 'GDCDTHCS',
+  gdtcID: 'GDTC',
 
   tinhocID: "TINHOC",
   stemID: 'STEM',

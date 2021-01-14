@@ -783,7 +783,7 @@ const styles = StyleSheet.create({
     headerContent: {
         flexDirection: 'row',
         flex: 1,
-        marginTop: 24
+        marginTop: 10
     },
     headerContentRight: {
         flex: 1,
