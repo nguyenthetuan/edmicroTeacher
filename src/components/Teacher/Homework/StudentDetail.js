@@ -242,8 +242,9 @@ export default function StudentDetail(props) {
                                 toast.current.show('Yêu cầu làm lại thành công!');
                             }, 500)
                         } else {
-                            Global.updateHomeWork();
-                            toast.current.show(res);
+                            // Global.updateHomeWork();
+                            // toast.current.show(res);
+                            Alert.alert('Thông báo', res);
                         }
                     }
                 }
@@ -260,7 +261,7 @@ export default function StudentDetail(props) {
 
     }
 
-    renderItem = ({ item, index }) => {
+    const renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
         return (
