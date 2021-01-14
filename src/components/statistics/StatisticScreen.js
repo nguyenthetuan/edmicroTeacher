@@ -7,7 +7,8 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
@@ -25,7 +26,20 @@ class StatisticScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            bgBox: [
+                "#00CFF5",
+                "#FAB50F",
+                "#BC88FF",
+                "#E34D5C",
+                "#EB9CA8",
+                "#7C878E",
+                "#8A004F",
+                "#000000",
+                "#10069F",
+                "#00a3e0",
+                "#4CC1A1"
+            ]
         };
     }
     componentDidMount() {
@@ -39,13 +53,53 @@ class StatisticScreen extends Component {
         this.props.fetchMissionAction({ token, enumType, schoolYear });
         this.props.fetchAssignmentAction({ token, enumType, schoolYear });
     }
+    _renderItem = ({ item, index }) => {
+        const {
+            data,
+            navigation,
+            isLoading,
+            listClass,
+            classArray
+        } = this.props;
+        // const bgBox = this.bgBox;
+        return (
+            <View style={{
+                marginTop: 10,
+                marginLeft: 10,
+                marginRight: 10
+            }}>
+                <View style={{
+                    flexDirection: 'column',
+                    backgroundColor: this.state.bgBox[index % this.state.bgBox.length],
+                    borderRadius: 5
+                }}>
+                    <Text numberOfLines={2}
+                        style={styles.number}>
+                        {item.totalClass ?
+                            (item.totalClass) : 0
+                        } Lớp
+                     </Text>
+                    <View style={styles.direction}>
+                        <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
+                        <Text style={styles.countGroup}>
+                            {item.totalStudent ?
+                                (item.totalStudent) : 0
+                            }
+                        </Text>
+                    </View>
+                </View>
+            </View>
+
+        )
+    }
 
     render() {
         const {
             assignment,
             mission,
             listClass,
-            isLoading
+            isLoading,
+            classArray
         } = this.props;
         return (
             <SafeAreaView style={styles.container}>
@@ -72,48 +126,22 @@ class StatisticScreen extends Component {
                             <View style={styles.bodyTask}>
                                 <Text style={styles.txtTask}>Thống kê số lượng các lớp</Text>
                                 <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lý</Text>
-                                <View style={styles.flexStatitics}>
-                                    <View style={styles.flexLeft}>
-                                        <Text numberOfLines={2}
-                                            style={styles.number}>
-                                            {
-                                                (listClass && listClass?.data.length) > 0
-                                                    ? (listClass?.data[0].totalClass) : 0
-                                            } Lớp
-                                            </Text>
-                                        <View style={styles.direction}>
-                                            <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
-                                            <Text style={styles.countGroup}>
-                                                {
-                                                    (listClass && listClass?.data.length) > 0
-                                                        ? (listClass?.data[0].totalStudent) : 0
-                                                }
-                                            </Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.flexRight}>
-                                        <Text numberOfLines={2}
-                                            style={styles.number}>
-                                            {
-                                                (listClass && listClass.data.length) > 0
-                                                    ? (listClass?.data[1].totalClass) : 0
-                                            } Lớp
-                                            </Text>
-                                        <View style={styles.direction}>
-                                            <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
-                                            <Text style={styles.countGroup}>
-                                                {
-                                                    (listClass && listClass?.data.length) > 0
-                                                        ? (listClass?.data[1].totalStudent) : 0
-                                                }
-                                            </Text>
-                                        </View>
-                                    </View>
+                                <View style={{ marginLeft: 20, marginRight: 20 }}>
+                                    <FlatList
+                                        data={classArray}
+                                        horizontal
+                                        extraData={classArray}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        showsHorizontalScrollIndicator={false}
+                                        stickyHeaderIndices={[0]}
+                                        renderItem={this._renderItem}
+                                        style={{ backgroundColor: 'transparent' }}
+                                    />
                                 </View>
                                 <Text style={[styles.status, { color: '#000' }]}>Số học sinh đang truy cập</Text>
                                 <View style={styles.progressBar}>
                                     <ProgressBar
-                                        progress={(listClass.totalStudentOnline / listClass.totalStudent)
+                                        progress={listClass.totalStudentOnline
                                             ?
                                             (listClass.totalStudentOnline / listClass.totalStudent) >
                                                 100 ? 100 : (listClass.totalStudentOnline / listClass.totalStudent) : 1}
@@ -449,7 +477,8 @@ const mapStateToProps = state => {
         listClass: state.statistic.listClass,
         mission: state.statistic.mission,
         assignment: state.statistic.assignment,
-        isLoading: state.statistic.isLoading
+        isLoading: state.statistic.isLoading,
+        classArray: state.statistic.classArray,
     };
 };
 
