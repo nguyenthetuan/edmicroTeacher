@@ -449,12 +449,12 @@ const styles = StyleSheet.create({
     },
     txtTitle: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#FFF',
     },
     txtTexinput: {
         paddingLeft: 12,
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#2D9CDB',
         fontFamily: 'Nunito-Regular',
         padding: 0
@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
     },
     txtButtom: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#FFF',
     },
     buttomSave: {
@@ -543,17 +543,17 @@ const styles = StyleSheet.create({
     txtItemActive: {
         fontFamily: 'Nunito-Bold',
         fontWeight: 'bold',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#000',
     },
     txtItem: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#828282',
     },
     styTxtLabel: {
         color: '#828282',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Bold',
         left: 15
     }

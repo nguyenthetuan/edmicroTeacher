@@ -267,19 +267,19 @@ const styles = StyleSheet.create({
   textPause: {
     fontFamily: 'Nunito-Regular',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#2D9CDB',
   },
   totalReview: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontWeight: 'bold',
     marginLeft: 16,
     color: '#56BB73',
   },
   titleMessage: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FF7C8A',
     marginLeft: 16,
   },
@@ -293,12 +293,12 @@ const styles = StyleSheet.create({
   contentMessage: {
     color: '#828282',
     fontFamily: 'Nunito-Regular',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     textAlign: 'center',
     marginTop: 9,
   },
   txtButon: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Regular',
     color: '#fff',
     fontWeight: 'bold',

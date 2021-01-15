@@ -139,7 +139,7 @@ export default class ModalEditName extends Component {
                                             {loading && <ActivityIndicator size='small' color='#56CCF2' />}
                                             <Text style={{
                                                 color: '#000',
-                                                fontSize: 12,
+                                                fontSize: RFFonsize(12),
                                                 fontFamily: 'Nunito-Bold',
                                                 marginTop: 4
                                             }}>{message}</Text>
@@ -206,13 +206,13 @@ const styles = StyleSheet.create({
     },
     txtTexinput: {
         paddingLeft: 10,
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#000',
         fontFamily: 'Nunito-Bold'
     },
     txtButtom: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#FFF',
     },
     buttomSave: {
@@ -250,12 +250,12 @@ const styles = StyleSheet.create({
     txtItemActive: {
         fontFamily: 'Nunito-Bold',
         fontWeight: 'bold',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#000'
     },
     txtItem: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#828282'
     }
 })

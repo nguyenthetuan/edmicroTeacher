@@ -172,7 +172,7 @@ export default class DropdownStudent extends Component {
                     numberOfLines={1}
                     style={{
                         fontFamily: 'Nunito-Regular',
-                        fontSize: 12,
+                        fontSize: RFFonsize(12),
                         color: '#2D9CDB',
                         flex: 1,
                         paddingHorizontal: 8,
@@ -351,7 +351,7 @@ export default class DropdownStudent extends Component {
                     {highlighted ? <Icon name="remove" color={'#fff'} size={8} /> : null}
                 </View>
                 <Text style={{
-                    fontSize: 12,
+                    fontSize: RFFonsize(12),
                     fontFamily: 'Nunito-Regular',
                     color: highlighted ? '#fff' : '#BDBDBD'
                 }}>
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonText: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
     },
     modal: {
         flexGrow: 1,
@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
     rowText: {
         paddingHorizontal: 6,
         paddingVertical: 10,
-        fontSize: 11,
+        fontSize: RFFonsize(11),
         color: 'gray',
         backgroundColor: 'white',
         textAlignVertical: 'center',

@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: RFFonsize(14),
     color: '#000000',
-    lineHeight: 20,
+    lineHeight: RFFonsize(20),
     fontFamily: 'Nunito-Bold',
   },
 

@@ -371,7 +371,7 @@ class Papers extends Component {
               style={{
                 color: '#000',
                 fontFamily: 'Nunito-Bold',
-                fontSize: 14,
+                fontSize: RFFonsize(14),
                 textAlign: 'center',
               }}>
               Xem thêm
@@ -764,7 +764,7 @@ const styles = StyleSheet.create({
   },
   txtAdd: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF',
     marginLeft: 8,
   },
@@ -775,7 +775,7 @@ const styles = StyleSheet.create({
   },
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
   },
   fill: {
@@ -797,7 +797,7 @@ const styles = StyleSheet.create({
   },
   searchPaper: {
     height: 40,
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
     fontFamily: 'Nunito-Regular',
     flex: 1,
@@ -805,8 +805,8 @@ const styles = StyleSheet.create({
   textTilteModal: {
     fontFamily: 'Nunito-Regular',
     fontWeight: '700',
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
     textAlign: 'center',
   },
   styWrapSearch: {

@@ -174,12 +174,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     alignSelf: 'flex-start',
     color: '#fff',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
   },
   textNumber: {
     color: '#fff',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     fontFamily: 'Nunito-Bold',
   },
   wrapNumber: {

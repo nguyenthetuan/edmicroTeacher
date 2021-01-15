@@ -119,7 +119,7 @@ class SelectModal extends Component {
                               fontFamily: isSelected
                                 ? 'Nunito-Bold'
                                 : 'Nunito-Regular',
-                              fontSize: 14,
+                              fontSize: RFFonsize(14),
                               color: isSelected ? '#2D9CDB' : '#828282',
                               paddingHorizontal: 6,
                             }}>
@@ -179,11 +179,11 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#2D9CDB',
   },
   txtEmpty: {
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     fontFamily: 'Nunito-Regular',
     color: '#000',
     marginStart: 2,

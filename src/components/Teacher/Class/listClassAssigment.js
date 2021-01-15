@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
   },
 });

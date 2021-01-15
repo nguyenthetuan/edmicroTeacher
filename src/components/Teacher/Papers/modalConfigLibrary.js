@@ -17,6 +17,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 
@@ -103,7 +104,7 @@ export default class ModalConfigLibrary extends Component {
               {activeButtom && !_.isEmpty(selectItem) && selectItem.name ? (
                 <TouchableOpacity onPress={() => this.deleteItem()}>
                   <Text
-                    style={{ fontSize: 12, color: '#757575', marginRight: 5 }}>
+                    style={{ fontSize: RFFonsize(12), color: '#757575', marginRight: 5 }}>
                     x
                   </Text>
                 </TouchableOpacity>
@@ -212,12 +213,12 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
   },
   txtTitleModal: {
     color: '#2D9CDB',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     fontFamily: 'Nunito-Bold',
   },
   topModal: {
@@ -228,20 +229,20 @@ const styles = StyleSheet.create({
   },
   txtSelectItem: {
     color: '#828282',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
     // width: '50%'
   },
   txtActive: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#2D9CDB',
     textAlign: 'center',
   },
   txtItem: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#828282',
     textAlign: 'center',
   },

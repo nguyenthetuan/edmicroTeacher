@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     },
     txtTitleItem: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#fff',
         textTransform: 'capitalize',
     },
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     },
     txtTitleItemContent: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#828282',
         marginLeft: 5
         // width: 80
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     },
     txtAssignment: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#fff',
         marginRight: 10,
         marginLeft: 10,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     },
     txtCheckAllow: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#828282'
     },
     viewName: {
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     },
     txtContentItem: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#CF616C'
     },
     viewDate: {

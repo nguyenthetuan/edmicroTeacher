@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   txtTotal: {
     fontFamily: 'Nunito-Bold',
     color: '#159FDA',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginVertical: 5,
   },
   wrapElement: {

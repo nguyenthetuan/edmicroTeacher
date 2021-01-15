@@ -156,7 +156,7 @@ const Style = StyleSheet.create({
   progressBar__balloonVal: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 6,
+    fontSize: RFFonsize(6),
     // lineHeight: 30,
     top: 0,
     paddingBottom: 1

@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         fontFamily: 'Nunito-Regular',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     },
     textInput: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         paddingHorizontal: 10,
         color: '#000',
         fontFamily: 'Nunito-Regular'

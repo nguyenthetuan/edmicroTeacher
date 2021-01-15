@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: 'center',
     color: 'white',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     fontFamily: 'Nunito-Bold',
     paddingVertical: 5,
   },
@@ -53,18 +53,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Nunito-Bold',
     color: 'white',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     paddingHorizontal: 3
   },
   textHello: {
     color: 'white',
     alignSelf: 'center',
-    fontSize: 12
+    fontSize: RFFonsize(12)
   },
   textDescription: {
     color: 'white',
     alignSelf: 'center',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
   }
 });

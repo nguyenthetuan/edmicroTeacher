@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     txtTitleModal: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#FFF',
         textTransform: 'uppercase',
     },
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     },
     txtUpload: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#828282',
         marginTop: 8,
     },
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito',
         fontWeight: '700',
         color: '#828282',
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         textAlign: 'center',
         marginTop: 10,
         marginBottom: 10,

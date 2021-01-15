@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     styTxtHeader: {
         color: '#FFF',
         marginHorizontal: 3,
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Bold',
     },
     styWrapElem: {
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
     },
     styWrapHtml: {
         fontFamily: "Nunito",
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         textAlign: 'center',
         color: '#757575',
         paddingHorizontal: 30

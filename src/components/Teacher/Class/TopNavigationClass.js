@@ -59,7 +59,7 @@ const Tab = createMaterialTopTabNavigator(
 
       },
       labelStyle: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         fontFamily: 'Nunito-Bold',
       },
     },

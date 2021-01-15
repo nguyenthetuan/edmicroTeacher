@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     textLink: {
         color: "#828282",
         alignSelf: 'center',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Regular',
     },
 });

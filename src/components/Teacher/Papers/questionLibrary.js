@@ -703,7 +703,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF',
   },
   rightHeader: {
@@ -715,7 +715,7 @@ const styles = StyleSheet.create({
   },
   totalAddQuestion: {
     marginLeft: 16,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#159FDA',
     marginTop: 10,

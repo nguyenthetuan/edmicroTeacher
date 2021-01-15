@@ -135,7 +135,7 @@ export default function LevelCompletion(props) {
           <View style={{ width: 14, height: 220 }}>
             <Text style={{
               fontFamily: 'Nunito-Regular',
-              fontSize: 9,
+              fontSize: RFFonsize(9),
               color: '#FF6213',
               transform: [
                 { rotate: "-90deg" },
@@ -162,7 +162,7 @@ export default function LevelCompletion(props) {
                       style={{
                         marginTop: i === 0 ? 15 : 31,
                         fontFamily: 'Nunito-Regular',
-                        fontSize: 6,
+                        fontSize: RFFonsize(6),
                         color: '#000',
                         textAlign: 'right'
                       }}>{e}%</Text>
@@ -239,7 +239,7 @@ export default function LevelCompletion(props) {
                             width: width / 4,
                             bottom: 4,
                             fontFamily: 'Nunito-Regular',
-                            fontSize: 8,
+                            fontSize: RFFonsize(8),
                             color: '#828282',
                             textAlign: 'center'
                           }}>{e.name}</Text>
@@ -258,7 +258,7 @@ export default function LevelCompletion(props) {
                       style={{
                         marginTop: i === 0 ? 15 : 90,
                         fontFamily: 'Nunito-Regular',
-                        fontSize: 6,
+                        fontSize: RFFonsize(6),
                         color: '#000',
                         textAlign: 'right'
                       }}>{e}</Text>
@@ -270,7 +270,7 @@ export default function LevelCompletion(props) {
           <View style={{ width: 14, height: 220 }}>
             <Text style={{
               fontFamily: 'Nunito-Regular',
-              fontSize: 9,
+              fontSize: RFFonsize(9),
               color: '#FF6213',
               transform: [
                 { rotate: "90deg" },
@@ -357,12 +357,12 @@ const styles = StyleSheet.create({
   },
   txtLeftChartCircle: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#828282'
   },
   txtPercentChartCircle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#2A8DC6'
   },
   viewPercentChartCircle: {
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     marginStart: 16,
     marginBottom: 23,
     color: '#000',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold'
   },
   txtTitleChart: {
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
     marginStart: 16,
     marginBottom: 23,
     color: '#000',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold'
   },
   containerChart: {
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   txtTimeAverage: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
     color: '#000',
     marginStart: 8

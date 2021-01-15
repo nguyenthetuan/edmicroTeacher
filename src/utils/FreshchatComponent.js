@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   txtIntercom: {
     fontWeight: '600',
     color: '#FFF',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
   },
   wrapTxtIntercom: {
     backgroundColor: 'red',

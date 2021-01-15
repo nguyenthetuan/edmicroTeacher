@@ -71,7 +71,7 @@ export default class ModalCard extends Component {
                             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                             onPress={this.onVisibleModalCard}
                         >
-                            <IconAntDesign name={'closecircleo'} style={{ fontSize: 20 }} />
+                            <IconAntDesign name={'closecircleo'} style={{ fontSize: RFFonsize(20) }} />
                         </TouchableOpacity>
                         <View style={styles.styWrapHead}>
                             <View style={styles.styWrapImg}>
@@ -94,7 +94,7 @@ export default class ModalCard extends Component {
                             <TouchableOpacity
                                 onPress={this.onclickCopyToClipboard}
                             >
-                                <Icon name={'copy'} style={{ color: '#828282', fontSize: 20 }} />
+                                <Icon name={'copy'} style={{ color: '#828282', fontSize: RFFonsize(20) }} />
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
     },
     styLabel: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 18,
+        fontSize: RFFonsize(18),
     },
     styDay: {
         fontFamily: 'Nunito-Regular',
         color: '#828282',
         letterSpacing: 1,
-        fontSize: 12
+        fontSize: RFFonsize(12)
     },
     styWrapCode: {
         padding: 5,

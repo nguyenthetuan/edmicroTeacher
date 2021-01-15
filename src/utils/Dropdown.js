@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     styTxt: {
         flex: 1,
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#2D9CDB',
         paddingHorizontal: 6,
     },

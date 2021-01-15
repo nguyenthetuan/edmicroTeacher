@@ -716,7 +716,7 @@ class ConfigQuestion extends Component {
                         style={{
                           color: '#FFFEFE',
                           fontFamily: 'Nunito-Bold',
-                          fontSize: 12,
+                          fontSize: RFFonsize(12),
                           marginLeft: 5,
                           marginRight: 15,
                           marginBottom: 5,
@@ -739,7 +739,7 @@ class ConfigQuestion extends Component {
                     }}>
                     <Text
                       style={[
-                        { color: '#FFF', fontSize: 12, fontFamily: 'Nunito-Bold' },
+                        { color: '#FFF', fontSize: RFFonsize(12), fontFamily: 'Nunito-Bold' },
                         errors.name && { color: '#EB5757' },
                       ]}>
                       Nhập tên bài kiểm tra
@@ -944,7 +944,7 @@ class ConfigQuestion extends Component {
                               { height: Platform.OS === 'ios' ? 20.5 : 22 },
                             ]}
                             onPress={() => this._moveQuestion()}>
-                            <Text style={{ fontSize: 11 }}>Đến</Text>
+                            <Text style={{ fontSize: RFFonsize(11) }}>Đến</Text>
                           </TouchableOpacity>
                           <View
                             style={{ marginTop: Platform.OS === 'ios' ? 5 : 5 }}>
@@ -1151,7 +1151,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF',
   },
   rightHeader: {
@@ -1166,7 +1166,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   txtRightHeader: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },
@@ -1177,7 +1177,7 @@ const styles = StyleSheet.create({
   pickTime: {
     height: 30,
     width: 100,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#828282',
     fontFamily: 'Nunito-Regular',
     backgroundColor: '#fff',
@@ -1189,25 +1189,25 @@ const styles = StyleSheet.create({
   txtFooterheder: {
     color: '#828282',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   txtTitleFooter: {
     marginTop: 7,
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#424242',
   },
   txtIndexOne: {
     marginTop: 7,
     color: '#2D9CDB',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     marginLeft: -20,
   },
   txtIndexTwo: {
     marginTop: 7,
     color: '#FF6213',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     marginLeft: -20,
   },
@@ -1232,12 +1232,12 @@ const styles = StyleSheet.create({
   },
   txtDeleteChoose: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#828282',
     marginRight: 8,
   },
   addQuestion: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     color: '#159FDA',
     marginTop: 6,
@@ -1269,19 +1269,19 @@ const styles = StyleSheet.create({
   txtTitleGrade: {
     color: '#FFFEFE',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 5,
     marginRight: 15,
   },
   txtItem: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#828282',
   },
   txtItemActive: {
     fontFamily: 'Nunito-Bold',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
   },
   buttonMove: {
@@ -1296,7 +1296,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   totalAddQuestion: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#159FDA',
   },
@@ -1308,7 +1308,7 @@ const styles = StyleSheet.create({
     marginTop: 9,
     textAlign: 'center',
     color: '#FF6213',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     paddingVertical: 0,
   },
@@ -1340,7 +1340,7 @@ const styles = StyleSheet.create({
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontWeight: '400',
     color: '#fff',
   }

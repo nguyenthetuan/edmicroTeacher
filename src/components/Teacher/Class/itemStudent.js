@@ -11,6 +11,7 @@ import ProgressBarClassic from '../../libs/progessBarClassic';
 import Common from '../../../utils/Common';
 import moment from 'moment';
 import ProgressBar from '../../libs/ProgressBar';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window')
 export default class ItemStudent extends React.Component {
   constructor(props) {
@@ -118,29 +119,29 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   txtName: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
     fontFamily: 'Nunito-Bold'
   },
   txtNameOne: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
     fontFamily: 'Nunito-Bold'
   },
   txtAccess: {
     color: '#828282',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
   },
   txtAccess1: {
     color: '#828282',
-    fontSize: 10,
-    lineHeight: 14,
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
     fontFamily: 'Nunito-Regular',
   },
   txtDate: {
     color: '#2D9CDB',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
     marginLeft: 10,
   },
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   },
   countToDo: {
     fontFamily: "Nunito",
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#2D9CDB',
     alignItems: 'center',
     paddingLeft: 10,

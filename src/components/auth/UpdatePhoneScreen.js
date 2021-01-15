@@ -544,7 +544,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     color: '#222222',
-    lineHeight: 19,
+    lineHeight: RFFonsize(19),
     marginBottom: 3
   },
   txtTitle: {

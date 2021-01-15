@@ -81,7 +81,7 @@ const homeStyle = StyleSheet.create({
     alignItems: 'center',
   },
   txtTitle: {
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
     alignSelf: 'center',

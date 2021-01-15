@@ -29,7 +29,7 @@ export default class VideoComponent extends Component {
                     style={styles.player} />
                 <View style={styles.infoYoutube}>
                     <Text style={styles.textTitleHead}>30 Ca Khúc Nhạc Trẻ Tâm Trạng Chỉ Dành Cho Người Thất Tình – Nhạc Trẻ Buồn Chọn Lọc Hay Nhất 2018</Text>
-                    <Text style={{ fontSize: 14 }}><Text style={{ fontWeight: 'bold', fontSize: 14 }}>Giảng viên : </Text>Đang Cập Nhật</Text>
+                    <Text style={{ fontSize: RFFonsize(14) }}><Text style={{ fontWeight: 'bold', fontSize: RFFonsize(14) }}>Giảng viên : </Text>Đang Cập Nhật</Text>
                 </View>
                 <FlatList
                     style={{ paddingHorizontal: 10 }}
@@ -48,7 +48,7 @@ export default class VideoComponent extends Component {
                                 <Text numberOfLines={2} ellipsizeMode={'tail'} style={styles.textTitle}>
                                     Hoa Vinh - Ngắm Hoa Lệ Rơi, Trăm Năm Không Quên - Những Ca Khúc Hay Nhất Được Cover Bởi Hoa Vinh
                                 </Text>
-                                <Text style={{ fontSize: 12 }}><Text style={{ fontWeight: 'bold', fontSize: 13 }}>Giảng viên : </Text>Đang Cập Nhật</Text>
+                                <Text style={{ fontSize: RFFonsize(12) }}><Text style={{ fontWeight: 'bold', fontSize: RFFonsize(13) }}>Giảng viên : </Text>Đang Cập Nhật</Text>
                             </View>
                         </View>
                     }
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     textTitleHead: {
         color: '#585858',
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: RFFonsize(15),
     },
     textTitle: {
         color: '#585858',
         fontWeight: 'bold',
-        fontSize: 13,
+        fontSize: RFFonsize(13),
     },
     rowItem: {
         flexDirection: 'row',
@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
     },
     titleImage: {
         color: '#fff',
-        fontSize: 9
+        fontSize: RFFonsize(9)
     }
 });

@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     color: '#fff',
     width: 30,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center',
     marginHorizontal: 25,
     backgroundColor: '#6ED8FB',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   styIcon: {
-    fontSize: 22,
+    fontSize: RFFonsize(22),
     color: '#FF4457',
     marginLeft: 8,
     marginRight: -6,
