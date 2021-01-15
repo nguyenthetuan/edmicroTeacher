@@ -8,9 +8,8 @@ export default function ItemPactice(props) {
             props.show({ _id: item.problemId });
         }}>
             <Text style={styles.styTxt} numberOfLines={1}>{item.problemName}</Text>
-            <View style={styles.styWrapCount}>
-                <Text style={styles.styCount}>{item.countDone}</Text>
-            </View>
+            <View style={{}} />
+            <Text style={styles.styCount}> Yêu cầu hoàn thành: <Text style={{color:'#6ED8FB'}}>{item.percentDone} %</Text></Text>
         </TouchableOpacity>
     )
 }
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         borderColor: '#56CCF2',
-        flexDirection: 'row',
+        flexDirection: 'column',
     },
     styTxt: {
         fontFamily: 'Nunito-Regular',
@@ -38,8 +37,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     styCount: {
-        color: '#fff',
+        color: '#828282',
         fontFamily: 'Nunito-Regular',
-        letterSpacing: 0
+        fontSize: 12,
+        letterSpacing: 0,
+        alignSelf: 'flex-end',  
+        marginTop: 5
     }
 })
