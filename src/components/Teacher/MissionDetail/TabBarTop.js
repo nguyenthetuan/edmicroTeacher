@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import TabClass from './TabClass';
 import TabMission from './TabMission';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const TabTop = createMaterialTopTabNavigator({
     TabMission: {
         screen: TabMission,

@@ -8,6 +8,7 @@ import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 

@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 // import { isIphoneX } from 'react-native-iphone-x-helper';
 // const top = isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 10;
+import { RFFonsize } from '../utils/Fonts';
 const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({

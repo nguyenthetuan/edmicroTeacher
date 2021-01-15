@@ -8,7 +8,9 @@ var {
   View,
   LayoutAnimation,
 } = require('react-native')
-import Entypo from 'react-native-vector-icons/Entypo';
+import Entypo from 'react-native-vector-icons/Entypo'
+import { RFFonsize } from '../../utils/Fonts';
+
 export default class ProgressBarClassic extends React.Component {
   constructor() {
     super()

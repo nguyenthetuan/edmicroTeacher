@@ -2,6 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import PracticeTab from './PracticeTab';
 import TestTab from './TestTab';
+import { RFFonsize } from '../../../utils/Fonts';
 const TabMissionType = createMaterialTopTabNavigator(
   {
     PracticeTab: {

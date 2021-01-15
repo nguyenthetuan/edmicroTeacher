@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import Color from '../../constants/colors';
 import RippleButton from '../libs/RippleButton';
+import { RFFonsize } from '../../utils/Fonts';
 
 const top = isIphoneX() ? 32 : Platform.OS == 'ios' ? 22 : 10;
 

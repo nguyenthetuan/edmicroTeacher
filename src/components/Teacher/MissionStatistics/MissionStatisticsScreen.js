@@ -22,7 +22,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Api from '../../../services/apiMission';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(

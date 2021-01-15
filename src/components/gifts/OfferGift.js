@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { imageDefault } from '../../utils/Common';
 import Toast from 'react-native-easy-toast';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default class OfferGift extends Component {

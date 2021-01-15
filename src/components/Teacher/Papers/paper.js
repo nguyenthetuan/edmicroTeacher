@@ -33,6 +33,7 @@ import ModalOption from './ModalOption';
 import ModalAddPaper from './ModalAddPaper';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

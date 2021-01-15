@@ -2,7 +2,7 @@
 // => paste file constants.js of
 // node_modules/react-native-chart-kit/src/contribution-graph/constants.js
 export const MILLISECONDS_IN_ONE_DAY = 24 * 60 * 60 * 1000;
-
+import { RFFonsize } from '../../utils/Fonts';
 export const DAYS_IN_WEEK = 7;
 
 export const MONTH_LABELS = {
@@ -273,7 +273,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >CN</Text>
                                     <Text
@@ -282,7 +282,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={squareSize + 20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >T2</Text>
                                     <Text
@@ -291,7 +291,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={squareSize * 2 + 20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >T3</Text>
                                     <Text
@@ -300,7 +300,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={squareSize * 3 + 20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >T4</Text>
                                     <Text
@@ -309,7 +309,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={squareSize * 4 + 20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >T5</Text>
                                     <Text
@@ -318,7 +318,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={squareSize * 5 + 20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >T6</Text>
                                     <Text
@@ -327,7 +327,7 @@ class ContributionGraph extends AbstractChart {
                                         height={squareSize}
                                         x={x + 10}
                                         y={squareSize * 6 + 20}
-                                        fontSize={12}
+                                        fontSize={RFFonsize(12)}
                                         fill={'#eee'}
                                     >T7</Text>
                                 </>

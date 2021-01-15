@@ -5,6 +5,7 @@ import AppIcon from '../../utils/AppIcon';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from './Avatar';
 import { formatNumber } from '../../utils/Common';
+import { RFFonsize } from '../../utils/Fonts';
 
 class HeaderMenu extends React.PureComponent {
   constructor(props) {
@@ -47,7 +48,7 @@ class HeaderMenu extends React.PureComponent {
             )} */}
           <View style={{ marginLeft: 10 }}>
             <Text
-              style={{ color: '#FFF', fontSize: 11, fontFamily: 'Nunito-Bold' }}>
+              style={{ color: '#FFF', fontSize: RFFonsize(11), fontFamily: 'Nunito-Bold' }}>
               {displayName}
             </Text>
             {phoneNumber && phoneNumber.length >= 10 ? (
@@ -93,7 +94,7 @@ class HeaderMenu extends React.PureComponent {
               style={{
                 fontFamily: 'Nunito-Regular',
                 color: '#FFF',
-                fontSize: 12,
+                fontSize: RFFonsize(12),
               }}>
               Đổi mật khẩu
           </Text>
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   },
   textUsername: {
     flex: 1,
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000000',
     lineHeight: 20,
     fontFamily: 'Nunito-Bold',
@@ -166,14 +167,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   txtInfo: {
-    fontSize: 11,
+    fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Regular',
     color: '#C4C4C4',
     marginTop: 2,
   },
   styTxtEDPoint: {
     color: '#FFF',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     marginHorizontal: 5
   },

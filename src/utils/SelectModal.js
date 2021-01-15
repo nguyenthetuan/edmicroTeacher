@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import * as Animatable from 'react-native-animatable';
+import { RFFonsize } from '../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 

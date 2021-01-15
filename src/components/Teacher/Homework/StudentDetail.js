@@ -18,7 +18,7 @@ import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import Global from '../../../utils/Globals';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {

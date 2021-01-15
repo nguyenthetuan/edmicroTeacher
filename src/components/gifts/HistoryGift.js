@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { copyToClipboard } from '../../utils/Common';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default class HistoryGift extends Component {

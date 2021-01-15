@@ -21,6 +21,7 @@ import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiMission';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

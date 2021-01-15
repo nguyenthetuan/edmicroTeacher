@@ -21,6 +21,7 @@ import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import Global from '../../../utils/Globals';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class StepOne extends Component {
   constructor(props) {

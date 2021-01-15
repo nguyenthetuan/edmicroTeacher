@@ -11,6 +11,7 @@ import {
 import HeaderNavigation from '../common/HeaderNavigation';
 import * as Api from '../../services/apiGift';
 import dataHelper from '../../utils/dataHelper';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default class OfferGiftDetail extends Component {

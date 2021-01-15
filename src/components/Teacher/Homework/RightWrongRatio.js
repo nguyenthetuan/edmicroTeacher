@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { Svg, Line } from 'react-native-svg';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {

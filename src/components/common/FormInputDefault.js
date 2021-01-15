@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class FormInputDefault extends Component {
     render() {
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     label: {
         color: '#828282',
         fontFamily: 'Nunito-Regular',
-        fontSize: 15
+        fontSize: RFFonsize(15)
     },
     viewInput: {
         height: 40,
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#000'
     }
 });

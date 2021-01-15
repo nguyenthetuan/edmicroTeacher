@@ -34,6 +34,7 @@ import SelectAnswer from './SelectAnswer';
 import AnalyticsManager from '../../../utils/AnalyticsManager';
 import Globals from '../../../utils/Globals';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
+import { RFFonsize } from '../../../utils/Fonts';
 import HeaderPaper from './HeaderPaper';
 import ModalSelectAnswers from './ModalSelectAnswers';
 

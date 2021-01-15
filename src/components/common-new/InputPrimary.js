@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-
+import { RFFonsize } from '../../utils/Fonts';
 export default InputPrimary = (props) => {
     getLabel = () => {
         try {

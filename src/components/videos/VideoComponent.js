@@ -1,5 +1,14 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, PixelRatio, Dimensions, FlatList, ImageBackground } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    PixelRatio,
+    Dimensions,
+    FlatList,
+    ImageBackground
+} from 'react-native';
+import { RFFonsize } from '../../../utils/Fonts';
 import YouTube from 'react-native-youtube';
 
 export default class VideoComponent extends Component {

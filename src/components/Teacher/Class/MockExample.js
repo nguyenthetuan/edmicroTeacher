@@ -26,6 +26,7 @@ import LearnPlaceholder from '../../shim/LearnPlaceholder';
 import HeaderDetail from '../../common-new/HeaderDetail';
 import AppIcon from '../../../utils/AppIcon';
 import HeaderExample from '../../common-new/HeaderExample';
+import { RFFonsize } from '../../../utils/Fonts';
 const messageError = 'Không có nội dung hiển thị';
 const {width, height} = Dimensions.get('window');
 let baseUrl = 'file:///android_asset/';

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 

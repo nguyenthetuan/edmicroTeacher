@@ -23,6 +23,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 let heightTextInput = 0,

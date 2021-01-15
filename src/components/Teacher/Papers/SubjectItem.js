@@ -11,6 +11,7 @@ import _ from 'lodash';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/AntDesign';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class SubjectItem extends Component {
     openModalSubject = () => {
         this.props.refModalSubject.onOpen()

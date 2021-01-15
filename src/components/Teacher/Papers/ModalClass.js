@@ -14,6 +14,7 @@ import { Modalize } from 'react-native-modalize';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/Entypo';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default class ModalClass extends Component {

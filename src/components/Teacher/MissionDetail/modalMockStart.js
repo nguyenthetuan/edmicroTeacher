@@ -14,6 +14,7 @@ import {
 import Api from '../../../services/apiPracticeHelper';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 export default class ModalMockExamStart extends Component {
   constructor(props) {

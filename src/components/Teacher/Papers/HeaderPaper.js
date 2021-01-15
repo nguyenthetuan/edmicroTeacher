@@ -10,6 +10,7 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class HeaderPaper extends React.PureComponent {
   constructor(props) {
     super(props);

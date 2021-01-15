@@ -15,6 +15,7 @@ import Api from '../../../services/apiClassTeacher';
 import _ from 'lodash';
 import Globals from '../../../utils/Globals';
 import { delay } from '../../../utils/Helper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class Plan extends Component {
   constructor(props) {

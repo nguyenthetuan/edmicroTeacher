@@ -25,6 +25,7 @@ import apiService from '../../services/apiPracticeHelper';
 import PickerUtils from '../../utils/PickerUtils';
 import AppIcon from '../../utils/AppIcon';
 import { alertMessage } from '../../utils/Alert';
+import { RFFonsize } from '../../utils/Fonts';
 import { styles } from 'react-native-material-ripple/styles';
 const { width, height } = Dimensions.get('window');
 export default class WarningModal extends Component {

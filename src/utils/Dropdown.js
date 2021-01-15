@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import SelectModal from './SelectModal';
 import AppIcon from '../utils/AppIcon';
+import { RFFonsize } from '../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default function Dropdown(props) {

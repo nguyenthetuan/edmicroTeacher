@@ -9,6 +9,7 @@ import { getAvatarSource } from '../../../utils/Common';
 import RippleButton from '../../common-new/RippleButton';
 import Globals from '../../../utils/Globals';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 export default class UpdatePlan extends Component {

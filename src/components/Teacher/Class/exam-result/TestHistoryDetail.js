@@ -7,6 +7,7 @@ import WarningModal from '../../../modals/WarningModal';
 import MathJaxLibs from '../../../../utils/MathJaxLibsTest';
 import { WebView } from 'react-native-webview';
 import _ from 'lodash';
+import { RFFonsize } from '../../../../utils/Fonts';
 import ShimePlaceholder from '../../../shim/LearnPlaceholder';
 
 let baseUrl = 'file:///android_asset/';

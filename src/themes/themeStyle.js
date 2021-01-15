@@ -1,6 +1,6 @@
 const btnSize = 5;
 const btnLgSize = 10;
-
+import { RFFonsize } from '../utils/Fonts';
 module.exports = {
   textTitle: {
     color: '#000000',

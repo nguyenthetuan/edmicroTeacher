@@ -12,6 +12,7 @@ import ItemExercise from './itemExercise';
 import RippleItem from '../../common-new/RippleItem';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
+import { RFFonsize } from '../../../utils/Fonts';
 import { delay } from '../../../utils/Helper';
 
 export default class ListExercise extends Component {

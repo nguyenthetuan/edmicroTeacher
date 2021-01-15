@@ -23,6 +23,7 @@ import dataHelper from '../../../utils/dataHelper';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width } = Dimensions.get('window');
 

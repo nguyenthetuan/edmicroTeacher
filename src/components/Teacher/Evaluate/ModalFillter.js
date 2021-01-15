@@ -13,6 +13,7 @@ import Dropdown from '../../../utils/Dropdown';
 import AppIcon from '../../../utils/AppIcon';
 import { DATA_YEAR } from '../../../constants/const';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class ModalFillter extends Component {
 

@@ -18,6 +18,7 @@ import dataHelper from './dataHelper';
 import jwtDecode from 'jwt-decode';
 import apiUserHelper from '../services/apiUserHelper';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../utils/Fonts';
 
 const APP_ID = '8d0af544-bbe3-4d5b-bd87-3ed6e2338a35';
 const APP_KEY = '97de673e-7c15-46d6-9a22-875bf38f2ecf';

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { RFFonsize } from '../../utils/Fonts';
 import Common from '../../utils/Common';
 export default class ItemInfo extends Component {
 

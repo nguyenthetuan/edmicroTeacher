@@ -19,6 +19,7 @@ import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../a
 import dataHelper from '../../utils/dataHelper';
 import { getSourceAvatar } from '../../utils/Helper';
 import { imageDefault, formatNumber } from '../../utils/Common';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 class ExchangeGiftScreen extends Component {
     componentDidMount() {

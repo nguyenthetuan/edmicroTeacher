@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import OfferGift from '../OfferGift';
+import { RFFonsize } from '../../../utils/Fonts';
 import HistoryGift from '../HistoryGift';
 const { width, height } = Dimensions.get('window');
 const TabTop = createMaterialTopTabNavigator({

@@ -10,6 +10,7 @@ import RippleButton from '../../common-new/RippleButton';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/AntDesign';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class ClassItem extends Component {
 
     openModalClass = () => {
