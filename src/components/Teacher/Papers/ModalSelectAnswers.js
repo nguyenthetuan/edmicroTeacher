@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Text, TextInput } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    Text,
+    TextInput
+} from 'react-native';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 

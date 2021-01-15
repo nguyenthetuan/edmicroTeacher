@@ -9,6 +9,7 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 

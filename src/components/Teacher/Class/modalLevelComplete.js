@@ -18,6 +18,7 @@ import _ from 'lodash';
 import ZoomAnim from '../../anim/ZoomAnim';
 import AppIcon from '../../../utils/AppIcon';
 import RadarChart from '../../common/RadarChart';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 export default class ModalLevelComplete extends Component {

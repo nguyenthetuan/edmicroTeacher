@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'rea
 import AppIcon from '../../../utils/AppIcon';
 import dataHelper from '../../../utils/dataHelper';
 import Global from '../../../utils/Globals';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width } = Dimensions.get('window');
 export default class StepFour extends Component {
 

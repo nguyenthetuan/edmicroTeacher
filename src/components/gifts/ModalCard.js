@@ -10,6 +10,7 @@ import {
     Linking
 } from 'react-native';
 import { formatNumber } from '../../utils/Common';
+import { RFFonsize } from '../../utils/Fonts';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Feather';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';

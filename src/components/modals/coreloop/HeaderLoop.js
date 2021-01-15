@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { mainStyle } from '../../../themes';
 import RippleButton from '../../libs/RippleButton';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class HeaderLoopModal extends Component {
   render() {

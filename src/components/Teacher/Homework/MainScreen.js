@@ -27,7 +27,7 @@ import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Global from '../../../utils/Globals';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(

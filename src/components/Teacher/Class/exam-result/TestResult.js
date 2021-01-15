@@ -10,7 +10,7 @@ import Share from '../../../exam-detail/Test';
 import { formatSecond } from '../../../../utils/Common';
 import MyActivityIndicator from '../../../libs/MyActivityIndicator';
 import Api from '../../../../services/apiClassTeacher'
-
+import { RFFonsize } from '../../../../utils/Fonts';
 // import RateApp from '../../../common/RateApp';
 // import Mixpanel from 'react-native-mixpanel';
 // import jwtDecode from 'jwt-decode';

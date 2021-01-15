@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import dataHelper from '../../../utils/dataHelper';
 const { width } = Dimensions.get('window');
 import Common from '../../../utils/Common';
+import { RFFonsize } from '../../../utils/Fonts';
 const modelStatus = {
   unDelivered: 1,// chưa giao bài.
   delivered: 0,// đã giao bài.

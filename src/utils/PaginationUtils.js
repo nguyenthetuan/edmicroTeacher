@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { RFFonsize } from '../utils/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class PaginationUtils extends Component {
   constructor(props) {

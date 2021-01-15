@@ -18,6 +18,7 @@ import dataHelper from '../../../utils/dataHelper';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../../utils/Fonts';
 Icon.loadFont();
 
 const TOUCHABLE_ELEMENTS = [

@@ -13,6 +13,7 @@ import classIcon from '../asserts/icon/icon_class_unactive.png';
 import classIconActive from '../asserts/icon/icon_class_active.png';
 import FreshchatComponent from '../utils/FreshchatComponent';
 import MissionScreen from '../containers/teacher/Mission/MissionContainer';
+import { RFFonsize } from '../utils/Fonts';
 const {width, height} = Dimensions.get('window');
 
 const TabMainTeacher = createBottomTabNavigator(

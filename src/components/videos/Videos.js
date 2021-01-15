@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/Entypo'
 import videoItem1 from '../../asserts/images/video_item1.png';
 import videoItem2 from '../../asserts/images/video_item2.png';
 import videoItem3 from '../../asserts/images/video_item3.png';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const images = [
   videoItem1, videoItem2, videoItem3
 ]

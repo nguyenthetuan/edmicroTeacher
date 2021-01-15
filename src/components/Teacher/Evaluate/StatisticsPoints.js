@@ -13,6 +13,7 @@ import FastImage from 'react-native-fast-image';
 import AppIcon from '../../../utils/AppIcon';
 import { HEIGHT_TOPBAR, roundToTwo } from '../../../utils/Common';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 let data = [

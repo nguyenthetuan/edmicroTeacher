@@ -32,6 +32,7 @@ import Globals from '../../../utils/Globals';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import SwitchButton from '../../../components/common/ButtonSwitch';
+import { RFFonsize } from '../../../utils/Fonts';
 import { AlertNoti, roundToTwo, roundToFour } from '../../../utils/Common';
 import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';

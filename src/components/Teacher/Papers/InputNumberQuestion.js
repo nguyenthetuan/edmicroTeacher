@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View, Dimensions, TouchableOpacity, TextInput, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppIcon from '../../../utils/AppIcon';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window')
 
 export default class InputNumberQuestion extends Component {

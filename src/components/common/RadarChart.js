@@ -3,6 +3,7 @@ import { VictoryChart, VictoryTheme, VictoryPolarAxis, VictoryArea, VictoryGroup
 import { View, Text, StyleSheet, Dimensions, processColor, ActivityIndicator } from 'react-native';
 import { UIActivityIndicator, } from 'react-native-indicators';
 import _ from 'lodash';
+import { RFFonsize } from '../../utils/Fonts';
 const borderColor = '#e2d7d7';
 
 const windowWidth = Dimensions.get('screen').width;
@@ -111,7 +112,7 @@ export default class RadarChart extends React.Component {
                             return (
                                 <VictoryPolarAxis key={i} dependentAxis
                                     style={{
-                                        axisLabel: { padding: 40, fontSize: 11, fill: '#828282', fontFamily: 'Nunito-Regular' },
+                                        axisLabel: { padding: 40, fontSize: RFFonsize(11), fill: '#828282', fontFamily: 'Nunito-Regular' },
                                         axis: { stroke: '#828282', strokeWidth: 1 },
                                         grid: { stroke: '#828282', strokeWidth: 1, opacity: 1 },
                                     }}
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#000',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         fontFamily: 'Nunito-Bold',
         marginLeft: 10
     },
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
     },
     textPercent: {
         color: '#E2E2E2',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         fontFamily: 'Nunito-Bold'
     },
     UIActivityIndicator: {

@@ -7,6 +7,7 @@ import {
 import _ from 'lodash';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import InputNumberQuestion from './InputNumberQuestion';
+import { RFFonsize } from '../../../utils/Fonts';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {

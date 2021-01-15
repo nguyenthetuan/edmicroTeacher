@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default function ItemPactice(props) {
     const { item } = props;

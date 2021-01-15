@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
 import TabOfferHis from '../gifts/tabTop/TabOfferHis';
+import { RFFonsize } from '../../utils/Fonts';
 class SaleGift extends Component {
 
     renderItem = ({ item }) => {

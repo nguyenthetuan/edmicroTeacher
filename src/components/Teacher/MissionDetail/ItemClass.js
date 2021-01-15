@@ -17,6 +17,7 @@ import dataHelper from '../../../utils/dataHelper';
 import apiMission from '../../../services/apiMission';
 import AppIcon from '../../../utils/AppIcon';
 import ModalSelectStudent from '../Papers/ModalSelectStudent';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('screen');
 import { connect } from 'react-redux';
 import {

@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';
+import { RFFonsize } from '../../utils/Fonts';
 import {
     statisticClassAction,
     statisticMissionAction,

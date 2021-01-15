@@ -11,6 +11,7 @@ import ProgressBar from '../../libs/ProgressBar';
 import Common from '../../../utils/Common';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 

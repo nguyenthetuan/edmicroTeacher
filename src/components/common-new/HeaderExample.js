@@ -3,6 +3,7 @@ import {View, StyleSheet, Image, TouchableOpacity, Text} from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import {getSourceAvatar} from '../../utils/Helper';
 import Global from '../../utils/Globals';
+import { RFFonsize } from '../../utils/Fonts';
 export default class HeaderExample extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   txtSubmit: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#2D9CDB',
     marginLeft: 6,
   },

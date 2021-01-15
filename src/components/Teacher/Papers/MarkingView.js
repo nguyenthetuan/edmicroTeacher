@@ -32,6 +32,7 @@ import Dropdown from '../../../utils/Dropdown';
 import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import FormInput from '../../../components/common/FormInput';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';

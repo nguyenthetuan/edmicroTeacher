@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { RFFonsize } from '../../utils/Fonts';
 
 const MenuStyle = StyleSheet.create({
     container: {

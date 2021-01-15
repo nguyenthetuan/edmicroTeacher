@@ -19,6 +19,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import _ from 'lodash';
 import RippleButton from '../../libs/RippleButton';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const{width,height } = Dimensions.get('window');
 export default class ModalMockExamComplete extends Component {

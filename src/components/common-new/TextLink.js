@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { RFFonsize } from '../../utils/Fonts';
 
 const TextLink = (props) => {
     const { title, onPress } = props;

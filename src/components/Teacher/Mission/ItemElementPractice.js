@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 const { height } = Dimensions.get('window');
 export default class ItemElement extends Component {
   renderItem = ({ item }) => {

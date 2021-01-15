@@ -19,6 +19,7 @@ import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
 import { DATA_YEAR } from '../../../constants/const';
 import { convertSeconds } from '../../../utils/Utils';
+import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 import HeaderMain from '../../common-new/HeaderMain';
 import FastImage from 'react-native-fast-image';

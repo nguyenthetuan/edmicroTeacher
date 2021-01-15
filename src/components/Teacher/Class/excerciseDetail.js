@@ -14,6 +14,7 @@ import { createAppContainer } from 'react-navigation';
 import ModalMockExamStart from './modalMockExamStart';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { getSourceAvatar } from '../../../utils/Helper';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const ExerciseTab = createMaterialTopTabNavigator(

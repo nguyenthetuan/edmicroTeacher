@@ -3,8 +3,15 @@ import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Modal, Linking, P
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIon from 'react-native-vector-icons/Ionicons';
 import Color from '../../constants/colors';
-import { descriptionContactForm, descriptionContactForm1, numberPhone } from '../../constants/appConst';
+import {
+  descriptionContactForm,
+  descriptionContactForm1,
+  numberPhone
+} from '../../constants/appConst';
+import { RFFonsize } from '../../utils/Fonts';
+
 const { width, height } = Dimensions.get('window');
+
 export default class SettingContact extends Component {
 
   handleClick = () => this.props.closeModal()
@@ -138,7 +145,7 @@ const s = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   txtLienhe: {
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     fontWeight: 'bold',
     color: 'white',
     paddingTop: 20,

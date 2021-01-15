@@ -21,6 +21,7 @@ import Common from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import { RFFonsize } from '../../../utils/Fonts';
 
 let height = Dimensions.get('window').height;
 

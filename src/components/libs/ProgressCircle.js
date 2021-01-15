@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { Text } from 'react-native'
 import Color from '../../constants/colors';
-
+import { RFFonsize } from '../../utils/Fonts';
 const { width } = Dimensions.get('window');
 
 

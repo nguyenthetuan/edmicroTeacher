@@ -14,6 +14,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import Globals from '../../../utils/Globals';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 const {width} = Dimensions.get('window');
 export default class QuestionMockMenu extends Component {
   constructor(props) {

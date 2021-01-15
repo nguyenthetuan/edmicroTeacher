@@ -15,6 +15,7 @@ import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/Entypo';
 import CommonBeta from '../../../utils/CommonBeta';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default class ModalSubject extends Component {

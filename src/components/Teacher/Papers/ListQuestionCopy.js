@@ -16,7 +16,7 @@ import AppIcon from '../../../utils/AppIcon';
 import htmlHelper from '../../../utils/WebviewListQuestionCopy';
 import { WebView } from 'react-native-webview';
 import WarningModal from '../../modals/WarningModal';
-
+import { RFFonsize } from '../../../utils/Fonts';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {

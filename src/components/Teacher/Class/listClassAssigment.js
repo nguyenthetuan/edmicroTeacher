@@ -10,6 +10,7 @@ import ItemCLassAssigment from './itemClassAssigment';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
 import { delay } from '../../../utils/Helper';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class ListClassAssigment extends Component {
   constructor(props) {
     super(props);

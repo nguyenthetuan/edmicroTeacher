@@ -18,6 +18,7 @@ import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import ItemSectionListPrac from './ItemSectionListPrac';
 import { createMission } from '../../../services/apiMission';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 export default class StepThree extends Component {
   constructor(props) {

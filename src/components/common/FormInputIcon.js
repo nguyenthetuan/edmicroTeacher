@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, Image, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class FormInputIcon extends Component {
     render() {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     labelFormDark: {
         color: '#828282',
         fontFamily: 'Nunito-Regular',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
     },
     rowForm: {
         flexDirection: 'row',

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class ItemSectionListPrac extends Component {
 

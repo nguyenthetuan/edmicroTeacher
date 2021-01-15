@@ -16,6 +16,7 @@ import * as Api from '../../services/apiGift';
 import dataHelper from '../../utils/dataHelper';
 import { formatNumber } from '../../utils/Common';
 import IconFeather from 'react-native-vector-icons/Feather';
+import { RFFonsize } from '../../utils/Fonts';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import {

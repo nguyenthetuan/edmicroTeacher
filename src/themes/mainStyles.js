@@ -3,7 +3,7 @@ import { Platform, Dimensions } from 'react-native';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import Dimens from '../constants/dimens';
 import * as AppConst from '../constants/const';
-
+import { RFFonsize } from '../utils/Fonts';
 const top = isIphoneX() ? 30 : Platform.OS == 'ios' ? 20 : 0;
 const paddingTop = isIphoneX() ? 40 : Platform.OS == 'ios' ? 30 : 10;
 

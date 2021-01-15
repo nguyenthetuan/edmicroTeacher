@@ -24,6 +24,7 @@ Icon.loadFont();
 import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import apiPapers from '../../../services/apiPapersTeacher';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class DropdownStudent extends Component {
     static propTypes = {

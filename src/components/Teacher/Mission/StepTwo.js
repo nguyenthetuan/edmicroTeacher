@@ -6,6 +6,7 @@ import _ from 'lodash';
 import TabMissionType from './TabMissionType';
 import Toast from 'react-native-easy-toast';
 import Global from '../../../utils/Globals';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { height, width, } = Dimensions.get('window');
 export default class StepTwo extends Component {

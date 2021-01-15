@@ -9,6 +9,7 @@ import _ from 'lodash';
 import Common from '../../../utils/Common';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class Item extends Component {
     constructor(props) {
         super(props);

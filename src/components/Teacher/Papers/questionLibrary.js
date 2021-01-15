@@ -34,6 +34,7 @@ import { AlertNoti } from '../../../utils/Common';
 import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { RFFonsize } from '../../../utils/Fonts';
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
   'Thêm câu hỏi không thành công. Bạn vui lòng chọn câu hỏi khác.';

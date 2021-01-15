@@ -17,6 +17,7 @@ import AppIcon from '../../../utils/AppIcon';
 import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DropdownStudent from './DropdownStudent';
+import { RFFonsize } from '../../../utils/Fonts';
 Icon.loadFont();
 import moment from 'moment';
 import DateTimePickerModal from "react-native-modal-datetime-picker";

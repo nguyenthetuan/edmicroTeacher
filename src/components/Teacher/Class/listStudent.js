@@ -12,6 +12,7 @@ import RippleItem from '../../common-new/RippleItem';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
 import { delay } from '../../../utils/Helper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 class ItemStudentContainer extends React.Component {
 

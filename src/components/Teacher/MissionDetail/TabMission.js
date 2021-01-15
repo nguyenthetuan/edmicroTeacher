@@ -12,7 +12,7 @@ import ItemTest from './ItemTest';
 import _ from 'lodash';
 import ModalMockStart from './modalMockStart';
 import ModalMockStartTest from './modalMockStartTest';
-
+import { RFFonsize } from '../../../utils/Fonts';
 export default class TabMisson extends Component {
     state = {
         visible: false

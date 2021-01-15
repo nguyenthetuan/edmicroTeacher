@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Image, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    Dimensions,
+    TextInput,
+    Image,
+    TouchableWithoutFeedback,
+    TouchableOpacity,
+    FlatList
+} from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
 import HeaderPaper from './HeaderPaper';
@@ -15,6 +26,7 @@ import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WarningModal from '../../modals/WarningModal';
 import { updateExamListAction } from '../../../actions/paperAction';
+import { RFFonsize } from '../../../utils/Fonts';
 
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';

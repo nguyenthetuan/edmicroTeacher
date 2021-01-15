@@ -4,6 +4,7 @@ import ListExercise from './listExercise';
 import Plans from './plans';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const Tab = createMaterialTopTabNavigator(
   {
