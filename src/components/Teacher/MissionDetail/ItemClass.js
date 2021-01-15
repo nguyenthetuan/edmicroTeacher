@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     dropZuCha: {
-        width: width - 32 - 54 - 150,
+        width: width - 32 - 54 - 110,
         marginTop: 8,
         height: 25,
         // borderWidth: 0.5,
