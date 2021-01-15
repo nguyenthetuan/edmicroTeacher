@@ -19,6 +19,7 @@ import Toast from 'react-native-easy-toast';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
+import moment from 'moment';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Api from '../../../services/apiMission';
 
@@ -149,8 +150,9 @@ export default class StatisticsPoints extends Component {
 
   render() {
     const { data, assignDetail } = this.state;
-    let timeEnd = assignDetail?.endTime * 1000;
-    timeEnd = convertTimeHMDMY(timeEnd);
+    let timeEnd = (assignDetail?.endTime) * 1000;
+    // timeEnd = convertTimeHMDMY(timeEnd);
+    timeEnd = moment((assignDetail?.endTime) * 1000).format('hh:mm DD/MM/YYYY');
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar />

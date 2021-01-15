@@ -301,13 +301,18 @@ export default function StudentDetail(props) {
                     <Text style={styles.txtNameItem}>{item.student.userDisplayName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <ProgressBar
-                            progress={progress || 0}
+                            progress={progress || 1}
                             height={4}
                             color='#2D9CDB'
                             widthProps={width - 160}
                             progressUnfilledColor='#C4C4C4'
                         />
-                        <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 8 }]}>{Number.parseFloat(progress).toFixed(2)}%</Text>
+                        <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 8 }]}>
+                            {progress ?
+                                Number.parseFloat(progress).toFixed(2)
+                                : 0
+                            } %
+                            </Text>
                     </View>
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1 }}>
@@ -316,7 +321,7 @@ export default function StudentDetail(props) {
                         </View>
                         <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả nhiệm vụ</Text>
-                            <Text style={styles.txtPoint}>{status.result||point}</Text>
+                            <Text style={styles.txtPoint}>{status.result || point}</Text>
                         </View>
                     </View>
                     {
