@@ -1049,7 +1049,7 @@ const styles = StyleSheet.create({
     viewList: {
         width: '100%',
         padding: 20,
-        marginTop: 40,
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
