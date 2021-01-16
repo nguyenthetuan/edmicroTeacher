@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import RippleButton from '../libs/RippleButton';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-
+import { RFFonsize } from '../../utils/Fonts';
 export const ButtonLoading = (props) => {
     const {
         title = '',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     textButton: {
         fontFamily: 'Nunito-Bold',
         color: '#fff',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
     },
     buttonStyle: {
         paddingVertical: 10,

@@ -188,19 +188,21 @@ const renderHtmlQuestionDetail = (data, subjectId) => {
             bgAnswer = '#000';
             bgContent = '#FFF';
           }
-          html += `<div style=" min-height:40px; border-radius: 4px;background:${bgContent}; overflow: hidden; display: flex; align-items: center;">
-            <span style="width:14% !important;text-align:center !important;display:inline-block !important;float: left !important;">
-            <span  style="
-            color: #fff;
-            padding: 5px 7px 5px 7px;
-            background: #C4C4C4;
-            border-radius: 25px;
-            font-size: 8px;
-            ">${getAnswerName(j)}</span>
-            </span>
-            <span class="opcontent" style="width:86% !important;display:inline-block !important;float: left !important;overflow: auto;">${dataStandard.options[j]?.content}</span>
-            </div>
-            `;
+          if (dataStandard.options[j]?.content) {
+            html += `<div style=" min-height:40px; border-radius: 4px;background:${bgContent}; overflow: hidden; display: flex; align-items: center;">
+              <span style="width:14% !important;text-align:center !important;display:inline-block !important;float: left !important;">
+              <span  style="
+              color: #fff;
+              padding: 5px 7px 5px 7px;
+              background: #C4C4C4;
+              border-radius: 25px;
+              font-size: 8px;
+              ">${getAnswerName(j)}</span>
+              </span>
+              <span class="opcontent" style="width:86% !important;display:inline-block !important;float: left !important;overflow: auto;">${dataStandard.options[j]?.content}</span>
+              </div>
+              `;
+          }
         }
       }
       html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row;    padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">

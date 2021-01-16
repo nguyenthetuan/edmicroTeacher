@@ -6,6 +6,7 @@ import _ from 'lodash';
 import TabMissionType from './TabMissionType';
 import Toast from 'react-native-easy-toast';
 import Global from '../../../utils/Globals';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { height, width, } = Dimensions.get('window');
 export default class StepTwo extends Component {
@@ -141,8 +142,8 @@ const styles = StyleSheet.create({
   styTxtBtnNext: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    lineHeight: 21,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21),
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     marginTop: 10,
   },
   styHeaderList: {
@@ -165,13 +166,13 @@ const styles = StyleSheet.create({
   },
   headerTextIndex: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 20,
+    fontSize: RFFonsize(20),
     color: '#999',
     marginHorizontal: 10,
   },
   headerTextTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#000',
     marginRight: 20,
   },

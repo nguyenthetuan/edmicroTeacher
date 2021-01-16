@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import OfferGift from '../OfferGift';
+import { RFFonsize } from '../../../utils/Fonts';
 import HistoryGift from '../HistoryGift';
 const { width, height } = Dimensions.get('window');
 const TabTop = createMaterialTopTabNavigator({
@@ -41,8 +42,8 @@ const TabTop = createMaterialTopTabNavigator({
         labelStyle: {
             fontFamily: 'Nunito-Bold',
             color: '#2D9CDB',
-            fontSize: 12,
-            lineHeight: 16,
+            fontSize: RFFonsize(12),
+            lineHeight: RFFonsize(16),
             textAlign: 'center',
         },
         indicatorStyle: {

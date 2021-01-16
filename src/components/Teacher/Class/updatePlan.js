@@ -9,6 +9,7 @@ import { getAvatarSource } from '../../../utils/Common';
 import RippleButton from '../../common-new/RippleButton';
 import Globals from '../../../utils/Globals';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 export default class UpdatePlan extends Component {
@@ -121,8 +122,8 @@ const styles = StyleSheet.create({
   },
   txtBtn: {
     color: '#fff',
-    fontSize: 18,
-    lineHeight: 21,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21),
     fontFamily: 'Nunito-Bold',
     marginTop: 14,
     marginBottom:14

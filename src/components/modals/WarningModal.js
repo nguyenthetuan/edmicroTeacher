@@ -25,6 +25,7 @@ import apiService from '../../services/apiPracticeHelper';
 import PickerUtils from '../../utils/PickerUtils';
 import AppIcon from '../../utils/AppIcon';
 import { alertMessage } from '../../utils/Alert';
+import { RFFonsize } from '../../utils/Fonts';
 import { styles } from 'react-native-material-ripple/styles';
 const { width, height } = Dimensions.get('window');
 export default class WarningModal extends Component {
@@ -358,7 +359,7 @@ export default class WarningModal extends Component {
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     paddingTop: 13,
     paddingHorizontal: 20,
     paddingBottom: 12,
@@ -369,7 +370,7 @@ const pickerSelectStyles = StyleSheet.create({
     height: 35,
   },
   inputAndroid: {
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     paddingTop: 13,
     paddingHorizontal: 20,
     paddingBottom: 12,
@@ -387,7 +388,7 @@ const styles1 = StyleSheet.create({
   txtPLL: {
     marginVertical: 10,
     color: '#828282',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     fontFamily: 'Nunito-Bold',
   },
   viewRNPicker: {
@@ -406,7 +407,7 @@ const styles1 = StyleSheet.create({
     marginBottom: 10,
     color: '#828282',
     fontFamily: 'Nunito-Bold',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
   },
   iconEdit: { position: 'absolute', zIndex: 2, padding: 7, right: 4 },
   txtInputCont: {
@@ -417,7 +418,7 @@ const styles1 = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#BDBDBD',
     marginBottom: 21,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     minHeight: 100,
     maxHeight: 300,
@@ -436,7 +437,7 @@ const styles1 = StyleSheet.create({
   txtSend: {
     color: '#FFF',
     alignSelf: 'center',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     textTransform: 'uppercase',
   },

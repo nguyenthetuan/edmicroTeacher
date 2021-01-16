@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Animated } from 'react-native';
 import {withSelfMeasure} from './SelfMeasureBehavior';
 import {compose} from 'recompose';
 import buildTransform from './BuildTransform';
+import { RFFonsize } from '../../utils/Fonts';
 
 const AnimatedText2 = ({
     animationRange,
@@ -31,7 +32,7 @@ const AnimatedText2 = ({
 
 const styles = StyleSheet.create({
     text: {        
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         color: '#fff'
     }
 });

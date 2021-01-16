@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default function ItemPactice(props) {
     const { item } = props;
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     styCount: {
         color: '#828282',
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         letterSpacing: 0,
         alignSelf: 'flex-end',  
         marginTop: 5

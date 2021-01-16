@@ -19,6 +19,7 @@ import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -484,12 +485,12 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF',
   },
   txtTexinput: {
     paddingLeft: 12,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
   },
@@ -508,7 +509,7 @@ const styles = StyleSheet.create({
   },
   txtButtom: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
   },
   buttomSave: {
@@ -545,17 +546,17 @@ const styles = StyleSheet.create({
   txtItemActive: {
     fontFamily: 'Nunito-Bold',
     fontWeight: 'bold',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#000',
   },
   txtItem: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#828282',
   },
   styTxtLabel: {
     color: '#000',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
   }
 });

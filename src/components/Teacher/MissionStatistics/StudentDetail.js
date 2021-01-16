@@ -18,7 +18,7 @@ import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import Global from '../../../utils/Globals';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -206,13 +206,13 @@ function ModalDetail(props) {
                                 onPress={() => props.onRetryPoint(item.studentId)}
                                 style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
                                 <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
-                                <Text style={[styles.txtBtn, { fontSize: 14 }]}>Chấm lại</Text>
+                                <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => props.onRework(item.studentId)}
                                 style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
                                 <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
-                                <Text style={[styles.txtBtn, { fontSize: 14 }]}>Làm lại</Text>
+                                <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
     },
     txtAvatar: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 20,
+        fontSize: RFFonsize(20),
         color: '#fff'
     },
     dotOnline: {
@@ -439,11 +439,11 @@ const styles = StyleSheet.create({
         top: 0,
         right: 6,
         fontFamily: 'Nunito-Regular',
-        fontSize: 10
+        fontSize: RFFonsize(10)
     },
     txtNameItem: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#000'
     },
     viewContent: {
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
     },
     txtTitleItem: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#828282',
         marginLeft: 20
     },
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
     },
     txtBtn: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#fff',
         textAlign: 'center',
         marginStart: 4
@@ -486,19 +486,19 @@ const styles = StyleSheet.create({
     },
     txtDetail: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#DB422D',
         textAlign: 'center'
     },
     txtProcess: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         flex: 1,
         color: '#2D9CDB',
     },
     txtPercentProcess: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#2D9CDB',
         flex: 1,
         textAlign: 'right'
@@ -511,7 +511,7 @@ const styles = StyleSheet.create({
     },
     txtPoint: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 10,
+        fontSize: RFFonsize(10),
         color: '#DB422D',
         textAlign: 'center',
         marginStart: 12
@@ -540,7 +540,7 @@ const styles = StyleSheet.create({
     },
     txtAvatarModal: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 28,
+        fontSize: RFFonsize(28),
         color: '#fff'
     },
     contentModal: {
@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
     },
     txtNameModal: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#000'
     },
     viewContentModal: {

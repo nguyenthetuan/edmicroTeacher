@@ -4,6 +4,7 @@ import ListExercise from './listExercise';
 import Plans from './plans';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const Tab = createMaterialTopTabNavigator(
   {
@@ -58,7 +59,7 @@ const Tab = createMaterialTopTabNavigator(
 
       },
       labelStyle: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         fontFamily: 'Nunito-Bold',
       },
     },

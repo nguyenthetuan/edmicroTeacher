@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { mainStyle } from '../../../themes';
 import RippleButton from '../../libs/RippleButton';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class HeaderLoopModal extends Component {
   render() {
@@ -16,7 +17,7 @@ export default class HeaderLoopModal extends Component {
             style={mainStyle.iconHeader} size={16} color={this.props.color || '#333'} /> */}
           {!this.props.isHideAleartIcon && <Image source={AppIcon.icon_warning} style={mainStyle.iconHeader} resizeMode={'contain'} />}
           <View style={{ flex: 1, paddingTop: 10 }}>
-            <Text style={[mainStyle.textHeader, mainStyle.textHeaderModal, { color: this.props.color, alignSelf: 'center', fontSize: 14, fontFamily: 'Nunito-Bold' }]}>
+            <Text style={[mainStyle.textHeader, mainStyle.textHeaderModal, { color: this.props.color, alignSelf: 'center', fontSize: RFFonsize(14), fontFamily: 'Nunito-Bold' }]}>
               {this.props.title ? this.props.title : ''}
             </Text>
           </View>

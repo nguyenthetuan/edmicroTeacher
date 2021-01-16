@@ -16,7 +16,7 @@ import AppIcon from '../../../utils/AppIcon';
 import htmlHelper from '../../../utils/WebviewListQuestionCopy';
 import { WebView } from 'react-native-webview';
 import WarningModal from '../../modals/WarningModal';
-
+import { RFFonsize } from '../../../utils/Fonts';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -268,27 +268,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     textTitle: {
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontFamily: 'Nunito-bold',
         color: '#fff',
     },
     textNormal: {
-        fontSize: 16,
-        lineHeight: 22,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(22),
         textAlign: 'center',
         fontFamily: 'Nunito-bold',
         color: '#fff',
     },
     textNormalName: {
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontFamily: 'Nunito',
         color: '#fff',
         top: 2,
     },
     textName: {
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontWeight: '800',
         fontFamily: 'Nunito-bold',
         color: '#fff',
@@ -300,8 +300,8 @@ const styles = StyleSheet.create({
     },
     txtRightHeader: {
         paddingHorizontal: 13,
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontFamily: 'Nunito-Bold',
         color: '#FFF',
         marginTop: 5.5,

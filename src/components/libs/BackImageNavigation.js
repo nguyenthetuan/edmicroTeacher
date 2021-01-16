@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, Platform, Text, Dimensions } from 'react-nativ
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import RippleButton from '../libs/RippleButton';
 import AppIcon from '../../utils/AppIcon';
-
+import { RFFonsize } from '../../utils/Fonts';
 const { width } = Dimensions.get('window');
 export default class BackImageNavigation extends Component {
 
@@ -81,7 +81,7 @@ const homeStyle = StyleSheet.create({
     alignItems: 'center',
   },
   txtTitle: {
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
     alignSelf: 'center',

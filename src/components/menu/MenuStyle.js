@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { RFFonsize } from '../../utils/Fonts';
 
 const MenuStyle = StyleSheet.create({
     container: {
@@ -49,11 +50,11 @@ const MenuStyle = StyleSheet.create({
     },
     txtComponent: {
         marginLeft: 20,
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         flex: 1,
         fontFamily: 'Nunito-Bold',
         alignSelf: 'flex-start',
-        lineHeight: 40,
+        lineHeight: RFFonsize(40),
         alignItems: 'center',
         marginTop: 6,
         color: '#4776AD'
@@ -77,7 +78,7 @@ const MenuStyle = StyleSheet.create({
         marginHorizontal: 40,
         marginVertical: 20,
         color: '#999',
-        fontSize: 11,
+        fontSize: RFFonsize(11),
         fontFamily: 'Nunito-Regular'
     }
 });

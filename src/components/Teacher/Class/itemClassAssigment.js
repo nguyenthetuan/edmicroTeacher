@@ -11,6 +11,7 @@ import RippleButton from '../../common-new/RippleButton';
 import ProgressBar from '../../libs/ProgressBar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -179,11 +180,11 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#FFF',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
   },
   textStatus: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
   },
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
   },
   txtDate: {
     color: '#4F4F4F',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
     // marginLeft: width < 350 ? 0 : 5,
@@ -232,8 +233,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   txtbuttom: {
-    fontSize: 11,
-    lineHeight: 15,
+    fontSize: RFFonsize(11),
+    lineHeight: RFFonsize(15),
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
     marginLeft: 21,
@@ -255,12 +256,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   toucSub: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     fontFamily: 'Nunito-Regular',
   },
   viewRate: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#F16219',
     fontFamily: 'Nunito-Regular',
     marginLeft: 10,

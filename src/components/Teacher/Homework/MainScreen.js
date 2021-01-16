@@ -27,7 +27,7 @@ import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Global from '../../../utils/Globals';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(
@@ -569,18 +569,18 @@ const styles = StyleSheet.create({
   },
   txtHeaderNavigation: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     color: '#000',
     flex: 1,
     textAlign: 'center',
   },
   labelTab: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#c4c4c4',
   },
   labelTabActive: {
-    fontSize: 11,
+    fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Bold',
     color: '#56CCF2',
   },
@@ -598,7 +598,7 @@ const styles = StyleSheet.create({
   },
   txtStatistic: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#2D9CDB',
     borderRadius: 1,
   },
@@ -610,14 +610,14 @@ const styles = StyleSheet.create({
   },
   txtAssignment: {
     color: '#2D9CDB',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     marginLeft: 10,
     fontFamily: 'Nunito-Bold',
     marginBottom: 5,
   },
   txtTitle: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     color: '#2D9CDB',
     marginLeft: 10,
     marginBottom: 5,

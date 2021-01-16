@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { Picker } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
-import { StyleSheet, View, TextInput, Text, Image, TouchableHighlight, Platform } from 'react-native';
+import {
+    StyleSheet,
+    View,
+    TextInput,
+    Text,
+    Platform
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class FormSelect extends Component {
     constructor(props) {
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         paddingTop: 13,
         paddingHorizontal: 10,
         paddingBottom: 12,

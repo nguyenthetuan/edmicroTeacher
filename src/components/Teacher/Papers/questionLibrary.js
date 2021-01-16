@@ -34,6 +34,7 @@ import { AlertNoti } from '../../../utils/Common';
 import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
 import HeaderNavigation from '../../common-new/HeaderNavigation';
+import { RFFonsize } from '../../../utils/Fonts';
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
   'Thêm câu hỏi không thành công. Bạn vui lòng chọn câu hỏi khác.';
@@ -702,7 +703,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF',
   },
   rightHeader: {
@@ -714,7 +715,7 @@ const styles = StyleSheet.create({
   },
   totalAddQuestion: {
     marginLeft: 16,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#159FDA',
     marginTop: 10,

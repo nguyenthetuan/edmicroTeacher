@@ -34,6 +34,7 @@ import SelectAnswer from './SelectAnswer';
 import AnalyticsManager from '../../../utils/AnalyticsManager';
 import Globals from '../../../utils/Globals';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
+import { RFFonsize } from '../../../utils/Fonts';
 import HeaderPaper from './HeaderPaper';
 import ModalSelectAnswers from './ModalSelectAnswers';
 
@@ -80,8 +81,8 @@ export default class UploadPDF extends Component {
   }
 
   onClickItem = async (index, optionIdAnswer, point) => {
-    await this.setState({ indexSelecting: index, optionIdAnswer: optionIdAnswer || -1, showSelectAnswer: true, currentPoint: point });
-    await this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1);
+    await this.setState({ indexSelecting: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
+    await this.modalSelectAnswers.setIdAnswer(isNaN(optionIdAnswer) ? -1 : optionIdAnswer);
     setTimeout(() => {
       this.scrollview.scrollToEnd();
     }, 0)
@@ -400,6 +401,9 @@ export default class UploadPDF extends Component {
   };
 
   onTextPointModalChange = (point) => {
+    if (point[point.length - 1] == ',') {
+      point = `${point.substring(0, point.length - 1)}.`
+    }
     this.setState({ currentPoint: point });
     this.selectAnswer.onChangePoint(point);
   }
@@ -531,7 +535,7 @@ export default class UploadPDF extends Component {
                         <Text
                           style={{
                             fontFamily: 'Nunito-Bold',
-                            fontSize: 12,
+                            fontSize: RFFonsize(12),
                             color: '#fff',
                             borderRadius: 1,
                             marginTop: 10,
@@ -576,7 +580,7 @@ export default class UploadPDF extends Component {
                         </View>
                         <View style={styles.wrapAreaUploadPDF}>
                           <View>
-                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: 14, fontWeight: '700' }}>Bộ đề PDF</Text>
+                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Bộ đề PDF</Text>
                             <View style={styles.wrapMiniPDF}>
                               {!!urlFilePDF && <Pdf
                                 ref={(ref) => (this.pdf = ref)}
@@ -596,10 +600,10 @@ export default class UploadPDF extends Component {
                                 </TouchableOpacity>
                               </View>
                             </View>
-                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
+                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
                           </View>
                           <View>
-                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: 14, fontWeight: '700' }}>Lời giải</Text>
+                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Lời giải</Text>
                             <View style={styles.wrapMiniPDF}>
                               {!!urlFileAnswerPDF && <Pdf
                                 ref={(ref) => (this.pdf = ref)}
@@ -619,7 +623,7 @@ export default class UploadPDF extends Component {
                                 </TouchableOpacity>
                               </View>
                             </View>
-                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '400', color: '#2D9CDB', maxWidth: 100 }}>{this.state.pdfFileTL}</Text>
+                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 100 }}>{this.state.pdfFileTL}</Text>
                           </View>
                         </View>
                       </View>
@@ -711,14 +715,14 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     color: '#000',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center',
   },
   txtNoteUploadPDF: {
     marginVertical: 3,
     color: '#FF0000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     textAlign: 'center',
   },
   btnChooseType: {
@@ -731,19 +735,19 @@ const styles = StyleSheet.create({
   },
   txtNoActive: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   txtActive: {
     color: '#fff',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   inputName: {
     height: 30,
     backgroundColor: '#fff',
     color: '#000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     paddingStart: 5,
     marginBottom: 7,
     borderRadius: 2,
@@ -753,7 +757,7 @@ const styles = StyleSheet.create({
   },
   textMinutes: {
     fontFamily: 'Nunito',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontWeight: '400',
     position: 'absolute',
     left: 90,
@@ -814,12 +818,12 @@ const styles = StyleSheet.create({
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#fff',
   },
   styTxtLabel: {
     fontFamily: 'Nunito',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontWeight: '700',
     marginTop: 15,
     marginBottom: 5

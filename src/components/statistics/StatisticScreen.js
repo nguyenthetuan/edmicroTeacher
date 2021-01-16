@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';
+import { RFFonsize } from '../../utils/Fonts';
 import {
     statisticClassAction,
     statisticMissionAction,
@@ -298,8 +299,8 @@ const styles = StyleSheet.create({
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 21,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(21),
         color: '#000',
         marginLeft: 16,
         marginTop: 20,
@@ -313,8 +314,8 @@ const styles = StyleSheet.create({
     },
     status: {
         fontFamily: 'Nunito',
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         color: '#2D9CDB',
         marginLeft: 27,
         marginTop: 8,
@@ -322,8 +323,8 @@ const styles = StyleSheet.create({
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 21,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(21),
         marginTop: 12,
         alignSelf: 'center',
     },
@@ -366,8 +367,8 @@ const styles = StyleSheet.create({
     },
     number: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 24,
-        lineHeight: 30,
+        fontSize: RFFonsize(24),
+        lineHeight: RFFonsize(30),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 18,
@@ -377,8 +378,8 @@ const styles = StyleSheet.create({
     },
     sumBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 32,
-        lineHeight: 42,
+        fontSize: RFFonsize(32),
+        lineHeight: RFFonsize(42),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 19.5,
@@ -396,8 +397,8 @@ const styles = StyleSheet.create({
     },
     countGroup: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 18,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(18),
         color: '#fff',
         fontWeight: '500',
         marginLeft: 3,
@@ -413,7 +414,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     rateSub: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#359CDB',
         fontFamily: 'Nunito-Bold',
         position: 'absolute',
@@ -439,7 +440,7 @@ const styles = StyleSheet.create({
     },
     numberBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 32,
+        fontSize: RFFonsize(32),
         alignSelf: 'center',
         textAlign: 'center',
         color: '#27AE60',
@@ -449,8 +450,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
         marginLeft: 10,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
         paddingRight: 30,
     },
     toSend: {
@@ -458,7 +459,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginRight: 10,
         fontFamily: 'Nunito',
-        fontSize: 12
+        fontSize: RFFonsize(12)
     },
     isLoading: {
         flex: 1

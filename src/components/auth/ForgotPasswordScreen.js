@@ -36,6 +36,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import FreshchatComponent from '../../utils/FreshchatComponent';
 import { phoneNumberScheme, forgotPasswordValidate } from '../../utils/SchemaValidate';
 import { SizedBox } from '../common-new/Bootstrap';
+import { RFFonsize } from '../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 export default class ForgotPasswordScreen extends Component {
@@ -466,7 +467,7 @@ export default class ForgotPasswordScreen extends Component {
                     alignItems: 'center'
                   }}>
                     <Text style={{
-                      fontFamily: 'Nunito-Bold', fontSize: 16, color: '#fff'
+                      fontFamily: 'Nunito-Bold', fontSize: RFFonsize(16), color: '#fff'
                     }}>{item.displayName ? item.displayName.substring(0, 1) : ''}</Text>
                   </View>
               }
@@ -474,7 +475,7 @@ export default class ForgotPasswordScreen extends Component {
           </View>
           <Text style={{
             fontFamily: 'Nunito-Bold',
-            fontSize: 14,
+            fontSize: RFFonsize(14),
             marginStart: 25
           }}>{
               item.displayName}
@@ -497,7 +498,7 @@ export default class ForgotPasswordScreen extends Component {
               </View>
               :
               <View>
-                <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14, marginTop: 45 }}>Chọn tài khoản</Text>
+                <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), marginTop: 45 }}>Chọn tài khoản</Text>
                 <FlatList
                   data={account}
                   keyExtractor={(item) => item.userName}
@@ -685,7 +686,7 @@ export default class ForgotPasswordScreen extends Component {
                         marginBottom: 20,
                         color: '#222222',
                         fontFamily: 'Nunito-Bold',
-                        fontSize: 15,
+                        fontSize: RFFonsize(15),
                         width: width - width / 5
                       }}>
                         Nhập mã OTP
@@ -708,7 +709,7 @@ export default class ForgotPasswordScreen extends Component {
                             <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'space-around' }}>
                               <Text style={{
                                 fontFamily: 'Nunito-Regular',
-                                fontSize: 13,
+                                fontSize: RFFonsize(13),
                                 color: '#757575'
                               }}>Tôi không nhận được mã</Text>
                               <TouchableOpacity
@@ -716,7 +717,7 @@ export default class ForgotPasswordScreen extends Component {
                                 <Text style={{
                                   marginStart: 17,
                                   fontFamily: 'Nunito-Bold',
-                                  fontSize: 14,
+                                  fontSize: RFFonsize(14),
                                   color: '#2D9CDB'
                                 }}>Gửi lại OTP</Text>
                               </TouchableOpacity>
@@ -742,7 +743,7 @@ export default class ForgotPasswordScreen extends Component {
               <View style={styles.wrapFooter}>
                 <Text style={{
                   color: '#757575',
-                  fontSize: 12,
+                  fontSize: RFFonsize(12),
                   fontFamily: 'Nunito-Regular'
                 }}>
                   Quay lại màn hình
@@ -758,7 +759,7 @@ export default class ForgotPasswordScreen extends Component {
                     color: '#757575',
                     alignSelf: 'center',
                     fontFamily: 'Nunito-Regular',
-                    fontSize: 12,
+                    fontSize: RFFonsize(12),
                     marginLeft: 3,
                     textDecorationLine: 'underline'
                   }}>Đăng nhập</Text>
@@ -783,17 +784,17 @@ const styles = StyleSheet.create({
   txtTitleForm: {
     marginTop: (height / width),
     fontFamily: 'Nunito',
-    fontSize: 15,
-    lineHeight: 20,
+    fontSize: RFFonsize(15),
+    lineHeight: RFFonsize(20),
     color: '#000',
-    lineHeight: 19,
+    lineHeight: RFFonsize(19),
     marginBottom: 3,
     marginLeft: 10,
   },
   txtTitle: {
     fontFamily: 'Nunito',
-    fontSize: 18,
-    lineHeight: 25,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(25),
     color: '#979797',
   },
   btnBack: {
@@ -823,7 +824,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   txtDecsMK: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: "#ddd",
     position: 'absolute',
@@ -849,7 +850,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginBottom: 0,
     padding: 0,
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     width: width - width / 8,
   },
   roundedTextInput: {
@@ -862,11 +863,11 @@ const styles = StyleSheet.create({
   txtErrorEmpty: {
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
-    fontSize: 11,
+    fontSize: RFFonsize(11),
   },
   textAction: {
     fontFamily: 'Nunito',
-    fontSize: 18,
-    lineHeight: 21
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21)
   }
 })

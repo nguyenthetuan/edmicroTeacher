@@ -9,6 +9,7 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   txtStatus: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#3DA059'
   },
   statusActive: {
@@ -153,13 +154,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   txtActive: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
     color: '#3DA059',
     textAlign: 'center'
   },
   name: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     color: '#FFF'
   },
@@ -170,18 +171,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   timeStart: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
     color: '#828282',
     alignSelf: 'center'
   },
   txtDate: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#56BB73',
     marginLeft: 5
   },
   txtDate1: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#FF6213',
     marginLeft: 5
   },
@@ -190,49 +191,49 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   txtClass: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
     color: '#828282',
     marginLeft: 5,
   },
   indexOne: {
     color: '#2D9CDB',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     position: 'absolute',
     right: 0
   },
   txtRight: {
     marginLeft: 9.5,
     color: '#828282',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito-Regular',
     alignSelf: 'center',
     marginRight: 50,
   },
   txtInfoDetail: {
     color: '#828282',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     marginLeft: 8,
     alignSelf: 'center',
   },
   txtFour: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#FF6213',
     paddingHorizontal: 25,
     marginRight: 16
   },
   txtRightFoot: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#000',
     marginLeft: 10
   },
   txtThree: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#FF6213',
     alignSelf: 'center'
   },
   indexTwo: {
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#56CCF2',
     marginLeft: 15
   },
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
     marginTop: 12
   },
   viewEnd: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center'
   },

@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Text, TextInput } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    Text,
+    TextInput
+} from 'react-native';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,6 +28,7 @@ export default class ModalSelectAnswers extends Component {
     }
 
     onSelectAnswer = (answer) => {
+    console.log("🚀 ~ file: ModalSelectAnswers.js ~ line 23 ~ ModalSelectAnswers ~ answer", answer)
         this.props.onSelectAnswer(answer)
         this.setState({ optionIdAnswer: answer });
     }
@@ -37,25 +46,26 @@ export default class ModalSelectAnswers extends Component {
     }
 
     render() {
+        console.log('optionIdAnswer: ', this.state.optionIdAnswer);
         let { indexSelecting } = this.props;
         return (
             <>
                 {this.props.showSelectAnswer && <View style={styles.modal}>
                     <Text style={{
                         fontFamily: 'Nunito-Bold',
-                        fontSize: 14,
+                        fontSize: RFFonsize(14),
                         color: '#fff',
                         fontWeight: '700',
                     }}>Câu {indexSelecting + 1}</Text>
                     <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', top: 10 }}>
-                        <Text style={{ fontSize: 14, fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
+                        <Text style={{ fontSize: RFFonsize(14), fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
                         <TextInput
                             value={this.props.currentPoint}
                             onChangeText={this.onChangeText}
                             numberOfLines={1}
                             returnKeyType={'done'}
                             maxLength={4}
-                            keyboardType={'numeric'}
+                            keyboardType={'numbers-and-punctuation'}
                             placeholderTextColor={'#BDBDBD'}
                             style={styles.inputPoint}
                             onEndEditing={this.onEnediting}
@@ -131,7 +141,7 @@ const styles = StyleSheet.create({
     },
     txtAnswer: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 18,
+        fontSize: RFFonsize(18),
         color: '#828282'
     },
     inputPoint: {
@@ -155,7 +165,7 @@ const styles = StyleSheet.create({
     },
     styTxtOk: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#56BB73'
     }
 })
