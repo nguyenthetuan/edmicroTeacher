@@ -19,9 +19,10 @@ import Toast from 'react-native-easy-toast';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
+import moment from 'moment';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Api from '../../../services/apiMission';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(
@@ -149,8 +150,9 @@ export default class StatisticsPoints extends Component {
 
   render() {
     const { data, assignDetail } = this.state;
-    let timeEnd = assignDetail?.endTime * 1000;
-    timeEnd = convertTimeHMDMY(timeEnd);
+    let timeEnd = (assignDetail?.endTime) * 1000;
+    // timeEnd = convertTimeHMDMY(timeEnd);
+    timeEnd = moment((assignDetail?.endTime) * 1000).format('hh:mm DD/MM/YYYY');
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar />
@@ -198,12 +200,12 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   labelTab: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#828282',
   },
   labelTabActive: {
-    fontSize: 11,
+    fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Bold',
     color: '#000',
   },
@@ -215,14 +217,14 @@ const styles = StyleSheet.create({
   },
   txtAssignment: {
     color: '#2D9CDB',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     marginLeft: 10,
     fontFamily: 'Nunito-Bold',
     marginBottom: 5,
   },
   txtTitle: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     color: '#2D9CDB',
     marginLeft: 10,
     marginBottom: 5,

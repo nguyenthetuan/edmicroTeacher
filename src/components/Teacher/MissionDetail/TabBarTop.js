@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import TabClass from './TabClass';
 import TabMission from './TabMission';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const TabTop = createMaterialTopTabNavigator({
     TabMission: {
         screen: TabMission,
@@ -39,8 +39,8 @@ const TabTop = createMaterialTopTabNavigator({
         labelStyle: {
             fontFamily: 'Nunito-Bold',
             color: '#56CCF2',
-            fontSize: 12,
-            lineHeight: 16,
+            fontSize: RFFonsize(12),
+            lineHeight: RFFonsize(16),
             textAlign: 'center',
         },
         indicatorStyle: {

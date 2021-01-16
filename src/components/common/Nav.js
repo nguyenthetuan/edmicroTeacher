@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default Nav = ({ title }) => {
     return (
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     textNav: {
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         color: '#828282',
         fontWeight: 'bold',
         fontFamily: 'Nunito-Bold'

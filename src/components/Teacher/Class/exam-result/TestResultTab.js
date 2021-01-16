@@ -5,7 +5,7 @@ import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TestResult from './TestResult';
 import TestHistoryDetail from './TestHistoryDetail';
-
+import { RFFonsize } from '../../../../utils/Fonts';
 import Share from '../../../exam-detail/Test';
 import Utils from '../../../../utils/Utils';
 import HeaderNavigation from '../../../common/HeaderNavigationMenu';
@@ -33,7 +33,7 @@ const TestResultTab = createMaterialTopTabNavigator({
     scrollEnabled: true,
     upperCaseLabel: false,
     labelStyle: {
-      fontSize: 16,
+      fontSize: RFFonsize(16),
       fontFamily: 'Nunito-Regular'
     },
     tabStyle: {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { RFFonsize } from '../../utils/Fonts';
 
 const TextLink = (props) => {
     const { title, onPress } = props;
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     textLink: {
         color: "#828282",
         alignSelf: 'center',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Regular',
     },
 });

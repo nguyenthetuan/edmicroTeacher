@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import SelectModal from './SelectModal';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default function Dropdown(props) {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   styTxt: {
     flex: 1,
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#2D9CDB',
     paddingHorizontal: 6,
   },

@@ -21,6 +21,7 @@ import Common from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import { RFFonsize } from '../../../utils/Fonts';
 
 let height = Dimensions.get('window').height;
 
@@ -198,7 +199,7 @@ export default class CopyFromSubjectExists extends Component {
                                     <TextInput
                                         placeholder={'Tên bài kiểm tra'}
                                         placeholderTextColor={'#c4c4c4'}
-                                        style={{ color: '#000', flex: 1, fontSize: 14, backgroundColor:'#fff', paddingVertical: 0, }}
+                                        style={{ color: '#000', flex: 1, fontSize: RFFonsize(14), backgroundColor: '#fff', paddingVertical: 0, }}
                                     // value={nameMission}
                                     />
                                     <IconAntDesign
@@ -215,7 +216,7 @@ export default class CopyFromSubjectExists extends Component {
                                         onPressItem={(index) => this.onPressItemSubject(index)}
                                     />
                                     <Dropdown
-                                        containerStyle={styles.styleDrop1}
+                                        containerStyle={styles.styleDrop}
                                         contentStyle={{ marginHorizontal: 0 }}
                                         title="Giáo trình"
                                         data={this.state.lerningTarget}
@@ -269,10 +270,10 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        alignSelf: 'center',
         flexDirection: 'row',
+        alignItems: 'flex-end',
+        flex: 1,
         marginRight: 10,
-        marginTop: 27
     },
     wrap2Dropdown: {
         width: '100%',
@@ -297,8 +298,8 @@ const styles = StyleSheet.create({
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
-        lineHeight: 16,
-        fontSize: 12,
+        lineHeight: RFFonsize(16),
+        fontSize: RFFonsize(12),
         color: '#fff',
         marginTop: 3,
         marginBottom: 3,
@@ -316,8 +317,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14
     },
     textDetail: {
-        fontSize: 10,
-        lineHeight: 14,
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
         fontFamily: 'Nunito',
         color: '#000',
         marginLeft: 5,

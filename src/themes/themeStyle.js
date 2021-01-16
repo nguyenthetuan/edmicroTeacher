@@ -1,24 +1,24 @@
 const btnSize = 5;
 const btnLgSize = 10;
-
+import { RFFonsize } from '../utils/Fonts';
 module.exports = {
   textTitle: {
     color: '#000000',
     fontFamily: 'Nunito-Bold',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
   },
   textTitleDisabled: {
     color: '#999',
     fontFamily: 'Nunito-Bold',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
   },
   textTitleCate: {
     color: '#383838',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   textDescription: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#c8c8c8',
   },
   btnDefault: {
@@ -164,7 +164,7 @@ module.exports = {
   textButton: {
     color: '#fff',
     fontFamily: 'Nunito-Regular',
-    fontSize: 16
+    fontSize: RFFonsize(16)
   },
   textButtonDefault: {
     color: '#383838',

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class HeaderNavigation extends React.Component {
     constructor(props) {
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     textTitleHeader: {
         fontFamily: 'Nunito-Bold',
         textAlign: 'center',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     },
     btnAvatar: {
         height: 38,

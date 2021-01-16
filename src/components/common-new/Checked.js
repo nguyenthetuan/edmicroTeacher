@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../utils/Fonts';
 
 export const Checked = (props) => {
     const { checked, onPress } = props;
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     },
     textLabel: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#757575'
     }
 });

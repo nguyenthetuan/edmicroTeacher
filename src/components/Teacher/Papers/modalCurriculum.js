@@ -23,6 +23,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 const { width, height } = Dimensions.get('window');
 let heightTextInput = 0,
@@ -312,7 +313,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
   },
   topheader: {
@@ -333,7 +334,7 @@ const styles = StyleSheet.create({
     width: width * 0.5,
     borderRadius: 4,
     paddingLeft: 5,
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     paddingRight: 24,
     color: '#FFF',
     paddingVertical: 5,
@@ -342,13 +343,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     width: '80%',
   },
   txtSelectItem: {
     color: '#828282',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
     marginTop: 3,

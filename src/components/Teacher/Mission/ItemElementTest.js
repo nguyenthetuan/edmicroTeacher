@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 
 const { height } = Dimensions.get('window');
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
     marginHorizontal: 5,
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     marginVertical: 8,
   },
   styTxtName: {
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   styTxtCate: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontStyle: 'italic',
   },
   styWrapItem: {

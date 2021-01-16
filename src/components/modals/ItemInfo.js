@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { RFFonsize } from '../../utils/Fonts';
 import Common from '../../utils/Common';
 export default class ItemInfo extends Component {
 
@@ -75,14 +76,14 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#5bc0de',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginLeft: 10,
     alignSelf: 'flex-end',
   },
   textNumber: {
     fontFamily: 'Nunito-Bold',
     color: '#000',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     alignSelf: 'flex-end'
   }
 });

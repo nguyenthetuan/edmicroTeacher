@@ -4,7 +4,8 @@ const initState = {
     isLoading: true,
     listClass: [],
     mission: [],
-    assignment: []
+    assignment: [],
+    classArray: []
 };
 
 export default function statisticReducer(state = initState, action) {
@@ -15,10 +16,12 @@ export default function statisticReducer(state = initState, action) {
                 isLoading: true,
             };
         case Types.STATISTIC_CLASS_SUCCESS_ACTION:
+            const listClass = action.data.data;
             return {
                 ...state,
                 isLoading: false,
-                listClass: action.data.data
+                listClass: listClass,
+                classArray: listClass.data
             }
         case Types.STATISTIC_MISSION_ACTION:
             return {

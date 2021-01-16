@@ -10,7 +10,7 @@ import Share from '../../../exam-detail/Test';
 import { formatSecond } from '../../../../utils/Common';
 import MyActivityIndicator from '../../../libs/MyActivityIndicator';
 import Api from '../../../../services/apiClassTeacher'
-
+import { RFFonsize } from '../../../../utils/Fonts';
 // import RateApp from '../../../common/RateApp';
 // import Mixpanel from 'react-native-mixpanel';
 // import jwtDecode from 'jwt-decode';
@@ -147,7 +147,7 @@ export default class TestResult extends Component {
 const styles = StyleSheet.create({
   textHeader: {
     color: '#383838',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     alignSelf: 'center',
     fontWeight: 'bold',
   },
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e1e1e1',
   },
   textNumber: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#383838',
     fontWeight: 'bold',
   },
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
   textSpeed: {
     color: '#383838',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     alignSelf: 'center',
     fontWeight: 'bold',
     marginVertical: 10,

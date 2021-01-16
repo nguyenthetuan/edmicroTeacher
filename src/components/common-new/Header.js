@@ -5,6 +5,7 @@ import leadIcon from '../../asserts/icon/back_arrow.png';
 import Ripple from 'react-native-material-ripple';
 import RippleButton from '../libs/RippleButton';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { RFFonsize } from '../../utils/Fonts';
 
 const HeaderPrimary = (props) => {
     const { showLead = true, navigation, title } = props;
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     textTitle: {
         flex: 1,
         color: '#757575',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         textAlign: 'center'
     }
 });

@@ -17,6 +17,7 @@ import AppIcon from '../../../utils/AppIcon';
 import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DropdownStudent from './DropdownStudent';
+import { RFFonsize } from '../../../utils/Fonts';
 Icon.loadFont();
 import moment from 'moment';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -378,7 +379,7 @@ const styles = StyleSheet.create({
     height: 12
   },
   txtBack: {
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     color: '#fff',
     fontFamily: 'Nunito-Bold',
   },
@@ -412,7 +413,7 @@ const styles = StyleSheet.create({
   },
   txtTitleItem: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#fff',
     textTransform: 'capitalize'
   },
@@ -422,8 +423,8 @@ const styles = StyleSheet.create({
   },
   txtTitleItemContent: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
     color: '#828282',
   },
   btnAssignment: {
@@ -436,8 +437,8 @@ const styles = StyleSheet.create({
   },
   txtAssignment: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    lineHeight: 21,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21),
     fontWeight: '500',
     color: '#fff',
     marginLeft: 76,
@@ -464,8 +465,8 @@ const styles = StyleSheet.create({
   },
   txtCheckAllow: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
     color: '#2D9CDB'
   },
   viewName: {
@@ -484,7 +485,7 @@ const styles = StyleSheet.create({
   },
   txtContentItem: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#2D9CDB',
     marginLeft: 10
   },
@@ -510,7 +511,7 @@ const styles = StyleSheet.create({
   },
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
     marginTop: 20,
     color: '#828282',

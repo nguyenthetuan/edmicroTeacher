@@ -9,6 +9,7 @@ import _ from 'lodash';
 import Common from '../../../utils/Common';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class Item extends Component {
     constructor(props) {
         super(props);
@@ -195,8 +196,8 @@ const styles = StyleSheet.create({
     },
     txtName: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         color: '#FFF',
         alignSelf: 'center',
         width: "90%"
@@ -217,8 +218,8 @@ const styles = StyleSheet.create({
     },
     txtQuestion: {
         fontFamily: 'Nunito',
-        fontSize: 12,
-        lineHeight: 14,
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(14),
         color: '#000',
         marginLeft: 5,
         alignSelf: 'center',
@@ -233,8 +234,8 @@ const styles = StyleSheet.create({
     },
     txtButtomPractice: {
         fontFamily: 'Nunito',
-        fontSize: 12,
-        lineHeight: 14,
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(14),
         color: '#000',
         alignSelf: 'center',
         marginHorizontal: 5

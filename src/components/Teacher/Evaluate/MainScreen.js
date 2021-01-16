@@ -19,6 +19,7 @@ import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
 import { DATA_YEAR } from '../../../constants/const';
 import { convertSeconds } from '../../../utils/Utils';
+import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 import HeaderMain from '../../common-new/HeaderMain';
 import FastImage from 'react-native-fast-image';
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   txtStatistics: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#2D9CDB',
     marginStart: 8,
     fontFamily: 'Nunito-Regular',
@@ -359,7 +360,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 11,
   },
   txtHeader: {
-    fontSize: 8,
+    fontSize: RFFonsize(8),
     color: '#fff',
     fontFamily: 'Nunito-Regular',
   },
@@ -376,7 +377,7 @@ const styles = StyleSheet.create({
   },
   txtItemName: {
     marginStart: 10,
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#000',
     fontFamily: 'Nunito-Bold',
     borderWidth: 1,
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     width: width * (1 / 8),
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     color: '#000',
     fontFamily: 'Nunito-Regular',
   },
@@ -408,12 +409,12 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   txtName: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     fontFamily: 'Nunito-Regular',
   },
   txtNameShow: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
     backgroundColor: 'rgba(0,0,0,0.5)',

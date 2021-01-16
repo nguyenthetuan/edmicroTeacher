@@ -16,6 +16,7 @@ import {
   actions,
   defaultActions,
 } from 'react-native-editor';
+import { RFFonsize } from '../../utils/Fonts';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
   },
   tib: {
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     fontFamily: 'Nunito-Regular'
   },
   styWrap: {
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   styTxtBtn: {
     fontFamily: 'Nunito-Regular',
     color: '#2095F2',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
   },
   styWrapBtn: {
     backgroundColor: '#FFF',

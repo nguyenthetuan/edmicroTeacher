@@ -37,6 +37,7 @@ import { singInValidate } from '../../utils/SchemaValidate';
 import Checked from '../common-new/Checked';
 import TextLink from '../common-new/TextLink';
 import { Row, TextValidate, SizedBox } from '../common-new/Bootstrap';
+import { RFFonsize } from '../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -389,7 +390,7 @@ const styles = StyleSheet.create({
   },
   styleTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF'
   },
   viewDotIn: {
@@ -399,14 +400,14 @@ const styles = StyleSheet.create({
   titleTea: {
     alignSelf: 'center',
     fontFamily: "Nunito-Bold",
-    fontSize: 28,
-    lineHeight: 38,
+    fontSize: RFFonsize(28),
+    lineHeight: RFFonsize(38),
     color: "#000"
   },
   teaDesc: {
     fontFamily: "Nunito",
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(22),
     color: "#000",
     textAlign: "center",
     color: "#757575",

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class ItemSectionListPrac extends Component {
 
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     color: '#fff',
     width: 30,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center',
     marginHorizontal: 25,
     backgroundColor: '#6ED8FB',
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   styIcon: {
-    fontSize: 22,
+    fontSize: RFFonsize(22),
     color: '#FF4457',
     marginLeft: 8,
     marginRight: -6,

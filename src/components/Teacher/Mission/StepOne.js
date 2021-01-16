@@ -21,6 +21,7 @@ import _ from 'lodash';
 import dataHelper from '../../../utils/dataHelper';
 import Global from '../../../utils/Globals';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class StepOne extends Component {
   constructor(props) {
@@ -284,8 +285,8 @@ const styles = StyleSheet.create({
   styTxtBtnNext: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    lineHeight: 21,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21),
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
@@ -295,8 +296,8 @@ const styles = StyleSheet.create({
   styTxtLabel: {
     fontFamily: 'Nunito',
     color: "#000",
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
     marginLeft: 10
   },
   styTxtPlacehoder: {

@@ -11,6 +11,7 @@ import _ from 'lodash';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/AntDesign';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class SubjectItem extends Component {
     openModalSubject = () => {
         this.props.refModalSubject.onOpen()
@@ -54,7 +55,7 @@ export default class SubjectItem extends Component {
                         />
                         <RippleButton
                             onPress={this.openModalSubject}
-                            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                         >
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     txtClass: {
         color: '#000',
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         textAlign: 'center',
     },
     buttomClass: {
@@ -93,13 +94,13 @@ const styles = StyleSheet.create({
     },
     txtItem: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#828282',
     },
     txtItemActive: {
         fontFamily: 'Nunito-Bold',
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#000',
         marginTop: 10,
         borderWidth: 1,

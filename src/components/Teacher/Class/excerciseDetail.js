@@ -14,6 +14,7 @@ import { createAppContainer } from 'react-navigation';
 import ModalMockExamStart from './modalMockExamStart';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { getSourceAvatar } from '../../../utils/Helper';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const ExerciseTab = createMaterialTopTabNavigator(
@@ -60,7 +61,7 @@ const ExerciseTab = createMaterialTopTabNavigator(
       scrollEnabled: false,
       upperCaseLabel: false,
       labelStyle: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         fontFamily: 'Nunito-Regular',
         color: '#F98E2F',
         width: '50%',
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#2D9CDB',
     textAlign: 'center',
     marginLeft: 15,
@@ -180,12 +181,12 @@ const styles = StyleSheet.create({
     marginTop: 17,
   },
   labelTab: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#C4C4C4',
   },
   labelTabActive: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#56CCF2',
   },

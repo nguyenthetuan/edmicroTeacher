@@ -15,6 +15,7 @@ import Api from '../../../services/apiClassTeacher';
 import _ from 'lodash';
 import Globals from '../../../utils/Globals';
 import { delay } from '../../../utils/Helper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 export default class Plan extends Component {
   constructor(props) {
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     paddingLeft: width < 350 ? 10 : 20,
   },
   txtTitle: {
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#2D9CDB',
     fontFamily: 'Nunito-Bold',
   },
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
   txtEmpty: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#828282',
     flex: 1,
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
   },
   buttonCancel: {
     color: '#FFF',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontWeight: 'bold',
     fontFamily: 'Nunito-Bold',
   },
