@@ -172,7 +172,8 @@ const renderHtmlQuestionDetail = (data, subjectId) => {
 
       if (dataStandard.typeAnswer <= 1) {
         let countOption = Object.keys(dataStandard).length;
-        for (let j = 0; j < 4; j++) {
+        let countNumber = dataStandard.options.length;
+        for (let j = 0; j < countNumber; j++) {
           let idOption = dataStandard.options[j];
           const bg = '#fff';
           let bgAnswer = '#000';

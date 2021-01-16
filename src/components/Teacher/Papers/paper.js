@@ -676,7 +676,6 @@ class Papers extends Component {
           )}
           initialNumToRender={12}
           windowSize={24}
-          scrollEventThrottle={1}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}

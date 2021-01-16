@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     // marginLeft: width < 350 ? 0 : 5,
   },
   buttomRevew: {
-    backgroundColor: '#2D9CDB',
+    backgroundColor: '#56CCF2',
     alignSelf:'center',
     alignItems:'center',
     paddingHorizontal:10,

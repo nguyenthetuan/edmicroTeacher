@@ -384,7 +384,7 @@ class EditConfig extends Component {
                                 ) : null}
                                 <View style={styles.footer}>
                                     <RippleButton
-                                        onPress={() => this.props.onVisible(false)}>
+                                        onPress={() => this.props.navigation.goBack()}>
                                         <View style={styles.buttomCancel}>
                                             <Text style={styles.txtButtom}>Huỷ</Text>
                                         </View>

@@ -6,7 +6,7 @@ export default function Version(props) {
     return (
         <View>
             <Text style={MenuStyle.textVersion}>Version : {props.version}</Text>
-            <Text style={{ fontFamily: 'Nunito-Regular', color: '#979797', fontSize: 9, marginBottom: 10, alignSelf: 'center' }}>Build Number : 3</Text>
+            <Text style={{ fontFamily: 'Nunito-Regular', color: '#979797', fontSize: 9, marginBottom: 10, alignSelf: 'center' }}>Build Number : 4</Text>
         </View>
     );
 }
