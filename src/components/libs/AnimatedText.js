@@ -31,7 +31,7 @@ const AnimatedText = ({
 
 const styles = StyleSheet.create({
     text: {        
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         color: '#fff',
         fontWeight: 'bold'
     }

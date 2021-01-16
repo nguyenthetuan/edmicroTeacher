@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
   styTxtInput: {
     color: '#757575',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     alignSelf: 'center',
     flex: 1,
     padding: 8
@@ -235,8 +235,8 @@ const styles = StyleSheet.create({
   styTxtBtn: {
     color: '#FFF',
     fontFamily: 'Nunito',
-    fontSize: 12,
-    lineHeight: 14,
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(14),
     marginLeft: 10,
     marginRight: 10,
   },

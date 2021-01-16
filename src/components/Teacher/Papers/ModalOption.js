@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     },
     txtModalDetail: {
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Regular',
         marginLeft: 25,
     },

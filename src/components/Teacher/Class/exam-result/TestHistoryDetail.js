@@ -101,7 +101,7 @@ export default class TestHistoryDetail extends Component {
         {
           this.convertJson(this.state.listQuestion) == 2 &&
           <View style={{ position: 'absolute', alignSelf: 'center', marginTop: 200 }}>
-            <Text style={{ fontSize: 14, color: '#999', fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Hiển Thị</Text>
+            <Text style={{ fontSize: RFFonsize(14), color: '#999', fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Hiển Thị</Text>
           </View>
         }
         <ModalReview

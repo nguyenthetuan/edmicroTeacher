@@ -36,8 +36,8 @@ export default class ModalLevelComplete extends Component {
     const { data } = this.state;
     const { assignmentTimeline } = data;
     let widthChart = (width / 4) * (data.assignmentTimeline.length + 0.5);
-    if(Platform.OS === 'android') {
-      if(widthChart > 9000) {
+    if (Platform.OS === 'android') {
+      if (widthChart > 9000) {
         widthChart = 9000;
       }
     }
@@ -73,7 +73,7 @@ export default class ModalLevelComplete extends Component {
         };
       });
       avgPercentComplete = (
-        totalPoint*10 / data.assignmentTimeline.length
+        totalPoint * 10 / data.assignmentTimeline.length
       ).toFixed(2);
       avgTimeComplete = totalTimeComplete / data.assignmentTimeline.length;
     }
@@ -83,7 +83,7 @@ export default class ModalLevelComplete extends Component {
       <View style={{ marginTop: 15, flex: 1 }}>
         {assignmentTimeline && assignmentTimeline.length <= 0 ?
           <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }} >
-            <Text style={{ fontFamily: 'Nunito-Regular', fontSize: 12, color: '#828282' }}>Không có dữ liệu :(( </Text>
+            <Text style={{ fontFamily: 'Nunito-Regular', fontSize: RFFonsize(12), color: '#828282' }}>Không có dữ liệu :(( </Text>
           </View>
           :
           <View style={styles.containerChart}>
@@ -91,7 +91,7 @@ export default class ModalLevelComplete extends Component {
               <Text
                 style={{
                   fontFamily: 'Nunito-Regular',
-                  fontSize: 9,
+                  fontSize: RFFonsize(9),
                   color: '#FF6213',
                   transform: [
                     { rotate: '-90deg' },
@@ -120,7 +120,7 @@ export default class ModalLevelComplete extends Component {
                       style={{
                         marginTop: i === 0 ? 15 : 31,
                         fontFamily: 'Nunito-Regular',
-                        fontSize: 6,
+                        fontSize: RFFonsize(6),
                         color: '#000',
                         textAlign: 'right',
                       }}>
@@ -218,17 +218,17 @@ export default class ModalLevelComplete extends Component {
                     })}
                     {data.assignmentTimeline.map((e, i) => {
                       const x = (width / 4) * (i + 1);
-                      const y2 = 
-                      (e.points !== 'NaN' && e.points) ? 220 - (e.points*10 / 100) * 200 : 219;
-                     
+                      const y2 =
+                        (e.points !== 'NaN' && e.points) ? 220 - (e.points * 10 / 100) * 200 : 219;
+
                       const stroke =
-                        (e.points !== 'NaN' && e.points*10) >= 70
+                        (e.points !== 'NaN' && e.points * 10) >= 70
                           ? '#04C6F1'
                           :
-                          (e.points === 'NaN' || e.points*10)&&
-                      e.points*10 < 50
-                        ? '#a55'
-                        : '#FFA500';
+                          (e.points === 'NaN' || e.points * 10) &&
+                            e.points * 10 < 50
+                            ? '#a55'
+                            : '#FFA500';
                       return (
                         <Line
                           key={`c${i.toString()}`}
@@ -292,7 +292,7 @@ export default class ModalLevelComplete extends Component {
                             width: width / 4,
                             bottom: 4,
                             fontFamily: 'Nunito-Regular',
-                            fontSize: 8,
+                            fontSize: RFFonsize(8),
                             color: '#828282',
                             textAlign: 'center',
                           }}>
@@ -323,7 +323,7 @@ export default class ModalLevelComplete extends Component {
                       style={{
                         marginTop: i === 0 ? 15 : 90,
                         fontFamily: 'Nunito-Regular',
-                        fontSize: 6,
+                        fontSize: RFFonsize(6),
                         color: '#000',
                         textAlign: 'right',
                       }}>
@@ -337,7 +337,7 @@ export default class ModalLevelComplete extends Component {
               <Text
                 style={{
                   fontFamily: 'Nunito-Regular',
-                  fontSize: 9,
+                  fontSize: RFFonsize(9),
                   color: '#FF6213',
                   transform: [
                     { rotate: '90deg' },
@@ -602,7 +602,7 @@ const styles = StyleSheet.create({
   },
   txtComplete: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     color: '#424242',
     marginLeft: 3,
   },
@@ -643,13 +643,13 @@ const styles = StyleSheet.create({
   txtName: {
     fontFamily: 'Nunito-Bold',
     color: '#000',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginHorizontal: 10,
   },
   txtNameOne: {
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     marginTop: 2,
   },
   containerChart: {
@@ -659,7 +659,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   txtTimeAverage: {
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     fontFamily: 'Nunito-Regular',
     color: '#000',
     marginStart: 8,

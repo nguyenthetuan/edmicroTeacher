@@ -144,7 +144,7 @@ export default class ModalSelectStudent extends Component {
                 marginVertical: 8
             }}>
                 <Text style={{
-                    fontSize: 14,
+                    fontSize: RFFonsize(14),
                     fontFamily: 'Nunito-Regular',
                     // color: highlighted ? '#fff' : '#BDBDBD'
                 }}>
@@ -275,7 +275,7 @@ export default class ModalSelectStudent extends Component {
                             // duration={500}
                             >
                                 <View style={{ borderBottomWidth: 0.5, justifyContent: 'center', alignItems: 'center', borderColor: '#828282', height: 40 }}>
-                                    <Text style={{ fontSize: 14 }}>Danh sách học sinh</Text>
+                                    <Text style={{ fontSize: RFFonsize(14) }}>Danh sách học sinh</Text>
                                 </View>
                                 {this._renderFlastList()}
                             </View>

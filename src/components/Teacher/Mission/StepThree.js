@@ -342,8 +342,8 @@ const styles = StyleSheet.create({
   styTxtBtnNext: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    lineHeight: 21,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21),
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     color: '#1c4db2',
     marginTop: 5,
     marginHorizontal: 3,
-    fontSize: 12
+    fontSize: RFFonsize(12)
   },
   styWrapLoading: {
     position: 'absolute',

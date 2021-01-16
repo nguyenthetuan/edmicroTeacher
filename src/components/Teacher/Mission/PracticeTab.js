@@ -161,14 +161,14 @@ const styles = StyleSheet.create({
   },
   headerTextIndex: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 20,
+    fontSize: RFFonsize(20),
     color: '#999',
     marginHorizontal: 10,
     alignSelf: 'center'
   },
   headerTextTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#424242',
     marginRight: 20,
     marginLeft: 11
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
   styTxtSum: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
-    fontSize: 10,
-    lineHeight: 14,
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
     marginLeft: 11,
   },
 });

@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   },
   txtHeaderNavigation: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#fff',
     flex: 1,
     textAlign: 'center',
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     marginVertical: 11,
     marginStart: 16,
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
   },
   containerChartCircle: {
@@ -311,14 +311,14 @@ const styles = StyleSheet.create({
   txtRank: {
     marginStart: 12,
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#fff',
     flex: 1,
   },
   txtPercentRank: {
     marginStart: 12,
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#fff',
   },
   chartCircle: {
@@ -336,14 +336,14 @@ const styles = StyleSheet.create({
   },
   txtBottomChartBar: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     marginStart: 35,
     flex: 1,
   },
   txtBottomChartBar2: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
   },
   viewLeftChartBar: {
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   },
   txtLeftChartBar: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     width: 45,
     textAlign: 'right',

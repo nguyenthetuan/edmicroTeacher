@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#5bc0de',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginLeft: 10,
     alignSelf: 'flex-end',
   },
   textNumber: {
     fontFamily: 'Nunito-Bold',
     color: '#000',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     alignSelf: 'flex-end'
   }
 });

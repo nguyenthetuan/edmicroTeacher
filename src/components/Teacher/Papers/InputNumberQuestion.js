@@ -75,7 +75,7 @@ export default class InputNumberQuestion extends Component {
       <View style={containerStyle}>
         <Text style={{
           fontFamily: 'Nunito-Bold',
-          fontSize: 12,
+          fontSize: RFFonsize(12),
           color: '#fff',
           borderRadius: 1
         }}>{title}</Text>
@@ -105,7 +105,7 @@ export default class InputNumberQuestion extends Component {
             style={{
               flex: 1,
               fontFamily: 'Nunito',
-              fontSize: 14,
+              fontSize: RFFonsize(14),
               fontWeight: '700',
               textAlign: 'center',
               paddingVertical: 0

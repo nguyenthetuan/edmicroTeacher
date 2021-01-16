@@ -480,14 +480,14 @@ class MarkingView extends Component {
               />
             </RippleButton>
             <Text
-              style={{ fontFamily: 'Nunito-Bold', fontSize: 14, color: '#fff' }}>
+              style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: '#fff' }}>
               Chấm điểm
             </Text>
           </View>
           <RippleButton
             style={styles.buttonReleasePoint}
             onPress={() => this.publicedScore()}>
-            <Text style={{ fontFamily: 'Nunito', fontSize: 12, color: '#fff' }}>
+            <Text style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), color: '#fff' }}>
               Công bố điểm
             </Text>
           </RippleButton>
@@ -504,7 +504,7 @@ class MarkingView extends Component {
             <View style={{}}>
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: RFFonsize(14),
                   fontFamily: 'Nunito-Bold',
                   color: '#FFFEFE',
                   marginLeft: 20,
@@ -524,7 +524,7 @@ class MarkingView extends Component {
             <View style={{}}>
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: RFFonsize(14),
                   fontFamily: 'Nunito-Bold',
                   color: '#FFFEFE',
                   marginLeft: 20,
@@ -845,7 +845,7 @@ class MarkingView extends Component {
                 </View>
                 <View style={styles.wrapInputScore}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14 }}>
+                    <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14) }}>
                       Câu {this.state.currentIndex + 1}{' '}
                     </Text>
                     <View style={{
@@ -866,7 +866,7 @@ class MarkingView extends Component {
                         styleInput={styles.point}
                       />
                     </View>
-                    <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14 }}>
+                    <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14) }}>
                       {' '}
                     /{maxScore}
                     </Text>
@@ -878,7 +878,7 @@ class MarkingView extends Component {
                       this.onpressComment();
                     }}>
                     <Text
-                      style={{ color: '#fff', fontFamily: 'Nunito', fontSize: 12 }}>
+                      style={{ color: '#fff', fontFamily: 'Nunito', fontSize: RFFonsize(12) }}>
                       Nhận xét
                   </Text>
                   </RippleButton>
@@ -889,7 +889,7 @@ class MarkingView extends Component {
                       this.onPressSubmitButton();
                     }}>
                     <Text
-                      style={{ color: '#fff', fontFamily: 'Nunito', fontSize: 12 }}>
+                      style={{ color: '#fff', fontFamily: 'Nunito', fontSize: RFFonsize(12) }}>
                       Cập nhật
                   </Text>
                   </RippleButton>
@@ -928,7 +928,7 @@ class MarkingView extends Component {
                         style={{
                           color: '#fff',
                           fontFamily: 'Nunito',
-                          fontSize: 12,
+                          fontSize: RFFonsize(12),
                         }}>
                         Nhận xét
                     </Text>
@@ -1072,7 +1072,7 @@ const styles = StyleSheet.create({
   },
   txtNote: {
     color: '#828282',
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     fontFamily: 'Nunito',
     marginLeft: 5,
   },
@@ -1202,7 +1202,7 @@ const styles = StyleSheet.create({
   },
   textQuestion: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000000',
   },
   pdf: {
@@ -1213,12 +1213,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   labelTab: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#DADADA',
   },
   labelTabActive: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#000000',
   },

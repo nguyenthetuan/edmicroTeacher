@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   textTitleHeader: {
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     flex: 1,
     alignSelf: 'center'
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   txtRightHeader: {
     paddingHorizontal: 13,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },

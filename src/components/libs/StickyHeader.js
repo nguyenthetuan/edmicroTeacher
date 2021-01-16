@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   viewStickey: {
-    fontSize: 20,
+    fontSize: RFFonsize(20),
     alignSelf: 'center',
     color: '#fff',
     alignSelf: 'center',

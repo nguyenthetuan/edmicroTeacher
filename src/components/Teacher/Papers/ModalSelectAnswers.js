@@ -53,12 +53,12 @@ export default class ModalSelectAnswers extends Component {
                 {this.props.showSelectAnswer && <View style={styles.modal}>
                     <Text style={{
                         fontFamily: 'Nunito-Bold',
-                        fontSize: 14,
+                        fontSize: RFFonsize(14),
                         color: '#fff',
                         fontWeight: '700',
                     }}>Câu {indexSelecting + 1}</Text>
                     <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', top: 10 }}>
-                        <Text style={{ fontSize: 14, fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
+                        <Text style={{ fontSize: RFFonsize(14), fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
                         <TextInput
                             value={this.props.currentPoint}
                             onChangeText={this.onChangeText}
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     },
     txtAnswer: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 18,
+        fontSize: RFFonsize(18),
         color: '#828282'
     },
     inputPoint: {
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     },
     styTxtOk: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#56BB73'
     }
 })

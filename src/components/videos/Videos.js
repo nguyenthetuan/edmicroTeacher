@@ -177,7 +177,7 @@ export default class Videos extends Component {
           <ImageBackground source={images[index % 3]}
             style={{ width: 140, height: 140 * 240 / 456, justifyContent: 'flex-end' }}
           >
-            <Text style={[styles.textTitle, { color: '#ddd', marginHorizontal: 5, fontSize: 12, zIndex: 2 }]} numberOfLines={2} >{item.title}</Text>
+            <Text style={[styles.textTitle, { color: '#ddd', marginHorizontal: 5, fontSize: RFFonsize(12), zIndex: 2 }]} numberOfLines={2} >{item.title}</Text>
             <Image source={AppIcon[data.image]} style={{
               position: 'absolute',
               right: 0,
@@ -308,14 +308,14 @@ const styles = StyleSheet.create({
   },
   textTitleHead: {
     color: '#cdcdcd',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     flex: 1
   },
   textTitle: {
     color: '#cdcdcd',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     height: 42,
   },
   rowItem: {
@@ -335,10 +335,10 @@ const styles = StyleSheet.create({
   },
   titleImage: {
     color: '#fff',
-    fontSize: 9
+    fontSize: RFFonsize(9)
   },
   txtGVtitle: {
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     color: '#BDBDBD',
     fontFamily: 'Nunito-Bold'
   }

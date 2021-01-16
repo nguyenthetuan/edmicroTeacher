@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   },
   txtSubmit: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#2D9CDB',
     marginLeft: 6,
   },
@@ -523,7 +523,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: '#333',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
   },
   wrapHeader: {

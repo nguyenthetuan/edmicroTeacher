@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
     marginHorizontal: 5,
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     marginVertical: 8,
   },
   styTxtName: {

@@ -39,8 +39,8 @@ const TabTop = createMaterialTopTabNavigator({
         labelStyle: {
             fontFamily: 'Nunito-Bold',
             color: '#56CCF2',
-            fontSize: 12,
-            lineHeight: 16,
+            fontSize: RFFonsize(12),
+            lineHeight: RFFonsize(16),
             textAlign: 'center',
         },
         indicatorStyle: {

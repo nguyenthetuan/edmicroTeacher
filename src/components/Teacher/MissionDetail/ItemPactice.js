@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     styCount: {
         color: '#828282',
         fontFamily: 'Nunito-Regular',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         letterSpacing: 0,
         alignSelf: 'flex-end',  
         marginTop: 5

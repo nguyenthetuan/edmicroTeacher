@@ -25,7 +25,7 @@ const TabMissionType = createMaterialTopTabNavigator(
       },
       labelStyle: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 15,
+        fontSize: RFFonsize(15),
       },
       indicatorStyle: {
         backgroundColor: '#56CCF2',

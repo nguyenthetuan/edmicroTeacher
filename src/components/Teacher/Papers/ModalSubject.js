@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     styTitle: {
         fontFamily: 'Nunito-Regular',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         flex: 1,
     },
     styCheck: {

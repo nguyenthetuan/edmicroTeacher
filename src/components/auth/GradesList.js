@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
   },
   textInfo: {
     marginRight: 10,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#c8c8c8',
   },
   textTitle: {
     fontFamily: 'Nunito-Regular',
     color: '#000',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     textAlign:'center'
   },
   iconOpacity: {

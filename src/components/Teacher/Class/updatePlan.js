@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
   },
   txtBtn: {
     color: '#fff',
-    fontSize: 18,
-    lineHeight: 21,
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(21),
     fontFamily: 'Nunito-Bold',
     marginTop: 14,
     marginBottom:14

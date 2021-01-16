@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     styTxtAlert: {
         fontFamily: 'Nunito-Bold',
         color: '#28A745',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         textAlign: 'center',
         margin: 20,
     },
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
         // lineHeight: 21
         color: '#FFF',
         fontFamily: 'Nunito-Bold',
-        fontSize: 18,
-        lineHeight: 21,
+        fontSize: RFFonsize(18),
+        lineHeight: RFFonsize(21),
         alignItems: 'center',
         alignSelf: 'center',
         fontWeight: "500",

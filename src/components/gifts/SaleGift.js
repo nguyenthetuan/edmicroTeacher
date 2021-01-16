@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
     },
     txtTitle: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
-        lineHeight: 16,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(16),
         color: '#000',
         marginTop: 16
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 5,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     txtMark: {
         fontFamily: 'Nunito',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#828282',
         alignSelf: 'center'
     },

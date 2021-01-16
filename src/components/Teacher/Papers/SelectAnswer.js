@@ -415,7 +415,7 @@ export default class SelectAnswer extends Component {
                   }}>
                   <Text style={{
                     fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
-                    fontSize: 12,
+                    fontSize: RFFonsize(12),
                     fontWeight: '700',
                     color: isSelected ? '#fff' : '#000'
                   }}>{name}</Text>
@@ -449,7 +449,7 @@ export default class SelectAnswer extends Component {
                     }}>
                     <Text style={{
                       fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
-                      fontSize: 12,
+                      fontSize: RFFonsize(12),
                       color: '#000',
                       fontWeight: '700',
                     }}>{name}</Text>
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF'
   },
   rightHeader: {
@@ -511,7 +511,9 @@ const styles = StyleSheet.create({
     marginEnd: 16
   },
   totalAddQuestion: {
-    fontFamily: 'Nunito', fontWeight: '700', fontSize: 14
+    fontFamily: 'Nunito',
+    fontWeight: '700',
+    fontSize: RFFonsize(14)
   },
   buttomTop: {
     backgroundColor: '#0091EA',
@@ -527,7 +529,7 @@ const styles = StyleSheet.create({
   },
   txtRightHeader: {
     paddingHorizontal: 13,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#FFF'
   },
@@ -542,12 +544,12 @@ const styles = StyleSheet.create({
   },
   txtAnswer: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#828282'
   },
   txtNotAdd: {
     color: '#FF6213',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold'
   },
   viewPdf: {
@@ -576,14 +578,14 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     color: '#000',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center'
   },
   txtEnterAnswer: {
     marginVertical: 3,
     color: '#000',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center'
   },
   btnEnterAnswer: {
@@ -597,7 +599,7 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     color: '#FF0000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     textAlign: 'center'
   },
   btnAddPDF: {
@@ -611,24 +613,24 @@ const styles = StyleSheet.create({
   txtAddPDF: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12
+    fontSize: RFFonsize(12)
   },
   txtNoActive: {
     color: '#C4C4C4',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12
+    fontSize: RFFonsize(12)
   },
   txtActive: {
     color: '#fff',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12
+    fontSize: RFFonsize(12)
   },
   inputName: {
     height: 24,
     backgroundColor: '#fff',
     color: '#828282',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     paddingStart: 5,
     marginBottom: 7,
     borderRadius: 1,
@@ -642,7 +644,7 @@ const styles = StyleSheet.create({
     marginTop: 9,
     textAlign: 'center',
     color: '#FF6213',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     paddingVertical: 0
   },
@@ -670,7 +672,7 @@ const styles = StyleSheet.create({
     marginStart: 8,
     color: '#0091EA',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center'
   },
   dotViewPDF: {

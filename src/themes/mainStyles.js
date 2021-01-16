@@ -40,7 +40,7 @@ module.exports = {
   },
   headerTextTitle: {
     alignSelf: 'center',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     color: '#fff',
     width: '70%',
     fontFamily: 'Nunito-Bold',
@@ -89,7 +89,7 @@ module.exports = {
     alignSelf: 'center',
     marginTop: 10,
     fontFamily: 'Nunito-Regular',
-    fontSize: 15
+    fontSize: RFFonsize(15)
   },
 
   /**
@@ -123,7 +123,7 @@ module.exports = {
     flex: 1,
     fontFamily: 'Nunito-Bold',
     color: '#5bc0de',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
   },
   wrapHeader: {
     paddingTop: top
@@ -161,7 +161,7 @@ module.exports = {
   textItem: {
     flex: 1,
     color: '#4CAF79',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold'
   },
   textItemModal: {
@@ -207,7 +207,7 @@ module.exports = {
   textC: {
     alignSelf: 'center',
     color: '#4CAF79',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     marginVertical: 5,
   },
   buttonContinue: {
@@ -307,7 +307,7 @@ module.exports = {
   textPecent: {
     fontFamily: 'Nunito-Regular',
     color: '#DC7A24',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
   },
   rowxs: {
     flexDirection: 'row',

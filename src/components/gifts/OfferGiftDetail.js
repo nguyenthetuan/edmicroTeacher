@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     },
     txtNumber: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         color: '#4776AD',
         alignSelf: 'center',
         marginLeft: 10,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     },
     titleCate: {
         fontFamily: "Nunito-Bold",
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         alignSelf: 'center',
         marginTop: 18,
         textAlign: 'center',
@@ -158,17 +158,17 @@ const styles = StyleSheet.create({
     txtSub: {
         fontFamily: 'Nunito-Bold',
         color: '#fff',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         marginTop: 14,
         marginBottom: 14,
         marginLeft: 76,
         marginRight: 76,
-        fontSize: 16,
+        fontSize: RFFonsize(16),
     },
     description: {
         fontFamily: 'Nunito',
-        fontSize: 14,
-        lineHeight: 18,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
         color: "#000",
         textAlign: 'center',
         marginHorizontal: 50
@@ -179,14 +179,14 @@ const styles = StyleSheet.create({
     },
     toSend: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 12,
-        lineHeight: 17,
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(17),
         color: '#828282'
     },
     toSend2: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 12,
-        lineHeight: 17,
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(17),
         color: '#828282',
         marginTop: -30
     },

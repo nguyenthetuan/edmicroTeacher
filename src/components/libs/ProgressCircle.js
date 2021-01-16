@@ -19,12 +19,12 @@ export default class ProgressCircle extends Component {
                     thickness={1}
                     showsText={true}
                     formatText={() => progress}
-                    textStyle={{ fontSize: 10, fontFamily: 'Nunito-Bold', color: '#FFF' }}
+                    textStyle={{ fontSize: RFFonsize(10), fontFamily: 'Nunito-Bold', color: '#FFF' }}
                     progress={progress / 100}
                     style={{ marginVertical: 6, ...style }}
                     size={28}
                 />
-                <Text style={{ color: '#FFF', alignSelf: 'flex-end', fontFamily: 'Nunito-Regular', fontSize: 12, marginBottom: 3 }}> %</Text>
+                <Text style={{ color: '#FFF', alignSelf: 'flex-end', fontFamily: 'Nunito-Regular', fontSize: RFFonsize(12), marginBottom: 3 }}> %</Text>
             </>
         );
     }

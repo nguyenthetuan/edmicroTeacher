@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     left: 12,
     top: 12,
-    fontSize: 10
+    fontSize: RFFonsize(10)
   },
   backFixHeader: {
     width: 40,

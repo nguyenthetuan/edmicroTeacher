@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
         flex: 1,
         alignSelf: 'center',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     }
 });
