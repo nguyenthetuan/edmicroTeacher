@@ -386,8 +386,11 @@ class MarkingView extends Component {
     this.setState({ [`valueCommnent${this.state.currentIndex}`]: value });
   }
 
-  onChangeTextScore(value) {
-    this.setState({ [`valueScore${this.state.currentIndex}`]: value });
+  onChangeTextScore(point) {
+    if (point[point.length - 1] == ',') {
+      point = `${point.substring(0, point.length - 1)}.`
+    }
+    this.setState({ [`valueScore${this.state.currentIndex}`]: point });
   }
 
   checkScore() {
@@ -704,6 +707,10 @@ class MarkingView extends Component {
     }
     let typeAnswer =
       item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
+    let makedPoint = false;
+    if (this.state[`valueScore${index}`] || this.state[`valueCommnent${index}`]) {
+      makedPoint = true;
+    }
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
@@ -713,9 +720,10 @@ class MarkingView extends Component {
           style={[
             styles.buttonQuestion,
             { backgroundColor: '#E34D5C', borderColor: '#E34D5C' },
+            makedPoint && { backgroundColor: '#2D9CDB' }
           ]}>
-          <Text style={{ color: '#fff' }}>{index + 1}</Text>
-          <Text style={{ color: '#fff', marginLeft: 3 }}>
+          <Text style={{ color: '#fff' }, makedPoint && { color: '#fff' }}>{index + 1}</Text>
+          <Text style={{ color: '#fff', marginLeft: 3 }, makedPoint && { color: '#fff' }}>
             {this._answer(answer)}
           </Text>
         </RippleButton>
@@ -725,13 +733,13 @@ class MarkingView extends Component {
         <RippleButton
           style={[
             styles.buttonQuestion,
-            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg },
+            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg }, makedPoint && { backgroundColor: '#2D9CDB' },
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
           }}>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0' }}>{index + 1}</Text>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
+          <Text style={{ color: (bg && '#fff') || '#a4a6b0' }, makedPoint && { color: '#fff' }}>{index + 1}</Text>
+          <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }, makedPoint && { color: '#fff' }}>
             {typeAnswer === 0 && this._answer(answer)}
           </Text>
         </RippleButton>
@@ -739,7 +747,7 @@ class MarkingView extends Component {
           <RippleButton
             style={[
               styles.buttonQuestion,
-              { borderColor: '#56CCF2' }, bg && { backgroundColor: bg },
+              { borderColor: '#56CCF2' }, bg && { backgroundColor: bg }
             ]}
             onPress={() => {
               this.onButtonQuestionPress(index);
