@@ -18,8 +18,6 @@ import StudentDetail from '../../../containers/teacher/homework/StudentDetail';
 import dataHelper from '../../../utils/dataHelper';
 import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
-import RippleButton from '../../common-new/RippleButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
@@ -467,9 +465,7 @@ export default function StatisticsPoints(props) {
     props.navigation.state.params.hideBackButtom;
 
   let timeEnd = props.data?.data.timeEnd;
-  console.log("🚀 ~ file: MainScreen.js ~ line 470 ~ StatisticsPoints ~ props.data", props.data);
-  // timeEnd = convertTimeHMDMY(timeEnd);
-  timeEnd = convertTimeHMDMY(Date.now()/1000);
+  timeEnd = convertTimeHMDMY(Date.now() / 1000);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -481,34 +477,6 @@ export default function StatisticsPoints(props) {
         isShow={isShow}
       />
       <View style={styles.header}>
-        {/* <View style={styles.headerNavigation}> */}
-        {/* {
-            isShow ? (
-              <RippleButton
-                onPress={() => {
-                  // goBack();
-                  props.navigation.goBack();
-                }}>
-                <MaterialCommunityIcons
-                  name="arrow-left"
-                  color="#000"
-                  size={23}
-                />
-              </RippleButton>
-            )
-              :
-              <View style={{ width: 30 }} />
-          } */}
-
-        {/* <Text style={styles.txtHeaderNavigation}>Thống kê bài tập</Text> */}
-        {/* {
-            !isShow ?
-              <RippleButton onPress={onClickFillter}>
-                <Image source={AppIcon.icons_filter} resizeMode={'contain'} />
-              </RippleButton>
-              : null
-          } */}
-        {/* </View> */}
         {
           !isLoading ?
             _.isEmpty(props.data) ?
@@ -531,6 +499,7 @@ export default function StatisticsPoints(props) {
           data: props.data,
           isLoading: isLoading,
           refreshData: refreshData,
+          navigation: props.navigation
         }}
       />
       <Toast ref={toast} position={'top'} />

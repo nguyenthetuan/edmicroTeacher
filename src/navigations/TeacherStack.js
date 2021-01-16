@@ -21,6 +21,7 @@ import ChangePassWord from '../components/account-detail/ChangePassword';
 import MockExample from '../components/Teacher/Class/MockExample';
 import MockExamDrawer from '../components/Teacher/Class/MockExamDrawer';
 import MockResult from '../components/Teacher/Class/exam-result/TestResultTab';
+import HomeWorkResult from '../components/Teacher/Homework/homework-result/TestResultTab';
 import UpdatePlan from '../components/Teacher/Class/updatePlan';
 import V_UpdatePhone from '../containers/auth/UpdatePhoneContainer';
 import TermsOfUse from '../components/Terms/TermsOfUse';
@@ -36,6 +37,7 @@ import GiftDetail from '../components/gifts/GiftDetail';
 import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
 import StatisticScreen from '../components/statistics/StatisticScreen';
 import EditConfig from '../components/Teacher/Papers/EditConfig';
+import SchoolResultPDF from '../components/Teacher/Homework/homework-result/SchoolResultPDF';
 import { Platform } from 'react-native';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -185,7 +187,15 @@ const TeacherStack = createStackNavigator({
   // WebViews:{
   //   screen: AppStoreScreen,
   //   navigationOptions: { header: null, gesturesEnabled: true },
-  // }
+  // },
+  HomeWorkResult: {
+    screen: HomeWorkResult,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  SchoolResultPDF: {
+    screen: SchoolResultPDF,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  }
 }, Platform.OS == 'android' && transition);
 
 export default TeacherStack;

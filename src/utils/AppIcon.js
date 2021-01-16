@@ -119,6 +119,8 @@ import icon_remakeParacV3 from '../asserts/icon/icon_remakeParacV3.png';
 import icon_remakePeopleV3 from '../asserts/icon/icon_remakePeopleV3.png';
 import icon_toSendV3 from '../asserts/icon/icon_toSendV3.png';
 import icon_remakeHatV3 from '../asserts/icon/icon_remakeHatV3.png';
+import score_9 from '../asserts/appIcon/score_9.png';
+
 module.exports = {
   logo_onluyen,
   icon_minus,
@@ -221,5 +223,6 @@ module.exports = {
   icon_remakeParacV3,
   icon_remakePeopleV3,
   icon_toSendV3,
-  icon_remakeHatV3
+  icon_remakeHatV3,
+  score_9
 };

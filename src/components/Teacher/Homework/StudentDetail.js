@@ -17,7 +17,7 @@ import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
-import Global from '../../../utils/Globals';
+import { AssignmentContentType } from '../../../utils/Utils';
 
 const { width, height } = Dimensions.get('window');
 
@@ -120,6 +120,24 @@ function ModalDetail(props) {
     const status = getStatus(item);
     const point = props.point;
 
+    const goToResult = () => {
+        const { assignmentContentType } = props.dataResult.data;
+        props.onClose();
+        if (assignmentContentType == AssignmentContentType.pdf) {
+            props.navigation.navigate('SchoolResultPDF', {
+                responseJson: props.dataResult,
+                nameTest: item.nameStudent,
+                statusbar: 'light-content',
+            });
+        } else if (assignmentContentType == AssignmentContentType.regular) {
+            props.navigation.navigate('HomeWorkResult', {
+                responseJson: props.dataResult,
+                nameTest: item.nameStudent,
+                statusbar: 'light-content',
+            });
+        }
+    }
+
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -181,6 +199,11 @@ function ModalDetail(props) {
                                 )
                             }}
                         />
+                        <TouchableOpacity
+                            onPress={goToResult}
+                        >
+                            <Text style={[styles.txtBtn, { fontSize: 14, color: '#000' }]}>Xem kết quả</Text>
+                        </TouchableOpacity>
                         <View style={styles.viewOptionModal}>
                             <TouchableOpacity
                                 onPress={() => props.onRetryPoint(item.studentId)}
@@ -208,6 +231,7 @@ export default function StudentDetail(props) {
 
     const [dataDetail, setDetail] = useState(null);
     const [point, setPoint] = useState(0);
+    const [dataResult, setDataResult] = useState(null);
 
     const handleRetryCheckPoint = async (studentId) => {
         if (dataDetail) {
@@ -256,9 +280,9 @@ export default function StudentDetail(props) {
     const detailStudent = async (item) => {
         const { token } = await dataHelper.getToken();
         const response = await apiHomework.getStudentDetail({ token, assignId: props.screenProps?.data?.data.assignId, studentId: item.studentId })
-        setPoint(response.data.totalScore)
-        setDetail(item)
-
+        setPoint(response.data.totalScore);
+        setDetail(item);
+        setDataResult(response);
     }
 
     const renderItem = ({ item, index }) => {
@@ -313,12 +337,12 @@ export default function StudentDetail(props) {
                                         style={{ marginStart: 5 }}
                                     />
                                 </TouchableOpacity>
-                                <TouchableOpacity
+                                {/* <TouchableOpacity
                                     onPress={() => handleRetryCheckPoint(item.studentId)}
                                     style={styles.btnChamlai}>
                                     <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
                                     <Text style={styles.txtBtn}>Chấm lại</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                                 <TouchableOpacity
                                     onPress={() => handleRework(item.studentId)}
                                     style={styles.btnLamlai}>
@@ -359,8 +383,10 @@ export default function StudentDetail(props) {
                                     onRetryPoint={(studentId) => handleRetryCheckPoint(studentId)}
                                     onRework={(studentId) => handleRework(studentId)}
                                     data={dataDetail}
+                                    dataResult={dataResult}
                                     onClose={() => setDetail(null)}
                                     point={point}
+                                    navigation={props.screenProps.navigation}
                                 /> : null
                             }
                         </View>)
