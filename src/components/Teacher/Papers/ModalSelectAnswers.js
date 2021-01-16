@@ -28,6 +28,7 @@ export default class ModalSelectAnswers extends Component {
     }
 
     onSelectAnswer = (answer) => {
+    console.log("🚀 ~ file: ModalSelectAnswers.js ~ line 23 ~ ModalSelectAnswers ~ answer", answer)
         this.props.onSelectAnswer(answer)
         this.setState({ optionIdAnswer: answer });
     }
@@ -45,6 +46,7 @@ export default class ModalSelectAnswers extends Component {
     }
 
     render() {
+        console.log('optionIdAnswer: ', this.state.optionIdAnswer);
         let { indexSelecting } = this.props;
         return (
             <>
@@ -63,7 +65,7 @@ export default class ModalSelectAnswers extends Component {
                             numberOfLines={1}
                             returnKeyType={'done'}
                             maxLength={4}
-                            keyboardType={'numeric'}
+                            keyboardType={'numbers-and-punctuation'}
                             placeholderTextColor={'#BDBDBD'}
                             style={styles.inputPoint}
                             onEndEditing={this.onEnediting}
