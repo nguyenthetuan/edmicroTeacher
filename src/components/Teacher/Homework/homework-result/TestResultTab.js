@@ -5,7 +5,7 @@ import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TestResult from './TestResult';
 import TestHistoryDetail from './TestHistoryDetail';
-import { RFFonsize } from '../../../../utils/Fonts';
+
 import Share from '../../../exam-detail/Test';
 import Utils from '../../../../utils/Utils';
 import HeaderNavigation from '../../../common/HeaderNavigationMenu';
@@ -33,7 +33,7 @@ const TestResultTab = createMaterialTopTabNavigator({
     scrollEnabled: true,
     upperCaseLabel: false,
     labelStyle: {
-      fontSize: RFFonsize(16),
+      fontSize: 16,
       fontFamily: 'Nunito-Regular'
     },
     tabStyle: {
@@ -57,22 +57,7 @@ const TestResultTabContainer = createAppContainer(TestResultTab);
 
 export default class TestResultScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    // header: (
-    //   <View style={{ backgroundColor: '#3371CB', flexDirection: 'row', paddingTop: Platform.OS == 'ios' ? 20 : 0 }}>
-    //     <TouchableOpacity
-    //       onPress={() => navigation.goBack()}
-    //       style={{ padding: 15 }}
-    //     >
-    //       <Icon
-    //         name={'chevron-left'}
-    //         size={24} color={'#ffff'}
-    //       />
-    //     </TouchableOpacity >
-    //     <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', marginLeft: 30, alignSelf: 'center' }}>{navigation.state.params.nameTest}</Text>
-    //   </View>
-    // ),
     title: navigation.state.params.nameTest,
-    // headerTitleStyle : {textAlign: 'center',alignSelf:'center'},
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#3371CB',
@@ -86,15 +71,6 @@ export default class TestResultScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    Utils.trackScreen('testResult');
-  }
-  componentDidUpdate() {
-    if (typeof (Share.updateCategory) == 'function') {
-
-      Share.updateCategory();
-    }
-  }
   handleLongText(text) {
     const textLength = 25;
     let result = '';
@@ -115,7 +91,6 @@ export default class TestResultScreen extends Component {
           title={this.handleLongText(this.props.navigation.state.params.nameTest)}
           bgColor='#3371CB'
           showIcon={1}
-          // gobackCategoryDetail={this.props.gobackCategoryDetail}
           isBack={true}
           styleTitle={{ fontSize: width < 380 ? 14 : 16, position: 'absolute', width: '100%', height: 40, alignSelf: 'flex-end', zIndex: -1 }}
         />
