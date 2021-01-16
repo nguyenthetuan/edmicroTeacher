@@ -475,7 +475,7 @@ export default class ForgotPasswordScreen extends Component {
           </View>
           <Text style={{
             fontFamily: 'Nunito-Bold',
-            fontSize: 14,
+            fontSize: RFFonsize(14),
             marginStart: 25
           }}>{
               item.displayName}
@@ -498,7 +498,7 @@ export default class ForgotPasswordScreen extends Component {
               </View>
               :
               <View>
-                <Text style={{ fontFamily: 'Nunito-Bold', fontSize: 14, marginTop: 45 }}>Chọn tài khoản</Text>
+                <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), marginTop: 45 }}>Chọn tài khoản</Text>
                 <FlatList
                   data={account}
                   keyExtractor={(item) => item.userName}

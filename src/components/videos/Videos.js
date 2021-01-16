@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(9)
   },
   txtGVtitle: {
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     color: '#BDBDBD',
     fontFamily: 'Nunito-Bold'
   }
