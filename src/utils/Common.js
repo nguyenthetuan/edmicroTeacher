@@ -134,6 +134,7 @@ const getDisplaySubject = (id) => {
     case AppConst.mathJRID: return 'Toán';
     case AppConst.gdqpID: return 'Giáo Dục Quốc Phòng';
     case AppConst.lienmonhocID: return 'Liên môn học';
+    case AppConst.congngheID: return 'Công Nghệ';
     default:
       return 'Unknown variable';
   }
