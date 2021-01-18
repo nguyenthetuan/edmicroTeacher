@@ -11,6 +11,7 @@ import ProgressBar from '../../libs/ProgressBar';
 import Common from '../../../utils/Common';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -189,12 +190,12 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#FFF',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     marginLeft: 5,
   },
   textStatus: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
   },
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
   },
   txtbtn: {
     color: '#FFF',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
     textTransform: 'uppercase',
     marginLeft: 5,
@@ -235,14 +236,14 @@ const styles = StyleSheet.create({
   txtInfoDetail: {
     color: '#000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 5,
     alignSelf: 'center',
   },
   txtRight: {
     color: '#000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 5,
     marginRight: 16,
     alignSelf: 'center'
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
   txtRightFoot: {
     color: '#000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     // marginLeft: 5,
     marginRight: 48,
     alignSelf: 'center'
@@ -258,20 +259,20 @@ const styles = StyleSheet.create({
   indexOne: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     // marginLeft: 16,
   },
   txtThree: {
     color: '#F16219',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 25,
     alignSelf: 'center'
   },
   indexTwo: {
     color: '#FF6213',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 15,
   },
   wrapBtn: {
@@ -293,8 +294,8 @@ const styles = StyleSheet.create({
   },
   txtQuestion: {
     fontFamily: 'Nunito',
-    fontSize: 11,
-    lineHeight: 14,
+    fontSize: RFFonsize(11),
+    lineHeight: RFFonsize(14),
     color: "#2D9CDB",
     alignSelf: 'center',
     marginTop: 2,
@@ -312,12 +313,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   viewSubmit: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#000',
     fontFamily: 'Nunito-Regular',
   },
   rateSub: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#F16219',
     fontFamily: 'Nunito-Regular',
     marginLeft: 10,

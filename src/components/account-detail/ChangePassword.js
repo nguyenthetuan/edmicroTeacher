@@ -10,6 +10,7 @@ import Button from '../common/Button';
 import { mainStyle } from '../../themes';
 import { changePasswordAction } from '../../actions/userAction';
 import { connect } from 'react-redux';
+import { RFFonsize } from '../../utils/Fonts';
 import {
   PASS_PRESENT_PLACE, PASS_RENEW_PLACE, PASS_NEW_PLACE, TITLE_HEADER_PASSWORD, BUTTON_UPDATE_PASS,
   CHANGE_PASSWORD_FAILD_MSG, CHANGE_PASSWORD_SUCCESS_MSG
@@ -154,7 +155,7 @@ class ChangePassword extends Component {
                       title={BUTTON_UPDATE_PASS}
                       width={'100%'} circle={40}
                       style={{ backgroundColor: '#2D9CDB', height: 40 }}
-                      styleTitle={{ fontSize: 16, fontFamily: 'Nunito-Regular', }}
+                      styleTitle={{ fontSize: RFFonsize(16), fontFamily: 'Nunito-Regular', }}
                       onPress={handleSubmit}
                     // onPress={this.changePassword.bind(this)}
                     />
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
   },
   styleLabel: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#828282',
     position: 'absolute',
     top: -10,
@@ -270,6 +271,6 @@ const styles = StyleSheet.create({
   txtErrorEmpty: {
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
-    fontSize: 11,
+    fontSize: RFFonsize(11),
   },
 })

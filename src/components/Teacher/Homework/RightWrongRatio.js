@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { Svg, Line } from 'react-native-svg';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
@@ -38,7 +39,7 @@ export default function RightWrongRatio(props) {
                             style={{
                               marginTop: i === 0 ? 15 : 31,
                               fontFamily: 'Nunito-Regular',
-                              fontSize: 6,
+                              fontSize: RFFonsize(6),
                               color: '#000',
                               textAlign: 'right'
                             }}>{e}%</Text>
@@ -112,7 +113,7 @@ export default function RightWrongRatio(props) {
                                   width: 20,
                                   bottom: 2,
                                   fontFamily: 'Nunito-Regular',
-                                  fontSize: 10,
+                                  fontSize: RFFonsize(10),
                                   color: '#000',
                                   textAlign: 'center'
                                 }}>{i + 1}</Text>
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
     padding: 16
   },
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   txtNote: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#000',
     marginStart: 15

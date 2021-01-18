@@ -19,6 +19,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import _ from 'lodash';
 import RippleButton from '../../libs/RippleButton';
 import {isIphoneX} from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../../../utils/Fonts';
 const message = `Bài kiểm tra vẫn chưa được hoàn thành. Bạn hãy cố gắng hoàn thành nhé!`;
 const {width,height} = Dimensions.get('window');
 export default class ModalMockExamStart extends Component {
@@ -105,7 +106,7 @@ export default class ModalMockExamStart extends Component {
                           <Text
                             style={{
                               fontFamily: 'Nunito-Regular',
-                              fontSize: 12,
+                              fontSize: RFFonsize(12),
                               marginLeft: 9,
                             }}>
                             Tổng số câu
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
   },
   name: {
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     fontFamily: 'Nunito-Regular',
     color: '#2D9CDB',
     fontWeight: 'bold',
@@ -190,18 +191,18 @@ const styles = StyleSheet.create({
   },
   sum: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontWeight: 'bold',
     color: '#FDC214',
   },
   time: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontWeight: 'bold',
     color: '#2D9CDB',
   },
   txtButon: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Regular',
     color: '#fff',
     fontWeight: 'bold',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   },
   txtTime: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 9,
   },
 });

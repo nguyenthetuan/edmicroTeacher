@@ -16,6 +16,7 @@ import Dropdown from './Dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AppIcon from '../../../utils/AppIcon';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width } = Dimensions.get('window');
 export default class ModalFillter extends Component {
   constructor(props) {
@@ -59,12 +60,12 @@ export default class ModalFillter extends Component {
           onPressOut={this.changeStateModale}>
           <View style={styles.contain}>
             <SafeAreaView />
-            <View style={{flexDirection:'row',}}>
+            <View style={{ flexDirection: 'row', }}>
               <Text style={styles.styTitle}>Tuỳ chọn</Text>
             </View>
-              <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
-                <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
-              </TouchableOpacity>
+            <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
+              <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
+            </TouchableOpacity>
             <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR }]}>
               <Dropdown
                 title="Khối"
@@ -149,11 +150,11 @@ const styles = StyleSheet.create({
   styBtnClose: {
     position: 'absolute',
     right: 10,
-    top:Platform.isPad?30:Platform.OS=='ios'?50:0
+    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 50 : 0
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',
     marginTop: 20,
-    fontSize: 16
+    fontSize: RFFonsize(16)
   }
 });

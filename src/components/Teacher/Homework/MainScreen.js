@@ -18,8 +18,6 @@ import StudentDetail from '../../../containers/teacher/homework/StudentDetail';
 import dataHelper from '../../../utils/dataHelper';
 import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
-import RippleButton from '../../common-new/RippleButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
@@ -27,7 +25,7 @@ import { convertTimeHMDMY } from '../../../utils/Utils';
 import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Global from '../../../utils/Globals';
-
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(
@@ -467,7 +465,7 @@ export default function StatisticsPoints(props) {
     props.navigation.state.params.hideBackButtom;
 
   let timeEnd = props.data?.data.timeEnd;
-  timeEnd = convertTimeHMDMY(timeEnd);
+  timeEnd = convertTimeHMDMY(Date.now() / 1000);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -479,34 +477,6 @@ export default function StatisticsPoints(props) {
         isShow={isShow}
       />
       <View style={styles.header}>
-        {/* <View style={styles.headerNavigation}> */}
-        {/* {
-            isShow ? (
-              <RippleButton
-                onPress={() => {
-                  // goBack();
-                  props.navigation.goBack();
-                }}>
-                <MaterialCommunityIcons
-                  name="arrow-left"
-                  color="#000"
-                  size={23}
-                />
-              </RippleButton>
-            )
-              :
-              <View style={{ width: 30 }} />
-          } */}
-
-        {/* <Text style={styles.txtHeaderNavigation}>Thống kê bài tập</Text> */}
-        {/* {
-            !isShow ?
-              <RippleButton onPress={onClickFillter}>
-                <Image source={AppIcon.icons_filter} resizeMode={'contain'} />
-              </RippleButton>
-              : null
-          } */}
-        {/* </View> */}
         {
           !isLoading ?
             _.isEmpty(props.data) ?
@@ -514,7 +484,8 @@ export default function StatisticsPoints(props) {
               : <View style={styles.wrapInfo}>
                 <Text style={styles.txtAssignment}>{props.data?.data.name || ''}</Text>
                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
-                <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
+                {/* <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text> */}
+                <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả ({timeEnd})</Text>
               </View>
             :
             <View style={styles.wrapInfo}>
@@ -528,6 +499,7 @@ export default function StatisticsPoints(props) {
           data: props.data,
           isLoading: isLoading,
           refreshData: refreshData,
+          navigation: props.navigation
         }}
       />
       <Toast ref={toast} position={'top'} />
@@ -566,18 +538,18 @@ const styles = StyleSheet.create({
   },
   txtHeaderNavigation: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     color: '#000',
     flex: 1,
     textAlign: 'center',
   },
   labelTab: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#c4c4c4',
   },
   labelTabActive: {
-    fontSize: 11,
+    fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Bold',
     color: '#56CCF2',
   },
@@ -595,7 +567,7 @@ const styles = StyleSheet.create({
   },
   txtStatistic: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#2D9CDB',
     borderRadius: 1,
   },
@@ -607,14 +579,14 @@ const styles = StyleSheet.create({
   },
   txtAssignment: {
     color: '#2D9CDB',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     marginLeft: 10,
     fontFamily: 'Nunito-Bold',
     marginBottom: 5,
   },
   txtTitle: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     color: '#2D9CDB',
     marginLeft: 10,
     marginBottom: 5,

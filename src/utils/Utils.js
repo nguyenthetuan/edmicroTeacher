@@ -378,6 +378,17 @@ module.exports = {
 
     if (align) return html + style + script;
     return html + style2 + script;
+  },
+
+  /**
+ *  regular: regular
+ *  pdf: pdf
+ *  image: image
+ */
+  AssignmentContentType: {
+    regular: 0,
+    pdf: 1,
+    image: 2
   }
 };
 

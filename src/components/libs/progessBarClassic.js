@@ -8,7 +8,9 @@ var {
   View,
   LayoutAnimation,
 } = require('react-native')
-import Entypo from 'react-native-vector-icons/Entypo';
+import Entypo from 'react-native-vector-icons/Entypo'
+import { RFFonsize } from '../../utils/Fonts';
+
 export default class ProgressBarClassic extends React.Component {
   constructor() {
     super()
@@ -154,7 +156,7 @@ const Style = StyleSheet.create({
   progressBar__balloonVal: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 6,
+    fontSize: RFFonsize(6),
     // lineHeight: 30,
     top: 0,
     paddingBottom: 1

@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import {
-  View, Text, BackHandler,
-  StyleSheet, Dimensions, Image, Alert, Keyboard, SafeAreaView, StatusBar, Platform, TouchableOpacity
+  View,
+  Text,
+  BackHandler,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Keyboard,
+  SafeAreaView,
+  StatusBar,
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import RippleButton from '../libs/RippleButton';
@@ -26,6 +35,7 @@ import { DotIndicator } from 'react-native-indicators';
 import { WOOPS_ERROR } from '../../constants/message';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast, { DURATION } from 'react-native-easy-toast';
+import { RFFonsize } from '../../utils/Fonts';
 
 const { height, width } = Dimensions.get("window");
 const ICON_SIZE = 17;
@@ -531,7 +541,7 @@ export default class SignUp extends Component {
                             center={true} btn={'rgb-lg'} title="Đăng ký"
                             width={width - width / 4} circle={40} color={'#f8f8f8'} vertical={20}
                             style={{ backgroundColor: '#54CEF5', height: 40, borderRadius: 5 }}
-                            styleTitle={{ fontWeight: 'bold', fontSize: 14 }}
+                            styleTitle={{ fontWeight: 'bold', fontSize: RFFonsize(14) }}
                             onPress={() => this.handleSignUp()}
                           />
                           :
@@ -545,7 +555,7 @@ export default class SignUp extends Component {
                 }
                 {this.state.isVerify &&
                   <SlideLeft style={{ flex: 1, width: width - width / 4 }}>
-                    <Text style={{ marginVertical: 20, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15 }}>Nhập mã OTP</Text>
+                    <Text style={{ marginVertical: 20, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: RFFonsize(15) }}>Nhập mã OTP</Text>
                     <OTPTextView
                       ref={ref => this.otp = ref}
                       containerStyle={styles.textInputContainer}
@@ -562,13 +572,13 @@ export default class SignUp extends Component {
                           center={true} btn={'rgb-lg'} title="Xác thực"
                           width={width - width / 4} circle={40} color={'#f8f8f8'} vertical={35}
                           style={{ backgroundColor: '#54CEF5', height: 40, borderRadius: 5 }}
-                          styleTitle={{ fontWeight: 'bold', fontSize: 14 }}
+                          styleTitle={{ fontWeight: 'bold', fontSize: RFFonsize(14) }}
                           onPress={() => this.handleSignUpAPI()}
                         />
                         <View style={{ marginTop: 30, flexDirection: 'row' }}>
                           <Text style={{
                             fontFamily: 'Nunito-Regular',
-                            fontSize: 13,
+                            fontSize: RFFonsize(13),
                             color: '#999999'
                           }}>Tôi không nhận được mã</Text>
                           <TouchableOpacity
@@ -576,7 +586,7 @@ export default class SignUp extends Component {
                             <Text style={{
                               marginStart: 17,
                               fontFamily: 'Nunito-Bold',
-                              fontSize: 14,
+                              fontSize: RFFonsize(14),
                               color: '#54CEF5'
                             }}>Gửi lại</Text>
                           </TouchableOpacity>
@@ -609,14 +619,14 @@ const styles = StyleSheet.create({
   },
   validationStyle: {
     color: '#D22D3F',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     textAlign: 'center',
     width: 350
   },
   textLink: {
     color: "#ffffff",
     alignSelf: 'center',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     fontWeight: 'bold'
   },
   imageLogo: {
@@ -654,14 +664,14 @@ const styles = StyleSheet.create({
   viewDotIndicator: {
     height: 30
   },
-  txtTitle: { fontFamily: 'Nunito-Regular', fontSize: 16, color: '#000000', fontWeight: 'bold' },
-  txtTitleForm: { paddingTop: 10, fontFamily: 'Nunito-Bold', fontSize: 14, color: '#222222', lineHeight: 19 },
+  txtTitle: { fontFamily: 'Nunito-Regular', fontSize: RFFonsize(16), color: '#000000', fontWeight: 'bold' },
+  txtTitleForm: { paddingTop: 10, fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: '#222222', lineHeight: RFFonsize(19) },
   btnBack: { tintColor: '#000', width: 30, height: 30, marginLeft: 10 },
   wrapText: { flex: .9, alignItems: 'center' },
   viewPhoneUse: { marginHorizontal: 30, marginBottom: height / 3 },
-  txtPhoneUes: { fontFamily: 'Nunito-Bold', fontSize: 16, lineHeight: 35 },
-  txtPhoneUesDecs: { fontFamily: 'Nunito-Regular', color: '#BDBDBD', fontSize: 11 },
-  txtDecsNotf: { marginTop: 20, fontSize: 12, color: '#828282', textAlign: 'center' },
+  txtPhoneUes: { fontFamily: 'Nunito-Bold', fontSize: RFFonsize(16), lineHeight: RFFonsize(35) },
+  txtPhoneUesDecs: { fontFamily: 'Nunito-Regular', color: '#BDBDBD', fontSize: RFFonsize(11) },
+  txtDecsNotf: { marginTop: 20, fontSize: RFFonsize(12), color: '#828282', textAlign: 'center' },
   imageBottom: {
     width: width,
     height: width * global.ratioImageBottom
@@ -684,6 +694,6 @@ const styles = StyleSheet.create({
   txtErrorEmpty: {
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
-    fontSize: 11
+    fontSize: RFFonsize(11)
   },
 });

@@ -20,7 +20,7 @@ import ImagePickerCrop from 'react-native-image-crop-picker';
 import ImagePickerR from 'react-native-image-picker';
 import jwtDecode from 'jwt-decode';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
+import { RFFonsize } from '../../utils/Fonts';
 import apiHelper from '../../services/apiExamHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';
 import {
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     height: 40,
-    fontSize: 16,
+    fontSize: RFFonsize(16),
   },
   wrapDropDown: {
     alignItems: 'center',
@@ -663,7 +663,7 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontFamily: 'Nunito-Regular',
     color: '#2F80ED',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   imgChangeinfo: {
     width: width,
@@ -672,13 +672,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   styleLabel: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito',
     marginStart: 0,
   },
   styleInputName: {
     color: '#396599',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginTop: 13,
     marginStart: -10,
     fontFamily: 'Nunito-Bold',
@@ -686,14 +686,14 @@ const styles = StyleSheet.create({
   },
   styleInputBirthday: {
     color: '#396599',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginTop: isAndroid ? 15 : -4,
     marginStart: -30,
     fontFamily: 'Nunito-Bold',
   },
   styleTxtFomselect: {
     color: '#396599',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginStart: -5,
     fontFamily: 'Nunito-Bold',
   },
@@ -701,7 +701,7 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     paddingTop: 13,
     paddingHorizontal: 10,
     paddingBottom: 12,

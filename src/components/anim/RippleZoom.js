@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native';
-
+import {
+    StyleSheet,
+    Dimensions,
+    Animated,
+    TouchableWithoutFeedback
+} from 'react-native';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 const row_width = (width - 50) / 4;
 
@@ -67,8 +72,8 @@ const styles = StyleSheet.create({
     },
     text: {
         marginTop: 8,
-        fontSize: 14,
-        lineHeight: 16,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(16),
         height: 32,
         fontFamily: 'Nunito-Bold'
     },

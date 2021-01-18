@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { RFFonsize } from '../utils/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class PaginationUtils extends Component {
   constructor(props) {
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
   txtTotal: {
     fontFamily: 'Nunito-Bold',
     color: '#159FDA',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginVertical: 5,
   },
   wrapElement: {

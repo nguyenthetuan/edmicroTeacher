@@ -34,6 +34,7 @@ import SelectAnswer from './SelectAnswer';
 import AnalyticsManager from '../../../utils/AnalyticsManager';
 import Globals from '../../../utils/Globals';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
+import { RFFonsize } from '../../../utils/Fonts';
 import HeaderPaper from './HeaderPaper';
 import ModalSelectAnswers from './ModalSelectAnswers';
 
@@ -453,20 +454,22 @@ export default class UploadPDF extends Component {
             notRightButton={true}
             marginLeft={-25}
           />
-          <TouchableOpacity style={styles.buttonCreateAssessment} onPress={this.assignmentContent}>
+          <TouchableOpacity
+            style={styles.buttonCreateAssessment}
+            onPress={this.assignmentContent}
+          >
             <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
           </TouchableOpacity>
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 10 }} ref={ref => this.scrollview = ref}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingTop: 20 }}
+            ref={ref => this.scrollview = ref}
+          >
             {/* start create Upload PDF */}
             <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); this.closeModalSelectAnswer() }}>
               <View>
-                <View
-                  style={[styles.bodyHeader, { flex: 1 }]}>
-                  <View
-                    style={{
-                      flex: 1,
-                      // paddingStart: width * 0.24,
-                    }}>
+                <View style={[styles.bodyHeader, { flex: 1 }]}>
+                  <View style={{ flex: 1 }}>
                     <TextInput
                       value={name}
                       onChangeText={this.onChangeTextName}
@@ -476,26 +479,26 @@ export default class UploadPDF extends Component {
                       placeholderTextColor={'#BDBDBD'}
                       style={styles.inputName}
                     />
-                    <Text style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '700', marginTop: 15, marginBottom: 5 }}>Môn học</Text>
+                    <Text style={styles.styTxtLabel}>Môn học</Text>
                     <Dropdown
                       containerStyle={{
                         marginHorizontal: 0,
                       }}
-                      contentStyle={{ marginHorizontal: 0, borderWidth: 1, borderColor: '#C4C4C4', width: '100%', height: 30, borderRadius: 2, marginBottom: 10 }}
-                      title="Môn Học"
+                      contentStyle={styles.styTxtPlace}
+                      title="Môn học"
                       data={listSubjects}
                       onPressItem={(index) => this.onPressItemSubject(index)}
                     />
-                    <Text style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '700', marginTop: 15, marginBottom: 5 }}>Khối lớp</Text>
+                    <Text style={styles.styTxtLabel}>Khối lớp</Text>
                     <Dropdown
-                      contentStyle={{ marginHorizontal: 0, borderWidth: 1, borderColor: '#C4C4C4', width: '100%', height: 30, borderRadius: 2, marginBottom: 10 }}
+                      contentStyle={styles.styTxtPlace}
                       title="Khối lớp"
                       data={listGrades}
                       onPressItem={(index) => this.onPressItemGrade(index)}
                     />
-                    <Text style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '700', marginTop: 15, marginBottom: 5 }}>Dạng bài</Text>
+                    <Text style={styles.styTxtLabel}>Dạng bài</Text>
                     <Dropdown
-                      contentStyle={{ marginHorizontal: 0, borderWidth: 1, borderColor: '#C4C4C4', width: '100%', height: 30, borderRadius: 2, marginBottom: 10 }}
+                      contentStyle={styles.styTxtPlace}
                       title="Dạng Bài"
                       data={assignmentTypes}
                       indexSelected={0}
@@ -532,7 +535,7 @@ export default class UploadPDF extends Component {
                         <Text
                           style={{
                             fontFamily: 'Nunito-Bold',
-                            fontSize: 12,
+                            fontSize: RFFonsize(12),
                             color: '#fff',
                             borderRadius: 1,
                             marginTop: 10,
@@ -577,7 +580,7 @@ export default class UploadPDF extends Component {
                         </View>
                         <View style={styles.wrapAreaUploadPDF}>
                           <View>
-                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: 14, fontWeight: '700' }}>Bộ đề PDF</Text>
+                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Bộ đề PDF</Text>
                             <View style={styles.wrapMiniPDF}>
                               {!!urlFilePDF && <Pdf
                                 ref={(ref) => (this.pdf = ref)}
@@ -597,10 +600,10 @@ export default class UploadPDF extends Component {
                                 </TouchableOpacity>
                               </View>
                             </View>
-                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
+                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
                           </View>
                           <View>
-                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: 14, fontWeight: '700' }}>Lời giải</Text>
+                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Lời giải</Text>
                             <View style={styles.wrapMiniPDF}>
                               {!!urlFileAnswerPDF && <Pdf
                                 ref={(ref) => (this.pdf = ref)}
@@ -620,7 +623,7 @@ export default class UploadPDF extends Component {
                                 </TouchableOpacity>
                               </View>
                             </View>
-                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: 12, fontWeight: '400', color: '#2D9CDB', maxWidth: 100 }}>{this.state.pdfFileTL}</Text>
+                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 100 }}>{this.state.pdfFileTL}</Text>
                           </View>
                         </View>
                       </View>
@@ -693,83 +696,10 @@ const styles = StyleSheet.create({
   header: {
     // backgroundColor: '#56CCF2',
   },
-  imgHeader: {
-    width: width * 0.24,
-    height: 0 + width * 0.35,
-    position: 'absolute',
-    bottom: 0,
-    left: 16,
-  },
-  topheader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: width < 380 ? 20 : 15,
-    paddingVertical: 10,
-    marginTop: HEIGHT_TOPBAR,
-  },
   bodyHeader: {
     paddingHorizontal: 16,
     justifyContent: 'space-between',
     flexDirection: 'row',
-  },
-  txtTitle: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    color: '#FFF',
-  },
-  rightHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
-    paddingHorizontal: width < 380 ? 5 : 5,
-    paddingBottom: 2,
-    backgroundColor: '#F49A31',
-    borderRadius: 5,
-    marginEnd: 16,
-  },
-  totalAddQuestion: {
-    fontSize: 12,
-    fontFamily: 'Nunito-Bold',
-    color: '#828282',
-  },
-  buttomTop: {
-    backgroundColor: '#0091EA',
-    marginTop: 20,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 4,
-    right: 16,
-    bottom: 48 + getBottomSpace(),
-    height: 24,
-    width: 24,
-  },
-  txtRightHeader: {
-    paddingHorizontal: 13,
-    fontSize: 12,
-    fontFamily: 'Nunito-Regular',
-    color: '#FFF',
-  },
-  btnAnswer: {
-    height: 30,
-    width: 30,
-    borderWidth: 1,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 7,
-  },
-  txtAnswer: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    color: '#828282',
-  },
-  txtNotAdd: {
-    color: '#FF6213',
-    fontSize: 14,
-    fontFamily: 'Nunito-Bold',
   },
   viewPdf: {
     flex: 1,
@@ -780,84 +710,44 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  btnZoomPDF: {
-    backgroundColor: 'rgba(47, 47, 46, 0.5)',
-    marginTop: 20,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 4,
-    right: 16,
-    bottom: 16 + getBottomSpace(),
-    height: 24,
-    width: 24,
-  },
   txtUploadingPDF: {
     marginTop: 10,
     marginVertical: 3,
     color: '#000',
     fontFamily: 'Nunito-Bold',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     textAlign: 'center',
-  },
-  txtEnterAnswer: {
-    marginVertical: 3,
-    color: '#000',
-    fontFamily: 'Nunito-Bold',
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  btnEnterAnswer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginVertical: 15,
   },
   txtNoteUploadPDF: {
     marginVertical: 3,
     color: '#FF0000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 9,
+    fontSize: RFFonsize(9),
     textAlign: 'center',
-  },
-  btnAddPDF: {
-    width: width / 3,
-    backgroundColor: '#fff',
-    borderRadius: 2,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   btnChooseType: {
     width: width / 3,
     backgroundColor: '#C4C4C4',
-    borderRadius: 2,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4
   },
-  txtAddPDF: {
-    color: '#2D9CDB',
-    fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-  },
   txtNoActive: {
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   txtActive: {
     color: '#fff',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
   },
   inputName: {
     height: 30,
     backgroundColor: '#fff',
-    color: '#828282',
+    color: '#000',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
+    fontSize: RFFonsize(14),
     paddingStart: 5,
     marginBottom: 7,
     borderRadius: 2,
@@ -865,65 +755,9 @@ const styles = StyleSheet.create({
     borderColor: '#C4C4C4',
     borderWidth: 1,
   },
-  inputPoint: {
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: '#828282',
-    height: 20,
-    marginTop: 9,
-    textAlign: 'center',
-    color: '#FF6213',
-    fontSize: 14,
-    fontFamily: 'Nunito-Bold',
-    paddingVertical: 0,
-  },
-  viewPointAndOption: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    margin: 16,
-    marginBottom: 0,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderColor: '#C4C4C4',
-  },
-  btnShowPDF: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 3,
-    borderColor: '#0091EA',
-    height: 30,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#e6f1fa',
-  },
-  txtShowPDF: {
-    marginStart: 8,
-    color: '#0091EA',
-    fontFamily: 'Nunito-Bold',
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  dotViewPDF: {
-    width: 16,
-    height: 16,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: '#0091EA',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  viewPosition: {
-    position: 'absolute',
-    // backgroundColor: '#56CCF2',
-    width,
-    height: height / 2,
-    zIndex: -1,
-  },
   textMinutes: {
     fontFamily: 'Nunito',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontWeight: '400',
     position: 'absolute',
     left: 90,
@@ -973,28 +807,36 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   buttonCreateAssessment: {
-    width: 80,
-    height: 20,
     borderRadius: 5,
     backgroundColor: '#F49A31',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
+    right: 16,
+    paddingHorizontal: 20,
+    height: 20,
     position: 'absolute',
-    right: 20,
-    top: Platform.OS == 'ios' ? 5 : 7,
-    zIndex: 2,
+    top: 10,
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
-    fontSize: 12,
-    fontWeight: '400',
+    fontSize: RFFonsize(14),
     color: '#fff',
-
+  },
+  styTxtLabel: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(14),
+    fontWeight: '700',
+    marginTop: 15,
+    marginBottom: 5
+  },
+  styTxtPlace: {
+    marginHorizontal: 0,
+    borderWidth: 1,
+    borderColor: '#C4C4C4',
+    width: '100%',
+    height: 30,
+    borderRadius: 2,
+    marginBottom: 10
   }
-  // wrapTotalQsNPoint: {
-  //   width: 0.9 * width,
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   alignSelf: 'center',
-  // }
 });

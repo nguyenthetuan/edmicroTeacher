@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import dataHelper from '../../../utils/dataHelper';
 const { width } = Dimensions.get('window');
 import Common from '../../../utils/Common';
+import { RFFonsize } from '../../../utils/Fonts';
 const modelStatus = {
   unDelivered: 1,// chưa giao bài.
   delivered: 0,// đã giao bài.
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
   styTxtHeader: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
     // width: "98%",
     flexDirection: "row",
     justifyContent: 'space-between'
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
     marginHorizontal: 3,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     alignSelf: 'center',
     color: "#000"
   },
@@ -178,8 +179,8 @@ const styles = StyleSheet.create({
   },
   txtTime: {
     fontFamily: "Nunito-Regular",
-    fontSize: 11,
-    lineHeight: 15,
+    fontSize: RFFonsize(11),
+    lineHeight: RFFonsize(15),
     alignSelf: "center",
     color: "#FFF"
   },
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
   txtButtomPractice: {
     fontFamily: 'Nunito',
     alignSelf: 'center',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     marginLeft: 5
   },
 });

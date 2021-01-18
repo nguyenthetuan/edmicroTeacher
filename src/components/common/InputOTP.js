@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View, TextInput, StyleSheet, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
+import { RFFonsize } from '../../utils/Fonts';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 4,
     margin: 5,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: RFFonsize(22),
     fontWeight: '500',
     color: '#000000'
   },

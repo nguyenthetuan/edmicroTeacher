@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-
+import { RFFonsize } from '../../utils/Fonts';
 export const Row = (props) => {
     const { style, children } = props;
     return (
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     textValidate: {
         alignSelf: 'center',
         color: '#d9534f',
-        fontSize: 13,
+        fontSize: RFFonsize(13),
         fontFamily: 'Nunito-Regular',
     }
 })
