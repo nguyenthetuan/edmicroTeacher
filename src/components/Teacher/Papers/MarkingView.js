@@ -381,7 +381,7 @@ class MarkingView extends Component {
         AlertNoti(messageSuccess);
         return;
       }
-      AlertNoti(response.message);
+      // AlertNoti(response.message);
     } catch (error) { }
   }
 
