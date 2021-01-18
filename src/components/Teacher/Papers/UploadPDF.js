@@ -811,10 +811,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F49A31',
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     right: 16,
     paddingHorizontal: 20,
-    paddingVertical: 8
+    height: 20,
+    position: 'absolute',
+    top: 10,
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',

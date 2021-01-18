@@ -1336,7 +1336,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 20,
-    top: Platform.OS == 'ios' ? 5 : 7,
+    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 10) : 10,
     zIndex: 2,
   },
   textCreateAssessment: {
