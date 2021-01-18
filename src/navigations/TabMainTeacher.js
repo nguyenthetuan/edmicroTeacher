@@ -1,8 +1,8 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Image, Text, Platform, StyleSheet, Dimensions} from 'react-native';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
+import { View } from 'react-native';
+import { Image, Text, Platform, StyleSheet, Dimensions } from 'react-native';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import Class from '../components/Teacher/Class/class';
 import Evaluate from '../components/Teacher/Evaluate/MainScreen';
 import Homework from '../containers/teacher/homework/MainScreen';
@@ -13,7 +13,8 @@ import classIcon from '../asserts/icon/icon_class_unactive.png';
 import classIconActive from '../asserts/icon/icon_class_active.png';
 import FreshchatComponent from '../utils/FreshchatComponent';
 import MissionScreen from '../containers/teacher/Mission/MissionContainer';
-const {width, height} = Dimensions.get('window');
+import { RFFonsize } from '../utils/Fonts';
+const { width, height } = Dimensions.get('window');
 
 const TabMainTeacher = createBottomTabNavigator(
   {
@@ -21,7 +22,7 @@ const TabMainTeacher = createBottomTabNavigator(
       screen: Class,
       navigationOptions: {
         title: 'Lớp học',
-        tabBarIcon: ({tintColor, focused}) => {
+        tabBarIcon: ({ tintColor, focused }) => {
           return !focused ? (
             <Image
               color={tintColor}
@@ -29,29 +30,29 @@ const TabMainTeacher = createBottomTabNavigator(
               resizeMode={'contain'}
             />
           ) : (
-            <Image
-              color={tintColor}
-              source={classIconActive}
-              resizeMode={'contain'}
-            />
-          );
+              <Image
+                color={tintColor}
+                source={classIconActive}
+                resizeMode={'contain'}
+              />
+            );
         },
         tabBarLabel: Platform.isPad
           ? 'Lớp học'
-          : ({focused}) => {
-              return !focused ? (
-                <Text style={styles.txtLabel}>Lớp học</Text>
-              ) : (
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Lớp học</Text>
+            ) : (
                 <Text style={styles.txtLabelActive}>Lớp học</Text>
               );
-            },
+          },
       },
     },
     TestKit: {
       screen: Papers,
       navigationOptions: {
         title: 'Bộ đề',
-        tabBarIcon: ({tintColor, focused}) => {
+        tabBarIcon: ({ tintColor, focused }) => {
           return !focused ? (
             <Image
               color={tintColor}
@@ -59,29 +60,29 @@ const TabMainTeacher = createBottomTabNavigator(
               resizeMode={'contain'}
             />
           ) : (
-            <Image
-              color={tintColor}
-              source={AppIcon.kiemtraActive}
-              resizeMode={'contain'}
-            />
-          );
+              <Image
+                color={tintColor}
+                source={AppIcon.kiemtraActive}
+                resizeMode={'contain'}
+              />
+            );
         },
         tabBarLabel: Platform.isPad
           ? 'Bộ đề'
-          : ({focused}) => {
-              return !focused ? (
-                <Text style={styles.txtLabel}>Bộ đề</Text>
-              ) : (
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Bộ đề</Text>
+            ) : (
                 <Text style={styles.txtLabelActive}>Bộ đề</Text>
               );
-            },
+          },
       },
     },
     Mission: {
       screen: MissionScreen,
       navigationOptions: {
         title: 'Nhiệm vụ',
-        tabBarIcon: ({tintColor, focused}) => {
+        tabBarIcon: ({ tintColor, focused }) => {
           return !focused ? (
             <Image
               color={tintColor}
@@ -89,29 +90,29 @@ const TabMainTeacher = createBottomTabNavigator(
               resizeMode={'contain'}
             />
           ) : (
-            <Image
-              color={tintColor}
-              source={AppIcon.task_active}
-              resizeMode={'contain'}
-            />
-          );
+              <Image
+                color={tintColor}
+                source={AppIcon.task_active}
+                resizeMode={'contain'}
+              />
+            );
         },
         tabBarLabel: Platform.isPad
           ? 'Nhiệm vụ'
-          : ({focused}) => {
-              return !focused ? (
-                <Text style={styles.txtLabel}>Nhiệm vụ</Text>
-              ) : (
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Nhiệm vụ</Text>
+            ) : (
                 <Text style={styles.txtLabelActive}>Nhiệm vụ</Text>
               );
-            },
+          },
       },
     },
     Evaluate: {
       screen: Evaluate,
       navigationOptions: {
         title: 'Đánh giá',
-        tabBarIcon: ({tintColor, focused}) => {
+        tabBarIcon: ({ tintColor, focused }) => {
           return !focused ? (
             <Image
               color={tintColor}
@@ -119,22 +120,22 @@ const TabMainTeacher = createBottomTabNavigator(
               resizeMode={'contain'}
             />
           ) : (
-            <Image
-              color={tintColor}
-              source={AppIcon.iconEvaluateActive}
-              resizeMode={'contain'}
-            />
-          );
+              <Image
+                color={tintColor}
+                source={AppIcon.iconEvaluateActive}
+                resizeMode={'contain'}
+              />
+            );
         },
         tabBarLabel: Platform.isPad
           ? 'Đánh Giá'
-          : ({focused}) => {
-              return !focused ? (
-                <Text style={styles.txtLabel}>Đánh giá</Text>
-              ) : (
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Đánh giá</Text>
+            ) : (
                 <Text style={styles.txtLabelActive}>Đánh giá</Text>
               );
-            },
+          },
       },
     },
     HomeWork: {
@@ -142,7 +143,7 @@ const TabMainTeacher = createBottomTabNavigator(
       navigationOptions: {
         title: 'Bài tập',
         drawerLockMode: 'locked-closed',
-        tabBarIcon: ({tintColor, focused}) => {
+        tabBarIcon: ({ tintColor, focused }) => {
           return !focused ? (
             <Image
               color={tintColor}
@@ -150,18 +151,18 @@ const TabMainTeacher = createBottomTabNavigator(
               resizeMode={'contain'}
             />
           ) : (
-            <Image color={tintColor} source={AppIcon.iconHomeWorkActive} />
-          );
+              <Image color={tintColor} source={AppIcon.iconHomeWorkActive} />
+            );
         },
         tabBarLabel: Platform.isPad
           ? 'Bài tập'
-          : ({focused}) => {
-              return !focused ? (
-                <Text style={styles.txtLabel}>Bài tập</Text>
-              ) : (
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Bài tập</Text>
+            ) : (
                 <Text style={styles.txtLabelActive}>Bài tập</Text>
               );
-            },
+          },
       },
     },
   },
@@ -185,7 +186,7 @@ const TabMainTeacher = createBottomTabNavigator(
       },
 
       labelStyle: {
-        fontSize: 13,
+        fontSize: RFFonsize(13),
         fontFamily: 'Nunito-Regular',
       },
       style: {
@@ -213,14 +214,14 @@ const TabMainTeacher = createBottomTabNavigator(
 
 const styles = StyleSheet.create({
   txtLabel: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     textAlign: 'center',
     color: '#000',
     marginBottom: 3,
   },
   txtLabelActive: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#000',
     textAlign: 'center',
@@ -249,7 +250,7 @@ export default createDrawerNavigator(
   },
   {
     drawerBackgroundColor: 'rgba(255,255,255,.9)',
-    contentComponent: ({navigation}) => (
+    contentComponent: ({ navigation }) => (
       <MenuTabTeacher navigation={navigation} />
     ),
     contentOptions: {

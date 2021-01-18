@@ -14,6 +14,7 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import Globals from '../../../utils/Globals';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
+import { RFFonsize } from '../../../utils/Fonts';
 const {width} = Dimensions.get('window');
 export default class QuestionMockMenu extends Component {
   constructor(props) {
@@ -173,12 +174,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     alignSelf: 'flex-start',
     color: '#fff',
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
   },
   textNumber: {
     color: '#fff',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     fontFamily: 'Nunito-Bold',
   },
   wrapNumber: {

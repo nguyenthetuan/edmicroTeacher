@@ -40,6 +40,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import { PHONE_DEBUG } from '../../constants/const';
 import { getUserByToken } from '../../utils/Helper';
 import FastImage from 'react-native-fast-image';
+import { RFFonsize } from '../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 const description = 'Việc cập nhật số điện thoại sẽ giúp bảo mật tài khoản và để cấp lại mật khẩu nếu bạn quên mật khẩu.'
@@ -390,7 +391,7 @@ export default class UpdatePhoneScreen extends Component {
                       />
                       <View style={{ flex: 1, justifyContent: 'center' }}>
                         <Text style={{
-                          fontSize: 14,
+                          fontSize: RFFonsize(14),
                           fontFamily: 'Nunito-Bold',
                           textTransform: 'uppercase',
                           color: '#000'
@@ -459,7 +460,7 @@ export default class UpdatePhoneScreen extends Component {
                         <View>
                           <Text style={{
                             marginBottom: 20, color: '#000',
-                            fontFamily: 'Nunito-Bold', fontSize: 15
+                            fontFamily: 'Nunito-Bold', fontSize: RFFonsize(15)
                           }}>
                             Nhập mã OTP
                             </Text>
@@ -486,7 +487,7 @@ export default class UpdatePhoneScreen extends Component {
                                 <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'space-around' }}>
                                   <Text style={{
                                     fontFamily: 'Nunito-Regular',
-                                    fontSize: 13,
+                                    fontSize: RFFonsize(13),
                                     color: '#757575'
                                   }}>Tôi không nhận được mã</Text>
                                   <TouchableOpacity
@@ -494,7 +495,7 @@ export default class UpdatePhoneScreen extends Component {
                                     <Text style={{
                                       marginStart: 17,
                                       fontFamily: 'Nunito-Bold',
-                                      fontSize: 14,
+                                      fontSize: RFFonsize(14),
                                       color: '#2D9CDB'
                                     }}>Gửi lại OTP</Text>
                                   </TouchableOpacity>
@@ -541,14 +542,15 @@ const styles = StyleSheet.create({
   txtTitleForm: {
     marginTop: (height / width),
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#222222',
-    lineHeight: 19,
+    lineHeight: RFFonsize(19),
     marginBottom: 3
   },
   txtTitle: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 16, color: '#000000',
+    fontSize: RFFonsize(16),
+     color: '#000000',
     fontWeight: 'bold'
   },
   btnBack: {
@@ -578,7 +580,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   txtDecsMK: {
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: "#ddd",
     position: 'absolute',
@@ -603,7 +605,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginBottom: 0,
     padding: 0,
-    fontSize: 10,
+    fontSize: RFFonsize(10),
     width: width - width / 8,
   },
   roundedTextInput: {
@@ -617,12 +619,12 @@ const styles = StyleSheet.create({
   txtErrorEmpty: {
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
-    fontSize: 11,
+    fontSize: RFFonsize(11),
   },
   txtSkip: {
     color: '#828282',
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginEnd: 6
   },
   btnSkip: {

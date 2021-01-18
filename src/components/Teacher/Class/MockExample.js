@@ -26,6 +26,7 @@ import LearnPlaceholder from '../../shim/LearnPlaceholder';
 import HeaderDetail from '../../common-new/HeaderDetail';
 import AppIcon from '../../../utils/AppIcon';
 import HeaderExample from '../../common-new/HeaderExample';
+import { RFFonsize } from '../../../utils/Fonts';
 const messageError = 'Không có nội dung hiển thị';
 const {width, height} = Dimensions.get('window');
 let baseUrl = 'file:///android_asset/';
@@ -484,7 +485,7 @@ const styles = StyleSheet.create({
   },
   txtSubmit: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#2D9CDB',
     marginLeft: 6,
   },
@@ -522,7 +523,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: '#333',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Bold',
   },
   wrapHeader: {

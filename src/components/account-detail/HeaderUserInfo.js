@@ -4,6 +4,7 @@ import AppIcon from '../../utils/AppIcon';
 import _ from 'lodash';
 import { getAvatarSource } from '../../utils/Common';
 import Avatar from '../common-new/Avatar';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 export default class HeaderUserInfo extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     marginLeft: 5,
   },
   wrapContainer: {

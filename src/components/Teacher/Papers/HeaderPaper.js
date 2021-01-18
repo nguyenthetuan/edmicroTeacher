@@ -10,6 +10,7 @@ import {
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppIcon from '../../../utils/AppIcon';
+import { RFFonsize } from '../../../utils/Fonts';
 export default class HeaderPaper extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -48,44 +49,28 @@ export default class HeaderPaper extends React.PureComponent {
       <View style={[styles.container, { backgroundColor: backgroundColor }]}>
         <RippleButton
           onPress={this.onGoback}
-          style={styles.button}>
-          {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
-          {/* <Image source={AppIcon.icon_arrowHeaderV3} style={styles.btnLeft} /> */}
+          style={styles.button}
+        >
           <Image
             source={AppIcon.icon_arrowLeftv3}
-            style={{ tintColor: iconColor || '#fff', alignSelf:'center'}}
+            style={{ tintColor: iconColor || '#fff', alignSelf: 'center' }}
           />
         </RippleButton>
         <View style={styles.viewTitle}>
           <Text numberOfLines={1}
             style={[styles.textTitleHeader, {
               color: color || '#383838',
-              left: marginLeft || 0
             }]}>{title}</Text>
         </View>
-        {/* {!notRightButton && <TouchableOpacity
-          style={styles.rightHeader}
-          onPress={onRightAction}>
-          {loading ? <View style={styles.txtRightHeader}>
-            <ActivityIndicator color='#fff' size='small' />
-          </View>
-            : <Text style={styles.txtRightHeader}>{buttonRightText || `Tạo bộ đề`}</Text>}
-        </TouchableOpacity>} */}
         {!notRightButton
-          &&
+          ?
           <TouchableOpacity
             onPress={onRightAction}
             style={styles.octiconSetting}>
-            {loading
-              ?
-              // <View style={styles.txtRightHeader}>
-              //   <ActivityIndicator color='#fff' size='small' />
-              // </View>
-              <Image source={AppIcon.icon_octiconSettingsV3} />
-              :
-              null
-            }
+            <Image source={AppIcon.icon_octiconSettingsV3} />
           </TouchableOpacity>
+          :
+          <View style={{ width: 10 }} />
         }
       </View>
     );
@@ -94,15 +79,15 @@ export default class HeaderPaper extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 5,
+    paddingVertical: 10,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
   },
   viewTitle: {
-    flex: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   button: {
     alignSelf: 'center'
@@ -110,9 +95,9 @@ const styles = StyleSheet.create({
   textTitleHeader: {
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     flex: 1,
-    alignSelf:'center'
+    alignSelf: 'center'
   },
   btnAvatar: {
     height: 38,
@@ -140,7 +125,7 @@ const styles = StyleSheet.create({
   },
   txtRightHeader: {
     paddingHorizontal: 13,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#FFF',
   },

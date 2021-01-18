@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import { RFFonsize } from '../../utils/Fonts';
 const Footer = ({ title, link, onPress }) => {
     return (
         <View style={styles.container}>
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#828282',
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         fontFamily: 'Nunito-Regular',
     },
     textLink: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontFamily: 'Nunito-Regular',
         textDecorationLine: 'underline',
-        fontSize: 12
+        fontSize: RFFonsize(12)
     }
 });
 

@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Text, TextInput } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    Text,
+    TextInput
+} from 'react-native';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -45,12 +53,12 @@ export default class ModalSelectAnswers extends Component {
                 {this.props.showSelectAnswer && <View style={styles.modal}>
                     <Text style={{
                         fontFamily: 'Nunito-Bold',
-                        fontSize: 14,
+                        fontSize: RFFonsize(14),
                         color: '#fff',
                         fontWeight: '700',
                     }}>Câu {indexSelecting + 1}</Text>
                     <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', top: 10 }}>
-                        <Text style={{ fontSize: 14, fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
+                        <Text style={{ fontSize: RFFonsize(14), fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
                         <TextInput
                             value={this.props.currentPoint}
                             onChangeText={this.onChangeText}
@@ -101,8 +109,8 @@ export default class ModalSelectAnswers extends Component {
                             }]}>D</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.close}
-                            style={{ width: 90, height: 30, position: 'absolute', right: 40, backgroundColor: '#FFFFFF', borderRadius: 4, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontWeight: '700', fontFamily: 'Nunito', fontSize: 14, color: '#56BB73' }}>OK</Text>
+                            style={styles.styWrapOk}>
+                            <Text style={styles.styTxtOk}>OK</Text>
                         </TouchableOpacity>
                     </View>
                 </View>}
@@ -133,19 +141,31 @@ const styles = StyleSheet.create({
     },
     txtAnswer: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 18,
+        fontSize: RFFonsize(18),
         color: '#828282'
     },
     inputPoint: {
-        height: 30,
         width: 100,
         backgroundColor: '#F8F8F8',
         borderRadius: 2,
-        paddingHorizontal: 10,
+        paddingStart: 10,
+        padding: 8,
         color: 'red',
         left: 10,
-        paddingVertical: 0,
-        margin: 0,
-        borderWidth: 0,
+    },
+    styWrapOk: {
+        padding: 5,
+        paddingHorizontal: 30,
+        position: 'absolute',
+        right: 40,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    styTxtOk: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(14),
+        color: '#56BB73'
     }
 })

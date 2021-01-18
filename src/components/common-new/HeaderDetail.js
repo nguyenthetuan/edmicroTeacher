@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RippleButton from '../libs/RippleButton';
 import { HEIGHT_TOPBAR, } from '../../utils/Common';
 import { getSourceAvatar } from '../../utils/Helper';
-
+import { RFFonsize } from '../../utils/Fonts';
 export default class HeaderDetail extends Component {
   constructor(props) {
     super(props);
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   txtHeader: {
     color: '#2D9CDB',
     fontFamily: 'Nunito-Bold',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
   },
   stylAvatar: {
     width: 25,

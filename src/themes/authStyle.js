@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 // import { isIphoneX } from 'react-native-iphone-x-helper';
 // const top = isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 10;
+import { RFFonsize } from '../utils/Fonts';
 const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   validationStyle: {
     alignSelf: 'center',
     color: '#d9534f',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     fontFamily: 'Nunito-Regular',
   },
   authItem: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   textHeadAuth: {
-    fontSize: 20,
+    fontSize: RFFonsize(20),
     fontWeight: 'bold',
     color: "#383838",
     marginVertical: 5,
@@ -63,14 +64,14 @@ const styles = StyleSheet.create({
   textLink: {
     color: "#828282",
     alignSelf: 'center',
-    fontSize: 13,
+    fontSize: RFFonsize(13),
     fontFamily: 'Nunito-Regular',
   },
   textInput: {
     width: '80%',
     paddingHorizontal: 5,
     color: '#828282',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito-Regular',
     // paddingTop: 28,
     color: '#000',
@@ -96,7 +97,8 @@ const styles = StyleSheet.create({
   },
   textAction: {
     color: "#fff",
-    fontFamily: 'Nunito-Bold', fontSize: 14,
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(14),
   }
 });
 

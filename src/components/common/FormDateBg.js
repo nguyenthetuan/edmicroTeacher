@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { RFFonsize } from '../../utils/Fonts';
 export default class FormDateBg extends Component {
     render() {
         const { keyboardType, placeholder, name, value } = this.props;
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     },
     textDate: {
         color: '#fff',
-        fontSize: 13
+        fontSize: RFFonsize(13)
     }
 });

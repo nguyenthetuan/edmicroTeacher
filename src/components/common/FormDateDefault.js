@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class FormDateDefault extends Component {
     render() {
@@ -47,12 +48,12 @@ const styles = StyleSheet.create({
     labelFormHightlight: {
         color: '#828282',
         fontFamily: 'Nunito-Regular',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     },
     labelFormDark: {
         color: '#828282',
         fontFamily: 'Nunito-Regular',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     },
     rowForm: {
         position: 'relative',
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     },
     textDate: {
         color: '#000',
-        fontSize: 16,
+        fontSize: RFFonsize(16),
         fontFamily: 'Nunito-Regular'
     }
 });

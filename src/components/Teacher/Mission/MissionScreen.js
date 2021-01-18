@@ -21,6 +21,7 @@ import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiMission';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -215,8 +216,8 @@ const styles = StyleSheet.create({
   styTxtInput: {
     color: '#757575',
     fontFamily: 'Nunito-Regular',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     alignSelf: 'center',
     flex: 1,
     padding: 8
@@ -234,8 +235,8 @@ const styles = StyleSheet.create({
   styTxtBtn: {
     color: '#FFF',
     fontFamily: 'Nunito',
-    fontSize: 12,
-    lineHeight: 14,
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(14),
     marginLeft: 10,
     marginRight: 10,
   },

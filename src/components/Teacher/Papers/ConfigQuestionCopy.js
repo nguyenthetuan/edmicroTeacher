@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Image, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    Dimensions,
+    TextInput,
+    Image,
+    TouchableWithoutFeedback,
+    TouchableOpacity,
+    FlatList
+} from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
 import HeaderPaper from './HeaderPaper';
@@ -15,6 +26,7 @@ import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WarningModal from '../../modals/WarningModal';
 import { updateExamListAction } from '../../../actions/paperAction';
+import { RFFonsize } from '../../../utils/Fonts';
 
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -801,8 +813,8 @@ const styles = StyleSheet.create({
     },
     textInPopupCreate: {
         fontFamily: 'Nunito',
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         color: '#000'
     },
     rightParams: {
@@ -812,26 +824,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     textTitle: {
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-bold',
         fontWeight: '800',
         color: '#fff'
     },
     textNormal: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         fontFamily: 'Nunito',
         color: '#fff',
         fontWeight: '400',
     },
     textName: {
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontWeight: '800',
         fontFamily: 'Nunito-bold',
         color: '#fff'
     },
     textHeader: {
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontFamily: 'Nunito',
         color: '#000',
         left: 5
@@ -885,7 +897,7 @@ const styles = StyleSheet.create({
     },
     textPopUp: {
         fontFamily: 'Nunito-bold',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontWeight: '800',
         color: '#4f4f4f',
         marginTop: 5
@@ -923,8 +935,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '500',
         fontFamily: 'Nunito-bold',
-        fontSize: 18,
-        lineHeight: 21,
+        fontSize: RFFonsize(18),
+        lineHeight: RFFonsize(21),
         marginLeft: 76,
         marginRight: 76,
         marginTop: 14,
@@ -943,15 +955,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textNormalName: {
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontFamily: 'Nunito',
         color: '#fff',
         top: 2
     },
     textNormal: {
-        fontSize: 16,
-        lineHeight: 22,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(22),
         textAlign: 'center',
         fontFamily: 'Nunito-bold',
         color: '#fff',
@@ -963,8 +975,8 @@ const styles = StyleSheet.create({
     },
     txtRightHeader: {
         paddingHorizontal: 13,
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontFamily: 'Nunito-Bold',
         color: '#FFF',
         marginTop: 5.5,

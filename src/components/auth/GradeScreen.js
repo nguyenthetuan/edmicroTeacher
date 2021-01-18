@@ -17,6 +17,7 @@ import apiHelper from '../../services/apiExamHelper';
 import LoadingScreen from '../libs/LoadingScreen';
 import Button from '../common/Button';
 import RippleButton from '../libs/RippleButton';
+import { RFFonsize } from '../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window')
 export default class Grades extends Component {
@@ -213,7 +214,7 @@ export default class Grades extends Component {
               width: '80%',
               borderRadius: 5,
             }}
-            styleTitle={{ fontSize: 16, fontFamily: 'Nunito-Bold' }}
+            styleTitle={{ fontSize: RFFonsize(16), fontFamily: 'Nunito-Bold' }}
           />
         </View>
         <LoadingScreen isLoading={this.state.isLoading} bgColor={'transparent'} color={'transparent'} />
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   txtButtom: {
-    fontSize: 16,
+    fontSize: RFFonsize(16),
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
     color: '#FFF'
@@ -250,13 +251,13 @@ const styles = StyleSheet.create({
   textContent: {
     textTransform: 'uppercase',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
     marginVertical: width * 0.23
   },
   txtTitle1: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 18,
+    fontSize: RFFonsize(18),
     alignSelf: 'center',
   },
   iconOpacity: {
@@ -299,7 +300,7 @@ const homeStyle = StyleSheet.create({
   textHead: {
     color: '#fff',
     alignSelf: 'center',
-    fontSize: 16
+    fontSize: RFFonsize(16)
   },
   bold: {
     fontWeight: 'bold',

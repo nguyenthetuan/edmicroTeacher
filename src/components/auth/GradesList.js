@@ -13,6 +13,7 @@ import ScaleAnim from '../anim/ScaleAnim';
 import RippleButton from '../common-new/RippleMenu';
 import Button from '../common/Button';
 import LoadingScreen from '../libs/LoadingScreen';
+import { RFFonsize } from '../../utils/Fonts';
 
 const widthItem = (WIDTH_DEVICE / HEIGHT_DEVICE) * 120;
 const radius = 30;
@@ -132,13 +133,13 @@ const styles = StyleSheet.create({
   },
   textInfo: {
     marginRight: 10,
-    fontSize: 12,
+    fontSize: RFFonsize(12),
     color: '#c8c8c8',
   },
   textTitle: {
     fontFamily: 'Nunito-Regular',
     color: '#000',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     textAlign:'center'
   },
   iconOpacity: {

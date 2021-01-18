@@ -12,6 +12,7 @@ import ItemExercise from './itemExercise';
 import RippleItem from '../../common-new/RippleItem';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
+import { RFFonsize } from '../../../utils/Fonts';
 import { delay } from '../../../utils/Helper';
 
 export default class ListExercise extends Component {
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   },
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color:'#828282',
     marginTop:16
   },

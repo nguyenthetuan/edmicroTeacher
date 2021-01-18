@@ -7,11 +7,13 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
 import HeaderNavigation from '../common-new/HeaderNavigation';
+import { RFFonsize } from '../../utils/Fonts';
 import {
     statisticClassAction,
     statisticMissionAction,
@@ -25,7 +27,20 @@ class StatisticScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            bgBox: [
+                "#00CFF5",
+                "#FAB50F",
+                "#BC88FF",
+                "#E34D5C",
+                "#EB9CA8",
+                "#7C878E",
+                "#8A004F",
+                "#000000",
+                "#10069F",
+                "#00a3e0",
+                "#4CC1A1"
+            ]
         };
     }
     componentDidMount() {
@@ -39,13 +54,53 @@ class StatisticScreen extends Component {
         this.props.fetchMissionAction({ token, enumType, schoolYear });
         this.props.fetchAssignmentAction({ token, enumType, schoolYear });
     }
+    _renderItem = ({ item, index }) => {
+        const {
+            data,
+            navigation,
+            isLoading,
+            listClass,
+            classArray
+        } = this.props;
+        // const bgBox = this.bgBox;
+        return (
+            <View style={{
+                marginTop: 10,
+                marginLeft: 10,
+                marginRight: 10
+            }}>
+                <View style={{
+                    flexDirection: 'column',
+                    backgroundColor: this.state.bgBox[index % this.state.bgBox.length],
+                    borderRadius: 5
+                }}>
+                    <Text numberOfLines={2}
+                        style={styles.number}>
+                        {item.totalClass ?
+                            (item.totalClass) : 0
+                        } Lớp
+                     </Text>
+                    <View style={styles.direction}>
+                        <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
+                        <Text style={styles.countGroup}>
+                            {item.totalStudent ?
+                                (item.totalStudent) : 0
+                            }
+                        </Text>
+                    </View>
+                </View>
+            </View>
+
+        )
+    }
 
     render() {
         const {
             assignment,
             mission,
             listClass,
-            isLoading
+            isLoading,
+            classArray
         } = this.props;
         return (
             <SafeAreaView style={styles.container}>
@@ -72,48 +127,22 @@ class StatisticScreen extends Component {
                             <View style={styles.bodyTask}>
                                 <Text style={styles.txtTask}>Thống kê số lượng các lớp</Text>
                                 <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lý</Text>
-                                <View style={styles.flexStatitics}>
-                                    <View style={styles.flexLeft}>
-                                        <Text numberOfLines={2}
-                                            style={styles.number}>
-                                            {
-                                                (listClass && listClass.data.length) > 0
-                                                    ? (listClass?.data[0].totalClass) : 0
-                                            } Lớp
-                                            </Text>
-                                        <View style={styles.direction}>
-                                            <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
-                                            <Text style={styles.countGroup}>
-                                                {
-                                                    (listClass && listClass.data.length) > 0
-                                                        ? (listClass?.data[0].totalStudent) : 0
-                                                }
-                                            </Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.flexRight}>
-                                        <Text numberOfLines={2}
-                                            style={styles.number}>
-                                            {
-                                                (listClass && listClass.data.length) > 0
-                                                    ? (listClass?.data[1].totalClass) : 0
-                                            } Lớp
-                                            </Text>
-                                        <View style={styles.direction}>
-                                            <Image source={AppIcon.icon_heroiconV3} style={styles.heroIcon} />
-                                            <Text style={styles.countGroup}>
-                                                {
-                                                    (listClass && listClass.data.length) > 0
-                                                        ? (listClass?.data[1].totalStudent) : 0
-                                                }
-                                            </Text>
-                                        </View>
-                                    </View>
+                                <View style={{ marginLeft: 20, marginRight: 20 }}>
+                                    <FlatList
+                                        data={classArray}
+                                        horizontal
+                                        extraData={classArray}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        showsHorizontalScrollIndicator={false}
+                                        stickyHeaderIndices={[0]}
+                                        renderItem={this._renderItem}
+                                        style={{ backgroundColor: 'transparent' }}
+                                    />
                                 </View>
                                 <Text style={[styles.status, { color: '#000' }]}>Số học sinh đang truy cập</Text>
                                 <View style={styles.progressBar}>
                                     <ProgressBar
-                                        progress={(listClass.totalStudentOnline / listClass.totalStudent)
+                                        progress={listClass.totalStudentOnline
                                             ?
                                             (listClass.totalStudentOnline / listClass.totalStudent) >
                                                 100 ? 100 : (listClass.totalStudentOnline / listClass.totalStudent) : 1}
@@ -123,7 +152,7 @@ class StatisticScreen extends Component {
                                     />
                                     <Text style={styles.rateSub}>
                                         {listClass.totalStudentOnline ?
-                                            ((listClass.totalStudentOnline / listClass.totalStudent) * 100)
+                                            Math.ceil((listClass.totalStudentOnline / listClass.totalStudent) * 100)
                                             : 0
                                         } %
                                     </Text>
@@ -174,18 +203,16 @@ class StatisticScreen extends Component {
                                     <Text style={[styles.status, { color: '#000', marginTop: 26 }]}>Hoàn thành</Text>
                                     <View style={styles.progressBar}>
                                         <ProgressBar
-                                            progress={(mission.totalStudentComplete / mission.percentComplete)
-                                                ?
-                                                (mission.totalStudentComplete / mission.percentComplete)
-                                                    > 100 ? 100 : (mission.totalStudentComplete / mission.percentComplete) : 1}
-                                            // progress={20}
+                                            progress={mission.totalMissionAssign ?
+                                                (mission.totalMissionAssign / mission.totalMission * 100) : 1
+                                            }
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {mission.totalStudentComplete ?
-                                                ((mission.totalStudentComplete / mission.percentComplete) * 100)
+                                            {mission.totalMissionAssign ?
+                                                Math.ceil((mission.totalMissionAssign / mission.totalMission) * 100)
                                                 : 0
                                             } %
 
@@ -237,17 +264,16 @@ class StatisticScreen extends Component {
                                     <Text style={[styles.status, { color: '#000', marginTop: 26 }]}>Hoàn thành</Text>
                                     <View style={styles.progressBar}>
                                         <ProgressBar
-                                            progress={(assignment.percentComplete / assignment.totalComplete)
-                                                ?
-                                                (assignment.percentComplete / assignment.totalComplete)
-                                                    > 100 ? 100 : (assignment.percentComplete / assignment.totalComplete) : 1}
+                                            progress={assignment.totalAssign ?
+                                                (assignment.totalAssign / assignment.totalAssignment * 100) : 1
+                                            }
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {assignment.percentComplete ?
-                                                ((assignment.percentComplete / assignment.totalComplete) * 100)
+                                            {assignment.totalAssign ?
+                                                Math.floor((assignment.totalAssign / assignment.totalAssignment) * 100)
                                                 : 0
                                             } %
                                          </Text>
@@ -273,8 +299,8 @@ const styles = StyleSheet.create({
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 21,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(21),
         color: '#000',
         marginLeft: 16,
         marginTop: 20,
@@ -288,8 +314,8 @@ const styles = StyleSheet.create({
     },
     status: {
         fontFamily: 'Nunito',
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         color: '#2D9CDB',
         marginLeft: 27,
         marginTop: 8,
@@ -297,8 +323,8 @@ const styles = StyleSheet.create({
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 21,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(21),
         marginTop: 12,
         alignSelf: 'center',
     },
@@ -341,8 +367,8 @@ const styles = StyleSheet.create({
     },
     number: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 24,
-        lineHeight: 30,
+        fontSize: RFFonsize(24),
+        lineHeight: RFFonsize(30),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 18,
@@ -352,8 +378,8 @@ const styles = StyleSheet.create({
     },
     sumBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 32,
-        lineHeight: 42,
+        fontSize: RFFonsize(32),
+        lineHeight: RFFonsize(42),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 19.5,
@@ -371,8 +397,8 @@ const styles = StyleSheet.create({
     },
     countGroup: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 16,
-        lineHeight: 18,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(18),
         color: '#fff',
         fontWeight: '500',
         marginLeft: 3,
@@ -388,7 +414,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     rateSub: {
-        fontSize: 12,
+        fontSize: RFFonsize(12),
         color: '#359CDB',
         fontFamily: 'Nunito-Bold',
         position: 'absolute',
@@ -414,7 +440,7 @@ const styles = StyleSheet.create({
     },
     numberBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: 32,
+        fontSize: RFFonsize(32),
         alignSelf: 'center',
         textAlign: 'center',
         color: '#27AE60',
@@ -424,8 +450,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
         marginLeft: 10,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
         paddingRight: 30,
     },
     toSend: {
@@ -433,7 +459,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginRight: 10,
         fontFamily: 'Nunito',
-        fontSize: 12
+        fontSize: RFFonsize(12)
     },
     isLoading: {
         flex: 1
@@ -452,7 +478,8 @@ const mapStateToProps = state => {
         listClass: state.statistic.listClass,
         mission: state.statistic.mission,
         assignment: state.statistic.assignment,
-        isLoading: state.statistic.isLoading
+        isLoading: state.statistic.isLoading,
+        classArray: state.statistic.classArray,
     };
 };
 

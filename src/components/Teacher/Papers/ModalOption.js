@@ -11,7 +11,7 @@ import {
 import RippleItem from '../../common-new/RippleItem';
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
-
+import { RFFonsize } from '../../../utils/Fonts';
 export default class ModalOption extends PureComponent {
 
     render() {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     },
     txtModalDetail: {
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Regular',
         marginLeft: 25,
     },

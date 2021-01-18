@@ -14,6 +14,7 @@ import AppIcon from '../../utils/AppIcon';
 import Rate, { AndroidMarket } from 'react-native-rate';
 import AsyncStorage from '@react-native-community/async-storage';
 import ZoomAnim from '../anim/ZoomAnim';
+import { RFFonsize } from '../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 const isIOS = Platform.OS == 'ios';
@@ -196,12 +197,12 @@ const styles = StyleSheet.create({
     },
     txtRateApp: {
         color: '#BDBDBD',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Regular'
     },
     txtOnluyen: {
         color: '#FFF',
-        fontSize: 18,
+        fontSize: RFFonsize(18),
         fontFamily: 'Nunito-Bold'
     },
     wrapStar: {
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
     txtRateNow: {
         fontFamily: 'Nunito-Regular',
         color: '#FFF',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     },
     containerBtn: {
         flexDirection: 'row',
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
     txtNonRate: {
         fontFamily: 'Nunito-Regular',
         color: '#C4C4C4',
-        fontSize: 16
+        fontSize: RFFonsize(16)
     },
     btnClose: {
         position: 'absolute',

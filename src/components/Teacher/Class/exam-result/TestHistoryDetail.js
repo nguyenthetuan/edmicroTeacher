@@ -7,6 +7,7 @@ import WarningModal from '../../../modals/WarningModal';
 import MathJaxLibs from '../../../../utils/MathJaxLibsTest';
 import { WebView } from 'react-native-webview';
 import _ from 'lodash';
+import { RFFonsize } from '../../../../utils/Fonts';
 import ShimePlaceholder from '../../../shim/LearnPlaceholder';
 
 let baseUrl = 'file:///android_asset/';
@@ -100,7 +101,7 @@ export default class TestHistoryDetail extends Component {
         {
           this.convertJson(this.state.listQuestion) == 2 &&
           <View style={{ position: 'absolute', alignSelf: 'center', marginTop: 200 }}>
-            <Text style={{ fontSize: 14, color: '#999', fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Hiển Thị</Text>
+            <Text style={{ fontSize: RFFonsize(14), color: '#999', fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Hiển Thị</Text>
           </View>
         }
         <ModalReview

@@ -33,6 +33,7 @@ import ModalOption from './ModalOption';
 import ModalAddPaper from './ModalAddPaper';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { RFFonsize } from '../../../utils/Fonts';
 
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -370,7 +371,7 @@ class Papers extends Component {
               style={{
                 color: '#000',
                 fontFamily: 'Nunito-Bold',
-                fontSize: 14,
+                fontSize: RFFonsize(14),
                 textAlign: 'center',
               }}>
               Xem thêm
@@ -676,7 +677,6 @@ class Papers extends Component {
           )}
           initialNumToRender={12}
           windowSize={24}
-          scrollEventThrottle={1}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}
@@ -763,7 +763,7 @@ const styles = StyleSheet.create({
   },
   txtAdd: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#FFF',
     marginLeft: 8,
   },
@@ -774,7 +774,7 @@ const styles = StyleSheet.create({
   },
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
   },
   fill: {
@@ -796,7 +796,7 @@ const styles = StyleSheet.create({
   },
   searchPaper: {
     height: 40,
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     color: '#000',
     fontFamily: 'Nunito-Regular',
     flex: 1,
@@ -804,8 +804,8 @@ const styles = StyleSheet.create({
   textTilteModal: {
     fontFamily: 'Nunito-Regular',
     fontWeight: '700',
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
     textAlign: 'center',
   },
   styWrapSearch: {

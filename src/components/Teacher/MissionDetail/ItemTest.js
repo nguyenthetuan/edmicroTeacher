@@ -12,9 +12,9 @@ export default function ItemTest(props) {
                 <Text style={styles.styCount}>{item.markDone}đ</Text>
             </View>
             <View style={{ width: 10 }} />
-            <View style={styles.styWrapCount}>
+            {/* <View style={styles.styWrapCount}>
                 <Text style={styles.styCount}>{item.countDone}</Text>
-            </View>
+            </View> */}
         </TouchableOpacity>
     )
 }
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
+        marginLeft: 5
     },
     styCount: {
         color: '#fff',
