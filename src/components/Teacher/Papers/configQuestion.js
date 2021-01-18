@@ -619,6 +619,7 @@ class ConfigQuestion extends Component {
             actionStyle={{ borderRadius: 0 }}
             onRightAction={() => this.config()}
             loading={loading}
+            notRightButton={true}
           />
           <TouchableOpacity style={styles.buttonCreateAssessment} onPress={this.config}>
             <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
