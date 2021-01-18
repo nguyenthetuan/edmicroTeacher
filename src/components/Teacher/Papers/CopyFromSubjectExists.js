@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     header: {
         width: '100%',
         backgroundColor: '#56CCF2',
-        height: height * 0.3
+        height: 200
     },
     wrapDropdown: {
         width: '100%',
