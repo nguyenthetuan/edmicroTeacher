@@ -13,6 +13,7 @@ import ScaleAnim from '../anim/ScaleAnim';
 import RippleButton from '../common-new/RippleMenu';
 import Button from '../common/Button';
 import LoadingScreen from '../libs/LoadingScreen';
+import { RFFonsize } from '../../utils/Fonts';
 
 const widthItem = (WIDTH_DEVICE / HEIGHT_DEVICE) * 120;
 const radius = 30;
