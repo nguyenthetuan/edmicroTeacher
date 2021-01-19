@@ -711,9 +711,9 @@ class MarkingView extends Component {
     let typeAnswer =
       item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
     let makedPoint = false;
-    if (this.state[`valueScore${index}`] || this.state[`valueCommnent${index}`]) {
-      makedPoint = true;
-    }
+    // if (this.state[`valueScore${index}`] || this.state[`valueCommnent${index}`]) {
+    //   makedPoint = true;
+    // }
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
@@ -756,7 +756,7 @@ class MarkingView extends Component {
               this.onButtonQuestionPress(index);
             }}>
             <Text
-              style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold' }}>
+              style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold', left: 1 }}>
               {index + 1}
             </Text>
             <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>

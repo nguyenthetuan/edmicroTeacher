@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     viewDate1: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginRight: 10,
+        marginRight: 5,
     },
     btnDate: {
         height: 25,
