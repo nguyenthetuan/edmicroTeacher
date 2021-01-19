@@ -513,7 +513,8 @@ const styles = StyleSheet.create({
   totalAddQuestion: {
     fontFamily: 'Nunito',
     fontWeight: '700',
-    fontSize: RFFonsize(14)
+    fontSize: RFFonsize(14),
+    left: -10
   },
   buttomTop: {
     backgroundColor: '#0091EA',
