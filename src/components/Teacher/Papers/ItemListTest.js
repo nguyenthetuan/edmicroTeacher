@@ -68,7 +68,7 @@ export default class Item extends Component {
                                 justifyContent: 'center',
                                 height: 25,
                             }}>
-                            <Text style={{ transform: [{ rotate: '90deg' }], fontSize: 25, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 10 }}>...</Text>
+                            <Text style={{ transform: [{ rotate: '90deg' }], fontSize: 20, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 10 }}>...</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
