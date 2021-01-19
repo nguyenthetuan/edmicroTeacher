@@ -4,6 +4,7 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
+    Image
 } from 'react-native';
 import _ from 'lodash';
 import Common from '../../../utils/Common';
@@ -65,12 +66,9 @@ export default class Item extends Component {
                                 alignItems: 'center',
                                 width: 30,
                                 justifyContent: 'center',
+                                height: 25,
                             }}>
-                            <FastImage
-                                style={{ width: 4, height: 12 }}
-                                source={require('../../../asserts/icon/icEdit.png')}
-                                resizeMode={FastImage.resizeMode.cover}
-                            />
+                            <Text style={{ transform: [{ rotate: '90deg' }], fontSize: 25, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 10 }}>...</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -200,7 +198,7 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(19),
         color: '#FFF',
         alignSelf: 'center',
-        width: "90%"
+        width: "90%",
     },
     itemTest: {
         borderRadius: 4,

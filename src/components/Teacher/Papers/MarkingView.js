@@ -756,7 +756,7 @@ class MarkingView extends Component {
               this.onButtonQuestionPress(index);
             }}>
             <Text
-              style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold' }}>
+              style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold', left: 1 }}>
               {index + 1}
             </Text>
             <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
