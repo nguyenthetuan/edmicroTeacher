@@ -345,7 +345,11 @@ class ConfigQuestion extends Component {
     onPressButtonPopUp() {
         let { value, eachQSPoint, data, listChecked } = this.state;
         if (value <= 0 || value >= eachQSPoint.length || !value) {
-            this.refs.toast.show('Vị trí không tồn tại')
+            this.refs.toast.show('Vị trí không tồn tại. Vị trí phải là số tự nhiên.')
+            return;
+        }
+        if (isNaN(value)) {
+            this.refs.toast.show('Vị trí không tồn tại. Vị trí phải là số tự nhiên.')
             return;
         }
         const valueChecked = listChecked.indexOf(true);
@@ -682,9 +686,9 @@ class ConfigQuestion extends Component {
                         </View>
                         <Text style={styles.textPopUp}>Đến vị trí</Text>
                         <TextInput
-                            style={{ width: 100, height: 20, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10 }}
+                            style={{ width: 100, height: 20, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, paddingVertical: 0 }}
                             onChangeText={(value) => { this.onValueChange(value) }}
-                            keyboardType={'numeric'}
+                            keyboardType={'decimal-pad'}
                             value={this.state.value}
                         />
                         <TouchableOpacity onPress={() => { this.onPressButtonPopUp() }} style={styles.buttonPopUp}>
