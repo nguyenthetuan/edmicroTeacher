@@ -105,6 +105,8 @@ export default class PracticeTab extends Component {
         });
       }).then(res => {
         this.setState({ activeSections, isLoading: false });
+      }).catch(err => {
+        this.setState({ isLoading: false });
       });
     } else {
       this.setState({ activeSections });
