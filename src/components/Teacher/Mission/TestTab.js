@@ -99,9 +99,12 @@ export default class PracticeTab extends Component {
           token: this.token,
           id: testCategoryId,
           res,
+          rej
         });
       }).then(res => {
         this.setState({ activeSections, isLoading: false });
+      }).catch(err => {
+        this.setState({ isLoading: false });
       });
     } else {
       this.setState({ activeSections });

@@ -150,11 +150,11 @@ const TeacherStack = createStackNavigator({
   },
   MissionPlayWebView: {
     screen: MissionPlayWebView,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: { header: null, gesturesEnabled: false },
   },
   MissonTestPlayWebView: {
     screen: MissonTestPlayWebView,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: { header: null, gesturesEnabled: false },
   },
   MissionStatisticsScreen: {
     screen: MissionStatisticsScreen,

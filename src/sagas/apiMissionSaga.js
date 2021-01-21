@@ -66,9 +66,12 @@ function* fetchListProblemMission(action) {
     yield put(fetchListProblemMissionSuccess(response));
     if (action.payload.res) {
       action.payload.res(response);
+      return;
     }
+    action.payload.rej(null);
   } catch (error) {
     console.log(error);
+    action.payload.rej(null);
     yield put(fetchListProblemMissionSuccess([]));
   }
 }
@@ -83,8 +86,11 @@ function* fetchListProblemTestMission(action) {
     yield put(fetchListProblemTestMissSuccess(data));
     if (action.payload.res) {
       action.payload.res(response);
+      return;
     }
+    action.payload.rej(null);
   } catch (error) {
+    action.payload.rej(null);
     console.log(error);
   }
 }
