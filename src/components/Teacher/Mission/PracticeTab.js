@@ -115,7 +115,6 @@ export default class PracticeTab extends Component {
 
   render() {
     const { listCateHirachy } = this.props.screenProps;
-    console.log("🚀 ~ file: PracticeTab.js ~ line 115 ~ PracticeTab ~ render ~ listCateHirachy", listCateHirachy)
     const { isLoading } = this.state;
     return (
       <ScrollView style={styles.contain} showsVerticalScrollIndicator={false}>

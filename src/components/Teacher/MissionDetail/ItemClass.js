@@ -155,7 +155,8 @@ class ItemClass extends Component {
                             onPress={this.showDatePicker}
                             style={styles.btnDate}>
                             <Text numberOfLines={1} style={styles.txtContentItem}>
-                                {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
+                                {moment(timeEnd).format('DD-MM-YYYY, HH:MM')}
+                            </Text>
                         </TouchableOpacity>
                         {/* <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
