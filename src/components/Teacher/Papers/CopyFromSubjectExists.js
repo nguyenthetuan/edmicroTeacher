@@ -190,7 +190,7 @@ export default class CopyFromSubjectExists extends Component {
                             title={'Bộ đề có sẵn'}
                             navigation={this.props.navigation}
                             color={'#fff'}
-                            notRightButton={false}
+                            notRightButton={true}
                         />
                         <View style={styles.wrapDropdown}>
                             <Image source={AppIcon.image_headerPaperV3} style={styles.imageHeaderLeft} />
