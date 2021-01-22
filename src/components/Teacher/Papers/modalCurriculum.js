@@ -349,15 +349,15 @@ const styles = StyleSheet.create({
   },
   txtSelectItem: {
     color: '#828282',
-    fontSize: RFFonsize(12),
+    fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
     marginTop: 3,
     marginBottom: 3
   },
   icDow: {
-    width: 35,
-    height: 35,
+    width: 25,
+    height: 25,
     backgroundColor: '#AAE5F9',
     borderRadius: 1,
     justifyContent: 'center',
@@ -369,16 +369,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    borderRadius: 5,
-    overflow: 'hidden'
+    // borderRadius: 5,
+    // overflow: 'hidden'
   },
   wrapElementSelect: {
     maxWidth: '50%',
     borderWidth: 0.5,
     borderColor: '#E0E0E0',
     marginLeft: 3,
-    marginTop: 5,
-    marginBottom: 5,
+    // marginTop: 5,
+    // marginBottom: 5,
     borderRadius: 5
   },
   wrapEmpty: {
