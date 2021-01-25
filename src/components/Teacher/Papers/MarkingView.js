@@ -513,6 +513,7 @@ class MarkingView extends Component {
                   fontFamily: 'Nunito-Bold',
                   color: '#FFFEFE',
                   marginLeft: 20,
+                  marginBottom: 10
                 }}>
                 Lớp
               </Text>
@@ -533,6 +534,7 @@ class MarkingView extends Component {
                   fontFamily: 'Nunito-Bold',
                   color: '#FFFEFE',
                   marginLeft: 20,
+                  marginBottom: 10
                 }}>
                 Học Sinh
               </Text>

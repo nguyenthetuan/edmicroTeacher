@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
     footer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginBottom: 20,
+        marginBottom: 40
     },
     buttomCancel: {
         backgroundColor: '#FF6213',

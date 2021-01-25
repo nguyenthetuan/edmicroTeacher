@@ -131,7 +131,7 @@ class ChangePassword extends Component {
                     />
                     <InputPrimary
                       label={'Mật khẩu mới'}
-                      placeholder={'Nhập lại Mật khẩu'}
+                      placeholder={'Nhập mật khẩu mới'}
                       value={values.passwordNew}
                       onChangeText={handleChange('passwordNew')}
                       onBlur={() => setFieldTouched('passwordNew')}
@@ -141,7 +141,7 @@ class ChangePassword extends Component {
                     />
                     <InputPrimary
                       label={'Xác thực mật khẩu'}
-                      placeholder={'Nhập lại Mật khẩu'}
+                      placeholder={'Nhập lại mật khẩu mới'}
                       value={values.passwordNewAgain}
                       onChangeText={handleChange('passwordNewAgain')}
                       onBlur={() => setFieldTouched('passwordNewAgain')}
