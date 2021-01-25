@@ -648,6 +648,8 @@ class Papers extends Component {
       extrapolate: 'clamp',
     });
 
+    console.log("render paper");
+
     return (
       <SafeAreaView style={styles.fill}>
         <Animated.View
@@ -675,8 +677,7 @@ class Papers extends Component {
           renderItem={({ item, index }) => (
             <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
           )}
-          initialNumToRender={12}
-          windowSize={24}
+          initialNumToRender={5}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}

@@ -173,7 +173,7 @@ const TabMainTeacher = createBottomTabNavigator(
     swipeEnabled: false,
     backBehavior: 'initialRoute',
     allowFontScaling: true,
-    lazy: false,
+    lazy: true,
     tabBarOptions: {
       pressColor: 'blue',
       activeTintColor: '#000000',

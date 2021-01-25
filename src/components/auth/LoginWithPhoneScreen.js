@@ -205,7 +205,7 @@ class LoginWithPhoneScreen extends Component {
       this.onSuccess(response.access_token);
     } else {
       this.myTimeErr = setTimeout(() => {
-        this.setState({ isLoging: false, errors: 'Tên đăng nhập hoặc mật khẩu không chính xác !' });
+        this.setState({ isLoging: false, errors: 'Tên đăng nhập hoặc mật khẩu không chính xác !', phoneNumber: '', passWord: '' });
         this.clearTimeError();
         if (this._resetForm) {
           this._resetForm();
@@ -310,7 +310,7 @@ class LoginWithPhoneScreen extends Component {
           <Formik
             initialValues={{
               username: __DEV__ ? this.state.phoneNumber : this.state.phoneNumber,
-              password: __DEV__ ?  this.state.passWord : this.state.passWord,
+              password: __DEV__ ? this.state.passWord : this.state.passWord,
             }}
             enableReinitialize={true}
             onSubmit={(values, { resetForm }) => this.onSignIn(values, resetForm)}
