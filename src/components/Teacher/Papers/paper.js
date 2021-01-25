@@ -549,7 +549,7 @@ class Papers extends Component {
   }
 
   onChangeText = text => {
-    this.setState({ textSearch: text.toLowerCase() });
+    this.setState({ textSearch: text });
     if (this.timeSearch) {
       clearTimeout(this.timeSearch);
       this.timeSearch = null;

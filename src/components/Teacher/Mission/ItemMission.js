@@ -46,7 +46,7 @@ export default class ItemMission extends Component {
 
   render() {
     const { data } = this.props;
-    const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
+    const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, HH:MM')
     return (
       <TouchableOpacity
         style={[styles.contain, {
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   txtTime: {
     fontFamily: "Nunito-Regular",
-    fontSize: RFFonsize(11),
+    fontSize: RFFonsize(12),
     lineHeight: RFFonsize(15),
     alignSelf: "center",
     color: "#FFF"

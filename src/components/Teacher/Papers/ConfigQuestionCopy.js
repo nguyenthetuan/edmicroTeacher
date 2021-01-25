@@ -228,7 +228,7 @@ class ConfigQuestion extends Component {
     validate = () => {
         var errors = [];
         var result = true;
-        _.forEach(['gradeCode', 'subjectCode', 'name'], item => {
+        _.forEach(['gradeCode', 'subjectCode', 'name', 'assignmentType'], item => {
             console.log(item, ' :', this.state[item]);
             if (_.isEmpty(this.state[item])) {
                 switch (item) {
@@ -276,6 +276,12 @@ class ConfigQuestion extends Component {
                 isExplain,
                 totalPoint,
             } = this.state;
+            if (this.state.assignmentType == 1) {
+                if (this.state.duration <= 0) {
+                    alert('Vui lòng nhập thời gian làm bài');
+                    return;
+                }
+            }
             if (totalPoint < 10 || totalPoint > 10) {
                 AlertNoti('Vui lòng nhập tổng điểm bằng 10');
                 return;
@@ -339,7 +345,11 @@ class ConfigQuestion extends Component {
     onPressButtonPopUp() {
         let { value, eachQSPoint, data, listChecked } = this.state;
         if (value <= 0 || value >= eachQSPoint.length || !value) {
-            this.refs.toast.show('Vị trí không tồn tại')
+            this.refs.toast.show('Vị trí không tồn tại. Vị trí phải là số tự nhiên.')
+            return;
+        }
+        if (isNaN(value)) {
+            this.refs.toast.show('Vị trí không tồn tại. Vị trí phải là số tự nhiên.')
             return;
         }
         const valueChecked = listChecked.indexOf(true);
@@ -676,9 +686,9 @@ class ConfigQuestion extends Component {
                         </View>
                         <Text style={styles.textPopUp}>Đến vị trí</Text>
                         <TextInput
-                            style={{ width: 100, height: 20, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10 }}
+                            style={{ width: 100, height: 20, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, paddingVertical: 0 }}
                             onChangeText={(value) => { this.onValueChange(value) }}
-                            keyboardType={'numeric'}
+                            keyboardType={'decimal-pad'}
                             value={this.state.value}
                         />
                         <TouchableOpacity onPress={() => { this.onPressButtonPopUp() }} style={styles.buttonPopUp}>
@@ -728,7 +738,7 @@ class ConfigQuestion extends Component {
                             {!!this.state.assignmentType && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', top: 10, paddingHorizontal: 20 }}>
                                 <Text style={[{ marginLeft: 4, marginRight: 4, top: 4 }, styles.textInPopupCreate]}>Thời gian:</Text>
                                 <TextInput
-                                    style={{ width: '20%', height: 30, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, backgroundColor: '#fff', color: '#2D9CDB' }}
+                                    style={{ width: '20%', height: 30, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, backgroundColor: '#fff', color: '#2D9CDB', paddingVertical: 0 }}
                                     onChangeText={(value) => { this.onValueChangeDuration(value) }}
                                     keyboardType={'numeric'}
                                     value={this.state.duration.toString()}
@@ -913,7 +923,7 @@ const styles = StyleSheet.create({
     },
     popUpCreate: {
         width: width * 0.9,
-        height: height * 0.8,
+        height: height * 0.9,
         borderRadius: 10,
         borderColor: "#ccc",
         position: 'absolute',
@@ -922,6 +932,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         paddingVertical: 20,
+        top: -20
     },
     blackLayer: {
         backgroundColor: 'rgba(0,0,0, 0.4)',

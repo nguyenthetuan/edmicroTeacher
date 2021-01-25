@@ -97,7 +97,7 @@ export default class ItemStudent extends React.Component {
                   <ProgressBar
                     progress={rate ? rate > 100 ? 100 : rate : 1}
                     color="#56BB73"
-                    widthProps={width - 190}
+                    widthProps={width - 200}
                     progressUnfilledColor="#E0E0E0"
                   />
                   <Text numberOfLines={1}
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,
-    width: width * 0.2,
+    width: width * 0.25,
   },
   countToDo: {
     fontFamily: "Nunito",

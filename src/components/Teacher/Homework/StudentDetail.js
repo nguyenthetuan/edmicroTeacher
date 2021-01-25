@@ -327,31 +327,31 @@ export default function StudentDetail(props) {
                     {
                         item.status === 4
                             ?
-                            <View style={styles.viewOption}>
-                                <TouchableOpacity style={styles.btnDetail}
-                                    onPress={() => { detailStudent(item) }}>
-                                    <Text style={styles.txtDetail}>Chi tiết</Text>
-                                    <Ionicons
-                                        name='ios-arrow-forward'
-                                        color='#DB422D'
-                                        size={14}
-                                        style={{ marginStart: 5 }}
-                                    />
-                                </TouchableOpacity>
-                                {/* <TouchableOpacity
+                    <View style={styles.viewOption}>
+                        <TouchableOpacity style={styles.btnDetail}
+                            onPress={() => { detailStudent(item) }}>
+                            <Text style={styles.txtDetail}>Chi tiết</Text>
+                            <Ionicons
+                                name='ios-arrow-forward'
+                                color='#DB422D'
+                                size={14}
+                                style={{ marginStart: 5 }}
+                            />
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity
                                     onPress={() => handleRetryCheckPoint(item.studentId)}
                                     style={styles.btnChamlai}>
                                     <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
                                     <Text style={styles.txtBtn}>Chấm lại</Text>
                                 </TouchableOpacity> */}
-                                <TouchableOpacity
-                                    onPress={() => handleRework(item.studentId)}
-                                    style={styles.btnLamlai}>
-                                    <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
-                                    <Text style={styles.txtBtn}>Làm lại</Text>
-                                </TouchableOpacity>
-                            </View>
-                            : null
+                        <TouchableOpacity
+                            onPress={() => handleRework(item.studentId)}
+                            style={styles.btnLamlai}>
+                            <Image source={require('../../../asserts/icon/ic_lamlai.png')} style={styles.icRemake} />
+                            <Text style={styles.txtNew}>Làm lại</Text>
+                        </TouchableOpacity>
+                    </View>
+                    : null
                     }
                 </View>
             </View>
@@ -459,13 +459,13 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     btnLamlai: {
-        marginStart: 23,
+        // marginStart: 23,
         flexDirection: 'row',
-        paddingHorizontal: 3,
+        paddingHorizontal: 5,
         paddingVertical: 1,
         backgroundColor: '#F49A31',
-        borderRadius: 2,
-        marginEnd: 6
+        borderRadius: 4,
+        marginEnd: 6,
     },
     btnChamlai: {
         flexDirection: 'row',
@@ -481,10 +481,24 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginStart: 4
     },
+    txtNew: {
+        fontFamily: 'Nunito-Regular',
+        fontSize: RFFonsize(10),
+        color: '#fff',
+        textAlign: 'center',
+        alignSelf: 'center',
+        marginLeft: 5,
+        marginTop: 3,
+        marginBottom: 3,
+        marginRight: 3
+    },
+    icRemake: {
+        alignSelf: 'center'
+    },
     btnDetail: {
         flexDirection: 'row',
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     txtDetail: {
         fontFamily: 'Nunito-Regular',
