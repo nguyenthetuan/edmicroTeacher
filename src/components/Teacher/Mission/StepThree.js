@@ -10,6 +10,8 @@ import {
   SectionList,
   ActivityIndicator,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
@@ -71,9 +73,10 @@ export default class StepThree extends Component {
 
     dataPracticeAdd = dataPracticeAdd.map(item => ({
       countDone: item.countDone || 1,
-      percentDone: 100,
+      percentDone: item.percentCount || 100,
       problemId: item.problemCode,
-      percentCount: item.percentCount || 100
+      percentCount: 1,
+      // percentCount: item.percentCount || 100
     }));
 
     dataTestAdd = dataTestAdd.map(item => ({
@@ -177,6 +180,7 @@ export default class StepThree extends Component {
             </View>
           </View>
           <SectionList
+            scrollEnabled={false}
             sections={dataTemp}
             keyExtractor={(item, index) => item + index}
             renderItem={({ item }) => <ItemSectionListPrac
@@ -215,6 +219,7 @@ export default class StepThree extends Component {
             </View>
           </View>
           <SectionList
+            scrollEnabled={false}
             sections={dataTemp}
             keyExtractor={(item, index) => item + index}
             renderItem={({ item }) => <ItemSectionListPrac
@@ -241,47 +246,50 @@ export default class StepThree extends Component {
     } = this.state;
     return (
       <View style={{ flex: 1, marginHorizontal: 10 }}>
-        <ScrollView
-          style={{ marginTop: 10 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View>
-            <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
-            <TextInput
-              placeholder={'Tên nhiệm vụ'}
-              placeholderTextColor={'#ccc'}
-              style={styles.styWrapInput}
-              value={nameMission}
-              onChangeText={nameMission => this.setState({ nameMission })}
-            />
-          </View>
-
-          <View style={[styles.styWrapInfo, { marginVertical: 10 }]}>
-            <View style={styles.styWrapInfo}>
-              <Text style={styles.styTxtInfo}>Khối</Text>
-              <Text style={styles.styWrapSubject}>{valueClass}</Text>
-            </View>
-
-            <View style={styles.styWrapInfo}>
-              <Text style={styles.styTxtInfo}>Môn học</Text>
-              <Text style={styles.styWrapSubject}>{valueSubject}</Text>
-            </View>
-          </View>
-
-          <View>
-            <Text>Mô tả</Text>
-            <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
-              <HTML
-                html={htmlContent}
-                imagesMaxWidth={Dimensions.get('window').width}
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null} style={{ flex: 1 }}>
+          <ScrollView
+            contentInset={{ bottom: Platform.OS == 'ios' ? 130 : 0 }}
+            style={{ marginTop: 10 }}
+            showsVerticalScrollIndicator={false}
+          >
+            <View>
+              <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
+              <TextInput
+                placeholder={'Tên nhiệm vụ'}
+                placeholderTextColor={'#ccc'}
+                style={styles.styWrapInput}
+                value={nameMission}
+                onChangeText={nameMission => this.setState({ nameMission })}
               />
-              {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
-            </TouchableOpacity>
-          </View>
+            </View>
 
-          {this.renderPractice()}
-          {this.renderTest()}
-        </ScrollView>
+            <View style={[styles.styWrapInfo, { marginVertical: 10 }]}>
+              <View style={styles.styWrapInfo}>
+                <Text style={styles.styTxtInfo}>Khối</Text>
+                <Text style={styles.styWrapSubject}>{valueClass}</Text>
+              </View>
+
+              <View style={styles.styWrapInfo}>
+                <Text style={styles.styTxtInfo}>Môn học</Text>
+                <Text style={styles.styWrapSubject}>{valueSubject}</Text>
+              </View>
+            </View>
+
+            <View>
+              <Text>Mô tả</Text>
+              <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
+                <HTML
+                  html={htmlContent}
+                  imagesMaxWidth={Dimensions.get('window').width}
+                />
+                {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
+              </TouchableOpacity>
+            </View>
+
+            {this.renderPractice()}
+            {this.renderTest()}
+          </ScrollView>
+        </KeyboardAvoidingView>
         <View style={styles.styWrapBtn}>
           <TouchableOpacity
             style={styles.styBtnBack}

@@ -68,7 +68,7 @@ export default class ListQuestion extends Component {
             <SafeAreaView></SafeAreaView>
             {data.assignmentContentType === 0 ?
               (
-                (data && !_.isEmpty(data.questions) && !_.isEmpty(data.questions[0].options))
+                (data && !_.isEmpty(data.questions) )
                   ?
                   <WebView
                     ref={(webView) => this.webview = webView}
