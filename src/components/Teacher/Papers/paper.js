@@ -593,7 +593,6 @@ class Papers extends Component {
                 height: 18,
                 width: 24,
               }}>
-              <EvilIcons name="search" size={20} color="#C4C4C4" />
             </TouchableOpacity>
           </View>
           <View style={styles.styWrapSearch}>

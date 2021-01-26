@@ -119,6 +119,7 @@ class ItemClass extends Component {
 
     goToMissionStatisticsScreen = () => {
         const { item } = this.props;
+        console.log(item);
         this.props.navigation.navigate('MissionStatisticsScreen', { _id: item.assignId });
     }
 
