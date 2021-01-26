@@ -357,6 +357,7 @@ class MarkingView extends Component {
       };
       const { token } = await apiHelper.getToken();
       const response = await apiPaper.submitReview({ token, formData });
+      console.log("🚀 ~ file: MarkingView.js ~ line 360 ~ MarkingView ~ onPressSubmitButton ~ response", response)
       if (response && response.message === null) {
         if (!_.isEmpty(assignmentDetailCheck?.data?.data)) {
           assignmentDetailCheck.data.data = assignmentDetailCheck.data.data.map(
@@ -376,7 +377,7 @@ class MarkingView extends Component {
               return item;
             },
           );
-          this.setState({ assignmentDetailCheck });
+          this.setState({ assignmentDetailCheck, [`marked${this.state.currentIndex}`]: true });
         }
         AlertNoti(messageSuccess);
         return;
@@ -427,6 +428,13 @@ class MarkingView extends Component {
 
   onButtonQuestionPress = index => {
     const { assignmentDetailCheck } = this.state;
+    console.log('onButtonQuestionPress: ', this.state[`marked${index}`]);
+    if (!this.state[`marked${index}`]) {
+      this.setState({
+        [`valueScore${index}`]: 0,
+        [`valueCommnent${index}`]: ''
+      })
+    }
     if (!this.state.isHideCommentInput) {
       this.onpressComment();
     }

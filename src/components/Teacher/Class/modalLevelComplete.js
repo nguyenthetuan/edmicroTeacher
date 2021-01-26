@@ -32,6 +32,10 @@ export default class ModalLevelComplete extends Component {
     };
   }
 
+  convertNumberToTime = (number) => {
+    return Math.floor(number / 60) + 'm ' + Math.floor(number % 60) + 's';
+  }
+
   _renderLevelComplete = () => {
     const { data } = this.state;
     const { assignmentTimeline } = data;
@@ -313,8 +317,8 @@ export default class ModalLevelComplete extends Component {
               </ScrollView>
               <View style={{ marginHorizontal: 2 }}>
                 {[
-                  convertNumberToTime(maxTime),
-                  convertNumberToTime(maxTime / 2),
+                  this.convertNumberToTime(maxTime),
+                  this.convertNumberToTime(maxTime / 2),
                   '0m 0s',
                 ].map((e, i) => {
                   return (
@@ -372,7 +376,7 @@ export default class ModalLevelComplete extends Component {
             <View style={[styles.viewTimeAverage, { marginLeft: 20 }]}>
               <View style={styles.dotTimeAverage} />
               <Text style={styles.txtTimeAverage}>
-                Thời gian làm bài : {convertNumberToTime(avgTimeComplete)}
+                Thời gian làm bài : {this.convertNumberToTime(avgTimeComplete)}
               </Text>
             </View>
           </View>

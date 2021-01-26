@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(19),
     width: "65%",
     flexDirection: "row",
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    maxWidth: '65%'
   },
   styFlexDirRow: {
     flexDirection: 'row',
