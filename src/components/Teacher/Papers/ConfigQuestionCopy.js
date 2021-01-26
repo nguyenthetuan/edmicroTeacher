@@ -33,6 +33,7 @@ import { RFFonsize } from '../../../utils/Fonts';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Dropdown from '../Homework/Dropdown';
 import apiService from '../../../services/apiPracticeHelper';
+import { RotationGestureHandler } from 'react-native-gesture-handler';
 
 
 const { width, height } = Dimensions.get('window');
@@ -173,6 +174,10 @@ class ConfigQuestion extends Component {
         let questionList = data.questions;
         let listChecked = this.state.listChecked;
         let count = listChecked.filter((a) => (a == true)).length;
+        if (count == listChecked.length) {
+            this.refs.toast.show('Bộ đề phải có câu hỏi!');
+            return;
+        }
         if (!count) {
             return;
         }
