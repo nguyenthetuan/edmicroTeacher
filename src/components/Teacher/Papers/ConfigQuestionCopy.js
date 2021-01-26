@@ -118,9 +118,26 @@ class ConfigQuestion extends Component {
 
     onHandleMessage(event) {
         const data = event.nativeEvent.data.split('---');
+        console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 121 ~ ConfigQuestion ~ onHandleMessage ~ data", data)
+
         if (data[0] === 'checked') {
             let listChecked = this.state.listChecked;
             listChecked[data[1]] = !listChecked[data[1]];
+            this.setState({ listChecked: listChecked })
+        }
+        if (data[0] === 'checkAll') {
+            let listChecked = this.state.listChecked;
+            for (let i = 0; i < listChecked.length; i++) {
+                listChecked[i] = (true);
+            }
+            console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 132 ~ ConfigQuestion ~ onHandleMessage ~ listChecked", listChecked)
+            this.setState({ listChecked: listChecked })
+        }
+        if (data[0] === 'unCheckAll') {
+            let listChecked = this.state.listChecked;
+            for (let i = 0; i < listChecked.length; i++) {
+                listChecked[i] = (false);
+            }
             this.setState({ listChecked: listChecked })
         }
         if (data[0] == 'newPoints') {
@@ -173,7 +190,7 @@ class ConfigQuestion extends Component {
         let totalPoint = eachQSPoint.reduce((a, b) => (a + b));
         totalPoint = Math.round(totalPoint * 10000) / 10000;
         data.questions = questionList;
-        this.setState({ data, totalPoint, eachQSPoint }, () => {
+        this.setState({ data, totalPoint, eachQSPoint, toggleCheckBox: false }, () => {
             this.resetListCheckedAndPoint(data.questions);
         });
     }
