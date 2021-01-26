@@ -118,7 +118,6 @@ class ConfigQuestion extends Component {
 
     onHandleMessage(event) {
         const data = event.nativeEvent.data.split('---');
-        console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 121 ~ ConfigQuestion ~ onHandleMessage ~ data", data)
 
         if (data[0] === 'checked') {
             let listChecked = this.state.listChecked;
@@ -130,7 +129,6 @@ class ConfigQuestion extends Component {
             for (let i = 0; i < listChecked.length; i++) {
                 listChecked[i] = (true);
             }
-            console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 132 ~ ConfigQuestion ~ onHandleMessage ~ listChecked", listChecked)
             this.setState({ listChecked: listChecked })
         }
         if (data[0] === 'unCheckAll') {
