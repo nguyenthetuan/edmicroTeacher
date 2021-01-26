@@ -38,6 +38,7 @@ import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
 import Toast, { DURATION } from 'react-native-easy-toast';
+import { setListGrades } from '../../../actions/paperAction';
 
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -139,12 +140,16 @@ class ConfigQuestion extends Component {
       this.setState({
         questions: getListQuestion,
       });
+    const { token } = await dataHelper.getToken();
 
+    const resGrade = await apiPapers.getGrade({ token });
+    if (resGrade) {
+      this.props.saveGrades(resGrade);
+    }
     this.setState(
       {
-        listGrades: this.props.paper.listGrade && this.props.paper.listGrade,
-        listSubjects:
-          this.props.paper.listSubject && this.props.paper.listSubject,
+        listGrades: resGrade,
+        listSubjects: this.props.paper.listSubject,
       },
       () =>
         this.activeSubject({
@@ -428,10 +433,8 @@ class ConfigQuestion extends Component {
           });
           this.setState(
             {
-              listGrades:
-                this.props.paper.listGrade && this.props.paper.listGrade,
-              listSubjects:
-                this.props.paper.listSubject && this.props.paper.listSubject,
+              listGrades: this.props.paper.listGrade,
+              listSubjects: this.props.paper.listSubject,
               name: '',
               loading: false,
             },
@@ -1116,10 +1119,14 @@ const mapStateToProps = state => {
     paper: state.paper,
   };
 };
-
+const mapDispatchToProps = dispatch => {
+  return {
+    saveGrades: listGrades => dispatch(setListGrades(listGrades)),
+  }
+}
 export default connect(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
 )(ConfigQuestion);
 
 const styles = StyleSheet.create({
