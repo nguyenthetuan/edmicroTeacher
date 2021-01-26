@@ -112,6 +112,7 @@ export default function LevelCompletion(props) {
       let dataTemp1 = {};
       let dataTemp2 = {};
       let dataChartTemp2 = [];
+      console.log("🚀 ~ file: LevelCompletion.js ~ line 116 ~ data.map ~ data", data);
       data.map((e, index) => {
         if (e.data.listProblem.length > 0) {
           const { listProblem } = e.data;
@@ -191,7 +192,7 @@ export default function LevelCompletion(props) {
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp1);
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp2);
 
-      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length*2).toFixed(4) * 100;
+      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length).toFixed(4) * 100/ 100;
 
       // let result = _.chain([...dataChartTemp1, ...dataChartTemp2])
       //   // Group the elements of Array based on color property
