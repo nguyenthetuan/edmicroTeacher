@@ -110,7 +110,8 @@ const indexSelected = {
 export default class StatisticsPoints extends Component {
 
   state = {
-    data: []
+    data: [],
+    missionDetail: {}
   }
 
   componentDidMount() {
@@ -136,8 +137,8 @@ export default class StatisticsPoints extends Component {
     const { _id } = this.props.navigation.state.params;
     const response = await Api.getMissionResult({ token, _id });
     console.log("StatisticsPoints -> response", response);
-    const { listDetailStudent, assignDetail } = response;
-    this.setState({ data: listDetailStudent, assignDetail: assignDetail });
+    const { listDetailStudent, assignDetail, missionDetail } = response;
+    this.setState({ data: listDetailStudent, assignDetail: assignDetail, missionDetail });
   };
 
   refreshData = async () => {
@@ -149,10 +150,11 @@ export default class StatisticsPoints extends Component {
   }
 
   render() {
-    const { data, assignDetail } = this.state;
+    const { data, assignDetail, missionDetail } = this.state;
     let timeEnd = (assignDetail?.endTime) * 1000;
     // timeEnd = convertTimeHMDMY(timeEnd);
     timeEnd = moment((assignDetail?.endTime) * 1000).format('hh:mm DD/MM/YYYY');
+    console.log(assignDetail);
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar />
@@ -166,7 +168,7 @@ export default class StatisticsPoints extends Component {
             _.isEmpty(assignDetail) ?
               null
               : <View style={styles.wrapInfo}>
-                {/* <Text style={styles.txtAssignment}>{data.assignDetail?.data.name || ''}</Text> */}
+                <Text style={styles.txtAssignment}>{missionDetail?.title || ''}</Text>
                 <Text style={styles.txtTitle}>{assignDetail?.className || ''}</Text>
                 <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text>
               </View>

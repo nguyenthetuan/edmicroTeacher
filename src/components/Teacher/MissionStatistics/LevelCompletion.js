@@ -191,7 +191,7 @@ export default function LevelCompletion(props) {
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp1);
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp2);
 
-      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length).toFixed(4) * 100 / 2;
+      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length*2).toFixed(4) * 100;
 
       // let result = _.chain([...dataChartTemp1, ...dataChartTemp2])
       //   // Group the elements of Array based on color property
@@ -203,7 +203,7 @@ export default function LevelCompletion(props) {
       // console.log('result', result);
 
     }
-    
+
     const widthChart = width / 4 * (dataChart.length + 0.5);
     const maxTime = Math.max(...dataChart.map(e => e.averageTime));
 
@@ -351,7 +351,7 @@ export default function LevelCompletion(props) {
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingHorizontal: 5 }}>
             <View style={[styles.viewTimeAverage]}>
               <View style={[styles.dotTimeAverage, { backgroundColor: '#04C6F1' }]} />
-              <Text style={styles.txtTimeAverage}>Mức độ hoàn thành trung bình {avgPercentComplete}%</Text>
+              <Text style={styles.txtTimeAverage}>Mức độ hoàn thành trung bình {avgPercentComplete.toFixed(2)}%</Text>
             </View>
           </View>
         </View>
