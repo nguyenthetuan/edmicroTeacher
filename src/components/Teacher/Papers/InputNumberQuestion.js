@@ -11,14 +11,14 @@ export default class InputNumberQuestion extends Component {
   }
 
   componentDidMount() {
-    const { totalQuestion } = this.props;
-    this.setState({ total: totalQuestion })
+    const { totalQuestionTN } = this.props;
+    this.setState({ total: totalQuestionTN })
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    if (prevProps.totalQuestion !== this.props.totalQuestion) {
+    if (prevProps.totalQuestionTN !== this.props.totalQuestionTN) {
       this.setState({
-        total: this.props.totalQuestion
+        total: this.props.totalQuestionTN
       })
       return true;
     } else {

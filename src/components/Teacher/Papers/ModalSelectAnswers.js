@@ -47,7 +47,7 @@ export default class ModalSelectAnswers extends Component {
 
     render() {
         console.log('optionIdAnswer: ', this.state.optionIdAnswer);
-        let { indexSelecting } = this.props;
+        let { indexSelectingTN } = this.props;
         return (
             <>
                 {this.props.showSelectAnswer && <View style={styles.modal}>
@@ -56,7 +56,7 @@ export default class ModalSelectAnswers extends Component {
                         fontSize: RFFonsize(14),
                         color: '#fff',
                         fontWeight: '700',
-                    }}>Câu {indexSelecting + 1}</Text>
+                    }}>Câu {indexSelectingTN + 1}</Text>
                     <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', top: 10 }}>
                         <Text style={{ fontSize: RFFonsize(14), fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
                         <TextInput

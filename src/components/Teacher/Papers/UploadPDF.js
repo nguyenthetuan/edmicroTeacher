@@ -50,14 +50,14 @@ export default class UploadPDF extends Component {
     super(props);
     this.state = {
       visibleViewAnswer: true,
-      totalQuestion: 10,
+      totalQuestionTN: 10,
       totalQuestionTL: 0,
       viewFileFDF: true,
       urlFilePDF: '',
       urlFileAnswerPDF: '',
       loadingUpload: false,
       pathFileAnswerPDF: null,
-      indexSelecting: 0,
+      indexSelectingTN: 0,
       assignmentTypes: [
         {
           id: 0,
@@ -81,7 +81,7 @@ export default class UploadPDF extends Component {
   }
 
   onClickItem = async (index, optionIdAnswer, point) => {
-    await this.setState({ indexSelecting: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
+    await this.setState({ indexSelectingTN: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
     await this.modalSelectAnswers.setIdAnswer(isNaN(optionIdAnswer) ? -1 : optionIdAnswer);
     setTimeout(() => {
       this.scrollview.scrollToEnd();
@@ -97,7 +97,7 @@ export default class UploadPDF extends Component {
   changeTotalQuestion = (totalQuestion) => {
     const { typeQuestion } = this.state;
     if (typeQuestion === 0) {
-      this.setState({ totalQuestion, indexSelecting: 0 });
+      this.setState({ totalQuestionTN, totalQuestion: 0 });
     } else {
       this.setState({ totalQuestionTL: totalQuestion, indexSelectingTL: 0 });
     }
@@ -284,7 +284,7 @@ export default class UploadPDF extends Component {
         return;
       }
 
-      if (list.totalPoint + list.totalPointTL !== 10) {
+      if (list.totalPointTN + list.totalPointTL !== 10) {
         this.toast.show('Tổng điểm chưa bằng 10!');
         return;
       }
@@ -427,7 +427,7 @@ export default class UploadPDF extends Component {
     const {
       urlFilePDF,
       urlFileAnswerPDF,
-      totalQuestion,
+      totalQuestionTN,
       totalQuestionTL,
       assignmentTypes,
       visibleViewAnswer,
@@ -643,14 +643,14 @@ export default class UploadPDF extends Component {
                       ref={(ref) => (this.selectAnswer = ref)}
                       isVisible={visibleViewAnswer}
                       numColumns={numColumns}
-                      totalQuestion={totalQuestion}
+                      totalQuestionTN={totalQuestionTN}
                       totalQuestionTL={totalQuestionTL}
                       typeQuestion={typeQuestion}
                       assignmentType={assignmentType}
                       onClickItem={this.onClickItem}
                       onClickItemTL={this.onClickItemTL}
                       onChange={this.changeTotalQuestion}
-                      indexSelecting={this.state.indexSelecting}
+                      indexSelectingTN={this.state.indexSelectingTN}
                       indexSelectingTL={this.state.indexSelectingTl}
                       showSelectAnswer={this.state.showSelectAnswer}
                     />
@@ -664,7 +664,7 @@ export default class UploadPDF extends Component {
           </ScrollView>
           <ModalSelectAnswers
             ref={(ref) => { this.modalSelectAnswers = ref }}
-            indexSelecting={this.state.indexSelecting}
+            indexSelectingTN={this.state.indexSelectingTN}
             indexSelectingTL={this.state.indexSelectingTL}
             onSelectAnswer={this.onSelectAnswer}
             optionIdAnswer={this.state.optionIdAnswer}
