@@ -218,31 +218,26 @@ class EditConfig extends Component {
         );
     };
 
+
     _validate = () => {
         const { name, time, gradeCode, subjectCode } = this.state;
         const { data } = this.props.navigation.state.params;
 
         if (name.trim() === '') {
-            this.refs.toast.show(
-                'Tên bài tập không được để trống!',
-                DURATION.LENGTH_LONG,
-            );
-            return;
+
+            return false;
         }
 
         if (!gradeCode.length) {
-            this.refs.toast.show('Vui lòng chọn khối lớp!', DURATION.LENGTH_LONG);
-            return;
+            return false;
         }
 
         if (!subjectCode.length) {
-            this.refs.toast.show('Vui lòng chọn môn học!', DURATION.LENGTH_LONG);
-            return;
+            return false;
         }
 
         if (data.assignmentType === 1 && time.trim() === '') {
-            this.refs.toast.show('Vui lòng nhập thời gian!', DURATION.LENGTH_LONG);
-            return;
+            return false;
         }
 
         return true;
@@ -303,7 +298,8 @@ class EditConfig extends Component {
     render() {
         const { name, loading, time, success, message, updating } = this.state;
         const { data } = this.props.navigation.state.params;
-        const disabled = data.assignmentType && time == '0' || time == '';
+        let disabled = data.assignmentType && time == '0' || time == '';
+        disabled = !this._validate();
         return (
             <View style={styles.safeView}>
                 <SafeAreaView style={{ backgroundColor: '#2D9CDB' }} />
