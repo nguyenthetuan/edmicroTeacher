@@ -1,4 +1,4 @@
-import { ToastAndroid, Dimensions, Alert, Platform,Clipboard } from 'react-native';
+import { ToastAndroid, Dimensions, Alert, Platform, Clipboard } from 'react-native';
 // import Clipboard from '@react-native-community/clipboard';
 import Config from 'react-native-config';
 import iconMath from '../asserts/icon/icon_toanV3.png';
@@ -303,6 +303,10 @@ const getLabel = (type) => {
       return 'Điểm số';
     case 'FalseAndSkip':
       return 'Số câu sai và bỏ qua';
+    case 'TimePratice':
+      return 'Thời gian luyện tập';
+    case 'TimePratice':
+      return 'Thời gian kiểm tra';
     default:
       return '';
   }
@@ -369,6 +373,10 @@ const getIconModal = (type) => {
       return AppIcon.r_accuracy;
     case 'FalseAndSkip':
       return AppIcon.r_false;
+    case 'TimePratice':
+      return AppIcon.icon_Time_exa;
+    case 'TimePratice':
+      return AppIcon.icon_Time_exa;
     default:
       return AppIcon.Icon_non_see;
   }
