@@ -208,13 +208,13 @@ function ModalDetail(props) {
                         <View style={styles.viewOptionModal}>
                             <TouchableOpacity
                                 onPress={() => props.onRetryPoint(item.studentId)}
-                                style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
+                                style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
                                 <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
                                 <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => props.onRework(item.studentId)}
-                                style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
+                                style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
                                 <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
                                 <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
                             </TouchableOpacity>
@@ -306,7 +306,7 @@ export default function StudentDetail(props) {
                     <Text style={styles.txtNameItem}>{item.nameStudent}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <ProgressBar
-                            progress={progress || 0}
+                            progress={progress || 1}
                             height={4}
                             color='#2D9CDB'
                             widthProps={width - 160}
@@ -319,39 +319,34 @@ export default function StudentDetail(props) {
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
                         </View>
-                        {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
+                        <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
-                            <Text style={styles.txtPoint}>{status.result||point}</Text>
-                        </View> */}
+                            <Text style={styles.txtPoint}>{status.result || point}</Text>
+                        </View>
                     </View>
                     {
                         item.status === 4
                             ?
-                    <View style={styles.viewOption}>
-                        <TouchableOpacity style={styles.btnDetail}
-                            onPress={() => { detailStudent(item) }}>
-                            <Text style={styles.txtDetail}>Chi tiết</Text>
-                            <Ionicons
-                                name='ios-arrow-forward'
-                                color='#DB422D'
-                                size={14}
-                                style={{ marginStart: 5 }}
-                            />
-                        </TouchableOpacity>
-                        {/* <TouchableOpacity
-                                    onPress={() => handleRetryCheckPoint(item.studentId)}
-                                    style={styles.btnChamlai}>
-                                    <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
-                                    <Text style={styles.txtBtn}>Chấm lại</Text>
-                                </TouchableOpacity> */}
-                        <TouchableOpacity
+                            <View style={styles.viewOption}>
+                                {/* <TouchableOpacity
                             onPress={() => handleRework(item.studentId)}
                             style={styles.btnLamlai}>
                             <Image source={require('../../../asserts/icon/ic_lamlai.png')} style={styles.icRemake} />
                             <Text style={styles.txtNew}>Làm lại</Text>
-                        </TouchableOpacity>
-                    </View>
-                    : null
+                        </TouchableOpacity> */}
+                                <TouchableOpacity style={styles.btnDetail}
+                                    onPress={() => { detailStudent(item) }}>
+                                    <Text style={styles.txtDetail}>Chi tiết</Text>
+                                    <Ionicons
+                                        name='ios-arrow-forward'
+                                        color='#DB422D'
+                                        size={14}
+                                        style={{ marginStart: 5 }}
+                                    />
+                                </TouchableOpacity>
+
+                            </View>
+                            : null
                     }
                 </View>
             </View>
@@ -455,11 +450,10 @@ const styles = StyleSheet.create({
     txtTitleItem: {
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(10),
-        color: '#828282',
-        marginLeft: 20
+        color: '#828282'
     },
     btnLamlai: {
-        // marginStart: 23,
+        marginStart: 23,
         flexDirection: 'row',
         paddingHorizontal: 5,
         paddingVertical: 1,
@@ -497,8 +491,8 @@ const styles = StyleSheet.create({
     },
     btnDetail: {
         flexDirection: 'row',
-        flex: 1,
         alignItems: 'center',
+        marginRight: 8
     },
     txtDetail: {
         fontFamily: 'Nunito-Regular',
@@ -535,8 +529,9 @@ const styles = StyleSheet.create({
     viewOption: {
         flexDirection: 'row',
         marginTop: 9,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        // justifyContent: 'space-between'
     },
     modalView: {
         margin: 16,
@@ -583,6 +578,7 @@ const styles = StyleSheet.create({
     },
     viewOptionModal: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: 40,
         marginBottom: 18
     },
