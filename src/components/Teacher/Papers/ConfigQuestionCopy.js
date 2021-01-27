@@ -9,7 +9,8 @@ import {
     Image,
     TouchableWithoutFeedback,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    Keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
@@ -347,6 +348,7 @@ class ConfigQuestion extends Component {
                     this.closePopupCreate();
                     this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
+                    this.setState({ assignmentType: 0 });
                     this.props.navigation.navigate('Assignment', {
                         item: res,
                         payloadAssignment: {
@@ -414,7 +416,7 @@ class ConfigQuestion extends Component {
 
     onValueChangeTypeExam = (va) => {
         console.log("onValueChangeTypeExam: ", va);
-        if (va == 0) {
+        if (va === 0) {
             this.setState({ duration: 0 })
         }
         this.setState({ assignmentType: va })
@@ -725,7 +727,7 @@ class ConfigQuestion extends Component {
                 {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
                     <TouchableWithoutFeedback
                         style={styles.popUpCreate}
-                        onPress={() => { this.textInput.blur() }}
+                        onPress={() => { this.textInput.blur(); Keyboard.dismiss() }}
                     >
                         <View style={[styles.popUpCreate, { borderWidth: 1 }]}>
                             <View style={{ width: '100%', paddingHorizontal: 20, zIndex: 1 }}>
