@@ -279,7 +279,12 @@ class ConfigQuestion extends Component {
 
     filterQuestions(data) {
         data = data.map((item, index) => {
-            return ({ questionId: item.questionId, point: this.state.eachQSPoint[index], index: index, typeAnswer: item.typeAnswer });
+            return ({
+                questionId: item.questionId,
+                point: this.state.eachQSPoint[index],
+                index: index,
+                typeAnswer: item.typeAnswer
+            });
         })
         return data;
     }

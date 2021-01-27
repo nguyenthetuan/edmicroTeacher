@@ -68,7 +68,10 @@ export default class Item extends Component {
                                 justifyContent: 'center',
                                 height: 25,
                             }}>
-                            <Text style={{ transform: [{ rotate: '90deg' }], fontSize: 20, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 10 }}>...</Text>
+                            <Text style={{
+                                transform: [{ rotate: '90deg' }],
+                                fontSize: 20, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 10
+                            }}>...</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -118,7 +121,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column', marginLeft: 30, flex: 1, }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 30, flex: 1, marginRight: 5 }}>
                             <View>
                                 {
                                     item.assignmentType
@@ -170,7 +173,6 @@ export default class Item extends Component {
                                     </Text>
                                 }
                             </View>
-
                         </View>
                     </View>
                 </TouchableOpacity>

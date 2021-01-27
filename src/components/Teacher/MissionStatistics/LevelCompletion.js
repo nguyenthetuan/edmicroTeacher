@@ -4,6 +4,7 @@ import { PieChart } from 'react-native-chart-kit';
 import { Svg, Line, Rect } from 'react-native-svg';
 import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
+import Common from '../../../utils/Common';
 const { width, height } = Dimensions.get('window');
 
 const chartConfig = {
@@ -192,8 +193,8 @@ export default function LevelCompletion(props) {
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp1);
       // console.log("renderChartLevelComplete -> dataChartTemp", dataChartTemp2);
 
-      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length).toFixed(4) * 100/ 100;
-
+      avgPercentComplete = ((totalCompletePractice + totalCompleteTest) / data.length).toFixed(4) * 100 / 2;
+      avgPercentComplete = Common.roundToTwo(avgPercentComplete);
       // let result = _.chain([...dataChartTemp1, ...dataChartTemp2])
       //   // Group the elements of Array based on color property
       //   .groupBy('id')

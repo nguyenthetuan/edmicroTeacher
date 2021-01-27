@@ -27,17 +27,18 @@ const nameToAvatar = (name) => {
 }
 
 const getProcess = (item) => {
-    let totalCount = item.data.listProblem.length + item.data.listTest.length;
+
+    const { listProblem, listTest } = item.data;
+    let totalCount = listProblem.length + listTest.length;
     let countDone = 0;
-    const listProblem = item.data.listProblem;
-    const listTest = item.data.listTest;
     for (let i = 0; i < listProblem.length; i++) {
         if (listProblem[i].isDone) {
             countDone++;
         }
     }
-    for (let j = 0; j < listTest.length; j++) {
-        if (listTest[j].isDone) {
+
+    for (let i = 0; i < listTest.length; i++) {
+        if (listTest[i].isDone) {
             countDone++;
         }
     }

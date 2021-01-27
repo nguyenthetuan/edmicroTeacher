@@ -586,7 +586,9 @@ export default class ModalLevelComplete extends Component {
     );
   }
 }
-
+const convertNumberToTime = (number) => {
+  return Math.floor(number / 60) + 'm ' + Math.floor(number % 60) + 's';
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
