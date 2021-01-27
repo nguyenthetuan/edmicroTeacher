@@ -593,7 +593,6 @@ class Papers extends Component {
                 height: 18,
                 width: 24,
               }}>
-              <EvilIcons name="search" size={20} color="#C4C4C4" />
             </TouchableOpacity>
           </View>
           <View style={styles.styWrapSearch}>
@@ -648,6 +647,8 @@ class Papers extends Component {
       extrapolate: 'clamp',
     });
 
+    console.log("render paper");
+
     return (
       <SafeAreaView style={styles.fill}>
         <Animated.View
@@ -675,8 +676,7 @@ class Papers extends Component {
           renderItem={({ item, index }) => (
             <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
           )}
-          initialNumToRender={12}
-          windowSize={24}
+          initialNumToRender={5}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}

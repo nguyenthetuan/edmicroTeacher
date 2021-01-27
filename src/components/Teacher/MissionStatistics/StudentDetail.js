@@ -27,11 +27,16 @@ const nameToAvatar = (name) => {
 }
 
 const getProcess = (item) => {
-    let totalCount = item.data.listProblem.length;
+    const { listProblem, listTest } = item.data;
+    let totalCount = listProblem.length + listTest.length;
     let countDone = 0;
-    const listProblem = item.data.listProblem;
     for (let i = 0; i < listProblem.length; i++) {
         if (listProblem[i].isDone) {
+            countDone++;
+        }
+    }
+    for (let i = 0; i < listTest.length; i++) {
+        if (listTest[i].isDone) {
             countDone++;
         }
     }
@@ -43,6 +48,13 @@ const getProcessDone = (item) => {
     const listProblem = item.data.listProblem;
     for (let i = 0; i < listProblem.length; i++) {
         if (listProblem[i].isDone) {
+            countDone++;
+        }
+    }
+
+    const listTest = item.data.listTest;
+    for (let i = 0; i < listTest.length; i++) {
+        if (listTest[i].isDone) {
             countDone++;
         }
     }
@@ -317,7 +329,7 @@ export default function StudentDetail(props) {
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1 }}>
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
-                            <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length}</Text>
+                            <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length + item.data.listTest.length}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả nhiệm vụ</Text>

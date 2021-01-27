@@ -33,6 +33,7 @@ import { RFFonsize } from '../../../utils/Fonts';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Dropdown from '../Homework/Dropdown';
 import apiService from '../../../services/apiPracticeHelper';
+import { RotationGestureHandler } from 'react-native-gesture-handler';
 
 
 const { width, height } = Dimensions.get('window');
@@ -118,9 +119,24 @@ class ConfigQuestion extends Component {
 
     onHandleMessage(event) {
         const data = event.nativeEvent.data.split('---');
+
         if (data[0] === 'checked') {
             let listChecked = this.state.listChecked;
             listChecked[data[1]] = !listChecked[data[1]];
+            this.setState({ listChecked: listChecked })
+        }
+        if (data[0] === 'checkAll') {
+            let listChecked = this.state.listChecked;
+            for (let i = 0; i < listChecked.length; i++) {
+                listChecked[i] = (true);
+            }
+            this.setState({ listChecked: listChecked })
+        }
+        if (data[0] === 'unCheckAll') {
+            let listChecked = this.state.listChecked;
+            for (let i = 0; i < listChecked.length; i++) {
+                listChecked[i] = (false);
+            }
             this.setState({ listChecked: listChecked })
         }
         if (data[0] == 'newPoints') {
@@ -158,6 +174,10 @@ class ConfigQuestion extends Component {
         let questionList = data.questions;
         let listChecked = this.state.listChecked;
         let count = listChecked.filter((a) => (a == true)).length;
+        if (count == listChecked.length) {
+            this.refs.toast.show('Bộ đề phải có câu hỏi!');
+            return;
+        }
         if (!count) {
             return;
         }
@@ -173,7 +193,7 @@ class ConfigQuestion extends Component {
         let totalPoint = eachQSPoint.reduce((a, b) => (a + b));
         totalPoint = Math.round(totalPoint * 10000) / 10000;
         data.questions = questionList;
-        this.setState({ data, totalPoint, eachQSPoint }, () => {
+        this.setState({ data, totalPoint, eachQSPoint, toggleCheckBox: false }, () => {
             this.resetListCheckedAndPoint(data.questions);
         });
     }

@@ -70,6 +70,7 @@ export default class ModalOption extends PureComponent {
                                             </View>
                                         </RippleItem>
                                     )}
+
                                     <RippleItem onPress={this.props._handleClickDetail(4)}>
                                         <View style={styles.wrapElementModal}>
                                             <Image
@@ -78,14 +79,16 @@ export default class ModalOption extends PureComponent {
                                             <Text style={styles.txtModalDetail}>Giao bài tập</Text>
                                         </View>
                                     </RippleItem>
-                                    <RippleItem onPress={this.props._handleClickDetail(7)}>
-                                        <View style={styles.wrapElementModal}>
-                                            <Image
-                                                source={require('../../../asserts/icon/icMarkingPoint.png')}
-                                            />
-                                            <Text style={styles.txtModalDetail}>Chấm điểm</Text>
-                                        </View>
-                                    </RippleItem>
+                                    {dataSelected?.countCheckPoint > 0 &&
+                                        <RippleItem onPress={this.props._handleClickDetail(7)}>
+                                            <View style={styles.wrapElementModal}>
+                                                <Image
+                                                    source={require('../../../asserts/icon/icMarkingPoint.png')}
+                                                />
+                                                <Text style={styles.txtModalDetail}>Chấm điểm ({dataSelected.countCheckPoint} bài)</Text>
+                                            </View>
+                                        </RippleItem>
+                                    }
                                 </View>
                             </Animatable.View>
                         </TouchableWithoutFeedback>

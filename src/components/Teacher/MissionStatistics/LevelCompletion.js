@@ -113,6 +113,7 @@ export default function LevelCompletion(props) {
       let dataTemp1 = {};
       let dataTemp2 = {};
       let dataChartTemp2 = [];
+      console.log("🚀 ~ file: LevelCompletion.js ~ line 116 ~ data.map ~ data", data);
       data.map((e, index) => {
         if (e.data.listProblem.length > 0) {
           const { listProblem } = e.data;
@@ -352,7 +353,7 @@ export default function LevelCompletion(props) {
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingHorizontal: 5 }}>
             <View style={[styles.viewTimeAverage]}>
               <View style={[styles.dotTimeAverage, { backgroundColor: '#04C6F1' }]} />
-              <Text style={styles.txtTimeAverage}>Mức độ hoàn thành trung bình {avgPercentComplete}%</Text>
+              <Text style={styles.txtTimeAverage}>Mức độ hoàn thành trung bình {avgPercentComplete.toFixed(2)}%</Text>
             </View>
           </View>
         </View>
