@@ -47,6 +47,7 @@ export default class ItemInfo extends Component {
       <Animated.View style={[styles.rowItem, { transform: [{ scale: this.state.scaleText }] }]}>
         <Animated.Image source={Common.getIconModal(status)} resizeMode={'contain'} />
         <Text style={[styles.textItem, { color: '#000' }]}>{`${Common.getLabel(status)}`}</Text>
+        <View style={styles.stylLine} />
         <Text style={[styles.textNumber, { color: Common.getTextColor(status) || '#000' }]}>{number}</Text>
       </Animated.View>
     );
@@ -60,20 +61,19 @@ ItemInfo.propTypes = {
     'Total', 'True',
     'False', 'Acur', 'Speed',
     'Pause', 'Skip', 'Attempted', 'ResiveLaster',
-    'UnAttempted', 'Time', 'Point', 'FalseAndSkip'
+    'UnAttempted', 'Time', 'Point', 'FalseAndSkip',
+    'TimePratice', 'TimeTest'
   ]).isRequired,
 }
 
 const styles = StyleSheet.create({
   rowItem: {
     flexDirection: 'row',
-    // borderBottomWidth: 1,
     paddingVertical: 7,
     marginTop: 5,
-    // borderColor: '#D3D3D3',
+    width: '100%'
   },
   textItem: {
-    flex: 1,
     color: '#5bc0de',
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
@@ -85,13 +85,25 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: RFFonsize(14),
     alignSelf: 'flex-end'
-  }
+  },
+  stylLine: {
+    height: 1,
+    flex: 1,
+    borderWidth: 1,
+    borderStyle: 'dotted',
+    borderColor: '#69D8FC',
+    width: '50%',
+    alignContent: 'flex-end',
+    alignSelf: 'flex-end',
+    marginBottom: 5,
+    marginHorizontal: 5
+  },
 });
 
 ItemInfo.propTypes = {
   number: PropTypes.string,
   isLoading: PropTypes.bool,
   type: PropTypes.oneOf([
-    'Total', 'True', 'False', 'Acur', 'Speed', 'Pause', 'Skip', 'Attempted', 'FalseAndSkip'
+    'Total', 'True', 'False', 'Acur', 'Speed', 'Pause', 'Skip', 'Attempted', 'FalseAndSkip', 'TimePratice', 'TimeTest'
   ]).isRequired,
 }

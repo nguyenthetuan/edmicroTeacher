@@ -46,8 +46,8 @@ export default class StepOne extends Component {
     this.token = token;
   }
 
-  reset = () => {
-    this.setState({
+  reset = async () => {
+    await this.setState({
       htmlContent: '',
       valueClass: '',
       valueSubject: '',
@@ -123,6 +123,7 @@ export default class StepOne extends Component {
       valueSubject,
       nameMission
     } = this.state;
+    console.log("🚀 ~ file: StepOne.js ~ line 126 ~ StepOne ~ render ~ htmlContent", htmlContent)
     let { listSubject } = this.props.screenProps;
     listSubject = listSubject.map(item => ({
       label: item.name,
@@ -203,12 +204,13 @@ export default class StepOne extends Component {
 
           <Text style={styles.styTxtLabel}>Mô tả</Text>
           <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
-            <HTML
-              html={htmlContent}
-              imagesMaxWidth={Dimensions.get('window').width}
-              baseFontStyle={{ color: '#000' }}
-            />
-            {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
+            {!htmlContent ?
+              <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> :
+              <HTML
+                html={htmlContent}
+                imagesMaxWidth={Dimensions.get('window').width}
+                baseFontStyle={{ color: '#000' }}
+              />}
           </TouchableOpacity>
         </ScrollView>
         <TouchableOpacity

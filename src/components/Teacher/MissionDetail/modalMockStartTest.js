@@ -16,6 +16,7 @@ import dataHelper from '../../../utils/dataHelper';
 import Common from '../../../utils/Common';
 import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
+import ItemInfo from '../../modals/ItemInfo';
 const { width, height } = Dimensions.get('window');
 export default class ModalMockExamStart extends Component {
     constructor(props) {
@@ -85,24 +86,7 @@ export default class ModalMockExamStart extends Component {
                                     {!_.isEmpty(data) && !isLoading ? (
                                         <>
                                             <Text style={styles.name}>{data.title}</Text>
-                                            <View style={styles.wrapTime}>
-                                                <View
-                                                    style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image
-                                                        source={require('../../../asserts/appIcon/iconSum.png')}
-                                                    />
-                                                    <Text
-                                                        style={{
-                                                            fontFamily: 'Nunito-Regular',
-                                                            fontSize: RFFonsize(12),
-                                                            marginLeft: 9,
-                                                        }}>
-                                                        Tổng số câu
-                                                     </Text>
-                                                </View>
-                                                <View style={styles.stylLine} />
-                                                <Text style={styles.sum}>{data.countQuestion}</Text>
-                                            </View>
+                                            <ItemInfo number={data.countQuestion} type={'Total'} />
                                             {data.duration ? (
                                                 <View style={styles.wrapTime}>
                                                     <View
