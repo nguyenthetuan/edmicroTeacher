@@ -179,7 +179,6 @@ class ItemClass extends Component {
                         <ModalSelectStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
-                            // style={{ width: width - 32 - 54 - 90, marginTop: 10, }}
                             style={{ width: width - 32, marginTop: 8, height: 40, }}
                             dropdownStyle={{ width: width - 32 }}
                             options={this.state.students || item.students}
@@ -282,7 +281,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginRight: 10,
         marginLeft: 10,
-        width: width * 0.25
     },
     checkAllow: {
         width: 14,
@@ -328,7 +326,7 @@ const styles = StyleSheet.create({
     viewDate1: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginRight: 5,
+        marginRight: 10,
     },
     btnDate: {
         height: 30,
@@ -361,7 +359,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     dropZuCha: {
-        width: width - 32 - 54 - 105,
         marginTop: 8,
         height: 30,
         borderRadius: 5,
