@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
-    // width: "98%",
+    width: "65%",
     flexDirection: "row",
     justifyContent: 'space-between',
     maxWidth: '65%'
@@ -183,7 +183,8 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(15),
     alignSelf: "center",
-    color: "#FFF"
+    color: "#FFF",
+    marginLeft: 10
   },
   imageSize: {
     // width: 20,

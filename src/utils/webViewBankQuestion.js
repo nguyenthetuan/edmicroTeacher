@@ -3,6 +3,7 @@ import {
 } from './WebUtils';
 import WebColor from './WebColorConfig';
 import _ from 'lodash';
+import { Platform } from 'react-native';
 const { bgColorActive, bgOptionTrue, bgOptionFalse, bgOptionActive,
   bgViewTrue, bgViewFalse, textReviewColor, borderButton,
   bgButtonColor, textVideoColor, borderColor } = WebColor;
@@ -37,8 +38,9 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
     <link rel="stylesheet" href="font47/css/font-awesome.min.css">`;
   html += getMathJaxScript(subjectId);
   html += `
-    <script>
+    <script type="text/javascript">
       var arrData = [];
+
       function myReviewActionresult(questionId, stepId){
         window.ReactNativeWebView.postMessage("reviewResult---"+questionId+"---"+stepId);
       }
@@ -62,13 +64,31 @@ const renderHtmlQuestionDetail = (data, subjectId, listQuestionAdded) => {
         document.getElementById(numberQuestion + 'add').style.display = 'block';
           window.ReactNativeWebView.postMessage("deleteQuestion---"+numberQuestion);
         }
-      window.addEventListener('message',(e)=>{
-        if(e.data == 'onTop'){
-          document.body.scrollTop = 0; // For Safari
-          document.documentElement.scrollTop = 0;     
-        }
-      })
-    </script>
+    </script>`;
+  if (Platform.OS == 'ios') {
+    html += `
+      <script type="text/javascript">
+          window.addEventListener('message',(e)=>{
+            if(e.data == 'onTop'){
+              document.body.scrollTop = 0; // For Safari
+              document.documentElement.scrollTop = 0;     
+            }
+          });
+        </script>
+        `;
+  } else {
+    html += `
+        <script type="text/javascript">
+          document.addEventListener('message',(e)=>{
+            if(e.data == 'onTop'){
+              document.body.scrollTop = 0; // For Safari
+              document.documentElement.scrollTop = 0;     
+            }
+          });
+        </script>
+        `;
+  }
+  html += `
   </head>
   <body style="margin:0;padding:15px 0;font-family: Arial, sans-serif !important;font-size:14px !important;">`;
 

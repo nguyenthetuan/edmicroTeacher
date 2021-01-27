@@ -82,6 +82,7 @@ class QuestionLibrary extends Component {
       urlMedia: '',
       idMatarial: ''
     };
+    this.webComponent = null;
   }
 
   displayWarning(b) {
@@ -145,7 +146,7 @@ class QuestionLibrary extends Component {
   }
   _onTop = () => {
     // this.webview.postMessage('onTop');
-    this.refs.WebViewComponent._onTop();
+    this.webComponent._onTop();
   };
 
   async componentDidMount() {
@@ -528,7 +529,7 @@ class QuestionLibrary extends Component {
           <View style={{ flex: 1, backgroundColor: '#FFF' }}>
             {!_.isEmpty(this.state.questions) ? (
               <WebViewComponent
-                ref={'WebViewComponent'}
+                ref={(webComponent) => this.webComponent = webComponent}
                 onHandleMessage={this.onHandleMessage}
                 _closeLearnPlaceholder={this._closeLearnPlaceholder}
                 questions={this.state.questions}
