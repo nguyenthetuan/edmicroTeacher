@@ -46,7 +46,7 @@ export default class ItemMission extends Component {
 
   render() {
     const { data } = this.props;
-    const timeCreateAt = moment(data.createAt * 1000).format('DD/MM/YY hh:mm');
+    const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, HH:MM')
     return (
       <TouchableOpacity
         style={[styles.contain, {
@@ -146,9 +146,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
-    // width: "98%",
+    width: "65%",
     flexDirection: "row",
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    maxWidth: '65%'
   },
   styFlexDirRow: {
     flexDirection: 'row',
@@ -179,10 +180,11 @@ const styles = StyleSheet.create({
   },
   txtTime: {
     fontFamily: "Nunito-Regular",
-    fontSize: RFFonsize(11),
+    fontSize: RFFonsize(12),
     lineHeight: RFFonsize(15),
     alignSelf: "center",
-    color: "#FFF"
+    color: "#FFF",
+    marginLeft: 10
   },
   imageSize: {
     // width: 20,

@@ -70,11 +70,13 @@ const renderHtmlListQuestionCopy = (data, points, renderCheckbox) => {
                   for(let i =0; i< checkboxs.length; i++) {
                     checkboxs[i].checked = true;
                   }
+                  window.ReactNativeWebView.postMessage("checkAll---");
                 } 
                 if(e.data == 'untickAll'){
                   for(let i =0; i< checkboxs.length; i++) {
                     checkboxs[i].checked = false;
                   }
+                  window.ReactNativeWebView.postMessage("unCheckAll---");
                 }
                 if(e.data == 'blurInput') {
                     blurFocus();
@@ -136,7 +138,7 @@ const renderListquestion = (data, points, renderCheckbox) => {
                         <div style="margin-bottom: -10px;" id="abcd">${options[j].content}</div>
                 </div>`
         }
-        html+='</div>'
+        html += '</div>'
         html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row; padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">
             <p style="font-family: Nunito-regular;font-size: 13px;color: #FFF;">ID: ${item.questionNumber}</p>
             <div style="display: flex; flex-direction: row;">

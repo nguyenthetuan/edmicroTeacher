@@ -119,6 +119,7 @@ class ItemClass extends Component {
 
     goToMissionStatisticsScreen = () => {
         const { item } = this.props;
+        console.log(item);
         this.props.navigation.navigate('MissionStatisticsScreen', { _id: item.assignId });
     }
 
@@ -155,7 +156,8 @@ class ItemClass extends Component {
                             onPress={this.showDatePicker}
                             style={styles.btnDate}>
                             <Text numberOfLines={1} style={styles.txtContentItem}>
-                                {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
+                                {moment(timeEnd).format('DD-MM-YYYY, HH:MM')}
+                            </Text>
                         </TouchableOpacity>
                         {/* <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
@@ -169,7 +171,7 @@ class ItemClass extends Component {
                         <TouchableOpacity onPress={() => { this.handlePickStudent() }}
                             style={styles.dropZuCha}>
                             <View style={styles.borDropRight}>
-                                <Icon name={this.showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+                                <Image source={require('../../../asserts/icon/icon_down.png')} />
                             </View>
                             <Text style={{ color: '#2D9CDB', left: 15 }}>{this.state.buttonText || item.students.length + ' học sinh'}</Text>
                         </TouchableOpacity>
@@ -177,7 +179,6 @@ class ItemClass extends Component {
                         <ModalSelectStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
-                            // style={{ width: width - 32 - 54 - 90, marginTop: 10, }}
                             style={{ width: width - 32, marginTop: 8, height: 40, }}
                             dropdownStyle={{ width: width - 32 }}
                             options={this.state.students || item.students}
@@ -191,14 +192,14 @@ class ItemClass extends Component {
                                 onPress={this.goToMissionStatisticsScreen}
                                 style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
                                 <Text style={styles.txtAssignment}>Xem tiến độ</Text>
-                                <Icon name={'check'} color={'#fff'} size={20} />
+                                {/* <Icon name={'check'} color={'#fff'} size={20} /> */}
                             </TouchableOpacity>
                             :
                             <TouchableOpacity
                                 onPress={this.onAssignment}
                                 style={styles.btnAssignment}>
                                 <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
-                                <Icon name={'check'} color={'#fff'} size={12} style={styles.widthCheck} />
+                                {/* <Icon name={'check'} color={'#fff'} size={12} style={styles.widthCheck} /> */}
                             </TouchableOpacity>
                         }
                     </View>
@@ -261,7 +262,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(12),
         color: '#828282',
-        marginLeft: 5
+        marginLeft: 5,
+        alignSelf: "center",
         // width: 80
     },
     btnAssignment: {
@@ -270,7 +272,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#56BB73',
         borderRadius: 4,
         paddingVertical: 8,
-        paddingHorizontal: 20,
+        paddingHorizontal: 35,
         flexDirection: 'row',
     },
     txtAssignment: {
@@ -319,15 +321,15 @@ const styles = StyleSheet.create({
         color: '#CF616C'
     },
     viewDate: {
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     viewDate1: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginRight: 5,
+        marginRight: 10,
     },
     btnDate: {
-        height: 25,
+        height: 30,
         flex: 1,
         backgroundColor: '#F2F2F2',
         borderRadius: 4,
@@ -337,6 +339,7 @@ const styles = StyleSheet.create({
     iconTxt: {
         flexDirection: 'row',
         justifyContent: "space-between",
+        marginTop: 5
     },
     iconTxt1: {
         flexDirection: 'row',
@@ -356,19 +359,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     dropZuCha: {
-        width: width - 32 - 54 - 110,
         marginTop: 8,
-        height: 25,
-        // borderWidth: 0.5,
+        height: 30,
         borderRadius: 5,
-        backgroundColor: 'rgba(86, 204, 242, 0.3)',
+        backgroundColor: '#f2f2f2',
         borderColor: '#56CCF2',
         justifyContent: 'center'
     },
     borDropRight: {
         width: 30,
         height: 25,
-        backgroundColor: '#56CCF2',
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',

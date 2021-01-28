@@ -32,7 +32,7 @@ const TabTop = createMaterialTopTabNavigator({
         },
         tabStyle: {
             width: 120,
-            height: 25,
+            height: 30,
             justifyContent: 'flex-start',
             padding: 0,
         },

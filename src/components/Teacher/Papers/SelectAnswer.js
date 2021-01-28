@@ -88,6 +88,7 @@ export default class SelectAnswer extends Component {
     questionsTL.map(e => {
       totalPointTL += e.point;
     });
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 89 ~ SelectAnswer ~ componentDidMount ~ questionsTL", questionsTL);
 
     this.setState({
       totalPointTN,
@@ -225,6 +226,7 @@ export default class SelectAnswer extends Component {
     const { indexSelectingTL } = this.props;
 
     const questionsTmpTL = questionsTL;
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 228 ~ SelectAnswer ~ questionsTmpTL", questionsTmpTL)
     questionsTmpTL[indexSelectingTL].textPoint = point;
     this.setState({
       questionsTL: questionsTmpTL
@@ -257,6 +259,8 @@ export default class SelectAnswer extends Component {
     const { questionsTL } = this.state;
     const { indexSelectingTL } = this.props;
     const questionsTmpTL = questionsTL;
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 261 ~ SelectAnswer ~ questionsTmpTL", questionsTmpTL)
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 263 ~ SelectAnswer ~ indexSelectingTL", indexSelectingTL)
     let textPoint = questionsTmpTL[indexSelectingTL].textPoint;
     let pointTmp = parseFloat(textPoint);
     if (!Number.isNaN(pointTmp)) {
@@ -325,12 +329,13 @@ export default class SelectAnswer extends Component {
 
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 332 ~ SelectAnswer ~ render ~ typeQuestion", typeQuestion)
     const { questionsTN, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPointTN, totalPointTL } = this.state;
     console.log("🚀 ~ file: SelectAnswer.js ~ line 329 ~ SelectAnswer ~ render ~ questionsTN", questionsTN)
     const { indexSelectingTN, indexSelectingTL } = this.props;
     let optionIdAnswer = -1;
     const indexOfAnswer = _.indexOf(questionsTN.map(e => e.index), this.props.indexSelectingTN);
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 334 ~ SelectAnswer ~ render ~ this.props.indexSelectingTN", this.props.indexSelectingTN)
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 334 ~ SelectAnswer ~ render ~ this.props.indexSelectingTL", this.props.indexSelectingTL)
     if (questionsTN.length <= 0 || !isVisible) {
       return null;
     } else {
@@ -452,7 +457,7 @@ export default class SelectAnswer extends Component {
                 const name = (item.index + 1);
                 return (
                   <TouchableOpacity
-                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questionsTN[index].textPoint) }}
+                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questionsTL[index].textPoint) }}
                     style={{
                       width: 45,
                       height: 45,

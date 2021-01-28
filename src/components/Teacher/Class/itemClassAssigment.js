@@ -143,14 +143,6 @@ export default class ItemClassAssigment extends Component {
                       </Text>
 
                 </RippleButton>
-                {/* <RippleButton
-                  //  onPress={() => this.props.navigation.navigate('MockExamDrawer', { assignId: item.assignId, classId: item.classId,assignmentId:assignmentId })}
-                  onPress={() => this.props.activeModal({ assignId: item.assignId, classId: item.classId, assignmentId: assignmentId })}
-                >
-                  <View style={styles.buttomTry}>
-                    <Text style={styles.txtbuttom}>Làm Thử</Text>
-                  </View>
-                </RippleButton> */}
               </View>
             </View>
           </View>

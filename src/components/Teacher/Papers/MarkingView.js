@@ -357,6 +357,7 @@ class MarkingView extends Component {
       };
       const { token } = await apiHelper.getToken();
       const response = await apiPaper.submitReview({ token, formData });
+      console.log("🚀 ~ file: MarkingView.js ~ line 360 ~ MarkingView ~ onPressSubmitButton ~ response", response)
       if (response && response.message === null) {
         if (!_.isEmpty(assignmentDetailCheck?.data?.data)) {
           assignmentDetailCheck.data.data = assignmentDetailCheck.data.data.map(
@@ -376,12 +377,12 @@ class MarkingView extends Component {
               return item;
             },
           );
-          this.setState({ assignmentDetailCheck });
+          this.setState({ assignmentDetailCheck, [`marked${this.state.currentIndex}`]: true });
         }
         AlertNoti(messageSuccess);
         return;
       }
-      // AlertNoti(response.message);
+      AlertNoti(response.message);
     } catch (error) { }
   }
 
@@ -427,6 +428,13 @@ class MarkingView extends Component {
 
   onButtonQuestionPress = index => {
     const { assignmentDetailCheck } = this.state;
+    console.log('onButtonQuestionPress: ', this.state[`marked${index}`]);
+    if (!this.state[`marked${index}`]) {
+      this.setState({
+        [`valueScore${index}`]: 0,
+        [`valueCommnent${index}`]: ''
+      })
+    }
     if (!this.state.isHideCommentInput) {
       this.onpressComment();
     }
@@ -513,6 +521,7 @@ class MarkingView extends Component {
                   fontFamily: 'Nunito-Bold',
                   color: '#FFFEFE',
                   marginLeft: 20,
+                  marginBottom: 10
                 }}>
                 Lớp
               </Text>
@@ -533,6 +542,7 @@ class MarkingView extends Component {
                   fontFamily: 'Nunito-Bold',
                   color: '#FFFEFE',
                   marginLeft: 20,
+                  marginBottom: 10
                 }}>
                 Học Sinh
               </Text>
@@ -711,9 +721,9 @@ class MarkingView extends Component {
     let typeAnswer =
       item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
     let makedPoint = false;
-    // if (this.state[`valueScore${index}`] || this.state[`valueCommnent${index}`]) {
-    //   makedPoint = true;
-    // }
+    if (this.state[`marked${index}`]) {
+      makedPoint = true;
+    }
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];

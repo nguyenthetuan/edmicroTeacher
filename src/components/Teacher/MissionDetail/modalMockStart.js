@@ -16,6 +16,7 @@ import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
+import ItemInfo from '../../modals/ItemInfo';
 export default class ModalMockExamStart extends Component {
   constructor(props) {
     super(props);
@@ -81,7 +82,7 @@ export default class ModalMockExamStart extends Component {
                 {!_.isEmpty(data) && !isLoading ? (
                   <>
                     <Text style={styles.name}>{data.title}</Text>
-                    <View style={styles.wrapTime}>
+                    {/* <View style={styles.wrapTime}>
                       <View
                         style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image
@@ -98,6 +99,15 @@ export default class ModalMockExamStart extends Component {
                       </View>
                       <View style={styles.stylLine} />
                       <Text style={styles.sum}>{data.totalQuestion}</Text>
+                    </View> */}
+                    <View>
+                      <ItemInfo number={data.totalQuestion} type={'Total'} />
+                      <ItemInfo number={data.correctAnswer} type={'True'} />
+                      <ItemInfo number={data.inCorrectAnswer} type={'False'} />
+                      <ItemInfo number={data.totalSkip} type={'Skip'} />
+                      <ItemInfo number={data.speed} type={'Speed'} />
+                      <ItemInfo number={data.totalDurationDoing} type={'TimePratice'} />
+                      <ItemInfo number={data.accuracy} type={'Acur'} />
                     </View>
                     <View style={styles.wrapTime}>
                       <TouchableOpacity

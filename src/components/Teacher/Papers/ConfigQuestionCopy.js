@@ -9,7 +9,8 @@ import {
     Image,
     TouchableWithoutFeedback,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    Keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
@@ -33,6 +34,7 @@ import { RFFonsize } from '../../../utils/Fonts';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Dropdown from '../Homework/Dropdown';
 import apiService from '../../../services/apiPracticeHelper';
+import { RotationGestureHandler } from 'react-native-gesture-handler';
 
 
 const { width, height } = Dimensions.get('window');
@@ -118,9 +120,24 @@ class ConfigQuestion extends Component {
 
     onHandleMessage(event) {
         const data = event.nativeEvent.data.split('---');
+
         if (data[0] === 'checked') {
             let listChecked = this.state.listChecked;
             listChecked[data[1]] = !listChecked[data[1]];
+            this.setState({ listChecked: listChecked })
+        }
+        if (data[0] === 'checkAll') {
+            let listChecked = this.state.listChecked;
+            for (let i = 0; i < listChecked.length; i++) {
+                listChecked[i] = (true);
+            }
+            this.setState({ listChecked: listChecked })
+        }
+        if (data[0] === 'unCheckAll') {
+            let listChecked = this.state.listChecked;
+            for (let i = 0; i < listChecked.length; i++) {
+                listChecked[i] = (false);
+            }
             this.setState({ listChecked: listChecked })
         }
         if (data[0] == 'newPoints') {
@@ -158,6 +175,10 @@ class ConfigQuestion extends Component {
         let questionList = data.questions;
         let listChecked = this.state.listChecked;
         let count = listChecked.filter((a) => (a == true)).length;
+        if (count == listChecked.length) {
+            this.refs.toast.show('Bộ đề phải có câu hỏi!');
+            return;
+        }
         if (!count) {
             return;
         }
@@ -173,7 +194,7 @@ class ConfigQuestion extends Component {
         let totalPoint = eachQSPoint.reduce((a, b) => (a + b));
         totalPoint = Math.round(totalPoint * 10000) / 10000;
         data.questions = questionList;
-        this.setState({ data, totalPoint, eachQSPoint }, () => {
+        this.setState({ data, totalPoint, eachQSPoint, toggleCheckBox: false }, () => {
             this.resetListCheckedAndPoint(data.questions);
         });
     }
@@ -229,7 +250,6 @@ class ConfigQuestion extends Component {
         var errors = [];
         var result = true;
         _.forEach(['gradeCode', 'subjectCode', 'name', 'assignmentType'], item => {
-            console.log(item, ' :', this.state[item]);
             if (_.isEmpty(this.state[item])) {
                 switch (item) {
                     case 'gradeCode': {
@@ -258,7 +278,12 @@ class ConfigQuestion extends Component {
 
     filterQuestions(data) {
         data = data.map((item, index) => {
-            return ({ questionId: item.questionId, point: this.state.eachQSPoint[index], index: index, typeAnswer: item.typeAnswer });
+            return ({
+                questionId: item.questionId,
+                point: this.state.eachQSPoint[index],
+                index: index,
+                typeAnswer: item.typeAnswer
+            });
         })
         return data;
     }
@@ -318,10 +343,10 @@ class ConfigQuestion extends Component {
                         token,
                         id: response.id,
                     });
-                    console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 303 ~ ConfigQuestion ~ config= ~ res", res)
                     this.closePopupCreate();
                     this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
+                    this.setState({ assignmentType: 0 });
                     this.props.navigation.navigate('Assignment', {
                         item: res,
                         payloadAssignment: {
@@ -334,7 +359,6 @@ class ConfigQuestion extends Component {
 
             } catch (error) {
                 this.setState({ loading: false })
-                console.log('error', error);
             }
         } else {
             alert('Vui lòng điền đầy đủ thông tin');
@@ -388,8 +412,7 @@ class ConfigQuestion extends Component {
     }
 
     onValueChangeTypeExam = (va) => {
-        console.log("onValueChangeTypeExam: ", va);
-        if (va == 0) {
+        if (va === 0) {
             this.setState({ duration: 0 })
         }
         this.setState({ assignmentType: va })
@@ -507,7 +530,6 @@ class ConfigQuestion extends Component {
 
     activeGrade = item => {
         const { gradeCode, listGrades } = this.state;
-        console.log("item.gradeId: ", item);
         let gradeCodeTmp = gradeCode;
         let listGradeTmp = listGrades.map(e => {
             return { ...e, isActive: false };
@@ -700,7 +722,7 @@ class ConfigQuestion extends Component {
                 {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
                     <TouchableWithoutFeedback
                         style={styles.popUpCreate}
-                        onPress={() => { this.textInput.blur() }}
+                        onPress={() => { this.textInput.blur(); Keyboard.dismiss() }}
                     >
                         <View style={[styles.popUpCreate, { borderWidth: 1 }]}>
                             <View style={{ width: '100%', paddingHorizontal: 20, zIndex: 1 }}>

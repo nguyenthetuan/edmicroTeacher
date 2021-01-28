@@ -27,11 +27,18 @@ const nameToAvatar = (name) => {
 }
 
 const getProcess = (item) => {
-    let totalCount = item.data.listProblem.length;
+
+    const { listProblem, listTest } = item.data;
+    let totalCount = listProblem.length + listTest.length;
     let countDone = 0;
-    const listProblem = item.data.listProblem;
     for (let i = 0; i < listProblem.length; i++) {
         if (listProblem[i].isDone) {
+            countDone++;
+        }
+    }
+
+    for (let i = 0; i < listTest.length; i++) {
+        if (listTest[i].isDone) {
             countDone++;
         }
     }
@@ -41,8 +48,16 @@ const getProcess = (item) => {
 const getProcessDone = (item) => {
     let countDone = 0;
     const listProblem = item.data.listProblem;
+    const listTest = item.data.listTest;
+
     for (let i = 0; i < listProblem.length; i++) {
         if (listProblem[i].isDone) {
+            countDone++;
+        }
+    }
+
+    for (let j = 0; j < listTest.length; j++) {
+        if (listTest[j].isDone) {
             countDone++;
         }
     }
@@ -54,33 +69,33 @@ const getStatus = (item, point) => {
     switch (item.status) {
         case 0:
             return {
-                title: 'Chưa làm',
+                title: '',
                 color: '#828282',
-                result: 'Chưa có'
+                result: ''
             };
         case 1:
             return {
-                title: 'Chưa làm',
+                title: '',
                 color: '#828282',
-                result: 'Chưa có'
+                result: ''
             };
         case 2:
             return {
                 title: 'Đang làm',
                 color: '#828282',
-                result: 'Chưa có'
+                result: ''
             };
         case 3:
             return {
                 title: 'Đang gửi bài',
                 color: '#828282',
-                result: 'Chưa có'
+                result: ''
             };
         case 4:
             let result = (item.point / item.totalPoint) * 10;
             result = result % 1 === 0 ? result : result.toFixed(2);
             return {
-                title: 'Đã hoàn thành',
+                title: 'Hoàn thành',
                 color: '#55B619',
                 // result: `${point} điểm`
             };
@@ -88,14 +103,14 @@ const getStatus = (item, point) => {
             return {
                 title: 'Chờ chấm điểm tự luận',
                 color: '#828282',
-                result: 'Chưa có'
+                result: ''
             };
         default:
 
             return {
-                title: 'Chưa làm',
+                title: '',
                 color: '#828282',
-                result: 'Chưa có'
+                result: ''
             };
     }
 }
@@ -317,12 +332,12 @@ export default function StudentDetail(props) {
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1 }}>
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
-                            <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length}</Text>
+                            <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length + item.data.listTest.length}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', marginEnd: 7 }}>
+                        {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả nhiệm vụ</Text>
                             <Text style={styles.txtPoint}>{status.result || point}</Text>
-                        </View>
+                        </View> */}
                     </View>
                     {
                         item.status === 4

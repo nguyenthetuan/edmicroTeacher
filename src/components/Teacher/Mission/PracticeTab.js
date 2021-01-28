@@ -105,6 +105,8 @@ export default class PracticeTab extends Component {
         });
       }).then(res => {
         this.setState({ activeSections, isLoading: false });
+      }).catch(err => {
+        this.setState({ isLoading: false });
       });
     } else {
       this.setState({ activeSections });
@@ -113,7 +115,6 @@ export default class PracticeTab extends Component {
 
   render() {
     const { listCateHirachy } = this.props.screenProps;
-    console.log("🚀 ~ file: PracticeTab.js ~ line 115 ~ PracticeTab ~ render ~ listCateHirachy", listCateHirachy)
     const { isLoading } = this.state;
     return (
       <ScrollView style={styles.contain} showsVerticalScrollIndicator={false}>

@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import {
     View,
-    Image,
     StyleSheet,
     FlatList,
     TextInput,
-    Animated,
     Keyboard,
-    Modal,
     Text,
     TouchableWithoutFeedback,
     Dimensions,
     ScrollView,
-    ActivityIndicator,
-    SafeAreaView
+    SafeAreaView,
+    KeyboardAvoidingView
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
-import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { connect } from 'react-redux';
@@ -222,31 +218,26 @@ class EditConfig extends Component {
         );
     };
 
+
     _validate = () => {
         const { name, time, gradeCode, subjectCode } = this.state;
         const { data } = this.props.navigation.state.params;
 
         if (name.trim() === '') {
-            this.refs.toast.show(
-                'Tên bài tập không được để trống!',
-                DURATION.LENGTH_LONG,
-            );
-            return;
+
+            return false;
         }
 
         if (!gradeCode.length) {
-            this.refs.toast.show('Vui lòng chọn khối lớp!', DURATION.LENGTH_LONG);
-            return;
+            return false;
         }
 
         if (!subjectCode.length) {
-            this.refs.toast.show('Vui lòng chọn môn học!', DURATION.LENGTH_LONG);
-            return;
+            return false;
         }
 
         if (data.assignmentType === 1 && time.trim() === '') {
-            this.refs.toast.show('Vui lòng nhập thời gian!', DURATION.LENGTH_LONG);
-            return;
+            return false;
         }
 
         return true;
@@ -270,7 +261,6 @@ class EditConfig extends Component {
             if (data.assignmentType) {
                 body['duration'] = parseInt(time) * 60;
             }
-            console.log("🚀 ~ file: EditConfig.js ~ line 269 ~ EditConfig ~ onUpdate= ~ body", body)
 
             this.setState({
                 updating: true,
@@ -308,101 +298,79 @@ class EditConfig extends Component {
     render() {
         const { name, loading, time, success, message, updating } = this.state;
         const { data } = this.props.navigation.state.params;
+        let disabled = data.assignmentType && time == '0' || time == '';
+        disabled = !this._validate();
         return (
-            <SafeAreaView style={styles.safeView}>
+            <View style={styles.safeView}>
+                <SafeAreaView style={{ backgroundColor: '#2D9CDB' }} />
                 <HeaderNavigation
                     title={'Cấu hình bộ đề'}
                     navigation={this.props.navigation}
                     color={"#fff"}
+                    backgroundColor={'#2D9CDB'}
                 />
                 <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-                    <ScrollView
-                        style={{ backgroundColor: '#fff' }}
+                    <KeyboardAvoidingView
+                        behavior={'padding'}
+                        style={{ flex: 1 }}
                     >
-                        <View style={styles.wrapContent}>
-                            <View>
-                                <Text style={styles.styTxtLabel}>
-                                    Tên bài tập
-                          </Text>
-                                <View
-                                    style={{
-                                        borderRadius: 4,
-                                        marginTop: 8,
-                                        justifyContent: 'center',
-                                        height: 40,
-                                        borderWidth: .5,
-                                        borderColor: '#56CCF2',
-                                        marginHorizontal: 15
-                                    }}>
-                                    <TextInput
-                                        numberOfLines={1}
-                                        value={name}
-                                        style={styles.txtTexinput}
-                                        onChangeText={text =>
-                                            this.setText({ key: 'name', text })
-                                        }
-                                    />
-                                </View>
-                                <View style={{ marginTop: 8 }}>
-                                    <Text style={styles.styTxtLabel}>
-                                        Khối lớp
-                        </Text>
-                                    {this._renderGrade()}
-                                </View>
-                                <View style={{ marginTop: 8 }}>
-                                    <Text style={styles.styTxtLabel}>
-                                        Môn học
-                        </Text>
-                                    {this._renderSubject()}
-                                </View>
-                                {data && data.assignmentType ? (
-                                    <View style={{ marginTop: 8 }}>
-                                        <Text style={styles.styTxtLabel}>
-                                            Thời gian
-                                </Text>
-                                        <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
-                                            <View
-                                                style={{
-                                                    borderRadius: 4,
-                                                    marginTop: 8,
-                                                    width: 60,
-                                                    height: 30,
-                                                    justifyContent: 'center',
-                                                    borderColor: '#56CCF2',
-                                                    borderWidth: 0.5
-                                                }}>
-                                                <TextInput
-                                                    value={time}
-                                                    style={styles.txtTexinput}
-                                                    onChangeText={text =>
-                                                        this.setText({ key: 'time', text })
-                                                    }
-                                                />
-                                            </View>
-                                            <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
-                                        </View>
-                                    </View>
-                                ) : null}
-                                <View style={styles.footer}>
-                                    <RippleButton
-                                        onPress={() => this.props.navigation.goBack()}>
-                                        <View style={styles.buttomCancel}>
-                                            <Text style={styles.txtButtom}>Huỷ</Text>
-                                        </View>
-                                    </RippleButton>
-                                    <View style={{ marginStart: 40 }}>
-                                        <RippleButton onPress={this.onUpdate}>
-                                            <View style={styles.buttomSave}>
-                                                <Text style={styles.txtButtom}>Lưu</Text>
-                                            </View>
-                                        </RippleButton>
-                                    </View>
-                                </View>
+                        <ScrollView
+                            contentContainerStyle={{ paddingVertical: 15 }}
+                        >
+                            <Text style={styles.styTxtLabel}>Tên bài tập</Text>
+                            <View style={styles.styWrapInutName}>
+                                <TextInput
+                                    numberOfLines={1}
+                                    value={name}
+                                    style={styles.txtTexinput}
+                                    onChangeText={text =>
+                                        this.setText({ key: 'name', text })
+                                    }
+                                />
                             </View>
-                        </View>
-                    </ScrollView>
+                            <View style={{ marginTop: 8 }}>
+                                <Text style={styles.styTxtLabel}>Khối lớp</Text>
+                                {this._renderGrade()}
+                            </View>
+                            <View style={{ marginTop: 8 }}>
+                                <Text style={styles.styTxtLabel}>Môn học</Text>
+                                {this._renderSubject()}
+                            </View>
+                            {data && data.assignmentType ? (
+                                <View style={{ marginTop: 8 }}>
+                                    <Text style={styles.styTxtLabel}>Thời gian</Text>
+                                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
+                                        <View style={styles.styWrapInutTime}>
+                                            <TextInput
+                                                value={time}
+                                                style={styles.txtTexinput}
+                                                onChangeText={text => this.setText({ key: 'time', text: text.trim() })}
+                                                keyboardType={'number-pad'}
+                                            />
+                                        </View>
+                                        <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
+                                    </View>
+                                </View>
+                            ) : null}
+                        </ScrollView>
+                    </KeyboardAvoidingView>
                 </TouchableWithoutFeedback>
-            </SafeAreaView>
+                <View style={styles.footer}>
+                    <RippleButton
+                        onPress={() => this.props.navigation.goBack()}>
+                        <View style={styles.buttomCancel}>
+                            <Text style={styles.txtButtom}>Huỷ</Text>
+                        </View>
+                    </RippleButton>
+                    <View style={{ marginStart: 40 }}>
+                        <RippleButton onPress={this.onUpdate} disabled={disabled}>
+                            <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', }]}>
+                                <Text style={styles.txtButtom}>Lưu</Text>
+                            </View>
+                        </RippleButton>
+                    </View>
+                </View>
+            </View>
         )
     }
 }
@@ -426,15 +394,11 @@ export default connect(
 const styles = StyleSheet.create({
     safeView: {
         flex: 1,
-        backgroundColor: '#2D9CDB',
-        marginBottom: -50
+        backgroundColor: '#FFF',
     },
     wrapContent: {
         flex: 1,
-        backgroundColor: '#fff',
-        paddingTop: 15,
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4
+        paddingVertical: 15,
     },
     bodyModal: {
         justifyContent: 'center',
@@ -461,9 +425,8 @@ const styles = StyleSheet.create({
     },
     footer: {
         flexDirection: 'row',
-        marginTop: 16,
         justifyContent: 'space-evenly',
-        marginTop: 50
+        marginBottom: 40
     },
     buttomCancel: {
         backgroundColor: '#FF6213',
@@ -480,7 +443,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
     },
     buttomSave: {
-        backgroundColor: '#56CCF2',
         justifyContent: 'center',
         alignItems: 'center',
         width: 120,
@@ -556,5 +518,23 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Bold',
         left: 15
+    },
+    styWrapInutName: {
+        borderRadius: 4,
+        marginTop: 8,
+        justifyContent: 'center',
+        height: 40,
+        borderWidth: .5,
+        borderColor: '#56CCF2',
+        marginHorizontal: 15
+    },
+    styWrapInutTime: {
+        borderRadius: 4,
+        marginTop: 8,
+        width: 60,
+        height: 30,
+        justifyContent: 'center',
+        borderColor: '#56CCF2',
+        borderWidth: 0.5
     }
 })
