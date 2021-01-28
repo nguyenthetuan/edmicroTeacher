@@ -359,7 +359,11 @@ export default class SelectAnswer extends Component {
                 this.props.assignmentType && { marginBottom: 80 },
               ]}
               totalQuestionTN={
-                this.props.totalQuestionTN
+                typeQuestion == 0
+                  ?
+                  this.props.totalQuestionTN
+                  :
+                  this.props.totalQuestionTL
               }
               onChange={this.props.onChange}
             />

@@ -52,7 +52,7 @@ export default class UploadPDF extends Component {
     this.state = {
       visibleViewAnswer: true,
       totalQuestionTN: 10,
-      totalQuestionTL: 10,
+      totalQuestionTL: 5,
       viewFileFDF: true,
       urlFilePDF: '',
       urlFileAnswerPDF: '',
@@ -77,8 +77,14 @@ export default class UploadPDF extends Component {
       typeQuestion: 0,
       indexSelectingTL: 0,
       pdfFile: '',
-      pdfFileTL: ''
+      pdfFileTL: '',
+      countAllQuestion: 0
     };
+  }
+
+  componentDidMount() {
+    let countAllQuestion = this.state.totalQuestionTN + this.state.totalQuestionTL;
+    this.setState({ countAllQuestion });
   }
 
   onClickItem = async (index, optionIdAnswer, point) => {
@@ -96,11 +102,16 @@ export default class UploadPDF extends Component {
   }
 
   changeTotalQuestion = (totalQuestion) => {
+    console.log("🚀 ~ file: UploadPDF.js ~ line 99 ~ UploadPDF ~ totalQuestion", totalQuestion)
+
     const { typeQuestion } = this.state;
+    let { countAllQuestion, indexSelectingTN, indexSelectingTL } = this.state;
     if (typeQuestion === 0) {
-      this.setState({ totalQuestionTN, totalQuestion: 0 });
+      countAllQuestion = totalQuestion + indexSelectingTL;
+      this.setState({ totalQuestionTN: totalQuestion, indexSelectingTN: 0, countAllQuestion });
     } else {
-      this.setState({ totalQuestionTL: totalQuestion, indexSelectingTL: 0 });
+      countAllQuestion = totalQuestion + indexSelectingTN;
+      this.setState({ totalQuestionTL: totalQuestion, indexSelectingTL: 0, countAllQuestion });
     }
   };
 
@@ -537,16 +548,12 @@ export default class UploadPDF extends Component {
                                 <Text style={styles.textMinutes}>Phút</Text>
                               </View>
                             ) : null}
-                            <Text
-                              style={{
-                                fontFamily: 'Nunito-Bold',
-                                fontSize: RFFonsize(12),
-                                color: '#fff',
-                                borderRadius: 1,
-                                marginTop: 10,
-                              }}>
-                              Loại bài tập
-                    </Text>
+                            <View style={styles.wrapTotalQuestion}>
+                              <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
+                              <View style={styles.wrapTotalQSText}>
+
+                              </View>
+                            </View>
                             <View style={styles.wrapButtonType}>
                               <TouchableOpacity
                                 onPress={() => this.setState({ typeQuestion: 0 })}
@@ -637,7 +644,7 @@ export default class UploadPDF extends Component {
                           <View style={{ borderWidth: 0.5, height: 0, borderColor: '#C4C4C4', width: '10%' }} />
                           <Text style={styles.txtNoteUploadPDF}>
                             Lưu ý! Bộ đề và đáp án file PDF. Dung lượng không quá 5MB!
-                  </Text>
+                          </Text>
                           <View style={{ borderWidth: 0.5, height: 0, borderColor: '#C4C4C4', width: '10%' }} />
                         </View>
                       </View>
@@ -773,10 +780,9 @@ const styles = StyleSheet.create({
   wrapButtonType: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: '#C4C4C4',
     width: 0.9 * width,
-    top: -30
   },
   wrapAreaUploadPDF: {
     flexDirection: 'row',
@@ -784,7 +790,7 @@ const styles = StyleSheet.create({
     width: 0.9 * width,
     height: 100,
     justifyContent: 'space-between',
-    marginTop: 10
+    marginTop: 20
   },
   wrapMiniPDF: {
     width: 150,
@@ -845,5 +851,27 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 2,
     marginBottom: 10
+  },
+  wrapTotalQuestion: {
+    flexDirection: 'row',
+    height: 35,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  textTotalQS: {
+    fontSize: 14,
+    fontFamily: 'Nunito',
+    fontWeight: '400',
+  },
+  wrapTotalQSText: {
+    borderWidth: 0.5,
+    borderColor: '#56CCF2',
+    borderRadius: 2,
+    width: 46,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 0
   }
 });
