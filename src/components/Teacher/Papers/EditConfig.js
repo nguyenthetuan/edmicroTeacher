@@ -316,6 +316,7 @@ class EditConfig extends Component {
                     >
                         <ScrollView
                             contentContainerStyle={{ paddingVertical: 15 }}
+                            showsVerticalScrollIndicator={false}
                         >
                             <Text style={styles.styTxtLabel}>Tên bài tập</Text>
                             <View style={styles.styWrapInutName}>
@@ -352,24 +353,25 @@ class EditConfig extends Component {
                                     </View>
                                 </View>
                             ) : null}
+                            <View style={styles.footer}>
+                                <RippleButton
+                                    onPress={() => this.props.navigation.goBack()}>
+                                    <View style={styles.buttomCancel}>
+                                        <Text style={styles.txtButtom}>Huỷ</Text>
+                                    </View>
+                                </RippleButton>
+                                <View style={{ marginStart: 40 }}>
+                                    <RippleButton onPress={this.onUpdate} disabled={disabled}>
+                                        <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', }]}>
+                                            <Text style={styles.txtButtom}>Lưu</Text>
+                                        </View>
+                                    </RippleButton>
+                                </View>
+                            </View>
                         </ScrollView>
                     </KeyboardAvoidingView>
                 </TouchableWithoutFeedback>
-                <View style={styles.footer}>
-                    <RippleButton
-                        onPress={() => this.props.navigation.goBack()}>
-                        <View style={styles.buttomCancel}>
-                            <Text style={styles.txtButtom}>Huỷ</Text>
-                        </View>
-                    </RippleButton>
-                    <View style={{ marginStart: 40 }}>
-                        <RippleButton onPress={this.onUpdate} disabled={disabled}>
-                            <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', }]}>
-                                <Text style={styles.txtButtom}>Lưu</Text>
-                            </View>
-                        </RippleButton>
-                    </View>
-                </View>
+
             </View>
         )
     }
@@ -426,7 +428,8 @@ const styles = StyleSheet.create({
     footer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginBottom: 40
+        marginTop: 50,
+        flex: 1
     },
     buttomCancel: {
         backgroundColor: '#FF6213',
