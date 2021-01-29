@@ -78,13 +78,8 @@ export default class UploadPDF extends Component {
       indexSelectingTL: 0,
       pdfFile: '',
       pdfFileTL: '',
-      countAllQuestion: 0
+      totalPoint: 0
     };
-  }
-
-  componentDidMount() {
-    let countAllQuestion = this.state.totalQuestionTN + this.state.totalQuestionTL;
-    this.setState({ countAllQuestion });
   }
 
   onClickItem = async (index, optionIdAnswer, point) => {
@@ -102,16 +97,11 @@ export default class UploadPDF extends Component {
   }
 
   changeTotalQuestion = (totalQuestion) => {
-    console.log("🚀 ~ file: UploadPDF.js ~ line 99 ~ UploadPDF ~ totalQuestion", totalQuestion)
-
     const { typeQuestion } = this.state;
-    let { countAllQuestion, indexSelectingTN, indexSelectingTL } = this.state;
     if (typeQuestion === 0) {
-      countAllQuestion = totalQuestion + indexSelectingTL;
-      this.setState({ totalQuestionTN: totalQuestion, indexSelectingTN: 0, countAllQuestion });
+      this.setState({ totalQuestionTN: totalQuestion, indexSelectingTN: 0 });
     } else {
-      countAllQuestion = totalQuestion + indexSelectingTN;
-      this.setState({ totalQuestionTL: totalQuestion, indexSelectingTL: 0, countAllQuestion });
+      this.setState({ totalQuestionTL: totalQuestion, indexSelectingTL: 0 });
     }
   };
 
@@ -453,6 +443,8 @@ export default class UploadPDF extends Component {
     const numColumns = this.getNumColumns();
     const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
     console.log("this.state.indexSelectingTL: ", this.state.indexSelectingTL);
+    const points = this.selectAnswer?.getTotalPoint();
+
     return (
       <View style={{ flex: 1 }}>
         <SafeAreaView />
@@ -551,7 +543,7 @@ export default class UploadPDF extends Component {
                             <View style={styles.wrapTotalQuestion}>
                               <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
                               <View style={styles.wrapTotalQSText}>
-
+                                <Text>{points}</Text>
                               </View>
                             </View>
                             <View style={styles.wrapButtonType}>

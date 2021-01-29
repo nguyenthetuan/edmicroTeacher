@@ -35,6 +35,10 @@ export default class SelectAnswer extends Component {
     }
   }
 
+  getTotalPoint() {
+    return (this.state.totalPointTN + this.state.totalQuestionTL);
+  }
+
   getListQuestions = () => {
     const { questionsTN, totalPointTN, questionsTL, totalPointTL } = this.state;
     return {
