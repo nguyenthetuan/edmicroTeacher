@@ -120,7 +120,7 @@ export default class ItemClassAssigment extends Component {
                 />
                 <Text
                   style={styles.viewRate}>
-                  {rate} %
+                  {rate}%
                 </Text>
               </View>
               <View

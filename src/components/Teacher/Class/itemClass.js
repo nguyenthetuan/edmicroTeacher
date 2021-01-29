@@ -93,7 +93,7 @@ export default class itemClass extends Component {
                 />
                 <Text
                   style={styles.rateSub}>
-                  {item.rateSubmit} %
+                  {item.rateSubmit}%
                 </Text>
               </View>
             </View>
