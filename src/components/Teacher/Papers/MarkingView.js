@@ -493,7 +493,7 @@ class MarkingView extends Component {
               />
             </RippleButton>
             <Text
-              style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: '#fff' }}>
+              style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: '#fff', marginLeft: 80 }}>
               Chấm điểm
             </Text>
           </View>
@@ -507,54 +507,32 @@ class MarkingView extends Component {
         </View>
         {
           <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginTop: 27,
-              marginBottom: 22,
-            }}>
-            <View style={{}}>
-              <Text
-                style={{
-                  fontSize: RFFonsize(14),
-                  fontFamily: 'Nunito-Bold',
-                  color: '#FFFEFE',
-                  marginLeft: 20,
-                  marginBottom: 10
-                }}>
+            style={styles.rowDrop}>
+            <View style={styles.dropTwo}>
+              <Text style={styles.titleDrop}>
                 Lớp
               </Text>
-              <View style={{}}>
-                <Dropdown
-                  title="Lớp"
-                  data={listClassAssigned}
-                  indexSelected={indexSelected.indexClass}
-                  isShowIcon={true}
-                  onPressItem={this.onValueChangePickerClass}
-                />
-              </View>
+              <Dropdown
+                title="Lớp"
+                data={listClassAssigned}
+                indexSelected={indexSelected.indexClass}
+                isShowIcon={true}
+                onPressItem={this.onValueChangePickerClass}
+                contentStyle={styles.widthDrop}
+              />
             </View>
-            <View style={{}}>
-              <Text
-                style={{
-                  fontSize: RFFonsize(14),
-                  fontFamily: 'Nunito-Bold',
-                  color: '#FFFEFE',
-                  marginLeft: 20,
-                  marginBottom: 10
-                }}>
+            <View style={styles.dropTwo}>
+              <Text style={styles.titleDrop}>
                 Học Sinh
               </Text>
-              <View style={{}}>
-                <Dropdown
-                  title="Học Sinh"
-                  data={listStudentAssigned}
-                  indexSelected={indexSelected.indexStudent}
-                  isShowIcon={true}
-                  onPressItem={this.onValueChangePickerStudent}
-                />
-              </View>
+              <Dropdown
+                title="Học Sinh"
+                data={listStudentAssigned}
+                indexSelected={indexSelected.indexStudent}
+                isShowIcon={true}
+                onPressItem={this.onValueChangePickerStudent}
+                contentStyle={styles.widthDrop}
+              />
             </View>
           </View>
         }
@@ -809,7 +787,8 @@ class MarkingView extends Component {
           {this.renderHeader()}
           <View
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#f86c6b', textAlign: 'center' }}>
+            <Text numberOfLines={2}
+              style={{ color: '#f86c6b', textAlign: 'center', marginHorizontal: 50 }}>
               Không tồn tại học sinh có bài cần chấm trong lớp
             </Text>
           </View>
@@ -1196,8 +1175,8 @@ const styles = StyleSheet.create({
   buttonBack: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 40,
-    height: 40,
+    // width: 40,
+    // height: 40,
   },
   header: {
     backgroundColor: '#56CCF2',
@@ -1216,6 +1195,7 @@ const styles = StyleSheet.create({
   buttonReleasePoint: {
     width: 100,
     height: 20,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFA031',
@@ -1273,6 +1253,32 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#AAE5F9',
   },
+  dropTwo: {
+    width: '50%',
+    flexDirection: 'column'
+  },
+  txtText: {
+    // marginLeft: 30,
+  },
+  widthDrop: {
+    height: 30,
+    width: '80%',
+  },
+  rowDrop: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 27,
+    marginBottom: 22,
+  },
+  titleDrop: {
+    fontSize: RFFonsize(14),
+    fontFamily: 'Nunito-Bold',
+    color: '#FFFEFE',
+    marginLeft: 20,
+    marginBottom: 10
+  }
+
 });
 
 const mapStateToProps = state => {

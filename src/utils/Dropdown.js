@@ -33,7 +33,7 @@ export default function Dropdown(props) {
                         ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName || ''
                         : title}
                 </Text>
-                {props.isShowIcon && <Image source={AppIcon.icon_arrow_down} resizeMode='stretch' style={styles.styArrowDown} />}
+                {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}
             </TouchableOpacity>
             <SelectModal
                 onHide={() => showDropdown(false)}
@@ -75,12 +75,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     styArrowDown: {
-        width: 30,
-        height: 30,
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        borderWidth: 1,
-        borderColor: '#AAE5F9'
+        // width: 30,
+        // height: 30,
+        // position: 'absolute',
+        // right: 0,
+        // top: 0,
+        // borderWidth: 1,
+        // borderColor: '#AAE5F9',
+        alignSelf: 'center',
+        marginRight: 5
     }
 });
