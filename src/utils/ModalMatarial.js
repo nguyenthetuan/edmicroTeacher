@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { getAnswerName, } from './WebUtils';
 import { Platform } from 'react-native';
 const renderMatarialDetail = (contentHtml, urlMedia, data, listQuestionAdded) => {
-  let totalAll = Object.keys(data).length;
+  let totalAll = data && Object.keys(data).length;
   let html = ``;
   html += `
 <html style="overflow-x:hidden">
