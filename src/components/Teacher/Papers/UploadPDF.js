@@ -90,7 +90,13 @@ export default class UploadPDF extends Component {
     }, 0)
   };
 
-  onClickItemTL = (index, optionIdAnswer, point) => { this.setState({ indexSelectingTL: index, optionIdAnswer: optionIdAnswer || -1, currentPoint: point }); this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1) };
+  onClickItemTL = (index, optionIdAnswer, point) => {
+    this.setState({ indexSelectingTL: index, optionIdAnswer: optionIdAnswer || -1, currentPoint: point, showSelectAnswer: true, });
+    this.modalSelectAnswers.setIdAnswer(optionIdAnswer || -1);
+    setTimeout(() => {
+      this.scrollview.scrollToEnd();
+    }, 0)
+  };
 
   closeModalSelectAnswer = () => {
     this.setState({ showSelectAnswer: false })
@@ -420,6 +426,10 @@ export default class UploadPDF extends Component {
     this.selectAnswer.onSelectAnswer(answer);
   }
 
+  getTotalPoint = (totalPoint) => {
+    this.setState({ totalPoint: totalPoint });
+  }
+
   render() {
     const {
       listGrades,
@@ -543,7 +553,7 @@ export default class UploadPDF extends Component {
                             <View style={styles.wrapTotalQuestion}>
                               <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
                               <View style={styles.wrapTotalQSText}>
-                                <Text>{points}</Text>
+                                <Text>{this.state.totalPoint}</Text>
                               </View>
                             </View>
                             <View style={styles.wrapButtonType}>
@@ -657,6 +667,7 @@ export default class UploadPDF extends Component {
                         onChange={this.changeTotalQuestion}
                         indexSelectingTN={this.state.indexSelectingTN}
                         indexSelectingTL={this.state.indexSelectingTL}
+                        getTotalPoint={this.getTotalPoint}
                         showSelectAnswer={this.state.showSelectAnswer}
                       />
                     </View>
@@ -671,6 +682,7 @@ export default class UploadPDF extends Component {
           <ModalSelectAnswers
             ref={(ref) => { this.modalSelectAnswers = ref }}
             indexSelectingTN={this.state.indexSelectingTN}
+            typeQuestion={this.state.typeQuestion}
             indexSelectingTL={this.state.indexSelectingTL}
             onSelectAnswer={this.onSelectAnswer}
             optionIdAnswer={this.state.optionIdAnswer}

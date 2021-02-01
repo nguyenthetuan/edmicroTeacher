@@ -92,7 +92,7 @@ export default class SelectAnswer extends Component {
     questionsTL.map(e => {
       totalPointTL += e.point;
     });
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 89 ~ SelectAnswer ~ componentDidMount ~ questionsTL", questionsTL);
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
 
     this.setState({
       totalPointTN,
