@@ -337,7 +337,6 @@ class QuestionLibrary extends Component {
         body: this.state.objectSearch,
         key: key,
       });
-      console.log(response);
       const responseCount = await apiPapers.countSearch({
         token: token,
         body: this.state.objectSearch,
@@ -534,6 +533,7 @@ class QuestionLibrary extends Component {
                 _closeLearnPlaceholder={this._closeLearnPlaceholder}
                 questions={this.state.questions}
                 listQuestionAdded={listQuestionAdded}
+                isModal={isModal}
               />
 
             ) : (
@@ -569,53 +569,17 @@ class QuestionLibrary extends Component {
           numberQuestion={this.state.numberQuestion}
           subjectId={'TOAN'}
         />
-        <Modal
-          visible={isModal}
-          transparent={true}
-        >
-          <TouchableWithoutFeedback
-            onPress={() => this.setState({ isModal: false })}
-          >
-            <View style={styles.containerModal}>
-              <TouchableWithoutFeedback>
-                <View style={styles.bodyModal}>
-                  <TouchableOpacity
-                    style={styles.btnClose}
-                    onPress={() => this.setState({ isModal: false })}>
-                    <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
-                  </TouchableOpacity>
-                  {isLoadingModal && htmlContent ?
-                    <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
-                    :
-                    htmlContent === null ?
-                      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
-                        <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                        <TouchableOpacity
-                          style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
-                          onPress={() => this.getDetailMatarial()}
-                        >
-                          <Text style={{ color: '#fff' }}>Tải lại</Text>
-                        </TouchableOpacity>
-                      </View> :
-                      <WebView
-                        ref={(ref) => (this.webview = ref)}
-                        source={{
-                          html: html.renderMatarialDetail(htmlContent, urlMedia),
-                          baseUrl,
-                        }}
-                        subjectId={'TOAN'}
-                        originWhitelist={['file://']}
-                        scalesPageToFit={false}
-                        javaScriptEnabled
-                        showsVerticalScrollIndicator={false}
-                        startInLoadingState={true}
-                      />
-                  }
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+        <ModalQuestion
+          isModal={isModal}
+          isLoadingModal={isLoadingModal}
+          htmlContent={htmlContent}
+          getDetailMatarial={this.getDetailMatarial}
+          urlMedia={urlMedia}
+          questions={this.state.questions}
+          listQuestionAdded={listQuestionAdded}
+          onHandleMessage={this.onHandleMessage}
+          onClose={() => this.setState({ isModal: false })}
+        />
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
       </View>
     );
@@ -626,9 +590,9 @@ class WebViewComponent extends Component {
     super(props);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    // if (this.props.isAllowRerennder != nextProps.isAllowRerennder) {
-    //   return true;
-    // }
+    if (this.props.isModal) {
+      return true;
+    }
     if (this.props.questions != nextProps.questions) {
       return true;
     }
@@ -669,6 +633,81 @@ class WebViewComponent extends Component {
     );
   }
 }
+
+class ModalQuestion extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.questions != nextProps.questions ||
+      this.props.isModal != nextProps.isModal ||
+      this.props.isLoadingModal != nextProps.isLoadingModal
+    ) {
+      return true;
+    }
+    return false;
+  }
+  render() {
+    const {
+      isModal,
+      isLoadingModal,
+      htmlContent,
+      getDetailMatarial,
+      urlMedia,
+      questions,
+      listQuestionAdded,
+      onHandleMessage,
+      onClose
+    } = this.props;
+    return (
+      <Modal
+        visible={isModal}
+        transparent={true}
+      >
+        <TouchableWithoutFeedback onPress={onClose}>
+          <View style={styles.containerModal}>
+            <TouchableWithoutFeedback>
+              <View style={styles.bodyModal}>
+                <TouchableOpacity
+                  style={styles.btnClose}
+                  onPress={onClose}>
+                  <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
+                </TouchableOpacity>
+                {isLoadingModal && htmlContent ?
+                  <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
+                  :
+                  !htmlContent ?
+                    <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
+                      <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                      <TouchableOpacity
+                        style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
+                        onPress={getDetailMatarial}
+                      >
+                        <Text style={{ color: '#fff' }}>Tải lại</Text>
+                      </TouchableOpacity>
+                    </View> :
+                    <WebView
+                      ref={(ref) => (this.webview = ref)}
+                      source={{
+                        html: html.renderMatarialDetail(htmlContent, urlMedia, questions, listQuestionAdded),
+                        baseUrl,
+                      }}
+                      onMessage={onHandleMessage}
+                      subjectId={'TOAN'}
+                      originWhitelist={['file://']}
+                      scalesPageToFit={false}
+                      javaScriptEnabled
+                      showsVerticalScrollIndicator={false}
+                      startInLoadingState={true}
+                    />
+                }
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   btnClose: {
     alignSelf: 'flex-end',
@@ -758,8 +797,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 500,
     justifyContent: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10
+    overflow: 'hidden'
+    // paddingHorizontal: 10,
+    // paddingVertical: 10
   }
 });
 
