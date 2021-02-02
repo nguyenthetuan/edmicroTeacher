@@ -86,7 +86,6 @@ export default class SelectAnswer extends Component {
       point: +(10 / totalQuestionTL).toFixed(2),
       optionIdAnswer: -1,
       typeAnswer: 0,
-      totalQption: 4,
       textPoint: `${(10 / totalQuestionTL).toFixed(2)}`,
     }).map((value, index) => { return { ...value, index } });
     questionsTL.map(e => {
@@ -215,30 +214,49 @@ export default class SelectAnswer extends Component {
   }
 
   onChangePoint = (point) => {
-    const { questionsTN } = this.state;
+    const { questionsTN, totalPointTL } = this.state;
     const { indexSelectingTN } = this.props;
     const questionsTmpTN = questionsTN;
     questionsTmpTN[indexSelectingTN].textPoint = point;
 
-    this.setState({
-      questionsTN: questionsTmpTN
+    let totalPointTN = 0;
+
+    questionsTmpTN.map(e => {
+      totalPointTN += e.point;
     });
+
+    this.setState({
+      questionsTN: questionsTmpTN,
+      totalPointTN
+    });
+
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
+
   }
 
   onChangPointTL = (point) => {
-    const { questionsTL } = this.state;
+    const { questionsTL, totalPointTN } = this.state;
     const { indexSelectingTL } = this.props;
 
     const questionsTmpTL = questionsTL;
     console.log("🚀 ~ file: SelectAnswer.js ~ line 228 ~ SelectAnswer ~ questionsTmpTL", questionsTmpTL)
     questionsTmpTL[indexSelectingTL].textPoint = point;
-    this.setState({
-      questionsTL: questionsTmpTL
+
+    let totalPointTL = 0;
+    questionsTmpTL.map(e => {
+      totalPointTL += e.point;
     })
+
+    this.setState({
+      questionsTL: questionsTmpTL,
+      totalPointTL
+    })
+
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
   }
 
   onEndEditingPoint = () => {
-    const { questionsTN } = this.state;
+    const { questionsTN, totalPointTL } = this.state;
     const { indexSelectingTN } = this.props;
     const questionsTmpTN = questionsTN;
     let textPoint = questionsTmpTN[indexSelectingTN].textPoint;
@@ -257,10 +275,12 @@ export default class SelectAnswer extends Component {
       questionsTN: questionsTmpTN,
       totalPointTN
     });
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
+
   }
 
   onEndEditingPointTL = () => {
-    const { questionsTL } = this.state;
+    const { questionsTL, totalPointTN } = this.state;
     const { indexSelectingTL } = this.props;
     const questionsTmpTL = questionsTL;
     console.log("🚀 ~ file: SelectAnswer.js ~ line 261 ~ SelectAnswer ~ questionsTmpTL", questionsTmpTL)
@@ -281,6 +301,7 @@ export default class SelectAnswer extends Component {
       questionsTL: questionsTmpTL,
       totalPointTL
     })
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
   }
 
   editPoint = () => {
@@ -320,6 +341,7 @@ export default class SelectAnswer extends Component {
         questionsTL: questionsTLTmp,
       })
     }
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
   }
 
   onChangeText = (point) => {
@@ -384,7 +406,7 @@ export default class SelectAnswer extends Component {
                 onChangeText={text => this.setState({ totalPointTN: text && parseInt(text) || 0 })}
                 onEndEditing={() => this.pointSentence(typeQuestion)}
                 value={totalPointTN && `${totalPointTN}` || ''}
-                editable={false}
+                editable={true}
               /> :
                 <TextInput
                   style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
@@ -395,7 +417,7 @@ export default class SelectAnswer extends Component {
                   onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
                   onEndEditing={() => this.pointSentence(typeQuestion)}
                   value={totalPointTL && `${totalPointTL}` || ''}
-                  editable={false}
+                  editable={true}
                 />}
               {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
             </View>

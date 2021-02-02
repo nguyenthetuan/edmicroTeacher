@@ -41,13 +41,11 @@ export default class ModalSelectAnswers extends Component {
         this.props.onChangeText(ponit);
     }
 
-    onEnediting = () => {
+    onEnediting = () => {;
         this.props.onEndEditing();
     }
 
     render() {
-        console.log('optionIdAnswer: ', this.state.optionIdAnswer);
-        console.log('this.props.showSelectAnswer: ', this.props.showSelectAnswer);
         let { indexSelectingTN } = this.props;
         return (
             <>
@@ -170,5 +168,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
         color: '#56BB73'
-    }
+    },
 })

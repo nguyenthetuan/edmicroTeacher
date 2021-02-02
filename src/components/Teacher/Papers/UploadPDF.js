@@ -413,7 +413,7 @@ export default class UploadPDF extends Component {
       point = `${point.substring(0, point.length - 1)}.`
     }
     this.setState({ currentPoint: point });
-    this.selectAnswer.onChangePoint(point);
+    this.selectAnswer.onChangeText(point);
   }
 
   onTextPointModalEdit = (point) => {
