@@ -99,7 +99,7 @@ export default class UploadPDF extends Component {
   };
 
   closeModalSelectAnswer = () => {
-  console.log("🚀 ~ file: UploadPDF.js ~ line 102 ~ UploadPDF ~ closeModalSelectAnswer")
+    console.log("🚀 ~ file: UploadPDF.js ~ line 102 ~ UploadPDF ~ closeModalSelectAnswer")
     this.setState({ showSelectAnswer: false })
   }
 
@@ -261,7 +261,12 @@ export default class UploadPDF extends Component {
         duration,
         urlFilePDF,
         urlFileAnswerPDF,
+        totalPoint
       } = this.state;
+      if (parseFloat(totalPoint) !== 10) {
+        this.toast.show('Tổng điểm chưa bằng 10!');
+        return;
+      }
       if (!name) {
         this.toast.show('Chưa nhập tên bộ đề!');
         return;
@@ -293,10 +298,10 @@ export default class UploadPDF extends Component {
         return;
       }
 
-      if (list.totalPointTN + list.totalPointTL !== 10) {
-        this.toast.show('Tổng điểm chưa bằng 10!');
-        return;
-      }
+      // if (list.totalPointTN + list.totalPointTL !== 10) {
+      //   this.toast.show('Tổng điểm chưa bằng 10!');
+      //   return;
+      // }
 
       let checkChooseOption = true;
       list.data.map((e) => {
@@ -410,13 +415,13 @@ export default class UploadPDF extends Component {
   };
 
   onTextPointModalChange = (point) => {
-  console.log("🚀 ~ file: UploadPDF.js ~ line 412 ~ UploadPDF ~ point", point)
+    console.log("🚀 ~ file: UploadPDF.js ~ line 412 ~ UploadPDF ~ point", point)
     // alert(1);
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }
     this.setState({ currentPoint: point });
-    this.selectAnswer.onChangeText(point); 
+    this.selectAnswer.onChangeText(point);
   }
 
   onTextPointModalEdit = (point) => {
