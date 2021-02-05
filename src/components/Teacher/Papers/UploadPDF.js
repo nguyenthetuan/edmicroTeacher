@@ -99,6 +99,7 @@ export default class UploadPDF extends Component {
   };
 
   closeModalSelectAnswer = () => {
+  console.log("🚀 ~ file: UploadPDF.js ~ line 102 ~ UploadPDF ~ closeModalSelectAnswer")
     this.setState({ showSelectAnswer: false })
   }
 
@@ -409,7 +410,8 @@ export default class UploadPDF extends Component {
   };
 
   onTextPointModalChange = (point) => {
-
+  console.log("🚀 ~ file: UploadPDF.js ~ line 412 ~ UploadPDF ~ point", point)
+    // alert(1);
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }

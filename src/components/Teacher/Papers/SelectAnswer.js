@@ -214,10 +214,14 @@ export default class SelectAnswer extends Component {
   }
 
   onChangePoint = (point) => {
+    if (isNaN(point) || point == '') {
+      return;
+    }
     const { questionsTN, totalPointTL } = this.state;
     const { indexSelectingTN } = this.props;
     const questionsTmpTN = questionsTN;
     questionsTmpTN[indexSelectingTN].textPoint = point;
+    questionsTmpTN[indexSelectingTN].point = parseFloat(point);
 
     let totalPointTN = 0;
 
@@ -229,6 +233,7 @@ export default class SelectAnswer extends Component {
       questionsTN: questionsTmpTN,
       totalPointTN
     });
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 233 ~ SelectAnswer ~ totalPointTN", totalPointTN)
 
     this.props.getTotalPoint(totalPointTN + totalPointTL);
 
@@ -240,6 +245,7 @@ export default class SelectAnswer extends Component {
 
     const questionsTmpTL = questionsTL;
     questionsTmpTL[indexSelectingTL].textPoint = point;
+    questionsTmpTL[indexSelectingTL].point = parseFloat(point);
 
     let totalPointTL = 0;
     questionsTmpTL.map(e => {
@@ -429,6 +435,7 @@ export default class SelectAnswer extends Component {
   }
 
   onChangeText = (point) => {
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 432 ~ SelectAnswer ~ point", point)
     const { typeQuestion } = this.props;
     if (typeQuestion === 0) {
       this.onChangePoint(point);
