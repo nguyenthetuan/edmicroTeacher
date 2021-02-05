@@ -52,7 +52,7 @@ export default class UploadPDF extends Component {
     this.state = {
       visibleViewAnswer: true,
       totalQuestionTN: 10,
-      totalQuestionTL: 5,
+      totalQuestionTL: 0,
       viewFileFDF: true,
       urlFilePDF: '',
       urlFileAnswerPDF: '',
@@ -409,11 +409,12 @@ export default class UploadPDF extends Component {
   };
 
   onTextPointModalChange = (point) => {
+
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }
     this.setState({ currentPoint: point });
-    this.selectAnswer.onChangeText(point);
+    this.selectAnswer.onChangeText(point); 
   }
 
   onTextPointModalEdit = (point) => {

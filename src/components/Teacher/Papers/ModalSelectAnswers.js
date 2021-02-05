@@ -68,7 +68,7 @@ export default class ModalSelectAnswers extends Component {
                             placeholderTextColor={'#BDBDBD'}
                             style={styles.inputPoint}
                             onEndEditing={this.onEnediting}
-                        />
+                        /> 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 30, height: 30, width: width, alignItems: 'center' }}>
                         {(this.props.typeQuestion == 0) && <View style={{ flexDirection: 'row', height: 30, alignItems: 'center' }}>

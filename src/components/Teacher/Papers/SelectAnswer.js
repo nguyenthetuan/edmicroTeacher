@@ -239,7 +239,6 @@ export default class SelectAnswer extends Component {
     const { indexSelectingTL } = this.props;
 
     const questionsTmpTL = questionsTL;
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 228 ~ SelectAnswer ~ questionsTmpTL", questionsTmpTL)
     questionsTmpTL[indexSelectingTL].textPoint = point;
 
     let totalPointTL = 0;
@@ -283,8 +282,6 @@ export default class SelectAnswer extends Component {
     const { questionsTL, totalPointTN } = this.state;
     const { indexSelectingTL } = this.props;
     const questionsTmpTL = questionsTL;
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 261 ~ SelectAnswer ~ questionsTmpTL", questionsTmpTL)
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 263 ~ SelectAnswer ~ indexSelectingTL", indexSelectingTL)
     let textPoint = questionsTmpTL[indexSelectingTL].textPoint;
     let pointTmp = parseFloat(textPoint);
     if (!Number.isNaN(pointTmp)) {
@@ -312,6 +309,93 @@ export default class SelectAnswer extends Component {
     } else {
       this.onEndEditingPointTL()
     }
+  }
+
+  renderFlatlist = (typeQuestion, numColumns, questionsTN, questionsTL) => {
+    if (typeQuestion === 0) {
+      return (
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          {(questionsTN.length > 0) ? <FlatList
+            contentContainerStyle={{ paddingHorizontal: 10, alignSelf: 'center', }}
+            numColumns={numColumns}
+            data={questionsTN}
+            scrollEnabled={false}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item, index }) => {
+              const isSelected = item.optionIdAnswer !== -1;
+              const isSelecting = (this.props.showSelectAnswer && this.props.indexSelectingTN === item.index);
+              const name = (item.index + 1) + this.getNameAnswer(item.optionIdAnswer);
+              return (
+                <TouchableOpacity
+                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer, questionsTN[index].textPoint) }}
+                  style={{
+                    width: 45,
+                    height: 45,
+                    borderRadius: 5,
+                    borderColor: isSelected || isSelecting ? '#56CCF2' : '#828282',
+                    borderWidth: 1,
+                    margin: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: isSelected ? '#56CCF2' : '#fff'
+                  }}>
+                  <Text style={{
+                    fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
+                    fontSize: RFFonsize(12),
+                    fontWeight: '700',
+                    color: isSelected ? '#fff' : '#000'
+                  }}>{name}</Text>
+                </TouchableOpacity>
+              )
+            }}
+          />
+            :
+            <View></View>
+          }
+        </View>
+      )
+    } else {
+      return (
+        <FlatList
+          scrollEnabled={false}
+          contentContainerStyle={{ paddingHorizontal: 8 }}
+          numColumns={numColumns}
+          data={questionsTL}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            const isSelected = item.optionIdAnswer !== -1;
+            const isSelecting = this.props.indexSelectingTL === item.index;
+            const name = (item.index + 1);
+            return (
+              <TouchableOpacity
+                onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questionsTL[index].textPoint) }}
+                style={{
+                  width: 45,
+                  height: 45,
+                  borderRadius: 5,
+                  borderColor: isSelecting ? '#56CCF2' : '#828282',
+                  borderWidth: 1,
+                  margin: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#fff'
+                }}>
+                <Text style={{
+                  fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
+                  fontSize: RFFonsize(12),
+                  color: '#000',
+                  fontWeight: '700',
+                }}>{name}</Text>
+              </TouchableOpacity>
+            )
+          }}
+        />
+      )
+    }
+
   }
 
   pointSentence = () => {
@@ -355,17 +439,14 @@ export default class SelectAnswer extends Component {
 
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 332 ~ SelectAnswer ~ render ~ typeQuestion", typeQuestion)
     const { questionsTN, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPointTN, totalPointTL } = this.state;
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 329 ~ SelectAnswer ~ render ~ questionsTN", questionsTN)
     const { indexSelectingTN, indexSelectingTL } = this.props;
     let optionIdAnswer = -1;
     const indexOfAnswer = _.indexOf(questionsTN.map(e => e.index), this.props.indexSelectingTN);
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 334 ~ SelectAnswer ~ render ~ this.props.indexSelectingTL", this.props.indexSelectingTL)
-    if (questionsTN.length <= 0 || !isVisible) {
+    if (!isVisible) {
       return null;
     } else {
-      optionIdAnswer = questionsTN[indexOfAnswer].optionIdAnswer;
+      optionIdAnswer = questionsTN[indexOfAnswer]?.optionIdAnswer;
     }
 
     return (
@@ -421,7 +502,7 @@ export default class SelectAnswer extends Component {
                 />}
               {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
               <Text style={styles.totalAddQuestion}>Điểm câu {typeQuestion === 0 ? this.props.indexSelectingTN + 1 : this.props.indexSelectingTL + 1}</Text>
               <TextInput
                 style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
@@ -434,82 +515,14 @@ export default class SelectAnswer extends Component {
                 value={typeQuestion === 0 ? `${questionsTN[this.props.indexSelectingTN].textPoint}` : `${questionsTL[this.props.indexSelectingTL].textPoint}`}
                 editable={false}
               />
-            </View>
+            </View> */}
           </View>
         </View>
         <View style={{
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          {typeQuestion === 0 ? <FlatList
-            contentContainerStyle={{ paddingHorizontal: 10, alignSelf: 'center', }}
-            numColumns={numColumns}
-            data={questionsTN}
-            scrollEnabled={false}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => {
-              const isSelected = item.optionIdAnswer !== -1;
-              const isSelecting = (this.props.showSelectAnswer && this.props.indexSelectingTN === item.index);
-              const name = (item.index + 1) + this.getNameAnswer(item.optionIdAnswer);
-              return (
-                <TouchableOpacity
-                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer, questionsTN[index].textPoint) }}
-                  style={{
-                    width: 45,
-                    height: 45,
-                    borderRadius: 5,
-                    borderColor: isSelected || isSelecting ? '#56CCF2' : '#828282',
-                    borderWidth: 1,
-                    margin: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: isSelected ? '#56CCF2' : '#fff'
-                  }}>
-                  <Text style={{
-                    fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
-                    fontSize: RFFonsize(12),
-                    fontWeight: '700',
-                    color: isSelected ? '#fff' : '#000'
-                  }}>{name}</Text>
-                </TouchableOpacity>
-              )
-            }}
-          /> :
-            <FlatList
-              scrollEnabled={false}
-              contentContainerStyle={{ paddingHorizontal: 8 }}
-              numColumns={numColumns}
-              data={questionsTL}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => {
-                const isSelected = item.optionIdAnswer !== -1;
-                const isSelecting = this.props.indexSelectingTL === item.index;
-                const name = (item.index + 1);
-                return (
-                  <TouchableOpacity
-                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questionsTL[index].textPoint) }}
-                    style={{
-                      width: 45,
-                      height: 45,
-                      borderRadius: 5,
-                      borderColor: isSelecting ? '#56CCF2' : '#828282',
-                      borderWidth: 1,
-                      margin: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#fff'
-                    }}>
-                    <Text style={{
-                      fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
-                      fontSize: RFFonsize(12),
-                      color: '#000',
-                      fontWeight: '700',
-                    }}>{name}</Text>
-                  </TouchableOpacity>
-                )
-              }}
-            />
-          }
+          {this.renderFlatlist(typeQuestion, numColumns, questionsTN, questionsTL)}
         </View>
       </View>
     )
@@ -736,6 +749,6 @@ const styles = StyleSheet.create({
     borderColor: '#0091EA',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   }
 })
