@@ -250,7 +250,6 @@ class ConfigQuestion extends Component {
         var errors = [];
         var result = true;
         _.forEach(['gradeCode', 'subjectCode', 'name', 'assignmentType'], item => {
-            console.log(item, ' :', this.state[item]);
             if (_.isEmpty(this.state[item])) {
                 switch (item) {
                     case 'gradeCode': {
@@ -344,7 +343,6 @@ class ConfigQuestion extends Component {
                         token,
                         id: response.id,
                     });
-                    console.log("🚀 ~ file: ConfigQuestionCopy.js ~ line 303 ~ ConfigQuestion ~ config= ~ res", res)
                     this.closePopupCreate();
                     this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
@@ -361,7 +359,6 @@ class ConfigQuestion extends Component {
 
             } catch (error) {
                 this.setState({ loading: false })
-                console.log('error', error);
             }
         } else {
             alert('Vui lòng điền đầy đủ thông tin');
@@ -415,7 +412,6 @@ class ConfigQuestion extends Component {
     }
 
     onValueChangeTypeExam = (va) => {
-        console.log("onValueChangeTypeExam: ", va);
         if (va === 0) {
             this.setState({ duration: 0 })
         }
@@ -534,7 +530,6 @@ class ConfigQuestion extends Component {
 
     activeGrade = item => {
         const { gradeCode, listGrades } = this.state;
-        console.log("item.gradeId: ", item);
         let gradeCodeTmp = gradeCode;
         let listGradeTmp = listGrades.map(e => {
             return { ...e, isActive: false };

@@ -28,7 +28,7 @@ export default class ModalSelectAnswers extends Component {
     }
 
     onSelectAnswer = (answer) => {
-    console.log("🚀 ~ file: ModalSelectAnswers.js ~ line 23 ~ ModalSelectAnswers ~ answer", answer)
+        console.log("🚀 ~ file: ModalSelectAnswers.js ~ line 23 ~ ModalSelectAnswers ~ answer", answer)
         this.props.onSelectAnswer(answer)
         this.setState({ optionIdAnswer: answer });
     }
@@ -41,13 +41,12 @@ export default class ModalSelectAnswers extends Component {
         this.props.onChangeText(ponit);
     }
 
-    onEnediting = () => {
+    onEnediting = () => {;
         this.props.onEndEditing();
     }
 
     render() {
-        console.log('optionIdAnswer: ', this.state.optionIdAnswer);
-        let { indexSelecting } = this.props;
+        let { indexSelectingTN } = this.props;
         return (
             <>
                 {this.props.showSelectAnswer && <View style={styles.modal}>
@@ -56,7 +55,7 @@ export default class ModalSelectAnswers extends Component {
                         fontSize: RFFonsize(14),
                         color: '#fff',
                         fontWeight: '700',
-                    }}>Câu {indexSelecting + 1}</Text>
+                    }}>Câu {indexSelectingTN + 1}</Text>
                     <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', top: 10 }}>
                         <Text style={{ fontSize: RFFonsize(14), fontFamily: 'Nunito', fontWeight: '400', color: '#fff' }}>Điểm số</Text>
                         <TextInput
@@ -69,45 +68,47 @@ export default class ModalSelectAnswers extends Component {
                             placeholderTextColor={'#BDBDBD'}
                             style={styles.inputPoint}
                             onEndEditing={this.onEnediting}
-                        />
+                        /> 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 30, height: 30, width: width, alignItems: 'center' }}>
-                        <TouchableOpacity onPress={() => this.onSelectAnswer(0)}
-                            style={[styles.btnAnswer, {
-                                backgroundColor: this.state.optionIdAnswer === 0 ? '#56CCF2' : '#fff',
-                                borderColor: this.state.optionIdAnswer === 0 ? '#2D9CDB' : '#828282'
-                            }]}>
-                            <Text style={[styles.txtAnswer, {
-                                color: this.state.optionIdAnswer === 0 ? '#fff' : '#828282'
-                            }]}>A</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.onSelectAnswer(1)}
-                            style={[styles.btnAnswer, {
-                                backgroundColor: this.state.optionIdAnswer === 1 ? '#56CCF2' : '#fff',
-                                borderColor: this.state.optionIdAnswer === 1 ? '#2D9CDB' : '#828282'
-                            }]}>
-                            <Text style={[styles.txtAnswer, {
-                                color: this.state.optionIdAnswer === 1 ? '#fff' : '#828282'
-                            }]}>B</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.onSelectAnswer(2)}
-                            style={[styles.btnAnswer, {
-                                backgroundColor: this.state.optionIdAnswer === 2 ? '#56CCF2' : '#fff',
-                                borderColor: this.state.optionIdAnswer === 2 ? '#2D9CDB' : '#828282'
-                            }]}>
-                            <Text style={[styles.txtAnswer, {
-                                color: this.state.optionIdAnswer === 2 ? '#fff' : '#828282'
-                            }]}>C</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.onSelectAnswer(3)}
-                            style={[styles.btnAnswer, {
-                                backgroundColor: this.state.optionIdAnswer === 3 ? '#56CCF2' : '#fff',
-                                borderColor: this.state.optionIdAnswer === 3 ? '#2D9CDB' : '#828282'
-                            }]}>
-                            <Text style={[styles.txtAnswer, {
-                                color: this.state.optionIdAnswer === 3 ? '#fff' : '#828282'
-                            }]}>D</Text>
-                        </TouchableOpacity>
+                        {(this.props.typeQuestion == 0) && <View style={{ flexDirection: 'row', height: 30, alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => this.onSelectAnswer(0)}
+                                style={[styles.btnAnswer, {
+                                    backgroundColor: this.state.optionIdAnswer === 0 ? '#56CCF2' : '#fff',
+                                    borderColor: this.state.optionIdAnswer === 0 ? '#2D9CDB' : '#828282'
+                                }]}>
+                                <Text style={[styles.txtAnswer, {
+                                    color: this.state.optionIdAnswer === 0 ? '#fff' : '#828282'
+                                }]}>A</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.onSelectAnswer(1)}
+                                style={[styles.btnAnswer, {
+                                    backgroundColor: this.state.optionIdAnswer === 1 ? '#56CCF2' : '#fff',
+                                    borderColor: this.state.optionIdAnswer === 1 ? '#2D9CDB' : '#828282'
+                                }]}>
+                                <Text style={[styles.txtAnswer, {
+                                    color: this.state.optionIdAnswer === 1 ? '#fff' : '#828282'
+                                }]}>B</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.onSelectAnswer(2)}
+                                style={[styles.btnAnswer, {
+                                    backgroundColor: this.state.optionIdAnswer === 2 ? '#56CCF2' : '#fff',
+                                    borderColor: this.state.optionIdAnswer === 2 ? '#2D9CDB' : '#828282'
+                                }]}>
+                                <Text style={[styles.txtAnswer, {
+                                    color: this.state.optionIdAnswer === 2 ? '#fff' : '#828282'
+                                }]}>C</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.onSelectAnswer(3)}
+                                style={[styles.btnAnswer, {
+                                    backgroundColor: this.state.optionIdAnswer === 3 ? '#56CCF2' : '#fff',
+                                    borderColor: this.state.optionIdAnswer === 3 ? '#2D9CDB' : '#828282'
+                                }]}>
+                                <Text style={[styles.txtAnswer, {
+                                    color: this.state.optionIdAnswer === 3 ? '#fff' : '#828282'
+                                }]}>D</Text>
+                            </TouchableOpacity>
+                        </View>}
                         <TouchableOpacity onPress={this.close}
                             style={styles.styWrapOk}>
                             <Text style={styles.styTxtOk}>OK</Text>
@@ -167,5 +168,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
         color: '#56BB73'
-    }
+    },
 })

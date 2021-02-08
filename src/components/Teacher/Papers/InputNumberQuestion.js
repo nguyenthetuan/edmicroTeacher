@@ -11,14 +11,14 @@ export default class InputNumberQuestion extends Component {
   }
 
   componentDidMount() {
-    const { totalQuestion } = this.props;
-    this.setState({ total: totalQuestion })
+    const { totalQuestionTN } = this.props;
+    this.setState({ total: totalQuestionTN })
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    if (prevProps.totalQuestion !== this.props.totalQuestion) {
+    if (prevProps.totalQuestionTN !== this.props.totalQuestionTN) {
       this.setState({
-        total: this.props.totalQuestion
+        total: this.props.totalQuestionTN
       })
       return true;
     } else {
@@ -48,7 +48,7 @@ export default class InputNumberQuestion extends Component {
   decrease = () => {
     const { onChange } = this.props;
     const { total } = this.state;
-    if (total < 100 && total !== 1) {
+    if (total < 100) {
       this.setState({
         total: total - 1
       }, () => onChange(total - 1))
@@ -114,7 +114,7 @@ export default class InputNumberQuestion extends Component {
             onChangeText={this.onChangeText}
             onEndEditing={this.onEndEditing}
             returnKeyType={'done'}
-            // editable={false}
+          // editable={false}
           />
           <TouchableOpacity
             onPress={this.increase}

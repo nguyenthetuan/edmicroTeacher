@@ -19,12 +19,12 @@ const { width, height } = Dimensions.get('window')
 export default class SelectAnswer extends Component {
   constructor(props) {
     super(props);
-    const { totalPoint, totalQuestionTL } = this.props
+    const { totalPointTN, totalQuestionTL } = this.props
     this.state = {
-      indexSelecting: 0,
-      questions: [],
+      indexSelectingTN: 0,
+      questionsTN: [],
       totalAddQuestion: 0,
-      totalPoint: totalPoint || 0,
+      totalPointTN: totalPointTN || 0,
 
       indexSelectingTL: 0,
       questionsTL: [],
@@ -35,10 +35,14 @@ export default class SelectAnswer extends Component {
     }
   }
 
+  getTotalPoint() {
+    return (this.state.totalPointTN + this.state.totalQuestionTL);
+  }
+
   getListQuestions = () => {
-    const { questions, totalPoint, questionsTL, totalPointTL } = this.state;
+    const { questionsTN, totalPointTN, questionsTL, totalPointTL } = this.state;
     return {
-      data: questions.map(e => {
+      data: questionsTN.map(e => {
         return {
           index: e.index,
           point: e.point,
@@ -47,7 +51,7 @@ export default class SelectAnswer extends Component {
           totalQption: e.totalQption
         }
       }),
-      totalPoint,
+      totalPointTN,
       dataTL: questionsTL.map(e => {
         return {
           index: e.index,
@@ -62,29 +66,44 @@ export default class SelectAnswer extends Component {
   }
 
   componentDidMount() {
-    const { totalQuestion } = this.props;
-    const questions = new Array(totalQuestion).fill({
+    const { totalQuestionTN, totalQuestionTL } = this.props;
+    let totalPointTN = 0;
+    let totalPointTL = 0;
+    const questionsTN = new Array(totalQuestionTN).fill({
       index: 0,
-      point: +(10 / totalQuestion).toFixed(2),
+      point: +(10 / totalQuestionTN).toFixed(2),
       optionIdAnswer: -1,
       typeAnswer: 0,
       totalQption: 4,
-      textPoint: `${(10 / totalQuestion).toFixed(2)}`,
+      textPoint: `${(10 / totalQuestionTN).toFixed(2)}`,
     }).map((value, index) => { return { ...value, index } });
-    let totalPoint = 0;
-    questions.map(e => {
-      totalPoint += e.point;
+    questionsTN.map(e => {
+      totalPointTN += e.point;
     });
 
+    const questionsTL = new Array(totalQuestionTL).fill({
+      index: 0,
+      point: +(10 / totalQuestionTL).toFixed(2),
+      optionIdAnswer: -1,
+      typeAnswer: 0,
+      textPoint: `${(10 / totalQuestionTL).toFixed(2)}`,
+    }).map((value, index) => { return { ...value, index } });
+    questionsTL.map(e => {
+      totalPointTL += e.point;
+    });
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
+
     this.setState({
-      totalPoint,
-      questions,
+      totalPointTN,
+      questionsTN,
+      totalPointTL,
+      questionsTL,
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { totalQuestion, totalQuestionTL, typeQuestion } = this.props;
-    const { totalPointTL, totalPoint } = this.state;
+    const { totalQuestionTN, totalQuestionTL, typeQuestion } = this.props;
+    const { totalPointTL, totalPointTN } = this.state;
 
     if (typeQuestion === 1) {
       console.log("prevProps.totalQuestionTL: ", prevProps.totalQuestionTL);
@@ -119,32 +138,32 @@ export default class SelectAnswer extends Component {
       }
 
     } else {
-      if (prevProps.totalQuestion !== totalQuestion) {
-        const { questions } = this.state;
-        let questionsTmp = questions;
-        const difference = prevProps.totalQuestion - totalQuestion;
+      if (prevProps.totalQuestionTN !== totalQuestionTN) {
+        const { questionsTN } = this.state;
+        let questionsTmpTN = questionsTN;
+        const difference = prevProps.totalQuestionTN - totalQuestionTN;
         if (difference > 0) {
-          questionsTmp = questionsTmp.slice(0, totalQuestion)
+          questionsTmpTN = questionsTmpTN.slice(0, totalQuestionTN)
         } else {
           let listTmp = new Array(Math.abs(difference)).fill({
             index: 0,
-            point: parseFloat((totalPoint / totalQuestion).toFixed(2)),
+            point: parseFloat((totalPointTN / totalQuestionTN).toFixed(2)),
             optionIdAnswer: -1,
             typeAnswer: 0,
             totalQption: 4,
-            textPoint: `${(totalPoint / totalQuestion).toFixed(2)}`
-          }).map((value, index) => { return { ...value, index: questionsTmp.length + index } });
-          questionsTmp = questionsTmp.concat(listTmp);
+            textPoint: `${(totalPointTN / totalQuestionTN).toFixed(2)}`
+          }).map((value, index) => { return { ...value, index: questionsTmpTN.length + index } });
+          questionsTmpTN = questionsTmpTN.concat(listTmp);
         }
 
-        questionsTmp = questionsTmp.map(e => {
+        questionsTmpTN = questionsTmpTN.map(e => {
           return {
             ...e,
-            point: parseFloat((totalPoint / totalQuestion).toFixed(2)),
-            textPoint: `${(totalPoint / totalQuestion).toFixed(2)}`
+            point: parseFloat((totalPointTN / totalQuestionTN).toFixed(2)),
+            textPoint: `${(totalPointTN / totalQuestionTN).toFixed(2)}`
           }
         })
-        this.setQuestion(typeQuestion, questionsTmp)
+        this.setQuestion(typeQuestion, questionsTmpTN)
       }
     }
   }
@@ -156,7 +175,7 @@ export default class SelectAnswer extends Component {
       })
     } else {
       this.setState({
-        questions: question
+        questionsTN: question
       })
     }
   }
@@ -165,16 +184,16 @@ export default class SelectAnswer extends Component {
   onClickItemTL = (index, optionIdAnswer, point) => this.props.onClickItemTL(index, optionIdAnswer, point);
 
   onSelectAnswer = (answer) => {
-    const { questions } = this.state;
-    const { indexSelecting } = this.props;
-    const questionsTmp = questions;
+    const { questionsTN } = this.state;
+    const { indexSelectingTN } = this.props;
+    const questionsTmpTN = questionsTN;
     let count = 0;
-    questionsTmp[indexSelecting].optionIdAnswer = answer;
-    questionsTmp.map(e => {
+    questionsTmpTN[indexSelectingTN].optionIdAnswer = answer;
+    questionsTmpTN.map(e => {
       if (e.optionIdAnswer > -1) { count++; }
     })
     this.setState({
-      questions: questionsTmp,
+      questionsTN: questionsTmpTN,
       totalAddQuestion: count
     });
   }
@@ -195,51 +214,78 @@ export default class SelectAnswer extends Component {
   }
 
   onChangePoint = (point) => {
-    const { questions } = this.state;
-    const { indexSelecting } = this.props;
-    const questionsTmp = questions;
-    questionsTmp[indexSelecting].textPoint = point;
+    if (isNaN(point) || point == '') {
+      return;
+    }
+    const { questionsTN, totalPointTL } = this.state;
+    const { indexSelectingTN } = this.props;
+    const questionsTmpTN = questionsTN;
+    questionsTmpTN[indexSelectingTN].textPoint = point;
+    questionsTmpTN[indexSelectingTN].point = parseFloat(point);
+
+    let totalPointTN = 0;
+
+    questionsTmpTN.map(e => {
+      totalPointTN += e.point;
+    });
 
     this.setState({
-      questions: questionsTmp
+      questionsTN: questionsTmpTN,
+      totalPointTN
     });
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 233 ~ SelectAnswer ~ totalPointTN", totalPointTN)
+
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
+
   }
 
   onChangPointTL = (point) => {
-    const { questionsTL } = this.state;
+    const { questionsTL, totalPointTN } = this.state;
     const { indexSelectingTL } = this.props;
 
     const questionsTmpTL = questionsTL;
     questionsTmpTL[indexSelectingTL].textPoint = point;
-    this.setState({
-      questionsTL: questionsTmpTL
+    questionsTmpTL[indexSelectingTL].point = parseFloat(point);
+
+    let totalPointTL = 0;
+    questionsTmpTL.map(e => {
+      totalPointTL += e.point;
     })
+
+    this.setState({
+      questionsTL: questionsTmpTL,
+      totalPointTL
+    })
+
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
   }
 
   onEndEditingPoint = () => {
-    const { questions } = this.state;
-    const { indexSelecting } = this.props;
-    const questionsTmp = questions;
-    let textPoint = questionsTmp[indexSelecting].textPoint;
+    const { questionsTN, totalPointTL } = this.state;
+    const { indexSelectingTN } = this.props;
+    const questionsTmpTN = questionsTN;
+    let textPoint = questionsTmpTN[indexSelectingTN].textPoint;
     let pointTmp = parseFloat(textPoint);
     if (!Number.isNaN(pointTmp)) {
       pointTmp = pointTmp % 1 === 0 ? (pointTmp > 10 ? 10 : parseInt(pointTmp)) : pointTmp;
     } else {
       pointTmp = 0;
     }
-    questionsTmp[indexSelecting].point = pointTmp;
-    let totalPoint = 0;
-    questionsTmp.map(e => {
-      totalPoint += e.point;
+    questionsTmpTN[indexSelectingTN].point = pointTmp;
+    let totalPointTN = 0;
+    questionsTmpTN.map(e => {
+      totalPointTN += e.point;
     });
     this.setState({
-      questions: questionsTmp,
-      totalPoint
+      questionsTN: questionsTmpTN,
+      totalPointTN
     });
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
+
   }
 
   onEndEditingPointTL = () => {
-    const { questionsTL } = this.state;
+    const { questionsTL, totalPointTN } = this.state;
     const { indexSelectingTL } = this.props;
     const questionsTmpTL = questionsTL;
     let textPoint = questionsTmpTL[indexSelectingTL].textPoint;
@@ -258,6 +304,7 @@ export default class SelectAnswer extends Component {
       questionsTL: questionsTmpTL,
       totalPointTL
     })
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
   }
 
   editPoint = () => {
@@ -270,138 +317,26 @@ export default class SelectAnswer extends Component {
     }
   }
 
-  pointSentence = () => {
-    const { typeQuestion, totalQuestion, totalQuestionTL } = this.props;
-    const { questions, questionsTL, totalPoint, totalPointTL } = this.state;
+  renderFlatlist = (typeQuestion, numColumns, questionsTN, questionsTL) => {
     if (typeQuestion === 0) {
-
-      let questionsTmp = questions.map(e => {
-        return {
-          ...e,
-          point: parseFloat((totalPoint / totalQuestion).toFixed(2)),
-          textPoint: `${(totalPoint / totalQuestion).toFixed(2)}`
-        }
-      })
-      this.setState({
-        questions: questionsTmp,
-      })
-    } else {
-      let questionsTLTmp = questionsTL.map(e => {
-        return {
-          ...e,
-          point: parseFloat((totalPointTL / totalQuestionTL).toFixed(2)),
-          textPoint: `${(totalPointTL / totalQuestionTL).toFixed(2)}`
-        }
-      })
-      this.setState({
-        questionsTL: questionsTLTmp,
-      })
-    }
-  }
-
-  onChangeText = (point) => {
-    const { typeQuestion } = this.props;
-    if (typeQuestion === 0) {
-      this.onChangePoint(point);
-    } else {
-      this.onChangPointTL(point);
-    }
-  }
-
-  render() {
-    const { numColumns, isVisible, typeQuestion } = this.props;
-    const { questions, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPoint, totalPointTL } = this.state;
-    const { indexSelecting, indexSelectingTL } = this.props;
-    let optionIdAnswer = -1;
-    const indexOfAnswer = _.indexOf(questions.map(e => e.index), this.props.indexSelecting);
-    if (questions.length <= 0 || !isVisible || typeQuestion === 1 && questionsTL.length <= 0) {
-      return null;
-    } else {
-      optionIdAnswer = questions[indexOfAnswer].optionIdAnswer;
-    }
-
-    return (
-      <View>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 15,
-          paddingHorizontal: 16,
-          alignItems: 'center',
-        }}>
-          <View style={{ top: 10 }}>
-            <Text style={styles.totalAddQuestion}>Tổng số câu</Text>
-            <InputNumberQuestion
-              containerStyle={[
-                { flex: 1, marginBottom: 25 },
-                this.props.assignmentType && { marginBottom: 80 },
-              ]}
-              totalQuestion={
-                this.props.totalQuestion
-              }
-              onChange={this.props.onChange}
-            />
-          </View>
-          <View style={{ justifyContent: 'space-evenly', height: 80 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
-              <Text style={styles.totalAddQuestion}>Tổng điểm:</Text>
-              {typeQuestion === 0 ? <TextInput
-                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
-                numberOfLines={1}
-                returnKeyType={'done'}
-                maxLength={4}
-                keyboardType={'numeric'}
-                onChangeText={text => this.setState({ totalPoint: text && parseInt(text) || 0 })}
-                onEndEditing={() => this.pointSentence(typeQuestion)}
-                value={totalPoint && `${totalPoint}` || ''}
-                editable={false}
-              /> :
-                <TextInput
-                  style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
-                  numberOfLines={1}
-                  returnKeyType={'done'}
-                  maxLength={4}
-                  keyboardType={'numeric'}
-                  onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
-                  onEndEditing={() => this.pointSentence(typeQuestion)}
-                  value={totalPointTL && `${totalPointTL}` || ''}
-                  editable={false}
-                />}
-              {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
-              <Text style={styles.totalAddQuestion}>Điểm câu {typeQuestion === 0 ? this.props.indexSelecting + 1 : this.props.indexSelectingTL + 1}</Text>
-              <TextInput
-                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
-                numberOfLines={1}
-                returnKeyType={'done'}
-                maxLength={4}
-                keyboardType={'numeric'}
-                onChangeText={this.onChangeText}
-                onEndEditing={() => this.editPoint(typeQuestion)}
-                value={typeQuestion === 0 ? `${questions[this.props.indexSelecting].textPoint}` : `${questionsTL[this.props.indexSelectingTL].textPoint}`}
-                editable={false}
-              />
-            </View>
-          </View>
-        </View>
+      return (
         <View style={{
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          {typeQuestion === 0 ? <FlatList
+          {(questionsTN.length > 0) ? <FlatList
             contentContainerStyle={{ paddingHorizontal: 10, alignSelf: 'center', }}
             numColumns={numColumns}
-            data={questions}
+            data={questionsTN}
             scrollEnabled={false}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => {
               const isSelected = item.optionIdAnswer !== -1;
-              const isSelecting = (this.props.showSelectAnswer && this.props.indexSelecting === item.index);
+              const isSelecting = (this.props.showSelectAnswer && this.props.indexSelectingTN === item.index);
               const name = (item.index + 1) + this.getNameAnswer(item.optionIdAnswer);
               return (
                 <TouchableOpacity
-                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer, questions[index].textPoint) }}
+                  onPress={() => { this.onClickItem(item.index, item.optionIdAnswer, questionsTN[index].textPoint) }}
                   style={{
                     width: 45,
                     height: 45,
@@ -422,42 +357,179 @@ export default class SelectAnswer extends Component {
                 </TouchableOpacity>
               )
             }}
-          /> :
-            <FlatList
-              scrollEnabled={false}
-              contentContainerStyle={{ paddingHorizontal: 8 }}
-              numColumns={numColumns}
-              data={questionsTL}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => {
-                const isSelected = item.optionIdAnswer !== -1;
-                const isSelecting = this.props.indexSelectingTL === item.index;
-                const name = (item.index + 1);
-                return (
-                  <TouchableOpacity
-                    onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questions[index].textPoint) }}
-                    style={{
-                      width: 45,
-                      height: 45,
-                      borderRadius: 5,
-                      borderColor: isSelecting ? '#56CCF2' : '#828282',
-                      borderWidth: 1,
-                      margin: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#fff'
-                    }}>
-                    <Text style={{
-                      fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
-                      fontSize: RFFonsize(12),
-                      color: '#000',
-                      fontWeight: '700',
-                    }}>{name}</Text>
-                  </TouchableOpacity>
-                )
-              }}
-            />
+          />
+            :
+            <View></View>
           }
+        </View>
+      )
+    } else {
+      return (
+        <FlatList
+          scrollEnabled={false}
+          contentContainerStyle={{ paddingHorizontal: 8 }}
+          numColumns={numColumns}
+          data={questionsTL}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            const isSelected = item.optionIdAnswer !== -1;
+            const isSelecting = this.props.indexSelectingTL === item.index;
+            const name = (item.index + 1);
+            return (
+              <TouchableOpacity
+                onPress={() => { this.onClickItemTL(item.index, item.optionIdAnswer, questionsTL[index].textPoint) }}
+                style={{
+                  width: 45,
+                  height: 45,
+                  borderRadius: 5,
+                  borderColor: isSelecting ? '#56CCF2' : '#828282',
+                  borderWidth: 1,
+                  margin: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#fff'
+                }}>
+                <Text style={{
+                  fontFamily: isSelected || isSelecting ? 'Nunito-Bold' : 'Nunito-Regular',
+                  fontSize: RFFonsize(12),
+                  color: '#000',
+                  fontWeight: '700',
+                }}>{name}</Text>
+              </TouchableOpacity>
+            )
+          }}
+        />
+      )
+    }
+
+  }
+
+  pointSentence = () => {
+    const { typeQuestion, totalQuestionTN, totalQuestionTL } = this.props;
+    const { questionsTN, questionsTL, totalPointTN, totalPointTL } = this.state;
+    if (typeQuestion === 0) {
+
+      let questionsTmpTN = questionsTN.map(e => {
+        return {
+          ...e,
+          point: parseFloat((totalPointTN / totalQuestionTN).toFixed(2)),
+          textPoint: `${(totalPointTN / totalQuestionTN).toFixed(2)}`
+        }
+      })
+      this.setState({
+        questionsTN: questionsTmpTN,
+      })
+    } else {
+      let questionsTLTmp = questionsTL.map(e => {
+        return {
+          ...e,
+          point: parseFloat((totalPointTL / totalQuestionTL).toFixed(2)),
+          textPoint: `${(totalPointTL / totalQuestionTL).toFixed(2)}`
+        }
+      })
+      this.setState({
+        questionsTL: questionsTLTmp,
+      })
+    }
+    this.props.getTotalPoint(totalPointTN + totalPointTL);
+  }
+
+  onChangeText = (point) => {
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 432 ~ SelectAnswer ~ point", point)
+    const { typeQuestion } = this.props;
+    if (typeQuestion === 0) {
+      this.onChangePoint(point);
+    } else {
+      this.onChangPointTL(point);
+    }
+  }
+
+  render() {
+    const { numColumns, isVisible, typeQuestion } = this.props;
+    const { questionsTN, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPointTN, totalPointTL } = this.state;
+    const { indexSelectingTN, indexSelectingTL } = this.props;
+    let optionIdAnswer = -1;
+    const indexOfAnswer = _.indexOf(questionsTN.map(e => e.index), this.props.indexSelectingTN);
+    if (!isVisible) {
+      return null;
+    } else {
+      optionIdAnswer = questionsTN[indexOfAnswer]?.optionIdAnswer;
+    }
+
+    return (
+      <View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginBottom: 15,
+          paddingHorizontal: 16,
+          alignItems: 'center',
+        }}>
+          <View style={{ top: 10 }}>
+            <Text style={styles.totalAddQuestion}>Tổng số câu</Text>
+            <InputNumberQuestion
+              containerStyle={[
+                { flex: 1, marginBottom: 25 },
+                this.props.assignmentType && { marginBottom: 80 },
+              ]}
+              totalQuestionTN={
+                typeQuestion == 0
+                  ?
+                  this.props.totalQuestionTN
+                  :
+                  this.props.totalQuestionTL
+              }
+              onChange={this.props.onChange}
+            />
+          </View>
+          <View style={{ justifyContent: 'space-evenly', height: 80 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
+              <Text style={styles.totalAddQuestion}>Tổng điểm:</Text>
+              {typeQuestion === 0 ? <TextInput
+                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                numberOfLines={1}
+                returnKeyType={'done'}
+                maxLength={4}
+                keyboardType={'numeric'}
+                onChangeText={text => this.setState({ totalPointTN: text && parseInt(text) || 0 })}
+                onEndEditing={() => this.pointSentence(typeQuestion)}
+                value={totalPointTN && `${totalPointTN}` || ''}
+                editable={true}
+              /> :
+                <TextInput
+                  style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                  numberOfLines={1}
+                  returnKeyType={'done'}
+                  maxLength={4}
+                  keyboardType={'numeric'}
+                  onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
+                  onEndEditing={() => this.pointSentence(typeQuestion)}
+                  value={totalPointTL && `${totalPointTL}` || ''}
+                  editable={true}
+                />}
+              {/* <Image source={require('../../../asserts/icon/editPoint.png')} style={{ position: 'absolute', right: 3 }} /> */}
+            </View>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
+              <Text style={styles.totalAddQuestion}>Điểm câu {typeQuestion === 0 ? this.props.indexSelectingTN + 1 : this.props.indexSelectingTL + 1}</Text>
+              <TextInput
+                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                numberOfLines={1}
+                returnKeyType={'done'}
+                maxLength={4}
+                keyboardType={'numeric'}
+                onChangeText={this.onChangeText}
+                onEndEditing={() => this.editPoint(typeQuestion)}
+                value={typeQuestion === 0 ? `${questionsTN[this.props.indexSelectingTN].textPoint}` : `${questionsTL[this.props.indexSelectingTL].textPoint}`}
+                editable={false}
+              />
+            </View> */}
+          </View>
+        </View>
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          {this.renderFlatlist(typeQuestion, numColumns, questionsTN, questionsTL)}
         </View>
       </View>
     )
@@ -684,6 +756,6 @@ const styles = StyleSheet.create({
     borderColor: '#0091EA',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   }
 })
