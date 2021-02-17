@@ -27,4 +27,4 @@ export const DATA_YEAR = [
 /**
  * Need change when upload store
  */
-export const APP_VERSION = Platform.OS == 'ios' ? '1.4' : '1.4';
+export const APP_VERSION = Platform.OS == 'ios' ? '1.11' : '1.5';
