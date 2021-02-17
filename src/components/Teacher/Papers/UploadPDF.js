@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import DropdownMultiSelect from '../Homework/DropdownMultiSelect';
 import Dropdown from '../Homework/Dropdown';
 import _ from 'lodash';
 import DocumentPicker from 'react-native-document-picker';
@@ -399,14 +400,26 @@ export default class UploadPDF extends Component {
     }
   }
 
-  onPressItemSubject = (index) => {
+  onPressItemSubject = (indexList) => {
     const { listSubjects } = this.props.navigation.state.params;
-    this.setState({ subjectCode: [listSubjects[index].code] });
+    let arrTmp = [];
+    if (indexList.length) {
+      indexList.forEach(element => {
+        arrTmp.push(listSubjects[element].code)
+      });
+    }
+    this.setState({ subjectCode: arrTmp });
   };
 
-  onPressItemGrade = (index) => {
+  onPressItemGrade = (indexList) => {
     const { listGrades } = this.props.navigation.state.params;
-    this.setState({ gradeCode: [listGrades[index].gradeId] });
+    let arrTmp = [];
+    if (indexList.length) {
+      indexList.forEach(element => {
+        arrTmp.push(listGrades[element].code)
+      });
+    }
+    this.setState({ gradeCode: arrTmp });
   };
 
   onPressItemAssignmentType = (index) => {
@@ -506,7 +519,7 @@ export default class UploadPDF extends Component {
                           style={styles.inputName}
                         />
                         <Text style={styles.styTxtLabel}>Môn học</Text>
-                        <Dropdown
+                        <DropdownMultiSelect
                           containerStyle={{
                             marginHorizontal: 0,
                           }}
@@ -516,7 +529,7 @@ export default class UploadPDF extends Component {
                           onPressItem={(index) => this.onPressItemSubject(index)}
                         />
                         <Text style={styles.styTxtLabel}>Khối lớp</Text>
-                        <Dropdown
+                        <DropdownMultiSelect
                           contentStyle={styles.styTxtPlace}
                           title="Khối lớp"
                           data={listGrades}
