@@ -62,125 +62,119 @@ export default class itemClass extends Component {
     const bg = Common.getBackroundSubject(item.subjectCode);
     return (
       <View style={[styles.container, { borderColor: bg }]}>
-        <View style={{ flex: 1 }}>
-          <View style={[styles.top, { backgroundColor: bg }]}>
-            <View style={styles.titleName}>
-              <Text style={styles.name}>{item.name}</Text>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.textStatus}>
-                {this._Status(item.status)}
-              </Text>
-              {(item.status === 1 || item.status === 2) && (
-                <View style={styles.iconStatus} />
-              )}
-            </View>
+        <View style={[styles.top, { backgroundColor: bg }]}>
+          <View style={styles.titleName}>
+            <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
           </View>
-          <View style={styles.body}>
-            <View style={{ marginTop: 5 }}>
-              <Text
-                style={styles.viewSubmit}>
-                Tỉ lệ nộp bài
-              </Text>
-              <View style={styles.progressBar}>
-                <ProgressBar
-                  progress={item.rateSubmit
-                    ? item.rateSubmit > 100
-                      ? 100 : item.rateSubmit : 1}
-                  color="#56BB73"
-                  widthProps={width - 100}
-                  progressUnfilledColor="#E0E0E0"
-                />
-                <Text
-                  style={styles.rateSub}>
-                  {item.rateSubmit}%
-                </Text>
-              </View>
-            </View>
-
-            <View>
-              {/* {activeDetail && ( */}
-              <View
-                style={styles.viewInfo}>
-                <View style={{ justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <FastImage
-                      source={Common.getIconSubject(item.subjectCode)}
-                      style={styles.getIcon}
-                    />
-                    <View style={styles.showSubjectCode}>
-                      <Text style={styles.txtInfoDetail}>
-                        Môn học
-                    </Text>
-                      <Text numberOfLines={1}
-                        style={styles.txtQuestion}>{item.subjectName}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.viewImageExcer}>
-                    <Image
-                      source={require('../../../asserts/icon/icon_remakeParacV3.png')}
-                      style={{ width: 23, height: 23 }}
-                    />
-                    <Text style={styles.txtInfoDetail}>Số bài tập</Text>
-                    <Text style={styles.txtThree}>{item.totalAssign}</Text>
-                  </View>
-                </View>
-                <View style={{ justifyContent: 'space-between' }}>
-                  <View style={styles.iconClass}>
-                    <Image
-                      source={require('../../../asserts/icon/icon_remakeClassV3.png')}
-                      style={{ width: 22, height: 22 }}
-                    />
-                    <Text style={styles.txtRight}>Khối lớp </Text>
-                    <Text style={[styles.indexOne, { marginLeft: 30 }]}>
-                      {item.gradeId.slice(1, 3)}
-                    </Text>
-                  </View>
-                  <View style={styles.iconPopu}>
-                    <Image
-                      source={require('../../../asserts/icon/icon_remakePeopleV3.png')}
-                      style={{ width: 22, height: 22 }}
-                    />
-                    <Text style={styles.txtRightFoot}>Sĩ số</Text>
-                    <Text style={styles.indexTwo}>{item.totalStudent}</Text>
-                  </View>
-                </View>
-              </View>
-              {/* )} */}
-              <RippleButton
-                onPress={() => this._classDetail(item)}
-                rippleDuration={150}
-                rippleSize={250}
-                rippleColor={'#FFF'}
-                style={styles.btn}>
-                <View style={[styles.wrapBtn, { backgroundColor: bg }]}>
-                  <FastImage
-                    style={{ width: 12 }}
-                    source={require('../../../asserts/icon/book.png')}
-                    resizeMode={FastImage.resizeMode.contain}
-                  />
-                  <Text style={styles.txtbtn}>Vào Lớp</Text>
-                </View>
-              </RippleButton>
-            </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.textStatus}>
+              {this._Status(item.status)}
+            </Text>
+            {(item.status === 1 || item.status === 2) && (
+              <View style={styles.iconStatus} />
+            )}
           </View>
         </View>
+        <View style={styles.body}>
+          <View style={{ marginTop: 5 }}>
+            <Text
+              style={styles.viewSubmit}>
+              Tỉ lệ nộp bài
+              </Text>
+            <View style={styles.progressBar}>
+              <ProgressBar
+                progress={item.rateSubmit
+                  ? item.rateSubmit > 100
+                    ? 100 : item.rateSubmit : 1}
+                color="#56BB73"
+                widthProps={width - 100}
+                progressUnfilledColor="#E0E0E0"
+              />
+              <Text
+                style={styles.rateSub}>
+                {item.rateSubmit}%
+                </Text>
+            </View>
+          </View>
+
+          <View
+            style={styles.viewInfo}>
+            <View style={{ justifyContent: 'space-between' }}>
+              <View style={{ flexDirection: 'row' }}>
+                <FastImage
+                  source={Common.getIconSubject(item.subjectCode)}
+                  style={styles.getIcon}
+                />
+                <View style={styles.showSubjectCode}>
+                  <Text style={styles.txtInfoDetail}>
+                    Môn học
+                    </Text>
+                  <Text numberOfLines={1}
+                    style={styles.txtQuestion}>{item.subjectName}</Text>
+                </View>
+              </View>
+              <View style={styles.viewImageExcer}>
+                <Image
+                  source={require('../../../asserts/icon/icon_remakeParacV3.png')}
+                  style={{ width: 23, height: 23 }}
+                />
+                <Text style={styles.txtInfoDetail}>Số bài tập</Text>
+                <Text style={styles.txtThree}>{item.totalAssign}</Text>
+              </View>
+            </View>
+            <View style={{ justifyContent: 'space-between' }}>
+              <View style={styles.iconClass}>
+                <Image
+                  source={require('../../../asserts/icon/icon_remakeClassV3.png')}
+                  style={{ width: 22, height: 22 }}
+                />
+                <Text style={styles.txtRight}>Khối lớp </Text>
+                <Text style={[styles.indexOne, { marginLeft: 30 }]}>
+                  {item.gradeId.slice(1, 3)}
+                </Text>
+              </View>
+              <View style={styles.iconPopu}>
+                <Image
+                  source={require('../../../asserts/icon/icon_remakePeopleV3.png')}
+                  style={{ width: 22, height: 22 }}
+                />
+                <Text style={styles.txtRightFoot}>Sĩ số</Text>
+                <Text style={styles.indexTwo}>{item.totalStudent}</Text>
+              </View>
+            </View>
+          </View>
+          <RippleButton
+            onPress={() => this._classDetail(item)}
+            rippleDuration={150}
+            rippleSize={250}
+            rippleColor={'#FFF'}
+            style={styles.btn}>
+            <View style={[styles.wrapBtn, { backgroundColor: bg }]}>
+              <FastImage
+                style={{ width: 12 }}
+                source={require('../../../asserts/icon/book.png')}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+              <Text style={styles.txtbtn}>Vào Lớp</Text>
+            </View>
+          </RippleButton>
+        </View>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
-    flex: 1,
+    // flex: 1,
     borderWidth: 1,
     marginTop: 20,
     borderRadius: 5,
     overflow: 'hidden',
   },
   top: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     paddingVertical: 3,
     paddingLeft: 10,
@@ -285,7 +279,7 @@ const styles = StyleSheet.create({
   viewInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
+    // flex: 1,
     paddingVertical: 15,
     paddingLeft: 8,
     paddingRight: 8,
@@ -310,7 +304,8 @@ const styles = StyleSheet.create({
   },
   titleName: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '70%'
   },
   viewSubmit: {
     fontSize: RFFonsize(12),

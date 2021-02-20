@@ -70,13 +70,13 @@ export default class MissionStepByStep extends Component {
   render() {
     return (
       <SafeAreaView style={styles.contain}>
-        <HeaderNavigation
+        {/* <HeaderNavigation
           title={'Thêm nhiệm vụ'}
           navigation={this.props.navigation}
           actionIcon={false}
           goBack={this.goBack}
           color={'#979797'}
-        />
+        /> */}
         <View style={{ backgroundColor: '#fff' }}>
           <StepIndicator
             customStyles={customStyles}
