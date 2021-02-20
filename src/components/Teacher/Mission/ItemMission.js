@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginTop: 15,
-    flex: 1,
+    // flex: 1,
     // backgroundColor: '#fff'
   },
   styWrapHeader: {
-    flex: 1,
+    // flex: 1,
     padding: 8,
     paddingHorizontal: 16,
     backgroundColor: '#7E96EC',
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     marginLeft: 5,
     width: width / 3 - 15,
-    flex: 1
+    // flex: 1
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
