@@ -10,7 +10,8 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity,
     FlatList,
-    Keyboard
+    Keyboard,
+    Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
@@ -162,6 +163,14 @@ class ConfigQuestion extends Component {
     }
 
     onCheckTotal(newValue) {
+        const { listChecked } = this.state;
+        console.log('listChecked', listChecked)
+        const dataConvert = listChecked.map(element => {
+            return true
+        })
+        this.setState({ listChecked: dataConvert })
+        console.log('dataConvert', dataConvert)
+
         this.setState({ toggleCheckBox: newValue });
         if (newValue) {
             this.webview.postMessage('tickAll');
@@ -171,9 +180,8 @@ class ConfigQuestion extends Component {
     }
 
     deleteCheckedQs() {
-        const { data, eachQSPoint } = this.state;
+        const { data, eachQSPoint, listChecked } = this.state;
         let questionList = data.questions;
-        let listChecked = this.state.listChecked;
         let count = listChecked.filter((a) => (a == true)).length;
         if (count == listChecked.length) {
             this.refs.toast.show('Bộ đề phải có câu hỏi!');
@@ -224,6 +232,7 @@ class ConfigQuestion extends Component {
         const { listChecked } = this.state;
         let count = listChecked.filter((a) => (a == true)).length;
         if (count > 1 || count == 0) {
+
             this.refs.toast.show('Xin vui lòng chọn 1 câu hỏi');
             return;
         }
@@ -393,9 +402,14 @@ class ConfigQuestion extends Component {
     copySubject = () => {
         const { totalPoint } = this.state;
         if (totalPoint != 10) {
-            this.refs.toast.show('Vui lòng nhập tổng điểm bằng 10')
+            Alert.alert('Thông báo', 'Vui lòng nhập tổng điểm bằng 10', [
+                {
+                    text: "OK",
+                }
+            ])
+        } else {
+            this.setState({ hidePopupCreate: false })
         }
-        this.setState({ hidePopupCreate: false })
     }
 
     onPressItemSubject = (index) => {

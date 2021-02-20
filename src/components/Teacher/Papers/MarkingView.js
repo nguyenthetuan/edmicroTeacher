@@ -358,7 +358,7 @@ class MarkingView extends Component {
       const { token } = await apiHelper.getToken();
       const response = await apiPaper.submitReview({ token, formData });
       console.log("🚀 ~ file: MarkingView.js ~ line 360 ~ MarkingView ~ onPressSubmitButton ~ response", response)
-      if (response && response.message === null) {
+      if (response && response.msg === null) {
         if (!_.isEmpty(assignmentDetailCheck?.data?.data)) {
           assignmentDetailCheck.data.data = assignmentDetailCheck.data.data.map(
             item => {
@@ -382,7 +382,7 @@ class MarkingView extends Component {
         AlertNoti(messageSuccess);
         return;
       }
-      AlertNoti(response.message);
+      AlertNoti(response.msg);
     } catch (error) { }
   }
 
