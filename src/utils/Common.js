@@ -708,7 +708,7 @@ export const AlertNoti = (message, clickOK) => {
 }
 
 export const roundNumberOne = (number) => {
-  return Math.round((number + 0.01) * 10) / 10;
+  return Math.round((number) * 10) / 10;
 }
 
 export function roundToTwo(num) {
