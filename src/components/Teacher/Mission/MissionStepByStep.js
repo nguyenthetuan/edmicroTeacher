@@ -91,6 +91,7 @@ export default class MissionStepByStep extends Component {
             handleNextStep: this.handleNextStep,
             token: this.token,
             data: this.state.data,
+            goback: this.goBack,
           }}
         />
       </SafeAreaView >

@@ -38,7 +38,7 @@ export default class StepFour extends Component {
     render() {
         return (
             <View style={styles.contain}>
-                <Image source={AppIcon.image_createCompleteV3} style={{ marginTop: 50 }} />
+                <Image source={AppIcon.image_createCompleteV3} style={{ marginTop: 20 }} />
                 <Text style={styles.styTxtAlert}>Tạo nhiệm vụ thành công! Bạn muốn làm gì tiếp theo?</Text>
                 <View style={styles.styWrapBtn}>
                     <TouchableOpacity
@@ -49,6 +49,9 @@ export default class StepFour extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                         <Text style={styles.styTxtBtn}>Giao nhiệm vụ vừa tạo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#ffbe70' }]} onPress={this.props.screenProps.goback}>
+                        <Text style={styles.styTxtBtn}>Màn hình chính</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -79,7 +82,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         position: 'absolute',
-        bottom: 20
+        bottom: 20,
+        marginTop: 10
     },
     styTxtAlert: {
         fontFamily: 'Nunito-Bold',
