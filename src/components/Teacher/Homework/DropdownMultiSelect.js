@@ -35,7 +35,7 @@ export default function DropdownMultiSelect(props) {
             let index = indexSelected[i];
             renderList.push(
                 <View style={[styles.wrapSelected, !isData && { borderWidth: 0, backgroundColor: 'transparent' }]}>
-                    <TouchableOpacity onPress={() => onPressMinus(index)} style={{ width: 20, height: 20, borderWidth: 1, borderRadius: 10, borderColor: 'red', position: 'absolute', right: 0, top: -10, backgroundColor: '#C4C4C4', justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => onPressMinus(index)} style={{ width: 20, height: 20, borderWidth: 1, borderRadius: 10, borderColor: 'red', position: 'absolute', right: -10, top: -10, backgroundColor: '#C4C4C4', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontWeight: '800', color: 'red', top: -6 }}>_</Text>
                     </TouchableOpacity>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
@@ -57,7 +57,6 @@ export default function DropdownMultiSelect(props) {
             indexSelectTmp.push(index)
         } else {
             indexSelectTmp.splice(indexOf, 1);
-            console.log("🚀 ~ file: DropdownMultiSelect.js ~ line 60 ~ onPressItem ~ indexSelectTmp", indexSelectTmp)
         }
         setIndex(indexSelectTmp);
         if (props.onPressItem) {
@@ -68,15 +67,11 @@ export default function DropdownMultiSelect(props) {
     const onPressMinus = index => {
         const indexOf = indexSelected.indexOf(index);
         let indexSelectTmp = indexSelected;
-        console.log('onPressMinus');
-        console.log("🚀 ~ file: DropdownMultiSelect.js ~ line 51 ~ onPressItem ~ indexOf", indexOf)
-        console.log("🚀 ~ file: DropdownMultiSelect.js ~ line 51 ~ onPressItem ~ index", index)
-        console.log("🚀 ~ file: DropdownMultiSelect.js ~ line 52 ~ onPressItem ~ indexSelectTmp", indexSelectTmp)
+
         if (indexOf < 0) {
 
         } else {
             indexSelectTmp.splice(indexOf, 1);
-            console.log("🚀 ~ file: DropdownMultiSelect.js ~ line 60 ~ onPressItem ~ indexSelectTmp else onPressMinus", indexSelectTmp)
         }
         setIndex(indexSelectTmp);
         props.onPressItem(indexSelectTmp);
