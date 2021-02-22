@@ -519,22 +519,26 @@ export default class UploadPDF extends Component {
                           style={styles.inputName}
                         />
                         <Text style={styles.styTxtLabel}>Môn học</Text>
-                        <DropdownMultiSelect
-                          containerStyle={{
-                            marginHorizontal: 0,
-                          }}
-                          contentStyle={styles.styTxtPlace}
-                          title="Môn học"
-                          data={listSubjects}
-                          onPressItem={(index) => this.onPressItemSubject(index)}
-                        />
+                        <View style={[styles.styTxtPlace]} >
+                          <DropdownMultiSelect
+                            containerStyle={{
+                              marginHorizontal: 0,
+                            }}
+                            contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
+                            title="Môn học"
+                            data={listSubjects}
+                            onPressItem={(index) => this.onPressItemSubject(index)}
+                          />
+                        </View>
                         <Text style={styles.styTxtLabel}>Khối lớp</Text>
-                        <DropdownMultiSelect
-                          contentStyle={styles.styTxtPlace}
-                          title="Khối lớp"
-                          data={listGrades}
-                          onPressItem={(index) => this.onPressItemGrade(index)}
-                        />
+                        <View style={[styles.styTxtPlace]} >
+                          <DropdownMultiSelect
+                            contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
+                            title="Khối lớp"
+                            data={listGrades}
+                            onPressItem={(index) => this.onPressItemGrade(index)}
+                          />
+                        </View>
                         <Text style={styles.styTxtLabel}>Dạng bài</Text>
                         <Dropdown
                           contentStyle={styles.styTxtPlace}
@@ -722,7 +726,7 @@ export default class UploadPDF extends Component {
               <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
             </View>}
         </SafeAreaView>
-      </View>
+      </View >
     );
   }
 }
@@ -875,7 +879,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 30,
     borderRadius: 2,
-    marginBottom: 10
+    marginBottom: 10,
+    minWidth: width - 50,
   },
   wrapTotalQuestion: {
     flexDirection: 'row',

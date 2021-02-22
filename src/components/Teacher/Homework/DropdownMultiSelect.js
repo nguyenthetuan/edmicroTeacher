@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import SelectModal from './SelectModal';
 import { RFFonsize } from '../../../utils/Fonts';
+import { ScrollView } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('window');
 
 export default function DropdownMultiSelect(props) {
@@ -35,8 +36,10 @@ export default function DropdownMultiSelect(props) {
             let index = indexSelected[i];
             renderList.push(
                 <View style={[styles.wrapSelected, !isData && { borderWidth: 0, backgroundColor: 'transparent' }]}>
-                    <TouchableOpacity onPress={() => onPressMinus(index)} style={{ width: 20, height: 20, borderWidth: 1, borderRadius: 10, borderColor: 'red', position: 'absolute', right: -10, top: -10, backgroundColor: '#C4C4C4', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontWeight: '800', color: 'red', top: -6 }}>_</Text>
+                    <TouchableOpacity onPress={() => onPressMinus(index)} style={{ width: 30, height: 30, position: 'absolute', right: -10, top: -10, justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>
+                        <View style={{ width: 15, height: 15, borderWidth: 1, borderRadius: 10, borderColor: 'red', justifyContent: 'center', alignItems: 'center', backgroundColor: '#C4C4C4' }}>
+                            <Text style={{ fontWeight: '800', color: 'red', fontSize: 10, top: -5, right: -0.5 }}>_</Text>
+                        </View>
                     </TouchableOpacity>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
                         {isData
@@ -47,6 +50,10 @@ export default function DropdownMultiSelect(props) {
             )
         }
         return renderList;
+    }
+
+    const renderTEST = () => {
+
     }
 
     const onPressItem = (index) => {
@@ -79,15 +86,17 @@ export default function DropdownMultiSelect(props) {
     }
 
     return (
-        <View style={containerStyle}>
-            <TouchableOpacity
-                onPress={() => {
-                    showDropdown(!dropdownVisible);
-                    selectModal.current.onShowModal();
-                }}
-                style={[styles.styBtn, contentStyle]}>
-                {renderSelect()}
-            </TouchableOpacity>
+        <View style={[{ marginHorizontal: 0 }]}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                <TouchableOpacity
+                    onPress={() => {
+                        showDropdown(!dropdownVisible);
+                        selectModal.current.onShowModal();
+                    }}
+                    style={[styles.styBtn, contentStyle]}>
+                    {renderSelect()}
+                </TouchableOpacity>
+            </ScrollView>
             <SelectModal
                 onHide={() => showDropdown(false)}
                 ref={selectModal}
