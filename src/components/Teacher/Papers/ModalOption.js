@@ -12,8 +12,26 @@ import RippleItem from '../../common-new/RippleItem';
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
 import { RFFonsize } from '../../../utils/Fonts';
+import dataHelper from '../../../utils/dataHelper';
+import Api from '../../../services/apiClassTeacher';
 export default class ModalOption extends PureComponent {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            totalUserDoing: 0,
+        }
+    }
+    async componentDidUpdate() {
+        const { dataSelected } = this.props;
+        const assignmentId = dataSelected.assignmentId;
+        try {
+            const { token } = await dataHelper.getToken();
+            const response = await Api.getListClassAssigment({ token, assignmentId });
+            this.setState({
+                totalUserDoing: response?.data[0]?.totalUserDoing,
+            });
+        } catch (error) { }
+    }
     render() {
         const { visibleEdit, animation, assignmentContentType, dataSelected } = this.props;
         return (
@@ -52,14 +70,14 @@ export default class ModalOption extends PureComponent {
                                             <Text style={styles.txtModalDetail}>Sửa tên</Text>
                                         </View>
                                     </RippleItem>
-                                    <RippleItem onPress={() => this.props._OpenModal(4)}>
+                                    {!this.state.totalUserDoing && <RippleItem onPress={() => this.props._OpenModal(4)}>
                                         <View style={styles.wrapElementModal}>
                                             <Image
                                                 source={require('../../../asserts/icon/icConfig.png')}
                                             />
                                             <Text style={styles.txtModalDetail}>Sửa cấu hình</Text>
                                         </View>
-                                    </RippleItem>
+                                    </RippleItem>}
                                     {dataSelected && dataSelected.status !== 4 && (
                                         <RippleItem onPress={this.props.deletePaper}>
                                             <View style={styles.wrapElementModal}>
