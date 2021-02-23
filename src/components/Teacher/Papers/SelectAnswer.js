@@ -214,7 +214,7 @@ export default class SelectAnswer extends Component {
   }
 
   onChangePoint = (point) => {
-    if (isNaN(point) || point == '') {
+    if (isNaN(point) || point === '') {
       return;
     }
     const { questionsTN, totalPointTL } = this.state;
@@ -444,6 +444,21 @@ export default class SelectAnswer extends Component {
     }
   }
 
+  onChange = (num) => {
+    console.log("🚀 ~ file: SelectAnswer.js ~ line 448 ~ SelectAnswer ~ num", num)
+    const { typeQuestion } = this.props;
+
+    if (num === 0) {
+      console.log("🚀 ~ file: SelectAnswer.js ~ line 453 ~ SelectAnswer ~ typeQuestion", typeQuestion)
+      if (typeQuestion === 0) {
+        this.onChangePoint(0);
+      } else {
+        this.onChangPointTL(0);
+      }
+    }
+    this.props.onChange(num);
+  }
+
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
     const { questionsTN, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPointTN, totalPointTL } = this.state;
@@ -479,7 +494,7 @@ export default class SelectAnswer extends Component {
                   :
                   this.props.totalQuestionTL
               }
-              onChange={this.props.onChange}
+              onChange={this.onChange}
             />
           </View>
           <View style={{ justifyContent: 'space-evenly', height: 80 }}>
