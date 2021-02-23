@@ -95,7 +95,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column', flex: 1 }}>
+                        <View>
                             <View style={styles.flexSenten}>
                                 <FastImage
                                     source={require('../../../asserts/icon/icon_remakeClassV3.png')}
@@ -121,7 +121,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column', marginLeft: 30, flex: 1, marginRight: 5 }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 30, marginRight: 5 }}>
                             <View>
                                 {
                                     item.assignmentType
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 14,
         backgroundColor: '#fff',
-        flex: 1,
+        // flex: 1,
     },
     txtQuestion: {
         fontFamily: 'Nunito',
