@@ -364,6 +364,7 @@ export default class UploadPDF extends Component {
 
       const { token } = await dataHelper.getToken();
       if (token) {
+        console.log("🚀 ~ file: UploadPDF.js ~ line 369 ~ UploadPDF ~ assignmentContent= ~ body", body)
         const res = await apiPapers.assignmentContent({ token, body });
         if (res && res.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
@@ -416,7 +417,7 @@ export default class UploadPDF extends Component {
     let arrTmp = [];
     if (indexList.length) {
       indexList.forEach(element => {
-        arrTmp.push(listGrades[element].code)
+        arrTmp.push(listGrades[element].gradeId)
       });
     }
     this.setState({ gradeCode: arrTmp });
