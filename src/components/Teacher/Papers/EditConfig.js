@@ -20,6 +20,7 @@ import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { RFFonsize } from '../../../utils/Fonts';
+import Api from '../../../services/apiClassTeacher';
 
 const { width } = Dimensions.get('window');
 
@@ -38,13 +39,24 @@ class EditConfig extends Component {
             updating: false,
             loading: false,
             message: '',
-            assignedCode: []
+            assignedCode: [],
+            totalUserDoing: 0
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const { data, listGrades, listSubjects } = this.props.navigation.state.params;
         const { assignedCode } = this.state;
+        const assignmentId = data.assignmentId;
+
+        await dataHelper.getToken().then(token => {
+            Api.getListClassAssigment({ token, assignmentId }).then(response => {
+                this.setState({
+                    totalUserDoing: response?.data[0]?.totalUserDoing,
+                });
+            });
+        });
+
         if (data) {
             let listGradeTmp = listGrades;
             let listSubjectTmp = listSubjects;
@@ -128,7 +140,7 @@ class EditConfig extends Component {
     };
 
     activeGrade = item => {
-        const { gradeCode, assignedCode } = this.state;
+        const { gradeCode, assignedCode, totalUserDoing } = this.state;
         const { listGrades } = this.props.navigation.state.params;
 
         let gradeCodeTmp = gradeCode;
@@ -137,7 +149,7 @@ class EditConfig extends Component {
         });
 
         const isAssigned = _.indexOf(assignedCode, item.gradeId) >= 0;
-        if (isAssigned) {
+        if (isAssigned && totalUserDoing) {
             return;
         }
         const index = _.indexOf(gradeCodeTmp, item.gradeId);
@@ -165,7 +177,7 @@ class EditConfig extends Component {
     };
 
     activeSubject = item => {
-        const { subjectCode, assignedCode } = this.state;
+        const { subjectCode, assignedCode, totalUserDoing } = this.state;
         const { listSubjects } = this.props.navigation.state.params;
 
         let subjectCodeTmp = subjectCode;
@@ -174,7 +186,7 @@ class EditConfig extends Component {
         });
 
         const isAssigned = _.indexOf(assignedCode, item.code) >= 0;
-        if (isAssigned) {
+        if (isAssigned && totalUserDoing) {
             return;
         }
 
