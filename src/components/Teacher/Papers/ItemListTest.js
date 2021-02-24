@@ -38,7 +38,7 @@ export default class Item extends Component {
         }
         let gradeCode =
             item.gradeCode && item.gradeCode.length > 0 ? item.gradeCode[0] : '';
-        gradeCode = gradeCode.substring(1);
+        gradeCode = gradeCode?.substring(1);
         const payloadAssignment = {
             gradeCode,
             subjectCode,

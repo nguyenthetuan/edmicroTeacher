@@ -26,7 +26,7 @@ import {
 
 class ItemClass extends Component {
     state = {
-        status: this.props.status,
+        status: this.props.item.isAssign,
         isDatePickerVisible: false,
         timeEnd: this.props.item.timeEnd * 1000 || new Date().getTime(),
         // timeEnd: new Date().getTime() + 190000,
@@ -125,6 +125,7 @@ class ItemClass extends Component {
 
     render() {
         const { item } = this.props;
+        console.log('item', item)
         const dataItem = {
             classCode: item.classId
         }
@@ -156,7 +157,7 @@ class ItemClass extends Component {
                             onPress={this.showDatePicker}
                             style={styles.btnDate}>
                             <Text numberOfLines={1} style={styles.txtContentItem}>
-                                {moment(timeEnd).format('DD-MM-YYYY, HH:MM')}
+                                {moment(timeEnd).format('DD-MM-YYYY, hh:mm')}
                             </Text>
                         </TouchableOpacity>
                         {/* <DropdownStudent
@@ -204,12 +205,12 @@ class ItemClass extends Component {
                         }
                     </View>
                 </View>
-                {__DEV__ ? null : <DateTimePickerModal
+                <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="datetime"
                     onConfirm={this.handleConfirm}
                     onCancel={this.hideDatePicker}
-                />}
+                />
             </View >
         );
     }

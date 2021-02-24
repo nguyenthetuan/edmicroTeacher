@@ -25,6 +25,7 @@ import { isIphoneX } from 'react-native-iphone-x-helper';
 import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
+
 const { width, height } = Dimensions.get('window');
 let heightTextInput = 0,
   heightContent = 0;
@@ -236,23 +237,36 @@ export default class ModalCurriculum extends Component {
                     justifyContent: 'space-between',
                     backgroundColor: '#2D9CDB',
                     paddingHorizontal: 16,
-                    paddingVertical: 4
+                    height: 80,
+                    alignContent: 'flex-end',
+                    paddingBottom: 10
                   }}>
                     <TouchableOpacity
+                      style={{ alignSelf: 'flex-end' }}
                       onPress={() => {
                         this.setState({
-                          data: this.props.data,
+                          visible: false,
                           searchKey: '',
                         })
                       }
                       }>
-                      <MaterialCommunityIcons
-                        name="arrow-left"
-                        color="#FFF"
-                        size={30}
+                      <Image
+                        style={{ tintColor: '#fff' }}
+                        source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
                       />
                     </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', }}>
+                    <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({
+                            data: this.props.data,
+                            searchKey: '',
+                          })
+                        }
+                        }
+                      >
+                        <Image source={require('../../../asserts/icon/iconHome.png')} style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }} resizeMode='contain' />
+                      </TouchableOpacity>
                       <TextInput
                         style={styles.TextInput}
                         onChangeText={(Text) =>
@@ -299,13 +313,14 @@ export default class ModalCurriculum extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: '#fff',
     flex: 1,
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
+    // paddingTop: Platform.OS == 'ios' ? (isIphoneX() ? 30 : 10) : 10,
   },
   content: {
     backgroundColor: '#FFFF',
-    height: 220,
+    // height: 220,
     borderRadius: 5,
     // position: 'absolute',
     width: width,
@@ -319,7 +334,7 @@ const styles = StyleSheet.create({
   topheader: {
     backgroundColor: '#2D9CDB',
     flexDirection: 'row',
-    padding: 6,
+    padding: 30,
     justifyContent: 'space-between',
     paddingLeft: 23,
     // position: 'absolute',
