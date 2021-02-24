@@ -38,11 +38,13 @@ class EditConfig extends Component {
             updating: false,
             loading: false,
             message: '',
+            assignedCode: []
         }
     }
 
     componentDidMount() {
         const { data, listGrades, listSubjects } = this.props.navigation.state.params;
+        const { assignedCode } = this.state;
         if (data) {
             let listGradeTmp = listGrades;
             let listSubjectTmp = listSubjects;
@@ -54,6 +56,7 @@ class EditConfig extends Component {
                     if (index > -1) {
                         listGradeTmp[index].isActive = true;
                         listGradeTmp = this.moveArrayItem(listGradeTmp, index, 0);
+                        assignedCode.push(gradeId);
                     }
                 });
 
@@ -62,8 +65,11 @@ class EditConfig extends Component {
                 if (index > -1) {
                     listSubjectTmp[index].isActive = true;
                     listSubjectTmp = this.moveArrayItem(listSubjectTmp, index, 0);
+                    assignedCode.push(subjectId);
                 }
             });
+
+            console.log("assignedCode: ", JSON.stringify(assignedCode));
 
             this.setState({
                 ...this.state,
@@ -75,6 +81,7 @@ class EditConfig extends Component {
                 subjectCode: data.subjectCode,
                 listGrades: listGradeTmp,
                 listSubjects: listSubjectTmp,
+                assignedCode: assignedCode
             });
         }
     }
@@ -121,7 +128,7 @@ class EditConfig extends Component {
     };
 
     activeGrade = item => {
-        const { gradeCode } = this.state;
+        const { gradeCode, assignedCode } = this.state;
         const { listGrades } = this.props.navigation.state.params;
 
         let gradeCodeTmp = gradeCode;
@@ -129,8 +136,11 @@ class EditConfig extends Component {
             return { ...e, isActive: false };
         });
 
+        const isAssigned = _.indexOf(assignedCode, item.gradeId) >= 0;
+        if (isAssigned) {
+            return;
+        }
         const index = _.indexOf(gradeCodeTmp, item.gradeId);
-
         index < 0
             ? (gradeCodeTmp = [...gradeCodeTmp, ...[item.gradeId]])
             : (gradeCodeTmp = [
@@ -155,13 +165,18 @@ class EditConfig extends Component {
     };
 
     activeSubject = item => {
-        const { subjectCode } = this.state;
+        const { subjectCode, assignedCode } = this.state;
         const { listSubjects } = this.props.navigation.state.params;
 
         let subjectCodeTmp = subjectCode;
         let listSubjectsTmp = listSubjects.map(e => {
             return { ...e, isActive: false };
         });
+
+        const isAssigned = _.indexOf(assignedCode, item.code) >= 0;
+        if (isAssigned) {
+            return;
+        }
 
         const index = _.indexOf(subjectCodeTmp, item.code);
         index < 0
