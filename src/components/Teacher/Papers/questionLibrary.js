@@ -35,6 +35,9 @@ import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { RFFonsize } from '../../../utils/Fonts';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+
+
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
   'Thêm câu hỏi không thành công. Bạn vui lòng chọn câu hỏi khác.';
@@ -447,139 +450,144 @@ class QuestionLibrary extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView />
-        <HeaderNavigation
-          title={'Ngân hàng câu hỏi'}
-          color={'white'}
-          navigation={this.props.navigation}
-          actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
-          actionStyle={{ borderRadius: 0 }}
-          onRightAction={() => this.configurationQuestion()}
-        />
-        <View style={styles.wrapSelectQuestion}>
-          <View style={{ flex: 0.45 }}>
-            <ModalConfigLibrary
-              title="Câu Hỏi"
-              data={[
-                { name: 'Câu hỏi công khai', code: '' },
-                { name: 'Câu hỏi của tôi', code: this.props.userName },
-              ]}
-              onPress={(value) => this.onPress(1, value)}
-              colum={2}
-              widthItem={40}
-              value={{ name: 'Câu hỏi công khai', code: '' }}
-            />
-            <ModalConfigLibrary
-              title="Môn Học"
-              data={subject}
-              onPress={(value) => this.onPress(2, value)}
-              colum={2}
-              widthItem={40}
-              value={subject && subject[0]}
-            />
-            <ModalConfigLibrary
-              title="Giáo trình"
-              data={element}
-              onPress={(value) => this.onPress(3, value)}
-              value={!_.isEmpty(element) && element[0]}
-            />
-          </View>
-          <View style={{ flex: 0.45 }}>
-            <ModalCurriculum
-              title="Đơn vị kiến thức"
-              height={this.state.height}
-              data={lerningTarget}
-              onPress={(value) => this.onPress(4, value)}
-            />
-            <ModalConfigLibrary
-              title="Dạng bài"
-              data={listSkills}
-              onPress={value => this.onPress(5, value)}
-              colum={2}
-              widthItem={40}
-            />
-            <ModalConfigLibrary
-              title="Cấp độ"
-              data={level}
-              colum={2}
-              widthItem={40}
-              onPress={(value) => this.onPress(6, value)}
-            />
-          </View>
-        </View>
-        <View
-          style={{ flex: 1, backgroundColor: '#FFF' }}
-          onLayout={(event) => {
-            var { x, y, width, height } = event.nativeEvent.layout;
-            this.setState({
-              height: height,
-            });
-          }}>
-          {isLoading && <LearnPlaceholder />}
-          <View style={styles.wrapPageAndNumberQuesion}>
-            <Text style={styles.totalAddQuestion}>
-              Số câu hỏi đã thêm: {listQuestionAdded.length}
-            </Text>
-            <PaginationUtils
-              ref={'PaginationUtils'}
-              totalQuestion={totalQuestion}
-              handleNextPage={this.handleNextPage}
-            />
-          </View>
-          <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-            {!_.isEmpty(this.state.questions) ? (
-              <WebViewComponent
-                ref={(webComponent) => this.webComponent = webComponent}
-                onHandleMessage={this.onHandleMessage}
-                _closeLearnPlaceholder={this._closeLearnPlaceholder}
-                questions={this.state.questions}
-                listQuestionAdded={listQuestionAdded}
-                isModal={isModal}
+        <SafeAreaView  style={styles.container}>
+          <HeaderNavigation
+            title={'Ngân hàng câu hỏi'}
+            color={'white'}
+            navigation={this.props.navigation}
+            // actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
+            actionStyle={{ borderRadius: 0 }}
+          // onRightAction={() => this.configurationQuestion()}
+          />
+          <TouchableOpacity style={styles.buttonCreateAssessment} onPress={() => this.configurationQuestion()}>
+            <Text style={styles.textCreateAssessment}>Cấu hình</Text>
+          </TouchableOpacity>
+          <View style={styles.wrapSelectQuestion}>
+            <View style={{ flex: 0.45 }}>
+              <ModalConfigLibrary
+                title="Câu Hỏi"
+                data={[
+                  { name: 'Câu hỏi công khai', code: '' },
+                  { name: 'Câu hỏi của tôi', code: this.props.userName },
+                ]}
+                onPress={(value) => this.onPress(1, value)}
+                colum={2}
+                widthItem={40}
+                value={{ name: 'Câu hỏi công khai', code: '' }}
               />
-
-            ) : (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 200,
-                  }}>
-                  <Text>Không có dữ liệu</Text>
-                </View>
-              )}
-            {!_.isEmpty(this.state.questions) && (
-              <TouchableOpacity
-                style={styles.buttomTop}
-                onPress={() => this._onTop()}>
-                <Image
-                  source={require('../../../asserts/appIcon/icUp.png')}
-                  resizeMode="contain"
-                  style={{ height: 20, width: 20 }}
-                />
-                <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-              </TouchableOpacity>
-            )}
+              <ModalConfigLibrary
+                title="Môn Học"
+                data={subject}
+                onPress={(value) => this.onPress(2, value)}
+                colum={2}
+                widthItem={40}
+                value={subject && subject[0]}
+              />
+              <ModalConfigLibrary
+                title="Giáo trình"
+                data={element}
+                onPress={(value) => this.onPress(3, value)}
+                value={!_.isEmpty(element) && element[0]}
+              />
+            </View>
+            <View style={{ flex: 0.45 }}>
+              <ModalCurriculum
+                title="Đơn vị kiến thức"
+                height={this.state.height}
+                data={lerningTarget}
+                onPress={(value) => this.onPress(4, value)}
+              />
+              <ModalConfigLibrary
+                title="Dạng bài"
+                data={listSkills}
+                onPress={value => this.onPress(5, value)}
+                colum={2}
+                widthItem={40}
+              />
+              <ModalConfigLibrary
+                title="Cấp độ"
+                data={level}
+                colum={2}
+                widthItem={40}
+                onPress={(value) => this.onPress(6, value)}
+              />
+            </View>
           </View>
-        </View>
-        <WarningModal
-          ref={'warningModal'}
-          navigation={this.props.navigation}
-          visible={this.state.visibleModalWarning}
-          hideModal={() => this.displayWarning(false)}
-          numberQuestion={this.state.numberQuestion}
-          subjectId={'TOAN'}
-        />
-        <ModalQuestion
-          isModal={isModal}
-          isLoadingModal={isLoadingModal}
-          htmlContent={htmlContent}
-          getDetailMatarial={this.getDetailMatarial}
-          urlMedia={urlMedia}
-          questions={this.state.questions}
-          listQuestionAdded={listQuestionAdded}
-          onHandleMessage={this.onHandleMessage}
-          onClose={() => this.setState({ isModal: false })}
-        />
+          <View
+            style={{ flex: 1, backgroundColor: '#FFF' }}
+            onLayout={(event) => {
+              var { x, y, width, height } = event.nativeEvent.layout;
+              this.setState({
+                height: height,
+              });
+            }}>
+            {isLoading && <LearnPlaceholder />}
+            <View style={styles.wrapPageAndNumberQuesion}>
+              <Text style={styles.totalAddQuestion}>
+                Số câu hỏi đã thêm: {listQuestionAdded.length}
+              </Text>
+              <PaginationUtils
+                ref={'PaginationUtils'}
+                totalQuestion={totalQuestion}
+                handleNextPage={this.handleNextPage}
+              />
+            </View>
+            <View style={{ flex: 1, backgroundColor: '#FFF' }}>
+              {!_.isEmpty(this.state.questions) ? (
+                <WebViewComponent
+                  ref={(webComponent) => this.webComponent = webComponent}
+                  onHandleMessage={this.onHandleMessage}
+                  _closeLearnPlaceholder={this._closeLearnPlaceholder}
+                  questions={this.state.questions}
+                  listQuestionAdded={listQuestionAdded}
+                  isModal={isModal}
+                />
+
+              ) : (
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginBottom: 200,
+                    }}>
+                    <Text>Không có dữ liệu</Text>
+                  </View>
+                )}
+              {!_.isEmpty(this.state.questions) && (
+                <TouchableOpacity
+                  style={styles.buttomTop}
+                  onPress={() => this._onTop()}>
+                  <Image
+                    source={require('../../../asserts/appIcon/icUp.png')}
+                    resizeMode="contain"
+                    style={{ height: 20, width: 20 }}
+                  />
+                  <Text style={{ color: '#FAFAFA' }}>TOP</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <WarningModal
+            ref={'warningModal'}
+            navigation={this.props.navigation}
+            visible={this.state.visibleModalWarning}
+            hideModal={() => this.displayWarning(false)}
+            numberQuestion={this.state.numberQuestion}
+            subjectId={'TOAN'}
+          />
+          <ModalQuestion
+            isModal={isModal}
+            isLoadingModal={isLoadingModal}
+            htmlContent={htmlContent}
+            getDetailMatarial={this.getDetailMatarial}
+            urlMedia={urlMedia}
+            questions={this.state.questions}
+            listQuestionAdded={listQuestionAdded}
+            onHandleMessage={this.onHandleMessage}
+            onClose={() => this.setState({ isModal: false })}
+          />
+        </SafeAreaView>
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
       </View>
     );
@@ -800,6 +808,24 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
     // paddingHorizontal: 10,
     // paddingVertical: 10
+  },
+  buttonCreateAssessment: {
+    width: 80,
+    height: 20,
+    borderRadius: 5,
+    backgroundColor: '#F49A31',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 20,
+    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 10) : 10,
+    zIndex: 2,
+  },
+  textCreateAssessment: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    fontWeight: '400',
+    color: '#fff',
   }
 });
 

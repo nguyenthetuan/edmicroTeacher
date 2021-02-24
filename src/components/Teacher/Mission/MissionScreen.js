@@ -79,6 +79,7 @@ export default class MissionScreen extends Component {
   };
 
   renderHeader = () => {
+
     const { isAccessMission } = this.state;
     return (
       <View style={styles.styWrapHeader}>
