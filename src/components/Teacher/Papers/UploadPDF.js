@@ -508,76 +508,78 @@ export default class UploadPDF extends Component {
                 {/* start create Upload PDF */}
                 <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); this.closeModalSelectAnswer() }}>
                   <View>
-                    <View>
-                      <View style={[styles.bodyHeader, { flex: 1 }]}>
-                        <View style={{ flex: 1 }}>
-                          <TextInput
-                            value={name}
-                            onChangeText={this.onChangeTextName}
-                            numberOfLines={1}
-                            returnKeyType={'done'}
-                            placeholder={'Nhập tên bài kiểm tra'}
-                            placeholderTextColor={'#BDBDBD'}
-                            style={styles.inputName}
-                          />
-                          <Text style={styles.styTxtLabel}>Môn học</Text>
+                    <View style={[styles.bodyHeader, { flex: 1 }]}>
+                      <View style={{ flex: 1 }}>
+                        <TextInput
+                          value={name}
+                          onChangeText={this.onChangeTextName}
+                          numberOfLines={1}
+                          returnKeyType={'done'}
+                          placeholder={'Nhập tên bài kiểm tra'}
+                          placeholderTextColor={'#BDBDBD'}
+                          style={styles.inputName}
+                        />
+                        <Text style={styles.styTxtLabel}>Môn học</Text>
+                        <View style={[styles.styTxtPlace]} >
                           <DropdownMultiSelect
                             containerStyle={{
                               marginHorizontal: 0,
                             }}
-                            contentStyle={styles.styTxtPlace}
+                            contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
                             title="Môn học"
                             data={listSubjects}
                             onPressItem={(index) => this.onPressItemSubject(index)}
                           />
-                          <Text style={styles.styTxtLabel}>Khối lớp</Text>
+                        </View>
+                        <Text style={styles.styTxtLabel}>Khối lớp</Text>
+                        <View style={[styles.styTxtPlace]} >
                           <DropdownMultiSelect
-                            contentStyle={styles.styTxtPlace}
+                            contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
                             title="Khối lớp"
                             data={listGrades}
                             onPressItem={(index) => this.onPressItemGrade(index)}
                           />
-                          <Text style={styles.styTxtLabel}>Dạng bài</Text>
-                          <Dropdown
-                            contentStyle={styles.styTxtPlace}
-                            title="Dạng Bài"
-                            data={assignmentTypes}
-                            indexSelected={0}
-                            onPressItem={(index) =>
-                              this.onPressItemAssignmentType(index)
-                            }
-                          />
-                          <View
-                            style={{
-                              flex: 1,
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              paddingBottom: 0,
-                              marginTop: 10,
-                            }}>
-                            <View>
-                              {assignmentType ? (
-                                <View style={{ flex: 1, marginBottom: 10, }}>
-                                  <TextInput
-                                    value={duration}
-                                    onChangeText={this.onChangeTextDuration}
-                                    numberOfLines={1}
-                                    returnKeyType={'done'}
-                                    keyboardType={'decimal-pad'}
-                                    maxLength={4}
-                                    placeholder={'Nhập thời gian'}
-                                    placeholderTextColor={'#BDBDBD'}
-                                    style={[styles.inputName, { width: 80 }]}
-                                    onEndEditing={() => this.onEnediting()}
-                                  />
-                                  <Text style={styles.textMinutes}>Phút</Text>
-                                </View>
-                              ) : null}
-                              <View style={styles.wrapTotalQuestion}>
-                                <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
-                                <View style={styles.wrapTotalQSText}>
-                                  <Text>{this.state.totalPoint}</Text>
-                                </View>
+                        </View>
+                        <Text style={styles.styTxtLabel}>Dạng bài</Text>
+                        <Dropdown
+                          contentStyle={styles.styTxtPlace}
+                          title="Dạng Bài"
+                          data={assignmentTypes}
+                          indexSelected={0}
+                          onPressItem={(index) =>
+                            this.onPressItemAssignmentType(index)
+                          }
+                        />
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingBottom: 0,
+                            marginTop: 10,
+                          }}>
+                          <View>
+                            {assignmentType ? (
+                              <View style={{ flex: 1, marginBottom: 10, }}>
+                                <TextInput
+                                  value={duration}
+                                  onChangeText={this.onChangeTextDuration}
+                                  numberOfLines={1}
+                                  returnKeyType={'done'}
+                                  keyboardType={'decimal-pad'}
+                                  maxLength={4}
+                                  placeholder={'Nhập thời gian'}
+                                  placeholderTextColor={'#BDBDBD'}
+                                  style={[styles.inputName, { width: 80 }]}
+                                  onEndEditing={() => this.onEnediting()}
+                                />
+                                <Text style={styles.textMinutes}>Phút</Text>
+                              </View>
+                            ) : null}
+                            <View style={styles.wrapTotalQuestion}>
+                              <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
+                              <View style={styles.wrapTotalQSText}>
+                                <Text>{this.state.totalPoint}</Text>
                               </View>
                               <View style={styles.wrapButtonType}>
                                 <TouchableOpacity
@@ -725,7 +727,7 @@ export default class UploadPDF extends Component {
               </View>}
           </ScrollView>
         </SafeAreaView>
-      </View>
+      </View >
     );
   }
 }
@@ -878,7 +880,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 30,
     borderRadius: 2,
-    marginBottom: 10
+    marginBottom: 10,
+    minWidth: width - 50,
   },
   wrapTotalQuestion: {
     flexDirection: 'row',
