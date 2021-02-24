@@ -482,22 +482,22 @@ export default class UploadPDF extends Component {
         <SafeAreaView />
         <SafeAreaView style={styles.container}>
           {/* start header */}
-            <HeaderPaper
-              title={'Câu Hỏi PDF'}
-              navigation={this.props.navigation}
-              color={'#979797'}
-              onRightAction={this.assignmentContent}
-              iconColor='#000'
-              notRightButton={true}
-              marginLeft={-25}
-            />
+          <HeaderPaper
+            title={'Câu Hỏi PDF'}
+            navigation={this.props.navigation}
+            color={'#979797'}
+            onRightAction={this.assignmentContent}
+            iconColor='#000'
+            notRightButton={true}
+            marginLeft={-25}
+          />
 
-            <TouchableOpacity
-              style={styles.buttonCreateAssessment}
-              onPress={this.assignmentContent}
-            >
-              <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonCreateAssessment}
+            onPress={this.assignmentContent}
+          >
+            <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
+          </TouchableOpacity>
           <ScrollView>
             <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
               <ScrollView
@@ -551,123 +551,73 @@ export default class UploadPDF extends Component {
                             this.onPressItemAssignmentType(index)
                           }
                         />
-                        <View
-                          style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingBottom: 0,
-                            marginTop: 10,
-                          }}>
+                        {assignmentType ? (
+                          <View style={{ flex: 1, marginBottom: 10, marginTop: 25 }}>
+                            <TextInput
+                              value={duration}
+                              onChangeText={this.onChangeTextDuration}
+                              numberOfLines={1}
+                              returnKeyType={'done'}
+                              keyboardType={'decimal-pad'}
+                              maxLength={4}
+                              placeholder={'Mời nhập'}
+                              placeholderTextColor={'#BDBDBD'}
+                              style={[styles.inputName, { width: 100, height: 30, fontSize: 14 }]}
+                              onEndEditing={() => this.onEnediting()}
+                            />
+                            <Text style={styles.textMinutes}>Phút</Text>
+                          </View>
+                        ) : null}
+                        <View style={styles.wrapAreaUploadPDF}>
                           <View>
-                            {assignmentType ? (
-                              <View style={{ flex: 1, marginBottom: 10, }}>
-                                <TextInput
-                                  value={duration}
-                                  onChangeText={this.onChangeTextDuration}
-                                  numberOfLines={1}
-                                  returnKeyType={'done'}
-                                  keyboardType={'decimal-pad'}
-                                  maxLength={4}
-                                  placeholder={'Nhập thời gian'}
-                                  placeholderTextColor={'#BDBDBD'}
-                                  style={[styles.inputName, { width: 80 }]}
-                                  onEndEditing={() => this.onEnediting()}
-                                />
-                                <Text style={styles.textMinutes}>Phút</Text>
-                              </View>
-                            ) : null}
-                            <View style={styles.wrapTotalQuestion}>
-                              <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
-                              <View style={styles.wrapTotalQSText}>
-                                <Text>{this.state.totalPoint}</Text>
-                              </View>
-                              <View style={styles.wrapButtonType}>
-                                <TouchableOpacity
-                                  onPress={() => this.setState({ typeQuestion: 0 })}
-                                  style={[
-                                    styles.btnChooseType,
-                                    this.state.typeQuestion === 0 && {
-                                      backgroundColor: '#2D9CDB',
-                                    },
-                                  ]}>
-                                  <Text
-                                    style={[
-                                      this.state.typeQuestion === 0
-                                        ? styles.txtActive
-                                        : styles.txtNoActive,
-                                    ]}>
-                                    Trắc nghiệm
-                        </Text>
+                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Bộ đề PDF</Text>
+                            <View style={styles.wrapMiniPDF}>
+                              {!!urlFilePDF && <Pdf
+                                ref={(ref) => (this.pdf = ref)}
+                                source={{ uri: urlFilePDF, cache: true }}
+                                onLoadComplete={(numberOfPages, filePath) => { }}
+                                onError={(error) => {
+                                  console.log(error);
+                                }}
+                                style={styles.pdf}
+                              />}
+                              <View style={styles.wrapEndAreaUploadPDF}>
+                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
+                                  <Image source={AppIcon.search_pdf} />
                                 </TouchableOpacity>
-                                <TouchableOpacity
-                                  onPress={() => this.setState({ typeQuestion: 1 })}
-                                  style={[
-                                    styles.btnChooseType, { left: 5 },
-                                    this.state.typeQuestion === 1 && {
-                                      backgroundColor: '#2D9CDB',
-                                    },
-                                  ]}>
-                                  <Text
-                                    style={[
-                                      this.state.typeQuestion === 1
-                                        ? styles.txtActive
-                                        : styles.txtNoActive,
-                                    ]}>
-                                    Tự luận
-                        </Text>
+                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
+                                  <Image source={AppIcon.pencil_pdf} />
                                 </TouchableOpacity>
-                              </View>
-                              <View style={styles.wrapAreaUploadPDF}>
-                                <View>
-                                  <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Bộ đề PDF</Text>
-                                  <View style={styles.wrapMiniPDF}>
-                                    {!!urlFilePDF && <Pdf
-                                      ref={(ref) => (this.pdf = ref)}
-                                      source={{ uri: urlFilePDF, cache: true }}
-                                      onLoadComplete={(numberOfPages, filePath) => { }}
-                                      onError={(error) => {
-                                        console.log(error);
-                                      }}
-                                      style={styles.pdf}
-                                    />}
-                                    <View style={styles.wrapEndAreaUploadPDF}>
-                                      <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
-                                        <Image source={AppIcon.search_pdf} />
-                                      </TouchableOpacity>
-                                      <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
-                                        <Image source={AppIcon.pencil_pdf} />
-                                      </TouchableOpacity>
-                                    </View>
-                                  </View>
-                                  <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
-                                </View>
-                                <View>
-                                  <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Lời giải</Text>
-                                  <View style={styles.wrapMiniPDF}>
-                                    {!!urlFileAnswerPDF && <Pdf
-                                      ref={(ref) => (this.pdf = ref)}
-                                      source={{ uri: urlFileAnswerPDF, cache: true }}
-                                      onLoadComplete={(numberOfPages, filePath) => { }}
-                                      onError={(error) => {
-                                        console.log(error);
-                                      }}
-                                      style={styles.pdf}
-                                    />}
-                                    <View style={styles.wrapEndAreaUploadPDF}>
-                                      <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(1) }}>
-                                        <Image source={AppIcon.search_pdf} />
-                                      </TouchableOpacity>
-                                      <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickAnswerPDF}>
-                                        <Image source={AppIcon.pencil_pdf} />
-                                      </TouchableOpacity>
-                                    </View>
-                                  </View>
-                                  <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 100 }}>{this.state.pdfFileTL}</Text>
-                                </View>
                               </View>
                             </View>
+                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
                           </View>
+                          <View>
+                            <Text style={{ top: -5, fontWeight: 'Nunito', fontSize: RFFonsize(14), fontWeight: '700' }}>Lời giải</Text>
+                            <View style={styles.wrapMiniPDF}>
+                              {!!urlFileAnswerPDF && <Pdf
+                                ref={(ref) => (this.pdf = ref)}
+                                source={{ uri: urlFileAnswerPDF, cache: true }}
+                                onLoadComplete={(numberOfPages, filePath) => { }}
+                                onError={(error) => {
+                                  console.log(error);
+                                }}
+                                style={styles.pdf}
+                              />}
+                              <View style={styles.wrapEndAreaUploadPDF}>
+                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(1) }}>
+                                  <Image source={AppIcon.search_pdf} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickAnswerPDF}>
+                                  <Image source={AppIcon.pencil_pdf} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                            <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 100 }}>{this.state.pdfFileTL}</Text>
+                          </View>
+                        </View>
+
+                        <View style={styles.descResult}>
                           <View style={{ width: '100%', flexDirection: "row", alignItems: 'center', alignSelf: 'center', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 10 }}>
                             <View style={{ borderWidth: 0.5, height: 0, borderColor: '#C4C4C4', width: '10%' }} />
                             <Text style={styles.txtNoteUploadPDF}>
@@ -676,31 +626,75 @@ export default class UploadPDF extends Component {
                             <View style={{ borderWidth: 0.5, height: 0, borderColor: '#C4C4C4', width: '10%' }} />
                           </View>
                         </View>
+
+                        <View style={styles.wrapTotalQuestion}>
+                          <Text style={styles.textTotalQS}>Tổng số điểm trắc nghiệm và tự luận</Text>
+                          <View style={styles.wrapTotalQSText}>
+                            <Text style={{ color: '#FF6213' }}>{this.state.totalPoint}</Text>
+                          </View>
+                        </View>
                       </View>
                     </View>
+
+                    <View style={styles.wrapButtonType}>
+                      <TouchableOpacity
+                        onPress={() => this.setState({ typeQuestion: 0 })}
+                        style={[
+                          styles.btnChooseType,
+                          this.state.typeQuestion === 0 && {
+                            backgroundColor: '#2D9CDB',
+                          },
+                        ]}>
+                        <Text
+                          style={[
+                            this.state.typeQuestion === 0
+                              ? styles.txtActive
+                              : styles.txtNoActive,
+                          ]}>
+                          Trắc nghiệm
+                                      </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => this.setState({ typeQuestion: 1 })}
+                        style={[
+                          styles.btnChooseType, { left: 5 },
+                          this.state.typeQuestion === 1 && {
+                            backgroundColor: '#2D9CDB',
+                          },
+                        ]}>
+                        <Text
+                          style={[
+                            this.state.typeQuestion === 1
+                              ? styles.txtActive
+                              : styles.txtNoActive,
+                          ]}>
+                          Tự luận
+                                  </Text>
+                      </TouchableOpacity>
+                    </View>
+
                     <View style={styles.wrapTotalQsNPoint}>
-                      <View>
-                        <SelectAnswer
-                          ref={(ref) => (this.selectAnswer = ref)}
-                          isVisible={visibleViewAnswer}
-                          numColumns={numColumns}
-                          totalQuestionTN={totalQuestionTN}
-                          totalQuestionTL={totalQuestionTL}
-                          typeQuestion={typeQuestion}
-                          assignmentType={assignmentType}
-                          onClickItem={this.onClickItem}
-                          onClickItemTL={this.onClickItemTL}
-                          onChange={this.changeTotalQuestion}
-                          indexSelectingTN={this.state.indexSelectingTN}
-                          indexSelectingTL={this.state.indexSelectingTL}
-                          getTotalPoint={this.getTotalPoint}
-                          showSelectAnswer={this.state.showSelectAnswer}
-                        />
-                      </View>
+                      <SelectAnswer
+                        ref={(ref) => (this.selectAnswer = ref)}
+                        isVisible={visibleViewAnswer}
+                        numColumns={numColumns}
+                        totalQuestionTN={totalQuestionTN}
+                        totalQuestionTL={totalQuestionTL}
+                        typeQuestion={typeQuestion}
+                        assignmentType={assignmentType}
+                        onClickItem={this.onClickItem}
+                        onClickItemTL={this.onClickItemTL}
+                        onChange={this.changeTotalQuestion}
+                        indexSelectingTN={this.state.indexSelectingTN}
+                        indexSelectingTL={this.state.indexSelectingTL}
+                        getTotalPoint={this.getTotalPoint}
+                        showSelectAnswer={this.state.showSelectAnswer}
+                      />
                     </View>
                   </View>
+
                 </TouchableWithoutFeedback>
-                <View style={{ flex: 1, backgroundColor: '#FFF', }}>
+                <View style={{ flex: 1, backgroundColor: '#FFF' }}>
                   <View style={[styles.viewPdf, { paddingBottom: this.state.showSelectAnswer ? 160 : 0 }]}></View>
                 </View>
               </ScrollView>
@@ -726,6 +720,7 @@ export default class UploadPDF extends Component {
                 <ActivityIndicator />
                 <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
               </View>}
+
           </ScrollView>
         </SafeAreaView>
       </View >
@@ -788,14 +783,14 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(14),
   },
   inputName: {
-    height: 30,
+    height: 40,
     backgroundColor: '#fff',
     color: '#000',
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
     paddingStart: 5,
     marginBottom: 7,
-    borderRadius: 2,
+    borderRadius: 5,
     padding: 0,
     borderColor: '#C4C4C4',
     borderWidth: 1,
@@ -805,7 +800,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     fontWeight: '400',
     position: 'absolute',
-    left: 90,
+    left: 110,
     top: 5
   },
   wrapButtonType: {
@@ -814,6 +809,8 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     borderColor: '#C4C4C4',
     width: 0.9 * width,
+    alignSelf: 'center',
+    marginTop: 10
   },
   wrapAreaUploadPDF: {
     flexDirection: 'row',
@@ -821,7 +818,7 @@ const styles = StyleSheet.create({
     width: 0.9 * width,
     height: 100,
     justifyContent: 'space-between',
-    marginTop: 20
+    marginTop: 30
   },
   wrapMiniPDF: {
     width: 150,
@@ -858,14 +855,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     right: 16,
     paddingHorizontal: 20,
-    height: 20,
+    height: 25,
     position: 'absolute',
     top: 10,
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
     fontSize: RFFonsize(14),
-    color: '#fff',
+    lineHeight: RFFonsize(20),
+    color: '#fff'
   },
   styTxtLabel: {
     fontFamily: 'Nunito',
@@ -879,31 +877,42 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#C4C4C4',
     width: '100%',
-    height: 30,
-    borderRadius: 2,
-    marginBottom: 10,
+    height: 40,
+    marginBottom: 5,
     minWidth: width - 50,
+    borderRadius: 4.5
   },
   wrapTotalQuestion: {
     flexDirection: 'row',
-    height: 35,
     alignItems: 'center',
     marginBottom: 15,
+    marginTop: 15
   },
   textTotalQS: {
-    fontSize: 14,
+    fontSize: RFFonsize(14),
     fontFamily: 'Nunito',
     fontWeight: '400',
   },
   wrapTotalQSText: {
     borderWidth: 0.5,
     borderColor: '#56CCF2',
-    borderRadius: 2,
+    borderRadius: 5,
     width: 46,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    right: 0
+    right: 0,
+  },
+  descResult: {
+    flex: 1,
+    flexDirection: 'column',
+    // justifyContent: 'space-between',
+    paddingBottom: 0,
+    marginTop: 10
+  },
+  wrapTotalQsNPoint: {
+    marginHorizontal: 10,
+    marginTop: 10
   }
 });
