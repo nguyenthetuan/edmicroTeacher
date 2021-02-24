@@ -78,13 +78,15 @@ export default class Item extends Component {
 
                 <TouchableOpacity onPress={this._handleClickDetail(payloadAssignment)}>
                     <View style={styles.bodyTest}>
-                        <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
                             <View style={styles.flexSubject}>
                                 <FastImage
                                     source={Common.getIconSubject(subjectCode)}
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 40 }}
                                 />
-                                <Text style={[styles.txtQuestion, { width: 80 }]}> {Common.getDisplaySubject(subjectCode)}</Text>
+                                <Text numberOfLines={2}
+                                    style={[styles.txtQuestion, { width: 80 }]}> 
+                                    {Common.getDisplaySubject(subjectCode)}</Text>
                             </View>
                             <View style={styles.flexSenten}>
                                 <FastImage
@@ -95,7 +97,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View>
+                        <View style={{ flex: 1 }}>
                             <View style={styles.flexSenten}>
                                 <FastImage
                                     source={require('../../../asserts/icon/icon_remakeClassV3.png')}
@@ -121,7 +123,7 @@ export default class Item extends Component {
                             </View>
                         </View>
 
-                        <View style={{ flexDirection: 'column', marginLeft: 30, marginRight: 5 }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 20, marginRight: 5, flex: 1 }}>
                             <View>
                                 {
                                     item.assignmentType
@@ -244,6 +246,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     flexSenten: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     }
 });
