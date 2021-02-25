@@ -647,8 +647,6 @@ class Papers extends Component {
       extrapolate: 'clamp',
     });
 
-    console.log("render paper");
-
     return (
       <SafeAreaView style={styles.fill}>
         <Animated.View

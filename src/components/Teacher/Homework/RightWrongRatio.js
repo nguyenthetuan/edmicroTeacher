@@ -62,7 +62,6 @@ export default function RightWrongRatio(props) {
                         <Line x1="1" y1="20" x2={`${widthChart}`} y2="20" stroke="#C4C4C4" strokeWidth="0.5" />
                         {
                           data.map((e, i) => {
-                            console.log("🚀 ~ file: RightWrongRatio.js ~ line 64 ~ data.map ~ e", e)
                             // const total = e.countSkip + e.countRight + e.countWrong;
 
                             // const x2 = 40 * (i + 1) - 10;

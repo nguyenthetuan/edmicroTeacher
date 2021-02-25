@@ -80,7 +80,6 @@ function Item(props) {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", stage);
     if (_ = stage == Stage.begin) {
       setTimeStart(date);
     } else {

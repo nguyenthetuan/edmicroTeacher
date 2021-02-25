@@ -63,7 +63,7 @@ const getStatus = (item, point) => {
             return {
                 title: 'Đã hoàn thành',
                 color: '#55B619',
-                // result: `${point} điểm`
+                // result: `Đã hoàn thành`
             };
         case 6:
             return {
@@ -321,33 +321,33 @@ export default function StudentDetail(props) {
                         </View>
                         <View style={{ flexDirection: 'row', marginEnd: 7 }}>
                             <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
-                            <Text style={styles.txtPoint}>{status.result || point}</Text>
-                        </View>
-                    </View>
-                    {
-                        item.status === 4
-                            ?
-                            <View style={styles.viewOption}>
-                                {/* <TouchableOpacity
+                            <Text style={styles.txtPoint}>{status.result}</Text>
+                            {
+                                item.status === 4
+                                    ?
+                                    <View style={styles.viewOption}>
+                                        {/* <TouchableOpacity
                             onPress={() => handleRework(item.studentId)}
                             style={styles.btnLamlai}>
                             <Image source={require('../../../asserts/icon/ic_lamlai.png')} style={styles.icRemake} />
                             <Text style={styles.txtNew}>Làm lại</Text>
                         </TouchableOpacity> */}
-                                <TouchableOpacity style={styles.btnDetail}
-                                    onPress={() => { detailStudent(item) }}>
-                                    <Text style={styles.txtDetail}>Chi tiết</Text>
-                                    <Ionicons
-                                        name='ios-arrow-forward'
-                                        color='#DB422D'
-                                        size={14}
-                                        style={{ marginStart: 5 }}
-                                    />
-                                </TouchableOpacity>
+                                        <TouchableOpacity style={styles.btnDetail}
+                                            onPress={() => { detailStudent(item) }}>
+                                            <Text style={styles.txtDetail}>Chi tiết</Text>
+                                            <Ionicons
+                                                name='ios-arrow-forward'
+                                                color='#DB422D'
+                                                size={14}
+                                                style={{ marginStart: 5 }}
+                                            />
+                                        </TouchableOpacity>
 
-                            </View>
-                            : null
-                    }
+                                    </View>
+                                    : null
+                            }
+                        </View>
+                    </View>
                 </View>
             </View>
         )
@@ -528,7 +528,7 @@ const styles = StyleSheet.create({
     },
     viewOption: {
         flexDirection: 'row',
-        marginTop: 9,
+        marginTop: 0,
         justifyContent: 'flex-end',
         alignItems: 'center',
         // justifyContent: 'space-between'
