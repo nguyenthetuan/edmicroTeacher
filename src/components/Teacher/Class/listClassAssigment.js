@@ -52,7 +52,6 @@ export default class ListClassAssigment extends Component {
 
   render() {
     const { data, isLoading } = this.state;
-    console.log('props', this.props);
     return (
       <View style={{ paddingHorizontal: 16, flex: 1 }}>
         {!isLoading ? (
