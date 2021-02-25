@@ -153,7 +153,7 @@ export default class StatisticsPoints extends Component {
     const { data, assignDetail, missionDetail } = this.state;
     let timeEnd = (assignDetail?.endTime) * 1000;
     // timeEnd = convertTimeHMDMY(timeEnd);
-    timeEnd = moment((assignDetail?.endTime) * 1000).format('DD-MM-YYYY, HH:MM');
+    timeEnd = moment((assignDetail?.endTime) * 1000).format('DD-MM-YYYY, hh:mm');
     console.log(assignDetail);
     return (
       <SafeAreaView style={styles.container}>

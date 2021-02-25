@@ -18,7 +18,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { isIphoneX } from 'react-native-iphone-x-helper';
@@ -42,7 +42,8 @@ export default class ModalCurriculum extends Component {
       searchKey: '',
       data: data || [],
       isKeyBoard: false,
-      searched: false
+      searched: false,
+      arrayHistoryFilter: []
     };
     this.positionY = new Animated.Value(-40);
   }
@@ -100,8 +101,13 @@ export default class ModalCurriculum extends Component {
   }
 
   searchExactly = ({ data, item }) => {
-    console.log(data);
+    console.log('dataaxxxxx0', data);
+    const { arrayHistoryFilter } = this.state
+    arrayHistoryFilter.push(item.code)
     let reslult = [];
+    this.setState({
+      arrayHistoryFilter: arrayHistoryFilter
+    })
     _.map(data, (element) => {
       if (element.parentCode === item.code) {
         reslult.push(element);
@@ -113,6 +119,24 @@ export default class ModalCurriculum extends Component {
       searched: true,
     });
   };
+
+  backBtn = ({ data }) => {
+    const { arrayHistoryFilter } = this.state
+    arrayHistoryFilter.pop()
+    let reslult = [];
+    console.log('arrayHistoryFilter[arrayHistoryFilter.length]', arrayHistoryFilter[arrayHistoryFilter.length - 1])
+    _.map(data, (element) => {
+      if (element.code.includes(arrayHistoryFilter[arrayHistoryFilter.length - 1])) {
+        reslult.push(element);
+      }
+    });
+    this.setState({
+      searchKey: '',
+      data: reslult,
+      searched: true,
+      arrayHistoryFilter: arrayHistoryFilter
+    });
+  }
 
   deleteItem = () => {
     this.setState(
@@ -242,7 +266,7 @@ export default class ModalCurriculum extends Component {
                     paddingBottom: 10
                   }}>
                     <TouchableOpacity
-                      style={{ alignSelf: 'flex-end' }}
+                      style={{ alignSelf: 'flex-end', marginBottom: 3 }}
                       onPress={() => {
                         this.setState({
                           visible: false,
@@ -256,6 +280,9 @@ export default class ModalCurriculum extends Component {
                       />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
+                      <TouchableOpacity style={{ marginRight: 10 }} onPress={() => this.backBtn({ data })}>
+                        <AntDesign name='arrowleft' size={20} style={{ color: '#fff' }} />
+                      </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({
@@ -265,6 +292,7 @@ export default class ModalCurriculum extends Component {
                         }
                         }
                       >
+
                         <Image source={require('../../../asserts/icon/iconHome.png')} style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }} resizeMode='contain' />
                       </TouchableOpacity>
                       <TextInput

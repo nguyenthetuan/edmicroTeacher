@@ -43,7 +43,8 @@ export default class StepThree extends Component {
       subjectCode,
       gradeId,
       nameMission,
-      isLoading: false
+      isLoading: false,
+      isVisiable: true,
     };
   }
 
@@ -98,7 +99,7 @@ export default class StepThree extends Component {
       token: this.token,
       params
     };
-    const response = await createMission(payload);
+    const response = await createMission(payload); å
     if (response.status == 0) {
       this.props.navigation.navigate('StepFour');
       this.props.screenProps.handleNextStep(3);
@@ -109,8 +110,10 @@ export default class StepThree extends Component {
 
   handleNextStepTwo = () => {
     Keyboard.dismiss();
-    this.props.navigation.navigate('StepTwo');
-    this.props.screenProps.handleNextStep(1);
+    this.setState({ isVisiable: true }, () => {
+      this.props.navigation.navigate('StepTwo');
+      this.props.screenProps.handleNextStep(1);
+    })
   }
 
   onOpenEditor = () => {
@@ -144,18 +147,15 @@ export default class StepThree extends Component {
         ...this.props.screenProps.data,
         dataPracticeAdd
       });
-
+      if (dataPracticeAdd.length == 0 || dataTestAdd.length == 0) {
+        this.setState({
+          isVisiable: false
+        });
+      }
     } catch (error) {
 
     }
   };
-
-
-  handleNextStepTwo = () => {
-    Keyboard.dismiss();
-    this.props.navigation.navigate('StepTwo');
-    this.props.screenProps.handleNextStep(1);
-  }
 
 
   renderPractice = () => {
@@ -242,7 +242,8 @@ export default class StepThree extends Component {
       valueClass,
       valueSubject,
       htmlContent,
-      isLoading
+      isLoading,
+      isVisiable
     } = this.state;
     return (
       <View style={{ flex: 1, marginHorizontal: 10 }}>
@@ -297,8 +298,10 @@ export default class StepThree extends Component {
             <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.styBtnNext}
-            onPress={this.handleNextStepFour}>
+            disabled={!isVisiable}
+            style={[styles.styBtnNext, !isVisiable && { backgroundColor: 'rgba(0,0,0,0.5)' }]}
+            onPress={this.handleNextStepFour}
+          >
             <Text style={styles.styTxtBtnNext}>
               Bước tiếp theo
             </Text>
