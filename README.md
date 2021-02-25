@@ -60,3 +60,12 @@
       [super displayLayer:layer];
   }
 }
+
+```
+export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+```
+
+``` 
+adb reverse tcp:8081 tcp:8081 
+```

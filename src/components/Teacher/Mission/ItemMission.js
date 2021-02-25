@@ -8,12 +8,19 @@ import dataHelper from '../../../utils/dataHelper';
 const { width } = Dimensions.get('window');
 import Common from '../../../utils/Common';
 import { RFFonsize } from '../../../utils/Fonts';
+import { color } from 'react-native-reanimated';
 const modelStatus = {
   unDelivered: 1,// chưa giao bài.
   delivered: 0,// đã giao bài.
 }
 export default class ItemMission extends Component {
 
+  state = {
+    colors: [
+      "#F66215",
+      "#F9C216"
+    ]
+  };
   goToMissionDetail = async () => {
     const { data } = this.props;
     const { token } = await dataHelper.getToken();
@@ -27,26 +34,25 @@ export default class ItemMission extends Component {
         statusbar: 'dark-content'
       });
   }
-  renderElement = (img, txt1, txt2) => {
+  renderElement = (img, txt1, txt2, color = '#000') => {
     return (
       <View style={styles.styFlexDirRow}>
         <FastImage source={img} resizeMode={'contain'} style={styles.styWrapImg} />
         <Text style={styles.styTxtLabel} numberOfLines={1}>{txt1}</Text>
-        <Text style={styles.styTxtLabel} numberOfLines={1}>{txt2}</Text>
+        <Text style={[styles.styTxtLabel, { color: color }]} numberOfLines={1}>{txt2}</Text>
       </View>
     );
   };
-
   shouldComponentUpdate = (prevProps) => {
     if (prevProps.data != this.props.data) {
       return true;
     }
     return false;
   }
-
   render() {
     const { data } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm')
+    const { colors } = this.state;
     return (
       <TouchableOpacity
         style={[styles.contain, {
@@ -68,13 +74,14 @@ export default class ItemMission extends Component {
           <View>
             <View style={styles.imageSize}>
               {this.renderElement(
-                AppIcon.icon_remakeClassV3, data.gradeName
+                AppIcon.icon_remakeClassV3, data.gradeName,
               )}
             </View>
             {this.renderElement(
               AppIcon.icon_remakeHatV3,
               'Bài kiểm tra',
               data.countTest,
+              colors[0]
             )}
           </View>
           <View style={styles.viewCount}>
@@ -86,6 +93,7 @@ export default class ItemMission extends Component {
               AppIcon.icon_paracClass,
               'Bài tự luyện',
               data.countPractice,
+              colors[1]
             )}
           </View>
           <View style={styles.flexDiAction}>

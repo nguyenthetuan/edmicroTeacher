@@ -70,7 +70,8 @@ export default class ModalOption extends PureComponent {
                                             <Text style={styles.txtModalDetail}>Sửa tên</Text>
                                         </View>
                                     </RippleItem>
-                                    {!this.state.totalUserDoing && <RippleItem onPress={() => this.props._OpenModal(4)}>
+                                    {/* {!this.state.totalUserDoing && <RippleItem onPress={() => this.props._OpenModal(4)}> */}
+                                    {true && <RippleItem onPress={() => this.props._OpenModal(4)}>
                                         <View style={styles.wrapElementModal}>
                                             <Image
                                                 source={require('../../../asserts/icon/icConfig.png')}
