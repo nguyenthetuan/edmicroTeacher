@@ -82,28 +82,29 @@ export default class TaskResultComponent extends Component {
             {resultStudent}
           </Text>
           {/* <HTML html={resultStudent} containerStyle={{ marginHorizontal: 10 }} textSelectable={true}/> */}
-          {images?.length > 0 && (
+          {images?.length > 0 ? (
             <FlatList
               data={images}
               renderItem={({ item }) => this.renderImage(item, images)}
               keyExtractor={(i, index) => index.toString()}
               horizontal={true}
             />
-          )}
+          ) : null}
         </View>
 
         {
-          item.contentNoteTeacher &&
-          <View style={styles.wrapView}>
-            <Text style={styles.notesTeacher}>Giáo viên nhận xét: </Text>
-            {/* <TextInput
+          item.contentNoteTeacher ?
+            <View style={styles.wrapView}>
+              <Text style={styles.notesTeacher}>Giáo viên nhận xét: </Text>
+              {/* <TextInput
             style={styles.inputTxt}
             editable={false}
             multiline={true}
             value={item.contentNoteTeacher?.replace(/(<p>||<\/p>)+/g, '')}
           /> */}
-            <HTML html={item.contentNoteTeacher} containerStyle={{ marginHorizontal: 10 }} />
-          </View>
+              <HTML html={item.contentNoteTeacher} containerStyle={{ marginHorizontal: 10 }} />
+            </View>
+            : null
         }
       </View>
     );
