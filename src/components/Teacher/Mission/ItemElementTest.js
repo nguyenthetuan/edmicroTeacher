@@ -136,8 +136,8 @@ const styles = StyleSheet.create({
     marginLeft: 30
   },
   styWrapBtnDele: {
-    // borderTopRightRadius: 4,
-    // borderBottomRightRadius: 4,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
     backgroundColor: '#FF4457',
     paddingTop: 9,
     paddingBottom: 9,
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     width: '85%'
   },
   createAdd: {
-    backgroundColor: '#56BB73',
     width: '15%',
   },
 });

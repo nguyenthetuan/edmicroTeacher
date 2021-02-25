@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 45,
     marginHorizontal: Platform.OS == 'android' ? 10 : 10,
+    marginTop: 8
   },
   icon: {
     position: 'absolute',
@@ -300,7 +301,8 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
-    marginLeft: 10
+    marginLeft: 10,
+    marginTop: 10
   },
   styTxtPlacehoder: {
     color: '#979797'

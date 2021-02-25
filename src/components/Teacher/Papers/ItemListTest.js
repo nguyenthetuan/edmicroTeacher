@@ -85,7 +85,7 @@ export default class Item extends Component {
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 40 }}
                                 />
                                 <Text numberOfLines={2}
-                                    style={[styles.txtQuestion, { width: 80 }]}> 
+                                    style={[styles.txtQuestion, { width: 70 }]}> 
                                     {Common.getDisplaySubject(subjectCode)}</Text>
                             </View>
                             <View style={styles.flexSenten}>
