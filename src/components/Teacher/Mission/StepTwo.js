@@ -82,7 +82,7 @@ export default class StepTwo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.styTxtLabel}>Chọn nhiệm vụ ôn luyện </Text>
+        {/* <Text style={styles.styTxtLabel}>Chọn nhiệm vụ ôn luyện </Text> */}
         <TabMissionType
           screenProps={{
             ...this.props.screenProps,
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
+    backgroundColor: '#EEFAFE'
   },
   icon: {
     position: 'absolute',
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
   styTxtBtnNext: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(18),
+    fontSize: RFFonsize(16),
     lineHeight: RFFonsize(21),
     alignItems: 'center',
     alignSelf: 'center',
