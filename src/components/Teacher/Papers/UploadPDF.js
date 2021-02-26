@@ -24,7 +24,6 @@ import Dropdown from '../Homework/Dropdown';
 import _ from 'lodash';
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
-import InputNumberQuestion from './InputNumberQuestion';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -425,7 +424,7 @@ export default class UploadPDF extends Component {
 
   onPressItemAssignmentType = (index) => {
     const { assignmentTypes } = this.state;
-    this.setState({ assignmentType: assignmentTypes[index].id });
+    this.setState({ assignmentType: assignmentTypes[index].id, showSelectAnswer: false });
   };
 
   onTextPointModalChange = (point) => {
@@ -498,7 +497,7 @@ export default class UploadPDF extends Component {
           >
             <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
           </TouchableOpacity>
-          <ScrollView>
+          <View>
             <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -638,7 +637,7 @@ export default class UploadPDF extends Component {
 
                     <View style={styles.wrapButtonType}>
                       <TouchableOpacity
-                        onPress={() => this.setState({ typeQuestion: 0 })}
+                        onPress={() => this.setState({ typeQuestion: 0, showSelectAnswer: false })}
                         style={[
                           styles.btnChooseType,
                           this.state.typeQuestion === 0 && {
@@ -655,7 +654,7 @@ export default class UploadPDF extends Component {
                                       </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => this.setState({ typeQuestion: 1 })}
+                        onPress={() => this.setState({ typeQuestion: 1, showSelectAnswer: false })}
                         style={[
                           styles.btnChooseType, { left: 5 },
                           this.state.typeQuestion === 1 && {
@@ -721,7 +720,7 @@ export default class UploadPDF extends Component {
                 <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
               </View>}
 
-          </ScrollView>
+          </View>
         </SafeAreaView>
       </View >
     );
