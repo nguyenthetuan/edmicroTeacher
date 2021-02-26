@@ -99,7 +99,7 @@ export default class StepThree extends Component {
       token: this.token,
       params
     };
-    const response = await createMission(payload); å
+    const response = await createMission(payload); 
     if (response.status == 0) {
       this.props.navigation.navigate('StepFour');
       this.props.screenProps.handleNextStep(3);

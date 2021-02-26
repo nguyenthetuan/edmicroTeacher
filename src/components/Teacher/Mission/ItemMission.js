@@ -39,7 +39,7 @@ export default class ItemMission extends Component {
       <View style={styles.styFlexDirRow}>
         <FastImage source={img} resizeMode={'contain'} style={styles.styWrapImg} />
         <Text style={styles.styTxtLabel} numberOfLines={1}>{txt1}</Text>
-        <Text style={[styles.styTxtLabel, { color: color }]} numberOfLines={1}>{txt2}</Text>
+        <Text style={[styles.styTxtLabel, { color: color, marginLeft: 20 }]} numberOfLines={1}>{txt2}</Text>
       </View>
     );
   };
@@ -56,73 +56,83 @@ export default class ItemMission extends Component {
     return (
       <TouchableOpacity
         style={[styles.contain, {
-          borderColor: Common.getBackroundSubject(data.subjectCode)
+          borderColor: Common.getBackroundSubject(data.subjectCode),
         }]}
         onPress={this.goToMissionDetail}
       >
-        <View style={[styles.styWrapHeader, {
-          backgroundColor: Common.getBackroundSubject(data.subjectCode),
-        }]}>
+        <View style={styles.leftImage}>
+          <Image source={require('../../../asserts/images/icon_missionOpacity.png')}
+            style={styles.widthImage}
+          />
+          <Text style={styles.gradeClass}>{data.gradeName}</Text>
+        </View>
+        <View style={[styles.styFlexDirRow, { flexDirection: 'column', marginLeft: 5 }]}>
           <Text
             numberOfLines={1}
             style={styles.styTxtHeader}>
             {data.title}
           </Text>
-          <Text style={styles.txtTime}>{timeCreateAt}</Text>
-        </View>
-        <View style={styles.styFlexDirRow}>
-          <View>
-            <View style={styles.imageSize}>
+          <View style={styles.hr} />
+          <View style={{ flexDirection: 'row', marginTop: 8 }}>
+            <View style={styles.contentMission}>
               {this.renderElement(
-                AppIcon.icon_remakeClassV3, data.gradeName,
+                AppIcon.icon_remakeHatV3,
+                'Bài kiểm tra',
+                data.countTest,
+                colors[0]
+              )}
+              {this.renderElement(
+                AppIcon.icon_paracClass,
+                'Bài tự luyện',
+                data.countPractice,
+                colors[1]
               )}
             </View>
-            {this.renderElement(
-              AppIcon.icon_remakeHatV3,
-              'Bài kiểm tra',
-              data.countTest,
-              colors[0]
-            )}
+
+            <View style={styles.subjectColumn}>
+              <View>
+                {this.renderElement(
+                  getIconSubject(data.subjectCode),
+                  Common.getDisplaySubject(data.subjectCode)
+                )}
+              </View>
+              <View style={styles.flexDiAction}>
+                {/* {this.renderElement(AppIcon.icon_paracComplete, textDelivered)} */}
+                {/* <></> */}
+                {/* {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)} */}
+                {data.status === modelStatus.unDelivered
+                  ?
+                  <FastImage
+                    source={require('../../../asserts/icon/icon_toSendV3.png')}
+                    style={{ height: 25, width: 25 }}
+                  />
+                  :
+                  <FastImage
+                    source={require('../../../asserts/icon/icon_paractoFinish.png')}
+                    style={{ height: 25, width: 25 }}
+                  />
+                }
+                {data.status === modelStatus.unDelivered
+                  ?
+                  <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
+                    {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
+                  </Text>
+                  :
+                  <Text style={[styles.txtButtomPractice,
+                  { color: data.stattus === 4 ? '#000' : '#c4c4c4' }]}>
+                    {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
+                  </Text>
+                }
+              </View>
+            </View>
           </View>
-          <View style={styles.viewCount}>
-            {this.renderElement(
-              getIconSubject(data.subjectCode),
-              Common.getDisplaySubject(data.subjectCode)
-            )}
-            {this.renderElement(
-              AppIcon.icon_paracClass,
-              'Bài tự luyện',
-              data.countPractice,
-              colors[1]
-            )}
-          </View>
-          <View style={styles.flexDiAction}>
-            {/* {this.renderElement(AppIcon.icon_paracComplete, textDelivered)} */}
-            <></>
-            {/* {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)} */}
-            {data.status === modelStatus.unDelivered
-              ?
-              <FastImage
-                source={require('../../../asserts/icon/icon_toSendV3.png')}
-                style={{ height: 25, width: 25 }}
-              />
-              :
-              <FastImage
-                source={require('../../../asserts/icon/icon_paractoFinish.png')}
-                style={{ height: 25, width: 25 }}
-              />
-            }
-            {data.status === modelStatus.unDelivered
-              ?
-              <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
-                {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
-              </Text>
-              :
-              <Text style={[styles.txtButtomPractice,
-              { color: data.stattus === 4 ? '#000' : '#c4c4c4' }]}>
-                {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
-              </Text>
-            }
+
+          <View style={styles.dateDaly}>
+            <View style={{ flexDirection: 'row' }}>
+              <Image source={require('../../../asserts/icon/icon_delivery.png')} />
+              <Text style={styles.txtDeve}>Ngày giao</Text>
+            </View>
+            <Text style={styles.txtTime}>{timeCreateAt}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -136,41 +146,38 @@ const styles = StyleSheet.create({
     margin: 5,
     marginHorizontal: 16,
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 5,
     marginTop: 15,
-    // flex: 1,
-    // backgroundColor: '#fff'
+    flexDirection: 'row'
   },
   styWrapHeader: {
     // flex: 1,
     padding: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#7E96EC',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   styTxtHeader: {
-    color: '#FFF',
+    marginTop: 2,
+    color: '#000',
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
-    width: "65%",
     flexDirection: "row",
-    justifyContent: 'space-between',
-    maxWidth: '65%'
+    marginLeft: 5,
+    marginRight: 10,
   },
   styFlexDirRow: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginVertical: 5,
+    marginVertical: 7,
     marginHorizontal: 0,
-    marginLeft: 5,
-    width: width / 3 - 15,
-    // flex: 1
+    // width: width / 2.5,
+    marginLeft: 1,
+    width: "80%"
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Regular',
-    marginHorizontal: 3,
+    marginHorizontal: 5,
     fontSize: RFFonsize(12),
     alignSelf: 'center',
     color: "#000"
@@ -180,19 +187,13 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: 22
   },
-  viewCount: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    alignContent: 'center',
-  },
   txtTime: {
     fontFamily: "Nunito-Regular",
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(15),
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
     alignSelf: "center",
-    color: "#FFF",
-    marginLeft: 10
+    color: "#2D9CBD",
+    marginLeft: 35
   },
   imageSize: {
     // width: 20,
@@ -200,10 +201,8 @@ const styles = StyleSheet.create({
   },
   flexDiAction: {
     flexDirection: 'row',
-    alignSelf: 'flex-start',
-    marginLeft: 10,
     marginTop: 4,
-    // justifyContent: 'space-between',
+    marginLeft: -1,
   },
   txtButtomPractice: {
     fontFamily: 'Nunito',
@@ -211,4 +210,51 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     marginLeft: 5
   },
+  subjectColumn: {
+    flexDirection: 'column',
+    marginHorizontal: 20
+  },
+  contentMission: {
+    flexDirection: 'column',
+  },
+  widthImage: {
+    alignSelf: "center",
+    marginLeft: 5,
+  },
+  leftImage: {
+    flexDirection: 'column',
+    width: '20%',
+    alignSelf: 'center',
+  },
+  txtDeve: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    color: '#000',
+    alignSelf: 'center',
+    marginLeft: 6
+  },
+  hr: {
+    backgroundColor: '#E6E6E6',
+    height: 1,
+    marginLeft: 3.5,
+    marginTop: 8,
+    marginRight: 18
+  },
+  dateDaly: {
+    flexDirection: 'row',
+    marginLeft: 2,
+    marginTop: 8,
+    marginBottom: 5
+  },
+  gradeClass: {
+    fontFamily: "Nunito-Bold",
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    color: '#2D9CBD',
+    alignSelf: 'center',
+    marginTop: 7,
+    marginLeft: 5
+  }
 });
+
