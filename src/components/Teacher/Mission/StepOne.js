@@ -146,16 +146,17 @@ export default class StepOne extends Component {
               onChangeText={nameMission => this.setState({ nameMission })}
             />
             <TouchableOpacity style={styles.iconEdit}>
-              <Image source={AppIcon.icon_editNameMission} />
+              <Image source={AppIcon.icon_editNameMission} style={styles.clIcon} />
             </TouchableOpacity>
           </View>
-          <Text style={styles.styTxtLabel}>Khối</Text>
+          <Text style={[styles.styTxtLabel, { marginTop: 20 }]}>Khối</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
               placeholder={{
-                label: '--- Chọn khối lớp ---',
+                label: 'Chọn khối lớp',
                 value: null,
               }}
+              placeholderTextColor="#979797"
               underlineColorAndroid="rgba(0,0,0,0)"
               items={listClass}
               style={{ ...pickerSelectStyles }}
@@ -175,14 +176,15 @@ export default class StepOne extends Component {
               style={styles.icon}
             />
           </View>
-          <Text style={styles.styTxtLabel}>Môn học</Text>
+          <Text style={[styles.styTxtLabel, { marginTop: 26 }]}>Môn học</Text>
           <View style={styles.viewRNPicker}>
             <RNPickerSelect
               underlineColorAndroid="rgba(0,0,0,0)"
               placeholder={{
-                label: '--- Chọn môn học ---',
+                label: 'Chọn môn học',
                 value: null,
               }}
+              placeholderTextColor="#979797"
               items={listSubject}
               style={{ ...pickerSelectStyles }}
               onValueChange={value => {
@@ -202,7 +204,7 @@ export default class StepOne extends Component {
             />
           </View>
 
-          <Text style={styles.styTxtLabel}>Mô tả</Text>
+          <Text style={[styles.styTxtLabel, { marginTop: 24 }]}>Mô tả</Text>
           <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
             {!htmlContent ?
               <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> :
@@ -233,34 +235,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
+    backgroundColor: '#EEFAFE'
   },
   styWrapInput: {
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 5,
-    borderColor: '#979797',
-    margin: 10,
+    borderColor: '#B5B5B5',
+    marginHorizontal: 10,
+    marginTop: 8,
     color: '#000',
     paddingLeft: 8,
     height: 45,
+    backgroundColor: '#fff'
   },
   styWrapDes: {
     paddingHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: 0.5,
     overflow: 'hidden',
-    borderColor: '#979797',
     borderRadius: 5,
-    margin: 10,
+    marginHorizontal: 10,
     padding: 10,
-    minHeight: 200
+    minHeight: 100,
+    marginTop: 8,
+    borderColor: '#B5B5B5',
+    backgroundColor: '#fff'
   },
   viewRNPicker: {
     backgroundColor: '#fff',
     borderRadius: 5,
-    borderColor: Platform.OS == 'android' ? '#828282' : '#979797',
+    borderColor: Platform.OS == 'android' ? '#B5B5B5' : '#B5B5B5',
     justifyContent: 'center',
     // borderWidth: Platform.OS == 'android' ? 1 : 0,
-    borderWidth: 1,
+    borderWidth: 0.5,
     height: 45,
     marginHorizontal: Platform.OS == 'android' ? 10 : 10,
     marginTop: 8
@@ -268,13 +275,14 @@ const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     alignSelf: 'flex-end',
-    paddingRight: 20,
+    paddingRight: 15,
+    color: '#979797'
   },
   iconEdit: {
     position: 'absolute',
     alignSelf: 'flex-end',
     marginTop: 20,
-    paddingRight: 20
+    paddingRight: 25
   },
   styBtnNext: {
     backgroundColor: '#2D9CDB',
@@ -288,7 +296,7 @@ const styles = StyleSheet.create({
   styTxtBtnNext: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(18),
+    fontSize: RFFonsize(16),
     lineHeight: RFFonsize(21),
     alignItems: 'center',
     alignSelf: 'center',
@@ -302,10 +310,13 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
     marginLeft: 10,
-    marginTop: 10
+    marginTop: 20
   },
   styTxtPlacehoder: {
     color: '#979797'
+  },
+  clIcon: {
+    tintColor: '#979797'
   }
 });
 
@@ -319,15 +330,19 @@ const pickerSelectStyles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: '#979797',
   },
+  underline: {
+    borderTopWidth: 0,
+  },
   inputAndroid: {
     borderRadius: 5,
+    borderTopWidth: 0,
     color: '#000',
     // backgroundColor:'red',
-    height: 44,
+    height: 45,
     fontFamily: 'Nunito-Regular',
     // borderWidth: 1,
     // borderColor: '#999',
-  },
+  }
 });
 
 const listClass = [];

@@ -188,7 +188,9 @@ export default class StepThree extends Component {
               item={item}
             />}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.styTxtHeader}>- {title}</Text>
+              <View style={styles.bgTitle}>
+                <Text style={styles.styTxtHeader}>- {title}</Text>
+              </View>
             )}
           />
         </View>
@@ -228,7 +230,9 @@ export default class StepThree extends Component {
               item={item}
             />}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.styTxtHeader}>- {title}</Text>
+              <View style={styles.bgTitle}>
+                <Text style={styles.styTxtHeader}>- {title}</Text>
+              </View>
             )}
           />
         </View>
@@ -246,8 +250,8 @@ export default class StepThree extends Component {
       isVisiable
     } = this.state;
     return (
-      <View style={{ flex: 1, marginHorizontal: 10 }}>
-        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null} style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#EEFAFE' }}>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null} style={{ flex: 1, marginHorizontal: 10 }}>
           <ScrollView
             contentInset={{ bottom: Platform.OS == 'ios' ? 130 : 0 }}
             style={{ marginTop: 10 }}
@@ -277,7 +281,7 @@ export default class StepThree extends Component {
             </View>
 
             <View>
-              <Text>Mô tả</Text>
+              <Text style={styles.styTxtLabel}>Mô tả</Text>
               <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
                 <HTML
                   html={htmlContent}
@@ -324,20 +328,22 @@ const styles = StyleSheet.create({
   },
   styWrapInput: {
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 5,
-    borderColor: '#999',
+    borderColor: '#B5B5B5',
     margin: 10,
     color: '#000',
+    backgroundColor: '#fff'
   },
   styWrapDes: {
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 0.5,
     overflow: 'hidden',
-    borderColor: '#efefef',
+    borderColor: '#B5B5B5',
     borderRadius: 5,
     margin: 10,
-    minHeight: 100
+    minHeight: 100,
+    backgroundColor: '#fff'
   },
   styBtnNext: {
     backgroundColor: '#2D9CDB',
@@ -353,7 +359,7 @@ const styles = StyleSheet.create({
   styTxtBtnNext: {
     color: '#FFF',
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(18),
+    fontSize: RFFonsize(16),
     lineHeight: RFFonsize(21),
     alignItems: 'center',
     alignSelf: 'center',
@@ -373,16 +379,20 @@ const styles = StyleSheet.create({
     width: 50, height: 50,
   },
   styTxtLabel: {
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(19),
+    color: '#000'
   },
   styWrapSubject: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     padding: 5,
     marginHorizontal: 10,
     borderRadius: 5,
-    borderColor: '#999',
+    borderColor: '#B5B5B5',
     minWidth: 80,
     textAlign: 'center',
+    backgroundColor: '#fff'
   },
   styWrapInfo: {
     flexDirection: 'row',
@@ -425,5 +435,8 @@ const styles = StyleSheet.create({
   },
   styTxtPlacehoder: {
     color: '#999',
+  },
+  bgTitle: {
+    backgroundColor: '#fff',
   }
 });

@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
 
 const labels = ['Cấu hình', 'Chọn bài', 'Kiểm tra', 'Kết thúc'];
 const customStyles = {
-  stepIndicatorSize: 25,
-  currentStepIndicatorSize: 30,
+  stepIndicatorSize: 35,
+  currentStepIndicatorSize: 35,
   separatorStrokeWidth: 2,
-  currentStepStrokeWidth: 3,
+  currentStepStrokeWidth: 1,
   stepStrokeCurrentColor: '#56ccf2',
-  stepStrokeWidth: 3,
+  stepStrokeWidth: 1,
   stepStrokeFinishedColor: '#56ccf2',
-  stepStrokeUnFinishedColor: '#aaaaaa',
+  stepStrokeUnFinishedColor: '#979797',
   separatorFinishedColor: '#56ccf2',
   separatorUnFinishedColor: '#aaaaaa',
   stepIndicatorFinishedColor: '#56ccf2',
@@ -124,8 +124,8 @@ const customStyles = {
   currentStepIndicatorLabelFontSize: 13,
   stepIndicatorLabelCurrentColor: '#56ccf2',
   stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-  labelColor: '#999999',
+  stepIndicatorLabelUnFinishedColor: '#000',
+  labelColor: '#757575',
   labelSize: 13,
   currentStepLabelColor: '#56ccf2',
   labelFontFamily: 'Nunito-Bold'
