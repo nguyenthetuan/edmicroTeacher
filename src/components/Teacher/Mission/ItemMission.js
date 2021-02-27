@@ -90,7 +90,7 @@ export default class ItemMission extends Component {
             </View>
 
             <View style={styles.subjectColumn}>
-              <View>
+              <View style={{marginLeft: 15}}>
                 {this.renderElement(
                   getIconSubject(data.subjectCode),
                   Common.getDisplaySubject(data.subjectCode)
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   flexDiAction: {
     flexDirection: 'row',
     marginTop: 4,
-    marginLeft: -1,
+    marginLeft: 14,
   },
   txtButtomPractice: {
     fontFamily: 'Nunito',

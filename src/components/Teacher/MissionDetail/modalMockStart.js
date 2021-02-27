@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     marginTop: 23,
   },
   btnStart: {
-    height: 30,
+    height: 35,
     backgroundColor: '#55B619',
     borderRadius: 5,
     // paddingHorizontal: 50,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   btnBack: {
-    height: 30,
+    height: 35,
     backgroundColor: '#F98E2F',
     borderRadius: 5,
     // paddingHorizontal: 50,

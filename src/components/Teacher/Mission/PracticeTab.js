@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderColor: '#BDBDBD',
     flexDirection: 'row',
     marginTop: 16,
-    // alignItems: 'center',
+    backgroundColor: '#fff'
   },
   headerTextIndex: {
     fontFamily: 'Nunito-Bold',
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     color: '#424242',
-    marginRight: 20,
+    marginRight: 30,
     marginLeft: 11
   },
   styWrapLoading: {
