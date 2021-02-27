@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   },
   dateDaly: {
     flexDirection: 'row',
-    marginLeft: 2,
+    marginLeft: 2.5,
     marginTop: 8,
     marginBottom: 5
   },
