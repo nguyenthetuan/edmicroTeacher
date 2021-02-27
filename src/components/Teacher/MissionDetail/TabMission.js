@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FDC214',
         padding: 10,
         borderRadius: 5,
-        marginHorizontal: 10,
+        marginHorizontal: 19,
         marginTop: 10
     },
     styWrapHtml: {

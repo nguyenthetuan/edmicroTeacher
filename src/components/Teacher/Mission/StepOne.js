@@ -134,7 +134,7 @@ export default class StepOne extends Component {
       <View style={styles.container}>
         <ScrollView style={[styles.container,
         {
-          paddingHorizontal: 0, marginTop: 20
+          paddingHorizontal: 0, marginTop: 13
         }]}>
           <Text style={styles.styTxtLabel}>Tên nhiệm vụ</Text>
           <View style={{ justifyContent: 'center' }}>
@@ -235,7 +235,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-    backgroundColor: '#EEFAFE'
+    backgroundColor: '#EEFAFE',
+    marginTop: 20
   },
   styWrapInput: {
     padding: 10,
@@ -247,7 +248,8 @@ const styles = StyleSheet.create({
     color: '#000',
     paddingLeft: 8,
     height: 45,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    paddingRight: 40
   },
   styWrapDes: {
     paddingHorizontal: 10,
@@ -309,8 +311,7 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
-    marginLeft: 10,
-    marginTop: 20
+    marginLeft: 10
   },
   styTxtPlacehoder: {
     color: '#979797'

@@ -156,8 +156,7 @@ const styles = StyleSheet.create({
     borderColor: '#BDBDBD',
     flexDirection: 'row',
     marginTop: 16,
-    // marginLeft:16,
-    // marginRight:16,
+    backgroundColor:'#fff'
   },
   headerTextIndex: {
     fontFamily: 'Nunito-Bold',
