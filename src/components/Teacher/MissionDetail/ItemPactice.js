@@ -10,7 +10,7 @@ export default function ItemPactice(props) {
         }}>
             <Text style={styles.styTxt} numberOfLines={1}>{item.problemName}</Text>
             <View style={{}} />
-            <Text style={styles.styCount}> Yêu cầu hoàn thành: <Text style={{color:'#6ED8FB'}}>{item.percentDone} %</Text></Text>
+            <Text style={styles.styCount}> Yêu cầu hoàn thành: <Text style={{color:'#6ED8FB'}}>{item.percentDone}%</Text></Text>
         </TouchableOpacity>
     )
 }
