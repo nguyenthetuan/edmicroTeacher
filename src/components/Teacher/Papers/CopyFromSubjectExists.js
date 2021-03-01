@@ -150,9 +150,9 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={AppIcon.icon_gradeClass1}
+                                source={require('../../../asserts/icon/icon_remakeClassV3.png')}
                                 resizeMode="contain"
-                                style={{ height: 23, width: 23 }} />
+                                style={{ height: 23, width: 23, tintColor: '#F78E30' }} />
                             <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
                         </View>
                     </View>
@@ -161,15 +161,16 @@ export default class CopyFromSubjectExists extends Component {
                             <Image
                                 source={AppIcon.icon_questionV3}
                                 resizeMode="contain"
-                                style={{ height: 20, width: 20 }} />
+                                style={{ height: 20, width: 20, tintColor: '#DB3546' }} />
                             <Text style={styles.textDetail}>Số câu hỏi: {item.totalQuestion}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
                                 source={AppIcon.icon_authorV3}
                                 resizeMode="contain"
-                                style={{ height: 20, width: 20 }} />
-                            <Text style={styles.textDetail}>Tác giả: {item.author}</Text>
+                                style={{ height: 20, width: 20, tintColor: '#7E96EC' }} />
+                            <Text style={styles.textDetail}>Tác giả:
+                             <Text style={styles.colorTG}> {item.author}</Text></Text>
                         </View>
                     </View>
                     <Image source={AppIcon.icon_paperParacV3} style={styles.paperParacV3} />
@@ -199,7 +200,7 @@ export default class CopyFromSubjectExists extends Component {
                                     <TextInput
                                         placeholder={'Tên bài kiểm tra'}
                                         placeholderTextColor={'#c4c4c4'}
-                                        style={{ color: '#000', flex: 1, fontSize: RFFonsize(14), backgroundColor: '#fff', paddingVertical: 0, }}
+                                        style={styles.nameTest}
                                     // value={nameMission}
                                     />
                                     <IconAntDesign
@@ -210,14 +211,14 @@ export default class CopyFromSubjectExists extends Component {
                                 <View style={styles.wrap2Dropdown}>
                                     <Dropdown
                                         containerStyle={styles.styleDrop}
-                                        contentStyle={{ marginHorizontal: 0 }}
+                                        contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
                                         title="Môn Học"
                                         data={listSubjects}
                                         onPressItem={(index) => this.onPressItemSubject(index)}
                                     />
                                     <Dropdown
                                         containerStyle={styles.styleDrop}
-                                        contentStyle={{ marginHorizontal: 0 }}
+                                        contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
                                         title="Giáo trình"
                                         data={this.state.lerningTarget}
                                         onPressItem={(index) => this.onPressCurriculum(index)}
@@ -237,10 +238,12 @@ export default class CopyFromSubjectExists extends Component {
                     {!isLoading
                         ?
                         <View style={styles.viewStatus}>
+
                             <FlatList
                                 data={this.state.listTask}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={this.renderTask}
+                                style={{ paddingHorizontal: 5 }}
                             />
                         </View>
                         :
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginTop: 3,
         marginBottom: 3,
-        marginLeft: 14,
+        marginLeft: 12,
         width: 320
     },
     bodyTask: {
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
     pieceBody: {
         width: '40%',
         marginTop: 10.5,
-        paddingHorizontal: 14
+        paddingHorizontal: 10
     },
     textDetail: {
         fontSize: RFFonsize(10),
@@ -349,7 +352,6 @@ const styles = StyleSheet.create({
     },
     viewStatus: {
         width: '100%',
-        alignItems: 'center',
         height: height - 200
     },
     paperParacV3: {
@@ -363,6 +365,21 @@ const styles = StyleSheet.create({
     },
     iconSearch: {
         alignSelf: 'center',
-        color: '#828282'
+        color: '#828282',
+        marginRight: 3
+    },
+    colorTG: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(16),
+        color: "#7E96EC",
+    },
+    nameTest: {
+        color: '#000',
+        flex: 1,
+        fontSize: RFFonsize(14),
+        backgroundColor: '#fff',
+        paddingVertical: 0,
+        paddingHorizontal: 5
     }
 })
