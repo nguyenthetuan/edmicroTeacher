@@ -8,8 +8,8 @@ export default function Version(props) {
         <View>
             <Text style={MenuStyle.textVersion}>Version : {props.version}</Text>
             <Text style={{ fontFamily: 'Nunito-Regular', color: '#979797', fontSize: RFFonsize(9), marginBottom: 10, alignSelf: 'center' }}>
-                Update At: 09:45 25/02/2021
-                </Text>
+                Update At: 16:45 01/03/2021
+            </Text>
         </View>
     );
 }

@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
-import {Text, TextInput} from 'react-native';
-import {enableScreens} from 'react-native-screens';
-import {Provider} from 'react-redux';
+import React, { Component } from 'react';
+import { Text, TextInput } from 'react-native';
+import { enableScreens } from 'react-native-screens';
+import { Provider } from 'react-redux';
 import codePush from "react-native-code-push";
 import store from './store/index';
 import sagaMiddleware from './middleware/sagaMiddleWare';
 import rootSaga from './sagas/rootSaga';
-import Mixpanel, {MixpanelInstance} from 'react-native-mixpanel';
+import Mixpanel, { MixpanelInstance } from 'react-native-mixpanel';
 import Common from './utils/Common';
 import dataHelper from './utils/dataHelper';
 import jwtDecode from 'jwt-decode';
 import apiUser from './services/apiUserHelper';
 import RootAppNavigator from './navigations/RootNavigator';
-import {StatusBar, Platform} from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import ConfigNotification from './utils/ConfigNotification';
 
-let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
-
+// let codePushOptions = codePush({ updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE });
+// let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 // enableScreens(); // crash webview back
 
 class App extends Component {
@@ -35,12 +35,12 @@ class App extends Component {
     Mixpanel.sharedInstanceWithToken(Common.MixpanelToken);
     console.disableYellowBox = true;
     this.configureTextProps();
-    dataHelper.getToken().then(({token}) => {
-      const {userId, idMixpanel} = jwtDecode(token);
+    dataHelper.getToken().then(({ token }) => {
+      const { userId, idMixpanel } = jwtDecode(token);
       if (!idMixpanel || idMixpanel !== Common.MixpanelToken) {
         Mixpanel.createAlias(userId);
         apiUser
-          .updateMixpanelId({token, mixpanelId: Common.MixpanelToken})
+          .updateMixpanelId({ token, mixpanelId: Common.MixpanelToken })
           .then((data) => {
             if (!!data) {
               Mixpanel.set(jwtDecode(data.access_token));
@@ -104,6 +104,15 @@ class App extends Component {
 
 sagaMiddleware.run(rootSaga);
 
-const MyApp = codePush(codePushOptions)(App);
+const MyApp = codePush({
+  updateDialog: {
+    title: 'Cập nhật bản mới',
+    optionalUpdateMessage: 'Đã có bản cập nhật mới. Bạn có muốn cập nhật ngay bây giờ?',
+    optionalInstallButtonLabel: 'Cập nhật',
+    optionalIgnoreButtonLabel: 'Bỏ qua'
+  },
+  installMode: codePush.InstallMode.IMMEDIATE,
+  checkFrequency: codePush.CheckFrequency.ON_APP_START
+})(App);
 
 export default MyApp;
