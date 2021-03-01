@@ -243,7 +243,7 @@ export default class CopyFromSubjectExists extends Component {
                                 data={this.state.listTask}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={this.renderTask}
-                                style={{ paddingHorizontal: 10 }}
+                                style={{ paddingHorizontal: 5 }}
                             />
                         </View>
                         :
