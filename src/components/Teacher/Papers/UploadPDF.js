@@ -15,7 +15,7 @@ import {
   ActivityIndicator,
   Modal,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -477,7 +477,7 @@ export default class UploadPDF extends Component {
     const points = this.selectAnswer?.getTotalPoint();
 
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <SafeAreaView />
         <SafeAreaView style={styles.container}>
           {/* start header */}
@@ -722,7 +722,7 @@ export default class UploadPDF extends Component {
 
           </View>
         </SafeAreaView>
-      </View >
+      </ScrollView>
     );
   }
 }
@@ -912,6 +912,6 @@ const styles = StyleSheet.create({
   },
   wrapTotalQsNPoint: {
     marginHorizontal: 10,
-    marginTop: 10
+    marginTop: 10,
   }
 });
