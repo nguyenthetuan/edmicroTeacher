@@ -99,7 +99,7 @@ export default class StepThree extends Component {
       token: this.token,
       params
     };
-    const response = await createMission(payload); 
+    const response = await createMission(payload);
     if (response.status == 0) {
       this.props.navigation.navigate('StepFour');
       this.props.screenProps.handleNextStep(3);
@@ -169,8 +169,8 @@ export default class StepThree extends Component {
       .value();
     return (
       <>
-        <Text style={styles.styTxtLabel}>Tự luyện</Text>
-        <View style={{ marginTop: 5 }}>
+        <Text style={[styles.styTxtLabel, { marginTop: 10 }]}>Tự luyện</Text>
+        <View style={{ marginTop: 5, marginHorizontal: 10 }}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flex: 1 }} />
@@ -210,8 +210,8 @@ export default class StepThree extends Component {
       .value();
     return (
       <>
-        <Text style={styles.styTxtLabel}>Kiểm tra</Text>
-        <View style={{ marginTop: 5 }}>
+        <Text style={[styles.styTxtLabel, { marginTop: 20 }]}>Kiểm tra</Text>
+        <View style={{ marginTop: 5, marginHorizontal: 10 }}>
           <View style={styles.styWrapHeader}>
             <Text style={[styles.styName]}>Tên nhiệm vụ</Text>
             <View style={{ flexDirection: 'row' }}>
@@ -371,6 +371,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginHorizontal: 10
   },
   styBtnBack: {
     backgroundColor: '#2D9CDB',
@@ -382,7 +383,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
-    color: '#000'
+    color: '#000',
+    marginLeft: 10
   },
   styWrapSubject: {
     borderWidth: 0.5,
@@ -390,7 +392,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 5,
     borderColor: '#B5B5B5',
-    minWidth: 80,
+    minWidth: 100,
     textAlign: 'center',
     backgroundColor: '#fff'
   },
