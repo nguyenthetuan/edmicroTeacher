@@ -357,7 +357,6 @@ class Papers extends Component {
 
   _listTestFooter = () => {
     let { isLoadMore, hideLoadMore } = this.state;
-    console.log("🚀 ~ file: paper.js ~ line 360 ~ Papers ~ { isLoadMore, hideLoadMore }", { isLoadMore, hideLoadMore })
     return hideLoadMore ? null : (
       <View style={{ width: '100%', height: 330,  }}>
         <TouchableOpacity
