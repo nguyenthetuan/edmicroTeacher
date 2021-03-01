@@ -249,7 +249,6 @@ export default class ModalCurriculum extends Component {
             ) : (
                 <View />
               )}
-            <TouchableOpacity>
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -257,7 +256,6 @@ export default class ModalCurriculum extends Component {
                   color="#fff"
                 />
               </View>
-            </TouchableOpacity>
           </View>
 
           <Modal visible={visible} transparent={true}>
@@ -368,6 +366,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(12),
     color: '#FFF',
+    marginBottom: 2
   },
   topheader: {
     backgroundColor: '#2D9CDB',
@@ -422,8 +421,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    // borderRadius: 5,
-    // overflow: 'hidden'
+    borderRadius: 5,
+    overflow: 'hidden'
   },
   wrapElementSelect: {
     maxWidth: '50%',
