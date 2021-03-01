@@ -188,6 +188,7 @@ class ConfigQuestion extends Component {
             return;
         }
         if (!count) {
+            this.refs.toast.show('Phải chọn ít nhất 1 câu hỏi!')
             return;
         }
         for (let i = listChecked.length - 1; i >= 0; i--) {
@@ -1089,7 +1090,7 @@ const styles = StyleSheet.create({
         height: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 150
+        width: 170
     },
     flexColumn: {
         flexDirection: 'column',
