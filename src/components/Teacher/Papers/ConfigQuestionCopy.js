@@ -188,6 +188,7 @@ class ConfigQuestion extends Component {
             return;
         }
         if (!count) {
+            this.refs.toast.show('Phải chọn ít nhất 1 câu hỏi!')
             return;
         }
         for (let i = listChecked.length - 1; i >= 0; i--) {
