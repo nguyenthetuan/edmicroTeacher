@@ -344,7 +344,7 @@ export default class ModalConfigPaper extends Component {
               <TouchableWithoutFeedback>
                 <View style={styles.bodyModal}>
                   <View style={styles.topModal}>
-                    <Text style={styles.txtTitle}>Cấu Hình Bộ Đề</Text>
+                    <Text style={styles.txtTitle}>Sao chép bộ đề</Text>
                   </View>
                   {updating ? (
                     <View
