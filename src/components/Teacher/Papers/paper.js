@@ -117,6 +117,7 @@ class Papers extends Component {
           isShare: true,
         },
       });
+      console.log("🚀 ~ file: paper.js ~ line 120 ~ Papers ~ getData= ~ resPapers", resPapers)
       if (resPapers && resPapers.status === 1) {
         listPapers = resPapers.data;
       }
@@ -355,29 +356,32 @@ class Papers extends Component {
   };
 
   _listTestFooter = () => {
-    const { isLoadMore, hideLoadMore } = this.state;
+    let { isLoadMore, hideLoadMore } = this.state;
+    console.log("🚀 ~ file: paper.js ~ line 360 ~ Papers ~ { isLoadMore, hideLoadMore }", { isLoadMore, hideLoadMore })
     return hideLoadMore ? null : (
-      <TouchableOpacity
-        onPress={this.onLoadMore}
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 50,
-        }}>
-        {isLoadMore ? (
-          <ActivityIndicator size={'small'} />
-        ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
-      </TouchableOpacity>
+      <View style={{ width: '100%', height: 330,  }}>
+        <TouchableOpacity
+          onPress={this.onLoadMore}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 50,
+          }}>
+          {isLoadMore ? (
+            <ActivityIndicator size={'small'} />
+          ) : (
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -669,8 +673,8 @@ class Papers extends Component {
           keyExtractor={(item, index) => index.toString()}
           extraData={listPapers}
           ListEmptyComponent={this._listTestEmpty}
-          // ListFooterComponent={this._listTestFooter}
-          ListFooterComponent={<View style={{ height: 280 }} />}
+          ListFooterComponent={this._listTestFooter}
+          // ListFooterComponent={<View style={{ height: 280 }} />}
           renderItem={({ item, index }) => (
             <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
           )}
