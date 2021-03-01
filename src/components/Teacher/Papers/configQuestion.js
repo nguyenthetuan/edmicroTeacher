@@ -905,7 +905,7 @@ class ConfigQuestion extends Component {
                     height: 60,
                   }}>
                   <TouchableOpacity
-                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    style={{ flexDirection: 'row', alignItems: 'center', }}
                     onPress={this.deleteQuestion}>
                     <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
                     <MaterialCommunityIcons

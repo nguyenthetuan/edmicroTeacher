@@ -139,7 +139,7 @@ export default class ListQuestionCopy extends Component {
                                         // onPress={() => { this.}}
                                         onPress={this.copySubjectMatter}
                                     >
-                                        <Text style={styles.txtRightHeader}>{`Cấu hình bộ đề` || `Lưu cấu hình`}</Text>
+                                        <Text style={styles.txtRightHeader}>{`Sao chép bộ đề` || `Lưu cấu hình`}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
