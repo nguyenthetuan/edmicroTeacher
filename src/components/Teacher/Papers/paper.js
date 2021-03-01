@@ -356,13 +356,9 @@ class Papers extends Component {
   };
 
   _listTestFooter = () => {
-    let { isLoadMore, hideLoadMore } = this.state;
+    const { isLoadMore, hideLoadMore } = this.state;
     return hideLoadMore ? null : (
-<<<<<<< HEAD
-      <View style={{ width: '100%', height: 330,  }}>
-=======
       <View style={{ width: '100%', height: 330, }}>
->>>>>>> 58545c29648500443e488c90e43603360b8602a9
         <TouchableOpacity
           onPress={this.onLoadMore}
           style={{
