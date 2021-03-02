@@ -53,7 +53,7 @@ export default class StepFour extends Component {
                     <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                         <Text style={styles.styTxtBtn}>Giao nhiệm vụ vừa tạo</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#28A745' }]} onPress={this.props.screenProps.goback}>
+                    <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#ffbe70' }]} onPress={this.props.screenProps.goback}>
                         <Text style={styles.styTxtBtn}>Màn hình chính</Text>
                     </TouchableOpacity>
                 </View>
