@@ -394,6 +394,9 @@ class MarkingView extends Component {
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }
+    // if(point ==='') {
+    //   point = 0;
+    // }
     this.setState({ [`valueScore${this.state.currentIndex}`]: point });
   }
 
@@ -803,11 +806,17 @@ class MarkingView extends Component {
           ? assignmentDetailCheck.data.data[currentIndex]?.dataMaterial.data[0]
             .maxScore
           : assignmentDetailCheck.data.data[currentIndex].dataStandard.maxScore;
-    const point =
+    let point =
       (typeof this.state[`valueScore${this.state.currentIndex}`] !==
         `undefined` &&
         `${this.state[`valueScore${this.state.currentIndex}`]}`) ||
       ``;
+    console.log("this.state[`valueScore${this.state.currentIndex}`]: ", this.state[`valueScore${this.state.currentIndex}`] === '');
+    if (this.state[`valueScore${this.state.currentIndex}`] === '') {
+      point = '0';
+    }
+    if (parseInt(point) > 0)
+      point = (point).replace(/^0+/, '');
 
     return (
       <View style={styles.rootView}>
