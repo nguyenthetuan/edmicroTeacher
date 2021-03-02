@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     ScrollView,
     ActivityIndicator,
-    FlatList
+    FlatList,
+    SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
@@ -22,7 +23,6 @@ import {
 const { width } = Dimensions.get('window');
 import AppIcon from '../../utils/AppIcon';
 import ProgressBar from '../libs/ProgressBar';
-import { SafeAreaView } from 'react-navigation';
 class StatisticScreen extends Component {
     constructor(props) {
         super(props);
@@ -154,7 +154,7 @@ class StatisticScreen extends Component {
                                         {listClass.totalStudentOnline ?
                                             Math.ceil((listClass.totalStudentOnline / listClass.totalStudent) * 100)
                                             : 0
-                                        } %
+                                        }%
                                     </Text>
                                 </View>
                             </View>
@@ -214,7 +214,7 @@ class StatisticScreen extends Component {
                                             {mission.totalMissionAssign ?
                                                 Math.ceil((mission.totalMissionAssign / mission.totalMission) * 100)
                                                 : 0
-                                            } %
+                                            }%
 
                                         </Text>
                                     </View>
@@ -250,7 +250,7 @@ class StatisticScreen extends Component {
                                         </View>
                                         <View style={styles.countRight}>
                                             <View style={[styles.flexIcon, { paddingRight: 26, justifyContent: 'space-between', width: '90%' }]}>
-                                                <Text style={styles.numberBig}>{assignment.totalAssign}</Text>
+                                                <Text style={styles.numberBig}>{assignment.totalAssignment}</Text>
                                                 <Text numberOfLines={1}
                                                     style={styles.mission}>Bài tập</Text>
                                             </View>
@@ -272,10 +272,10 @@ class StatisticScreen extends Component {
                                             progressUnfilledColor="#BDBDBD"
                                         />
                                         <Text style={styles.rateSub}>
-                                            {assignment.totalAssign ?
-                                                Math.floor((assignment.totalAssign / assignment.totalAssignment) * 100)
+                                            {assignment.totalAssignment ?
+                                                Math.floor((assignment.totalAssignment / assignment.totalAssignment) * 100)
                                                 : 0
-                                            } %
+                                            }%
                                          </Text>
                                     </View>
                                 </View>
@@ -471,7 +471,6 @@ const styles = StyleSheet.create({
         marginLeft: 5
     }
 })
-
 
 const mapStateToProps = state => {
     return {
