@@ -38,11 +38,14 @@ export default class StepFour extends Component {
     render() {
         return (
             <View style={styles.contain}>
-                <Image source={AppIcon.image_createCompleteV3} style={{ marginTop: 20 }} />
+                <Image
+                    // source={AppIcon.image_createCompleteV3}
+                    source={require('../../../asserts/images/image_finishMission.png')}
+                    style={{ marginTop: 20 }} />
                 <Text style={styles.styTxtAlert}>Tạo nhiệm vụ thành công! Bạn muốn làm gì tiếp theo?</Text>
                 <View style={styles.styWrapBtn}>
                     <TouchableOpacity
-                        style={[styles.styBtn, { backgroundColor: '#28A745' }]}
+                        style={[styles.styBtn, { backgroundColor: '#FF6D22' }]}
                         onPress={this.createMissionOther}
                     >
                         <Text style={styles.styTxtBtn}>Tạo nhiệm vụ khác</Text>
@@ -50,7 +53,7 @@ export default class StepFour extends Component {
                     <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                         <Text style={styles.styTxtBtn}>Giao nhiệm vụ vừa tạo</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#ffbe70' }]} onPress={this.props.screenProps.goback}>
+                    <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#28A745' }]} onPress={this.props.screenProps.goback}>
                         <Text style={styles.styTxtBtn}>Màn hình chính</Text>
                     </TouchableOpacity>
                 </View>
@@ -83,14 +86,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         position: 'absolute',
         bottom: 20,
-        marginTop: 10
     },
     styTxtAlert: {
         fontFamily: 'Nunito-Bold',
-        color: '#28A745',
+        color: '#2D9CDB',
         fontSize: RFFonsize(16),
         textAlign: 'center',
-        margin: 20,
+        marginHorizontal: 80,
+        marginTop: 40
     },
     styTxtBtn: {
         // color: '#FFF',
