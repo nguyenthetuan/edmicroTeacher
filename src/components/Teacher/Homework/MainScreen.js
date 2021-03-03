@@ -286,12 +286,12 @@ export default function StatisticsPoints(props) {
   const handleStatistic = async () => {
     if (data.class.length > 0) {
       const { token } = await dataHelper.getToken();
-      console.log("handleStatistic: ", props);
       if (token) {
-        props.fetchHomework({
+        await props.fetchHomework({
           token,
           assignId: data.class[indexSelected.class].assignId,
         });
+        props.needUpdate(true);
       }
     } else {
       toast.current.show('Không tìm thấy lớp nào!');

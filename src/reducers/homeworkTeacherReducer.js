@@ -18,6 +18,8 @@ export default function homeworkTeacherReducer(state = initState, action) {
             }
         case Types.FETCH_DATA_HOMEWORK_TEACHER_SUCCESS_ACTION:
             const data = action.data.response;
+            console.log("🚀 ~ file: homeworkTeacherReducer.js ~ line 36 ~ homeworkTeacherReducer ~ FETCH_DATA_HOMEWORK_TEACHER_SUCCESS_ACTION", Types.FETCH_DATA_HOMEWORK_TEACHER_SUCCESS_ACTION);
+            console.log("🚀 ~ file: homeworkTeacherReducer.js ~ line 36 ~ homeworkTeacherReducer ~ data", data);
             return {
                 assignId: action.data.assignId,
                 loading: false,

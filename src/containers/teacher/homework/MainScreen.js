@@ -1,6 +1,8 @@
 import MainScreen from '../../../components/Teacher/Homework/MainScreen';
 import { connect } from 'react-redux';
 import { fetchHomeworkAction } from '../../../actions/homeworkTeacherAction';
+import { updateExamListAction } from '../../../actions/paperAction';
+
 
 const mapStateToProps = state => {
   return {
@@ -11,7 +13,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchHomework: (payload) => { dispatch(fetchHomeworkAction(payload)) }
+    fetchHomework: (payload) => { dispatch(fetchHomeworkAction(payload)) },
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   }
 }
 

@@ -265,6 +265,7 @@ export default function StudentDetail(props) {
                             props.screenProps.onRefresh();
                             setTimeout(() => {
                                 toast.current.show('Yêu cầu làm lại thành công!');
+                                props.screenProps.navigation.pop(2);
                             }, 500)
                         } else {
                             // Global.updateHomeWork();
