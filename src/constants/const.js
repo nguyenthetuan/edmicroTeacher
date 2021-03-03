@@ -28,3 +28,5 @@ export const DATA_YEAR = [
  * Need change when upload store
  */
 export const APP_VERSION = Platform.OS == 'ios' ? '1.11' : '1.6';
+
+export const CODE_PUSH_VERSION = 'Update At : 14:00 03/03/2021';
