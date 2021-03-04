@@ -323,11 +323,12 @@ const styles = StyleSheet.create({
     },
     viewDate: {
         flexDirection: 'column',
+        paddingRight: 14
     },
     viewDate1: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginRight: 10,
+        paddingRight: 14
     },
     btnDate: {
         height: 30,
