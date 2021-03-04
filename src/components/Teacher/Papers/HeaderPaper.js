@@ -88,6 +88,9 @@ const styles = StyleSheet.create({
   },
   viewTitle: {
     alignSelf: 'center',
+    height: 30,
+    // alignItems: 'center',
+    // justifyContent: 'center'
   },
   button: {
     alignSelf: 'center'
@@ -97,7 +100,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: RFFonsize(16),
     flex: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    top: -2
   },
   btnAvatar: {
     height: 38,
