@@ -203,7 +203,6 @@ export default class StepOne extends Component {
               style={styles.icon}
             />
           </View>
-
           <Text style={[styles.styTxtLabel, { marginTop: 24 }]}>Mô tả</Text>
           <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
             {!htmlContent ?
@@ -246,13 +245,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 8,
     color: '#000',
-    paddingLeft: 8,
+    paddingLeft: 16,
     height: 45,
     backgroundColor: '#fff',
     paddingRight: 40
   },
   styWrapDes: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
     borderWidth: 0.5,
     overflow: 'hidden',
     borderRadius: 5,
@@ -327,7 +326,7 @@ const pickerSelectStyles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Nunito-Regular',
     height: 35,
-    margin: 10,
+    margin: 16,
     // borderWidth: 1,
     // borderColor: '#979797',
   },

@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     styWrapClassIn: {
         flexDirection: 'row',
         flex: 1,
-        borderWidth: 1,
+        borderWidth: 0.5,
         paddingHorizontal: 5,
         borderRadius: 3,
         borderColor: '#C4C4C4',

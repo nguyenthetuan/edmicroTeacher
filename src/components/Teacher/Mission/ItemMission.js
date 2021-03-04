@@ -130,7 +130,7 @@ export default class ItemMission extends Component {
           <View style={styles.dateDaly}>
             <View style={{ flexDirection: 'row' }}>
               <Image source={require('../../../asserts/icon/icon_delivery.png')} />
-              <Text style={styles.txtDeve}>Ngày giao</Text>
+              <Text style={styles.txtDeve}>Ngày tạo</Text>
             </View>
             <Text style={styles.txtTime}>{timeCreateAt}</Text>
           </View>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(14),
     alignSelf: "center",
     color: "#2D9CBD",
-    marginLeft: 35
+    marginLeft: 40
   },
   imageSize: {
     // width: 20,
