@@ -207,8 +207,7 @@ const styles = StyleSheet.create({
     itemTest: {
         borderRadius: 4,
         borderWidth: 1,
-        overflow: 'hidden',
-        marginTop: 22,
+        overflow: 'hidden'
     },
     bodyTest: {
         paddingHorizontal: 11,

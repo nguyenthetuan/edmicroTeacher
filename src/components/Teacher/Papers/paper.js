@@ -20,6 +20,7 @@ import ModalEditName from './ModalEditName';
 import { connect } from 'react-redux';
 import { setListGrades, setListSubject } from '../../../actions/paperAction';
 import Globals from '../../../utils/Globals';
+import HeaderMainPaper from '../../common-new/HeaderMainPaper';
 import HeaderMain from '../../common-new/HeaderMain';
 import { alertDeletePaper } from '../../../utils/Alert';
 import { TextInput } from 'react-native-gesture-handler';
@@ -35,7 +36,6 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import RippleButton from '../../common-new/RippleButton';
-
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -576,7 +576,6 @@ class Papers extends Component {
     } = this.state;
     return (
       <View style={styles.navbar}>
-
         <ClassItem
           gradeActive={gradeActive}
           refModalClass={this.refModalClass}
@@ -588,7 +587,7 @@ class Papers extends Component {
           refModalSubject={this.refModalSubject}
           activeSubject={this.activeSubject}
         />
-        <View style={{
+        {/* <View style={{
           justifyContent: 'space-between',
           flexDirection: 'row',
           alignItems: 'center'
@@ -622,7 +621,7 @@ class Papers extends Component {
             <Image source={require('../../../asserts/icon/icAdd.png')} resizeMode={'contain'} />
             <Text style={styles.txtAdd}>Thêm bộ đề</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     );
   }
@@ -742,7 +741,7 @@ class Papers extends Component {
             }
           ]}
         >
-          <HeaderMain {...user} navigation={this.props.navigation} />
+          <HeaderMainPaper {...user} navigation={this.props.navigation} />
           {this.renderHeaderFlastList()}
           {this.createTabButton()}
         </Animated.View>
@@ -869,10 +868,10 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: NAVBAR_HEIGHT,
+    // height: NAVBAR_HEIGHT,
     paddingTop: 10,
     backgroundColor: '#fff',
-    paddingHorizontal: 16,
+    paddingHorizontal: 16
   },
   contentContainer: {
     // paddingTop: NAVBAR_HEIGHT,
@@ -912,27 +911,26 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   tabBar: {
-    width: '100%',
-    height: 40,
+    flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 15,
-    paddingHorizontal: 15,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   buttonActive: {
-    width: '30%',
+    flex: 1,
+    marginHorizontal: 10,
     height: 30,
-    borderWidth: 1,
+    borderWidth: .5,
     borderColor: '#2D9CDB',
-    backgroundColor: 'rgba(190, 255, 181, .5)',
+    backgroundColor: 'rgba(190, 255, 181, .4)',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15
   },
   buttonNotActive: {
-    width: '30%',
+    flex: 1,
+    marginHorizontal: 10,
     height: 30,
     borderWidth: 1,
     borderColor: '#c4c4c4',
@@ -943,13 +941,16 @@ const styles = StyleSheet.create({
   },
   textButtonTabActive: {
     fontFamily: 'Nunito-Bold',
-    fontWeight: '800',
-    color: '#2D9CDB'
+    fontWeight: '500',
+    color: '#2D9CDB',
+    fontSize: RFFonsize(12),
   },
   textButtonTabNotActive: {
     fontFamily: 'Nunito-Bold',
-    fontWeight: '800',
-    color: '#b5b3b3'
+    fontWeight: '500',
+    color: '#b5b3b3',
+    fontSize: RFFonsize(12),
+    alignSelf: 'center'
   }
 });
 
