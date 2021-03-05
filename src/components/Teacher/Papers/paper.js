@@ -34,6 +34,7 @@ import ModalAddPaper from './ModalAddPaper';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
+import RippleButton from '../../common-new/RippleButton';
 
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -69,6 +70,8 @@ class Papers extends Component {
       payloadAssignment: null,
       animation: 'fadeInUpBig',
       assignmentContentType: 0,
+      typeChange: 0,
+      dataFilter: []
     };
 
 
@@ -121,11 +124,14 @@ class Papers extends Component {
       if (resPapers && resPapers.status === 1) {
         listPapers = resPapers.data;
       }
+      let dataFilter = this.filterData(listPapers);
+      console.log("🚀 ~ file: paper.js ~ line 128 ~ Papers ~ getData= ~ dataFilter", dataFilter)
       this.setState({
-        listGrades,
+        listGrades: {},
         listSubjects,
         listPapers,
         loading: false,
+        dataFilter,
         hideLoadMore: !(listPapers.length % this._pageSize === 0),
       });
     } else {
@@ -620,6 +626,79 @@ class Papers extends Component {
     );
   }
 
+  onPressChangeType = async (index) => {
+    console.log("🚀 ~ file: paper.js ~ line 630 ~ Papers ~ onPressChangeType= ~ onPressChangeType", index);
+    const { listPapers } = this.state;
+    switch (index) {
+      case 0: {
+        await this.setState({ typeChange: 0 });
+
+        break;
+      }
+      case 1: {
+        await this.setState({ typeChange: 1 })
+
+        break;
+      }
+      case 2: {
+        await this.setState({ typeChange: 2 })
+
+        break;
+      }
+      default: break;
+    }
+    let dataFilter = this.filterData(listPapers);
+    console.log("🚀 ~ file: paper.js ~ line 651 ~ Papers ~ onPressChangeType= ~ dataFilter", dataFilter)
+    this.setState({ dataFilter });
+
+  }
+
+  filterData(data) {
+    const { typeChange } = this.state;
+    let result = [];
+    switch (typeChange) {
+      case 0: {
+        result = data;
+        break;
+      }
+      case 2: {
+        data.map(item => {
+          if (item.totalAssign < 1) {
+            result.push(item);
+          }
+        })
+        break;
+      }
+      case 1: {
+        data.map(item => {
+          if (item.countCheckPoint > 0) {
+            result.push(item);
+          }
+        })
+        break;
+      }
+      default: break;
+    }
+    return result;
+  }
+
+  createTabButton = () => {
+    const { typeChange } = this.state;
+    return (
+      <View style={styles.tabBar}>
+        <RippleButton onPress={() => { this.onPressChangeType(0) }} style={typeChange === 0 ? styles.buttonActive : styles.buttonNotActive}>
+          <Text style={typeChange === 0 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>Tất cả</Text>
+        </RippleButton>
+        <RippleButton onPress={() => { this.onPressChangeType(1) }} style={typeChange === 1 ? styles.buttonActive : styles.buttonNotActive}>
+          <Text style={typeChange === 1 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>Chờ chấm điểm</Text>
+        </RippleButton>
+        <RippleButton onPress={() => { this.onPressChangeType(2) }} style={typeChange === 2 ? styles.buttonActive : styles.buttonNotActive}>
+          <Text style={typeChange === 2 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>Chưa giao</Text>
+        </RippleButton>
+      </View>
+    )
+  }
+
   render() {
     const {
       loading,
@@ -635,18 +714,19 @@ class Papers extends Component {
       visibleModalEdit,
       visibleModalEditName,
       assignmentContentType,
+      dataFilter,
     } = this.state;
     const { user } = this.props;
 
-    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
+    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 390);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 50],
       outputRange: [1, 1],
       extrapolate: 'clamp'
     })
     let translateY = _diff_clamp_scroll_y.interpolate({
-      inputRange: [0, 330],
-      outputRange: [0, -330],
+      inputRange: [0, 390],
+      outputRange: [0, -390],
       extrapolate: 'clamp',
     });
 
@@ -663,14 +743,15 @@ class Papers extends Component {
         >
           <HeaderMain {...user} navigation={this.props.navigation} />
           {this.renderHeaderFlastList()}
+          {this.createTabButton()}
         </Animated.View>
         <AnimatedFlatList
-          style={{ paddingHorizontal: 16, paddingTop: 270 }}
-          data={listPapers}
+          style={{ paddingHorizontal: 16, paddingTop: 295 }}
+          data={dataFilter}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
-          extraData={listPapers}
+          extraData={dataFilter}
           ListEmptyComponent={this._listTestEmpty}
           ListFooterComponent={this._listTestFooter}
           // ListFooterComponent={<View style={{ height: 280 }} />}
@@ -829,6 +910,46 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     zIndex: 1
   },
+  tabBar: {
+    width: '100%',
+    height: 40,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 15,
+    paddingHorizontal: 15,
+    backgroundColor: '#fff'
+  },
+  buttonActive: {
+    width: '30%',
+    height: 30,
+    borderWidth: 1,
+    borderColor: '#2D9CDB',
+    backgroundColor: 'rgba(190, 255, 181, .5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15
+  },
+  buttonNotActive: {
+    width: '30%',
+    height: 30,
+    borderWidth: 1,
+    borderColor: '#c4c4c4',
+    backgroundColor: 'rgba(196,196,196, .5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15
+  },
+  textButtonTabActive: {
+    fontFamily: 'Nunito-Bold',
+    fontWeight: '800',
+    color: '#2D9CDB'
+  },
+  textButtonTabNotActive: {
+    fontFamily: 'Nunito-Bold',
+    fontWeight: '800',
+    color: '#b5b3b3'
+  }
 });
 
 const mapStateToProps = state => {

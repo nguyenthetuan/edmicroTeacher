@@ -477,7 +477,7 @@ export default class UploadPDF extends Component {
     const points = this.selectAnswer?.getTotalPoint();
 
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <SafeAreaView />
         <SafeAreaView style={styles.container}>
           {/* start header */}
@@ -501,7 +501,7 @@ export default class UploadPDF extends Component {
             <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingTop: 20 }}
+                contentContainerStyle={{ paddingTop: 20, paddingBottom: Platform.OS == 'ios' ? 0 : 40 }}
                 ref={ref => this.scrollview = ref}
                 contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
               >
@@ -722,7 +722,7 @@ export default class UploadPDF extends Component {
 
           </View>
         </SafeAreaView>
-      </ScrollView>
+      </View>
     );
   }
 }
