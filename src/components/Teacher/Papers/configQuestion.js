@@ -248,10 +248,10 @@ class ConfigQuestion extends Component {
         const i = _.indexOf(listGradeTmp.map(e => e.gradeId), gradeId);
         if (i > -1) {
           listGradeTmp[i].isActive = true;
-          listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
+          // listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
         }
       });
-    this.refs.flastList.scrollToIndex({ animated: true, index: 0 });
+    // this.refs.flastList.scrollToIndex({ animated: true, index: 0 });
     this.setState({
       gradeCode: gradeCodeTmp,
       listGrades: listGradeTmp,
@@ -275,7 +275,9 @@ class ConfigQuestion extends Component {
               onPress={() => this.activeGrade(item)}>
               <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
-          ) : (
+          )
+            :
+            (
               <RippleButton
                 key={`b${index}`}
                 style={styles.buttomActive}
@@ -309,10 +311,10 @@ class ConfigQuestion extends Component {
       const i = _.indexOf(listSubjectsTmp.map(e => e.code), subjectId);
       if (i > -1) {
         listSubjectsTmp[i].isActive = true;
-        listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
+        // listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
       }
     });
-    this.refs.flastListSub.scrollToIndex({ animated: true, index: 0 });
+    // this.refs.flastListSub.scrollToIndex({ animated: true, index: 0 });
     this.setState({
       subjectCode: subjectCodeTmp,
       listSubjects: listSubjectsTmp,
