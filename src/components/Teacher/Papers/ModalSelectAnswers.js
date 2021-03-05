@@ -8,6 +8,8 @@ import {
     TextInput
 } from 'react-native';
 import { RFFonsize } from '../../../utils/Fonts';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -41,7 +43,8 @@ export default class ModalSelectAnswers extends Component {
         this.props.onChangeText(ponit);
     }
 
-    onEnediting = () => {;
+    onEnediting = () => {
+        ;
         this.props.onEndEditing();
     }
 
@@ -68,7 +71,7 @@ export default class ModalSelectAnswers extends Component {
                             placeholderTextColor={'#BDBDBD'}
                             style={styles.inputPoint}
                             onEndEditing={this.onEnediting}
-                        /> 
+                        />
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 30, height: 30, width: width, alignItems: 'center' }}>
                         {(this.props.typeQuestion == 0) && <View style={{ flexDirection: 'row', height: 30, alignItems: 'center' }}>
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 4,
         borderTopRightRadius: 4,
         position: 'absolute',
-        bottom: 0,
+        bottom: isIphoneX() ? 0 : 20,
         padding: 10
     },
     btnAnswer: {

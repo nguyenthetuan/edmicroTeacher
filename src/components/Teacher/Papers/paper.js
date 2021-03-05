@@ -96,6 +96,7 @@ class Papers extends Component {
       let listPapers = [];
 
       const resGrade = await apiPapers.getGrade({ token });
+      console.log("resGrade: ", resGrade);
       if (resGrade) {
         listGrades = resGrade;
         this.props.saveGrades(resGrade);
@@ -127,7 +128,7 @@ class Papers extends Component {
       let dataFilter = this.filterData(listPapers);
       console.log("🚀 ~ file: paper.js ~ line 128 ~ Papers ~ getData= ~ dataFilter", dataFilter)
       this.setState({
-        listGrades: {},
+        listGrades,
         listSubjects,
         listPapers,
         loading: false,
