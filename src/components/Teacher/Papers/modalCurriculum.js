@@ -249,13 +249,13 @@ export default class ModalCurriculum extends Component {
             ) : (
                 <View />
               )}
-              <View style={styles.icDow}>
-                <Ionicons
-                  name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
-                  size={18}
-                  color="#fff"
-                />
-              </View>
+            <View style={styles.icDow}>
+              <Ionicons
+                name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
+                size={18}
+                color="#fff"
+              />
+            </View>
           </View>
 
           <Modal visible={visible} transparent={true}>
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    borderRadius: 5,
+    borderRadius: 3,
     overflow: 'hidden'
   },
   wrapElementSelect: {
