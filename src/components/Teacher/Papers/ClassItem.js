@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
     },
     styWrapClass: {
-        marginTop: 12,
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
     },

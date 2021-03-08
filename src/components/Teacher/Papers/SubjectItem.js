@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     styWrapClass: {
-        marginTop: 6,
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
     },

@@ -365,13 +365,13 @@ class Papers extends Component {
   _listTestFooter = () => {
     const { isLoadMore, hideLoadMore } = this.state;
     return hideLoadMore ? null : (
-      <View style={{ width: '100%', height: 330, }}>
+      <View style={{ width: '100%', height: 330 }}>
         <TouchableOpacity
           onPress={this.onLoadMore}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            height: 50,
+            height: NAVBAR_HEIGHT ,
           }}>
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
@@ -746,7 +746,7 @@ class Papers extends Component {
           {this.createTabButton()}
         </Animated.View>
         <AnimatedFlatList
-          style={{ paddingHorizontal: 16, paddingTop: 295 }}
+          style={{ paddingHorizontal: 16, flex: 1 }}
           data={dataFilter}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
@@ -868,10 +868,10 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    // height: NAVBAR_HEIGHT,
-    paddingTop: 10,
+    height: NAVBAR_HEIGHT - 50,
     backgroundColor: '#fff',
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
+    justifyContent: 'center'
   },
   contentContainer: {
     // paddingTop: NAVBAR_HEIGHT,
@@ -910,12 +910,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   tabBar: {
-    flex: 1,
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row',
     backgroundColor: '#fff',
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    marginTop: 10
   },
   buttonActive: {
     flex: 1,

@@ -85,7 +85,7 @@ export default class Item extends Component {
                                     style={{ width: 23, height: 23, marginLeft: 1, borderRadius: 40 }}
                                 />
                                 <Text numberOfLines={2}
-                                    style={[styles.txtQuestion, { width: 70 }]}> 
+                                    style={[styles.txtQuestion, { width: 70 }]}>
                                     {Common.getDisplaySubject(subjectCode)}</Text>
                             </View>
                             <View style={styles.flexSenten}>
@@ -207,7 +207,8 @@ const styles = StyleSheet.create({
     itemTest: {
         borderRadius: 4,
         borderWidth: 1,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginTop: 16
     },
     bodyTest: {
         paddingHorizontal: 11,
