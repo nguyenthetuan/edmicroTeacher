@@ -212,9 +212,11 @@ class Papers extends Component {
         },
       });
       if (resPapers && resPapers.status === 1) {
+        let dataFilter = this.filterData(resPapers.data);
         this.setState({
           listPapers: resPapers.data,
           loading: false,
+          dataFilter
         });
       }
     } else {
