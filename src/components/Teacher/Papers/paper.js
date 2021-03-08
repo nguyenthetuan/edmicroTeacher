@@ -10,7 +10,8 @@ import {
   ActivityIndicator,
   Animated,
   SafeAreaView,
-  FlatList
+  FlatList,
+  TextInput
 } from 'react-native';
 import ModalEditConfig from './modalEditConfig';
 import _ from 'lodash';
@@ -21,9 +22,8 @@ import { connect } from 'react-redux';
 import { setListGrades, setListSubject } from '../../../actions/paperAction';
 import Globals from '../../../utils/Globals';
 import HeaderMainPaper from '../../common-new/HeaderMainPaper';
-import HeaderMain from '../../common-new/HeaderMain';
+// import HeaderMain from '../../common-new/HeaderMain';
 import { alertDeletePaper } from '../../../utils/Alert';
-import { TextInput } from 'react-native-gesture-handler';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import ClassItem from './ClassItem';
 import SubjectItem from './SubjectItem';
@@ -907,8 +907,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 0,
     zIndex: 1,
-    backgroundColor: '#fff',
-    zIndex: 1
+    backgroundColor: '#fff'
   },
   tabBar: {
     flex: 1,
@@ -916,6 +915,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: '#fff',
+    marginHorizontal: 8
   },
   buttonActive: {
     flex: 1,
