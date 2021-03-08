@@ -22,9 +22,10 @@ import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { RFFonsize } from '../../../utils/Fonts';
+import RippleButton from '../../common-new/RippleButton';
 
 let height = Dimensions.get('window').height;
-
+let indexPage = 0;
 export default class CopyFromSubjectExists extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +36,8 @@ export default class CopyFromSubjectExists extends Component {
             indexSelected: 0,
             subjectCode: [],
             knowledgeUnits: null,
-            isLoading: false
+            isLoading: false,
+            listTask: [],
         }
     }
 
@@ -43,6 +45,7 @@ export default class CopyFromSubjectExists extends Component {
     }
     async getDetailSubject(subjectCode) {
         const { token } = await dataHelper.getToken();
+        indexPage = 0;
         if (token) {
             const response = await apiPapers.getDetailSubject({
                 token: token,
@@ -60,6 +63,21 @@ export default class CopyFromSubjectExists extends Component {
         }
     }
 
+    renderLoadMoreButton = () => {
+        if (this.state.listTask.length) {
+            return (
+                <View style={styles.loadmoreWrap}>
+                    <RippleButton onPress={() => { this.loadMorePress() }} style={styles.loadmoreBtn}>
+                        <Text style={styles.textLoadMore}>Thêm...</Text>
+                    </RippleButton>
+                </View >
+            )
+        }
+        else {
+            return null;
+        }
+    }
+
     onPressItemSubject = async (index) => {
         const { listSubjects } = this.props.navigation.state.params;
         let subjectCode = [];
@@ -74,6 +92,7 @@ export default class CopyFromSubjectExists extends Component {
     async onPressCurriculum(index) {
         await this.setState({ currentCurriculum: this.state.lerningTarget[index].id })
         this.getLerningTarget(this.state.lerningTarget[index].id);
+        indexPage = 0;
         this.findPremadeLib();
     }
 
@@ -88,22 +107,31 @@ export default class CopyFromSubjectExists extends Component {
         }
     }
 
-    async findPremadeLib() {
+    async findPremadeLib(indexPage) {
         const { token } = await dataHelper.getToken();
+        let { listTask } = this.state;
         let curriculumCodes = [this.state.currentCurriculum];
-        let pageIndex = 0;
+        let pageIndex = indexPage || 0;
         let searchKnowledgeUnitChild = true;
         let subjectCodes = this.state.subjectCode;
         let gradeCodes = null;
         let knowledgeUnits = this.state.knowledgeUnits;
         let name = '';
-        this.setState({ isLoading: true });
+        if (!indexPage) {
+            this.setState({ isLoading: true });
+        }
         const rp = await apiPapers.findPremadeLib({ token, curriculumCodes, pageIndex, searchKnowledgeUnitChild, subjectCodes, gradeCodes, knowledgeUnits, name });
-        this.setState({ listTask: !rp ? [] : rp, isLoading: false });
+        this.setState({ listTask: !rp ? listTask : listTask.concat(rp), isLoading: false });
+    }
+
+    loadMorePress() {
+        indexPage++;
+        this.findPremadeLib(indexPage);
     }
 
     onPress(data) {
         console.log('onPress: ', data);
+        indexPage = 0;
         const { subjectCode, code, curriculumCode } = data;
         this.setState({ knowledgeUnits: code ? [code] : null },
             () => {
@@ -238,12 +266,12 @@ export default class CopyFromSubjectExists extends Component {
                     {!isLoading
                         ?
                         <View style={styles.viewStatus}>
-
                             <FlatList
                                 data={this.state.listTask}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={this.renderTask}
                                 style={{ paddingHorizontal: 5 }}
+                                ListFooterComponent={this.renderLoadMoreButton}
                             />
                         </View>
                         :
@@ -352,7 +380,7 @@ const styles = StyleSheet.create({
     },
     viewStatus: {
         width: '100%',
-        height: height - 200
+        height: height - 230
     },
     paperParacV3: {
         marginLeft: -60,
@@ -381,5 +409,24 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingVertical: 0,
         paddingHorizontal: 5
+    },
+    loadmoreWrap: {
+        width: '100%',
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 10
+    },
+    loadmoreBtn: {
+        width: 80,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textLoadMore: {
+        fontFamily: 'Nunito',
+        fontSize: 14,
+        fontWeight: '800',
+        color: '#55CCF2'
     }
 })
