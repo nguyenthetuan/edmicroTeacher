@@ -753,7 +753,7 @@ class Papers extends Component {
           {this.createTabButton()}
         </Animated.View>
         <AnimatedFlatList
-          style={{ paddingHorizontal: 16, paddingTop: 295 }}
+          style={{ paddingHorizontal: 16, paddingTop: 300 }}
           data={dataFilter}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
