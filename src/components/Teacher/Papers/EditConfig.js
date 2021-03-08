@@ -49,14 +49,12 @@ class EditConfig extends Component {
         const { assignedCode } = this.state;
         const assignmentId = data.assignmentId;
 
-        await dataHelper.getToken().then(token => {
-            Api.getListClassAssigment({ token, assignmentId }).then(response => {
-                this.setState({
-                    totalUserDoing: response?.data[0]?.totalUserDoing,
-                });
-            });
-        });
+        const { token } = await dataHelper.getToken();
+        const response = await Api.getListClassAssigment({ token, assignmentId });
 
+        this.setState({
+            totalUserDoing: response?.data[0]?.totalUserDoing,
+        });
         if (data) {
             let listGradeTmp = listGrades;
             let listSubjectTmp = listSubjects;
@@ -141,6 +139,7 @@ class EditConfig extends Component {
 
     activeGrade = item => {
         const { gradeCode, assignedCode, totalUserDoing } = this.state;
+        console.log("🚀 ~ file: EditConfig.js ~ line 144 ~ EditConfig ~ totalUserDoing", totalUserDoing)
         const { listGrades } = this.props.navigation.state.params;
 
         let gradeCodeTmp = gradeCode;
@@ -149,6 +148,7 @@ class EditConfig extends Component {
         });
 
         const isAssigned = _.indexOf(assignedCode, item.gradeId) >= 0;
+        console.log("🚀 ~ file: EditConfig.js ~ line 152 ~ EditConfig ~ isAssigned", isAssigned)
         if (isAssigned && totalUserDoing) {
             return;
         }
