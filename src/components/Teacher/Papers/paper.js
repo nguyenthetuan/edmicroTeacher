@@ -145,12 +145,15 @@ class Papers extends Component {
 
   deletePaper = async () => alertDeletePaper('Xoá bộ đề', 'Bạn có muốn xoá bộ đề này!', async () => {
     const { dataSelected } = this.state;
+    console.log("dataSelected.assignmentId: ", dataSelected.assignmentId)
     const { token } = await dataHelper.getToken();
     const response = await apiPapers.deletePaper({
       token,
       id: dataSelected.assignmentId,
     });
+    console.log("🚀 ~ file: paper.js ~ line 153 ~ Papers ~ deletePaper ~ response", response)
     if (response.status === 1) {
+      alert('Xóa bài thành công!');
       this.setState(
         {
           visibleEdit: false,
@@ -178,11 +181,13 @@ class Papers extends Component {
           },
         });
         if (resPapers && resPapers.status === 1) {
+          let dataFilter = this.filterData(resPapers.data);
           this.setState(
             {
               listPapers: resPapers.data,
               loading: false,
               hideLoadMore: true,
+              dataFilter,
             }
           );
         }
@@ -649,7 +654,6 @@ class Papers extends Component {
       default: break;
     }
     let dataFilter = this.filterData(listPapers);
-    console.log("🚀 ~ file: paper.js ~ line 651 ~ Papers ~ onPressChangeType= ~ dataFilter", dataFilter)
     this.setState({ dataFilter });
 
   }
