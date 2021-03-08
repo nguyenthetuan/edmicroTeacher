@@ -378,7 +378,7 @@ class Papers extends Component {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            height: NAVBAR_HEIGHT ,
+            height: NAVBAR_HEIGHT,
           }}>
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
