@@ -166,7 +166,7 @@ function Item(props) {
           <TouchableOpacity
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#fa915c' }]}>
+            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#E0E0E0' }]}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>

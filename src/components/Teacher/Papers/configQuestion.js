@@ -637,7 +637,7 @@ class ConfigQuestion extends Component {
                 <View style={{ flex: 1 }}>
                   <View>
                     {!_.isEmpty(listGrades) && (
-                      <View style={{ marginTop: 14 }}>
+                      <View style={{ marginTop: 0 }}>
                         <Text
                           style={[
                             styles.txtTitleGrade,
@@ -649,7 +649,7 @@ class ConfigQuestion extends Component {
                       </View>
                     )}
                     {!_.isEmpty(listSubjects) && (
-                      <View style={{ marginTop: 14 }}>
+                      <View style={{ marginTop: 8 }}>
                         <Text
                           style={[
                             styles.txtTitleGrade,
@@ -745,7 +745,7 @@ class ConfigQuestion extends Component {
                     }}>
                     <Text
                       style={[
-                        { color: '#FFF', fontSize: RFFonsize(12), fontFamily: 'Nunito-Bold' },
+                        { color: '#FFF', fontSize: RFFonsize(14), fontFamily: 'Nunito-Bold', marginTop: 4, marginBottom: -3 },
                         errors.name && { color: '#EB5757' },
                       ]}>
                       Nhập tên bài kiểm tra
@@ -1163,6 +1163,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     color: '#FFF',
+    marginTop: 5,
+    marginBottom: 3
   },
   rightHeader: {
     alignItems: 'center',
@@ -1272,16 +1274,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
-    paddingHorizontal: 5,
+    marginRight: 5,
     paddingVertical: 3,
+    paddingHorizontal: 5,
   },
   txtTitleGrade: {
     color: '#FFFEFE',
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(12),
-    marginLeft: 5,
+    marginBottom: -3,
     marginRight: 15,
+    marginTop: 4
   },
   txtItem: {
     fontFamily: 'Nunito-Regular',
