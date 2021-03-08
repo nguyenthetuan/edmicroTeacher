@@ -39,11 +39,11 @@ export default class SubjectItem extends Component {
                     <Text style={styles.txtClass}>Môn học</Text>
                 </View>
                 <View style={styles.styWrapClass}>
-                    <Image
+                    {/* <Image
                         style={{ marginRight: 10 }}
                         source={require('../../../asserts/icon/subject.png')}
                         resizeMode={'contain'}
-                    />
+                    /> */}
                     <View style={styles.styWrapClassIn}>
                         <FlatList
                             data={subjectActive}
@@ -60,6 +60,7 @@ export default class SubjectItem extends Component {
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
                                 resizeMode={'contain'}
+                                style={{ tintColor: '#56CCF2' }}
                             />
                         </RippleButton>
                     </View>
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         paddingHorizontal: 5,
         borderRadius: 3,
-        borderColor: '#C4C4C4',
+        borderColor: '#56CCF2',
         alignItems: 'center'
     },
     styWrapLabel: {
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     styWrapClass: {
-        marginTop: 6,
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
     },
