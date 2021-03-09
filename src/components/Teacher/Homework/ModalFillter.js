@@ -70,14 +70,14 @@ export default class ModalFillter extends Component {
               data={dataGade}
               indexSelected={indexSelected.grade}
               onPressItem={onPressItemGrade}
-              contentStyle={{ marginHorizontal: 0 }}
+              contentStyle={styles.contentDrop}
             />
             <Dropdown
               title="Môn học"
               data={dataSubject}
               indexSelected={indexSelected.subject}
               onPressItem={onPressItemSubject}
-              contentStyle={{ marginHorizontal: 0 }}
+              contentStyle={styles.contentDrop}
             />
           </View>
           <View style={[styles.wrapSelect, { flexDirection: 'column' }]}>
@@ -99,7 +99,7 @@ export default class ModalFillter extends Component {
 
           <TouchableOpacity style={styles.btnViewStatistic} onPress={this.handleStatistic}>
             <Text style={styles.txtBtn}>Xem thống kê</Text>
-            <Icon name='angle-right' size={20} color={'#FFF'} />
+            {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
           </TouchableOpacity>
         </View>
       </Modal >
@@ -127,22 +127,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
-    borderRadius: 3,
+    borderRadius: 5,
     marginTop: 50
   },
   txtBtn: {
     color: '#FFF',
     marginHorizontal: 20,
-    marginVertical: 5
+    marginVertical: 10
   },
   contentStyle: {
     marginVertical: 10,
     width: width - 80,
-    marginHorizontal: 0
+    marginHorizontal: 0,
+    height: 40,
+    borderRadius: 5,
+    paddingLeft: 10,
+    paddingRight: 5
   },
   imgClose: {
     width: 25,
-    height: 25
+    height: 25,
+    right: 5,
+    top: 7
+
   },
   styBtnClose: {
     position: 'absolute',
@@ -153,5 +160,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     marginTop: 20,
     fontSize: RFFonsize(16)
+  },
+  contentDrop: {
+    marginHorizontal: 0,
+    height: 40,
+    paddingLeft: 10,
+    borderRadius: 5,
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+
   }
 });

@@ -390,14 +390,20 @@ const styles = StyleSheet.create({
     borderRadius: 12.5,
   },
   searchPaper: {
-    height: 22,
+    height: 40,
     fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     color: '#000',
     fontFamily: 'Nunito-Regular',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
     flex: 1,
   },
   styWrapSearch: {
+    fontFamily: 'Nunito-Regular',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     borderColor: '#C4C4C4',
     borderWidth: 0.5,
     borderRadius: 4,
@@ -405,7 +411,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginRight: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    height: 25,
+    color: '#000',
+    alignSelf: "center"
   },
   addPaper: {
     flex: 1,
