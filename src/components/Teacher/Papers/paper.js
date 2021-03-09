@@ -921,7 +921,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     marginHorizontal: 8,
-    marginTop: 10
+    flex: 1,
   },
   buttonActive: {
     flex: 1,
