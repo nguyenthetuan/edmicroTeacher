@@ -383,16 +383,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-              <Text
-                style={{
-                  color: '#000',
-                  fontFamily: 'Nunito-Bold',
-                  fontSize: RFFonsize(14),
-                  textAlign: 'center',
-                }}>
-                Xem thêm
-              </Text>
-            )}
+            <Text
+              style={{
+                color: '#000',
+                fontFamily: 'Nunito-Bold',
+                fontSize: RFFonsize(14),
+                textAlign: 'center',
+              }}>
+              Xem thêm
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -747,7 +747,7 @@ class Papers extends Component {
             }
           ]}
         >
-          <HeaderMainPaper {...user} navigation={this.props.navigation} />
+          <HeaderMainPaper {...user} navigation={this.props.navigation} onChangeText={this.onChangeText} textSearch={this.state.textSearch} searchPaper={this.searchPaper}/>
           {this.renderHeaderFlastList()}
           {this.createTabButton()}
         </Animated.View>

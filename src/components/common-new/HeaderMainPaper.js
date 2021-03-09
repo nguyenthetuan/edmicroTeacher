@@ -206,225 +206,9 @@ class HeaderMainPaper extends React.Component {
     }
   };
 
-  onLoadMore = async () => {
-    this.setState({
-      isLoadMore: true,
-    });
-    const { token } = await dataHelper.getToken();
-    if (token) {
-      this._indexPage++;
-
-      let listPapers = this.state.listPapers;
-
-      const res = await apiPapers.getPapers({
-        token,
-        body: {
-          text: '',
-          gradeCode: [],
-          subjectCode: [],
-          status: [],
-          indexPage: this._indexPage,
-          isShare: true,
-        },
-      });
-
-      if (res && res.status === 1) {
-        listPapers = listPapers.concat(res.data);
-      }
-
-      this.setState({
-        listPapers,
-        isLoadMore: false,
-        hideLoadMore: !(listPapers.length % this._pageSize === 0),
-      });
-    } else {
-      this.setState({
-        isLoadMore: false,
-      });
-    }
-  };
-
-  onUpdateItem = async item => {
-    const { listPapers } = this.state;
-    let listPapersTmp = listPapers;
-    const index = _.findIndex(listPapers, ['assignmentId', item.assignmentId]);
-    if (index > -1) {
-      listPapersTmp[index] = item;
-    }
-    this.setState({
-      listPapers: listPapersTmp,
-    });
-  };
-
-  activeClass = async item => {
-    const { gradeActive } = this.state;
-    const index = _.indexOf(gradeActive, item.gradeId || item);
-    if (index < 0) {
-      gradeActive.push(item.gradeId)
-      await this.setState({ gradeActive, loading: true });
-      this.onGetPapers();
-      return;
-    }
-    gradeActive.splice(index, 1);
-    await this.setState({ gradeActive, loading: true });
-    this.onGetPapers();
-  };
-
-  refreshClass = () => {
-    this.setState({
-      gradeActive: [],
-      loading: true,
-    });
-    this.onGetPapers();
-  };
-
-  activeSubject = async item => {
-    const { subjectActive } = this.state;
-    const index = _.indexOf(subjectActive, item.code || item);
-    if (index < 0) {
-      subjectActive.push(item.code);
-      await this.setState({ subjectActive, loading: true });
-      this.onGetPapers()
-      return;
-    }
-    subjectActive.splice(index, 1)
-    await this.setState({ subjectActive, loading: true });
-    this.onGetPapers()
-  };
-
-  refreshSubject = () => {
-    this.setState({
-      subjectActive: [],
-      loading: true,
-    });
-    this.onGetPapers();
-  };
-
-  _OpenModal = type => {
-    this.setState(
-      {
-        visibleEdit: false,
-      },
-      () => {
-        switch (type) {
-          case 3:
-            this.onVisibleModalEditName(true);
-            break;
-          case 4:
-            // this.onVisibleModalEdit(true);
-            this.props.navigation.navigate('EditConfig', {
-              statusbar: 'light-content',
-              data: this.state.dataSelected,
-              listGrades: this.state.listGrades,
-              listSubjects: this.state.listSubjects,
-              onUpdateItem: (item) => { this.onUpdateItem(item) }
-            });
-            break;
-          default:
-            break;
-        }
-      },
-    );
-  };
-
-  OpenModalEdit = () => {
-    this.setButton(this.button2, () => {
-      this.setState({ popover: true });
-    });
-  };
-
-
-  _crateBackUp = async id => {
-    const { listGrades, listSubjects } = this.state;
-    try {
-      const { token } = await dataHelper.getToken();
-      const res = await apiPapers.getAssignmentConfig({ token, id: id });
-      if (res && res.assignmentContentType === 0) {
-        const question = dataHelper.saveQuestion(res.questions);
-        this.props.navigation.navigate('QuestionLibrary', {
-          nagigation: this.props.nagigation,
-          statusbar: 'light-content',
-        });
-      } else {
-        this.props.navigation.navigate('UploadPDF', {
-          nagigation: this.props.nagigation,
-          listGrades,
-          listSubjects,
-          urlFile: res.listFile[0],
-          statusbar: 'dark-content',
-        });
-      }
-    } catch (error) { }
-  };
-
   _handleAddPaper = () => {
     dataHelper.saveQuestion([]);
     this.setState({ visibleModalAdd: true });
-  };
-
-  _handleClickDetail = index => () => {
-    const {
-      dataSelected,
-      payloadAssignment,
-    } = this.state;
-    switch (index) {
-      case 1:
-        this.setState({ visibleEdit: false });
-        this.props.navigation.navigate('ExcerciseDetail', {
-          subjectCode: dataSelected.subjectCode,
-          assignmentId: dataSelected.assignmentId,
-          name: dataSelected.name,
-          naviagtion: this.props.navigation,
-          statusbar: 'dark-content',
-        });
-        break;
-      case 2:
-        this.setState({ visibleEdit: false });
-        this._crateBackUp(dataSelected.assignmentId);
-        break;
-      case 4:
-        this.setState({ visibleEdit: false });
-        this.props.navigation.navigate('Assignment', {
-          item: { ...dataSelected, id: dataSelected.assignmentId },
-          payloadAssignment,
-          statusbar: 'light-content',
-        });
-        break;
-      case 7:
-        this.setState({ visibleEdit: false });
-        this.props.navigation.navigate('MarkingView', {
-          item: dataSelected,
-          statusbar: 'light-content',
-        });
-        break;
-
-      default:
-        break;
-    }
-  };
-
-  _onOpenModal = item => (payloadAssignment, visibleEdit = true) => {
-    this.setState(
-      {
-        visibleEdit,
-        dataSelected: item,
-        payloadAssignment,
-        assignmentContentType: item.assignmentContentType,
-      },
-      () => {
-        if (!visibleEdit) {
-          this._handleClickDetail(1)();
-        }
-      },
-    );
-  };
-
-  _handleCloseModal = () => {
-    this.setState({ animation: 'fadeOutDownBig' }, () => {
-      this.myTime = setTimeout(() => {
-        this.setState({ animation: 'fadeInUpBig', visibleEdit: false });
-      }, 220);
-    });
   };
 
   onPress = () => {
@@ -480,12 +264,6 @@ class HeaderMainPaper extends React.Component {
     });
   };
 
-  onVisibleModalAdd = visible => {
-    this.setState({
-      visibleModalAdd: visible,
-    });
-  };
-
   componentWillUnmount() {
     if (this.myTimecloseModal) {
       clearTimeout(this.myTimecloseModal);
@@ -498,72 +276,11 @@ class HeaderMainPaper extends React.Component {
   }
 
   searchPaper = () => {
-    this.setState({ loading: true, }, () => this.onGetPapers())
+    this.props.searchPaper();
   }
 
   onChangeText = text => {
-    this.setState({ textSearch: text });
-    if (this.timeSearch) {
-      clearTimeout(this.timeSearch);
-      this.timeSearch = null;
-    }
-    this.timeSearch = setTimeout(this.searchPaper, 1000);
-  }
-
-
-  onPressChangeType = async (index) => {
-    console.log("🚀 ~ file: paper.js ~ line 630 ~ Papers ~ onPressChangeType= ~ onPressChangeType", index);
-    const { listPapers } = this.state;
-    switch (index) {
-      case 0: {
-        await this.setState({ typeChange: 0 });
-
-        break;
-      }
-      case 1: {
-        await this.setState({ typeChange: 1 })
-
-        break;
-      }
-      case 2: {
-        await this.setState({ typeChange: 2 })
-
-        break;
-      }
-      default: break;
-    }
-    let dataFilter = this.filterData(listPapers);
-    this.setState({ dataFilter });
-
-  }
-
-  filterData(data) {
-    const { typeChange } = this.state;
-    let result = [];
-    switch (typeChange) {
-      case 0: {
-        result = data;
-        break;
-      }
-      case 2: {
-        data.map(item => {
-          if (item.totalAssign < 1) {
-            result.push(item);
-          }
-        })
-        break;
-      }
-      case 1: {
-        data.map(item => {
-          if (item.countCheckPoint > 0) {
-            result.push(item);
-          }
-        })
-        break;
-      }
-      default: break;
-    }
-    return result;
+    this.props.onChangeText(text);
   }
 
 
@@ -585,8 +302,8 @@ class HeaderMainPaper extends React.Component {
       visibleModalEditName,
       assignmentContentType,
       dataFilter,
-      textSearch
     } = this.state;
+    const { textSearch } = this.props;
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 50],
