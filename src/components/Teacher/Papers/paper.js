@@ -96,7 +96,7 @@ class Papers extends Component {
       let listPapers = [];
 
       const resGrade = await apiPapers.getGrade({ token });
-      console.log("resGrade: ", resGrade);
+
       if (resGrade) {
         listGrades = resGrade;
         this.props.saveGrades(resGrade);
@@ -121,12 +121,10 @@ class Papers extends Component {
           isShare: true,
         },
       });
-      console.log("🚀 ~ file: paper.js ~ line 120 ~ Papers ~ getData= ~ resPapers", resPapers)
       if (resPapers && resPapers.status === 1) {
         listPapers = resPapers.data;
       }
       let dataFilter = this.filterData(listPapers);
-      console.log("🚀 ~ file: paper.js ~ line 128 ~ Papers ~ getData= ~ dataFilter", dataFilter)
       this.setState({
         listGrades,
         listSubjects,
@@ -145,13 +143,11 @@ class Papers extends Component {
 
   deletePaper = async () => alertDeletePaper('Xoá bộ đề', 'Bạn có muốn xoá bộ đề này!', async () => {
     const { dataSelected } = this.state;
-    console.log("dataSelected.assignmentId: ", dataSelected.assignmentId)
     const { token } = await dataHelper.getToken();
     const response = await apiPapers.deletePaper({
       token,
       id: dataSelected.assignmentId,
     });
-    console.log("🚀 ~ file: paper.js ~ line 153 ~ Papers ~ deletePaper ~ response", response)
     if (response.status === 1) {
       alert('Xóa bài thành công!');
       this.setState(
@@ -634,7 +630,6 @@ class Papers extends Component {
   }
 
   onPressChangeType = async (index) => {
-    console.log("🚀 ~ file: paper.js ~ line 630 ~ Papers ~ onPressChangeType= ~ onPressChangeType", index);
     const { listPapers } = this.state;
     switch (index) {
       case 0: {
@@ -722,6 +717,7 @@ class Papers extends Component {
       assignmentContentType,
       dataFilter,
     } = this.state;
+    console.log("🚀 ~ file: paper.js ~ line 720 ~ Papers ~ render ~ dataFilter", dataFilter)
     const { user } = this.props;
 
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 390);
@@ -747,12 +743,12 @@ class Papers extends Component {
             }
           ]}
         >
-          <HeaderMainPaper {...user} navigation={this.props.navigation} onChangeText={this.onChangeText} textSearch={this.state.textSearch} searchPaper={this.searchPaper}/>
+          <HeaderMainPaper {...user} navigation={this.props.navigation} onChangeText={this.onChangeText} textSearch={this.state.textSearch} searchPaper={this.searchPaper} />
           {this.renderHeaderFlastList()}
           {this.createTabButton()}
         </Animated.View>
         <AnimatedFlatList
-          style={{ paddingHorizontal: 16, flex: 1 }}
+          style={{ paddingHorizontal: 16, paddingTop: 280 }}
           data={dataFilter}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
@@ -761,9 +757,11 @@ class Papers extends Component {
           ListEmptyComponent={this._listTestEmpty}
           ListFooterComponent={this._listTestFooter}
           // ListFooterComponent={<View style={{ height: 280 }} />}
-          renderItem={({ item, index }) => (
-            <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-          )}
+          renderItem={({ item, index }) => {
+            return (
+              <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+            )
+          }}
           initialNumToRender={5}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
