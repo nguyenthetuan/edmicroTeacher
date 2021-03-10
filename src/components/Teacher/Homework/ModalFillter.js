@@ -64,7 +64,7 @@ export default class ModalFillter extends Component {
           <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
             <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
           </TouchableOpacity>
-          <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR }]}>
+          <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
             <Dropdown
               title="Khối"
               data={dataGade}
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: width - 80,
     marginHorizontal: 0,
-    height: 40,
+    height: 35,
     borderRadius: 5,
     paddingLeft: 10,
     paddingRight: 5
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     right: 5,
-    top: 7
+    top: 10
 
   },
   styBtnClose: {
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   contentDrop: {
     marginHorizontal: 0,
-    height: 40,
+    height: 35,
     paddingLeft: 10,
     borderRadius: 5,
     fontFamily: "Nunito",
