@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         borderColor: '#56CCF2',
         marginBottom: 16,
         marginHorizontal: 16,
-        marginTop: 15
+        marginTop: 15,
     },
     headerItem: {
         height: 30,
@@ -258,14 +258,14 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        flex: 1
     },
     txtTitleItemContent: {
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(12),
         color: '#828282',
         marginLeft: 5,
-        alignSelf: "center",
-        // width: 80
+        alignSelf: "center"
     },
     btnAssignment: {
         alignSelf: 'flex-end',
@@ -273,15 +273,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#56BB73',
         borderRadius: 4,
         paddingVertical: 8,
-        paddingHorizontal: 35,
         flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'center'
     },
     txtAssignment: {
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
         color: '#fff',
         marginRight: 10,
-        marginLeft: 10,
+        marginLeft: 10
     },
     checkAllow: {
         width: 14,
@@ -328,7 +329,8 @@ const styles = StyleSheet.create({
     viewDate1: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingRight: 14
+        paddingRight: 14,
+        width: '50%'
     },
     btnDate: {
         height: 30,
