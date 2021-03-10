@@ -30,6 +30,11 @@ export default class InputNumberQuestion extends Component {
   }
 
   onChangeText = (text) => {
+    if (text === '') {
+      text = 0;
+    }
+    if (parseInt(text) > 0)
+      text = (text).replace(/^0+/, '');
     this.setState({
       total: text
     })
