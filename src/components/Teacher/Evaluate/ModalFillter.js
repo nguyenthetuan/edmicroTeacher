@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   styClose: {
     width: 25,
     height: 25,
-    top: 7,
+    top: 10,
     right: 5
   },
   wrapClose: {
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     width: '90%',
     borderRadius: 5,
     marginTop: 30,
-    height: 40,
+    height: 35,
     paddingLeft: 10,
     fontFamily: 'Nunito',
     fontSize: RFFonsize(12),
