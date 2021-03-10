@@ -96,7 +96,7 @@ export default class ModalFillter extends Component {
 
             <TouchableOpacity style={styles.btnViewStatistic} onPress={this.changeStateModale}>
               <Text style={styles.txtBtn}>Xem thống kê</Text>
-              <Icon name='angle-right' size={20} color={'#FFF'} />
+              {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
             </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
@@ -120,6 +120,8 @@ const styles = StyleSheet.create({
   styClose: {
     width: 25,
     height: 25,
+    top: 7,
+    right: 5
   },
   wrapClose: {
     width: 35,
@@ -133,8 +135,13 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     width: '90%',
-    borderRadius: 3,
+    borderRadius: 5,
     marginTop: 30,
+    height: 40,
+    paddingLeft: 10,
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
   },
   btnViewStatistic: {
     backgroundColor: '#2D9CDB',
@@ -142,12 +149,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
-    borderRadius: 3,
+    borderRadius: 5,
     marginTop: 50,
   },
   txtBtn: {
     color: '#FFF',
     marginHorizontal: 20,
-    marginVertical: 5
+    marginVertical: 10,
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    fontWeight: "500"
   },
 });
