@@ -63,7 +63,6 @@ export default class StepThree extends Component {
     // this.props.navigation.navigate('StepFour');
     // this.props.screenProps.handleNextStep(3);
     // return;
-    this.setState({ isLoading: true });
     let {
       htmlContent,
       gradeId,
@@ -71,6 +70,12 @@ export default class StepThree extends Component {
       subjectCode
     } = this.state;
     let { dataPracticeAdd, dataTestAdd } = this.props.screenProps.data;
+
+    if (dataPracticeAdd.length == 0 && dataTestAdd.length == 0) {
+      alert('Bạn đã xóa hết bài giao, vui lòng quay lại bước 2 để thêm mới!', 1000);
+      return;
+    }
+    this.setState({ isLoading: true });
 
     dataPracticeAdd = dataPracticeAdd.map(item => ({
       countDone: item.countDone || 1,
@@ -140,6 +145,11 @@ export default class StepThree extends Component {
           ...this.props.screenProps.data,
           dataTestAdd
         });
+        if (dataPracticeAdd.length == 0 && dataTestAdd.length == 0) {
+          this.setState({
+            isVisiable: false
+          });
+        }
         return;
       }
       dataPracticeAdd = dataPracticeAdd.filter(elem => elem.id != item.id);
@@ -147,7 +157,7 @@ export default class StepThree extends Component {
         ...this.props.screenProps.data,
         dataPracticeAdd
       });
-      if (dataPracticeAdd.length == 0 || dataTestAdd.length == 0) {
+      if (dataPracticeAdd.length == 0 && dataTestAdd.length == 0) {
         this.setState({
           isVisiable: false
         });
