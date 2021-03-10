@@ -237,6 +237,7 @@ class MarkingView extends Component {
           );
         }
         this.setState({
+          [`${this.state.selectedValueStudent}marked${i}`] : !!scoreTeacher,
           [`valueScore${i}`]: scoreTeacher,
           [`valueCommnent${i}`]: contentNoteTeacher,
         });
@@ -357,7 +358,6 @@ class MarkingView extends Component {
       };
       const { token } = await apiHelper.getToken();
       const response = await apiPaper.submitReview({ token, formData });
-      console.log("🚀 ~ file: MarkingView.js ~ line 360 ~ MarkingView ~ onPressSubmitButton ~ response", response)
       if (response && response.msg === null) {
         if (!_.isEmpty(assignmentDetailCheck?.data?.data)) {
           assignmentDetailCheck.data.data = assignmentDetailCheck.data.data.map(
@@ -377,7 +377,7 @@ class MarkingView extends Component {
               return item;
             },
           );
-          this.setState({ assignmentDetailCheck, [`${studentId}marked${this.state.currentIndex}`]: true });
+          this.setState({ assignmentDetailCheck, [`${selectedValueStudent}marked${this.state.currentIndex}`]: true });
         }
         AlertNoti(messageSuccess);
         return;
@@ -391,12 +391,15 @@ class MarkingView extends Component {
   }
 
   onChangeTextScore(point) {
+    console.log("🚀 ~ file: MarkingView.js ~ line 394 ~ MarkingView ~ onChangeTextScore ~ point", point)
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }
     // if(point ==='') {
     //   point = 0;
     // }
+    console.log("🚀 ~ file: MarkingView.js ~ line 394 ~ MarkingView ~ onChangeTextScore ~ point---------", point)
+
     this.setState({ [`valueScore${this.state.currentIndex}`]: point });
   }
 
@@ -783,6 +786,7 @@ class MarkingView extends Component {
       modalImageFull,
       arrayImage
     } = this.state;
+    console.log("assignmentDetailCheck.data.data ", assignmentDetailCheck?.data?.data);
     if (_.isEmpty(assignmentDetailCheck)) {
       return (
         <View style={styles.rootView}>
