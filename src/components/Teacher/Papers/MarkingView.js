@@ -15,7 +15,7 @@ import {
   Platform
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchDataAssignmentAction } from '../../../actions/paperAction';
+import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
 import apiHelper from '../../../utils/dataHelper';
 import apiPaper from '../../../services/apiPapersTeacher';
 import MarkingPointTeacherWeb from '../../../utils/MarkingPointTeacherWeb';
@@ -33,6 +33,7 @@ import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import FormInput from '../../../components/common/FormInput';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { RFFonsize } from '../../../utils/Fonts';
+
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';
@@ -237,7 +238,7 @@ class MarkingView extends Component {
           );
         }
         this.setState({
-          [`${this.state.selectedValueStudent}marked${i}`] : !!scoreTeacher,
+          [`${this.state.selectedValueStudent}marked${i}`]: !!scoreTeacher,
           [`valueScore${i}`]: scoreTeacher,
           [`valueCommnent${i}`]: contentNoteTeacher,
         });
@@ -468,6 +469,7 @@ class MarkingView extends Component {
       const response = await apiPaper.publicedScore({ token, formData });
       if (response.status === 1) {
         AlertNoti(messageSuccessPoint, () => {
+          this.props.needUpdate(true);
           this.props.navigation.pop(1);
         });
       }
@@ -1302,6 +1304,7 @@ const mapDispatchToProps = dispatch => {
     fetchDetailAssignment: payload => {
       dispatch(fetchDataAssignmentAction(payload));
     },
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   };
 };
 
