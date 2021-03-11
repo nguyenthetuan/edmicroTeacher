@@ -392,14 +392,12 @@ class MarkingView extends Component {
   }
 
   onChangeTextScore(point) {
-    console.log("🚀 ~ file: MarkingView.js ~ line 394 ~ MarkingView ~ onChangeTextScore ~ point", point)
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }
     // if(point ==='') {
     //   point = 0;
     // }
-    console.log("🚀 ~ file: MarkingView.js ~ line 394 ~ MarkingView ~ onChangeTextScore ~ point---------", point)
 
     this.setState({ [`valueScore${this.state.currentIndex}`]: point });
   }
@@ -703,10 +701,8 @@ class MarkingView extends Component {
         bg = '#2D9CDB';
       }
     }
-    console.log("item: ", (item));
     let typeAnswer =
       item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
-    console.log("🚀 ~ file: MarkingView.js ~ line 708 ~ MarkingView ~ typeAnswer", typeAnswer)
     let makedPoint = false;
     if (this.state[`${selectedValueStudent}marked${index}`]) {
       makedPoint = true;
