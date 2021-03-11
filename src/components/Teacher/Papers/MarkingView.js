@@ -703,8 +703,10 @@ class MarkingView extends Component {
         bg = '#2D9CDB';
       }
     }
+    console.log("item: ", (item));
     let typeAnswer =
       item.dataMaterial ? item.dataMaterial.data[0].typeAnswer : item.dataStandard?.typeAnswer;
+    console.log("🚀 ~ file: MarkingView.js ~ line 708 ~ MarkingView ~ typeAnswer", typeAnswer)
     let makedPoint = false;
     if (this.state[`${selectedValueStudent}marked${index}`]) {
       makedPoint = true;
@@ -712,7 +714,7 @@ class MarkingView extends Component {
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
-    if (typeAnswer === 0 && urlFile) {
+    if (typeAnswer === 0) {
       return (
         <RippleButton
           onPress={() => {
