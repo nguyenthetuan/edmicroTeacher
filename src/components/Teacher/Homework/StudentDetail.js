@@ -306,13 +306,15 @@ export default function StudentDetail(props) {
                     <Text style={[styles.txtStatus, { color: status.color }]}>{status.title}</Text>
                     <Text style={styles.txtNameItem}>{item.nameStudent}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <ProgressBar
-                            progress={progress || 1}
-                            height={4}
-                            color='#2D9CDB'
-                            widthProps={width - 160}
-                            progressUnfilledColor='#C4C4C4'
-                        />
+                        <View>
+                            <ProgressBar
+                                progress={progress || 1}
+                                height={4}
+                                color='#2D9CDB'
+                                widthProps={width - 180}
+                                progressUnfilledColor='#C4C4C4'
+                            />
+                        </View>
                         <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 8 }]}>{Number.parseFloat(progress).toFixed(2)}%</Text>
                     </View>
                     <View style={styles.viewContent}>
@@ -503,7 +505,7 @@ const styles = StyleSheet.create({
     },
     txtProcess: {
         fontFamily: 'Nunito-Regular',
-        fontSize: RFFonsize(10),
+        fontSize: RFFonsize(9),
         flex: 1,
         color: '#2D9CDB',
     },

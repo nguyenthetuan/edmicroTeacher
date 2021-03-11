@@ -12,8 +12,9 @@ export default class ProgressBar extends Component {
     return (
       <Progress.Bar
         color={this.props.color ? this.props.color : Color.progressColor}
-        width={widthProps ? widthProps : 160}
+        width={widthProps ? widthProps : 180}
         height={height}
+        
         borderRadius={2}
         borderWidth={0}
         borderColor={Color.progressBorderColor}
