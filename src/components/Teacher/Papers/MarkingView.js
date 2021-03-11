@@ -15,7 +15,7 @@ import {
   Platform
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchDataAssignmentAction } from '../../../actions/paperAction';
+import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
 import apiHelper from '../../../utils/dataHelper';
 import apiPaper from '../../../services/apiPapersTeacher';
 import MarkingPointTeacherWeb from '../../../utils/MarkingPointTeacherWeb';
@@ -33,6 +33,7 @@ import { AlertNoti, roundToTwo } from '../../../utils/Common';
 import FormInput from '../../../components/common/FormInput';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { RFFonsize } from '../../../utils/Fonts';
+
 
 const messageErrPoint =
   'Số điểm nhập vào lớn hơn số điểm mặc định.Vui lòng nhập lại';
@@ -237,7 +238,7 @@ class MarkingView extends Component {
           );
         }
         this.setState({
-          [`${this.state.selectedValueStudent}marked${i}`] : !!scoreTeacher,
+          [`${this.state.selectedValueStudent}marked${i}`]: !!scoreTeacher,
           [`valueScore${i}`]: scoreTeacher,
           [`valueCommnent${i}`]: contentNoteTeacher,
         });
@@ -391,14 +392,12 @@ class MarkingView extends Component {
   }
 
   onChangeTextScore(point) {
-    console.log("🚀 ~ file: MarkingView.js ~ line 394 ~ MarkingView ~ onChangeTextScore ~ point", point)
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
     }
     // if(point ==='') {
     //   point = 0;
     // }
-    console.log("🚀 ~ file: MarkingView.js ~ line 394 ~ MarkingView ~ onChangeTextScore ~ point---------", point)
 
     this.setState({ [`valueScore${this.state.currentIndex}`]: point });
   }
@@ -468,6 +467,7 @@ class MarkingView extends Component {
       const response = await apiPaper.publicedScore({ token, formData });
       if (response.status === 1) {
         AlertNoti(messageSuccessPoint, () => {
+          this.props.needUpdate(true);
           this.props.navigation.pop(1);
         });
       }
@@ -710,9 +710,12 @@ class MarkingView extends Component {
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
-    if (typeAnswer === 0 && urlFile) {
+    if (typeAnswer === 0) {
       return (
         <RippleButton
+          onPress={() => {
+            this.onButtonQuestionPress(index);
+          }}
           style={[
             styles.buttonQuestion,
             { backgroundColor: '#E34D5C', borderColor: '#E34D5C' },
@@ -786,7 +789,6 @@ class MarkingView extends Component {
       modalImageFull,
       arrayImage
     } = this.state;
-    console.log("assignmentDetailCheck.data.data ", assignmentDetailCheck?.data?.data);
     if (_.isEmpty(assignmentDetailCheck)) {
       return (
         <View style={styles.rootView}>
@@ -1303,6 +1305,7 @@ const mapDispatchToProps = dispatch => {
     fetchDetailAssignment: payload => {
       dispatch(fetchDataAssignmentAction(payload));
     },
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   };
 };
 
