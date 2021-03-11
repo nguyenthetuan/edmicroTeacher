@@ -216,7 +216,7 @@ function ModalDetail(props) {
                                 onPress={() => props.onRework(item.studentId)}
                                 style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
                                 <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
-                                <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
+                                <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại1</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

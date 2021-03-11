@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  Platform,
   TouchableOpacity,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
@@ -137,9 +138,9 @@ export default class ItemClassAssigment extends Component {
                     });
                   }}
                   style={styles.buttomRevew}
-                  >
-                    <Text style={styles.txtbuttom}>
-                      Xem báo cáo
+                >
+                  <Text style={styles.txtbuttom}>
+                    Xem báo cáo
                       </Text>
 
                 </RippleButton>
@@ -217,9 +218,9 @@ const styles = StyleSheet.create({
   },
   buttomRevew: {
     backgroundColor: '#56CCF2',
-    alignSelf:'center',
-    alignItems:'center',
-    paddingHorizontal:10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
     borderRadius: 24,
     paddingVertical: 8,
     marginBottom: 8,
@@ -253,14 +254,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
   },
   viewRate: {
-    fontSize: RFFonsize(12),
+    fontSize: RFFonsize(11.5),
     color: '#F16219',
     fontFamily: 'Nunito-Regular',
     marginLeft: 10,
     position: 'absolute',
     right: 0,
-    top: 0,
-    alignSelf:'center'
+    top: Platform.OS == 'android' ? -2 : 0,
+    alignSelf: 'center'
   },
   ripButton: {
     flexDirection: 'row',
