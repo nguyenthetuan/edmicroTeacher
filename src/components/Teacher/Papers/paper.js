@@ -717,7 +717,6 @@ class Papers extends Component {
       assignmentContentType,
       dataFilter,
     } = this.state;
-    console.log("🚀 ~ file: paper.js ~ line 720 ~ Papers ~ render ~ dataFilter", dataFilter)
     const { user } = this.props;
 
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 390);

@@ -786,7 +786,6 @@ class MarkingView extends Component {
       modalImageFull,
       arrayImage
     } = this.state;
-    console.log("assignmentDetailCheck.data.data ", assignmentDetailCheck?.data?.data);
     if (_.isEmpty(assignmentDetailCheck)) {
       return (
         <View style={styles.rootView}>
