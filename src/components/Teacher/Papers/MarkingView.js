@@ -715,6 +715,9 @@ class MarkingView extends Component {
     if (typeAnswer === 0 && urlFile) {
       return (
         <RippleButton
+          onPress={() => {
+            this.onButtonQuestionPress(index);
+          }}
           style={[
             styles.buttonQuestion,
             { backgroundColor: '#E34D5C', borderColor: '#E34D5C' },
