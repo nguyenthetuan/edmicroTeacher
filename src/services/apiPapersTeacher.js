@@ -263,11 +263,14 @@ const createQuestion = async ({ token, formData }) => {
       'Content-Type': 'multipart/form-data',
       Accept: 'application/json',
       Authorization: `Bearer ${token}`,
-      'Referer': 'https://m.k12.onluyen.vn'
+      'Referer': 'https://app.onluyen.vn'
     },
     body: formData,
   })
-  let responseJson = response.json();
+  console.log("createQuestion response: ", JSON.stringify(response));
+
+  let responseJson = await response.json();
+  console.log("createQuestion responseJson: ", JSON.stringify(responseJson));
   return responseJson;
 }
 

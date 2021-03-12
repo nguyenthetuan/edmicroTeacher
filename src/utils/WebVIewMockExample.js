@@ -321,7 +321,7 @@ const renderMockExample = (data, subjectId, numberQuestion, isBookmark, contentH
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
                     Authorization: 'Bearer ${token}',
-                    'Referer': 'https://m.k12.onluyen.vn'
+                    'Referer': 'https://app.onluyen.vn'
                     },
                     body: JSON.stringify({
                         fileType: type,
