@@ -426,6 +426,7 @@ class ConfigQuestion extends Component {
         this.setState({ loading: true })
         const { token } = await dataHelper.getToken();
         const response = await apiPapers.createQuestion({ token, formData });
+        console.log("response: ", JSON.stringify(response));
         if (response.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
           const setQuestion = await dataHelper.saveQuestion([]);

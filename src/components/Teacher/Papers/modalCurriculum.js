@@ -107,7 +107,6 @@ export default class ModalCurriculum extends Component {
     dataTMP = [...this.arrayHistoryFilter, item.parentCode]
     let reslult = [];
     this.arrayHistoryFilter = dataTMP;
-    console.log('arrayHistoryFilter111', this.arrayHistoryFilter)
     _.map(data, (element) => {
       if (element.parentCode === item.code) {
         reslult.push(element);
@@ -129,7 +128,6 @@ export default class ModalCurriculum extends Component {
       }
     });
     this.arrayHistoryFilter.pop()
-    console.log('arrayHistoryFilter2222', this.arrayHistoryFilter)
     this.setState({
       searchKey: '',
       data: reslult,
@@ -139,7 +137,6 @@ export default class ModalCurriculum extends Component {
 
   compactList() {
     let itemParent = this.state.dataDefault.find(x => this.state.currentParent === x.code);
-    console.log('itemParent', itemParent)
     let arrayFileter = this.state.dataDefault.filter(x => this.state.currentParent === x.parentCode);
     this.setState({
       searchKey: '',
@@ -228,7 +225,6 @@ export default class ModalCurriculum extends Component {
       value
     } = this.props;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
-    console.log('dataa', data);
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={{ flex: 1 }} onPress={() => this.setState({ visible: true })}>
