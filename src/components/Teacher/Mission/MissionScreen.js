@@ -126,6 +126,7 @@ export default class MissionScreen extends Component {
       positionY,
       listMissionSearch
     } = this.state;
+    // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
 
 
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
