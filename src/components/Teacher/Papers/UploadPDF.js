@@ -363,7 +363,6 @@ export default class UploadPDF extends Component {
 
       const { token } = await dataHelper.getToken();
       if (token) {
-        console.log("🚀 ~ file: UploadPDF.js ~ line 369 ~ UploadPDF ~ assignmentContent= ~ body", body)
         const res = await apiPapers.assignmentContent({ token, body });
         if (res && res.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
@@ -372,7 +371,7 @@ export default class UploadPDF extends Component {
             this.props.navigation.navigate('Assignment', {
               item: { ...res, name: name, id: res.id },
             });
-          }, 100);
+          }, 500);
           // cau hinh thanh cong
           AnalyticsManager.trackWithProperties('School Teacher', {
             action: 'CREATEASSIGNMENT',
@@ -856,7 +855,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 25,
     position: 'absolute',
-    top: 10,
+    top: Platform.OS == 'android' ? 10 : 5,
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
