@@ -33,6 +33,8 @@ import HeaderNavigation from '../../common-new/HeaderNavigation';
 import ModalSelectStudent from './ModalSelectStudent';
 import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
+import classIcon from '../../../asserts/appIcon/icon_class.png';
+
 
 const { width, height } = Dimensions.get('screen');
 
@@ -311,6 +313,9 @@ class Assignment extends Component {
           title={dataItem.name}
           navigation={this.props.navigation}
           goBack={() => this._handleGoBack()}
+          actionIcon={classIcon}
+          iconAction={()=> {this.props.navigation.pop(4)}}
+          actionColor='#fff'
         />
         <FlatList
           bounces={false}
