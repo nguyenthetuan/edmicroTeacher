@@ -68,7 +68,7 @@ export default class CopyFromSubjectExists extends Component {
             return (
                 <View style={styles.loadmoreWrap}>
                     <RippleButton onPress={() => { this.loadMorePress() }} style={styles.loadmoreBtn}>
-                        <Text style={styles.textLoadMore}>Thêm...</Text>
+                        <Text style={styles.textLoadMore}>Xem Thêm...</Text>
                     </RippleButton>
                 </View >
             )
@@ -425,8 +425,9 @@ const styles = StyleSheet.create({
     },
     textLoadMore: {
         fontFamily: 'Nunito',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '800',
-        color: '#55CCF2'
+        color: '#55CCF2',
+        lineHeight: 20
     }
 })
