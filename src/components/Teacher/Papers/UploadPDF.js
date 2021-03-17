@@ -141,6 +141,12 @@ export default class UploadPDF extends Component {
     return Math.floor((width - 20) / 65);
   };
 
+  getBlob = async (fileUri) => {
+    const resp = await fetch(fileUri);
+    const file = await resp.blob();
+    return file;
+  };
+
   onPickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
@@ -158,21 +164,14 @@ export default class UploadPDF extends Component {
         this.setState({
           loadingUpload: true,
         });
-        //upload pdf
         const { token } = await dataHelper.getToken();
         if (token) {
           const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
           if (resSignedUrl) {
-            var formData = new FormData();
-            formData.append('file', {
-              uri: res.uri,
-              name: resSignedUrl.fileName,
-              type: res.type,
-            });
-
+            let file = await this.getBlob(url);
             const resUpload = await apiPapers.uploadPDF({
               url: resSignedUrl.preSignedUrl,
-              formData,
+              file,
             });
 
             if (resUpload && resUpload.status === 200) {
@@ -188,7 +187,6 @@ export default class UploadPDF extends Component {
         }
       }
     } catch (err) {
-      console.log(err);
       this.toast.show('Tải lên PDF thất bại');
       this.setState({ loadingUpload: false });
       if (DocumentPicker.isCancel(err)) {

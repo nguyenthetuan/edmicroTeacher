@@ -63,7 +63,7 @@ const premadeLibCopy = async (payload) => {
     let responseJson = await response.json();
     return responseJson;
   } catch (error) {
-    
+
   }
 }
 
@@ -223,8 +223,6 @@ const fetchListStudentAssign = async (payload) => {
 
 }
 
-
-
 const signedUrlContentPDF = async ({ token }) => {
   let response = await fetch(`${API_BASE}school-online/library/assignment-content/signed-url-content/`, {
     method: 'POST',
@@ -238,10 +236,10 @@ const signedUrlContentPDF = async ({ token }) => {
   return responseJson;
 }
 
-const uploadPDF = async ({ url, formData }) => {
+const uploadPDF = async ({ url, file }) => {
   let response = await fetch(`${url}`, {
     method: 'PUT',
-    body: formData
+    body: file
   });
   return response;
 }
@@ -267,10 +265,8 @@ const createQuestion = async ({ token, formData }) => {
     },
     body: formData,
   })
-  console.log("createQuestion response: ", JSON.stringify(response));
 
   let responseJson = await response.json();
-  console.log("createQuestion responseJson: ", JSON.stringify(responseJson));
   return responseJson;
 }
 
