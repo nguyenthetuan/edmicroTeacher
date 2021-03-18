@@ -419,7 +419,9 @@ const styles = StyleSheet.create({
   addPaper: {
     flex: 1,
     backgroundColor: '#2D9CDB',
-    borderRadius: 2
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   txtAdd: {
     fontFamily: 'Nunito',
