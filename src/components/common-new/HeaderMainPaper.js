@@ -331,7 +331,10 @@ class HeaderMainPaper extends React.Component {
 
         {/* <Image source={require('../../asserts/icon/logo_onluyen.png')} /> */}
         <TouchableOpacity
-          onPress={() => this.searchPaper()}
+          // onPress={() => this.searchPaper()}
+          onPress={() =>
+            this.props.navigation.navigate('SearchScreen')
+          }
           style={styles.styWrapSearch}>
           <TextInput
             placeholder='Tìm kiếm...'
