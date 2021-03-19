@@ -28,6 +28,9 @@ const nameToAvatar = (name) => {
 }
 
 const getProcess = (item) => {
+    if (!item.totalPoint) {
+        return 0;
+    }
     return (item.point / item.totalPoint) * 100;
 }
 
@@ -288,6 +291,7 @@ export default function StudentDetail(props) {
     }
 
     const renderItem = ({ item, index }) => {
+        console.log("🚀 ~ file: StudentDetail.js ~ line 291 ~ renderItem ~ item", item)
         const progress = getProcess(item);
         const status = getStatus(item, point);
         return (

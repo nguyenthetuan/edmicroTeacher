@@ -465,6 +465,7 @@ export default function StatisticsPoints(props) {
     props.navigation.state.params.hideBackButtom;
 
   let timeExport = props.data?.data.timeExport;
+  console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
   timeExport = convertTimeHMDMY(timeExport);
   return (
     <SafeAreaView style={styles.container}>
