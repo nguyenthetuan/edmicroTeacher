@@ -218,16 +218,11 @@ export default class UploadPDF extends Component {
           const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
 
           if (resSignedUrl) {
-            var formData = new FormData();
-            formData.append('file', {
-              uri: res.uri,
-              name: resSignedUrl.fileName,
-              type: res.type,
-            });
+            let file = await this.getBlob(url);
 
             const resUpload = await apiPapers.uploadPDF({
               url: resSignedUrl.preSignedUrl,
-              formData,
+              file,
             });
 
             if (resUpload && resUpload.status === 200) {
@@ -240,6 +235,8 @@ export default class UploadPDF extends Component {
         }
       }
     } catch (err) {
+      this.toast.show('Tải lên PDF thất bại');
+
       console.log(err);
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
