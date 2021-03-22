@@ -30,6 +30,7 @@ import { setListGrades, setListSubject } from '../../actions/paperAction';
 import { TextInput } from 'react-native-gesture-handler';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
 class HeaderMainPaper extends React.Component {
   constructor(props) {
     super(props);
@@ -325,7 +326,8 @@ class HeaderMainPaper extends React.Component {
             <Image
               source={require('../../asserts/icon/menu.png')}
               style={{ tintColor: '#383838' }}
-              tintColor={'#383838'} />
+              tintColor={'#383838'}
+            />
           </View>
         </RippleButton>
 
@@ -333,18 +335,19 @@ class HeaderMainPaper extends React.Component {
         <TouchableOpacity
           // onPress={() => this.searchPaper()}
           onPress={() =>
-            this.props.navigation.navigate('SearchScreen')
+            this.props.navigation.navigate('SearchScreen', { listPapers })
           }
           style={styles.styWrapSearch}>
-          <TextInput
+          {/* <TextInput
             placeholder='Tìm kiếm...'
             placeholderTextColor='#C4C4C4'
             style={styles.searchPaper}
             value={textSearch}
             onChangeText={this.onChangeText}
           // onEndEditing={() => this.searchPaper()}
-          />
-          <EvilIcons name={'search'} size={20} color={'#C4C4C4'} />
+          /> */}
+          <Text style={styles.searchtxt}>Tìm kiếm...</Text>
+          <EvilIcons name={'search'} size={20} color={'#828282'} />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
@@ -445,6 +448,13 @@ const styles = StyleSheet.create({
   },
   dot: {
     marginHorizontal: 5
+  },
+  searchtxt: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(14),
+    color: '#828282',
+    alignSelf: 'center'
   }
 });
 
