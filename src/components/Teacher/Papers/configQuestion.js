@@ -38,7 +38,7 @@ import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import { setListGrades } from '../../../actions/paperAction';
+import { setListGrades, updateExamListAction } from '../../../actions/paperAction';
 
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -339,13 +339,13 @@ class ConfigQuestion extends Component {
               <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
-              <RippleButton
-                key={`d${index}`}
-                style={styles.buttomActive}
-                onPress={() => this.activeSubject(item)}>
-                <Text style={styles.txtItemActive}>{item.name}</Text>
-              </RippleButton>
-            );
+            <RippleButton
+              key={`d${index}`}
+              style={styles.buttomActive}
+              onPress={() => this.activeSubject(item)}>
+              <Text style={styles.txtItemActive}>{item.name}</Text>
+            </RippleButton>
+          );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -455,6 +455,7 @@ class ConfigQuestion extends Component {
             subject: subjectCode,
           });
           Globals.updatePaper();
+          this.props.needUpdate(true);
         }
       } catch (error) {
         this.setState({ loading: false })
@@ -1090,21 +1091,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                        <WebView
-                          ref={ref => (this.webview = ref)}
-                          source={{
-                            html: html.renderMatarialDetail(htmlContent, urlMedia),
-                            baseUrl,
-                          }}
-                          subjectId={'TOAN'}
-                          originWhitelist={['file://']}
-                          scalesPageToFit={false}
-                          javaScriptEnabled
-                          showsVerticalScrollIndicator={false}
-                          startInLoadingState={false}
-                          style={{ backgroundColor: '#fff' }}
-                        />
-                      )}
+                      <WebView
+                        ref={ref => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={false}
+                        style={{ backgroundColor: '#fff' }}
+                      />
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -1125,6 +1126,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     saveGrades: listGrades => dispatch(setListGrades(listGrades)),
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   }
 }
 export default connect(
