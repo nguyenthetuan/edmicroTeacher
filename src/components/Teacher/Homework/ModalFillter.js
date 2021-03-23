@@ -55,15 +55,16 @@ export default class ModalFillter extends Component {
     } = this.props;
     const { isShowModal } = this.state;
     return (
-      <Modal transparent={false} visible={isShowModal}>
+      <Modal transparent={false} visible={isShowModal} tintColor='#000'>
         <View style={styles.contain}>
           <SafeAreaView />
-          <View style={{ flexDirection: 'row', }}>
+          <View style={styles.headerNav}>
             <Text style={styles.styTitle}>Tuỳ chọn</Text>
           </View>
           <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
             <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
           </TouchableOpacity>
+
           <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
             <Dropdown
               title="Khối"
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   },
   wrapSelect: {
     flexDirection: 'row',
-    marginVertical: 10,
+    marginVertical: 8,
     justifyContent: 'space-between',
     width: width - 80,
   },
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   contentStyle: {
-    marginVertical: 10,
+    marginVertical: 16,
     width: width - 80,
     marginHorizontal: 0,
     height: 35,
@@ -149,16 +150,14 @@ const styles = StyleSheet.create({
     height: 25,
     right: 5,
     top: 10
-
   },
   styBtnClose: {
     position: 'absolute',
     right: 10,
-    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 50 : 0
+    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',
-    marginTop: 20,
     fontSize: RFFonsize(16)
   },
   contentDrop: {
@@ -169,6 +168,10 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito",
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
-
+  },
+  headerNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
   }
 });

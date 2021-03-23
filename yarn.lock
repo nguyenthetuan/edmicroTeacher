@@ -6585,6 +6585,11 @@ react-native-screens@^2.3.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.10.1.tgz#06d22fae87ef0ce51c616c34a199726db1403b95"
   integrity sha512-Z2kKSk4AwWRQNCBmTjViuBQK0/Lx0jc25TZptn/2gKYUCOuVRvCekoA26u0Tsb3BIQ8tWDsZW14OwDlFUXW1aw==
 
+react-native-search-component@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-search-component/-/react-native-search-component-1.4.0.tgz#54352eccb51c5ca9d6413470db21a040609b0806"
+  integrity sha512-H59Z9Pcv/MLe0lmpUSoKTOcXaq54ZE+3PUslGYiUSUM/FzudYSySwcHQZkN1Qa5Z4zXFteeo4o1YirFtnjxA0g==
+
 react-native-search-filter@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/react-native-search-filter/-/react-native-search-filter-0.1.5.tgz#15d02f5c990d918532e06b1b0d226c9ae0ccd3a7"
