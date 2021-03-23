@@ -330,7 +330,7 @@ class HeaderMainPaper extends React.Component {
         </RippleButton>
 
         {/* <Image source={require('../../asserts/icon/logo_onluyen.png')} /> */}
-        <TouchableOpacity
+        <View
           onPress={() => this.searchPaper()}
           style={styles.styWrapSearch}>
           <TextInput
@@ -342,7 +342,7 @@ class HeaderMainPaper extends React.Component {
           // onEndEditing={() => this.searchPaper()}
           />
           <EvilIcons name={'search'} size={20} color={'#C4C4C4'} />
-        </TouchableOpacity>
+        </View>
 
         <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
           <Text style={styles.txtAdd}>Thêm bộ đề</Text>
