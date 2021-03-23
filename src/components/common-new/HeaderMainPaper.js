@@ -30,6 +30,7 @@ import { setListGrades, setListSubject } from '../../actions/paperAction';
 import { TextInput } from 'react-native-gesture-handler';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
 class HeaderMainPaper extends React.Component {
   constructor(props) {
     super(props);
@@ -325,28 +326,48 @@ class HeaderMainPaper extends React.Component {
             <Image
               source={require('../../asserts/icon/menu.png')}
               style={{ tintColor: '#383838' }}
-              tintColor={'#383838'} />
+              tintColor={'#383838'}
+            />
           </View>
         </RippleButton>
-
-        {/* <Image source={require('../../asserts/icon/logo_onluyen.png')} /> */}
         <View
           onPress={() => this.searchPaper()}
           style={styles.styWrapSearch}>
           <TextInput
+
             placeholder='Tìm kiếm...'
             placeholderTextColor='#C4C4C4'
             style={styles.searchPaper}
             value={textSearch}
             onChangeText={this.onChangeText}
-          // onEndEditing={() => this.searchPaper()}
-          />
-          <EvilIcons name={'search'} size={20} color={'#C4C4C4'} />
+          /> 
+     
+
+
+        <View style={{ flex: 1, marginLeft: 10 }}>
+          <Image source={require('../../asserts/icon/logo_onluyen.png')} />
         </View>
 
-        <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
-          <Text style={styles.txtAdd}>Thêm bộ đề</Text>
-        </TouchableOpacity>
+        <View style={styles.rowGif}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('SearchScreen', { listPapers })
+            }
+            style={styles.searchGif}
+          >
+            <Image
+              source={require('../../asserts/icon/icon_search_ani.gif')}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+           <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
+            {/* <Text style={styles.txtAdd}>Thêm bộ đề</Text> */}
+            <Image
+              source={require('../../asserts/icon/create_paper_color.gif')}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+        </View>
 
         {/* <TouchableOpacity style={styles.dot}>
                     <Text style={styles.dotMain}>...</Text>
@@ -370,7 +391,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 10,
-    marginRight: 12,
+    marginRight: 12
   },
   button: {
     width: 38,
@@ -416,12 +437,13 @@ const styles = StyleSheet.create({
     color: '#000',
     alignSelf: "center"
   },
+  searchGif: {
+    // alignItems: 'flex-end',
+    alignSelf: "center"
+  },
   addPaper: {
-    flex: 1,
-    backgroundColor: '#2D9CDB',
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-end',
+    marginHorizontal: 10
   },
   txtAdd: {
     fontFamily: 'Nunito',
@@ -442,6 +464,18 @@ const styles = StyleSheet.create({
   },
   dot: {
     marginHorizontal: 5
+  },
+  searchtxt: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(14),
+    color: '#828282',
+    alignSelf: 'center'
+  },
+  rowGif: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingLeft: "50%"
   }
 });
 
