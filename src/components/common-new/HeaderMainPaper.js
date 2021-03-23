@@ -330,25 +330,18 @@ class HeaderMainPaper extends React.Component {
             />
           </View>
         </RippleButton>
+        <View
+          onPress={() => this.searchPaper()}
+          style={styles.styWrapSearch}>
+          <TextInput
 
-
-        {/* <TouchableOpacity
-          // onPress={() => this.searchPaper()}
-          onPress={() =>
-            this.props.navigation.navigate('SearchScreen', { listPapers })
-          }
-          style={styles.styWrapSearch}> */}
-        {/* <TextInput
             placeholder='Tìm kiếm...'
             placeholderTextColor='#C4C4C4'
             style={styles.searchPaper}
             value={textSearch}
             onChangeText={this.onChangeText}
-          // onEndEditing={() => this.searchPaper()}
-          /> */}
-        {/* <Text style={styles.searchtxt}>Tìm kiếm...</Text>
-          <EvilIcons name={'search'} size={20} color={'#828282'} />
-        </TouchableOpacity> */}
+          /> 
+     
 
 
         <View style={{ flex: 1, marginLeft: 10 }}>
@@ -367,8 +360,7 @@ class HeaderMainPaper extends React.Component {
               style={{ width: 25, height: 25 }}
             />
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
+           <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
             {/* <Text style={styles.txtAdd}>Thêm bộ đề</Text> */}
             <Image
               source={require('../../asserts/icon/create_paper_color.gif')}

@@ -11,7 +11,8 @@ import {
   Animated,
   SafeAreaView,
   FlatList,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 import ModalEditConfig from './modalEditConfig';
 import _ from 'lodash';
@@ -149,12 +150,22 @@ class Papers extends Component {
       id: dataSelected.assignmentId,
     });
     if (response.status === 1) {
-      alert('Xóa bài thành công!');
+      Alert.alert(
+        '',
+        'Xóa bài thành công!',
+        [
+        ],
+        { cancelable: false }
+      );
       this.setState(
         {
           visibleEdit: false,
         },
-        () => this.getListPaper(token),
+        () => {
+          setTimeout(() => {
+            this.getListPaper(token)
+          }, 1000)
+        },
       );
     }
   })
@@ -366,7 +377,10 @@ class Papers extends Component {
   };
 
   _listTestFooter = () => {
-    const { isLoadMore, hideLoadMore } = this.state;
+    const { isLoadMore, hideLoadMore, dataFilter } = this.state;
+    if (!dataFilter.length) {
+      return null;
+    }
     return hideLoadMore ? null : (
       <View style={{ width: '100%', height: 330 }}>
         <TouchableOpacity

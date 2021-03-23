@@ -480,7 +480,7 @@ export default class SelectAnswer extends Component {
           paddingHorizontal: 16,
           alignItems: 'center',
         }}>
-          <View style={{ top: 10 }}>
+          <View style={{ alignItems: 'center', height: 80 }}>
             <Text style={styles.totalAddQuestion}>Tổng số câu</Text>
             <InputNumberQuestion
               containerStyle={[
@@ -497,11 +497,11 @@ export default class SelectAnswer extends Component {
               onChange={this.onChange}
             />
           </View>
-          <View style={{ justifyContent: 'space-evenly', height: 80 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: 150 }}>
-              <Text style={styles.totalAddQuestion}>Tổng điểm:</Text>
+          <View style={{ height: 80, left: 15 }}>
+            <View style={{ alignItems: 'center', width: 150, height: 80 }}>
+              <Text style={styles.totalAddQuestion}>Tổng điểm</Text>
               {typeQuestion === 0 ? <TextInput
-                style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                style={[styles.inputPoint, { marginTop: 10, width: 60 }]}
                 numberOfLines={1}
                 returnKeyType={'done'}
                 maxLength={4}
@@ -512,7 +512,7 @@ export default class SelectAnswer extends Component {
                 editable={true}
               /> :
                 <TextInput
-                  style={[styles.inputPoint, { marginTop: 0, width: 60, position: 'absolute', right: 5 }]}
+                  style={[styles.inputPoint, { marginTop: 10, width: 60 }]}
                   numberOfLines={1}
                   returnKeyType={'done'}
                   maxLength={4}
@@ -601,7 +601,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
     fontWeight: '700',
     fontSize: RFFonsize(14),
-    left: -10
   },
   buttomTop: {
     backgroundColor: '#0091EA',
@@ -728,7 +727,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 2,
     borderColor: '#828282',
-    height: 20,
+    height: 30,
     marginTop: 9,
     textAlign: 'center',
     color: '#FF6213',
