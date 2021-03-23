@@ -38,6 +38,7 @@ export default class CopyFromSubjectExists extends Component {
             knowledgeUnits: null,
             isLoading: false,
             listTask: [],
+            searchName: ''
         }
     }
 
@@ -64,7 +65,7 @@ export default class CopyFromSubjectExists extends Component {
     }
 
     renderLoadMoreButton = () => {
-        if (this.state.listTask.length) {
+        if (this.state.listTask.length > 10) {
             return (
                 <View style={styles.loadmoreWrap}>
                     <RippleButton onPress={() => { this.loadMorePress() }} style={styles.loadmoreBtn}>
@@ -107,21 +108,26 @@ export default class CopyFromSubjectExists extends Component {
         }
     }
 
-    async findPremadeLib(indexPage) {
+    async findPremadeLib(indexPage, isSearch) {
         const { token } = await dataHelper.getToken();
         let { listTask } = this.state;
         let curriculumCodes = [this.state.currentCurriculum];
-        let pageIndex = indexPage || 0;
+        let pageIndex = indexPage || 1;
         let searchKnowledgeUnitChild = true;
         let subjectCodes = this.state.subjectCode;
         let gradeCodes = null;
         let knowledgeUnits = this.state.knowledgeUnits;
-        let name = '';
+        let name = this.state.searchName;
+        console.log("🚀 ~ file: CopyFromSubjectExists.js ~ line 121 ~ CopyFromSubjectExists ~ findPremadeLib ~ this.state.searchName", this.state.searchName)
         if (!indexPage) {
             this.setState({ isLoading: true });
         }
         const rp = await apiPapers.findPremadeLib({ token, curriculumCodes, pageIndex, searchKnowledgeUnitChild, subjectCodes, gradeCodes, knowledgeUnits, name });
-        this.setState({ listTask: !rp ? listTask : listTask.concat(rp), isLoading: false });
+        if (listTask) {
+            this.setState({ listTask: rp, isLoading: false });
+        } else {
+            this.setState({ listTask: !rp ? listTask : listTask.concat(rp), isLoading: false });
+        }
     }
 
     loadMorePress() {
@@ -207,6 +213,16 @@ export default class CopyFromSubjectExists extends Component {
         )
     }
 
+    onPressSearch = () => {
+        this.setState({ searchName: this.state.previosSearchText }, () => {
+            this.findPremadeLib();
+        });
+    }
+
+    onChangePreviosSearchText = (text) => {
+        this.setState({ previosSearchText: text });
+    }
+
     render() {
         const { listSubjects } = this.props.navigation.state.params;
         const { lerningTarget, isLoading } = this.state;
@@ -229,12 +245,15 @@ export default class CopyFromSubjectExists extends Component {
                                         placeholder={'Tên bài kiểm tra'}
                                         placeholderTextColor={'#c4c4c4'}
                                         style={styles.nameTest}
-                                    // value={nameMission}
+                                        value={this.state.textPreviosSearch}
+                                        onChangeText={this.onChangePreviosSearchText}
                                     />
-                                    <IconAntDesign
-                                        name={'search1'}
-                                        style={styles.iconSearch}
-                                    />
+                                    <TouchableOpacity style={{ width: 20, height: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onPressSearch() }}>
+                                        <IconAntDesign
+                                            name={'search1'}
+                                            style={styles.iconSearch}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                                 <View style={styles.wrap2Dropdown}>
                                     <Dropdown
