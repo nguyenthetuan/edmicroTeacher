@@ -868,7 +868,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(20),
-    color: '#fff'
+    color: '#fff',
+    fontWeight: '800'
   },
   styTxtLabel: {
     fontFamily: 'Nunito',
