@@ -331,14 +331,14 @@ class HeaderMainPaper extends React.Component {
           </View>
         </RippleButton>
 
-        {/* <Image source={require('../../asserts/icon/logo_onluyen.png')} /> */}
-        <TouchableOpacity
+
+        {/* <TouchableOpacity
           // onPress={() => this.searchPaper()}
           onPress={() =>
             this.props.navigation.navigate('SearchScreen', { listPapers })
           }
-          style={styles.styWrapSearch}>
-          {/* <TextInput
+          style={styles.styWrapSearch}> */}
+        {/* <TextInput
             placeholder='Tìm kiếm...'
             placeholderTextColor='#C4C4C4'
             style={styles.searchPaper}
@@ -346,13 +346,36 @@ class HeaderMainPaper extends React.Component {
             onChangeText={this.onChangeText}
           // onEndEditing={() => this.searchPaper()}
           /> */}
-          <Text style={styles.searchtxt}>Tìm kiếm...</Text>
+        {/* <Text style={styles.searchtxt}>Tìm kiếm...</Text>
           <EvilIcons name={'search'} size={20} color={'#828282'} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
-          <Text style={styles.txtAdd}>Thêm bộ đề</Text>
-        </TouchableOpacity>
+
+        <View style={{ flex: 1, marginLeft: 10 }}>
+          <Image source={require('../../asserts/icon/logo_onluyen.png')} />
+        </View>
+
+        <View style={styles.rowGif}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('SearchScreen', { listPapers })
+            }
+            style={styles.searchGif}
+          >
+            <Image
+              source={require('../../asserts/icon/icon_search_ani.gif')}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
+            {/* <Text style={styles.txtAdd}>Thêm bộ đề</Text> */}
+            <Image
+              source={require('../../asserts/icon/create_paper_color.gif')}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+        </View>
 
         {/* <TouchableOpacity style={styles.dot}>
                     <Text style={styles.dotMain}>...</Text>
@@ -376,7 +399,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 10,
-    marginRight: 12,
+    marginRight: 12
   },
   button: {
     width: 38,
@@ -422,12 +445,13 @@ const styles = StyleSheet.create({
     color: '#000',
     alignSelf: "center"
   },
+  searchGif: {
+    // alignItems: 'flex-end',
+    alignSelf: "center"
+  },
   addPaper: {
-    flex: 1,
-    backgroundColor: '#2D9CDB',
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-end',
+    marginHorizontal: 10
   },
   txtAdd: {
     fontFamily: 'Nunito',
@@ -455,6 +479,11 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(14),
     color: '#828282',
     alignSelf: 'center'
+  },
+  rowGif: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingLeft: "50%"
   }
 });
 

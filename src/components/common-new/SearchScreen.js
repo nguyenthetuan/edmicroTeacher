@@ -36,22 +36,6 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const { width, height } = Dimensions.get('window');
 const NAVBAR_HEIGHT = 220;
 
-// const [theme, setTheme] = React.useState("LIGHT");
-// const [searchTerm, setSearchTerm] = useState("");
-// const themeBasedContainer = [
-//     styles.container,
-//     { backgroundColor: theme === "LIGHT" ? "white" : "black" },
-// ];
-// const themeBasedTextStyle = [
-//     styles.textStyle,
-//     { color: theme === "LIGHT" ? "black" : "white" },
-// ];
-
-// const onChange = (e) => {
-//     setSearchTerm(e?.nativeEvent?.text);
-// };
-// const onSearchClear = () => textSearch("");
-
 class SearchScreen extends React.Component {
 
     constructor(props) {
@@ -690,7 +674,7 @@ class SearchScreen extends React.Component {
                     />
                 </View>
                 <AnimatedFlatList
-                    style={{ paddingHorizontal: 16, paddingTop: 16 }}
+                    style={{ paddingHorizontal: 16 }}
                     data={listPapers}
                     contentContainerStyle={styles.contentContainer}
                     showsVerticalScrollIndicator={false}
