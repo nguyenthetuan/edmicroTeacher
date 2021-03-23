@@ -96,7 +96,6 @@ class UploadPDF extends Component {
   };
 
   closeModalSelectAnswer = () => {
-    console.log("🚀 ~ file: UploadPDF.js ~ line 102 ~ UploadPDF ~ closeModalSelectAnswer")
     this.setState({ showSelectAnswer: false })
   }
 
