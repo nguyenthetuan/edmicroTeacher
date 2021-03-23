@@ -512,7 +512,7 @@ class UploadPDF extends Component {
                           style={styles.inputName}
                         />
                         <Text style={styles.styTxtLabel}>Môn học</Text>
-                        <View style={[styles.styTxtPlace]} >
+                        <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                           <DropdownMultiSelect
                             containerStyle={{
                               marginHorizontal: 0,
@@ -524,7 +524,7 @@ class UploadPDF extends Component {
                           />
                         </View>
                         <Text style={styles.styTxtLabel}>Khối lớp</Text>
-                        <View style={[styles.styTxtPlace]} >
+                        <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                           <DropdownMultiSelect
                             contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
                             title="Khối lớp"
@@ -534,7 +534,7 @@ class UploadPDF extends Component {
                         </View>
                         <Text style={styles.styTxtLabel}>Dạng bài</Text>
                         <Dropdown
-                          contentStyle={styles.styTxtPlace}
+                          contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5 }]}
                           title="Dạng Bài"
                           data={assignmentTypes}
                           indexSelected={0}
@@ -793,7 +793,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
-    paddingStart: 5,
+    paddingStart: 10,
     marginBottom: 7,
     borderRadius: 5,
     padding: 0,
