@@ -330,19 +330,18 @@ class HeaderMainPaper extends React.Component {
             />
           </View>
         </RippleButton>
-        <View
+        {/* <View
           onPress={() => this.searchPaper()}
           style={styles.styWrapSearch}>
           <TextInput
-
             placeholder='Tìm kiếm...'
             placeholderTextColor='#C4C4C4'
             style={styles.searchPaper}
             value={textSearch}
             onChangeText={this.onChangeText}
-          /> 
-     
-
+          />
+        </View>
+ */}
 
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Image source={require('../../asserts/icon/logo_onluyen.png')} />
@@ -360,7 +359,7 @@ class HeaderMainPaper extends React.Component {
               style={{ width: 25, height: 25 }}
             />
           </TouchableOpacity>
-           <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
+          <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
             {/* <Text style={styles.txtAdd}>Thêm bộ đề</Text> */}
             <Image
               source={require('../../asserts/icon/create_paper_color.gif')}
