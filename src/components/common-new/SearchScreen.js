@@ -521,7 +521,7 @@ class SearchScreen extends React.Component {
             <ActivityIndicator
                 animating
                 size={'small'}
-                style={{ height: height / 2 }}
+                style={{ height: height / 1.5 }}
                 color="#F98E2F"
             />
             :
@@ -681,7 +681,7 @@ class SearchScreen extends React.Component {
                     keyExtractor={(item, index) => index.toString()}
                     extraData={dataFilter}
                     ListEmptyComponent={this._listTestEmpty}
-                    ListFooterComponent={this._listTestFooter}
+                    // ListFooterComponent={this._listTestFooter}
                     renderItem={({ item, index }) => {
                         return (
                             <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
