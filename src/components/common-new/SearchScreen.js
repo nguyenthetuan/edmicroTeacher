@@ -671,6 +671,7 @@ class SearchScreen extends React.Component {
                         value={textSearch}
                         onChange={this.onChangeText}
                         onSearchClear={this.onSearchClear}
+                        customSearchInputStyle={{ paddingRight: 35 }}
                     />
                 </View>
                 <AnimatedFlatList

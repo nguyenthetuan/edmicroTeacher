@@ -22,6 +22,8 @@ import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiMission';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
+import HeaderMissionNew from '../../common-new/HeaderMissionNew';
+import SearchComponent from "react-native-search-component";
 const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -34,6 +36,8 @@ export default class MissionScreen extends Component {
       listMission: this.props.listMission,
       listMissionSearch: this.props.listMission,
       isAccessMission: false,
+      onSearchClear: '',
+      textSearch: '',
     }
     this._scroll_y = new Value(0)
     this.token = null;
@@ -66,41 +70,49 @@ export default class MissionScreen extends Component {
     this.props.navigation.navigate('MissionStepByStep');
   };
 
-  handleSearch = keyWord => {
+  onSearchClear = () => {
+    this.setState({ textSearch: '' });
+  }
+
+  handleSearch = () => {
+    const { textSearch } = this.state;
     let { listMission, listMissionSearch } = this.state;
     listMissionSearch = listMission.filter(item =>
-      item.title.includes(keyWord),
+      item.title.includes(textSearch),
     );
     this.setState({ listMissionSearch });
   };
+
+  onChangeText = e => {
+    const textSearch = e?.nativeEvent?.text;
+    this.setState({ textSearch });
+    if (this.timeSearch) {
+      clearTimeout(this.timeSearch);
+      this.timeSearch = null;
+    }
+    this.timeSearch = setTimeout(this.handleSearch, 500);
+  }
 
   renderItem = ({ item }) => {
     return <ItemMission data={item} {...this.props} token={this.token} />;
   };
 
   renderHeader = () => {
-
-    const { isAccessMission } = this.state;
+    const {
+      isAccessMission,
+      listMission,
+      listMissionSearch,
+      textSearch
+    } = this.state;
     return (
-      <View style={styles.styWrapHeader}>
-        <View style={styles.styWrapSearch}>
-          <TextInput
-            placeholder={'Tìm kiếm'}
-            placeholderTextColor={'#757575'}
-            style={styles.styTxtInput}
-            onChangeText={this.handleSearch}
-          />
-          <IconAntDesign
-            name={'search1'}
-            style={styles.iconSearch}
-          />
-        </View>
-        {isAccessMission && <TouchableOpacity
-          style={styles.styWrapBtn}
-          onPress={this.goToSetupMission}>
-          <Text style={styles.styTxtBtn}>Thêm nhiệm vụ</Text>
-        </TouchableOpacity>}
-      </View>
+      <SearchComponent
+        placeholder="Tìm kiếm"
+        cancelColor="#2D9CDB"
+        value={textSearch}
+        onChange={this.onChangeText}
+        onSearchClear={this.onSearchClear}
+        customSearchInputStyle={{ paddingRight: 35 }}
+      />
     );
   };
 
@@ -124,7 +136,7 @@ export default class MissionScreen extends Component {
     const { user } = this.props;
     const {
       positionY,
-      listMissionSearch
+      listMissionSearch,
     } = this.state;
     // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
 
@@ -155,18 +167,16 @@ export default class MissionScreen extends Component {
             <Animated.View style={{
               opacity: _header_opacity
             }}>
-              <HeaderMain
+              {/* <HeaderMain
                 {...user}
+                navigation={this.props.navigation}
+              /> */}
+              <HeaderMissionNew
                 navigation={this.props.navigation}
               />
               {this.renderHeader()}
             </Animated.View>
           </Animated.View>
-          {/* <View style={{ backgroundColor: '#fff' }}>
-          <HeaderMain
-            {...user}
-            navigation={this.props.navigation} />
-        </View> */}
           <AnimatedFlatList
             data={listMissionSearch}
             keyExtractor={(item, index) => index.toString()}
