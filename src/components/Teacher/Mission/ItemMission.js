@@ -73,7 +73,7 @@ export default class ItemMission extends Component {
             {data.title}
           </Text>
           <View style={styles.hr} />
-          <View style={{ flexDirection: 'row', marginTop: 8 }}>
+          <View style={{ flexDirection: 'row', marginTop: 8, justifyContent: 'space-between' }}>
             <View style={styles.contentMission}>
               {this.renderElement(
                 AppIcon.icon_remakeHatV3,
@@ -90,16 +90,14 @@ export default class ItemMission extends Component {
             </View>
 
             <View style={styles.subjectColumn}>
-              <View style={{marginLeft: 15}}>
+              <View style={{ marginLeft: 15 }}>
                 {this.renderElement(
                   getIconSubject(data.subjectCode),
                   Common.getDisplaySubject(data.subjectCode)
                 )}
               </View>
+
               <View style={styles.flexDiAction}>
-                {/* {this.renderElement(AppIcon.icon_paracComplete, textDelivered)} */}
-                {/* <></> */}
-                {/* {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)} */}
                 {data.status === modelStatus.unDelivered
                   ?
                   <FastImage
@@ -192,8 +190,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(10),
     lineHeight: RFFonsize(14),
     alignSelf: "center",
-    color: "#2D9CBD",
-    marginLeft: 40
+    color: "#2D9CBD"
   },
   imageSize: {
     // width: 20,
@@ -243,9 +240,11 @@ const styles = StyleSheet.create({
   },
   dateDaly: {
     flexDirection: 'row',
+    justifyContent: "space-between",
     marginLeft: 2.5,
     marginTop: 8,
-    marginBottom: 5
+    marginBottom: 5,
+    marginHorizontal: 20
   },
   gradeClass: {
     fontFamily: "Nunito-Bold",
