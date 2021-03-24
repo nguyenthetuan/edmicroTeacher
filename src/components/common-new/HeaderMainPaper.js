@@ -442,7 +442,8 @@ const styles = StyleSheet.create({
   },
   addPaper: {
     alignItems: 'flex-end',
-    marginHorizontal: 10
+    marginHorizontal: 5,
+    marginLeft: 10
   },
   txtAdd: {
     fontFamily: 'Nunito',
@@ -474,7 +475,7 @@ const styles = StyleSheet.create({
   rowGif: {
     flex: 1,
     flexDirection: 'row',
-    paddingLeft: "50%"
+    justifyContent: 'flex-end'
   }
 });
 
