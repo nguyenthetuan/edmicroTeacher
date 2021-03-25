@@ -4,11 +4,13 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Text
 } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import dataHelper from '../../utils/dataHelper';
 import Api from '../../services/apiMission';
+import { RFFonsize } from '../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 export default class HeaderMissionNew extends React.Component {
@@ -63,9 +65,14 @@ export default class HeaderMissionNew extends React.Component {
                     <TouchableOpacity
                         style={styles.addMission}
                         onPress={this.goToSetupMission}>
-                        <Image
+                        {/* <Image
                             source={require('../../asserts/icon/icon_missionPlus.png')}
                             style={{ width: 25, height: 25 }}
+                        /> */}
+                        <Text style={styles.txtAdd}>Thêm nhiệm vụ</Text>
+                        <Image
+                            source={require('../../asserts/icon/icon_plusBox.png')}
+                            style={styles.iconFlus}
                         />
                     </TouchableOpacity>
                 }
@@ -90,6 +97,25 @@ const styles = StyleSheet.create({
     },
     addMission: {
         justifyContent: 'flex-end',
+        marginRight: 10,
+        flexDirection: 'row',
+        backgroundColor: '#ededed',
+        borderRadius: 5,
+    },
+    txtAdd: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        fontWeight: '500',
+        color: '#000',
+        alignSelf: 'center',
+        padding: 5,
+        paddingLeft: 10
+    },
+    iconFlus: {
+        tintColor: '#2D9CDB',
+        alignSelf: 'center',
+        marginLeft: 2,
         marginRight: 10
     }
 });
