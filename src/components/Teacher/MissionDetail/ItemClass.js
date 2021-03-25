@@ -18,6 +18,7 @@ import apiMission from '../../../services/apiMission';
 import AppIcon from '../../../utils/AppIcon';
 import ModalSelectStudent from '../Papers/ModalSelectStudent';
 import { RFFonsize } from '../../../utils/Fonts';
+import shadowStyle from '../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('screen');
 import { connect } from 'react-redux';
 import {
@@ -124,6 +125,7 @@ class ItemClass extends Component {
     }
 
     render() {
+        const { shadowBtn } = shadowStyle;
         const { item } = this.props;
         console.log('item', item)
         const dataItem = {
@@ -191,14 +193,14 @@ class ItemClass extends Component {
                         {status ?
                             <TouchableOpacity
                                 onPress={this.goToMissionStatisticsScreen}
-                                style={[styles.btnAssignment, { backgroundColor: '#FD9F4C' }]}>
+                                style={[styles.btnAssignment, { backgroundColor: '#FD9F4C', ...shadowBtn }]}>
                                 <Text style={styles.txtAssignment}>Xem tiến độ</Text>
                                 {/* <Icon name={'check'} color={'#fff'} size={20} /> */}
                             </TouchableOpacity>
                             :
                             <TouchableOpacity
                                 onPress={this.onAssignment}
-                                style={styles.btnAssignment}>
+                                style={[styles.btnAssignment, { ...shadowBtn }]}>
                                 <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
                                 {/* <Icon name={'check'} color={'#fff'} size={12} style={styles.widthCheck} /> */}
                             </TouchableOpacity>

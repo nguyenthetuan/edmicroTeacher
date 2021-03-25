@@ -11,6 +11,7 @@ import RippleButton from '../common-new/RippleButton';
 import dataHelper from '../../utils/dataHelper';
 import Api from '../../services/apiMission';
 import { RFFonsize } from '../../utils/Fonts';
+import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 export default class HeaderMissionNew extends React.Component {
@@ -45,6 +46,7 @@ export default class HeaderMissionNew extends React.Component {
     };
 
     render() {
+        const { shadowBtn } = shadowStyle;
         const { isAccessMission } = this.state;
         return (
             <View style={styles.container}>
@@ -63,7 +65,7 @@ export default class HeaderMissionNew extends React.Component {
                 {isAccessMission
                     &&
                     <TouchableOpacity
-                        style={styles.addMission}
+                        style={[styles.addMission, { ...shadowBtn }]}
                         onPress={this.goToSetupMission}>
                         {/* <Image
                             source={require('../../asserts/icon/icon_missionPlus.png')}

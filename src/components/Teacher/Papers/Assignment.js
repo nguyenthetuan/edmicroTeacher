@@ -34,7 +34,7 @@ import ModalSelectStudent from './ModalSelectStudent';
 import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
 import classIcon from '../../../asserts/appIcon/icon_class.png';
-
+import shadowStyle from '../../../themes/shadowStyle';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -44,6 +44,7 @@ const Stage = {
 }
 
 function Item(props) {
+  const { shadowBtn } = shadowStyle;
   const pickStudent = useRef();
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
@@ -219,7 +220,7 @@ function Item(props) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onAssignment}
-          style={styles.btnAssignment}>
+          style={[styles.btnAssignment, { ...shadowBtn }]}>
           <Text style={styles.txtAssignment}>Giao bài</Text>
         </TouchableOpacity>
       </View>
@@ -314,7 +315,7 @@ class Assignment extends Component {
           navigation={this.props.navigation}
           goBack={() => this._handleGoBack()}
           actionIcon={classIcon}
-          iconAction={()=> {this.props.navigation.pop(4)}}
+          iconAction={() => { this.props.navigation.pop(4) }}
           actionColor='#fff'
         />
         <FlatList
