@@ -943,21 +943,29 @@ const styles = StyleSheet.create({
   buttonActive: {
     flex: 1,
     marginHorizontal: 10,
-    height: 30,
+    height: 32,
     borderWidth: .5,
     borderColor: '#2D9CDB',
-    backgroundColor: 'rgba(190, 255, 181, .4)',
+    backgroundColor: '#2D9CDB',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2.5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2.5,
+    elevation: 5,
   },
   buttonNotActive: {
     flex: 1,
     marginHorizontal: 10,
-    height: 30,
+    height: 32,
     borderWidth: 1,
     borderColor: '#c4c4c4',
-    backgroundColor: 'rgba(196,196,196, .5)',
+    backgroundColor: '#c4c4c4',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15
@@ -965,14 +973,16 @@ const styles = StyleSheet.create({
   textButtonTabActive: {
     fontFamily: 'Nunito-Bold',
     fontWeight: '500',
-    color: '#2D9CDB',
+    color: '#fff',
     fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16)
   },
   textButtonTabNotActive: {
     fontFamily: 'Nunito-Bold',
     fontWeight: '500',
-    color: '#b5b3b3',
+    color: '#fff',
     fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     alignSelf: 'center'
   }
 });

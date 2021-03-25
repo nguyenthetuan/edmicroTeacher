@@ -355,15 +355,13 @@ class HeaderMainPaper extends React.Component {
             style={styles.searchGif}
           >
             <Image
-              source={require('../../asserts/icon/icon_search_ani.gif')}
-              style={{ width: 25, height: 25 }}
+              source={require('../../asserts/icon/icon_searchPar.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
-            {/* <Text style={styles.txtAdd}>Thêm bộ đề</Text> */}
             <Image
-              source={require('../../asserts/icon/create_paper_color.gif')}
-              style={{ width: 25, height: 25 }}
+              source={require('../../asserts/icon/icon_addPar.png')}
+              style={{ top: -1 }}
             />
           </TouchableOpacity>
         </View>
