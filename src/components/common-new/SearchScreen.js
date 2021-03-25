@@ -369,6 +369,11 @@ class SearchScreen extends React.Component {
     }
     onSearchClear = () => {
         this.setState({ textSearch: '' });
+        if (this.timeSearch) {
+            clearTimeout(this.timeSearch);
+            this.timeSearch = null;
+        }
+        this.timeSearch = setTimeout(this.searchPaper, 500);
     }
 
     _handleClickDetail = index => () => {

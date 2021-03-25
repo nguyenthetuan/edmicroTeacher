@@ -64,6 +64,11 @@ export default class MissionScreen extends Component {
 
   onSearchClear = () => {
     this.setState({ textSearch: '' });
+    if (this.textSearch) {
+      clearTimeout(this.textSearch);
+      this.textSearch = null;
+    }
+    this.textSearch = setTimeout(this.handleSearch, 500);
   }
 
   handleSearch = () => {
