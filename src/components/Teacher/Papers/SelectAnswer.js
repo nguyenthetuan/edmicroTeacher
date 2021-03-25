@@ -459,6 +459,18 @@ export default class SelectAnswer extends Component {
     this.props.onChange(num);
   }
 
+  onChangePointEach = (type, point) => {
+    if (point[point.length - 1] == ',') {
+      point = `${point.substring(0, point.length - 1)}.`
+    }
+    if (type == 0) {
+      this.setState({ totalPointTN: point && (point) || 0 })
+    } else {
+      this.setState({ totalPointTL: point && (point) || 0 })
+
+    }
+  }
+
   render() {
     const { numColumns, isVisible, typeQuestion } = this.props;
     const { questionsTN, questionsTL, totalAddQuestion, totalAddQuestionTL, totalPointTN, totalPointTL } = this.state;
@@ -506,7 +518,7 @@ export default class SelectAnswer extends Component {
                 returnKeyType={'done'}
                 maxLength={4}
                 keyboardType={'numeric'}
-                onChangeText={text => this.setState({ totalPointTN: text && parseInt(text) || 0 })}
+                onChangeText={text => this.onChangePointEach(typeQuestion, text)}
                 onEndEditing={() => this.pointSentence(typeQuestion)}
                 value={totalPointTN && `${totalPointTN}` || ''}
                 editable={true}
@@ -517,7 +529,7 @@ export default class SelectAnswer extends Component {
                   returnKeyType={'done'}
                   maxLength={4}
                   keyboardType={'numeric'}
-                  onChangeText={text => this.setState({ totalPointTL: text && parseInt(text) || 0 })}
+                  onChangeText={text => this.onChangePointEach(typeQuestion, text)}
                   onEndEditing={() => this.pointSentence(typeQuestion)}
                   value={totalPointTL && `${totalPointTL}` || ''}
                   editable={true}
