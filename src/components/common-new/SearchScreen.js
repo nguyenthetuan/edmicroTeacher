@@ -5,18 +5,14 @@ import {
     Text,
     TouchableOpacity,
     View,
-    TextInput,
     Animated,
     FlatList,
     ActivityIndicator,
     Dimensions
 } from "react-native";
 import SearchComponent from "react-native-search-component";
-import RippleButton from '../common-new/RippleButton';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 import { RFFonsize } from '../../utils/Fonts';
 import { getSourceAvatar } from '../../utils/Helper';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import dataHelper from '../../utils/dataHelper';
 import Globals from '../../utils/Globals';
 import { connect } from 'react-redux';
@@ -84,57 +80,6 @@ class SearchScreen extends React.Component {
     componentDidMount() {
         this.getData();
     }
-
-    // getData = async () => {
-    //     const { token } = await dataHelper.getToken();
-    //     this.setState({ loading: true });
-    //     if (token) {
-    //         let listGrades = [];
-    //         let listSubjects = [];
-    //         let listPapers = [];
-
-    //         const resGrade = await apiPapers.getGrade({ token });
-    //         if (resGrade) {
-    //             listGrades = resGrade;
-    //             this.props.saveGrades(resGrade);
-    //         }
-
-    //         const resSubject = await apiPapers.getSubject({ token });
-    //         if (resSubject) {
-    //             listSubjects = resSubject;
-    //             this.props.saveSubject(resSubject);
-    //         }
-
-    //         this._indexPage = 0;
-
-    //         const resPapers = await apiPapers.getPapers({
-    //             token,
-    //             body: {
-    //                 text: '',
-    //                 gradeCode: [],
-    //                 subjectCode: [],
-    //                 status: [],
-    //                 indexPage: this._indexPage,
-    //                 isShare: true,
-    //             },
-    //         });
-    //         if (resPapers && resPapers.status === 1) {
-    //             listPapers = resPapers.data;
-    //         }
-    //         this.setState({
-    //             listGrades,
-    //             listSubjects,
-    //             listPapers,
-    //             loading: false,
-    //             hideLoadMore: !(listPapers.length % this._pageSize === 0),
-    //         });
-    //     } else {
-    //         this.setState({
-    //             loading: false,
-    //             hideLoadMore: true,
-    //         });
-    //     }
-    // };
 
     getData = async () => {
         const { token } = await dataHelper.getToken();
@@ -546,12 +491,7 @@ class SearchScreen extends React.Component {
                         <ActivityIndicator size={'small'} />
                     ) : (
                             <Text
-                                style={{
-                                    color: '#000',
-                                    fontFamily: 'Nunito-Bold',
-                                    fontSize: RFFonsize(14),
-                                    textAlign: 'center',
-                                }}>
+                                style={styles.more}>
                                 Xem thêm
                             </Text>
                         )}
@@ -581,7 +521,6 @@ class SearchScreen extends React.Component {
         }
         let dataFilter = this.filterData(listPapers);
         this.setState({ dataFilter });
-
     }
 
     filterData(data) {
@@ -742,13 +681,9 @@ class SearchScreen extends React.Component {
 }
 
 
-
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     textStyle: {
         fontSize: 24,
@@ -774,9 +709,13 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(14),
         color: '#000',
     },
+    more: {
+        color: '#000',
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(14),
+        textAlign: 'center',
+    }
 });
-
-
 
 
 const mapStateToProps = state => {
