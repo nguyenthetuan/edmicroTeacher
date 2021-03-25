@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { RFFonsize } from '../../../utils/Fonts';
 import Api from '../../../services/apiClassTeacher';
-
+import shadowStyle from '../../../themes/shadowStyle';
 const { width } = Dimensions.get('window');
 
 class EditConfig extends Component {
@@ -323,6 +323,7 @@ class EditConfig extends Component {
     };
 
     render() {
+        const { shadowBtn } = shadowStyle;
         const { name, loading, time, success, message, updating } = this.state;
         const { data } = this.props.navigation.state.params;
         let disabled = data.assignmentType && time == '0' || time == '';
@@ -383,13 +384,13 @@ class EditConfig extends Component {
                             <View style={styles.footer}>
                                 <RippleButton
                                     onPress={() => this.props.navigation.goBack()}>
-                                    <View style={styles.buttomCancel}>
+                                    <View style={[styles.buttomCancel, { ...shadowBtn }]}>
                                         <Text style={styles.txtButtom}>Huỷ</Text>
                                     </View>
                                 </RippleButton>
                                 <View style={{ marginStart: 40 }}>
                                     <RippleButton onPress={this.onUpdate} disabled={disabled}>
-                                        <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', }]}>
+                                        <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', ...shadowBtn }]}>
                                             <Text style={styles.txtButtom}>Lưu</Text>
                                         </View>
                                     </RippleButton>

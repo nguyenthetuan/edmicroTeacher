@@ -13,7 +13,7 @@ import ProgressBar from '../../libs/ProgressBar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import shadowStyle from '../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 export default class ItemClassAssigment extends Component {
@@ -35,6 +35,7 @@ export default class ItemClassAssigment extends Component {
   };
 
   render() {
+    const { shadowBtn } = shadowStyle;
     const {
       item,
       subjectCode,
@@ -137,7 +138,7 @@ export default class ItemClassAssigment extends Component {
                       }
                     });
                   }}
-                  style={styles.buttomRevew}
+                  style={[styles.buttomRevew, { ...shadowBtn }]}
                 >
                   <Text style={styles.txtbuttom}>
                     Xem báo cáo
