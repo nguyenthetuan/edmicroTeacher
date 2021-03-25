@@ -14,7 +14,11 @@ import { RFFonsize } from '../../../utils/Fonts';
 export default class ClassItem extends Component {
 
     openModalClass = () => {
-        this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        try {
+            this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+            
+        }
         this.props.refModalClass.onOpen()
     }
 

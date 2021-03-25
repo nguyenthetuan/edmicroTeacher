@@ -4,11 +4,14 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Text
 } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import dataHelper from '../../utils/dataHelper';
 import Api from '../../services/apiMission';
+import { RFFonsize } from '../../utils/Fonts';
+import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 export default class HeaderMissionNew extends React.Component {
@@ -43,6 +46,7 @@ export default class HeaderMissionNew extends React.Component {
     };
 
     render() {
+        const { shadowBtn } = shadowStyle;
         const { isAccessMission } = this.state;
         return (
             <View style={styles.container}>
@@ -61,11 +65,16 @@ export default class HeaderMissionNew extends React.Component {
                 {isAccessMission
                     &&
                     <TouchableOpacity
-                        style={styles.addMission}
+                        style={[styles.addMission, { ...shadowBtn }]}
                         onPress={this.goToSetupMission}>
-                        <Image
+                        {/* <Image
                             source={require('../../asserts/icon/icon_missionPlus.png')}
                             style={{ width: 25, height: 25 }}
+                        /> */}
+                        <Text style={styles.txtAdd}>Thêm nhiệm vụ</Text>
+                        <Image
+                            source={require('../../asserts/icon/icon_plusBox.png')}
+                            style={styles.iconFlus}
                         />
                     </TouchableOpacity>
                 }
@@ -90,6 +99,25 @@ const styles = StyleSheet.create({
     },
     addMission: {
         justifyContent: 'flex-end',
+        marginRight: 10,
+        flexDirection: 'row',
+        backgroundColor: '#ededed',
+        borderRadius: 5,
+    },
+    txtAdd: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        fontWeight: '500',
+        color: '#000',
+        alignSelf: 'center',
+        padding: 5,
+        paddingLeft: 10
+    },
+    iconFlus: {
+        tintColor: '#2D9CDB',
+        alignSelf: 'center',
+        marginLeft: 2,
         marginRight: 10
     }
 });

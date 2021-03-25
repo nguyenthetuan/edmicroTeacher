@@ -145,9 +145,10 @@ class Papers extends Component {
     });
     if (response.status === 1) {
       Alert.alert(
-        '',
+        'Thông báo',
         'Xóa bài thành công!',
         [
+          { text: 'OK'}
         ],
         { cancelable: false }
       );
