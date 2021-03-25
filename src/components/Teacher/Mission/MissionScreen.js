@@ -8,6 +8,7 @@ import {
   Animated,
   Dimensions,
   Platform,
+  Keyboard
 } from 'react-native';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
@@ -47,7 +48,28 @@ export default class MissionScreen extends Component {
 
   componentDidMount() {
     this.getToken();
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow.bind(this),
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide.bind(this),
+    );
   }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow() {
+    this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+  }
+
+  _keyboardDidHide() {
+  }
+
 
   async getToken() {
     const { token } = await dataHelper.getToken();
@@ -167,13 +189,13 @@ export default class MissionScreen extends Component {
             </Animated.View>
           </Animated.View>
           <AnimatedFlatList
+            ref={(fl) => this.refFlatlist = fl}
             data={listMissionSearch}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderItem}
             initialNumToRender={6}
             bounces={false}
             scrollEventThrottle={1}
-            // ListHeaderComponent={this.renderHeader}
             ListFooterComponent={<View style={{ height: 120 }} />}
             ListEmptyComponent={this.renderEmpty}
             showsVerticalScrollIndicator={false}

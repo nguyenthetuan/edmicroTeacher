@@ -102,6 +102,7 @@ target 'school' do
   pod 'Firebase/Messaging'
   pod "YoutubePlayer-in-WKWebView", "~> 0.3.3" 
   pod 'XCDYouTubeKit', '~> 2.8'
+  pod 'OpenSSL-Universal', '~>1.0.2.20'
   # pod 'Mixpanel'
   pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
 

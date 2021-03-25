@@ -593,12 +593,14 @@ class Papers extends Component {
         <ClassItem
           gradeActive={gradeActive}
           refModalClass={this.refModalClass}
+          refFlatlist={this.refFlatlist}
           activeClass={this.activeClass}
         />
         <SubjectItem
           subjectActive={subjectActive}
           listSubjects={listSubjects}
           refModalSubject={this.refModalSubject}
+          refFlatlist={this.refFlatlist}
           activeSubject={this.activeSubject}
         />
       </View>
@@ -749,6 +751,7 @@ class Papers extends Component {
         <AnimatedFlatList
           style={{ paddingHorizontal: 16, paddingTop: 280 }}
           data={dataFilter}
+          ref={(fl) => this.refFlatlist = fl}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}

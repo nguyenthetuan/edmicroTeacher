@@ -339,13 +339,13 @@ class ConfigQuestion extends Component {
               <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
-            <RippleButton
-              key={`d${index}`}
-              style={styles.buttomActive}
-              onPress={() => this.activeSubject(item)}>
-              <Text style={styles.txtItemActive}>{item.name}</Text>
-            </RippleButton>
-          );
+              <RippleButton
+                key={`d${index}`}
+                style={styles.buttomActive}
+                onPress={() => this.activeSubject(item)}>
+                <Text style={styles.txtItemActive}>{item.name}</Text>
+              </RippleButton>
+            );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -384,6 +384,22 @@ class ConfigQuestion extends Component {
     return result;
   };
 
+  getQuestionPostData = (data) => {
+    try {
+      const questions = data.map((val, key)=>{
+        return {
+          questionId: val.questionId,
+          index : key,
+          point : val.point,
+          typeAnswer: val.typeAnswer
+        }
+      })
+      return questions;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   config = async () => {
     if (this.validate()) {
       const {
@@ -421,9 +437,10 @@ class ConfigQuestion extends Component {
       _.forEach(subjectCode, item => {
         formData.append(`subjectCode[]`, item);
       });
-      formData.append('question', JSON.stringify(questions));
+      formData.append('question', JSON.stringify(this.getQuestionPostData(questions)));
+
       try {
-        this.setState({ loading: true })
+        this.setState({ loading: true });
         const { token } = await dataHelper.getToken();
         const response = await apiPapers.createQuestion({ token, formData });
         console.log("response: ", JSON.stringify(response));
@@ -463,7 +480,6 @@ class ConfigQuestion extends Component {
       }
     } else {
       AlertNoti('Vui lòng điền đầy đủ thông tin');
-      // alert('Vui lòng điền đầy đủ thông tin')
     }
   };
 
@@ -1091,21 +1107,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                      <WebView
-                        ref={ref => (this.webview = ref)}
-                        source={{
-                          html: html.renderMatarialDetail(htmlContent, urlMedia),
-                          baseUrl,
-                        }}
-                        subjectId={'TOAN'}
-                        originWhitelist={['file://']}
-                        scalesPageToFit={false}
-                        javaScriptEnabled
-                        showsVerticalScrollIndicator={false}
-                        startInLoadingState={false}
-                        style={{ backgroundColor: '#fff' }}
-                      />
-                    )}
+                        <WebView
+                          ref={ref => (this.webview = ref)}
+                          source={{
+                            html: html.renderMatarialDetail(htmlContent, urlMedia),
+                            baseUrl,
+                          }}
+                          subjectId={'TOAN'}
+                          originWhitelist={['file://']}
+                          scalesPageToFit={false}
+                          javaScriptEnabled
+                          showsVerticalScrollIndicator={false}
+                          startInLoadingState={false}
+                          style={{ backgroundColor: '#fff' }}
+                        />
+                      )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>

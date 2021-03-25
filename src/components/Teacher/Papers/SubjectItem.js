@@ -14,7 +14,8 @@ import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
 export default class SubjectItem extends Component {
     openModalSubject = () => {
-        this.props.refModalSubject.onOpen()
+        this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        this.props.refModalSubject.onOpen();
     }
 
     renderItem = ({ item }) => {
