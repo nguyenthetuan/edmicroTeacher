@@ -60,7 +60,7 @@ export default class SubjectItem extends Component {
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#56CCF2' }}
+                                style={{ tintColor: '#2D9CDB' }}
                             />
                         </RippleButton>
                     </View>

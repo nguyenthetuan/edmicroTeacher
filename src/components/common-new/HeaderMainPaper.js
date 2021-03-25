@@ -6,17 +6,9 @@ import {
   TouchableOpacity,
   Animated,
   FlatList,
-  Text,
-  Platform,
-  Dimensions,
-  ActivityIndicator,
-  SafeAreaView,
 } from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 import RippleButton from '../common-new/RippleButton';
-import { getSourceAvatar } from '../../utils/Helper';
-import Avatar from '../common-new/Avatar';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import dataHelper from '../../utils/dataHelper';
 import Globals from '../../utils/Globals';
 import ModalAddPaper from '../Teacher/Papers/ModalAddPaper';
@@ -27,7 +19,6 @@ import { updateExamListAction } from '../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import apiPapers from '../../services/apiPapersTeacher';
 import { setListGrades, setListSubject } from '../../actions/paperAction';
-import { TextInput } from 'react-native-gesture-handler';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -61,8 +52,6 @@ class HeaderMainPaper extends React.Component {
       typeChange: 0,
       dataFilter: []
     };
-
-
     this._indexPage = 0;
     this._pageSize = 50;
     Globals.updatePaper = this.refreshData.bind(this);
@@ -179,7 +168,10 @@ class HeaderMainPaper extends React.Component {
   };
 
   onGetPapers = async () => {
-    const { gradeActive, subjectActive, textSearch } = this.state;
+    const {
+      gradeActive,
+      subjectActive,
+      textSearch } = this.state;
     const { token } = await dataHelper.getToken();
     if (token) {
       this._indexPage = 0;
@@ -286,25 +278,10 @@ class HeaderMainPaper extends React.Component {
 
 
   render() {
-    const { userId, timeCached } = this.props;
-    const source = getSourceAvatar(userId, timeCached);
     const {
-      loading,
-      animation,
-      listGrades,
       listPapers,
-      visibleEdit,
-      gradeActive,
-      listSubjects,
-      dataSelected,
-      subjectActive,
       visibleModalAdd,
-      visibleModalEdit,
-      visibleModalEditName,
-      assignmentContentType,
-      dataFilter,
     } = this.state;
-    const { textSearch } = this.props;
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 50],
@@ -330,23 +307,9 @@ class HeaderMainPaper extends React.Component {
             />
           </View>
         </RippleButton>
-        {/* <View
-          onPress={() => this.searchPaper()}
-          style={styles.styWrapSearch}>
-          <TextInput
-            placeholder='Tìm kiếm...'
-            placeholderTextColor='#C4C4C4'
-            style={styles.searchPaper}
-            value={textSearch}
-            onChangeText={this.onChangeText}
-          />
-        </View>
- */}
-
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Image source={require('../../asserts/icon/logo_onluyen.png')} />
         </View>
-
         <View style={styles.rowGif}>
           <TouchableOpacity
             onPress={() =>
@@ -355,22 +318,16 @@ class HeaderMainPaper extends React.Component {
             style={styles.searchGif}
           >
             <Image
-              source={require('../../asserts/icon/icon_search_ani.gif')}
-              style={{ width: 25, height: 25 }}
+              source={require('../../asserts/icon/icon_searchPar.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
-            {/* <Text style={styles.txtAdd}>Thêm bộ đề</Text> */}
             <Image
-              source={require('../../asserts/icon/create_paper_color.gif')}
-              style={{ width: 25, height: 25 }}
+              source={require('../../asserts/icon/icon_addPar.png')}
+              style={{ top: -1 }}
             />
           </TouchableOpacity>
         </View>
-
-        {/* <TouchableOpacity style={styles.dot}>
-                    <Text style={styles.dotMain}>...</Text>
-                </TouchableOpacity> */}
         <ModalAddPaper
           onPress={this.onPress}
           closeModal={this.closeModal}
@@ -398,17 +355,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  btnAvatar: {
-    height: 25,
-    width: 25,
-    borderRadius: 12.5,
-    marginLeft: 10,
-  },
-  imgAvatar: {
-    height: 25,
-    width: 25,
-    borderRadius: 12.5,
-  },
   searchPaper: {
     height: 40,
     fontSize: RFFonsize(12),
@@ -420,22 +366,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-  styWrapSearch: {
-    fontFamily: 'Nunito-Regular',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderColor: '#C4C4C4',
-    borderWidth: 0.5,
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    flex: 1,
-    marginRight: 20,
-    marginLeft: 10,
-    height: 25,
-    color: '#000',
-    alignSelf: "center"
-  },
   searchGif: {
     // alignItems: 'flex-end',
     alignSelf: "center"
@@ -444,33 +374,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginHorizontal: 5,
     marginLeft: 10
-  },
-  txtAdd: {
-    fontFamily: 'Nunito',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(18),
-    color: "#fff",
-    alignSelf: 'center',
-    marginTop: 2,
-    marginBottom: 2
-  },
-  dotMain: {
-    transform: [{ rotate: '90deg' }],
-    fontSize: RFFonsize(25),
-    color: '#000',
-    fontWeight: '900',
-    fontFamily: 'Nunito-Bold',
-    left: 10
-  },
-  dot: {
-    marginHorizontal: 5
-  },
-  searchtxt: {
-    fontFamily: 'Nunito',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(14),
-    color: '#828282',
-    alignSelf: 'center'
   },
   rowGif: {
     flex: 1,

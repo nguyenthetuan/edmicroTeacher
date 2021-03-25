@@ -61,19 +61,23 @@ export default class ItemMission extends Component {
         onPress={this.goToMissionDetail}
       >
         <View style={styles.leftImage}>
-          <Image source={require('../../../asserts/images/icon_missionOpacity.png')}
+          <Image
+            source={require('../../../asserts/images/icon_missionOpacity.png')}
             style={styles.widthImage}
           />
           <Text style={styles.gradeClass}>{data.gradeName}</Text>
         </View>
-        <View style={[styles.styFlexDirRow, { flexDirection: 'column', marginLeft: 5 }]}>
+        <View
+          style={[styles.styFlexDirRow,
+          { flexDirection: 'column', marginLeft: 5 }]}
+        >
           <Text
             numberOfLines={1}
             style={styles.styTxtHeader}>
             {data.title}
           </Text>
           <View style={styles.hr} />
-          <View style={{ flexDirection: 'row', marginTop: 8, justifyContent: 'space-between' }}>
+          <View style={styles.rightRow}>
             <View style={styles.contentMission}>
               {this.renderElement(
                 AppIcon.icon_remakeHatV3,
@@ -148,13 +152,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     flexDirection: 'row'
   },
-  styWrapHeader: {
-    // flex: 1,
-    padding: 8,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   styTxtHeader: {
     marginTop: 2,
     color: '#000',
@@ -191,10 +188,6 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(14),
     alignSelf: "center",
     color: "#2D9CBD"
-  },
-  imageSize: {
-    // width: 20,
-    // height: 20
   },
   flexDiAction: {
     flexDirection: 'row',
@@ -254,6 +247,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 7,
     marginLeft: 5
+  },
+  rightRow: {
+    flexDirection: 'row',
+    marginTop: 8,
+    justifyContent: 'space-between'
   }
 });
 

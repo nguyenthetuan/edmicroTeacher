@@ -4,19 +4,11 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  Image,
   FlatList,
-  TextInput,
-  TouchableOpacity,
   Animated,
   Dimensions,
-  ScrollView,
-  StatusBar,
   Platform,
 } from 'react-native';
-import HeaderMain from '../../common-new/HeaderMain';
-import AppIcon from '../../../utils/AppIcon';
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiMission';
@@ -99,9 +91,6 @@ export default class MissionScreen extends Component {
 
   renderHeader = () => {
     const {
-      isAccessMission,
-      listMission,
-      listMissionSearch,
       textSearch
     } = this.state;
     return (
@@ -140,7 +129,6 @@ export default class MissionScreen extends Component {
     } = this.state;
     // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
 
-
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 100],
@@ -167,10 +155,6 @@ export default class MissionScreen extends Component {
             <Animated.View style={{
               opacity: _header_opacity
             }}>
-              {/* <HeaderMain
-                {...user}
-                navigation={this.props.navigation}
-              /> */}
               <HeaderMissionNew
                 navigation={this.props.navigation}
               />
@@ -208,56 +192,6 @@ export default class MissionScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  contain: {
-    flex: 1,
-    backgroundColor: '#FFF',
-  },
-  styWrapSearch: {
-    borderWidth: 1,
-    borderColor: '#DADADA',
-    paddingHorizontal: 10,
-    marginHorizontal: 5,
-    marginTop: 10,
-    height: 36,
-    borderRadius: 3,
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  styTxtInput: {
-    color: '#757575',
-    fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
-    alignSelf: 'center',
-    flex: 1,
-    padding: 8
-  },
-  styWrapBtn: {
-    backgroundColor: '#56BB73',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    height: 36,
-    borderRadius: 2,
-    marginHorizontal: 5,
-    marginTop: 10
-  },
-  styTxtBtn: {
-    color: '#FFF',
-    fontFamily: 'Nunito',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(14),
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  styWrapHeader: {
-    height: 46,
-    flexDirection: 'row',
-    backgroundColor: '#FFF',
-    paddingHorizontal: 12
-  },
   styWrapEmpty: {
     height: height / 2,
     justifyContent: 'center',
@@ -265,14 +199,9 @@ const styles = StyleSheet.create({
   },
   styTxtEmpty: {
     fontFamily: 'Nunito-Regular',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     color: '#999',
-  },
-  iconSearch: {
-    marginRight: -5,
-    alignSelf: 'center'
-  },
-  safe_area_view: {
-    flex: 1,
   },
   header: {
     height: 100,
