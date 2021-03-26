@@ -64,7 +64,11 @@ export default class MissionScreen extends Component {
   }
 
   _keyboardDidShow() {
-    this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+    try {
+      this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+    } catch (error) {
+      
+    }
   }
 
   _keyboardDidHide() {
