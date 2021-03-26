@@ -14,7 +14,12 @@ import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
 export default class SubjectItem extends Component {
     openModalSubject = () => {
-        this.props.refModalSubject.onOpen()
+        try {
+            this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+            
+        }
+        this.props.refModalSubject.onOpen();
     }
 
     renderItem = ({ item }) => {
@@ -60,7 +65,7 @@ export default class SubjectItem extends Component {
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#56CCF2' }}
+                                style={{ tintColor: '#2D9CDB' }}
                             />
                         </RippleButton>
                     </View>

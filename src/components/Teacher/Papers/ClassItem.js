@@ -14,6 +14,11 @@ import { RFFonsize } from '../../../utils/Fonts';
 export default class ClassItem extends Component {
 
     openModalClass = () => {
+        try {
+            this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+            
+        }
         this.props.refModalClass.onOpen()
     }
 
@@ -59,7 +64,7 @@ export default class ClassItem extends Component {
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#56CCF2' }}
+                                style={{ tintColor: '#2D9CDB' }}
                             />
                         </RippleButton>
                     </View>

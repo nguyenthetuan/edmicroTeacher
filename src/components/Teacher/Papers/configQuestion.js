@@ -39,7 +39,7 @@ import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import { setListGrades } from '../../../actions/paperAction';
+import { setListGrades, updateExamListAction } from '../../../actions/paperAction';
 
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -385,6 +385,22 @@ class ConfigQuestion extends Component {
     return result;
   };
 
+  getQuestionPostData = (data) => {
+    try {
+      const questions = data.map((val, key)=>{
+        return {
+          questionId: val.questionId,
+          index : key,
+          point : val.point,
+          typeAnswer: val.typeAnswer
+        }
+      })
+      return questions;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   config = async () => {
     if (this.validate()) {
       const {
@@ -422,9 +438,10 @@ class ConfigQuestion extends Component {
       _.forEach(subjectCode, item => {
         formData.append(`subjectCode[]`, item);
       });
-      formData.append('question', JSON.stringify(questions));
+      formData.append('question', JSON.stringify(this.getQuestionPostData(questions)));
+
       try {
-        this.setState({ loading: true })
+        this.setState({ loading: true });
         const { token } = await dataHelper.getToken();
         const response = await apiPapers.createQuestion({ token, formData });
         console.log("response: ", JSON.stringify(response));
@@ -456,6 +473,7 @@ class ConfigQuestion extends Component {
             subject: subjectCode,
           });
           Globals.updatePaper();
+          this.props.needUpdate(true);
         }
       } catch (error) {
         this.setState({ loading: false })
@@ -463,7 +481,6 @@ class ConfigQuestion extends Component {
       }
     } else {
       AlertNoti('Vui lòng điền đầy đủ thông tin');
-      // alert('Vui lòng điền đầy đủ thông tin')
     }
   };
 
@@ -1134,6 +1151,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     saveGrades: listGrades => dispatch(setListGrades(listGrades)),
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   }
 }
 export default connect(

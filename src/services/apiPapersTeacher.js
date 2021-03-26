@@ -255,6 +255,7 @@ const assignmentContent = async ({ token, body }) => {
 }
 
 const createQuestion = async ({ token, formData }) => {
+  console.log('createQs: ', JSON.stringify(formData));
   let response = await fetch(`${API_BASE}school-online/library/assignment/create`, {
     method: 'POST',
     headers: {
@@ -265,7 +266,7 @@ const createQuestion = async ({ token, formData }) => {
     },
     body: formData,
   })
-
+  console.log('createQuestion: ', JSON.stringify(response))
   let responseJson = await response.json();
   return responseJson;
 }
