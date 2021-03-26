@@ -17,21 +17,23 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AppIcon from '../../../utils/AppIcon';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { RFFonsize } from '../../../utils/Fonts';
+import shadowStyle from '../../../themes/shadowStyle';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 const { width } = Dimensions.get('window');
 export default class ModalFillter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowModal: false
+      isShowModal: false,
     }
   }
 
   changeStateModale = () => {
     const { isShowModal } = this.state;
     if (!isShowModal) {
-      StatusBar.setBarStyle('light-content');
-    } else {
       StatusBar.setBarStyle('dark-content');
+    } else {
+      StatusBar.setBarStyle('light-content');
     }
     this.setState({ isShowModal: !isShowModal });
   }
@@ -42,6 +44,8 @@ export default class ModalFillter extends Component {
   }
 
   render() {
+    const { shadowBtn } = shadowStyle;
+    const { isShow } = this.props;
     const {
       dataGade,
       dataSubject,
@@ -56,16 +60,21 @@ export default class ModalFillter extends Component {
     const { isShowModal } = this.state;
     return (
       <Modal transparent={false} visible={isShowModal} tintColor='#000'>
+        <SafeAreaView style={{ backgroundColor: '#E8F6FF' }} />
         <View style={styles.contain}>
-          <SafeAreaView />
-          <View style={styles.headerNav}>
+          {/* <View style={styles.headerNav}>
             <Text style={styles.styTitle}>Tuỳ chọn</Text>
-          </View>
-          <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
-            <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
-          </TouchableOpacity>
-
-          <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
+            <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
+              <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
+            </TouchableOpacity>
+          </View> */}
+          <HeaderNavigation
+            title={'Tuỳ chọn'}
+            onRightAction={this.changeStateModale}
+            actionIcon={AppIcon.close_img}
+            isShow={false}
+          />
+          <View style={[styles.wrapSelect1, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
             <Dropdown
               title="Khối"
               data={dataGade}
@@ -98,7 +107,7 @@ export default class ModalFillter extends Component {
             />
           </View>
 
-          <TouchableOpacity style={styles.btnViewStatistic} onPress={this.handleStatistic}>
+          <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.handleStatistic}>
             <Text style={styles.txtBtn}>Xem thống kê</Text>
             {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
           </TouchableOpacity>
@@ -112,24 +121,30 @@ const styles = StyleSheet.create({
   contain: {
     flex: 1,
     backgroundColor: '#E8F6FF',
-    alignItems: 'center',
-    paddingHorizontal: 40,
-
   },
   wrapSelect: {
     flexDirection: 'row',
     marginVertical: 8,
     justifyContent: 'space-between',
-    width: width - 80,
+    width: width - 40,
+    paddingHorizontal: 16,
+    marginLeft: 5
+  },
+  wrapSelect1: {
+    flexDirection: 'row',
+    marginVertical: 8,
+    justifyContent: 'space-between',
+    width: width - 10,
+    paddingHorizontal: 16,
+    marginLeft: 5
   },
   btnViewStatistic: {
     backgroundColor: '#2D9CDB',
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
     borderRadius: 5,
-    marginTop: 50
+    marginTop: 50,
+    marginHorizontal: "30%"
   },
   txtBtn: {
     color: '#FFF',
@@ -138,40 +153,46 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     marginVertical: 16,
-    width: width - 80,
+    width: width - 40,
     marginHorizontal: 0,
     height: 35,
     borderRadius: 5,
-    paddingLeft: 10,
+    paddingLeft: 5,
     paddingRight: 5
   },
   imgClose: {
     width: 25,
     height: 25,
-    right: 5,
-    top: 10
+    alignSelf: 'center'
   },
   styBtnClose: {
-    position: 'absolute',
     right: 10,
-    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
+    alignSelf: 'center',
+    justifyContent: 'flex-end',
+    // top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(16)
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20),
+    flex: 1,
   },
   contentDrop: {
     marginHorizontal: 0,
     height: 35,
-    paddingLeft: 10,
     borderRadius: 5,
     fontFamily: "Nunito",
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
+    paddingLeft: 5
   },
   headerNav: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
-  }
+    backgroundColor: '#E8F6FF',
+    top: 10,
+    width: "55%",
+    // marginLeft: Platform.isPad ? "45%" : Platform.OS == 'ios' ? "45%" : 0
+    // top: Platform.isPad ? 10 : Platform.OS == 'ios' ? 30 : 0
+  },
 });
