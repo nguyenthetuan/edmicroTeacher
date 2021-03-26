@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  Platform,
   TouchableOpacity,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
@@ -12,7 +13,7 @@ import ProgressBar from '../../libs/ProgressBar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import shadowStyle from '../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 export default class ItemClassAssigment extends Component {
@@ -34,6 +35,7 @@ export default class ItemClassAssigment extends Component {
   };
 
   render() {
+    const { shadowBtn } = shadowStyle;
     const {
       item,
       subjectCode,
@@ -136,10 +138,10 @@ export default class ItemClassAssigment extends Component {
                       }
                     });
                   }}
-                  style={styles.buttomRevew}
-                  >
-                    <Text style={styles.txtbuttom}>
-                      Xem báo cáo
+                  style={[styles.buttomRevew, { ...shadowBtn }]}
+                >
+                  <Text style={styles.txtbuttom}>
+                    Xem báo cáo
                       </Text>
 
                 </RippleButton>
@@ -217,9 +219,9 @@ const styles = StyleSheet.create({
   },
   buttomRevew: {
     backgroundColor: '#56CCF2',
-    alignSelf:'center',
-    alignItems:'center',
-    paddingHorizontal:10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
     borderRadius: 24,
     paddingVertical: 8,
     marginBottom: 8,
@@ -253,14 +255,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
   },
   viewRate: {
-    fontSize: RFFonsize(12),
+    fontSize: RFFonsize(11.5),
     color: '#F16219',
     fontFamily: 'Nunito-Regular',
     marginLeft: 10,
     position: 'absolute',
     right: 0,
-    top: 0,
-    alignSelf:'center'
+    top: Platform.OS == 'android' ? -2 : 0,
+    alignSelf: 'center'
   },
   ripButton: {
     flexDirection: 'row',

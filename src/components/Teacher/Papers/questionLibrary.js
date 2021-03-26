@@ -36,7 +36,7 @@ import html from '../../../utils/ModalMatarial'
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { RFFonsize } from '../../../utils/Fonts';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-
+import shadowStyle from '../../../themes/shadowStyle';
 
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
@@ -412,6 +412,7 @@ class QuestionLibrary extends Component {
   }
 
   render() {
+    const { shadowBtn } = shadowStyle;
     const {
       listQuestionAdded,
       subject,
@@ -450,7 +451,7 @@ class QuestionLibrary extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView />
-        <SafeAreaView  style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <HeaderNavigation
             title={'Ngân hàng câu hỏi'}
             color={'white'}
@@ -459,7 +460,7 @@ class QuestionLibrary extends Component {
             actionStyle={{ borderRadius: 0 }}
           // onRightAction={() => this.configurationQuestion()}
           />
-          <TouchableOpacity style={styles.buttonCreateAssessment} onPress={() => this.configurationQuestion()}>
+          <TouchableOpacity style={[styles.buttonCreateAssessment, { ...shadowBtn }]} onPress={() => this.configurationQuestion()}>
             <Text style={styles.textCreateAssessment}>Cấu hình</Text>
           </TouchableOpacity>
           <View style={styles.wrapSelectQuestion}>

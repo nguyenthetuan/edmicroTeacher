@@ -15,29 +15,26 @@ import {
   ActivityIndicator,
   Modal,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DropdownMultiSelect from '../Homework/DropdownMultiSelect';
 import Dropdown from '../Homework/Dropdown';
 import _ from 'lodash';
 import DocumentPicker from 'react-native-document-picker';
 import Pdf from 'react-native-pdf';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import Toast from 'react-native-easy-toast';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AppIcon from '../../../utils/AppIcon';
 import SelectAnswer from './SelectAnswer';
 import AnalyticsManager from '../../../utils/AnalyticsManager';
-import Globals from '../../../utils/Globals';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { RFFonsize } from '../../../utils/Fonts';
 import HeaderPaper from './HeaderPaper';
 import ModalSelectAnswers from './ModalSelectAnswers';
+import { connect } from 'react-redux';
+import { updateExamListAction } from '../../../actions/paperAction';
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -46,7 +43,7 @@ if (Platform.OS === 'ios') {
 
 const { width, height } = Dimensions.get('window');
 
-export default class UploadPDF extends Component {
+class UploadPDF extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -99,7 +96,6 @@ export default class UploadPDF extends Component {
   };
 
   closeModalSelectAnswer = () => {
-    console.log("🚀 ~ file: UploadPDF.js ~ line 102 ~ UploadPDF ~ closeModalSelectAnswer")
     this.setState({ showSelectAnswer: false })
   }
 
@@ -141,6 +137,12 @@ export default class UploadPDF extends Component {
     return Math.floor((width - 20) / 65);
   };
 
+  getBlob = async (fileUri) => {
+    const resp = await fetch(fileUri);
+    const file = await resp.blob();
+    return file;
+  };
+
   onPickPDF = async () => {
     try {
       const res = await DocumentPicker.pick({
@@ -158,21 +160,14 @@ export default class UploadPDF extends Component {
         this.setState({
           loadingUpload: true,
         });
-        //upload pdf
         const { token } = await dataHelper.getToken();
         if (token) {
           const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
           if (resSignedUrl) {
-            var formData = new FormData();
-            formData.append('file', {
-              uri: res.uri,
-              name: resSignedUrl.fileName,
-              type: res.type,
-            });
-
+            let file = await this.getBlob(url);
             const resUpload = await apiPapers.uploadPDF({
               url: resSignedUrl.preSignedUrl,
-              formData,
+              file,
             });
 
             if (resUpload && resUpload.status === 200) {
@@ -188,7 +183,6 @@ export default class UploadPDF extends Component {
         }
       }
     } catch (err) {
-      console.log(err);
       this.toast.show('Tải lên PDF thất bại');
       this.setState({ loadingUpload: false });
       if (DocumentPicker.isCancel(err)) {
@@ -220,16 +214,11 @@ export default class UploadPDF extends Component {
           const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
 
           if (resSignedUrl) {
-            var formData = new FormData();
-            formData.append('file', {
-              uri: res.uri,
-              name: resSignedUrl.fileName,
-              type: res.type,
-            });
+            let file = await this.getBlob(url);
 
             const resUpload = await apiPapers.uploadPDF({
               url: resSignedUrl.preSignedUrl,
-              formData,
+              file,
             });
 
             if (resUpload && resUpload.status === 200) {
@@ -242,6 +231,8 @@ export default class UploadPDF extends Component {
         }
       }
     } catch (err) {
+      this.toast.show('Tải lên PDF thất bại');
+
       console.log(err);
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -363,7 +354,6 @@ export default class UploadPDF extends Component {
 
       const { token } = await dataHelper.getToken();
       if (token) {
-        console.log("🚀 ~ file: UploadPDF.js ~ line 369 ~ UploadPDF ~ assignmentContent= ~ body", body)
         const res = await apiPapers.assignmentContent({ token, body });
         if (res && res.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
@@ -372,7 +362,8 @@ export default class UploadPDF extends Component {
             this.props.navigation.navigate('Assignment', {
               item: { ...res, name: name, id: res.id },
             });
-          }, 100);
+          }, 500);
+          this.props.needUpdate(true);
           // cau hinh thanh cong
           AnalyticsManager.trackWithProperties('School Teacher', {
             action: 'CREATEASSIGNMENT',
@@ -501,7 +492,7 @@ export default class UploadPDF extends Component {
             <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingTop: 20 }}
+                contentContainerStyle={{ paddingTop: 20, paddingBottom: Platform.OS == 'ios' ? 0 : 40 }}
                 ref={ref => this.scrollview = ref}
                 contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
               >
@@ -520,7 +511,7 @@ export default class UploadPDF extends Component {
                           style={styles.inputName}
                         />
                         <Text style={styles.styTxtLabel}>Môn học</Text>
-                        <View style={[styles.styTxtPlace]} >
+                        <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                           <DropdownMultiSelect
                             containerStyle={{
                               marginHorizontal: 0,
@@ -532,7 +523,7 @@ export default class UploadPDF extends Component {
                           />
                         </View>
                         <Text style={styles.styTxtLabel}>Khối lớp</Text>
-                        <View style={[styles.styTxtPlace]} >
+                        <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                           <DropdownMultiSelect
                             contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
                             title="Khối lớp"
@@ -542,7 +533,7 @@ export default class UploadPDF extends Component {
                         </View>
                         <Text style={styles.styTxtLabel}>Dạng bài</Text>
                         <Dropdown
-                          contentStyle={styles.styTxtPlace}
+                          contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5 }]}
                           title="Dạng Bài"
                           data={assignmentTypes}
                           indexSelected={0}
@@ -722,10 +713,24 @@ export default class UploadPDF extends Component {
 
           </View>
         </SafeAreaView>
-      </View >
+      </View>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UploadPDF);
 
 const styles = StyleSheet.create({
   container: {
@@ -787,7 +792,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
-    paddingStart: 5,
+    paddingStart: 10,
     marginBottom: 7,
     borderRadius: 5,
     padding: 0,
@@ -856,13 +861,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 25,
     position: 'absolute',
-    top: 10,
+    top: Platform.OS == 'android' ? 10 : 5,
   },
   textCreateAssessment: {
     fontFamily: 'Nunito',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(20),
-    color: '#fff'
+    color: '#fff',
+    fontWeight: '800'
   },
   styTxtLabel: {
     fontFamily: 'Nunito',
@@ -912,6 +918,6 @@ const styles = StyleSheet.create({
   },
   wrapTotalQsNPoint: {
     marginHorizontal: 10,
-    marginTop: 10
+    marginTop: 10,
   }
 });

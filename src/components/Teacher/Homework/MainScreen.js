@@ -95,7 +95,7 @@ const initTab = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       style: {
         backgroundColor: '#FFF',
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderBottomColor: '#56CCF2',
         height: 40,
         elevation: 0,
@@ -105,13 +105,14 @@ const initTab = createMaterialTopTabNavigator(
       indicatorStyle: {
         backgroundColor: '#56CCF2',
         height: 5,
-        width: Platform.isPad ? 200 : 80,
+        width: Platform.isPad ? 200 : 100,
         borderBottomWidth: 1,
         borderBottomColor: '#56CCF2',
         borderBottomWidth: 1,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
-        marginLeft: width < 350 ? 10 : 30,
+        marginLeft: width < 350 ? 20 : 15,
+        marginRight: width < 350 ? 20 : 15,
       },
     },
   },
@@ -286,12 +287,12 @@ export default function StatisticsPoints(props) {
   const handleStatistic = async () => {
     if (data.class.length > 0) {
       const { token } = await dataHelper.getToken();
-      console.log("handleStatistic: ", props);
       if (token) {
-        props.fetchHomework({
+        await props.fetchHomework({
           token,
           assignId: data.class[indexSelected.class].assignId,
         });
+        props.needUpdate(true);
       }
     } else {
       toast.current.show('Không tìm thấy lớp nào!');
@@ -465,6 +466,7 @@ export default function StatisticsPoints(props) {
     props.navigation.state.params.hideBackButtom;
 
   let timeExport = props.data?.data.timeExport;
+  console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
   timeExport = convertTimeHMDMY(timeExport);
   return (
     <SafeAreaView style={styles.container}>

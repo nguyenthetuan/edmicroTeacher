@@ -22,9 +22,10 @@ import AppIcon from '../../../utils/AppIcon';
 import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { RFFonsize } from '../../../utils/Fonts';
+import RippleButton from '../../common-new/RippleButton';
 
 let height = Dimensions.get('window').height;
-
+let indexPage = 0;
 export default class CopyFromSubjectExists extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +36,9 @@ export default class CopyFromSubjectExists extends Component {
             indexSelected: 0,
             subjectCode: [],
             knowledgeUnits: null,
-            isLoading: false
+            isLoading: false,
+            listTask: [],
+            searchName: ''
         }
     }
 
@@ -43,6 +46,7 @@ export default class CopyFromSubjectExists extends Component {
     }
     async getDetailSubject(subjectCode) {
         const { token } = await dataHelper.getToken();
+        indexPage = 0;
         if (token) {
             const response = await apiPapers.getDetailSubject({
                 token: token,
@@ -60,6 +64,21 @@ export default class CopyFromSubjectExists extends Component {
         }
     }
 
+    renderLoadMoreButton = () => {
+        if (this.state.listTask.length > 10) {
+            return (
+                <View style={styles.loadmoreWrap}>
+                    <RippleButton onPress={() => { this.loadMorePress() }} style={styles.loadmoreBtn}>
+                        <Text style={styles.textLoadMore}>Xem Thêm...</Text>
+                    </RippleButton>
+                </View >
+            )
+        }
+        else {
+            return null;
+        }
+    }
+
     onPressItemSubject = async (index) => {
         const { listSubjects } = this.props.navigation.state.params;
         let subjectCode = [];
@@ -74,6 +93,7 @@ export default class CopyFromSubjectExists extends Component {
     async onPressCurriculum(index) {
         await this.setState({ currentCurriculum: this.state.lerningTarget[index].id })
         this.getLerningTarget(this.state.lerningTarget[index].id);
+        indexPage = 0;
         this.findPremadeLib();
     }
 
@@ -88,22 +108,36 @@ export default class CopyFromSubjectExists extends Component {
         }
     }
 
-    async findPremadeLib() {
+    async findPremadeLib(indexPage, isSearch) {
         const { token } = await dataHelper.getToken();
+        let { listTask } = this.state;
         let curriculumCodes = [this.state.currentCurriculum];
-        let pageIndex = 0;
+        let pageIndex = indexPage || 1;
         let searchKnowledgeUnitChild = true;
         let subjectCodes = this.state.subjectCode;
         let gradeCodes = null;
         let knowledgeUnits = this.state.knowledgeUnits;
-        let name = '';
-        this.setState({ isLoading: true });
+        let name = this.state.searchName;
+        console.log("🚀 ~ file: CopyFromSubjectExists.js ~ line 121 ~ CopyFromSubjectExists ~ findPremadeLib ~ this.state.searchName", this.state.searchName)
+        if (!indexPage) {
+            this.setState({ isLoading: true });
+        }
         const rp = await apiPapers.findPremadeLib({ token, curriculumCodes, pageIndex, searchKnowledgeUnitChild, subjectCodes, gradeCodes, knowledgeUnits, name });
-        this.setState({ listTask: !rp ? [] : rp, isLoading: false });
+        if (listTask) {
+            this.setState({ listTask: rp, isLoading: false });
+        } else {
+            this.setState({ listTask: !rp ? listTask : listTask.concat(rp), isLoading: false });
+        }
+    }
+
+    loadMorePress() {
+        indexPage++;
+        this.findPremadeLib(indexPage);
     }
 
     onPress(data) {
         console.log('onPress: ', data);
+        indexPage = 0;
         const { subjectCode, code, curriculumCode } = data;
         this.setState({ knowledgeUnits: code ? [code] : null },
             () => {
@@ -150,9 +184,9 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
-                                source={AppIcon.icon_gradeClass1}
+                                source={require('../../../asserts/icon/icon_remakeClassV3.png')}
                                 resizeMode="contain"
-                                style={{ height: 23, width: 23 }} />
+                                style={{ height: 23, width: 23, tintColor: '#F78E30' }} />
                             <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
                         </View>
                     </View>
@@ -161,21 +195,32 @@ export default class CopyFromSubjectExists extends Component {
                             <Image
                                 source={AppIcon.icon_questionV3}
                                 resizeMode="contain"
-                                style={{ height: 20, width: 20 }} />
+                                style={{ height: 20, width: 20, tintColor: '#DB3546' }} />
                             <Text style={styles.textDetail}>Số câu hỏi: {item.totalQuestion}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
                             <Image
                                 source={AppIcon.icon_authorV3}
                                 resizeMode="contain"
-                                style={{ height: 20, width: 20 }} />
-                            <Text style={styles.textDetail}>Tác giả: {item.author}</Text>
+                                style={{ height: 20, width: 20, tintColor: '#7E96EC' }} />
+                            <Text style={styles.textDetail}>Tác giả:
+                             <Text style={styles.colorTG}> {item.author}</Text></Text>
                         </View>
                     </View>
                     <Image source={AppIcon.icon_paperParacV3} style={styles.paperParacV3} />
                 </View>
             </TouchableOpacity>
         )
+    }
+
+    onPressSearch = () => {
+        this.setState({ searchName: this.state.previosSearchText }, () => {
+            this.findPremadeLib();
+        });
+    }
+
+    onChangePreviosSearchText = (text) => {
+        this.setState({ previosSearchText: text });
     }
 
     render() {
@@ -199,25 +244,28 @@ export default class CopyFromSubjectExists extends Component {
                                     <TextInput
                                         placeholder={'Tên bài kiểm tra'}
                                         placeholderTextColor={'#c4c4c4'}
-                                        style={{ color: '#000', flex: 1, fontSize: RFFonsize(14), backgroundColor: '#fff', paddingVertical: 0, }}
-                                    // value={nameMission}
+                                        style={styles.nameTest}
+                                        value={this.state.textPreviosSearch}
+                                        onChangeText={this.onChangePreviosSearchText}
                                     />
-                                    <IconAntDesign
-                                        name={'search1'}
-                                        style={styles.iconSearch}
-                                    />
+                                    <TouchableOpacity style={{ width: 20, height: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onPressSearch() }}>
+                                        <IconAntDesign
+                                            name={'search1'}
+                                            style={styles.iconSearch}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                                 <View style={styles.wrap2Dropdown}>
                                     <Dropdown
                                         containerStyle={styles.styleDrop}
-                                        contentStyle={{ marginHorizontal: 0 }}
+                                        contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
                                         title="Môn Học"
                                         data={listSubjects}
                                         onPressItem={(index) => this.onPressItemSubject(index)}
                                     />
                                     <Dropdown
                                         containerStyle={styles.styleDrop}
-                                        contentStyle={{ marginHorizontal: 0 }}
+                                        contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
                                         title="Giáo trình"
                                         data={this.state.lerningTarget}
                                         onPressItem={(index) => this.onPressCurriculum(index)}
@@ -241,6 +289,8 @@ export default class CopyFromSubjectExists extends Component {
                                 data={this.state.listTask}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={this.renderTask}
+                                style={{ paddingHorizontal: 5 }}
+                                ListFooterComponent={this.renderLoadMoreButton}
                             />
                         </View>
                         :
@@ -303,7 +353,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginTop: 3,
         marginBottom: 3,
-        marginLeft: 14,
+        marginLeft: 12,
         width: 320
     },
     bodyTask: {
@@ -314,7 +364,7 @@ const styles = StyleSheet.create({
     pieceBody: {
         width: '40%',
         marginTop: 10.5,
-        paddingHorizontal: 14
+        paddingHorizontal: 10
     },
     textDetail: {
         fontSize: RFFonsize(10),
@@ -349,8 +399,7 @@ const styles = StyleSheet.create({
     },
     viewStatus: {
         width: '100%',
-        alignItems: 'center',
-        height: height - 200
+        height: height - 230
     },
     paperParacV3: {
         marginLeft: -60,
@@ -363,6 +412,41 @@ const styles = StyleSheet.create({
     },
     iconSearch: {
         alignSelf: 'center',
-        color: '#828282'
+        color: '#828282',
+        marginRight: 3
+    },
+    colorTG: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(16),
+        color: "#7E96EC",
+    },
+    nameTest: {
+        color: '#000',
+        flex: 1,
+        fontSize: RFFonsize(14),
+        backgroundColor: '#fff',
+        paddingVertical: 0,
+        paddingHorizontal: 5
+    },
+    loadmoreWrap: {
+        width: '100%',
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 10
+    },
+    loadmoreBtn: {
+        width: 80,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textLoadMore: {
+        fontFamily: 'Nunito',
+        fontSize: 16,
+        fontWeight: '800',
+        color: '#55CCF2',
+        lineHeight: 20
     }
 })

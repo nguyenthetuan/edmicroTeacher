@@ -14,6 +14,11 @@ import { RFFonsize } from '../../../utils/Fonts';
 export default class ClassItem extends Component {
 
     openModalClass = () => {
+        try {
+            this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+            
+        }
         this.props.refModalClass.onOpen()
     }
 
@@ -37,11 +42,11 @@ export default class ClassItem extends Component {
                     <Text style={styles.txtClass}>Khối lớp</Text>
                 </View>
                 <View style={styles.styWrapClass}>
-                    <Image
+                    {/* <Image
                         style={{ marginRight: 10 }}
                         source={require('../../../asserts/images/iconHome.png')}
                         resizeMode={'contain'}
-                    />
+                    /> */}
                     <View style={styles.styWrapClassIn}>
                         <FlatList
                             data={gradeActive}
@@ -54,11 +59,12 @@ export default class ClassItem extends Component {
                         />
                         <RippleButton
                             onPress={this.openModalClass}
-                            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                         >
                             <Image
                                 source={require('../../../asserts/appIcon/icon_filter_plus.png')}
                                 resizeMode={'contain'}
+                                style={{ tintColor: '#2D9CDB' }}
                             />
                         </RippleButton>
                     </View>
@@ -111,17 +117,17 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
     },
     styWrapClass: {
-        marginTop: 12,
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
     },
     styWrapClassIn: {
         flexDirection: 'row',
         flex: 1,
-        borderWidth: 1,
+        borderWidth: 0.5,
         paddingHorizontal: 5,
         borderRadius: 3,
-        borderColor: '#C4C4C4',
+        borderColor: '#56CCF2',
         alignItems: 'center'
     },
     styIcon: {

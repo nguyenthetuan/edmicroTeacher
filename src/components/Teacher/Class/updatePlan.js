@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet, TextInput, ActivityIndicator, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  TextInput,
+  ActivityIndicator,
+  SafeAreaView
+} from 'react-native';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiClassTeacher';
 import _ from 'lodash';
@@ -10,6 +18,7 @@ import RippleButton from '../../common-new/RippleButton';
 import Globals from '../../../utils/Globals';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { RFFonsize } from '../../../utils/Fonts';
+import shadowStyle from '../../../themes/shadowStyle';
 
 const { width, height } = Dimensions.get('window');
 export default class UpdatePlan extends Component {
@@ -51,7 +60,7 @@ export default class UpdatePlan extends Component {
     const { avatar, value, isLoading } = this.state;
     const { navigation } = this.props;
     const { title, index, classId } = this.props.navigation.state.params;
-
+    const { shadowBtn } = shadowStyle;
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={styles.container}
@@ -75,7 +84,7 @@ export default class UpdatePlan extends Component {
               editable={!isLoading}
             />
             <RippleButton onPress={this.save}>
-              <View style={[styles.btn, { alignSelf: 'center' }]}>
+              <View style={[styles.btn, { alignSelf: 'center', ...shadowBtn }]}>
                 <Text style={styles.txtBtn}>Cập nhật</Text>
               </View>
             </RippleButton>
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(21),
     fontFamily: 'Nunito-Bold',
     marginTop: 14,
-    marginBottom:14
+    marginBottom: 14
   },
   styActivity: {
     position: 'absolute',

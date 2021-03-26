@@ -63,7 +63,7 @@ const premadeLibCopy = async (payload) => {
     let responseJson = await response.json();
     return responseJson;
   } catch (error) {
-    
+
   }
 }
 
@@ -223,8 +223,6 @@ const fetchListStudentAssign = async (payload) => {
 
 }
 
-
-
 const signedUrlContentPDF = async ({ token }) => {
   let response = await fetch(`${API_BASE}school-online/library/assignment-content/signed-url-content/`, {
     method: 'POST',
@@ -238,10 +236,10 @@ const signedUrlContentPDF = async ({ token }) => {
   return responseJson;
 }
 
-const uploadPDF = async ({ url, formData }) => {
+const uploadPDF = async ({ url, file }) => {
   let response = await fetch(`${url}`, {
     method: 'PUT',
-    body: formData
+    body: file
   });
   return response;
 }
@@ -257,17 +255,19 @@ const assignmentContent = async ({ token, body }) => {
 }
 
 const createQuestion = async ({ token, formData }) => {
+  console.log('createQs: ', JSON.stringify(formData));
   let response = await fetch(`${API_BASE}school-online/library/assignment/create`, {
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data',
       Accept: 'application/json',
       Authorization: `Bearer ${token}`,
-      'Referer': 'https://m.k12.onluyen.vn'
+      'Referer': 'https://app.onluyen.vn'
     },
     body: formData,
   })
-  let responseJson = response.json();
+  console.log('createQuestion: ', JSON.stringify(response))
+  let responseJson = await response.json();
   return responseJson;
 }
 

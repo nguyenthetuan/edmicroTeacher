@@ -6,7 +6,7 @@ const getHeaders = (token) => ({
     'Content-Type': 'application/json',
     Accept: 'application/json',
     Authorization: `Bearer ${token}`,
-    'Referer': 'https://m.k12.onluyen.vn'
+    'Referer': 'https://app.onluyen.vn'
   }
 });
 
@@ -17,7 +17,7 @@ const register = async (email, passWord, displayName, rememberMe, type) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ email, passWord, displayName, rememberMe, type })
     });
@@ -33,7 +33,7 @@ const signin = async (email, passWord, RememberMe, socialType, socialId, socialT
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ email, passWord, RememberMe, socialType, socialId, socialToken })
     });
@@ -119,7 +119,7 @@ const testSendAnswer = (token, idOption, stepId, testId) => (
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: 'Bearer ' + token,
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ idOption, stepId, testId })
     })
@@ -134,7 +134,7 @@ const testSendAnswer_556 = (token, idOption, stepId, testId, dataOptionId, textA
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: 'Bearer ' + token,
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({
         idOption, stepId, testId, dataOptionId, textAnswer, isAnswer, isSkip: false, problemId: '', problemHierachyId: ''
@@ -155,7 +155,7 @@ const refreshToken = async (body) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body
     });
@@ -171,7 +171,7 @@ const refreshTokenV2 = async (body) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body
     });
@@ -188,7 +188,7 @@ const updateProfile =
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            'Referer': 'https://m.k12.onluyen.vn',
+            'Referer': 'https://app.onluyen.vn',
             Authorization: 'Bearer ' + token
           },
           body: JSON.stringify({ birthday, displayName, districtId, gradeId, password, phoneNumber, provinceId, schoolId })
@@ -205,7 +205,7 @@ const changePassword = (token, email, passwordNew, passwordOld) => (
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: 'Bearer ' + token,
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ email, passwordNew, passwordOld })
     })
@@ -242,7 +242,7 @@ const getUriLogin = async () => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Referer': 'https://m.k12.onluyen.vn'
+      'Referer': 'https://app.onluyen.vn'
     }
   });
   let responseJson = await response.json();
@@ -256,7 +256,7 @@ const getTokenHocmai = async (accessCodeHocmai) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       }
     });
     let responseJson = await response.json();

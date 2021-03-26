@@ -43,9 +43,11 @@ export default class ModalCurriculum extends Component {
       data: data || [],
       isKeyBoard: false,
       searched: false,
-      arrayHistoryFilter: []
+      dataDefault: data || [],
+      currentParent: ''
     };
     this.positionY = new Animated.Value(-40);
+    this.arrayHistoryFilter = [];
   }
 
   componentWillMount() {
@@ -101,13 +103,10 @@ export default class ModalCurriculum extends Component {
   }
 
   searchExactly = ({ data, item }) => {
-    console.log('dataaxxxxx0', data);
-    const { arrayHistoryFilter } = this.state
-    arrayHistoryFilter.push(item.code)
+    let dataTMP = [];
+    dataTMP = [...this.arrayHistoryFilter, item.parentCode]
     let reslult = [];
-    this.setState({
-      arrayHistoryFilter: arrayHistoryFilter
-    })
+    this.arrayHistoryFilter = dataTMP;
     _.map(data, (element) => {
       if (element.parentCode === item.code) {
         reslult.push(element);
@@ -121,21 +120,29 @@ export default class ModalCurriculum extends Component {
   };
 
   backBtn = ({ data }) => {
-    const { arrayHistoryFilter } = this.state
-    arrayHistoryFilter.pop()
+    const { dataDefault } = this.state
     let reslult = [];
-    console.log('arrayHistoryFilter[arrayHistoryFilter.length]', arrayHistoryFilter[arrayHistoryFilter.length - 1])
-    _.map(data, (element) => {
-      if (element.code.includes(arrayHistoryFilter[arrayHistoryFilter.length - 1])) {
+    _.map(dataDefault, (element) => {
+      if (element.parentCode === this.arrayHistoryFilter[this.arrayHistoryFilter.length - 1]) {
         reslult.push(element);
       }
     });
+    this.arrayHistoryFilter.pop()
     this.setState({
       searchKey: '',
       data: reslult,
-      searched: true,
-      arrayHistoryFilter: arrayHistoryFilter
+      searched: true
     });
+  }
+
+  compactList() {
+    let itemParent = this.state.dataDefault.find(x => this.state.currentParent === x.code);
+    let arrayFileter = this.state.dataDefault.filter(x => this.state.currentParent === x.parentCode);
+    this.setState({
+      searchKey: '',
+      data: arrayFileter,
+      searched: true,
+    })
   }
 
   deleteItem = () => {
@@ -238,15 +245,13 @@ export default class ModalCurriculum extends Component {
             ) : (
                 <View />
               )}
-            <TouchableOpacity>
-              <View style={styles.icDow}>
-                <Ionicons
-                  name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
-                  size={18}
-                  color="#fff"
-                />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.icDow}>
+              <Ionicons
+                name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
+                size={18}
+                color="#fff"
+              />
+            </View>
           </View>
 
           <Modal visible={visible} transparent={true}>
@@ -292,7 +297,6 @@ export default class ModalCurriculum extends Component {
                         }
                         }
                       >
-
                         <Image source={require('../../../asserts/icon/iconHome.png')} style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }} resizeMode='contain' />
                       </TouchableOpacity>
                       <TextInput
@@ -358,6 +362,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(12),
     color: '#FFF',
+    marginBottom: 2
   },
   topheader: {
     backgroundColor: '#2D9CDB',
@@ -412,8 +417,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    // borderRadius: 5,
-    // overflow: 'hidden'
+    borderRadius: 3,
+    overflow: 'hidden'
   },
   wrapElementSelect: {
     maxWidth: '50%',

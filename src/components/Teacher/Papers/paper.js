@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Image,
   StyleSheet,
   Text,
   Platform,
@@ -10,7 +9,8 @@ import {
   ActivityIndicator,
   Animated,
   SafeAreaView,
-  FlatList
+  FlatList,
+  Alert
 } from 'react-native';
 import ModalEditConfig from './modalEditConfig';
 import _ from 'lodash';
@@ -20,9 +20,8 @@ import ModalEditName from './ModalEditName';
 import { connect } from 'react-redux';
 import { setListGrades, setListSubject } from '../../../actions/paperAction';
 import Globals from '../../../utils/Globals';
-import HeaderMain from '../../common-new/HeaderMain';
+import HeaderMainPaper from '../../common-new/HeaderMainPaper';
 import { alertDeletePaper } from '../../../utils/Alert';
-import { TextInput } from 'react-native-gesture-handler';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import ClassItem from './ClassItem';
 import SubjectItem from './SubjectItem';
@@ -34,7 +33,7 @@ import ModalAddPaper from './ModalAddPaper';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import RippleButton from '../../common-new/RippleButton';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -69,9 +68,9 @@ class Papers extends Component {
       payloadAssignment: null,
       animation: 'fadeInUpBig',
       assignmentContentType: 0,
+      typeChange: 0,
+      dataFilter: []
     };
-
-
     this._indexPage = 0;
     this._pageSize = 50;
     Globals.updatePaper = this.refreshData.bind(this);
@@ -80,6 +79,7 @@ class Papers extends Component {
   refreshData = async () => {
     this.getData();
   };
+
   componentDidMount() {
     this.getData();
   }
@@ -93,6 +93,7 @@ class Papers extends Component {
       let listPapers = [];
 
       const resGrade = await apiPapers.getGrade({ token });
+
       if (resGrade) {
         listGrades = resGrade;
         this.props.saveGrades(resGrade);
@@ -103,9 +104,7 @@ class Papers extends Component {
         listSubjects = resSubject;
         this.props.saveSubject(resSubject);
       }
-
       this._indexPage = 0;
-
       const resPapers = await apiPapers.getPapers({
         token,
         body: {
@@ -120,11 +119,13 @@ class Papers extends Component {
       if (resPapers && resPapers.status === 1) {
         listPapers = resPapers.data;
       }
+      let dataFilter = this.filterData(listPapers);
       this.setState({
         listGrades,
         listSubjects,
         listPapers,
         loading: false,
+        dataFilter,
         hideLoadMore: !(listPapers.length % this._pageSize === 0),
       });
     } else {
@@ -143,11 +144,23 @@ class Papers extends Component {
       id: dataSelected.assignmentId,
     });
     if (response.status === 1) {
+      Alert.alert(
+        'Thông báo',
+        'Xóa bài thành công!',
+        [
+          { text: 'OK'}
+        ],
+        { cancelable: false }
+      );
       this.setState(
         {
           visibleEdit: false,
         },
-        () => this.getListPaper(token),
+        () => {
+          setTimeout(() => {
+            this.getListPaper(token)
+          }, 1000)
+        },
       );
     }
   })
@@ -170,11 +183,13 @@ class Papers extends Component {
           },
         });
         if (resPapers && resPapers.status === 1) {
+          let dataFilter = this.filterData(resPapers.data);
           this.setState(
             {
               listPapers: resPapers.data,
               loading: false,
               hideLoadMore: true,
+              dataFilter,
             }
           );
         }
@@ -183,7 +198,11 @@ class Papers extends Component {
   };
 
   onGetPapers = async () => {
-    const { gradeActive, subjectActive, textSearch } = this.state;
+    const {
+      gradeActive,
+      subjectActive,
+      textSearch
+    } = this.state;
     const { token } = await dataHelper.getToken();
     if (token) {
       this._indexPage = 0;
@@ -199,9 +218,11 @@ class Papers extends Component {
         },
       });
       if (resPapers && resPapers.status === 1) {
+        let dataFilter = this.filterData(resPapers.data);
         this.setState({
           listPapers: resPapers.data,
           loading: false,
+          dataFilter
         });
       }
     } else {
@@ -218,9 +239,7 @@ class Papers extends Component {
     const { token } = await dataHelper.getToken();
     if (token) {
       this._indexPage++;
-
       let listPapers = this.state.listPapers;
-
       const res = await apiPapers.getPapers({
         token,
         body: {
@@ -252,7 +271,8 @@ class Papers extends Component {
   onUpdateItem = async item => {
     const { listPapers } = this.state;
     let listPapersTmp = listPapers;
-    const index = _.findIndex(listPapers, ['assignmentId', item.assignmentId]);
+    const index = _.findIndex(listPapers,
+      ['assignmentId', item.assignmentId]);
     if (index > -1) {
       listPapersTmp[index] = item;
     }
@@ -355,29 +375,34 @@ class Papers extends Component {
   };
 
   _listTestFooter = () => {
-    const { isLoadMore, hideLoadMore } = this.state;
+    const { isLoadMore, hideLoadMore, dataFilter } = this.state;
+    if (!dataFilter.length) {
+      return null;
+    }
     return hideLoadMore ? null : (
-      <TouchableOpacity
-        onPress={this.onLoadMore}
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 50,
-        }}>
-        {isLoadMore ? (
-          <ActivityIndicator size={'small'} />
-        ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
-      </TouchableOpacity>
+      <View style={{ width: '100%', height: 330 }}>
+        <TouchableOpacity
+          onPress={this.onLoadMore}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: NAVBAR_HEIGHT,
+          }}>
+          {isLoadMore ? (
+            <ActivityIndicator size={'small'} />
+          ) : (
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -566,55 +591,110 @@ class Papers extends Component {
     } = this.state;
     return (
       <View style={styles.navbar}>
-
         <ClassItem
           gradeActive={gradeActive}
           refModalClass={this.refModalClass}
+          refFlatlist={this.refFlatlist}
           activeClass={this.activeClass}
         />
         <SubjectItem
           subjectActive={subjectActive}
           listSubjects={listSubjects}
           refModalSubject={this.refModalSubject}
+          refFlatlist={this.refFlatlist}
           activeSubject={this.activeSubject}
         />
-        <View style={{
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}>
-          <View>
-            <TouchableOpacity
-              onPress={() => this.searchPaper()}
-              style={{
-                position: 'absolute',
-                right: 4,
-                top: 4,
-                height: 18,
-                width: 24,
-              }}>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.styWrapSearch}>
-            <TextInput
-              placeholder='Tìm kiếm...'
-              placeholderTextColor='#C4C4C4'
-              style={styles.searchPaper}
-              value={textSearch}
-              onChangeText={this.onChangeText}
-            // onEndEditing={() => this.searchPaper()}
-            />
-            <EvilIcons name={'search'} size={20} color={'#C4C4C4'} />
-          </View>
-          <TouchableOpacity
-            style={styles.buttonAdd}
-            onPress={this._handleAddPaper}>
-            <Image source={require('../../../asserts/icon/icAdd.png')} resizeMode={'contain'} />
-            <Text style={styles.txtAdd}>Thêm bộ đề</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
+  }
+
+  onPressChangeType = async (index) => {
+    const { listPapers } = this.state;
+    switch (index) {
+      case 0: {
+        await this.setState({ typeChange: 0 });
+
+        break;
+      }
+      case 1: {
+        await this.setState({ typeChange: 1 })
+
+        break;
+      }
+      case 2: {
+        await this.setState({ typeChange: 2 })
+
+        break;
+      }
+      default: break;
+    }
+    let dataFilter = this.filterData(listPapers);
+    this.setState({ dataFilter });
+  }
+
+  filterData(data) {
+    const { typeChange } = this.state;
+    let result = [];
+    switch (typeChange) {
+      case 0: {
+        result = data;
+        break;
+      }
+      case 2: {
+        data.map(item => {
+          if (item.totalAssign < 1) {
+            result.push(item);
+          }
+        })
+        break;
+      }
+      case 1: {
+        data.map(item => {
+          if (item.countCheckPoint > 0) {
+            result.push(item);
+          }
+        })
+        break;
+      }
+      default: break;
+    }
+    return result;
+  }
+
+  createTabButton = () => {
+    const { typeChange } = this.state;
+    return (
+      <View style={styles.tabBar}>
+        <RippleButton
+          onPress={() => {
+            this.onPressChangeType(0)
+          }}
+          style={typeChange === 0 ? styles.buttonActive : styles.buttonNotActive}
+        >
+          <Text
+            style={typeChange === 0 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
+            Tất cả
+            </Text>
+        </RippleButton>
+        <RippleButton
+          onPress={() => { this.onPressChangeType(1) }}
+          style={typeChange === 1 ? styles.buttonActive : styles.buttonNotActive}
+        >
+          <Text
+            style={typeChange === 1 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
+            Chờ chấm điểm
+            </Text>
+        </RippleButton>
+        <RippleButton
+          onPress={() => { this.onPressChangeType(2) }}
+          style={typeChange === 2 ? styles.buttonActive : styles.buttonNotActive}>
+          <Text
+            style={typeChange === 2 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
+            Chưa giao
+            </Text>
+        </RippleButton>
+      </View>
+    )
   }
 
   render() {
@@ -632,18 +712,19 @@ class Papers extends Component {
       visibleModalEdit,
       visibleModalEditName,
       assignmentContentType,
+      dataFilter,
     } = this.state;
     const { user } = this.props;
 
-    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
+    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 390);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 50],
       outputRange: [1, 1],
       extrapolate: 'clamp'
     })
     let translateY = _diff_clamp_scroll_y.interpolate({
-      inputRange: [0, 330],
-      outputRange: [0, -330],
+      inputRange: [0, 390],
+      outputRange: [0, -390],
       extrapolate: 'clamp',
     });
 
@@ -658,22 +739,32 @@ class Papers extends Component {
             }
           ]}
         >
-          <HeaderMain {...user} navigation={this.props.navigation} />
+          <HeaderMainPaper
+            {...user}
+            navigation={this.props.navigation}
+            onChangeText={this.onChangeText}
+            textSearch={this.state.textSearch}
+            searchPaper={this.searchPaper}
+          />
           {this.renderHeaderFlastList()}
+          {this.createTabButton()}
         </Animated.View>
         <AnimatedFlatList
-          style={{ paddingHorizontal: 16, paddingTop: 270 }}
-          data={listPapers}
+          style={{ paddingHorizontal: 16, paddingTop: 280 }}
+          data={dataFilter}
+          ref={(fl) => this.refFlatlist = fl}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
-          extraData={listPapers}
+          extraData={dataFilter}
           ListEmptyComponent={this._listTestEmpty}
-          // ListFooterComponent={this._listTestFooter}
-          ListFooterComponent={<View style={{ height: 280 }} />}
-          renderItem={({ item, index }) => (
-            <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-          )}
+          ListFooterComponent={this._listTestFooter}
+          // ListFooterComponent={<View style={{ height: 280 }} />}
+          renderItem={({ item, index }) => {
+            return (
+              <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+            )
+          }}
           initialNumToRender={5}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
@@ -748,23 +839,7 @@ class Papers extends Component {
 }
 
 const styles = StyleSheet.create({
-  buttonAdd: {
-    backgroundColor: '#7E96EC',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: 20,
-    padding: 3,
-    paddingHorizontal: 10,
-    borderRadius: 4,
-    height: 40,
-  },
-  txtAdd: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(14),
-    color: '#FFF',
-    marginLeft: 8,
-  },
+
   viewNotFound: {
     marginTop: 100,
     justifyContent: 'center',
@@ -784,10 +859,10 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: NAVBAR_HEIGHT,
-    paddingTop: 10,
+    height: NAVBAR_HEIGHT - 50,
     backgroundColor: '#fff',
     paddingHorizontal: 16,
+    justifyContent: 'center'
   },
   contentContainer: {
     // paddingTop: NAVBAR_HEIGHT,
@@ -799,23 +874,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     flex: 1,
   },
-  textTilteModal: {
-    fontFamily: 'Nunito-Regular',
-    fontWeight: '700',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
-    textAlign: 'center',
-  },
-  styWrapSearch: {
-    flexDirection: 'row',
-    borderColor: '#C4C4C4',
-    borderWidth: 0.5,
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    flex: 1,
-    marginRight: 20
-  },
   header: {
     height: 285,
     position: 'absolute',
@@ -823,9 +881,61 @@ const styles = StyleSheet.create({
     left: 0,
     top: isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 0,
     zIndex: 1,
-    backgroundColor: '#fff',
-    zIndex: 1
+    backgroundColor: '#fff'
   },
+  tabBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    marginHorizontal: 8,
+    flex: 1,
+  },
+  buttonActive: {
+    flex: 1,
+    marginHorizontal: 10,
+    height: 32,
+    borderWidth: .5,
+    borderColor: '#2D9CDB',
+    backgroundColor: '#2D9CDB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2.5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2.5,
+    elevation: 5,
+  },
+  buttonNotActive: {
+    flex: 1,
+    marginHorizontal: 10,
+    height: 32,
+    borderWidth: 1,
+    borderColor: '#c4c4c4',
+    backgroundColor: '#c4c4c4',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15
+  },
+  textButtonTabActive: {
+    fontFamily: 'Nunito-Bold',
+    fontWeight: '500',
+    color: '#fff',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16)
+  },
+  textButtonTabNotActive: {
+    fontFamily: 'Nunito-Bold',
+    fontWeight: '500',
+    color: '#fff',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    alignSelf: 'center'
+  }
 });
 
 const mapStateToProps = state => {

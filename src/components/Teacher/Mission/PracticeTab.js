@@ -134,7 +134,7 @@ export default class PracticeTab extends Component {
           renderHeader={this._renderHeader}
           renderContent={this._renderContent}
           onChange={this._updateSections}
-          underlayColor={'#efefef'}
+          underlayColor={'#EEFAFE'}
         />
       </ScrollView>
     );

@@ -110,12 +110,12 @@ class MenuTabTeacher extends Component {
                 title={'Hồ sơ cá nhân'}
                 rippleColor={rippleColor}
               />
-              <MenuItem
+              {/* <MenuItem
                 onPress={() => this.handleClick(16)}
                 source={AppIcon.icon_diamondV3}
                 title={'Đổi quà'}
                 rippleColor={rippleColor}
-              />
+              /> */}
               <MenuItem
                 onPress={() => this.handleClick(3)}
                 source={require('../../asserts/icon/icon_staticV3.png')}

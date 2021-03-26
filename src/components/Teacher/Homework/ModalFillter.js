@@ -55,29 +55,30 @@ export default class ModalFillter extends Component {
     } = this.props;
     const { isShowModal } = this.state;
     return (
-      <Modal transparent={false} visible={isShowModal}>
+      <Modal transparent={false} visible={isShowModal} tintColor='#000'>
         <View style={styles.contain}>
           <SafeAreaView />
-          <View style={{ flexDirection: 'row', }}>
+          <View style={styles.headerNav}>
             <Text style={styles.styTitle}>Tuỳ chọn</Text>
           </View>
           <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
             <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
           </TouchableOpacity>
-          <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR }]}>
+
+          <View style={[styles.wrapSelect, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
             <Dropdown
               title="Khối"
               data={dataGade}
               indexSelected={indexSelected.grade}
               onPressItem={onPressItemGrade}
-              contentStyle={{ marginHorizontal: 0 }}
+              contentStyle={styles.contentDrop}
             />
             <Dropdown
               title="Môn học"
               data={dataSubject}
               indexSelected={indexSelected.subject}
               onPressItem={onPressItemSubject}
-              contentStyle={{ marginHorizontal: 0 }}
+              contentStyle={styles.contentDrop}
             />
           </View>
           <View style={[styles.wrapSelect, { flexDirection: 'column' }]}>
@@ -99,7 +100,7 @@ export default class ModalFillter extends Component {
 
           <TouchableOpacity style={styles.btnViewStatistic} onPress={this.handleStatistic}>
             <Text style={styles.txtBtn}>Xem thống kê</Text>
-            <Icon name='angle-right' size={20} color={'#FFF'} />
+            {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
           </TouchableOpacity>
         </View>
       </Modal >
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   },
   wrapSelect: {
     flexDirection: 'row',
-    marginVertical: 10,
+    marginVertical: 8,
     justifyContent: 'space-between',
     width: width - 80,
   },
@@ -127,31 +128,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
-    borderRadius: 3,
+    borderRadius: 5,
     marginTop: 50
   },
   txtBtn: {
     color: '#FFF',
     marginHorizontal: 20,
-    marginVertical: 5
+    marginVertical: 10
   },
   contentStyle: {
-    marginVertical: 10,
+    marginVertical: 16,
     width: width - 80,
-    marginHorizontal: 0
+    marginHorizontal: 0,
+    height: 35,
+    borderRadius: 5,
+    paddingLeft: 10,
+    paddingRight: 5
   },
   imgClose: {
     width: 25,
-    height: 25
+    height: 25,
+    right: 5,
+    top: 10
   },
   styBtnClose: {
     position: 'absolute',
     right: 10,
-    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 50 : 0
+    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
   },
   styTitle: {
     fontFamily: 'Nunito-Bold',
-    marginTop: 20,
     fontSize: RFFonsize(16)
+  },
+  contentDrop: {
+    marginHorizontal: 0,
+    height: 35,
+    paddingLeft: 10,
+    borderRadius: 5,
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+  },
+  headerNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    top: Platform.isPad ? 30 : Platform.OS == 'ios' ? 30 : 0
   }
 });

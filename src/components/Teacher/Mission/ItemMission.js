@@ -61,19 +61,23 @@ export default class ItemMission extends Component {
         onPress={this.goToMissionDetail}
       >
         <View style={styles.leftImage}>
-          <Image source={require('../../../asserts/images/icon_missionOpacity.png')}
+          <Image
+            source={require('../../../asserts/images/icon_missionOpacity.png')}
             style={styles.widthImage}
           />
           <Text style={styles.gradeClass}>{data.gradeName}</Text>
         </View>
-        <View style={[styles.styFlexDirRow, { flexDirection: 'column', marginLeft: 5 }]}>
+        <View
+          style={[styles.styFlexDirRow,
+          { flexDirection: 'column', marginLeft: 5 }]}
+        >
           <Text
             numberOfLines={1}
             style={styles.styTxtHeader}>
             {data.title}
           </Text>
           <View style={styles.hr} />
-          <View style={{ flexDirection: 'row', marginTop: 8 }}>
+          <View style={styles.rightRow}>
             <View style={styles.contentMission}>
               {this.renderElement(
                 AppIcon.icon_remakeHatV3,
@@ -90,16 +94,14 @@ export default class ItemMission extends Component {
             </View>
 
             <View style={styles.subjectColumn}>
-              <View style={{marginLeft: 15}}>
+              <View style={{ marginLeft: 15 }}>
                 {this.renderElement(
                   getIconSubject(data.subjectCode),
                   Common.getDisplaySubject(data.subjectCode)
                 )}
               </View>
+
               <View style={styles.flexDiAction}>
-                {/* {this.renderElement(AppIcon.icon_paracComplete, textDelivered)} */}
-                {/* <></> */}
-                {/* {this.renderElement(require('../../../asserts/appIcon/iconClock.png'), timeCreateAt)} */}
                 {data.status === modelStatus.unDelivered
                   ?
                   <FastImage
@@ -130,7 +132,7 @@ export default class ItemMission extends Component {
           <View style={styles.dateDaly}>
             <View style={{ flexDirection: 'row' }}>
               <Image source={require('../../../asserts/icon/icon_delivery.png')} />
-              <Text style={styles.txtDeve}>Ngày giao</Text>
+              <Text style={styles.txtDeve}>Ngày tạo</Text>
             </View>
             <Text style={styles.txtTime}>{timeCreateAt}</Text>
           </View>
@@ -149,13 +151,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 15,
     flexDirection: 'row'
-  },
-  styWrapHeader: {
-    // flex: 1,
-    padding: 8,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   styTxtHeader: {
     marginTop: 2,
@@ -192,12 +187,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(10),
     lineHeight: RFFonsize(14),
     alignSelf: "center",
-    color: "#2D9CBD",
-    marginLeft: 35
-  },
-  imageSize: {
-    // width: 20,
-    // height: 20
+    color: "#2D9CBD"
   },
   flexDiAction: {
     flexDirection: 'row',
@@ -243,9 +233,11 @@ const styles = StyleSheet.create({
   },
   dateDaly: {
     flexDirection: 'row',
+    justifyContent: "space-between",
     marginLeft: 2.5,
     marginTop: 8,
-    marginBottom: 5
+    marginBottom: 5,
+    marginHorizontal: 20
   },
   gradeClass: {
     fontFamily: "Nunito-Bold",
@@ -255,6 +247,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 7,
     marginLeft: 5
+  },
+  rightRow: {
+    flexDirection: 'row',
+    marginTop: 8,
+    justifyContent: 'space-between'
   }
 });
 

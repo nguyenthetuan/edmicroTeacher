@@ -33,6 +33,8 @@ import HeaderNavigation from '../../common-new/HeaderNavigation';
 import ModalSelectStudent from './ModalSelectStudent';
 import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
+import classIcon from '../../../asserts/appIcon/icon_class.png';
+import shadowStyle from '../../../themes/shadowStyle';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -42,6 +44,7 @@ const Stage = {
 }
 
 function Item(props) {
+  const { shadowBtn } = shadowStyle;
   const pickStudent = useRef();
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
@@ -166,7 +169,7 @@ function Item(props) {
           <TouchableOpacity
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#fa915c' }]}>
+            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#E0E0E0' }]}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableOpacity>
@@ -217,7 +220,7 @@ function Item(props) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onAssignment}
-          style={styles.btnAssignment}>
+          style={[styles.btnAssignment, { ...shadowBtn }]}>
           <Text style={styles.txtAssignment}>Giao bài</Text>
         </TouchableOpacity>
       </View>
@@ -311,6 +314,9 @@ class Assignment extends Component {
           title={dataItem.name}
           navigation={this.props.navigation}
           goBack={() => this._handleGoBack()}
+          actionIcon={classIcon}
+          iconAction={() => { this.props.navigation.pop(4) }}
+          actionColor='#fff'
         />
         <FlatList
           bounces={false}

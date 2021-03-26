@@ -6,7 +6,7 @@ const getHeaders = (token) => (
     'Content-Type': 'application/json',
     Accept: 'application/json',
     Authorization: `Bearer ${token}`,
-    'Referer': 'https://m.k12.onluyen.vn'
+    'Referer': 'https://app.onluyen.vn'
   }
 );
 
@@ -18,7 +18,7 @@ const refreshTokenV2 = async (body) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body
     });
@@ -77,7 +77,7 @@ const forgotPasswordV2 = async (payload) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Referer': 'https://m.k12.onluyen.vn'
+      'Referer': 'https://app.onluyen.vn'
     },
     body: JSON.stringify({ code, csrf, password, phoneNumber })
   })
@@ -114,7 +114,7 @@ const checkPhoneNumber = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ type, phoneNumber, token })
     })
@@ -131,7 +131,7 @@ const registerPhoneV2 = async ({ code, csrf, displayName, password, phoneNumber,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Referer': 'https://m.k12.onluyen.vn'
+      'Referer': 'https://app.onluyen.vn'
     },
     body: JSON.stringify({ displayName, phoneNumber, password, rememberMe, userToken, code, csrf })
   });
@@ -147,7 +147,7 @@ const changePasswordV2 = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ code, csrf, password, phoneNumber })
     });
@@ -166,7 +166,7 @@ const loginPhoneV2 = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ loginType, password, phoneNumber, rememberMe, socialId, socialToken, socialType })
     });
@@ -185,7 +185,7 @@ const loginUserName = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ loginType, password, userName, rememberMe, socialId, socialToken, socialType })
     });
@@ -309,7 +309,7 @@ const registerFirebasePhone = async (payload) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Referer': 'https://m.k12.onluyen.vn'
+      'Referer': 'https://app.onluyen.vn'
     },
     body: JSON.stringify({ displayName, phoneNumber, password, projectId, token, codeOTP, phoneCountry })
   });
@@ -325,7 +325,7 @@ const changeFirebasePassword = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ codeOTP, userName, password, phoneNumber, phoneCountry, token, projectId })
     });
@@ -344,7 +344,7 @@ const verifiedFirebase = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ codeOTP, userName, password, phoneNumber, phoneCountry, token, projectId })
     });
@@ -455,7 +455,7 @@ const loginWithGoogle = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: '*/*',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ dataLogin })
     });
@@ -484,7 +484,7 @@ const loginWithFacebook = async (payload) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: '*/*',
-        'Referer': 'https://m.k12.onluyen.vn'
+        'Referer': 'https://app.onluyen.vn'
       },
       body: JSON.stringify({ dataLogin })
     });

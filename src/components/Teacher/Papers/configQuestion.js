@@ -38,7 +38,7 @@ import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import { setListGrades } from '../../../actions/paperAction';
+import { setListGrades, updateExamListAction } from '../../../actions/paperAction';
 
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
@@ -248,10 +248,10 @@ class ConfigQuestion extends Component {
         const i = _.indexOf(listGradeTmp.map(e => e.gradeId), gradeId);
         if (i > -1) {
           listGradeTmp[i].isActive = true;
-          listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
+          // listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
         }
       });
-    this.refs.flastList.scrollToIndex({ animated: true, index: 0 });
+    // this.refs.flastList.scrollToIndex({ animated: true, index: 0 });
     this.setState({
       gradeCode: gradeCodeTmp,
       listGrades: listGradeTmp,
@@ -275,7 +275,9 @@ class ConfigQuestion extends Component {
               onPress={() => this.activeGrade(item)}>
               <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
-          ) : (
+          )
+            :
+            (
               <RippleButton
                 key={`b${index}`}
                 style={styles.buttomActive}
@@ -309,10 +311,10 @@ class ConfigQuestion extends Component {
       const i = _.indexOf(listSubjectsTmp.map(e => e.code), subjectId);
       if (i > -1) {
         listSubjectsTmp[i].isActive = true;
-        listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
+        // listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
       }
     });
-    this.refs.flastListSub.scrollToIndex({ animated: true, index: 0 });
+    // this.refs.flastListSub.scrollToIndex({ animated: true, index: 0 });
     this.setState({
       subjectCode: subjectCodeTmp,
       listSubjects: listSubjectsTmp,
@@ -382,6 +384,22 @@ class ConfigQuestion extends Component {
     return result;
   };
 
+  getQuestionPostData = (data) => {
+    try {
+      const questions = data.map((val, key)=>{
+        return {
+          questionId: val.questionId,
+          index : key,
+          point : val.point,
+          typeAnswer: val.typeAnswer
+        }
+      })
+      return questions;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   config = async () => {
     if (this.validate()) {
       const {
@@ -419,11 +437,13 @@ class ConfigQuestion extends Component {
       _.forEach(subjectCode, item => {
         formData.append(`subjectCode[]`, item);
       });
-      formData.append('question', JSON.stringify(questions));
+      formData.append('question', JSON.stringify(this.getQuestionPostData(questions)));
+
       try {
-        this.setState({ loading: true })
+        this.setState({ loading: true });
         const { token } = await dataHelper.getToken();
         const response = await apiPapers.createQuestion({ token, formData });
+        console.log("response: ", JSON.stringify(response));
         if (response.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
           const setQuestion = await dataHelper.saveQuestion([]);
@@ -452,6 +472,7 @@ class ConfigQuestion extends Component {
             subject: subjectCode,
           });
           Globals.updatePaper();
+          this.props.needUpdate(true);
         }
       } catch (error) {
         this.setState({ loading: false })
@@ -459,7 +480,6 @@ class ConfigQuestion extends Component {
       }
     } else {
       AlertNoti('Vui lòng điền đầy đủ thông tin');
-      // alert('Vui lòng điền đầy đủ thông tin')
     }
   };
 
@@ -635,7 +655,7 @@ class ConfigQuestion extends Component {
                 <View style={{ flex: 1 }}>
                   <View>
                     {!_.isEmpty(listGrades) && (
-                      <View style={{ marginTop: 14 }}>
+                      <View style={{ marginTop: 0 }}>
                         <Text
                           style={[
                             styles.txtTitleGrade,
@@ -647,7 +667,7 @@ class ConfigQuestion extends Component {
                       </View>
                     )}
                     {!_.isEmpty(listSubjects) && (
-                      <View style={{ marginTop: 14 }}>
+                      <View style={{ marginTop: 8 }}>
                         <Text
                           style={[
                             styles.txtTitleGrade,
@@ -743,7 +763,7 @@ class ConfigQuestion extends Component {
                     }}>
                     <Text
                       style={[
-                        { color: '#FFF', fontSize: RFFonsize(12), fontFamily: 'Nunito-Bold' },
+                        { color: '#FFF', fontSize: RFFonsize(14), fontFamily: 'Nunito-Bold', marginTop: 4, marginBottom: -3 },
                         errors.name && { color: '#EB5757' },
                       ]}>
                       Nhập tên bài kiểm tra
@@ -905,7 +925,7 @@ class ConfigQuestion extends Component {
                     height: 60,
                   }}>
                   <TouchableOpacity
-                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    style={{ flexDirection: 'row', alignItems: 'center', }}
                     onPress={this.deleteQuestion}>
                     <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
                     <MaterialCommunityIcons
@@ -1122,6 +1142,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     saveGrades: listGrades => dispatch(setListGrades(listGrades)),
+    needUpdate: (payload) => dispatch(updateExamListAction(payload)),
   }
 }
 export default connect(
@@ -1161,6 +1182,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     color: '#FFF',
+    marginTop: 5,
+    marginBottom: 3
   },
   rightHeader: {
     alignItems: 'center',
@@ -1270,16 +1293,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
-    paddingHorizontal: 5,
+    marginRight: 5,
     paddingVertical: 3,
+    paddingHorizontal: 5,
   },
   txtTitleGrade: {
     color: '#FFFEFE',
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(12),
-    marginLeft: 5,
+    marginBottom: -3,
     marginRight: 15,
+    marginTop: 4
   },
   txtItem: {
     fontFamily: 'Nunito-Regular',

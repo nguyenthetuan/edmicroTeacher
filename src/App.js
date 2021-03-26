@@ -19,8 +19,8 @@ import firestore from '@react-native-firebase/firestore';
 import { APP_VERSION_CODE } from './constants/buildConfig';
 import AsyncStorage from '@react-native-community/async-storage';
 
-let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
-
+// let codePushOptions = codePush({ updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE });
+// let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 // enableScreens(); // crash webview back
 
 class App extends Component {
@@ -169,6 +169,15 @@ class App extends Component {
 
 sagaMiddleware.run(rootSaga);
 
-const MyApp = codePush(codePushOptions)(App);
+const MyApp = codePush({
+  updateDialog: {
+    title: 'Cập nhật bản mới',
+    optionalUpdateMessage: 'Đã có bản cập nhật mới. Bạn có muốn cập nhật ngay bây giờ?',
+    optionalInstallButtonLabel: 'Cập nhật',
+    optionalIgnoreButtonLabel: 'Bỏ qua'
+  },
+  installMode: codePush.InstallMode.IMMEDIATE,
+  checkFrequency: codePush.CheckFrequency.ON_APP_START
+})(App);
 
 export default MyApp;

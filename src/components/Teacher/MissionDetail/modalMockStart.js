@@ -17,6 +17,7 @@ import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 import ItemInfo from '../../modals/ItemInfo';
+import shadowStyle from '../../../themes/shadowStyle';
 export default class ModalMockExamStart extends Component {
   constructor(props) {
     super(props);
@@ -72,6 +73,7 @@ export default class ModalMockExamStart extends Component {
 
   render() {
     const { visible, data, isLoading } = this.state;
+    const { shadowBtn } = shadowStyle;
     return (
       <Modal visible={visible} transparent={true}>
         <TouchableWithoutFeedback
@@ -112,7 +114,7 @@ export default class ModalMockExamStart extends Component {
                     <View style={styles.wrapTime}>
                       <TouchableOpacity
                         onPress={() => this._startMockExam()}
-                        style={styles.btnStart}>
+                        style={[styles.btnStart, { ...shadowBtn }]}>
                         <Text style={styles.txtButon}>
                           {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
                           Làm thử
@@ -120,7 +122,7 @@ export default class ModalMockExamStart extends Component {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => this.setState({ visible: false })}
-                        style={styles.btnBack}>
+                        style={[styles.btnBack, { ...shadowBtn }]}>
                         <Text style={styles.txtButon}>Quay lại</Text>
                       </TouchableOpacity>
                     </View>

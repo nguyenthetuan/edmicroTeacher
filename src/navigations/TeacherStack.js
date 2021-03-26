@@ -38,6 +38,7 @@ import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
 import StatisticScreen from '../components/statistics/StatisticScreen';
 import EditConfig from '../components/Teacher/Papers/EditConfig';
 import SchoolResultPDF from '../components/Teacher/Homework/homework-result/SchoolResultPDF';
+import SearchScreen from '../components/common-new/SearchScreen';
 import { Platform } from 'react-native';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -182,6 +183,10 @@ const TeacherStack = createStackNavigator({
   },
   EditConfig: {
     screen: EditConfig,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  SearchScreen: {
+    screen: SearchScreen,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   // WebViews:{

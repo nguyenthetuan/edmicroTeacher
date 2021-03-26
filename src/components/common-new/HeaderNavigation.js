@@ -35,7 +35,7 @@ export default class HeaderNavigation extends React.Component {
             title,
             color,
             backgroundColor,
-            isShow = true, 
+            isShow = true,
             data
         } = this.props;
         return (
@@ -60,8 +60,8 @@ export default class HeaderNavigation extends React.Component {
                 </View>
                 {actionIcon ?
                     <TouchableOpacity
-                        onPress={this.navigateUser}
-                        style={styles.btnAvatar}>
+                        onPress={this.props.iconAction || this.navigateUser}
+                        style={[styles.btnAvatar, { backgroundColor: this.props.actionColor || 'transparent' }]}>
                         <Image
                             source={actionIcon}
                             style={[styles.imgAvatar,
