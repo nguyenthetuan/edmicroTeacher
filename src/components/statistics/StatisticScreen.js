@@ -139,7 +139,12 @@ class StatisticScreen extends Component {
                                         style={{ backgroundColor: 'transparent' }}
                                     />
                                 </View>
-                                <Text style={[styles.status, { color: '#000' }]}>Số học sinh đang truy cập</Text>
+                                <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                    <Text style={[styles.txtOnline, { color: '#000' }]}>Số học sinh đang truy cập:</Text>
+                                    <Text style={styles.txtCount}>
+                                        {listClass.totalStudentOnline}/{listClass.totalStudent}
+                                    </Text>
+                                </View>
                                 <View style={styles.progressBar}>
                                     <ProgressBar
                                         progress={listClass.totalStudentOnline
@@ -149,6 +154,7 @@ class StatisticScreen extends Component {
                                         color="#56BB73"
                                         widthProps={width - 125}
                                         progressUnfilledColor="#BDBDBD"
+                                        style={{ height: 5, borderRadius: 10 }}
                                     />
                                     <Text style={styles.rateSub}>
                                         {listClass.totalStudentOnline ?
@@ -209,13 +215,13 @@ class StatisticScreen extends Component {
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
+                                            style={{ height: 5, borderRadius: 10 }}
                                         />
                                         <Text style={styles.rateSub}>
                                             {mission.totalMissionAssign ?
                                                 Math.ceil((mission.totalMissionAssign / mission.totalMission) * 100)
                                                 : 0
                                             }%
-
                                         </Text>
                                     </View>
                                 </View>
@@ -250,7 +256,7 @@ class StatisticScreen extends Component {
                                         </View>
                                         <View style={styles.countRight}>
                                             <View style={[styles.flexIcon, { paddingRight: 26, justifyContent: 'space-between', width: '90%' }]}>
-                                                <Text style={styles.numberBig}>{assignment.totalAssignment}</Text>
+                                                <Text style={styles.numberBig}>{assignment.totalAssign}</Text>
                                                 <Text numberOfLines={1}
                                                     style={styles.mission}>Bài tập</Text>
                                             </View>
@@ -270,10 +276,11 @@ class StatisticScreen extends Component {
                                             color="#56BB73"
                                             widthProps={width - 125}
                                             progressUnfilledColor="#BDBDBD"
+                                            style={{ height: 5, borderRadius: 10 }}
                                         />
                                         <Text style={styles.rateSub}>
-                                            {assignment.totalAssignment ?
-                                                Math.floor((assignment.totalAssignment / assignment.totalAssignment) * 100)
+                                            {assignment.totalAssign ?
+                                                Math.ceil((assignment.totalAssign / assignment.totalAssignment) * 100)
                                                 : 0
                                             }%
                                          </Text>
@@ -320,6 +327,13 @@ const styles = StyleSheet.create({
         marginLeft: 27,
         marginTop: 8,
         marginRight: 10
+    },
+    txtOnline: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
+        color: '#2D9CDB',
+        marginLeft: 27
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
@@ -419,6 +433,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         position: 'absolute',
         right: 20
+    },
+    txtCount: {
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#359CDB',
+        fontFamily: 'Nunito-Bold',
+        alignSelf: 'center',
+        marginLeft: 5
     },
     shadow: {
         shadowColor: "#000",
