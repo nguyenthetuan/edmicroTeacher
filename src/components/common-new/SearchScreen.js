@@ -615,7 +615,7 @@ class SearchScreen extends React.Component {
                         value={textSearch}
                         onChange={this.onChangeText}
                         onSearchClear={this.onSearchClear}
-                        customSearchInputStyle={{ paddingRight: 35 }}
+                        customSearchInputStyle={styles.txtPlace}
                     />
                 </View>
                 <AnimatedFlatList
@@ -719,6 +719,17 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
         textAlign: 'center',
+    },
+    txtPlace: {
+        paddingRight: 35,
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(20),
+        fontWeight: '400',
+        letterSpacing: 0.5,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        borderRadius: 12,
+        paddingLeft: 32
     }
 });
 

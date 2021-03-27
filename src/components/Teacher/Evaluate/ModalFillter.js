@@ -14,7 +14,7 @@ import AppIcon from '../../../utils/AppIcon';
 import { DATA_YEAR } from '../../../constants/const';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import shadowStyle from '../../../themes/shadowStyle';
 export default class ModalFillter extends Component {
 
   state = {
@@ -44,6 +44,7 @@ export default class ModalFillter extends Component {
   };
 
   render() {
+    const { shadowBtn } = shadowStyle;
     const { payload } = this.props;
     const {
       yearIndex,
@@ -94,7 +95,7 @@ export default class ModalFillter extends Component {
               indexSelected={testIndex}
             />
 
-            <TouchableOpacity style={styles.btnViewStatistic} onPress={this.changeStateModale}>
+            <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.changeStateModale}>
               <Text style={styles.txtBtn}>Xem thống kê</Text>
               {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
             </TouchableOpacity>

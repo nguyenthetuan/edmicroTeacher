@@ -159,7 +159,7 @@ class ItemClass extends Component {
                             onPress={this.showDatePicker}
                             style={styles.btnDate}>
                             <Text numberOfLines={1} style={styles.txtContentItem}>
-                                {moment(timeEnd).format('DD-MM-YYYY, hh:mm')}
+                                {moment(timeEnd).format('DD-MM-YYYY, hh:mm A')}
                             </Text>
                         </TouchableOpacity>
                         {/* <DropdownStudent

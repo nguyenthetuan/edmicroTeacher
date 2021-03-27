@@ -131,7 +131,7 @@ export default class MissionScreen extends Component {
         value={textSearch}
         onChange={this.onChangeText}
         onSearchClear={this.onSearchClear}
-        customSearchInputStyle={{ paddingRight: 35 }}
+        customSearchInputStyle={styles.txtPlace}
       />
     );
   };
@@ -248,4 +248,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 100,
   },
+  txtPlace: {
+    paddingRight: 35,
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20),
+    fontWeight: '400',
+    letterSpacing: 0.5,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 12,
+    paddingLeft: 32
+  }
 });
