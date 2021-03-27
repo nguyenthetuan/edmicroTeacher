@@ -148,7 +148,7 @@ class Papers extends Component {
         'Thông báo',
         'Xóa bài thành công!',
         [
-          { text: 'OK'}
+          { text: 'OK' }
         ],
         { cancelable: false }
       );
@@ -612,18 +612,27 @@ class Papers extends Component {
     const { listPapers } = this.state;
     switch (index) {
       case 0: {
+        try {
+          this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+        }
         await this.setState({ typeChange: 0 });
-
         break;
       }
       case 1: {
+        try {
+          this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+        }
         await this.setState({ typeChange: 1 })
-
         break;
       }
       case 2: {
+        try {
+          this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+        }
         await this.setState({ typeChange: 2 })
-
         break;
       }
       default: break;
