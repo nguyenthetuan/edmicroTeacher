@@ -55,7 +55,7 @@ export default class Item extends Component {
                     <View
                         style={[
                             styles.topTest,
-                            { backgroundColor: Common.getBackroundSubject(subjectCode) },
+                            { backgroundColor: item.status === 4 ? "#fcd362" : '#f79940' },
                         ]}>
                         <Text numberOfLines={1}
                             style={styles.txtName}>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     },
     itemTest: {
         borderRadius: 4,
-        borderWidth: 1,
+        borderWidth: 0.5,
         overflow: 'hidden',
         marginTop: 16
     },
