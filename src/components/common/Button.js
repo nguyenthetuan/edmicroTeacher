@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import RippleButton from '../libs/RippleButton';
 import themes from '../../themes/themeStyle';
+import shadowStyle from '../../themes/shadowStyle';
 
 export default class Button extends Component {
     getStyle = () => {
@@ -50,6 +51,7 @@ export default class Button extends Component {
     }
 
     render() {
+        const { shadowBtn } = shadowStyle;
         return (
             <RippleButton
                 onPress={() => this.props.onPress()}
@@ -58,7 +60,7 @@ export default class Button extends Component {
                 radius={this.props.radius}
                 disabled={this.props.disabled}
                 style={[
-                    this.getStyle(),
+                    this.getStyle(), { ...shadowBtn },
                     { width: this.props.width, borderRadius: this.props.circle && 20 },
                     { alignSelf: this.props.center && 'center', marginVertical: this.props.vertical || 0 },
                     { ...this.props.style },
