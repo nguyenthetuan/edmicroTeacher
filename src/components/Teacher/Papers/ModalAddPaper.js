@@ -47,37 +47,53 @@ export default class ModalAddPaper extends PureComponent {
                             />
                         </View>
                         <View style={styles.bodyModal}>
-                            <View style={styles.buttomMoadal}>
-                                <RippleButton onPress={this.props.onPress}>
-                                    <View style={styles.buttomMoadal}>
-                                        <Image
-                                            source={require('../../../asserts/icon/cloud.png')}
-                                        />
-                                        <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
-                                    </View>
-                                </RippleButton>
-                            </View>
+                            {/* <View style={styles.flexOption}> */}
+                            <RippleButton onPress={this.props.onPress}>
+                                <View style={styles.columnAdd}>
+                                    <Image
+                                        source={require('../../../asserts/icon/cloud.png')}
+                                    />
+                                    <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
+                                </View>
+                            </RippleButton>
+                            <RippleButton onPress={this.props.onPressCopy}>
+                                <View style={styles.columnAdd}>
+                                    <Image
+                                        source={require('../../../asserts/icon/icon-saochepbode.png')}
+                                    />
+                                    <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
+                                </View>
+                            </RippleButton>
+                            {/* </View> */}
 
-                            <View style={styles.buttomMoadal}>
-                                <RippleButton onPress={this.props.onPressCopy}>
-                                    <View style={styles.buttomMoadal}>
-                                        <Image
-                                            source={require('../../../asserts/icon/icon-saochepbode.png')}
-                                        />
-                                        <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
-                                    </View>
-                                </RippleButton>
-                            </View>
-                            <View style={styles.buttomMoadal}>
+                            <RippleButton onPress={this.props.onPressUploadPDF}>
+                                <View style={styles.columnAdd}>
+                                    <Image
+                                        source={require('../../../asserts/icon/dowload.png')}
+                                    />
+                                    <Text style={styles.txtUpload}>Upload file .PDF</Text>
+                                </View>
+                            </RippleButton>
+
+                            {/* <View style={styles.flexOption}>
                                 <RippleButton onPress={this.props.onPressUploadPDF}>
-                                    <View style={styles.buttomMoadal}>
+                                    <View style={styles.columnAdd}>
                                         <Image
                                             source={require('../../../asserts/icon/dowload.png')}
                                         />
                                         <Text style={styles.txtUpload}>Upload file .PDF</Text>
                                     </View>
                                 </RippleButton>
-                            </View>
+                                <RippleButton onPress={this.props.onPressCamera}>
+                                    <View style={styles.columnAdd}>
+                                        <Image
+                                            source={require('../../../asserts/icon/icon_paperPlane.png')}
+                                            style={{ tintColor: '#2D9CDB' }}
+                                        />
+                                        <Text style={styles.txtUpload}>Tạo bộ đề chấm điểm camera</Text>
+                                    </View>
+                                </RippleButton>
+                            </View> */}
                         </View>
                     </View>
                 </View>
@@ -113,8 +129,12 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
     },
     buttomMoadal: {
+        flex: 1
+    },
+    columnAdd: {
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 10
     },
     topModal: {
         backgroundColor: '#7E96EC',
@@ -141,6 +161,7 @@ const styles = StyleSheet.create({
     txtUpload: {
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(14),
         color: '#828282',
         marginTop: 8,
     },
@@ -154,4 +175,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
     },
+    flexOption: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    }
 });

@@ -39,6 +39,7 @@ import StatisticScreen from '../components/statistics/StatisticScreen';
 import EditConfig from '../components/Teacher/Papers/EditConfig';
 import SchoolResultPDF from '../components/Teacher/Homework/homework-result/SchoolResultPDF';
 import SearchScreen from '../components/common-new/SearchScreen';
+import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import { Platform } from 'react-native';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -99,6 +100,10 @@ const TeacherStack = createStackNavigator({
   },
   UploadPDF: {
     screen: UploadPDF,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MarkCamera: {
+    screen: MarkCamera,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   FullViewPDFAssessment: {
