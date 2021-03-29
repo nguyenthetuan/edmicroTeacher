@@ -47,7 +47,7 @@ export default class Item extends Component {
             <View
                 style={[
                     styles.itemTest,
-                    { borderColor: Common.getBackroundSubject(subjectCode) },
+                    { borderColor: item.status === 4 ? "#56CCF2" : '#33CBCB' },
                 ]}
                 onPress={this._handleClickDetail(payloadAssignment)}>
                 <TouchableOpacity
@@ -55,7 +55,7 @@ export default class Item extends Component {
                     <View
                         style={[
                             styles.topTest,
-                            { backgroundColor: item.status === 4 ? "#fcd362" : '#f79940' },
+                            { backgroundColor: item.status === 4 ? "#56CCF2" : '#33CBCB' },
                         ]}>
                         <Text numberOfLines={1}
                             style={styles.txtName}>

@@ -56,7 +56,7 @@ export default class ItemMission extends Component {
     return (
       <TouchableOpacity
         style={[styles.contain, {
-          borderColor: Common.getBackroundSubject(data.subjectCode),
+          borderColor: data.status === modelStatus.unDelivered ? '#2D9CDB' : '#C4C4C4',
         }]}
         onPress={this.goToMissionDetail}
       >
