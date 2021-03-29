@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import RippleButton from '../libs/RippleButton';
 import themes from '../../themes/themeStyle';
 import shadowStyle from '../../themes/shadowStyle';
-
 export default class Button extends Component {
     getStyle = () => {
         const { btn } = this.props;
@@ -63,7 +62,7 @@ export default class Button extends Component {
                     this.getStyle(), { ...shadowBtn },
                     { width: this.props.width, borderRadius: this.props.circle && 20 },
                     { alignSelf: this.props.center && 'center', marginVertical: this.props.vertical || 0 },
-                    { ...this.props.style },
+                    { ...this.props.style }, { ...shadowBtn }
                 ]}>
                 <Text style={[this.getTextStyle(), this.props.styleTitle]}>{this.props.title}</Text>
             </RippleButton>

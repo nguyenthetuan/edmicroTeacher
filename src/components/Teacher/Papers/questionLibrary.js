@@ -819,7 +819,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 20,
-    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 12) : 15,
+    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 15) : 15,
     zIndex: 2,
   },
   textCreateAssessment: {

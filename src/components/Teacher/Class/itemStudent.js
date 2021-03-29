@@ -99,6 +99,7 @@ export default class ItemStudent extends React.Component {
                     color="#56BB73"
                     widthProps={width - 200}
                     progressUnfilledColor="#E0E0E0"
+                    style={{ height: 5, borderRadius: 5 }}
                   />
                   <Text numberOfLines={1}
                     style={styles.countToDo}>{item.totalDoing}/{item.totalAssign} bài</Text>
@@ -148,19 +149,17 @@ const styles = StyleSheet.create({
   flextime: {
     flexDirection: "row",
     marginTop: 5
-    // justifyContent: "space-between",
-    // marginRight:170
   },
   marProcess: {
     marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
-    width: width * 0.25,
+    flex: 1
   },
   countToDo: {
     fontFamily: "Nunito",
     fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     color: '#2D9CDB',
     alignItems: 'center',
     paddingLeft: 10,

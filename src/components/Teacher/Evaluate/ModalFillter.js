@@ -14,9 +14,10 @@ import AppIcon from '../../../utils/AppIcon';
 import { DATA_YEAR } from '../../../constants/const';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RFFonsize } from '../../../utils/Fonts';
+import shadowStyle from '../../../themes/shadowStyle';
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 
 export default class ModalFillter extends Component {
-
   state = {
     isShowModal: false
   }
@@ -44,6 +45,7 @@ export default class ModalFillter extends Component {
   };
 
   render() {
+    const { shadowBtn } = shadowStyle;
     const { payload } = this.props;
     const {
       yearIndex,
@@ -62,7 +64,7 @@ export default class ModalFillter extends Component {
       >
         <TouchableWithoutFeedback onPressOut={this.changeStateModale}>
           <View style={styles.contain}>
-            <View style={styles.wrapBtn}>
+            {/* <View style={styles.wrapBtn}>
               <TouchableOpacity onPress={this.changeStateModale} style={styles.wrapClose}>
                 <Image
                   source={AppIcon.close_img}
@@ -71,7 +73,13 @@ export default class ModalFillter extends Component {
                 />
               </TouchableOpacity>
             </View>
-            <Text style={styles.txtHeader}>Tuỳ chọn</Text>
+            <Text style={styles.txtHeader}>Tuỳ chọn</Text> */}
+            <HeaderNavigation
+              title={'Tuỳ chọn'}
+              onRightAction={this.changeStateModale}
+              actionIcon={AppIcon.close_img}
+              isShow={false}
+            />
             <Dropdown
               title="Năm học"
               data={DATA_YEAR}
@@ -94,7 +102,7 @@ export default class ModalFillter extends Component {
               indexSelected={testIndex}
             />
 
-            <TouchableOpacity style={styles.btnViewStatistic} onPress={this.changeStateModale}>
+            <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.changeStateModale}>
               <Text style={styles.txtBtn}>Xem thống kê</Text>
               {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
             </TouchableOpacity>

@@ -51,7 +51,7 @@ export default class ItemMission extends Component {
   }
   render() {
     const { data } = this.props;
-    const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm')
+    const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm A')
     const { colors } = this.state;
     return (
       <TouchableOpacity

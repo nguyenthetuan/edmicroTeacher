@@ -340,7 +340,6 @@ export default class UpdatePhoneScreen extends Component {
   }
 
   render() {
-
     const {
       phoneNumber,
       isShowKeybroad,
