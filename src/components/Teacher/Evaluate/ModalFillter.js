@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Modal,
   StyleSheet,
-  Image,
-  TouchableWithoutFeedback,
+  Dimensions,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 import Dropdown from '../../../utils/Dropdown';
 import AppIcon from '../../../utils/AppIcon';
 import { DATA_YEAR } from '../../../constants/const';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
-
+// import Modal from 'react-native-modal';
+import Modal from '../../../utils/Modal';
+const { height, width } = Dimensions.get('window');
 export default class ModalFillter extends Component {
   state = {
     isShowModal: false
@@ -58,56 +58,41 @@ export default class ModalFillter extends Component {
     return (
       <Modal
         visible={isShowModal}
-        animationType={'slide'}
-        transparent={false}
-        presentationStyle={'formSheet'}
+        closeModal={this.changeStateModale}
       >
-        <TouchableWithoutFeedback onPressOut={this.changeStateModale}>
-          <View style={styles.contain}>
-            {/* <View style={styles.wrapBtn}>
-              <TouchableOpacity onPress={this.changeStateModale} style={styles.wrapClose}>
-                <Image
-                  source={AppIcon.close_img}
-                  resizeMode={'stretch'}
-                  style={styles.styClose}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.txtHeader}>Tuỳ chọn</Text> */}
-            <HeaderNavigation
-              title={'Tuỳ chọn'}
-              onRightAction={this.changeStateModale}
-              actionIcon={AppIcon.close_img}
-              isShow={false}
-            />
-            <Dropdown
-              title="Năm học"
-              data={DATA_YEAR}
-              contentStyle={styles.contentStyle}
-              onPressItem={this._selectYear}
-              indexSelected={yearIndex}
-            />
-            <Dropdown
-              title="Lớp học"
-              data={classSubject}
-              contentStyle={styles.contentStyle}
-              onPressItem={this._selectClass}
-              indexSelected={classSubjectIndex}
-            />
-            <Dropdown
-              title="Bài thi"
-              data={tests}
-              onPressItem={this._selectTest}
-              contentStyle={styles.contentStyle}
-              indexSelected={testIndex}
-            />
+        <View style={styles.contain}>
+          <HeaderNavigation
+            title={'Tuỳ chọn'}
+            onRightAction={this.changeStateModale}
+            actionIcon={AppIcon.close_img}
+            isShow={false}
+          />
+          <Dropdown
+            title="Năm học"
+            data={DATA_YEAR}
+            contentStyle={styles.contentStyle}
+            onPressItem={this._selectYear}
+            indexSelected={yearIndex}
+          />
+          <Dropdown
+            title="Lớp học"
+            data={classSubject}
+            contentStyle={styles.contentStyle}
+            onPressItem={this._selectClass}
+            indexSelected={classSubjectIndex}
+          />
+          <Dropdown
+            title="Bài thi"
+            data={tests}
+            onPressItem={this._selectTest}
+            contentStyle={styles.contentStyle}
+            indexSelected={testIndex}
+          />
 
-            <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.changeStateModale}>
-              <Text style={styles.txtBtn}>Xem thống kê</Text>
-              {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
-            </TouchableOpacity>
-          </View>
-        </TouchableWithoutFeedback>
+          <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.changeStateModale}>
+            <Text style={styles.txtBtn}>Xem thống kê</Text>
+          </TouchableOpacity>
+        </View>
       </Modal>
     );
   }
@@ -115,9 +100,11 @@ export default class ModalFillter extends Component {
 
 const styles = StyleSheet.create({
   contain: {
-    flex: 1,
     backgroundColor: '#E8F6FF',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: height - 50,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   },
   txtHeader: {
     fontFamily: 'Nunito-Bold',

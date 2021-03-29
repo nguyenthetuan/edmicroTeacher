@@ -3,20 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  Modal,
   SafeAreaView,
   TouchableOpacity,
   Dimensions,
-  Image,
-  TouchableWithoutFeedback,
   StatusBar,
-  Platform
 } from 'react-native';
 import Dropdown from './Dropdown';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import AppIcon from '../../../utils/AppIcon';
 import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { RFFonsize } from '../../../utils/Fonts';
+import Modal from '../../../utils/Modal';
 import shadowStyle from '../../../themes/shadowStyle';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 const { width } = Dimensions.get('window');
@@ -31,9 +27,9 @@ export default class ModalFillter extends Component {
   changeStateModale = () => {
     const { isShowModal } = this.state;
     if (!isShowModal) {
-      StatusBar.setBarStyle('dark-content');
-    } else {
       StatusBar.setBarStyle('light-content');
+    } else {
+      StatusBar.setBarStyle('dark-content');
     }
     this.setState({ isShowModal: !isShowModal });
   }
@@ -59,15 +55,12 @@ export default class ModalFillter extends Component {
     } = this.props;
     const { isShowModal } = this.state;
     return (
-      <Modal transparent={false} visible={isShowModal} tintColor='#000'>
+      <Modal
+        visible={isShowModal}
+        closeModal={this.changeStateModale}
+      >
         <SafeAreaView style={{ backgroundColor: '#E8F6FF' }} />
         <View style={styles.contain}>
-          {/* <View style={styles.headerNav}>
-            <Text style={styles.styTitle}>Tuỳ chọn</Text>
-            <TouchableOpacity style={styles.styBtnClose} onPress={this.changeStateModale}>
-              <Image source={AppIcon.close_img} resizeMode={'contain'} style={styles.imgClose} />
-            </TouchableOpacity>
-          </View> */}
           <HeaderNavigation
             title={'Tuỳ chọn'}
             onRightAction={this.changeStateModale}
@@ -109,7 +102,6 @@ export default class ModalFillter extends Component {
 
           <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.handleStatistic}>
             <Text style={styles.txtBtn}>Xem thống kê</Text>
-            {/* <Icon name='angle-right' size={20} color={'#FFF'} /> */}
           </TouchableOpacity>
         </View>
       </Modal >
