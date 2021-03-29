@@ -34,6 +34,7 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import RippleButton from '../../common-new/RippleButton';
+import { AssignmentContentType } from '../../../models';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -464,10 +465,17 @@ class Papers extends Component {
         break;
       case 7:
         this.setState({ visibleEdit: false });
-        this.props.navigation.navigate('MarkingView', {
-          item: dataSelected,
-          statusbar: 'light-content',
-        });
+        if(dataSelected.assignmentContentType == AssignmentContentType.camera){
+          this.props.navigation.navigate('MarkingWeb', {
+            item: dataSelected,
+            statusbar: 'dark-content',
+          });
+        }else{
+          this.props.navigation.navigate('MarkingView', {
+            item: dataSelected,
+            statusbar: 'light-content',
+          });
+        }
         break;
 
       default:
@@ -476,6 +484,7 @@ class Papers extends Component {
   };
 
   _onOpenModal = item => (payloadAssignment, visibleEdit = true) => {
+    console.log(item);
     this.setState(
       {
         visibleEdit,

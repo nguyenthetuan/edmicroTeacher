@@ -32,6 +32,9 @@
 		80B25111438C4D6A90D521D4 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */; };
 		82387D40B41E4BEAAD0B723D /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FFC042CFE143D39DE3DEF5 /* Nunito-Italic.ttf */; };
 		840D737D25107E270007BEA0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840D737C25107E270007BEA0 /* GoogleService-Info.plist */; };
+		842DA814260F1B03007885CF /* fabric.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 842DA813260F1B03007885CF /* fabric.min.js */; };
+		842DA81B260F1F93007885CF /* s.png in Resources */ = {isa = PBXBuildFile; fileRef = 842DA819260F1F92007885CF /* s.png */; };
+		842DA81C260F1F93007885CF /* d.png in Resources */ = {isa = PBXBuildFile; fileRef = 842DA81A260F1F92007885CF /* d.png */; };
 		845F29DB252D7DEB009FB28A /* teacher.png in Resources */ = {isa = PBXBuildFile; fileRef = 845F29DA252D7DEA009FB28A /* teacher.png */; };
 		848BB3F4250CC7C800511F44 /* jqueryfastclick.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E5250CC7C600511F44 /* jqueryfastclick.js */; };
 		848BB3F5250CC7C800511F44 /* fontawesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E6250CC7C600511F44 /* fontawesome.min.css */; };
@@ -119,6 +122,9 @@
 		77F35146CDAF4412B7D12D14 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBold.ttf"; path = "../src/asserts/fonts/Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
 		8327978F2FCFA5E94AACFD64 /* Pods-school-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-school-tvOS/Pods-school-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		840D737C25107E270007BEA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		842DA813260F1B03007885CF /* fabric.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = fabric.min.js; sourceTree = "<group>"; };
+		842DA819260F1F92007885CF /* s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s.png; sourceTree = "<group>"; };
+		842DA81A260F1F92007885CF /* d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = d.png; sourceTree = "<group>"; };
 		845F29DA252D7DEA009FB28A /* teacher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teacher.png; sourceTree = "<group>"; };
 		848BB3E3250CBC0D00511F44 /* school.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = school.entitlements; path = school/school.entitlements; sourceTree = "<group>"; };
 		848BB3E5250CC7C600511F44 /* jqueryfastclick.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jqueryfastclick.js; sourceTree = "<group>"; };
@@ -346,7 +352,10 @@
 				848BB3EC250CC7C700511F44 /* fontAsome.css */,
 				848BB3E6250CC7C600511F44 /* fontawesome.min.css */,
 				848BB3F3250CC7C700511F44 /* jquery-pull-touch.js */,
+				842DA813260F1B03007885CF /* fabric.min.js */,
 				848BB3E8250CC7C700511F44 /* jquery-ui.min.js */,
+				842DA81A260F1F92007885CF /* d.png */,
+				842DA819260F1F92007885CF /* s.png */,
 				848BB3EF250CC7C700511F44 /* jquery.fireworks.js */,
 				840D737C25107E270007BEA0 /* GoogleService-Info.plist */,
 				848BB3F1250CC7C700511F44 /* jquery.min.js */,
@@ -538,6 +547,7 @@
 				B0B7F8DFE502416799A1C042 /* Nunito-BlackItalic.ttf in Resources */,
 				848BB3FB250CC7C800511F44 /* fontAsome.css in Resources */,
 				391006C8250F52CF008FF5D5 /* logo_spl.png in Resources */,
+				842DA814260F1B03007885CF /* fabric.min.js in Resources */,
 				DCB05DF0FC3E4738A24A1A1D /* Nunito-Bold.ttf in Resources */,
 				391006C6250F52CF008FF5D5 /* logo_spl@3x.png in Resources */,
 				024F7A869AE64A0FAC3F971F /* Nunito-BoldItalic.ttf in Resources */,
@@ -550,6 +560,7 @@
 				35A6FE187D7448E6A233A6DB /* Nunito-ExtraLight.ttf in Resources */,
 				848BB3F6250CC7C800511F44 /* fastclick_min.js in Resources */,
 				3D16A5D7A79E4639BC8B2FA4 /* Nunito-ExtraLightItalic.ttf in Resources */,
+				842DA81B260F1F93007885CF /* s.png in Resources */,
 				848BB3F9250CC7C800511F44 /* font47 in Resources */,
 				82387D40B41E4BEAAD0B723D /* Nunito-Italic.ttf in Resources */,
 				848BB3FA250CC7C800511F44 /* bootstrap.min.css in Resources */,
@@ -562,6 +573,7 @@
 				848BB3FF250CC7C800511F44 /* keypad.css in Resources */,
 				E594F73072744727A63AAA64 /* Nunito-Regular.ttf in Resources */,
 				848BB3F4250CC7C800511F44 /* jqueryfastclick.js in Resources */,
+				842DA81C260F1F93007885CF /* d.png in Resources */,
 				80B25111438C4D6A90D521D4 /* Nunito-SemiBold.ttf in Resources */,
 				7AD0B5B6C5444119AA24F601 /* Nunito-SemiBoldItalic.ttf in Resources */,
 			);

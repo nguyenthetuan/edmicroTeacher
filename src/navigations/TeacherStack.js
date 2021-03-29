@@ -8,6 +8,8 @@ import QuestionLibrary from '../components/Teacher/Papers/questionLibrary';
 import ConfigQuestion from '../components/Teacher/Papers/configQuestion';
 import Assignment from '../components/Teacher/Papers/Assignment';
 import MarkingView from '../components/Teacher/Papers/MarkingView';
+import MarkingCamera from '../components/Teacher/MarkingCamera/MarkingCamera';
+import MarkingWebScreen from '../components/Teacher/MarkingWeb/MarkingWebScreen';
 import Homework from '../containers/teacher/homework/MainScreen';
 import MainHomeWork from '../containers/teacher/report/MainScreen';
 import UploadPDF from '../components/Teacher/Papers/UploadPDF';
@@ -87,6 +89,14 @@ const TeacherStack = createStackNavigator({
   },
   MarkingView: {
     screen: MarkingView,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MarkingCamera: {
+    screen: MarkingCamera,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MarkingWeb: {
+    screen: MarkingWebScreen,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   Report: {
