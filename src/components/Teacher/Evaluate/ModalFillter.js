@@ -15,8 +15,9 @@ import { DATA_YEAR } from '../../../constants/const';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
-export default class ModalFillter extends Component {
+import HeaderNavigation from '../../common-new/HeaderNavigation';
 
+export default class ModalFillter extends Component {
   state = {
     isShowModal: false
   }
@@ -63,7 +64,7 @@ export default class ModalFillter extends Component {
       >
         <TouchableWithoutFeedback onPressOut={this.changeStateModale}>
           <View style={styles.contain}>
-            <View style={styles.wrapBtn}>
+            {/* <View style={styles.wrapBtn}>
               <TouchableOpacity onPress={this.changeStateModale} style={styles.wrapClose}>
                 <Image
                   source={AppIcon.close_img}
@@ -72,7 +73,13 @@ export default class ModalFillter extends Component {
                 />
               </TouchableOpacity>
             </View>
-            <Text style={styles.txtHeader}>Tuỳ chọn</Text>
+            <Text style={styles.txtHeader}>Tuỳ chọn</Text> */}
+            <HeaderNavigation
+              title={'Tuỳ chọn'}
+              onRightAction={this.changeStateModale}
+              actionIcon={AppIcon.close_img}
+              isShow={false}
+            />
             <Dropdown
               title="Năm học"
               data={DATA_YEAR}
