@@ -59,7 +59,7 @@ export default class Button extends Component {
                 radius={this.props.radius}
                 disabled={this.props.disabled}
                 style={[
-                    this.getStyle(),
+                    this.getStyle(), { ...shadowBtn },
                     { width: this.props.width, borderRadius: this.props.circle && 20 },
                     { alignSelf: this.props.center && 'center', marginVertical: this.props.vertical || 0 },
                     { ...this.props.style }, { ...shadowBtn }
