@@ -42,14 +42,15 @@ export default InputPrimary = (props) => {
         <View style={[
             styles.containerStyle,
             {
-                borderColor: this.getBorderColor()
+                borderColor: getBorderColor()
             },
             props.containerStyle]}>
             <Text numberOfLines={1} style={[styles.labelStyle,
-            { color: this.getLabelColor() },
-            props.labelStyle]}>{this.getLabel()}</Text>
+            { color: getLabelColor() },
+            props.labelStyle]}>{getLabel()}</Text>
             <TextInput
                 {...props}
+                autoCapitalize='none'
                 value={props.value}
                 placeholderTextColor={'#BDBDBD'}
                 style={[styles.textInput, props.textInputStyle]} />

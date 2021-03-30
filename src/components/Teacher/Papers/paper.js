@@ -74,6 +74,7 @@ class Papers extends Component {
     };
     this._indexPage = 0;
     this._pageSize = 50;
+    Globals.onPressCamera = this.onPressCamera.bind(this);
     Globals.updatePaper = this.refreshData.bind(this);
   }
 
@@ -465,12 +466,12 @@ class Papers extends Component {
         break;
       case 7:
         this.setState({ visibleEdit: false });
-        if(dataSelected.assignmentContentType == AssignmentContentType.camera){
+        if (dataSelected.assignmentContentType == AssignmentContentType.camera) {
           this.props.navigation.navigate('MarkingWeb', {
             item: dataSelected,
             statusbar: 'dark-content',
           });
-        }else{
+        } else {
           this.props.navigation.navigate('MarkingView', {
             item: dataSelected,
             statusbar: 'light-content',
@@ -790,7 +791,7 @@ class Papers extends Component {
           extraData={dataFilter}
           ListEmptyComponent={this._listTestEmpty}
           ListFooterComponent={this._listTestFooter}
-          // ListFooterComponent={<View style={{ height: 280 }} />}
+          ListFooterComponent={<View style={{ height: 300 }} />}
           renderItem={({ item, index }) => {
             return (
               <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
@@ -853,7 +854,7 @@ class Papers extends Component {
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
           onPressUploadPDF={this.onPressUploadPDF}
-          onPressCamera={this.onPressCamera}
+          // onPressCamera={this.onPressCamera}
         />
         <ModalOption
           visibleEdit={visibleEdit}

@@ -53,11 +53,9 @@ export default class MarkingWebScreen extends PureComponent {
                         fcFrame.setAttribute('style', 'display:none !important');
                     }
                 }
-                window.addEventListener("load", function(event) {
-                    timeHeader = setInterval(function() {
-                        initLoad();
-                    }, 500);
-                },false);
+                timeHeader = setInterval(function() {
+                    initLoad();
+                }, 500);
             `;
             this.setState({
                 token: token,
