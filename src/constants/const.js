@@ -29,4 +29,4 @@ export const DATA_YEAR = [
  */
 export const APP_VERSION = Platform.OS == 'ios' ? '1.11' : '1.6';
 
-export const CODE_PUSH_VERSION = 'Update At : 10:00 25/03/2021';
+export const CODE_PUSH_VERSION = 'Update At : 18:00 29/03/2021';

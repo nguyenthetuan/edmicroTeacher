@@ -60,6 +60,7 @@ module.exports = {
   updateDataCompetitionStep: null,
   timeEndInListHomeWork: null,
   permissionViewResult: null,
+  onPressCamera: null,
   updateQuestionMockExam: () => { },
   updateMenuQuestion: () => { },
   nextQuestion: () => { },
