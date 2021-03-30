@@ -73,7 +73,7 @@ class ConfigQuestion extends Component {
       scrollview: true,
       scrollWebview: false,
       totalPoint: 10,
-      webheight: 350,
+      webheight: 500,
       isExplain: false,
       isModal: false,
       isLoadingModal: false,
@@ -119,7 +119,7 @@ class ConfigQuestion extends Component {
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
-      this.setState({ webheight: parseInt(event.nativeEvent.data) + 40 });
+      this.setState({ webheight: parseInt(event.nativeEvent.data) + 200 });
     }
     if (data[0] === 'matariaDetail') {
       this.getDetailMatarial();
