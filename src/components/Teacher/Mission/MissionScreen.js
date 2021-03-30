@@ -131,7 +131,8 @@ export default class MissionScreen extends Component {
         value={textSearch}
         onChange={this.onChangeText}
         onSearchClear={this.onSearchClear}
-        customSearchInputStyle={{ paddingRight: 35 }}
+        customSearchInputStyle={styles.textSear}
+        customCancelTextStyle={styles.txtCan}
       />
     );
   };
@@ -248,4 +249,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 100,
   },
+  txtCan: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20)
+  },
+  textSear: {
+    paddingRight: 35,
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(16)
+  }
 });

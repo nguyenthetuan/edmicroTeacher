@@ -34,6 +34,7 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import RippleButton from '../../common-new/RippleButton';
+import { AssignmentContentType } from '../../../models';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -148,7 +149,7 @@ class Papers extends Component {
         'Thông báo',
         'Xóa bài thành công!',
         [
-          { text: 'OK'}
+          { text: 'OK' }
         ],
         { cancelable: false }
       );
@@ -464,10 +465,17 @@ class Papers extends Component {
         break;
       case 7:
         this.setState({ visibleEdit: false });
-        this.props.navigation.navigate('MarkingView', {
-          item: dataSelected,
-          statusbar: 'light-content',
-        });
+        if(dataSelected.assignmentContentType == AssignmentContentType.camera){
+          this.props.navigation.navigate('MarkingWeb', {
+            item: dataSelected,
+            statusbar: 'dark-content',
+          });
+        }else{
+          this.props.navigation.navigate('MarkingView', {
+            item: dataSelected,
+            statusbar: 'light-content',
+          });
+        }
         break;
 
       default:
@@ -476,6 +484,7 @@ class Papers extends Component {
   };
 
   _onOpenModal = item => (payloadAssignment, visibleEdit = true) => {
+    console.log(item);
     this.setState(
       {
         visibleEdit,
@@ -527,6 +536,17 @@ class Papers extends Component {
     );
   };
 
+  onPressCamera = () => {
+    const { listGrades, listSubjects } = this.state;
+    this.setState({ visibleModalAdd: false }, () =>
+      this.props.navigation.navigate('MarkCamera', {
+        nagigation: this.props.nagigation,
+        listGrades,
+        listSubjects,
+        statusbar: 'dark-content',
+      }),
+    );
+  }
   onPressCopy = () => {
     const { listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
@@ -612,18 +632,27 @@ class Papers extends Component {
     const { listPapers } = this.state;
     switch (index) {
       case 0: {
+        try {
+          this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+        }
         await this.setState({ typeChange: 0 });
-
         break;
       }
       case 1: {
+        try {
+          this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+        }
         await this.setState({ typeChange: 1 })
-
         break;
       }
       case 2: {
+        try {
+          this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+        } catch (error) {
+        }
         await this.setState({ typeChange: 2 })
-
         break;
       }
       default: break;
@@ -678,7 +707,8 @@ class Papers extends Component {
         </RippleButton>
         <RippleButton
           onPress={() => { this.onPressChangeType(1) }}
-          style={typeChange === 1 ? styles.buttonActive : styles.buttonNotActive}
+          style={typeChange === 1 ? [styles.buttonActive,
+          { backgroundColor: '#56CCF2', borderColor: '#56CCF2' }] : styles.buttonNotActive}
         >
           <Text
             style={typeChange === 1 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
@@ -687,7 +717,8 @@ class Papers extends Component {
         </RippleButton>
         <RippleButton
           onPress={() => { this.onPressChangeType(2) }}
-          style={typeChange === 2 ? styles.buttonActive : styles.buttonNotActive}>
+          style={typeChange === 2 ? [styles.buttonActive,
+          { backgroundColor: '#33CBCB', borderColor: '#33CBCB' }] : styles.buttonNotActive}>
           <Text
             style={typeChange === 2 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
             Chưa giao
@@ -822,6 +853,7 @@ class Papers extends Component {
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
           onPressUploadPDF={this.onPressUploadPDF}
+          onPressCamera={this.onPressCamera}
         />
         <ModalOption
           visibleEdit={visibleEdit}

@@ -8,6 +8,8 @@ import QuestionLibrary from '../components/Teacher/Papers/questionLibrary';
 import ConfigQuestion from '../components/Teacher/Papers/configQuestion';
 import Assignment from '../components/Teacher/Papers/Assignment';
 import MarkingView from '../components/Teacher/Papers/MarkingView';
+import MarkingCamera from '../components/Teacher/MarkingCamera/MarkingCamera';
+import MarkingWebScreen from '../components/Teacher/MarkingWeb/MarkingWebScreen';
 import Homework from '../containers/teacher/homework/MainScreen';
 import MainHomeWork from '../containers/teacher/report/MainScreen';
 import UploadPDF from '../components/Teacher/Papers/UploadPDF';
@@ -39,6 +41,7 @@ import StatisticScreen from '../components/statistics/StatisticScreen';
 import EditConfig from '../components/Teacher/Papers/EditConfig';
 import SchoolResultPDF from '../components/Teacher/Homework/homework-result/SchoolResultPDF';
 import SearchScreen from '../components/common-new/SearchScreen';
+import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import { Platform } from 'react-native';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -89,6 +92,14 @@ const TeacherStack = createStackNavigator({
     screen: MarkingView,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
+  MarkingCamera: {
+    screen: MarkingCamera,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MarkingWeb: {
+    screen: MarkingWebScreen,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
   Report: {
     screen: Homework,
     navigationOptions: { header: null, gesturesEnabled: true },
@@ -99,6 +110,10 @@ const TeacherStack = createStackNavigator({
   },
   UploadPDF: {
     screen: UploadPDF,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  MarkCamera: {
+    screen: MarkCamera,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   FullViewPDFAssessment: {

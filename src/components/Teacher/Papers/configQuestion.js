@@ -15,6 +15,7 @@ import {
   ScrollView,
   Modal,
   ActivityIndicator,
+  Alert
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -72,7 +73,7 @@ class ConfigQuestion extends Component {
       scrollview: true,
       scrollWebview: false,
       totalPoint: 10,
-      webheight: 350,
+      webheight: 500,
       isExplain: false,
       isModal: false,
       isLoadingModal: false,
@@ -118,7 +119,7 @@ class ConfigQuestion extends Component {
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
-      this.setState({ webheight: parseInt(event.nativeEvent.data) + 40 });
+      this.setState({ webheight: parseInt(event.nativeEvent.data) + 200 });
     }
     if (data[0] === 'matariaDetail') {
       this.getDetailMatarial();
@@ -603,10 +604,18 @@ class ConfigQuestion extends Component {
 
   unFocusTime = () => {
     const { duration } = this.state;
-    if (duration == '') {
+    if (!duration || duration < 5) {
+      AlertNoti('Thời gian làm bài tối thiếu phải là 5 phút!');
       this.setState({ duration: 5 });
     }
   };
+
+  onValueTimeChange = ( num ) => {
+    if (num[num.length - 1] == ',') {
+      num = `${num.substring(0, num.length - 1)}.`
+    }
+    this.setState({ duration: num || '' });
+  } 
 
   render() {
     const {
@@ -708,7 +717,7 @@ class ConfigQuestion extends Component {
                         <TextInput
                           style={styles.pickTime}
                           onChangeText={text => {
-                            this.setState({ duration: parseInt(text) || '' });
+                            this.onValueTimeChange(text);
                           }}
                           value={
                             (typeof duration.toString() !== NaN &&
