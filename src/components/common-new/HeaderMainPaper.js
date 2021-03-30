@@ -232,6 +232,17 @@ class HeaderMainPaper extends React.Component {
     );
   };
 
+  onPressCamera = () => {
+    const { listGrades, listSubjects } = this.state;
+    this.setState({ visibleModalAdd: false }, () =>
+      this.props.navigation.navigate('MarkCamera', {
+        listGrades,
+        listSubjects,
+        statusbar: 'dark-content',
+      }),
+    );
+  };
+
   onPressCopy = () => {
     const { listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
@@ -325,6 +336,11 @@ class HeaderMainPaper extends React.Component {
             <Image
               source={require('../../asserts/icon/icon_addPar.png')}
               style={{ top: -1 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.addPaper} onPress={this.onPressCamera}>
+            <Image
+              source={require('../../asserts/icon/icon_paperPlane.png')}
             />
           </TouchableOpacity>
         </View>

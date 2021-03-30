@@ -512,7 +512,6 @@ class Papers extends Component {
   onPress = () => {
     this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('QuestionLibrary', {
-        nagigation: this.props.nagigation,
         statusbar: 'light-content',
       }),
     );
@@ -529,7 +528,6 @@ class Papers extends Component {
     const { listGrades, listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('UploadPDF', {
-        nagigation: this.props.nagigation,
         listGrades,
         listSubjects,
         statusbar: 'dark-content',
@@ -541,7 +539,6 @@ class Papers extends Component {
     const { listGrades, listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('MarkCamera', {
-        nagigation: this.props.nagigation,
         listGrades,
         listSubjects,
         statusbar: 'dark-content',
