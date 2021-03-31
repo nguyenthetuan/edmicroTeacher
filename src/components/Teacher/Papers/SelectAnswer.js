@@ -106,8 +106,6 @@ export default class SelectAnswer extends Component {
     const { totalPointTL, totalPointTN } = this.state;
 
     if (typeQuestion === 1) {
-      console.log("prevProps.totalQuestionTL: ", prevProps.totalQuestionTL);
-      console.log("totalQuestionTL: ", totalQuestionTL);
       if (prevProps.totalQuestionTL !== totalQuestionTL) {
         const { questionsTL } = this.state;
         let questionsTmpTL = questionsTL;
@@ -233,7 +231,6 @@ export default class SelectAnswer extends Component {
       questionsTN: questionsTmpTN,
       totalPointTN
     });
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 233 ~ SelectAnswer ~ totalPointTN", totalPointTN)
 
     this.props.getTotalPoint(totalPointTN + totalPointTL);
 
@@ -280,6 +277,7 @@ export default class SelectAnswer extends Component {
       questionsTN: questionsTmpTN,
       totalPointTN
     });
+
     this.props.getTotalPoint(totalPointTN + totalPointTL);
 
   }
@@ -435,7 +433,6 @@ export default class SelectAnswer extends Component {
   }
 
   onChangeText = (point) => {
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 432 ~ SelectAnswer ~ point", point)
     const { typeQuestion } = this.props;
     if (typeQuestion === 0) {
       this.onChangePoint(point);
@@ -445,11 +442,9 @@ export default class SelectAnswer extends Component {
   }
 
   onChange = (num) => {
-    console.log("🚀 ~ file: SelectAnswer.js ~ line 448 ~ SelectAnswer ~ num", num)
     const { typeQuestion } = this.props;
 
     if (num === 0) {
-      console.log("🚀 ~ file: SelectAnswer.js ~ line 453 ~ SelectAnswer ~ typeQuestion", typeQuestion)
       if (typeQuestion === 0) {
         this.onChangePoint(0);
       } else {
@@ -464,9 +459,9 @@ export default class SelectAnswer extends Component {
       point = `${point.substring(0, point.length - 1)}.`
     }
     if (type == 0) {
-      this.setState({ totalPointTN: point && (point) || 0 })
+      this.setState({ totalPointTN: (point) && Number(point) || 0 })
     } else {
-      this.setState({ totalPointTL: point && (point) || 0 })
+      this.setState({ totalPointTL: point && Number(point) || 0 })
 
     }
   }
