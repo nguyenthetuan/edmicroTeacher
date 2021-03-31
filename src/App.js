@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, TextInput } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
-import codePush from "react-native-code-push";
 import store from './store/index';
 import sagaMiddleware from './middleware/sagaMiddleWare';
 import rootSaga from './sagas/rootSaga';
@@ -18,6 +17,7 @@ import UpdateApp from './components/common/UpdateApp';
 import firestore from '@react-native-firebase/firestore';
 import { APP_VERSION_CODE } from './constants/buildConfig';
 import AsyncStorage from '@react-native-community/async-storage';
+import DownloadCodePushApp from './utils/DownloadCodePush';
 
 // let codePushOptions = codePush({ updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE });
 // let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
@@ -162,6 +162,7 @@ class App extends Component {
             }
           }}
         />
+        <DownloadCodePushApp />
       </Provider>
     );
   }
@@ -169,15 +170,5 @@ class App extends Component {
 
 sagaMiddleware.run(rootSaga);
 
-const MyApp = codePush({
-  updateDialog: {
-    title: 'Cập nhật bản mới',
-    optionalUpdateMessage: 'Đã có bản cập nhật mới. Bạn có muốn cập nhật ngay bây giờ?',
-    optionalInstallButtonLabel: 'Cập nhật',
-    optionalIgnoreButtonLabel: 'Bỏ qua'
-  },
-  installMode: codePush.InstallMode.IMMEDIATE,
-  checkFrequency: codePush.CheckFrequency.ON_APP_START
-})(App);
+export default App;
 
-export default MyApp;

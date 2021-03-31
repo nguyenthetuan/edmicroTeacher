@@ -15,12 +15,18 @@ export const LOGIN_TYPE = {
 }
 
 export const isExpried = (exp, curTime) => {
-    return (curTime - exp) >= 300;
-}
-
-export const isRefresh = (exp, curTime, iat) => {
-    return (exp - curTime) < 3600 || (curTime - iat) > 600;
-}
+    let time = Number.parseInt(curTime) - Number.parseInt(exp);
+    console.log(time);
+    return time >= 300; // need chan
+  };
+  
+  export const isRefresh = (exp, curTime, iat) => {
+    let expNumber = Number.parseInt(exp);
+    let curTimeNumber = Number.parseInt(curTime);
+    let iatNumber = Number.parseInt(iat);
+    return expNumber - curTimeNumber < 300 || curTimeNumber - iatNumber > 14700; // 4h5 -> 5h55 
+  };
+  
 
 export const authenRedirect = (CreateBySchool, GradeId, Role, navigation) => {
     // giao vien

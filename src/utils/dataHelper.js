@@ -18,25 +18,10 @@ const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem('@token');
     if (value !== null && value !== '') {
-      const curTime = Math.floor(Date.now() / 1000);
-      const { exp, userName } = jwtDecode(value);
-      if (exp - curTime < 60 * 60) {
-        let userPost = await getUserPost();
-        let userObj = JSON.parse(userPost);
-        let res = '';
-        if (userObj.isPhonenumber) {
-          res = await apiUserHelper.loginPhoneV2(userObj);
-        } else {
-          res = await apiUserHelper.loginUserName(userObj);
-        }
-        if (res != '' && res.status === 200) {
-          saveToken(res.access_token);
-          return { token: res.access_token, userName };
-        }
-      }
-      return { token: value, userName };
+      return { token: value };
+    } else {
+      return { token: '' };
     }
-    return '';
   } catch (error) {
     return '';
   }
