@@ -393,16 +393,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-              <Text
-                style={{
-                  color: '#000',
-                  fontFamily: 'Nunito-Bold',
-                  fontSize: RFFonsize(14),
-                  textAlign: 'center',
-                }}>
-                Xem thêm
-              </Text>
-            )}
+            <Text
+              style={{
+                color: '#000',
+                fontFamily: 'Nunito-Bold',
+                fontSize: RFFonsize(14),
+                textAlign: 'center',
+              }}>
+              Xem thêm
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -420,7 +420,7 @@ class Papers extends Component {
           statusbar: 'light-content',
         });
       } else {
-        this.props.navigation.navigate('UploadPDF', {
+        this.props.navigation.navigate('UploadPDFStepByStep', {
           nagigation: this.props.nagigation,
           listGrades,
           listSubjects,
@@ -526,15 +526,16 @@ class Papers extends Component {
   }
 
   onPressUploadPDF = () => {
-    const { listGrades, listSubjects } = this.state;
-    this.setState({ visibleModalAdd: false }, () =>
-      this.props.navigation.navigate('UploadPDF', {
-        nagigation: this.props.nagigation,
-        listGrades,
-        listSubjects,
-        statusbar: 'dark-content',
-      }),
-    );
+    console.log("onPressUploadPDF");
+    // const { listGrades, listSubjects } = this.state;
+    // this.setState({ visibleModalAdd: false }, () =>
+    //   this.props.navigation.navigate('UploadPDFStepByStep', {
+    //     nagigation: this.props.nagigation,
+    //     listGrades,
+    //     listSubjects,
+    //     statusbar: 'dark-content',
+    //   }),
+    // );
   };
 
   onPressCamera = () => {
@@ -848,14 +849,14 @@ class Papers extends Component {
           listSubjects={listSubjects}
           activeSubject={this.activeSubject}
         />
-        <ModalAddPaper
+        {/* <ModalAddPaper
           onPress={this.onPress}
           closeModal={this.closeModal}
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
-          onPressUploadPDF={this.onPressUploadPDF}
-          // onPressCamera={this.onPressCamera}
-        />
+          onPressUploadPDF={() => { alert(1) }}
+        // onPressCamera={this.onPressCamera}
+        /> */}
         <ModalOption
           visibleEdit={visibleEdit}
           _handleCloseModal={this._handleCloseModal}
