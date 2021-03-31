@@ -419,7 +419,6 @@ class UploadPDF extends Component {
   };
 
   onTextPointModalChange = (point) => {
-    console.log("🚀 ~ file: UploadPDF.js ~ line 412 ~ UploadPDF ~ point", point)
     // alert(1);
     if (point[point.length - 1] == ',') {
       point = `${point.substring(0, point.length - 1)}.`
@@ -464,7 +463,6 @@ class UploadPDF extends Component {
     } = this.state;
     const numColumns = this.getNumColumns();
     const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
-    console.log("this.state.indexSelectingTL: ", this.state.indexSelectingTL);
     const points = this.selectAnswer?.getTotalPoint();
 
     return (

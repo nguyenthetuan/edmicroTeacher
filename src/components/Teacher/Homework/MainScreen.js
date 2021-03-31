@@ -40,10 +40,10 @@ const initTab = createMaterialTopTabNavigator(
               Độ hoàn thành
             </Text>
           ) : (
-              <Text numberOfLines={1} style={styles.labelTabActive}>
-                Độ hoàn thành
-              </Text>
-            );
+            <Text numberOfLines={1} style={styles.labelTabActive}>
+              Độ hoàn thành
+            </Text>
+          );
         },
       },
     },
@@ -57,10 +57,10 @@ const initTab = createMaterialTopTabNavigator(
               Tỉ lệ Đ/S
             </Text>
           ) : (
-              <Text numberOfLines={1} style={styles.labelTabActive}>
-                Tỉ lệ Đ/S
-              </Text>
-            );
+            <Text numberOfLines={1} style={styles.labelTabActive}>
+              Tỉ lệ Đ/S
+            </Text>
+          );
         },
       },
     },
@@ -76,10 +76,10 @@ const initTab = createMaterialTopTabNavigator(
               Học sinh
             </Text>
           ) : (
-              <Text numberOfLines={1} style={styles.labelTabActive}>
-                Học sinh
-              </Text>
-            );
+            <Text numberOfLines={1} style={styles.labelTabActive}>
+              Học sinh
+            </Text>
+          );
         },
       },
     },
@@ -136,8 +136,9 @@ export default function StatisticsPoints(props) {
     homework: [],
     class: [],
   });
-  const [isLoading, setIsLoading] = useState(true)
 
+  const [timeExport, setTimeExport] = useState('');
+  const [isLoading, setIsLoading] = useState(true)
   const onPressItemGrade = async (index) => {
     indexSelected.grade = index;
 
@@ -388,6 +389,11 @@ export default function StatisticsPoints(props) {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
+    let timeExportTmp = props.data?.data.timeExport;
+    console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
+    timeExportTmp = convertTimeHMDMY(timeExport);
+    console.log("🚀 ~ file: MainScreen.js ~ line 395 ~ useEffect ~ timeExportTmp", timeExportTmp)
+    setTimeExport(timeExportTmp);
   }, []);
 
   const goBack = async () => {
@@ -462,12 +468,7 @@ export default function StatisticsPoints(props) {
     modalFillter.current.changeStateModale();
   }
 
-  const isShow = !!props.navigation.state.params &&
-    props.navigation.state.params.hideBackButtom;
-
-  let timeExport = props.data?.data.timeExport;
-  console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
-  timeExport = convertTimeHMDMY(timeExport);
+  const isShow = !!props.navigation.state.params && props.navigation.state.params.hideBackButtom;
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
