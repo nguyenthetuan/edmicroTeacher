@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Image, Alert } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
@@ -10,6 +10,8 @@ import StepFour from './StepFourPDF';
 import Appicon from '../../../../utils/AppIcon';
 import _ from 'lodash';
 import RippleButton from '../../../common-new/RippleButton';
+import HeaderNavigation from '../../../common-new/HeaderNavigation';
+
 
 const labels = ['Upload', 'Đáp án', 'Cấu hình', 'Hoàn thành'];
 
@@ -18,13 +20,25 @@ export default class UploadPDFStepByStep extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            currentPosition: 0
         }
     }
 
     componentDidMount() {
 
     }
+
+    handleNextStep = (index, data) => {
+        if (index == 0 && _.isEmpty(data)) {
+            Global.resetStateStepOne();
+            this.setState({ currentPosition: index, data: {} });
+            return;
+        }
+        if (data) {
+            this.setState({ data });
+        }
+        this.setState({ currentPosition: index });
+    };
 
     renderStepIndicator = (params) => {
         const { stepStatus, position } = params;
@@ -104,15 +118,37 @@ export default class UploadPDFStepByStep extends Component {
         return icon;
     };
 
+    goBack = () => {
+        Alert.alert('Thông báo', 'Dữ liệu sẽ không được lưu khi bạn rời khỏi đây', [
+            {
+                text: 'Rời khỏi',
+                onPress: () => {
+                    this.props.navigation.goBack();
+                }
+            },
+            {
+                text: 'Ở lại',
+                onPress: () => { }
+            },
+        ])
+    }
+
 
     render() {
         return (
             <SafeAreaView style={styles.contain}>
-                <View style={{ backgroundColor: '#2D9CDB', paddingTop: 20 }}>
+                <HeaderNavigation
+                    title={'Câu hỏi PDF'}
+                    navigation={this.props.navigation}
+                    actionIcon={false}
+                    goBack={this.goBack}
+                    color={'#fff'}
+                />
+                <View style={{ backgroundColor: '#2D9CDB', paddingTop: 10 }}>
                     <StepIndicator
                         customStyles={customStyles}
                         renderStepIndicator={this.renderStepIndicator}
-                        currentPosition={2}
+                        currentPosition={this.state.currentPosition}
                         labels={labels}
                         stepCount={4}
                         renderLabel={this.renderText}
