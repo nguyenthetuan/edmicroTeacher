@@ -306,7 +306,6 @@ class HeaderMainPaper extends React.Component {
     });
 
     console.log("render paper");
-
     return (
       <View style={styles.container}>
         <RippleButton onPress={this.openDrawer}>
@@ -338,7 +337,8 @@ class HeaderMainPaper extends React.Component {
               style={{ top: -1 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.addPaper} onPress={this.onPressCamera}>
+          <TouchableOpacity
+            style={styles.addPaper} onPress={this.onPressCamera} >
             <Image
               source={require('../../asserts/icon/icon_paperPlane.png')}
             />
@@ -350,6 +350,9 @@ class HeaderMainPaper extends React.Component {
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
           onPressUploadPDF={this.onPressUploadPDF}
+          onPressCamera={this.onPressCamera}
+          listGrades={this.listGrades}
+          listSubjects={this.listSubjects}
         />
       </View>
 

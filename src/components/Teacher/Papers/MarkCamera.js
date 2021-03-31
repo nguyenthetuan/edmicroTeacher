@@ -1,363 +1,3 @@
-// import React, { Component } from 'react';
-// import {
-//     View,
-//     Text,
-//     SafeAreaView,
-//     StyleSheet,
-//     TextInput,
-//     Dimensions,
-//     Image
-// } from 'react-native';
-// import HeaderNavigation from '../../common-new/HeaderNavigation';
-// import { RFFonsize } from '../../../utils/Fonts';
-// import Pdf from 'react-native-pdf';
-// import Dropdown from '../Homework/Dropdown';
-// import RippleButton from '../../common-new/RippleButton';
-// import shadowStyle from '../../../themes/shadowStyle';
-// import DropdownMultiSelect from '../Homework/DropdownMultiSelect';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-// import AppIcon from '../../../utils/AppIcon';
-// const { width, height } = Dimensions.get('window');
-// export default class MarkCamera extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             text: '',
-//             visibleViewAnswer: true,
-//             totalQuestionTN: 10,
-//             totalQuestionTL: 0,
-//             viewFileFDF: true,
-//             urlFilePDF: '',
-//             urlFileAnswerPDF: '',
-//             loadingUpload: false,
-//             pathFileAnswerPDF: null,
-//             indexSelectingTN: 0,
-//             assignmentTypes: [
-//                 {
-//                     id: 0,
-//                     name: 'Bài tự luyện',
-//                 },
-//                 {
-//                     id: 1,
-//                     name: 'Bài kiểm tra',
-//                 },
-//             ],
-//             gradeCode: [],
-//             subjectCode: [],
-//             name: '',
-//             assignmentType: 0,
-//             duration: '',
-//             typeQuestion: 0,
-//             indexSelectingTL: 0,
-//             pdfFile: '',
-//             pdfFileTL: '',
-//             totalPoint: 0
-//         }
-//     }
-
-//     onPickPDF = async () => {
-//         try {
-//             const res = await DocumentPicker.pick({
-//                 type: [DocumentPicker.types.pdf],
-//             });
-
-//             if (res) {
-//                 let url = res.uri;
-//                 let split = url.split('/');
-//                 let name = split.pop();
-//                 this.setState({
-//                     loadingUpload: true,
-//                     pdfFile: name,
-//                 });
-//                 this.setState({
-//                     loadingUpload: true,
-//                 });
-//                 const { token } = await dataHelper.getToken();
-//                 if (token) {
-//                     const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
-//                     if (resSignedUrl) {
-//                         let file = await this.getBlob(url);
-//                         const resUpload = await apiPapers.uploadPDF({
-//                             url: resSignedUrl.preSignedUrl,
-//                             file,
-//                         });
-
-//                         if (resUpload && resUpload.status === 200) {
-//                             this.setState({
-//                                 urlFilePDF: resSignedUrl.urlFile,
-//                                 loadingUpload: false,
-//                             });
-//                         } else {
-//                             this.toast.show('Tải lên PDF thất bại');
-//                             this.setState({ loadingUpload: false });
-//                         }
-//                     }
-//                 }
-//             }
-//         } catch (err) {
-//             this.toast.show('Tải lên PDF thất bại');
-//             this.setState({ loadingUpload: false });
-//             if (DocumentPicker.isCancel(err)) {
-//                 // User cancelled the picker, exit any dialogs or menus and move on
-//             } else {
-//                 throw err;
-//             }
-//         }
-//     };
-
-//     _onFullView = (type) => {
-//         if (type == 1) {
-//             if (!this.state.urlFileAnswerPDF) {
-//                 this.toast.show('Chưa có tài liệu PDF');
-//                 return;
-//             }
-//         } else {
-//             if (!this.state.urlFilePDF) {
-//                 this.toast.show('Chưa có tài liệu PDF');
-//                 return;
-//             }
-//         }
-//         this.props.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: type === 1 ? this.state.urlFileAnswerPDF : this.state.urlFilePDF, text: type == 1 ? 'Lời Giải' : 'Bộ đề PDF' });
-//     };
-//     render() {
-//         const { shadowBtn } = shadowStyle;
-//         const {
-//             loadingUpload,
-//             urlFilePDF
-//         } = this.state;
-//         return (
-//             <View style={styles.container}>
-//                 <SafeAreaView />
-//                 <HeaderNavigation
-//                     navigation={this.props.navigation}
-//                     title={'Chấm điểm camera'}
-//                     bgColor={'#fff'}
-//                     colorIcon={'#000'}
-//                     styleTitle={styles.styleTitle}
-//                     back={true}
-//                 />
-//                 <View style={styles.bodyInput}>
-//                     <TextInput
-//                         // value={name}
-//                         onChangeText={this.onChangeTextName}
-//                         numberOfLines={1}
-//                         returnKeyType={'done'}
-//                         placeholder={'Nhập tên bài kiểm tra'}
-//                         placeholderTextColor={'#BDBDBD'}
-//                         style={styles.inputName}
-//                     />
-//                     <TouchableOpacity style={styles.chosePick}>
-//                         <Image source={require('../../../asserts/icon/dowload.png')} style={{ alignSelf: "center", marginTop: 8 }} />
-//                         <Text style={styles.addPar}>Thêm bộ đề</Text>
-//                     </TouchableOpacity>
-
-//                     <View style={styles.wrapMiniPDF}>
-//                         {!!urlFilePDF && <Pdf
-//                             ref={(ref) => (this.pdf = ref)}
-//                             source={{ uri: urlFilePDF, cache: true }}
-//                             onLoadComplete={(numberOfPages, filePath) => { }}
-//                             onError={(error) => {
-//                                 console.log(error);
-//                             }}
-//                             style={styles.pdf}
-//                         />}
-//                         <View style={styles.wrapEndAreaUploadPDF}>
-//                             <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
-//                                 <Image source={AppIcon.search_pdf} />
-//                             </TouchableOpacity>
-//                             <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
-//                                 <Image source={AppIcon.pencil_pdf} />
-//                             </TouchableOpacity>
-//                         </View>
-//                         <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={txtPDf}>{this.state.pdfFile}</Text>
-//                     </View>
-
-
-
-
-
-
-//                     <Text style={styles.note}>
-//                         Lưu ý! Bộ đề và đáp án được thêm dưới dạng file pdf.
-//                         Dung lượng không quá 10MB!
-//                          </Text>
-
-//                     <Text style={styles.txtOption}>Khối</Text>
-//                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-//                         <DropdownMultiSelect
-//                             contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
-//                             title="Khối lớp"
-//                             // data={listGrades}
-//                             onPressItem={(index) => this.onPressItemGrade(index)}
-//                         />
-//                     </View>
-
-//                     <Text style={styles.txtOption}>Môn Học</Text>
-//                     <Dropdown
-//                         containerStyle={styles.styleDrop}
-//                         contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
-//                         title="Môn Học"
-//                         // data={this.state.lerningTarget}
-//                         onPressItem={(index) => this.onPressCurriculum(index)}
-//                         indexSelected={this.state.indexSelected}
-//                     />
-//                     <Text style={styles.txtOption}>Loại bài</Text>
-//                     <Dropdown
-//                         containerStyle={styles.styleDrop}
-//                         contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
-//                         title="Loại bài"
-//                         // data={this.state.lerningTarget}
-//                         onPressItem={(index) => this.onPressCurriculum(index)}
-//                         indexSelected={this.state.indexSelected}
-//                     />
-//                     <RippleButton
-//                         style={[styles.btnCreate, { ...shadowBtn }]}
-//                         onPress={() => { alert(123) }}>
-//                         <Text style={styles.txtCreate}>Tạo bộ đề</Text>
-//                     </RippleButton>
-//                 </View>
-//                 {loadingUpload &&
-//                     <View>
-//                         <ActivityIndicator />
-//                         <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
-//                     </View>}
-//             </View>
-
-//         )
-//     }
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1
-//     },
-//     styleTitle: {
-//         fontFamily: 'Nunito',
-//         fontSize: RFFonsize(12),
-//         lineHeight: RFFonsize(16),
-//     },
-//     bodyInput: {
-//         flex: 1,
-//         marginHorizontal: 16,
-//         marginTop: 16
-//     },
-//     txtInputCont: {
-//         // borderWidth: 0.5,
-//         // borderColor: '#2D9CDB',
-//         // borderRadius: 5,
-//         // height: 35,
-//         // paddingLeft: 10,
-//         height: 35,
-//         backgroundColor: '#fff',
-//         color: '#000',
-//         fontFamily: 'Nunito-Regular',
-//         fontSize: RFFonsize(14),
-//         paddingStart: 10,
-//         marginBottom: 7,
-//         borderRadius: 5,
-//         padding: 0,
-//         borderColor: '#2D9CDB',
-//         borderWidth: 0.5,
-//         paddingTop: 5
-//     },
-//     txtOption: {
-//         fontFamily: 'Nunito-Bold',
-//         fontSize: RFFonsize(14),
-//         lineHeight: RFFonsize(18),
-//         paddingTop: 16
-//     },
-//     styleDrop: {
-//         borderWidth: 0.5,
-//         borderRadius: 5,
-//         borderColor: "#2D9CDB",
-//         marginTop: 5,
-//         backgroundColor: "#c4c4c4",
-//     },
-//     btnCreate: {
-//         backgroundColor: '#2D9CDB',
-//         borderRadius: 5,
-//         marginTop: 40,
-//         marginHorizontal: '25%'
-//     },
-//     txtCreate: {
-//         fontFamily: "Nunito",
-//         fontSize: RFFonsize(16),
-//         lineHeight: RFFonsize(20),
-//         color: '#fff',
-//         fontWeight: "500",
-//         alignSelf: 'center',
-//         paddingVertical: 8
-//     },
-//     note: {
-//         fontFamily: 'Nunito',
-//         fontSize: RFFonsize(12),
-//         lineHeight: RFFonsize(16),
-//         textAlign: 'center',
-//         paddingTop: 10,
-//         color: "#EC407B"
-//     },
-//     styTxtPlace: {
-//         borderWidth: 0.5,
-//         borderColor: '#2D9CDB',
-//         height: 35,
-//         marginBottom: 5,
-//         minWidth: width - 50,
-//         borderRadius: 5,
-//         marginTop: 6
-//     },
-//     chosePick: {
-//         flexDirection: 'column',
-//         borderRadius: 5,
-//         borderWidth: .5,
-//         borderColor: '#2D9CDB',
-//         marginTop: 16
-//     },
-//     addPar: {
-//         fontFamily: "Nunito",
-//         fontSize: RFFonsize(12),
-//         lineHeight: RFFonsize(16),
-//         color: "#3596F3",
-//         paddingTop: 6,
-//         paddingBottom: 6,
-//         alignSelf: 'center'
-//     },
-//     inputName: {
-//         height: 40,
-//         backgroundColor: '#fff',
-//         color: '#000',
-//         fontFamily: 'Nunito-Regular',
-//         fontSize: RFFonsize(14),
-//         paddingStart: 10,
-//         marginBottom: 7,
-//         borderRadius: 5,
-//         padding: 0,
-//         borderColor: '#2D9CDB',
-//         borderWidth: .5,
-//         paddingRight: 10
-//     },
-//     wrapMiniPDF: {
-//         width: 150,
-//         height: 80,
-//         borderWidth: 0.5,
-//         backgroundColor: 'rgba(86, 204, 242, 0.1)',
-//         borderColor: '#56CCF2',
-//         borderRadius: 5,
-//     },
-//     pdf: {
-//         flex: 1,
-//         width: '100%',
-//     },
-//     txtPDf: {
-//         fontFamily: 'Nunito',
-//         fontSize: RFFonsize(12),
-//         fontWeight: '400',
-//         color: '#2D9CDB',
-//         maxWidth: 130
-//     }
-// });
-
-
-
 import React, { Component } from 'react';
 import {
     View,
@@ -393,6 +33,8 @@ import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import shadowStyle from '../../../themes/shadowStyle';
+import { setListGrades, setListSubject } from '../../../actions/paperAction';
+// import ModalSelectAnswers from './ModalSelectAnswers';
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
     baseUrl = 'web/';
@@ -435,6 +77,8 @@ class MarkCamera extends Component {
             totalPoint: 0
         };
     }
+
+
 
     onClickItem = async (index, optionIdAnswer, point) => {
         await this.setState({ indexSelectingTN: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
@@ -550,62 +194,17 @@ class MarkCamera extends Component {
         }
     };
 
-    onPickAnswerPDF = async () => {
-        try {
-            const res = await DocumentPicker.pick({
-                type: [DocumentPicker.types.pdf],
-            });
-
-
-            if (res) {
-                let url = res.uri;
-                let split = url.split('/');
-                let name = split.pop();
-                this.setState({
-                    loadingUpload: true,
-                    pdfFileTL: name,
-                });
-                //upload pdf
-                const { token } = await dataHelper.getToken();
-                if (token) {
-                    const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
-
-                    if (resSignedUrl) {
-                        let file = await this.getBlob(url);
-
-                        const resUpload = await apiPapers.uploadPDF({
-                            url: resSignedUrl.preSignedUrl,
-                            file,
-                        });
-
-                        if (resUpload && resUpload.status === 200) {
-                            this.setState({
-                                urlFileAnswerPDF: resSignedUrl.urlFile,
-                                loadingUpload: false,
-                            });
-                        }
-                    }
-                }
-            }
-        } catch (err) {
-            this.toast.show('Tải lên PDF thất bại');
-
-            console.log(err);
-            if (DocumentPicker.isCancel(err)) {
-                // User cancelled the picker, exit any dialogs or menus and move on
-            } else {
-                throw err;
-            }
-        }
-    };
-
     validation = () => {
         try {
             const {
                 gradeCode,
                 subjectCode,
                 name,
+                assignmentType,
+                duration,
                 urlFilePDF,
+                // urlFileAnswerPDF,
+                // totalPoint
             } = this.state;
             if (!name) {
                 this.toast.show('Chưa nhập tên bộ đề!');
@@ -619,6 +218,14 @@ class MarkCamera extends Component {
                 this.toast.show('Chưa chọn môn học!');
                 return;
             }
+            if (assignmentType && !duration) {
+                this.toast.show('Chưa nhập thời gian kiểm tra!');
+                return;
+            }
+            if (assignmentType && duration && duration < 1) {
+                this.toast.show('Thời gian kiểm tra phải lớn hơn 1 phút!');
+                return;
+            }
             if (!urlFilePDF) {
                 this.toast.show('Chưa thêm bộ đề!');
                 return;
@@ -630,7 +237,8 @@ class MarkCamera extends Component {
         }
     };
 
-    assignmentContent = async () => {
+
+    UploadPdfCam = async () => {
         Keyboard.dismiss();
         // let question = [
         //     ...this.selectAnswer.getListQuestions().data,
@@ -644,7 +252,7 @@ class MarkCamera extends Component {
                 assignmentType,
                 duration,
                 urlFilePDF,
-                urlFileAnswerPDF,
+                // urlFileAnswerPDF,
             } = this.state;
             let body = {
                 gradeCode: gradeCode,
@@ -654,16 +262,16 @@ class MarkCamera extends Component {
                 isShare: true,
                 assignmentType,
                 duration: assignmentType ? parseInt(duration) * 60 : 300,
-                question: question,
+                // question: question,
                 assignmentContentType: 1,
                 listFile: [urlFilePDF],
-                answerFile: urlFileAnswerPDF,
+                // answerFile: urlFileAnswerPDF,
             };
 
             const { token } = await dataHelper.getToken();
             if (token) {
-                const res = await apiPapers.assignmentContent({ token, body });
-                if (res && res.status === 0) {
+                const res = await apiPapers.UploadPdfCam({ token, body });
+                if (res && res.status === 1) {
                     this.refToast.show('Tạo bộ đề thành công!');
                     setTimeout(() => {
                         // this.props.navigation.goBack();
@@ -796,7 +404,8 @@ class MarkCamera extends Component {
                                 contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
                             >
                                 {/* start create Upload PDF */}
-                                <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); this.closeModalSelectAnswer() }}>
+                                <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); }}>
+                                    {/* this.closeModalSelectAnswer() */}
                                     <View>
                                         <View style={[styles.bodyHeader, { flex: 1 }]}>
                                             <View style={{ flex: 1 }}>
@@ -890,7 +499,7 @@ class MarkCamera extends Component {
                                         </View>
                                         <RippleButton
                                             style={[styles.btnCreate, { ...shadowBtn }]}
-                                            onPress={this.assignmentContent}>
+                                            onPress={this.UploadPdfCam}>
                                             <Text style={styles.txtCreate}>Tạo bộ đề</Text>
                                         </RippleButton>
                                     </View>
@@ -900,19 +509,6 @@ class MarkCamera extends Component {
                                 </View> */}
                             </ScrollView>
                         </KeyboardAvoidingView>
-                        {/* <ModalSelectAnswers
-                            ref={(ref) => { this.modalSelectAnswers = ref }}
-                            indexSelectingTN={this.state.indexSelectingTN}
-                            typeQuestion={this.state.typeQuestion}
-                            indexSelectingTL={this.state.indexSelectingTL}
-                            onSelectAnswer={this.onSelectAnswer}
-                            optionIdAnswer={this.state.optionIdAnswer}
-                            showSelectAnswer={this.state.showSelectAnswer}
-                            close={this.closeModalSelectAnswer}
-                            onChangeText={this.onTextPointModalChange}
-                            onEndEditing={this.onTextPointModalEdit}
-                            currentPoint={this.state.currentPoint}
-                        /> */}
                         <Toast ref={ref => this.refToast = ref} position={'bottom'} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
                         {loadingUpload &&
@@ -930,10 +526,13 @@ class MarkCamera extends Component {
 
 const mapStateToProps = state => {
     return {
+        updateListExam: state.paper.updateListExam
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
+        // saveGrades: listGrades => dispatch(setListGrades(listGrades)),
+        // saveSubject: listSubjects => dispatch(setListSubject(listSubjects)),
         needUpdate: (payload) => dispatch(updateExamListAction(payload)),
     }
 }
@@ -982,7 +581,7 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         borderRadius: 5,
         padding: 0,
-        borderColor: '#2D9CDB',
+        borderColor: '#c4c4c4',
         borderWidth: 1,
         paddingRight: 10
     },
@@ -991,8 +590,8 @@ const styles = StyleSheet.create({
     },
     wrapMiniPDF: {
         borderWidth: 0.5,
-        backgroundColor: 'rgba(86, 204, 242, 0.2)',
-        borderColor: '#2D9CDB',
+        backgroundColor: 'rgba(86, 204, 242, 0.15)',
+        borderColor: 'rgba(86, 204, 242, 0.3)',
         borderRadius: 5,
     },
     wrapEndAreaUploadPDF: {
@@ -1011,7 +610,7 @@ const styles = StyleSheet.create({
     styTxtPlace: {
         marginHorizontal: 0,
         borderWidth: 1,
-        borderColor: '#2D9CDB',
+        borderColor: '#c4c4c4',
         width: '100%',
         height: 40,
         marginBottom: 5,
@@ -1069,3 +668,8 @@ const styles = StyleSheet.create({
         top: 5
     },
 });
+
+
+
+
+
