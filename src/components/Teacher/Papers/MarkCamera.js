@@ -16,6 +16,7 @@ import {
     Modal,
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
+    Pressable
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import DropdownMultiSelect from '../Homework/DropdownMultiSelect';
@@ -34,7 +35,9 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import shadowStyle from '../../../themes/shadowStyle';
 import { setListGrades, setListSubject } from '../../../actions/paperAction';
-// import ModalSelectAnswers from './ModalSelectAnswers';
+import ModalAddPaper from './ModalAddPaper';
+import RNImageToPdf from 'react-native-image-to-pdf';
+import ImagePickerCrop from 'react-native-image-crop-picker';
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
     baseUrl = 'web/';
@@ -46,11 +49,13 @@ class MarkCamera extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            visibleModalAdd: false,
             visibleViewAnswer: true,
             totalQuestionTN: 10,
             totalQuestionTL: 0,
             viewFileFDF: true,
             urlFilePDF: '',
+            urlImage: '',
             urlFileAnswerPDF: '',
             loadingUpload: false,
             pathFileAnswerPDF: null,
@@ -74,11 +79,60 @@ class MarkCamera extends Component {
             indexSelectingTL: 0,
             pdfFile: '',
             pdfFileTL: '',
-            totalPoint: 0
+            totalPoint: 0,
+            modalVisible: false,
         };
     }
+    // setModalVisible = (visible) => {
+    //     this.setState({ modalVisible: visible });
+    // }
 
+    async uploadImage() {
+        this.cropPickerAndroid();
+    }
 
+    cropPickerAndroid() {
+        ImagePickerCrop.openPicker({
+            width: 400,
+            height: 400,
+            cropping: true,
+            includeBase64: true,
+        })
+        // .then((image) => {
+        //     console.log(image);
+        //     this.postImageBase64(image.data);
+        //     // this.setState({
+        //     //   avatarSource: image.path,
+        //     // });
+        // })
+        // .catch((err) => console.log(err));
+    }
+
+    convertBase64ByTag = (uri, callback) => {
+        ImageStore.getBase64ForTag(uri, (base64String) => {
+            callback(base64String);
+        });
+    };
+    myAsyncPDFFunction = async () => {
+        try {
+            const options = {
+                // imagePaths: imagePaths: ['/path/to/image1.png', '/path/to/image2.png'],
+                // name: name: 'PDFName',
+                imagePaths: '',
+                name: '',
+                maxSize: {
+                    width: 900,
+                    height: Math.round(deviceHeight() / deviceWidth() * 900),
+                },
+                quality: .7,
+            };
+            const pdf = await RNImageToPdf.createPDFbyImages(options);
+
+            console.log(pdf.filePath);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     onClickItem = async (index, optionIdAnswer, point) => {
         await this.setState({ indexSelectingTN: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
@@ -252,6 +306,7 @@ class MarkCamera extends Component {
                 assignmentType,
                 duration,
                 urlFilePDF,
+                urlImage,
                 // urlFileAnswerPDF,
             } = this.state;
             let body = {
@@ -431,7 +486,7 @@ class MarkCamera extends Component {
                                                                 style={styles.pdf}
                                                             />}
                                                             <View style={styles.wrapEndAreaUploadPDF}>
-                                                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
+                                                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => this.setState({ modalVisible: true })}>
                                                                     <Image source={require('../../../asserts/icon/dowload.png')} style={{ alignSelf: "center", marginTop: 8 }} />
                                                                     <Text style={styles.addPar}>Thêm bộ đề</Text>
                                                                 </TouchableOpacity>
@@ -439,8 +494,18 @@ class MarkCamera extends Component {
                                                                     <Text style={styles.addPar}>View</Text>
                                                                 </TouchableOpacity>
                                                             </View>
+                                                            {/* <ModalAddPaper
+                                                                onPress={this.onPress}
+                                                                closeModal={this.closeModal}
+                                                                onPressCopy={this.onPressCopy}
+                                                                visibleModalAdd={this.visibleModalAdd}
+                                                                onPressUploadPDF={this.onPressUploadPDF}
+                                                                onPressCamera={this.onPressCamera}
+                                                                listGrades={this.listGrades}
+                                                                listSubjects={this.listSubjects}
+                                                            /> */}
                                                         </View>
-                                                        <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), fontWeight: '400', color: '#2D9CDB', maxWidth: 130 }}>{this.state.pdfFile}</Text>
+                                                        <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile}</Text>
                                                     </View>
                                                     <Text style={styles.note}>
                                                         Lưu ý! Bộ đề và đáp án được thêm dưới dạng file pdf.
@@ -518,7 +583,30 @@ class MarkCamera extends Component {
                             </View>}
 
                     </View>
+                    <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    // onRequestClose={() => {
+                    //     Alert.alert("Modal has been closed.");
+                    //     this.setModalVisible(!modalVisible);
+                    // }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Hello World!</Text>
+                            {/* <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => this.setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.textStyle}>Hide Modal</Text>
+                            </Pressable> */}
+                        </View>
+                    </View>
+                </Modal>
                 </SafeAreaView>
+              
+
             </View>
         );
     }
@@ -667,6 +755,13 @@ const styles = StyleSheet.create({
         left: 110,
         top: 5
     },
+    textPdfFile: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(12),
+        fontWeight: '400',
+        color: '#2D9CDB',
+        maxWidth: 130
+    }
 });
 
 
