@@ -83,9 +83,9 @@ class MarkCamera extends Component {
             modalVisible: false,
         };
     }
-    // setModalVisible = (visible) => {
-    //     this.setState({ modalVisible: visible });
-    // }
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
 
     async uploadImage() {
         this.cropPickerAndroid();
@@ -438,6 +438,7 @@ class MarkCamera extends Component {
         console.log("this.state.indexSelectingTL: ", this.state.indexSelectingTL);
         const points = this.selectAnswer?.getTotalPoint();
         const { shadowBtn } = shadowStyle;;
+        const { modalVisible } = this.state;
         return (
             <View style={{ flex: 1 }}>
                 <SafeAreaView />
@@ -486,7 +487,7 @@ class MarkCamera extends Component {
                                                                 style={styles.pdf}
                                                             />}
                                                             <View style={styles.wrapEndAreaUploadPDF}>
-                                                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => this.setState({ modalVisible: true })}>
+                                                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => this.setModalVisible(true)} >
                                                                     <Image source={require('../../../asserts/icon/dowload.png')} style={{ alignSelf: "center", marginTop: 8 }} />
                                                                     <Text style={styles.addPar}>Thêm bộ đề</Text>
                                                                 </TouchableOpacity>
@@ -494,16 +495,6 @@ class MarkCamera extends Component {
                                                                     <Text style={styles.addPar}>View</Text>
                                                                 </TouchableOpacity>
                                                             </View>
-                                                            {/* <ModalAddPaper
-                                                                onPress={this.onPress}
-                                                                closeModal={this.closeModal}
-                                                                onPressCopy={this.onPressCopy}
-                                                                visibleModalAdd={this.visibleModalAdd}
-                                                                onPressUploadPDF={this.onPressUploadPDF}
-                                                                onPressCamera={this.onPressCamera}
-                                                                listGrades={this.listGrades}
-                                                                listSubjects={this.listSubjects}
-                                                            /> */}
                                                         </View>
                                                         <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile}</Text>
                                                     </View>
@@ -584,29 +575,25 @@ class MarkCamera extends Component {
 
                     </View>
                     <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    // onRequestClose={() => {
-                    //     Alert.alert("Modal has been closed.");
-                    //     this.setModalVisible(!modalVisible);
-                    // }}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Hello World!</Text>
-                            {/* <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => this.setModalVisible(!modalVisible)}
-                            >
-                                <Text style={styles.textStyle}>Hide Modal</Text>
-                            </Pressable> */}
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                    >
+                        <View style={styles.centeredView}>
+                            <View style={styles.modalView}>
+                                <TouchableOpacity onPress={this.onPickPDF}>
+                                    <Text>Upload .PDF</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={() => this.setModalVisible(!modalVisible)}
+                                >
+                                    <Text style={styles.textStyle}>Close</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                </Modal>
+                    </Modal>
                 </SafeAreaView>
-              
-
             </View>
         );
     }
@@ -619,8 +606,6 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        // saveGrades: listGrades => dispatch(setListGrades(listGrades)),
-        // saveSubject: listSubjects => dispatch(setListSubject(listSubjects)),
         needUpdate: (payload) => dispatch(updateExamListAction(payload)),
     }
 }
@@ -761,7 +746,49 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: '#2D9CDB',
         maxWidth: 130
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "#fff",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    buttonOpen: {
+        backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
     }
+
 });
 
 
