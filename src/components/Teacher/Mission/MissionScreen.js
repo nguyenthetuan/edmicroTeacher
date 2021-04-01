@@ -198,7 +198,7 @@ export default class MissionScreen extends Component {
             data={listMissionSearch}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderItem}
-            initialNumToRender={6}
+            initialNumToRender={3}
             bounces={false}
             scrollEventThrottle={1}
             ListFooterComponent={<View style={{ height: 120 }} />}

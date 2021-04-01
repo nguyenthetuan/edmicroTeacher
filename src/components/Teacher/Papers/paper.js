@@ -730,6 +730,7 @@ class Papers extends Component {
   }
 
   render() {
+    console.log("render paper");
     const {
       loading,
       animation,
@@ -797,7 +798,7 @@ class Papers extends Component {
               <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
             )
           }}
-          initialNumToRender={5}
+          initialNumToRender={2}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}
