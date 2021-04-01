@@ -42,6 +42,7 @@ import EditConfig from '../components/Teacher/Papers/EditConfig';
 import SchoolResultPDF from '../components/Teacher/Homework/homework-result/SchoolResultPDF';
 import SearchScreen from '../components/common-new/SearchScreen';
 import MarkCamera from '../components/Teacher/Papers/MarkCamera';
+import TakePhotoCamera from '../components/Teacher/Papers/TakePhotoCamera';
 import { Platform } from 'react-native';
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
@@ -94,6 +95,10 @@ const TeacherStack = createStackNavigator({
   },
   MarkingCamera: {
     screen: MarkingCamera,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  TakePhotoCamera: {
+    screen: TakePhotoCamera,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   MarkingWeb: {

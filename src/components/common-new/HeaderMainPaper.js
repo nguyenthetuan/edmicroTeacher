@@ -337,12 +337,12 @@ class HeaderMainPaper extends React.Component {
               style={{ top: -1 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.addPaper} onPress={this.onPressCamera} >
             <Image
               source={require('../../asserts/icon/icon_paperPlane.png')}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <ModalAddPaper
           onPress={this.onPress}

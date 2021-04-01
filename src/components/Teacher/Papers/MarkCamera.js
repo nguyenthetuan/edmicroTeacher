@@ -38,12 +38,22 @@ import { setListGrades, setListSubject } from '../../../actions/paperAction';
 import ModalAddPaper from './ModalAddPaper';
 import RNImageToPdf from 'react-native-image-to-pdf';
 import ImagePickerCrop from 'react-native-image-crop-picker';
+import TakePhotoCamera from './TakePhotoCamera';
+
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
     baseUrl = 'web/';
 }
 
 const { width, height } = Dimensions.get('window');
+
+const options = {
+    title: 'Chọn Ảnh',
+    storageOptions: {
+        skipBackup: true,
+        path: 'images',
+    },
+};
 
 class MarkCamera extends Component {
     constructor(props) {
@@ -81,61 +91,74 @@ class MarkCamera extends Component {
             pdfFileTL: '',
             totalPoint: 0,
             modalVisible: false,
+            imgWidth: "100%",
+            imgHeight: "100%",
+            pdfFromImage: ''
         };
     }
-    setModalVisible = (visible) => {
-        this.setState({ modalVisible: visible });
+
+    takeCamera = () => {
+        this.props.navigation.navigate("TakePhotoCamera");
     }
 
-    async uploadImage() {
-        this.cropPickerAndroid();
-    }
 
     cropPickerAndroid() {
         ImagePickerCrop.openPicker({
-            width: 400,
-            height: 400,
+            // width: 500,
+            // height: 900,
             cropping: true,
             includeBase64: true,
         })
-        // .then((image) => {
-        //     console.log(image);
-        //     this.postImageBase64(image.data);
-        //     // this.setState({
-        //     //   avatarSource: image.path,
-        //     // });
-        // })
-        // .catch((err) => console.log(err));
-    }
+            .then((image) => {
+                console.log(image);
 
+                this.myAsyncPDFFunction(image.sourceURL);
+
+            })
+            .catch((err) => console.log(err));
+    }
     convertBase64ByTag = (uri, callback) => {
         ImageStore.getBase64ForTag(uri, (base64String) => {
             callback(base64String);
         });
     };
-    myAsyncPDFFunction = async () => {
+
+    uploadImage = () => {
+        this.action = 'uploadImage';
+        this.cropPickerAndroid();
+    }
+
+    myAsyncPDFFunction = async (sourceURL) => {
         try {
             const options = {
-                // imagePaths: imagePaths: ['/path/to/image1.png', '/path/to/image2.png'],
-                // name: name: 'PDFName',
-                imagePaths: '',
+                imagePaths: [sourceURL],
                 name: '',
                 maxSize: {
+                    // optional maximum image dimension - larger images will be resized
                     width: 900,
-                    height: Math.round(deviceHeight() / deviceWidth() * 900),
+                    height: Math.round(width / height * 900),
                 },
-                quality: .7,
+                quality: .7, // optional compression paramter
             };
-            const pdf = await RNImageToPdf.createPDFbyImages(options);
 
+            const pdf = await RNImageToPdf.createPDFbyImages(options);
             console.log(pdf.filePath);
         } catch (e) {
             console.log(e);
         }
+
+    }
+
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
     }
 
     onClickItem = async (index, optionIdAnswer, point) => {
-        await this.setState({ indexSelectingTN: index, optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer, showSelectAnswer: true, currentPoint: point });
+        await this.setState({
+            indexSelectingTN: index,
+            optionIdAnswer: isNaN(optionIdAnswer) ? -1 : optionIdAnswer,
+            showSelectAnswer: true, currentPoint: point
+        });
         await this.modalSelectAnswers.setIdAnswer(isNaN(optionIdAnswer) ? -1 : optionIdAnswer);
         setTimeout(() => {
             this.scrollview.scrollToEnd();
@@ -200,6 +223,7 @@ class MarkCamera extends Component {
 
     onPickPDF = async () => {
         try {
+            this.action = 'picker';
             const res = await DocumentPicker.pick({
                 type: [DocumentPicker.types.pdf],
             });
@@ -291,6 +315,13 @@ class MarkCamera extends Component {
         }
     };
 
+    getListFile() {
+        if (this.action == 'uploadImage') {
+            return [this.state.pdfFromImage];
+        } else {
+            return [this.state.urlFilePDF];
+        }
+    }
 
     UploadPdfCam = async () => {
         Keyboard.dismiss();
@@ -319,8 +350,7 @@ class MarkCamera extends Component {
                 duration: assignmentType ? parseInt(duration) * 60 : 300,
                 // question: question,
                 assignmentContentType: 1,
-                listFile: [urlFilePDF],
-                // answerFile: urlFileAnswerPDF,
+                listFile: this.getListFile()
             };
 
             const { token } = await dataHelper.getToken();
@@ -581,8 +611,14 @@ class MarkCamera extends Component {
                     >
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <TouchableOpacity onPress={this.onPickPDF}>
+                                <TouchableOpacity onPress={this.onPickPDF} style={{ padding: 10 }}>
                                     <Text>Upload .PDF</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={this.uploadImage} style={{ padding: 10 }}>
+                                    <Text>Upload Image</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={this.takeCamera} style={{ padding: 10 }}>
+                                    <Text>Take camera</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[styles.button, styles.buttonClose]}
@@ -778,6 +814,8 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
         backgroundColor: "#2196F3",
+        position: 'absolute',
+        alignSelf: 'flex-end'
     },
     textStyle: {
         color: "white",

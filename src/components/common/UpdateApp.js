@@ -131,14 +131,12 @@ export default class UpdateApp extends Component {
                 {Platform.OS == 'ios' ? messageIOS : messageAndroid}
               </Text>
             </ImageBackground>
-
             <View style={styles.wrapViewBtn}>
               <TouchableOpacity style={styles.wrapBtn}>
                 <Text style={styles.txtBtn} onPress={this._handleUpdateNow}>
                   Cập nhật ngay
                 </Text>
               </TouchableOpacity>
-
               {!isRequiredUpdate ? <TouchableOpacity
                 style={[styles.wrapBtn, { backgroundColor: '#5096BD' }]}
                 onPress={this._handleClose}>
