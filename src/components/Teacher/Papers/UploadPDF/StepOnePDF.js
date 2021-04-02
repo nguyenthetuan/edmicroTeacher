@@ -4,7 +4,6 @@ import UploadPDFComp from './UploadPDFComp';
 import AppIcon from '../../../../utils/AppIcon';
 import RippleButton from '../../../libs/RippleButton';
 import DocumentPicker from 'react-native-document-picker';
-import Pdf from 'react-native-pdf';
 import dataHelper from '../../../../utils/dataHelper';
 import Toast from 'react-native-easy-toast';
 import apiPapers from '../../../../services/apiPapersTeacher';
@@ -200,7 +199,7 @@ export default class StepOnePDF extends Component {
                 <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
                 <View style={{ width: '100%', height: 80, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>
-                        <Text>Tiếp tục</Text>
+                        <Text style={styles.textNext}>Tiếp tục</Text>
                     </RippleButton>
                 </View>
             </View>
@@ -223,6 +222,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 40,
         alignSelf: 'center'
+    },
+    textNext: {
+        fontSize: 12,
+        lineHeight: 16,
+        fontFamily: 'Nunito-bold',
+        color: "#fff"
     },
     buttonNext: {
         width: 160,
