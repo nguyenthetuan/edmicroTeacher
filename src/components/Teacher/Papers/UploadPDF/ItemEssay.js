@@ -17,10 +17,15 @@ export default function ItemEssay(props) {
     }
 
     const onChangePointEachQS = () => {
+        props.onKeyBoardBlur();
         if (isNaN(textPoint)) {
             setTextPoint(props.data.textPoint);
         }
         props.onChangePointEachQS(index, textPoint)
+    }
+
+    const onFocus = () => {
+        props.onKeyBoardShow(props.data.index);
     }
 
     return (
@@ -33,10 +38,11 @@ export default function ItemEssay(props) {
                     <TextInput
                         style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213' }}
                         textAlign={'center'}
-                        value={textPoint}
+                        value={Number(textPoint).toFixed(2)}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => setTextPoint(val)}
                         onBlur={onChangePointEachQS}
+                        onFocus={onFocus}
                     />
                 </View>
             </View>

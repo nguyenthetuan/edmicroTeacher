@@ -31,11 +31,16 @@ export default function ItemMultipleChoice(props) {
         return (group);
     }
 
+    const onFocus = () => {
+        props.onKeyBoardShow(props.data.index);
+    }
+
     const onChangePointEachQS = () => {
+        props.onKeyBoardBlur();
         if (isNaN(textPoint)) {
             setTextPoint(props.data.textPoint);
         }
-        props.onChangePointEachQS(index, textPoint)
+        props.onChangePointEachQS(index, textPoint);
     }
 
     return (
@@ -48,10 +53,11 @@ export default function ItemMultipleChoice(props) {
                     <TextInput
                         style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213' }}
                         textAlign={'center'}
-                        value={textPoint}
+                        value={Number(textPoint).toFixed(2)}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => setTextPoint(val)}
                         onBlur={onChangePointEachQS}
+                        onFocus={onFocus}
                     />
                 </View>
             </View>

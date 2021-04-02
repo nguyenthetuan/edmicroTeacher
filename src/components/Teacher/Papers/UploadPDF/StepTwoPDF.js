@@ -34,7 +34,7 @@ export default class StepTwoPDF extends Component {
             textPoint: `${(10 / totalQSTN)}`,
         }).map((value, index) => { return { ...value, index } });
         questionsTN.map(e => {
-            totalPointTN += e.point;
+            totalPointTN += Number(e.point);
         });
 
         const questionsTL = new Array(totalQSTL).fill({
@@ -45,7 +45,7 @@ export default class StepTwoPDF extends Component {
             textPoint: `${(10 / totalQSTL)}`,
         }).map((value, index) => { return { ...value, index } });
         questionsTL.map(e => {
-            totalPointTL += e.point;
+            totalPointTL += Number(e.point);
         });
         // this.props.getTotalPoint(totalPointTN + totalPointTL);
 
@@ -58,12 +58,13 @@ export default class StepTwoPDF extends Component {
     }
 
     caculatePointTotal = () => {
-        const { questionsTN, questionsTmpTL, activeButtonIndex } = this.state;
+        const { questionsTN, questionsTL, activeButtonIndex } = this.state;
         let questionsTmp = activeButtonIndex === 0 ? questionsTN : questionsTL;
         let totalPointTmp = 0;
         questionsTmp.forEach(e => {
-            totalPointTmp += e.point;
+            totalPointTmp += Number(e.point);
         });
+        totalPointTmp = Math.round(totalPointTmp* 100)/100;
         if (activeButtonIndex === 0) {
             this.setState({ totalPointTN: totalPointTmp })
         } else {
@@ -158,8 +159,8 @@ export default class StepTwoPDF extends Component {
             this.setState({ totalPointTN: num, questionsTN: questionsTmp })
         } else {
             questionsTmp.map(item => {
-                item.point = (num / totalQSTN).toFixed(2);
-                item.textPoint = (num / totalQSTN).toFixed(2).toString();
+                item.point = (num / totalQSTL).toFixed(2);
+                item.textPoint = (num / totalQSTL).toFixed(2).toString();
                 return item;
             })
             this.setState({ totalPointTL: num, questionsTL: questionsTmp })

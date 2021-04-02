@@ -1,21 +1,55 @@
-import React, { Component, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, } from 'react-native';
+import React, { Component, useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Dimensions, } from 'react-native';
 import ItemMultipleChoice from './ItemMultipleChoice';
 import ItemEssay from './ItemEssay';
 
+const ITEM_HEIGHT = 35;
+
+const { height } = Dimensions.get('window').height;
+
 export default function TotalQuestionConfig(props) {
     useEffect(() => {
-        setQuestions(props.questionList)
+        setQuestions(props.questionList);
+        let numberQuestion = props.questionList?.length;
+        if (numberQuestion) {
+            let flatlistHeightTmp = numberQuestion * ITEM_HEIGHT;
+            setFlatlistHeight(flatlistHeightTmp);
+        }
     }, [props.questionList])
+
+
     const [questions, setQuestions] = useState(props.questionList)
+    const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+    const [flatlistHeight, setFlatlistHeight] = useState(height);
+
+    const flatList = useRef();
     const onChangeOptionAnswer = (index, option) => {
         props.onChangeOptionAnswer(index, option)
     }
-    console.log(props.questionList)
 
     const onChangePointEachQS = (index, val) => {
         props.onChangePointEachQS(index, val);
     }
+
+    const onKeyBoardShow = async (index) => {
+        if (!isShowKeyboard) {
+            let flatlistHeightTmp = flatlistHeight + 200;
+            setFlatlistHeight(flatlistHeightTmp);
+            setIsShowKeyboard(true);
+        }
+        setTimeout(() => {
+            flatList.current.scrollToIndex({ animated: true, index: index });
+        }, 0)
+    }
+
+    const onKeyBoardBlur = () => {
+        if (isShowKeyboard) {
+            let flatlistHeightTmp = flatlistHeight - 200;
+            setFlatlistHeight(flatlistHeightTmp);
+        }
+        setIsShowKeyboard(false);
+    }
+
     return (
         <View style={styles.rootView}>
             <View style={styles.itemWrap}>
@@ -33,10 +67,14 @@ export default function TotalQuestionConfig(props) {
                 </View>
             </View>
             <FlatList
+                ref={flatList}
                 data={props.questionList}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ width: '100%' }}
+                contentContainerStyle={{ width: '100%', height: flatlistHeight }}
+                onLayout={(e) => {
+                    console.log(e.nativeEvent.layout);
+                }}
                 renderItem={({ item, index }) => {
                     if (props.typeQuestion === 0) {
                         return (
@@ -44,6 +82,8 @@ export default function TotalQuestionConfig(props) {
                                 data={item}
                                 onChangeOptionAnswer={onChangeOptionAnswer}
                                 onChangePointEachQS={onChangePointEachQS}
+                                onKeyBoardShow={onKeyBoardShow}
+                                onKeyBoardBlur={onKeyBoardBlur}
                             />
                         )
                     } else {
@@ -52,6 +92,8 @@ export default function TotalQuestionConfig(props) {
                                 data={item}
                                 onChangeOptionAnswer={onChangeOptionAnswer}
                                 onChangePointEachQS={onChangePointEachQS}
+                                onKeyBoardShow={onKeyBoardShow}
+                                onKeyBoardBlur={onKeyBoardBlur}
                             />
                         )
                     }
