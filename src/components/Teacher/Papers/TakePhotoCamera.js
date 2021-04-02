@@ -1,12 +1,20 @@
 import React, { PureComponent } from 'react';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// import { RNCamera } from 'react-native-camera';
+import { Image, StyleSheet, Text, TouchableOpacity, View, Modal, Dimensions } from 'react-native';
+import { RNCamera, } from 'react-native-camera';
+
+const { width, height } = Dimensions.get('window');
 
 class TakePhotoCamera extends PureComponent {
+
+    state = {
+        uri: null,
+    }
+
     render() {
+        const { uri } = this.state;
         return (
             <View style={styles.container}>
-                {/* <RNCamera
+                <RNCamera
                     ref={ref => {
                         this.camera = ref;
                     }}
@@ -28,7 +36,7 @@ class TakePhotoCamera extends PureComponent {
                     onGoogleVisionBarcodesDetected={({ barcodes }) => {
                         console.log(barcodes);
                     }}
-                /> */}
+                />
                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
                         <Text style={{ fontSize: 14 }}> SNAP </Text>
@@ -39,6 +47,14 @@ class TakePhotoCamera extends PureComponent {
                         <Text style={{ fontSize: 14 }}> Back </Text>
                     </TouchableOpacity>
                 </View>
+                <Modal visible={uri != null} style={{ flex: 1, width, height }}>
+                    <TouchableOpacity
+                        onPress={() => this.setState({ uri: null })}
+                    >
+                        <Text>close</Text>
+                    </TouchableOpacity>
+                    <Image source={{ uri }} resizeMode={'contain'} style={{ width: width, height: height }} />
+                </Modal>
             </View>
         );
     }
@@ -48,6 +64,7 @@ class TakePhotoCamera extends PureComponent {
             const options = { quality: 0.5, base64: true };
             const data = await this.camera.takePictureAsync(options);
             console.log(data.uri);
+            this.setState({ uri: data.uri });
         }
     };
 }

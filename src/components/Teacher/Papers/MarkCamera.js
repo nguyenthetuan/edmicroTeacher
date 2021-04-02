@@ -131,20 +131,20 @@ class MarkCamera extends Component {
     myAsyncPDFFunction = async (sourceURL) => {
         try {
             const options = {
-                imagePaths: [sourceURL],
-                name: '',
+                imagePaths: ['https://photo-cms-kienthuc.zadn.vn//zoom/800/uploaded/ctvcongdongtre/2020_02_04/2/diem-mat-4-hot-girl-10x-so-huu-body-dong-ho-cat-nong-bong-mat-hinh-4.jpg'],
+                name: 'PDFName',
                 maxSize: {
                     // optional maximum image dimension - larger images will be resized
-                    width: 900,
-                    height: Math.round(width / height * 900),
+                    width: 300,
+                    height: 300,
                 },
                 quality: .7, // optional compression paramter
             };
 
             const pdf = await RNImageToPdf.createPDFbyImages(options);
-            console.log(pdf.filePath);
+            console.log('pdf.filePath', pdf.filePath);
         } catch (e) {
-            console.log(e);
+            console.log('error pdf', e);
         }
 
     }

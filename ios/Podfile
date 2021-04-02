@@ -106,6 +106,10 @@ target 'school' do
   # pod 'Mixpanel'
   pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
   pod 'OpenSSL-Universal', '~>1.0.2.20'
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'RNImageToPdf', :path => '../node_modules/react-native-image-to-pdf'
+
   target 'schoolTests' do
     inherit! :complete
     # Pods for testing
