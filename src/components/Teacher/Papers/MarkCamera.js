@@ -18,6 +18,7 @@ import {
     KeyboardAvoidingView,
     Pressable
 } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import RippleButton from '../../common-new/RippleButton';
 import DropdownMultiSelect from '../Homework/DropdownMultiSelect';
 import Dropdown from '../Homework/Dropdown';
@@ -98,7 +99,34 @@ class MarkCamera extends Component {
     }
 
     takeCamera = () => {
-        this.props.navigation.navigate("TakePhotoCamera");
+        this.setModalVisible(false);
+        let options = {
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        ImagePicker.launchCamera(options, (response) => {
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                alert(response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                console.log('response', JSON.stringify(response));
+                this.setState({
+                    filePath: response,
+                    fileData: response.data,
+                    fileUri: response.uri
+                });
+                this.convertImageToPdf(response.uri);
+            }
+        });
+        // this.props.navigation.navigate("TakePhotoCamera");
     }
 
 
@@ -110,8 +138,6 @@ class MarkCamera extends Component {
             includeBase64: true,
         })
             .then((image) => {
-                console.log(image);
-
                 this.myAsyncPDFFunction(image.sourceURL);
 
             })
@@ -123,15 +149,43 @@ class MarkCamera extends Component {
         });
     };
 
-    uploadImage = () => {
-        this.action = 'uploadImage';
-        this.cropPickerAndroid();
+    // uploadImage = () => {
+    //     this.action = 'uploadImage';
+    //     this.cropPickerAndroid();
+    // }
+    launchImageLibrary = () => {
+        this.setModalVisible(false);
+        let options = {
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                alert(response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                this.setState({
+                    filePath: response,
+                    fileData: response.data,
+                    fileUri: response.uri
+                });
+                this.convertImageToPdf(response.uri);
+            }
+        });
+
     }
 
-    myAsyncPDFFunction = async (sourceURL) => {
+    convertImageToPdf = async (sourceURL) => {
         try {
             const options = {
-                imagePaths: ['https://photo-cms-kienthuc.zadn.vn//zoom/800/uploaded/ctvcongdongtre/2020_02_04/2/diem-mat-4-hot-girl-10x-so-huu-body-dong-ho-cat-nong-bong-mat-hinh-4.jpg'],
+                imagePaths: [sourceURL],
                 name: 'PDFName',
                 maxSize: {
                     // optional maximum image dimension - larger images will be resized
@@ -142,7 +196,11 @@ class MarkCamera extends Component {
             };
 
             const pdf = await RNImageToPdf.createPDFbyImages(options);
-            console.log('pdf.filePath', pdf.filePath);
+            console.log('pdfdata', pdf);
+            let url = pdf.filePath;
+            let name = 'pdffile';
+            this.uploadFileToServer({ url, name });
+
         } catch (e) {
             console.log('error pdf', e);
         }
@@ -221,45 +279,59 @@ class MarkCamera extends Component {
         return file;
     };
 
+    uploadFileToServer = async ({ url, name }) => {
+        this.setState({
+            loadingUpload: true,
+            pdfFile: name,
+        });
+        this.setState({
+            loadingUpload: true,
+        });
+        console.log("URL PDF " + url);
+        const { token } = await dataHelper.getToken();
+        if (token) {
+            const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
+            console.log(resSignedUrl);
+            if (resSignedUrl) {
+                // console.log("ok done");
+                let file = await this.getBlob(url);
+                console.log(file);
+                const resUpload = await apiPapers.uploadPDF({
+                    url: resSignedUrl.preSignedUrl,
+                    file,
+                });
+
+                const resJson = await resUpload.json();
+                console.log(resJson);
+
+                if (resUpload && resUpload.status === 200) {
+                    this.setState({
+                        urlFilePDF: resSignedUrl.urlFile,
+                        loadingUpload: false,
+                    });
+                    this.toast.show('Tải lên PDF thành công!');
+                } else {
+                    this.toast.show('Tải lên PDF thất bại!');
+                    this.setState({ loadingUpload: false });
+                }
+            }
+        }
+    }
+
     onPickPDF = async () => {
+        this.setModalVisible(false);
         try {
+            // CAMERA
             this.action = 'picker';
             const res = await DocumentPicker.pick({
                 type: [DocumentPicker.types.pdf],
             });
-
+            //UPLOAD API
             if (res) {
                 let url = res.uri;
                 let split = url.split('/');
                 let name = split.pop();
-                this.setState({
-                    loadingUpload: true,
-                    pdfFile: name,
-                });
-                this.setState({
-                    loadingUpload: true,
-                });
-                const { token } = await dataHelper.getToken();
-                if (token) {
-                    const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
-                    if (resSignedUrl) {
-                        let file = await this.getBlob(url);
-                        const resUpload = await apiPapers.uploadPDF({
-                            url: resSignedUrl.preSignedUrl,
-                            file,
-                        });
-
-                        if (resUpload && resUpload.status === 200) {
-                            this.setState({
-                                urlFilePDF: resSignedUrl.urlFile,
-                                loadingUpload: false,
-                            });
-                        } else {
-                            this.toast.show('Tải lên PDF thất bại');
-                            this.setState({ loadingUpload: false });
-                        }
-                    }
-                }
+                this.uploadFileToServer({ url, name });
             }
         } catch (err) {
             this.toast.show('Tải lên PDF thất bại');
@@ -315,13 +387,15 @@ class MarkCamera extends Component {
         }
     };
 
-    getListFile() {
-        if (this.action == 'uploadImage') {
-            return [this.state.pdfFromImage];
-        } else {
-            return [this.state.urlFilePDF];
-        }
-    }
+    // getListFile() {
+    //     if (this.action == 'uploadImage') {
+    //         return [this.state.pdfFromImage];
+    //     } else if (this.action == 'uploadFile') {
+
+    //     } else {
+    //         return [this.state.urlFilePDF];
+    //     }
+    // }
 
     UploadPdfCam = async () => {
         Keyboard.dismiss();
@@ -350,7 +424,7 @@ class MarkCamera extends Component {
                 duration: assignmentType ? parseInt(duration) * 60 : 300,
                 // question: question,
                 assignmentContentType: 1,
-                listFile: this.getListFile()
+                listFile: urlFilePDF
             };
 
             const { token } = await dataHelper.getToken();
@@ -465,7 +539,6 @@ class MarkCamera extends Component {
         } = this.state;
         const numColumns = this.getNumColumns();
         const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
-        console.log("this.state.indexSelectingTL: ", this.state.indexSelectingTL);
         const points = this.selectAnswer?.getTotalPoint();
         const { shadowBtn } = shadowStyle;;
         const { modalVisible } = this.state;
@@ -609,23 +682,29 @@ class MarkCamera extends Component {
                         transparent={true}
                         visible={modalVisible}
                     >
+
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <TouchableOpacity onPress={this.onPickPDF} style={{ padding: 10 }}>
-                                    <Text>Upload .PDF</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.uploadImage} style={{ padding: 10 }}>
-                                    <Text>Upload Image</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.takeCamera} style={{ padding: 10 }}>
-                                    <Text>Take camera</Text>
-                                </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[styles.button, styles.buttonClose]}
                                     onPress={() => this.setModalVisible(!modalVisible)}
                                 >
-                                    <Text style={styles.textStyle}>Close</Text>
+                                    <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
                                 </TouchableOpacity>
+                                <View style={styles.rowFlex}>
+                                    <TouchableOpacity onPress={this.onPickPDF} style={styles.clickOption}>
+                                        <Image source={require('../../../asserts/icon/icon_addPdf.png')} style={styles.iconOp} />
+                                        <Text style={styles.txtOP}>Tải .PDF</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.launchImageLibrary} style={styles.clickOption}>
+                                        <Image source={require('../../../asserts/icon/icon_add_image.png')} style={styles.iconOp} />
+                                        <Text style={styles.txtOP}>Chọn ảnh</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.takeCamera} style={styles.clickOption}>
+                                        <Image source={require('../../../asserts/icon/icon_camera.png')} style={styles.iconOp} />
+                                        <Text style={styles.txtOP}>Chụp ảnh</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                     </Modal>
@@ -787,7 +866,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 22,
     },
     modalView: {
         margin: 20,
@@ -802,10 +881,11 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
+        justifyContent: 'space-between',
+        flexDirection: 'column'
     },
     button: {
-        borderRadius: 20,
         padding: 10,
         elevation: 2
     },
@@ -813,9 +893,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#F194FF",
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        alignSelf: 'flex-end',
         position: 'absolute',
-        alignSelf: 'flex-end'
+        right: 5
     },
     textStyle: {
         color: "white",
@@ -825,6 +905,38 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: "center"
+    },
+    clickOption: {
+        flexDirection: 'column',
+        flex: 1,
+        borderWidth: 0.5,
+        borderStyle: 'dashed',
+        marginHorizontal: 6,
+        borderRadius: 5,
+        // paddingVertical: 10,
+    },
+    rowFlex: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 16,
+        marginBottom: 16
+    },
+    iconOp: {
+        width: 25,
+        height: 25,
+        alignSelf: 'center',
+        marginTop: 5
+    },
+    txtOP: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        textAlign: "center",
+        color: "#000",
+        paddingTop: 5,
+        paddingHorizontal: 5,
+        paddingBottom: 5
+
     }
 
 });

@@ -349,7 +349,6 @@ class LoginWithPhoneScreen extends Component {
                 {!this.state.isLoging ?
                   <Button
                     center={true}
-                    btn={'rgb'}
                     title="Đăng nhập"
                     width={width - 60}
                     circle={40}

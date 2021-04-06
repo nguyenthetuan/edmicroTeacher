@@ -744,7 +744,6 @@ class Papers extends Component {
       dataFilter,
     } = this.state;
     const { user } = this.props;
-
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 390);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 50],
@@ -851,7 +850,7 @@ class Papers extends Component {
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
           onPressUploadPDF={this.onPressUploadPDF}
-          // onPressCamera={this.onPressCamera}
+        // onPressCamera={this.onPressCamera}
         />
         <ModalOption
           visibleEdit={visibleEdit}
@@ -931,14 +930,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    shadowColor: "#000",
+    shadowColor: "#c4c4c4",
     shadowOffset: {
       width: 0,
-      height: 2.5,
+      height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 2.5,
-    elevation: 5,
+    shadowOpacity: 0.20,
+    shadowRadius: 5,
+    elevation: 3
   },
   buttonNotActive: {
     flex: 1,

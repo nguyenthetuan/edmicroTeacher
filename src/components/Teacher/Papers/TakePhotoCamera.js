@@ -20,7 +20,7 @@ class TakePhotoCamera extends PureComponent {
                     }}
                     style={styles.preview}
                     type={RNCamera.Constants.Type.back}
-                    flashMode={RNCamera.Constants.FlashMode.on}
+                    flashMode={RNCamera.Constants.FlashMode.auto}
                     androidCameraPermissionOptions={{
                         title: 'Permission to use camera',
                         message: 'We need your permission to use your camera',
@@ -36,22 +36,33 @@ class TakePhotoCamera extends PureComponent {
                     onGoogleVisionBarcodesDetected={({ barcodes }) => {
                         console.log(barcodes);
                     }}
-                />
-                <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-                    <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-                        <Text style={{ fontSize: 14 }}> SNAP </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
-                        this.props.navigation.goBack()
-                    }} style={styles.capture}>
-                        <Text style={{ fontSize: 14 }}> Back </Text>
-                    </TouchableOpacity>
-                </View>
+                    captureAudio={true}
+                    autoFocus={RNCamera.Constants.AutoFocus.on}
+                    focusDepth={1}
+                    whiteBalance={RNCamera.Constants.WhiteBalance.auto}
+                    maxZoom={1}
+                    playSoundOnCapture={true}
+                    faceDetectionMode={RNCamera.Constants.FaceDetection.Mode.fast}
+                    torchMode
+                >
+                    <View style={styles.touchCapture}>
+                        <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
+                            <Text style={{ fontSize: 14 }}> SNAP </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            this.props.navigation.goBack()
+                        }} style={styles.capture}>
+                            <Text style={{ fontSize: 14 }}> Back </Text>
+                        </TouchableOpacity>
+                    </View>
+                </RNCamera>
+
                 <Modal visible={uri != null} style={{ flex: 1, width, height }}>
                     <TouchableOpacity
                         onPress={() => this.setState({ uri: null })}
+                        style={{ marginTop: 10 }}
                     >
-                        <Text>close</Text>
+                        <Text style={styles.close}>close</Text>
                     </TouchableOpacity>
                     <Image source={{ uri }} resizeMode={'contain'} style={{ width: width, height: height }} />
                 </Modal>
@@ -91,4 +102,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         margin: 20,
     },
+    close: {
+        color: "red",
+        padding: 10
+    },
+    touchCapture: {
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+    }
 });
