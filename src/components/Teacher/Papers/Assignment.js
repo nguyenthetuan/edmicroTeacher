@@ -37,7 +37,7 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import shadowStyle from '../../../themes/shadowStyle';
 import Carousel from 'react-native-snap-carousel';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
+import AwesomeButton from 'react-native-really-awesome-button';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 20;
 const slideWidth = width - 95;
@@ -163,9 +163,11 @@ function Item(props) {
       <View style={styles.contentItem}>
         <View style={styles.viewName}>
           <Text style={styles.txtTitleItemContent}>Lớp</Text>
-          <View style={styles.inputName}>
+          {/* <View style={styles.inputName}>
             <Text numberOfLines={1} style={styles.txtContentItem}>{props.item.name}</Text>
-          </View>
+          </View> */}
+
+          <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
         <View style={[styles.viewName, { top: 8 }]}>
           <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
@@ -178,7 +180,7 @@ function Item(props) {
           <TouchableWithoutFeedback
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#E0E0E0' }]}>
+            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#f0f0f0' : '#f0f0f0' }]}>
             <Text numberOfLines={1} style={styles.txtContentItem}>
               {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
           </TouchableWithoutFeedback>
@@ -227,11 +229,30 @@ function Item(props) {
           </View>
           <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
+        {/* <TouchableWithoutFeedback
           onPress={onAssignment}
-          style={[styles.btnAssignment, { ...shadowBtn }]}>
+          style={[styles.btnAssignment, { ...shadowBtn }]}
+          >
           <Text style={styles.txtAssignment}>Giao bài</Text>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback> */}
+        <AwesomeButton
+          // progress
+          onPress={onAssignment}
+          style={[styles.AweBtn, { ...shadowBtn }]}
+          height={50}
+          backgroundColor={'#2D9CDB'}
+          borderBottomLeftRadius={20}
+          borderBottomRightRadius={20}
+          borderTopLeftRadius={20}
+          borderTopRightRadius={20}
+          backgroundActive={'#2D9DFE'}
+          backgroundShadow={'transparent'}
+          backgroundDarker={'transparent'}
+
+        >
+          <Text style={styles.txtAssignment}>Giao bài</Text>
+        </AwesomeButton>
+
       </View>
       {__DEV__ ? null : <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -491,26 +512,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  AweBtn: {
+    alignSelf: 'center',
+    marginTop: 30
+  },
   txtAssignment: {
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(18),
     lineHeight: RFFonsize(21),
     fontWeight: '500',
     color: '#fff',
-    marginLeft: 76,
-    marginRight: 76,
+    marginLeft: 60,
+    marginRight: 60,
     marginTop: 14,
     marginBottom: 14
   },
   checkAllow: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     borderWidth: 1,
     borderColor: '#56CCF2',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 7,
-    borderRadius: 2,
+    borderRadius: 4,
   },
   btnCheckAllow: {
     flexDirection: 'row',
@@ -520,9 +545,9 @@ const styles = StyleSheet.create({
 
   },
   txtCheckAllow: {
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito-LightItalic',
     fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
+    lineHeight: RFFonsize(18),
     color: '#2D9CDB'
   },
   viewName: {
@@ -543,6 +568,16 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     color: '#2D9CDB',
     marginLeft: 10
+  },
+  titleClass: {
+    fontFamily: 'Nunito-SemiBoldItalic',
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(22),
+    color: '#2D9CDB',
+    alignSelf: 'center',
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 0.8,
+    textShadowColor: '#f0f0f0'
   },
   viewDate: {
     flexDirection: 'column',
