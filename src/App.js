@@ -41,23 +41,6 @@ class App extends Component {
     this.updataVersionApp();
     console.disableYellowBox = true;
     this.configureTextProps();
-    dataHelper.getToken().then(({ token }) => {
-      const { userId, idMixpanel } = jwtDecode(token);
-      if (!idMixpanel || idMixpanel !== Common.MixpanelToken) {
-        Mixpanel.createAlias(userId);
-        apiUser
-          .updateMixpanelId({ token, mixpanelId: Common.MixpanelToken })
-          .then((data) => {
-            if (!!data) {
-              Mixpanel.set(jwtDecode(data.access_token));
-              Mixpanel.trackWithProperties('Sign Up', {
-                user: 'OLD',
-                mobile: Platform.OS,
-              });
-            }
-          });
-      }
-    });
   }
 
   updataVersionApp = async () => {

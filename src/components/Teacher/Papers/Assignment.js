@@ -296,7 +296,7 @@ class Assignment extends Component {
     return (
       <View style={styles.viewNotFound}>
         <Image source={require('../../../asserts/icon/iconNodata.png')} />
-        <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+        <Text style={styles.txtNotFound}>Không tìm lớp giao bài.</Text>
       </View>
     )
   }
@@ -332,10 +332,14 @@ class Assignment extends Component {
         <SafeAreaView style={styles.container} />
         <HeaderNavigation
           goBack={() => {
-            this._carousel.snapToItem(0);
-            this.timeMount = setTimeout(() => {
+            try {
+              this._carousel.snapToItem(0);
+              this.timeMount = setTimeout(() => {
+                this.props.navigation.goBack();
+              }, 350);
+            } catch (error) {
               this.props.navigation.goBack();
-            }, 350);
+            }
           }}
           backgroundColor={'#359CDB'}
           color={'#fff'}
