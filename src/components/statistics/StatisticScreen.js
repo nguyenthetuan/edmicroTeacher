@@ -104,6 +104,14 @@ class StatisticScreen extends Component {
         } = this.props;
         return (
             <SafeAreaView style={styles.container}>
+                <View style={styles.bgHeader}>
+                    <HeaderNavigation
+                        navigation={this.props.navigation}
+                        color={'#000'}
+                        title={'Thống kê'}
+                        back={true}
+                    />
+                </View>
                 {isLoading
                     ?
                     <ActivityIndicator size='small' color='gray' style={styles.isLoading} />
@@ -112,14 +120,6 @@ class StatisticScreen extends Component {
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         style={{ flex: 1 }}>
-                        <View style={styles.bgHeader}>
-                            <HeaderNavigation
-                                navigation={this.props.navigation}
-                                color={'#000'}
-                                title={'Thống kê'}
-                                back={true}
-                            />
-                        </View>
                         <Text style={styles.titleTask}>
                             Quản lý lớp học
                     </Text>
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     },
     bgHeader: {
         backgroundColor: '#fff',
-        flex: 1
+        // flex: 1
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
