@@ -228,7 +228,7 @@ function Item(props) {
           style={[styles.AweBtn, { ...shadowBtn }]}
           height={45}
           backgroundColor={'#2D9CDB'}
-          borderRadius={5}
+          borderRadius={25}
           backgroundActive={'#2D9DFE'}
           backgroundShadow={'transparent'}
           backgroundDarker={'transparent'}
@@ -328,7 +328,7 @@ class Assignment extends Component {
     const { data, loading, activeSlide } = this.state;
     const dataItem = this.props.navigation.getParam('item');
     return (
-      <View style={{ flex: 1, backgroundColor: '#359CDB' }}>
+      <View style={{ flex: 1 }}>
         <SafeAreaView style={styles.container} />
         <HeaderNavigation
           goBack={() => {
@@ -357,7 +357,7 @@ class Assignment extends Component {
                   width: 12,
                   height: 12,
                   borderRadius: 10,
-                  backgroundColor: '#fff',
+                  backgroundColor: '#359CDB',
                 }}
                 inactiveDotStyle={{
                   backgroundColor: '#c4c4c4'
