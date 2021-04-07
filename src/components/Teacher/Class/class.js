@@ -6,8 +6,11 @@ import {
   StatusBar,
   ActivityIndicator,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
+  AppState
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import jwtDecode from 'jwt-decode';
 import AppIcon from '../../../utils/AppIcon';
 import global from '../../../utils/Globals';
 import ListClass from './listClass';
@@ -18,6 +21,9 @@ import SplashScreen from 'react-native-splash-screen';
 import { setProfileUserAction } from '../../../actions/userAction';
 import { userGiftAction } from '../../../actions/giftAction';
 import { getUserByToken } from '../../../utils/Helper';
+import { LOGIN_TYPE, isExpried, isRefresh } from '../../../utils/AuthCommon';
+import apiUserHelper from '../../../services/apiUserHelper';
+import { TOKEN_EXP } from '../../../constants/const';
 import HeaderMain from '../../common-new/HeaderMain';
 import ClassHolder from '../../shim/ClassHolder';
 
@@ -28,25 +34,103 @@ class Class extends Component {
       data: [],
       isLoading: true,
       isRefresh: false,
+      appState: AppState.currentState
     };
   }
 
   async componentDidMount() {
     try {
       SplashScreen.hide();
-      const { token } = await dataHelper.getToken();
-      const payload = getUserByToken(token);
-      this.props.makeRequestProfile(payload);
-      this.props.userGiftAction({ token });
-      const response = await Api.getListClass({ token });
-      this.setState({
-        isLoading: false,
-        data: response && response,
-      });
+      AppState.addEventListener("change", this._handleAppStateChange);
+      await this.onRefreshToken();
+      this.setTimeoutRefresh();
+      this.initData();
     } catch (error) {
       this.setState({
         isLoading: false,
       });
+    }
+  }
+
+  async initData() {
+    const { token } = await dataHelper.getToken();
+    const payload = getUserByToken(token);
+    this.props.makeRequestProfile(payload);
+    this.props.userGiftAction({ token });
+    const response = await Api.getListClass({ token });
+    this.setState({
+      isLoading: false,
+      data: response && response,
+    });
+  }
+
+  componentWillUnmount = () => {
+    AppState.removeEventListener("change", this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = nextAppState => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log("App has come to the foreground!");
+      this.checkToken();
+    }
+    this.setState({ appState: nextAppState });
+  };
+
+  checkToken = async () => {
+    this.onRefreshToken();
+    this.setTimeoutRefresh();
+  }
+
+  setTimeoutRefresh = () => {
+    if (this.timeRefresh != null) {
+      clearInterval(this.timeRefresh);
+      this.timeRefresh = null;
+    }
+    this.timeRefresh = setInterval(() => {
+      this.onRefreshToken();
+    }, 30000);
+  }
+
+  onRefreshToken = async () => {
+    const value = await AsyncStorage.getItem('@token');
+    if (value !== null && value !== '') {
+      const curTime = Math.floor(Date.now() / 1000);
+      const { iat, exp } = jwtDecode(value);
+      let userPost = null;
+      let userObj = null;
+      let res = null;
+      if (isExpried(exp, curTime) == true) {
+        userPost = await dataHelper.getUserPost();
+        userObj = JSON.parse(userPost);
+        switch (userObj.loginType) {
+          case LOGIN_TYPE.PHONE:
+            res = await apiUserHelper.loginPhoneV2(userObj);
+            break;
+          case LOGIN_TYPE.USERNAME:
+            res = await apiUserHelper.loginUserName(userObj);
+            break;
+          default:
+            global.onSignIn(false); // sosical exp
+            break;
+        }
+        if (res != '' && res.status === 200) {
+          dataHelper.saveToken(res.access_token);
+          return { token: res.access_token }
+        }
+      } else if (isRefresh(exp, curTime, iat)) {
+        userPost = await dataHelper.getUserPost();
+        userObj = JSON.parse(userPost);
+        res = await apiUserHelper.refreshToken({ token: value });
+        console.log(res);
+        if (res != '' && res.status === 200) {
+          dataHelper.saveToken(res.access_token);
+          return { token: res.access_token }
+        }
+      }
+      return { token: value };
     }
   }
 

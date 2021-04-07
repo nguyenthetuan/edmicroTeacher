@@ -383,14 +383,10 @@ PODS:
     - gRPC-Core/Interface (= 1.21.0)
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
-  - GTMAppAuth (1.1.0):
+  - GTMAppAuth (1.2.1):
     - AppAuth/Core (~> 1.4)
-    - GTMSessionFetcher (~> 1.4)
-  - GTMSessionFetcher (1.5.0):
-    - GTMSessionFetcher/Full (= 1.5.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.5.0)
-  - GTMSessionFetcher/Full (1.5.0):
-    - GTMSessionFetcher/Core (= 1.5.0)
   - JWT (3.0.0-beta.12):
     - Base64 (~> 1.1.2)
   - leveldb-library (1.22.1)
@@ -1154,7 +1150,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
-  GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
+  GTMAppAuth: 5b53231ef6920f149ab84b2969cb0ab572da3077
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
@@ -1243,4 +1239,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c96e82de5717c6b1850dc5128c9b1af1d39cef4a
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.9.3

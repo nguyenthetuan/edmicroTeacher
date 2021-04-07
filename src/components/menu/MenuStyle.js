@@ -74,12 +74,18 @@ const MenuStyle = StyleSheet.create({
         tintColor: '#4776AD'
     },
     textVersion: {
-        alignSelf: 'center',
-        marginHorizontal: 40,
-        marginVertical: 20,
+        marginVertical: 5,
         color: '#999',
         fontSize: RFFonsize(11),
-        fontFamily: 'Nunito-Regular'
+        lineHeight: RFFonsize(15),
+        fontFamily: 'Nunito-Regular',
+    },
+    versionContainer: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        marginHorizontal: 25,
+        paddingVertical: 12,
+        backgroundColor: '#fff',
     }
 });
 

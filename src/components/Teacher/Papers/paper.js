@@ -706,7 +706,7 @@ class Papers extends Component {
         <RippleButton
           onPress={() => { this.onPressChangeType(1) }}
           style={typeChange === 1 ? [styles.buttonActive,
-          { backgroundColor: '#56CCF2', borderColor: '#56CCF2' }] : styles.buttonNotActive}
+          { backgroundColor: '#334ca4', borderColor: '#334ca4' }] : styles.buttonNotActive}
         >
           <Text
             style={typeChange === 1 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
@@ -716,7 +716,7 @@ class Papers extends Component {
         <RippleButton
           onPress={() => { this.onPressChangeType(2) }}
           style={typeChange === 2 ? [styles.buttonActive,
-          { backgroundColor: '#33CBCB', borderColor: '#33CBCB' }] : styles.buttonNotActive}>
+          { backgroundColor: '#DB3546', borderColor: '#DB3546' }] : styles.buttonNotActive}>
           <Text
             style={typeChange === 2 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
             Chưa giao
@@ -727,6 +727,7 @@ class Papers extends Component {
   }
 
   render() {
+    console.log("render paper");
     const {
       loading,
       animation,
@@ -793,7 +794,7 @@ class Papers extends Component {
               <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
             )
           }}
-          initialNumToRender={5}
+          initialNumToRender={2}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}
