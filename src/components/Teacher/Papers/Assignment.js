@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Platform,
   SafeAreaView,
+  TouchableWithoutFeedback,
   Alert
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
@@ -35,8 +36,7 @@ import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
 // import classIcon from '../../../asserts/appIcon/icon_class.png';
 import shadowStyle from '../../../themes/shadowStyle';
-import Carousel from 'react-native-snap-carousel';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AwesomeButton from 'react-native-really-awesome-button';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 20;
@@ -49,7 +49,8 @@ const itemHeight = height;
 
 const Stage = {
   begin: 1,
-  end: 2
+  end: 2,
+  activeSlide: 1
 }
 
 function Item(props) {
@@ -157,57 +158,49 @@ function Item(props) {
 
   return (
     <View style={styles.containerItem}>
-      {/* <View style={styles.headerItem}>
-        <Text style={styles.txtTitleItem}>{props.item.name}</Text>
-      </View> */}
       <View style={styles.contentItem}>
         <View style={styles.viewName}>
-          <Text style={styles.txtTitleItemContent}>Lớp</Text>
-          {/* <View style={styles.inputName}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>{props.item.name}</Text>
-          </View> */}
-
           <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
-        <View style={[styles.viewName, { top: 8 }]}>
+        <View style={styles.viewName}>
           <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
           <View style={styles.inputName}>
             <Text numberOfLines={1} style={styles.txtContentItem}>{props.dataItem.name}</Text>
           </View>
         </View>
-        <View style={[styles.viewDate, { top: 10 }]}>
+        <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Bắt đầu</Text>
           <TouchableWithoutFeedback
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#f0f0f0' : '#f0f0f0' }]}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>
-              {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
+          >
+            <View
+              style={[styles.btnDate, { backgroundColor: item.timeStart ? '#f0f0f0' : '#f0f0f0' }]}>
+              <Text numberOfLines={1} style={styles.txtContentItem}>
+                {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
+            </View>
           </TouchableWithoutFeedback>
         </View>
-        <View style={[styles.viewDate, { paddingTop: 10 }]}>
+        <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Kết thúc</Text>
           <TouchableWithoutFeedback
             onPress={() => showDatePicker(Stage.end)}
-            style={styles.btnDate}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>
-              {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
+          >
+            <View style={styles.btnDate}>
+              <Text numberOfLines={1} style={styles.txtContentItem}>
+                {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
+            </View>
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Học sinh</Text>
-          {/* <DropdownStudent
-            ref={dropdownStudent}
-            dataItem={item}
-            style={{ width: width - 32, marginTop: 8, height: 40, }}
-            dropdownStyle={{ width: width - 32 }}
-            options={item.students}
-          /> */}
-          <TouchableWithoutFeedback onPress={() => { handlePickStudent() }} style={styles.dropZuCha}>
-            <View style={styles.borDropRight}>
-              <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+          <TouchableWithoutFeedback onPress={() => { handlePickStudent() }}>
+            <View style={styles.dropZuCha}>
+              <View style={styles.borDropRight}>
+                <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+              </View>
+              <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
             </View>
-            <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
           </TouchableWithoutFeedback>
           <ModalSelectStudent
             ref={pickStudent}
@@ -219,36 +212,26 @@ function Item(props) {
             handlePickStudent={handlePickStudent}
           />
         </View>
-        <TouchableWithoutFeedback
-          onPress={() => setCheck(!isCheck)}
-          style={styles.btnCheckAllow}>
-          <View style={styles.checkAllow}>
-            {
-              isCheck ? <Icon name="check" color={'#56CCF2'} size={18} /> : null
-            }
+        <TouchableWithoutFeedback onPress={() => setCheck(!isCheck)}>
+          <View
+            style={styles.btnCheckAllow}>
+            <View style={styles.checkAllow}>
+              {
+                isCheck ? <Icon name="check" color={'#56CCF2'} size={18} /> : null
+              }
+            </View>
+            <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
           </View>
-          <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
         </TouchableWithoutFeedback>
-        {/* <TouchableWithoutFeedback
-          onPress={onAssignment}
-          style={[styles.btnAssignment, { ...shadowBtn }]}
-          >
-          <Text style={styles.txtAssignment}>Giao bài</Text>
-        </TouchableWithoutFeedback> */}
         <AwesomeButton
-          // progress
           onPress={onAssignment}
           style={[styles.AweBtn, { ...shadowBtn }]}
-          height={50}
+          height={45}
           backgroundColor={'#2D9CDB'}
-          borderBottomLeftRadius={20}
-          borderBottomRightRadius={20}
-          borderTopLeftRadius={20}
-          borderTopRightRadius={20}
+          borderRadius={5}
           backgroundActive={'#2D9DFE'}
           backgroundShadow={'transparent'}
           backgroundDarker={'transparent'}
-
         >
           <Text style={styles.txtAssignment}>Giao bài</Text>
         </AwesomeButton>
@@ -260,7 +243,6 @@ function Item(props) {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />}
-
     </View >
   )
 }
@@ -324,6 +306,7 @@ class Assignment extends Component {
   }
 
   _handleGoBack = () => {
+    this.state.activeSlide;
     if (this.props.navigation.state.params.checked) {
       Globals.updatePaper();
       this.props.navigation.replace('QuestionLibrary')
@@ -332,68 +315,90 @@ class Assignment extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.timeMount != null) {
+      clearTimeout(this.timeMount);
+      this.timeMount = null;
+    }
+  }
+
+
+
   render() {
-    const { data } = this.state;
+    const { data, loading, activeSlide } = this.state;
     const dataItem = this.props.navigation.getParam('item');
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#359CDB' }}>
         <SafeAreaView style={styles.container} />
         <HeaderNavigation
-          backgroundColor={'#56CCF2'}
+          goBack={() => {
+            this._carousel.snapToItem(0);
+            this.timeMount = setTimeout(() => {
+              this.props.navigation.goBack();
+            }, 350);
+          }}
+          backgroundColor={'#359CDB'}
           color={'#fff'}
           title={dataItem.name}
           navigation={this.props.navigation}
-          goBack={() => this._handleGoBack()}
-          // actionIcon={classIcons')}
           iconAction={() => { this.props.navigation.pop(4) }}
-        // actionColor='#56CCF2' 
         />
-        {/* <FlatList
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-          data={data}
-          style={{ backgroundColor: '#fff' }}
-          keyExtractor={(item, index) => index.toString()}
-          // ListHeaderComponent={this._renderListHeader}
-          ListEmptyComponent={this._renderListEmpty}
-          renderItem={({ item, index }) => {
-            return <Item
-              item={item}
-              navigation={this.props.navigation}
-              onToast={(text) => this.onToast(text)}
-              dataItem={dataItem}
-              needUpdate={this.props.needUpdate}
-            />
-          }}
-        /> */}
-        <Carousel
-          ref={(c) => { this._carousel = c; }}
-          layout={'stack'}
-          layoutCardOffset={`14`}
-          data={data}
-          renderItem=
-          {({ item, index }) => {
-            return <Item
-              item={item}
-              navigation={this.props.navigation}
-              onToast={(text) => this.onToast(text)}
-              dataItem={dataItem}
-              needUpdate={this.props.needUpdate}
-            />
-          }}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          itemHeight={itemHeight}
-          hasParallaxImages={true}
-          inactiveSlideScale={100}
-          inactiveSlideOpacity={0.7}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          loopClonesPerSide={2}
-          autoplayDelay={500}
-          autoplayInterval={3000}
-          activeAnimationType='timing'
-        />
+        {
+          loading ? <ActivityIndicator style={{ flex: 1 }} /> : (data && data.length > 0)
+            ?
+            <>
+              <Pagination
+                dotsLength={data.length}
+                activeDotIndex={activeSlide || 0}
+                containerStyle={{
+                  height: height * 0.1
+                }}
+                dotStyle={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 10,
+                  backgroundColor: '#fff',
+                }}
+                inactiveDotStyle={{
+                  backgroundColor: '#c4c4c4'
+                }}
+                inactiveDotOpacity={0.6}
+                inactiveDotScale={0.7}
+              />
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                layout={'stack'}
+                layoutCardOffset={14}
+                data={data}
+                renderItem=
+                {({ item, index }) => {
+                  return <Item
+                    item={item}
+                    navigation={this.props.navigation}
+                    onToast={(text) => this.onToast(text)}
+                    dataItem={dataItem}
+                    needUpdate={this.props.needUpdate}
+                  />
+                }}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                itemHeight={itemHeight}
+                activeSlideOffset={1}
+                inactiveSlideOpacity={0.7}
+                containerCustomStyle={styles.slider}
+                contentContainerCustomStyle={styles.sliderContentContainer}
+                loopClonesPerSide={2}
+                autoplayDelay={500}
+                autoplayInterval={3000}
+                activeAnimationType='spring'
+                activeSlideAlignment='center'
+                onSnapToItem={(index) => this.setState({ activeSlide: index })}
+              />
+
+            </>
+            :
+            this._renderListEmpty()
+        }
         <Toast ref="toast" position={'bottom'} />
         <SafeAreaView />
       </View >
@@ -420,7 +425,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#56CCF2'
+    backgroundColor: '#359CDB'
   },
   wrapHeader: {
     flexDirection: 'row',
@@ -466,7 +471,7 @@ const styles = StyleSheet.create({
   containerItem: {
     borderRadius: 5,
     marginBottom: 16,
-    marginTop: 16,
+    // marginTop: 16,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -474,7 +479,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
-
     elevation: 4,
     flex: 1,
     // backgroundColor: "#fff"
@@ -503,6 +507,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(18),
     color: '#828282',
+    marginTop: 10
   },
   btnAssignment: {
     alignSelf: 'center',
@@ -514,18 +519,19 @@ const styles = StyleSheet.create({
   },
   AweBtn: {
     alignSelf: 'center',
-    marginTop: 30
+    marginTop: "10%",
+    marginBottom: '20%',
   },
   txtAssignment: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(18),
-    lineHeight: RFFonsize(21),
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20),
     fontWeight: '500',
     color: '#fff',
-    marginLeft: 60,
-    marginRight: 60,
-    marginTop: 14,
-    marginBottom: 14
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 6,
+    marginBottom: 6
   },
   checkAllow: {
     width: 18,
@@ -559,7 +565,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     paddingHorizontal: 8,
-    marginTop: 8,
+    marginTop: 5,
     borderWidth: 0.5,
     borderColor: '#56CCF2',
   },
@@ -577,11 +583,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textShadowOffset: { width: 3, height: 3 },
     textShadowRadius: 0.8,
-    textShadowColor: '#f0f0f0'
+    textShadowColor: '#f0f0f0',
+    marginTop: 6,
+    marginBottom: 10
   },
   viewDate: {
     flexDirection: 'column',
-    marginTop: 8,
+    marginTop: 5,
   },
   btnDate: {
     height: 40,
@@ -589,7 +597,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     paddingHorizontal: 8,
-    marginTop: 8,
+    marginTop: 5,
     borderWidth: 0.5,
     borderColor: '#56CCF2'
   },
@@ -606,7 +614,7 @@ const styles = StyleSheet.create({
     color: '#828282',
   },
   dropZuCha: {
-    marginTop: 8,
+    marginTop: 5,
     height: 40,
     borderWidth: 0.5,
     borderRadius: 5,

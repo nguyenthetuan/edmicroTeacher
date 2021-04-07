@@ -67,7 +67,7 @@ export default class MissionScreen extends Component {
     try {
       this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
     } catch (error) {
-      
+
     }
   }
 
@@ -125,15 +125,17 @@ export default class MissionScreen extends Component {
       textSearch
     } = this.state;
     return (
-      <SearchComponent
-        placeholder="Tìm kiếm"
-        cancelColor="#2D9CDB"
-        value={textSearch}
-        onChange={this.onChangeText}
-        onSearchClear={this.onSearchClear}
-        customSearchInputStyle={styles.textSear}
-        customCancelTextStyle={styles.txtCan}
-      />
+      <View style={{width :'100%'}}>
+        <SearchComponent
+          placeholder="Tìm kiếm"
+          cancelColor="#2D9CDB"
+          value={textSearch}
+          onChange={this.onChangeText}
+          onSearchClear={this.onSearchClear}
+          customSearchInputStyle={styles.textSear}
+          customCancelTextStyle={styles.txtCan}
+        />
+      </View>
     );
   };
 
