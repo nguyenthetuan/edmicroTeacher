@@ -162,14 +162,14 @@ function Item(props) {
         <View style={styles.viewName}>
           <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
-        <View style={styles.viewName}>
+        {/* <View style={styles.viewName}>
           <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
           <View style={styles.inputName}>
             <Text numberOfLines={1} style={styles.txtContentItem}>{props.dataItem.name}</Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.viewDate}>
-          <Text style={styles.txtTitleItemContent}>Bắt đầu</Text>
+          <Text style={styles.txtTitleItemContent}>Ngày bắt đầu</Text>
           <TouchableWithoutFeedback
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
@@ -182,7 +182,7 @@ function Item(props) {
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.viewDate}>
-          <Text style={styles.txtTitleItemContent}>Kết thúc</Text>
+          <Text style={styles.txtTitleItemContent}>Ngày kết thúc</Text>
           <TouchableWithoutFeedback
             onPress={() => showDatePicker(Stage.end)}
           >
@@ -193,7 +193,7 @@ function Item(props) {
           </TouchableWithoutFeedback>
         </View>
         <View style={styles.viewDate}>
-          <Text style={styles.txtTitleItemContent}>Học sinh</Text>
+          <Text style={styles.txtTitleItemContent}>Học sinh được giao bài tập</Text>
           <TouchableWithoutFeedback onPress={() => { handlePickStudent() }}>
             <View style={styles.dropZuCha}>
               <View style={styles.borDropRight}>
