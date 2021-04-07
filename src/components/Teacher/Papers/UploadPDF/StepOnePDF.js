@@ -47,53 +47,29 @@ export default class StepOnePDF extends Component {
         this.props.screenProps.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: type === 1 ? this.state.urlFilePDFAS : this.state.urlFilePDFQS, text: type == 1 ? 'Lời Giải' : 'Bộ đề PDF' });
     }
 
+    validate = () => {
+        const { urlFilePDFQS, urlFilePDFAS } = this.state;
+        if (!urlFilePDFQS || !urlFilePDFAS) {
+            this.toast.show('Chưa upload file PDF!')
+            return false;
+        }
+        return true;
+    }
+
     handleNextStepTwo = () => {
-        // Keyboard.dismiss();
-        // const {
-        //     valueClass,
-        //     valueSubject,
-        //     nameMission,
-        //     htmlContent
-        // } = this.state;
-        // if (
-        //     _.isEmpty(valueClass) ||
-        //     _.isEmpty(valueSubject) ||
-        //     _.isEmpty(nameMission)
-        // ) {
-        //     this.refToast.show('Bạn chưa điền đầy đủ thông tin', 3000);
-        //     return;
-        // }
-        // const gradeId = `C${valueClass.split(' ')[1]}`;
-        // let { listSubject } = this.props.screenProps;
-        // let subjectId = '';
-        // subjectId = listSubject.find(item => item.name == valueSubject).code;
-        // const formData = {
-        //     gradeId,
-        //     subjectId,
-        //     nameMission,
-        // };
-        // this.props.screenProps.getCategoryHirachyMission({
-        //     token: this.token,
-        //     gradeId: formData.gradeId,
-        //     subjectId: formData.subjectId,
-        // });
-        // this.props.screenProps.getCategoryTest({
-        //     token: this.token,
-        //     gradeId: formData.gradeId,
-        //     subjectId: formData.subjectId,
-        // });
-        // this.props.navigation.navigate('StepTwo');
-        // const data = {
-        //     ...this.props.screenProps.data,
-        //     nameMission,
-        //     valueSubject,
-        //     valueClass,
-        //     valueDes: htmlContent,
-        //     subjectCode: subjectId,
-        //     gradeId
-        // };
-        this.props.screenProps.handleNextStep(1);
-        this.props.navigation.navigate('StepTwo');
+        const { urlFilePDFQS, urlFilePDFAS } = this.state;
+        const data = {
+            ...this.props.screenProps.data,
+            urlFilePDFQS,
+            urlFilePDFAS
+        };
+        const condition = this.validate();
+        if (condition) {
+            this.props.screenProps.handleNextStep(1, data);
+            this.props.navigation.navigate('StepTwo');
+        } else {
+
+        }
     };
 
     onPressUpload = async (type) => {

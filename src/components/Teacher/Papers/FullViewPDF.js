@@ -10,6 +10,7 @@ export default class FullViewPDFAssessment extends Component {
 
     render() {
         const { urlFilePDF, text } = this.props.navigation.state.params;
+        console.log("🚀 ~ file: FullViewPDF.js ~ line 13 ~ FullViewPDFAssessment ~ render ~ urlFilePDF", urlFilePDF)
         return (
             <SafeAreaView style={styles.container}>
                 <HeaderPaper

@@ -11,6 +11,7 @@ import Appicon from '../../../../utils/AppIcon';
 import _ from 'lodash';
 import RippleButton from '../../../common-new/RippleButton';
 import HeaderNavigation from '../../../common-new/HeaderNavigation';
+import { NavigationActions } from 'react-navigation';
 
 
 const labels = ['Upload', 'Đáp án', 'Cấu hình', 'Hoàn thành'];
@@ -20,7 +21,8 @@ export default class UploadPDFStepByStep extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPosition: 0
+            currentPosition: 0,
+            data: null
         }
     }
 
@@ -30,7 +32,7 @@ export default class UploadPDFStepByStep extends Component {
 
     handleNextStep = (index, data) => {
         if (index == 0 && _.isEmpty(data)) {
-            Global.resetStateStepOne();
+            // Global.resetStateStepOne();
             this.setState({ currentPosition: index, data: {} });
             return;
         }
@@ -39,6 +41,32 @@ export default class UploadPDFStepByStep extends Component {
         }
         this.setState({ currentPosition: index });
     };
+
+    onPressStepIndicator = (stepStatus, position) => {
+        const { data } = this.state;
+        let name = '';
+        switch (position) {
+            case 0: {
+                name = 'StepOnePDF';
+                break;
+            }
+            case 1: {
+                name = 'StepTwoPDF';
+                break;
+            }
+            case 2: {
+                name = 'StepThreePDF';
+                break;
+            }
+            case 3: {
+                name = 'StepFourPDF';
+                break;
+            }
+        }
+        console.log("🚀 ~ file: UploadPDFStepByStep.js ~ line 63 ~ UploadPDFStepByStep ~ name", name)
+        this.props.navigation.navigate('StepTwoPDF');
+        this.handleNextStep(position, data);
+    }
 
     renderStepIndicator = (params) => {
         const { stepStatus, position } = params;
@@ -62,7 +90,7 @@ export default class UploadPDFStepByStep extends Component {
             }
         }
         return (
-            <RippleButton style={{ width: 35, height: 35, backgroundColor: isCurrent ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', borderRadius: 20, }} onPress={() => { alert(position) }}>
+            <RippleButton style={{ width: 35, height: 35, backgroundColor: isCurrent ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', borderRadius: 20, }} onPress={() => { this.onPressStepIndicator(stepStatus, position) }}>
                 <View style={{ width: 33, height: 33, backgroundColor: isCurrent ? '#2D9CDB' : 'transparent', justifyContent: 'center', alignItems: 'center', borderRadius: 17 }} onPress={() => { }}>
                     <View style={{ width: 30, height: 30, backgroundColor: backgroundColor, justifyContent: 'center', alignItems: 'center', borderRadius: 15 }}>
                         <Image source={this.getStepIndicatorIconConfig(params)} style={{ tintColor: iconColor }} />

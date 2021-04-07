@@ -13,7 +13,7 @@ export default class StepTwoPDF extends Component {
         super(props);
         this.state = {
             activeButtonIndex: 0,
-            totalPoint: 100,
+            totalPoint: 10,
             totalQSTN: 10,
             totalQSTL: 0,
             totalPointTN: 0,
@@ -48,6 +48,7 @@ export default class StepTwoPDF extends Component {
             totalPointTL += Number(e.point);
         });
         // this.props.getTotalPoint(totalPointTN + totalPointTL);
+        console.log("data: ", this.props.screenProps.data);
 
         this.setState({
             totalPointTN,
@@ -64,7 +65,7 @@ export default class StepTwoPDF extends Component {
         questionsTmp.forEach(e => {
             totalPointTmp += Number(e.point);
         });
-        totalPointTmp = Math.round(totalPointTmp* 100)/100;
+        totalPointTmp = Math.round(totalPointTmp * 100) / 100;
         if (activeButtonIndex === 0) {
             this.setState({ totalPointTN: totalPointTmp })
         } else {
@@ -184,6 +185,79 @@ export default class StepTwoPDF extends Component {
         }
     }
 
+    validation = () => {
+        try {
+            const {
+                questionsTN,
+                questionsTL,
+                totalPointTL,
+                totalPointTN,
+            } = this.state;
+
+            const { urlFilePDFQS, urlFilePDFAS } = this.props.screenProps.data;
+
+            let totalPoint = (Number(totalPointTL) + Number(totalPointTN)).toString().replace(/^0+/, '');
+            if (parseFloat(totalPoint) !== 10) {
+                this.toast.show('Tổng điểm chưa bằng 10!');
+                return;
+            }
+            if ((questionsTN.length + questionsTL.length) === 0) {
+                this.toast.show('Chưa có câu hỏi nào!');
+                return;
+            }
+
+            if (urlFilePDFQS === '' || urlFilePDFAS === '') {
+                this.toast.show('Chưa thêm bộ đề!');
+                return;
+            }
+
+            // if (list.totalPointTN + list.totalPointTL !== 10) {
+            //   this.toast.show('Tổng điểm chưa bằng 10!');
+            //   return;
+            // }
+
+            let checkChooseOption = true;
+            questionsTN.map((e) => {
+                if (e.optionIdAnswer === -1) {
+                    checkChooseOption = false;
+                }
+            });
+            if (!checkChooseOption) {
+                this.toast.show('Chưa chọn hết đáp án cho câu hỏi!');
+                return;
+            }
+            let checkPointTL = true;
+            questionsTL.map((e) => {
+                if (e.point === 0) {
+                    checkPointTL = false;
+                }
+            });
+
+            if (!checkPointTL) {
+                this.toast.show('Chưa chọn hết điểm cho câu hỏi!');
+                return;
+            }
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    };
+
+    handleNextStepThree = () => {
+        const { questionsTL, questionsTN } = this.state;
+        const validate = this.validation();
+        if (validate) {
+            const data = {
+                ...this.props.screenProps.data, questionsTL, questionsTN
+            };
+            this.props.screenProps.handleNextStep(2, data);
+            this.props.navigation.navigate('StepThree');
+        } else {
+            return;
+        }
+    };
+
     onChangeOptionAnswer = (index, option) => {
         const { activeButtonIndex, questionsTN, questionsTL } = this.state;
         let questionsTmp = activeButtonIndex === 0 ? questionsTN : questionsTL;
@@ -218,7 +292,6 @@ export default class StepTwoPDF extends Component {
                 return item;
             }
         })
-        console.log("🚀 ~ file: StepTwoPDF.js ~ line 153 ~ StepTwoPDF ~ questionsTmp", questionsTmp)
         if (activeButtonIndex === 0) {
             this.setState({ questionsTN: questionsTmp })
         } else {
@@ -229,7 +302,6 @@ export default class StepTwoPDF extends Component {
 
     render() {
         const { activeButtonIndex, totalPoint, questionsTN, questionsTL, totalPointTL, totalPointTN } = this.state;
-        console.log("questionsTN: ", questionsTN);
         return (
             <View style={styles.container} onTouchStart={() => { Keyboard.dismiss(); }}>
                 <View style={styles.wrapTextOnTop}>
@@ -265,10 +337,12 @@ export default class StepTwoPDF extends Component {
                             totalQSTL={this.state.totalQSTL}
                             totalQSTN={this.state.totalQSTN}
                             type={this.state.activeButtonIndex}
+                            navigation={this.props.screenProps.navigation}
+                            screenProps={this.props.screenProps}
                         />
                         <TotalQuestionConfig questionList={activeButtonIndex === 0 ? questionsTN : questionsTL} onChangeOptionAnswer={this.onChangeOptionAnswer} onChangePointEachQS={this.onChangePointEachQS} typeQuestion={activeButtonIndex} />
                         <View style={styles.wrapEnd}>
-                            <RippleButton style={styles.buttonNext} radius={15}>
+                            <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepThree}>
                                 <Text style={styles.textNext}>Tiếp tục</Text>
                             </RippleButton>
                         </View>

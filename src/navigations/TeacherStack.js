@@ -43,6 +43,7 @@ import SearchScreen from '../components/common-new/SearchScreen';
 import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import { Platform } from 'react-native';
 import UploadPDFStepByStep from '../components/Teacher/Papers/UploadPDF/UploadPDFStepByStep';
+
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
