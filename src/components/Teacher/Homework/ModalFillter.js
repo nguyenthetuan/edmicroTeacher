@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
+  Image
 } from 'react-native';
 import Dropdown from './Dropdown';
 import AppIcon from '../../../utils/AppIcon';
@@ -59,31 +60,40 @@ export default class ModalFillter extends Component {
         visible={isShowModal}
         closeModal={this.changeStateModale}
       >
-        <SafeAreaView style={{ backgroundColor: '#E8F6FF' }} />
+        <SafeAreaView style={{ backgroundColor: '#F6F7F9' }} />
         <View style={styles.contain}>
           <HeaderNavigation
             title={'Tuỳ chọn'}
             onRightAction={this.changeStateModale}
-            actionIcon={AppIcon.close_img}
+            // actionIcon={AppIcon.close_img}
+            actionIcon={require('../../../asserts/icon/iconCloseX.png')}
             isShow={false}
           />
           <View style={[styles.wrapSelect1, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
-            <Dropdown
-              title="Khối"
-              data={dataGade}
-              indexSelected={indexSelected.grade}
-              onPressItem={onPressItemGrade}
-              contentStyle={styles.contentDrop}
-            />
-            <Dropdown
-              title="Môn học"
-              data={dataSubject}
-              indexSelected={indexSelected.subject}
-              onPressItem={onPressItemSubject}
-              contentStyle={styles.contentDrop}
-            />
+            <View style={styles.teCoPlace}>
+              <Text style={styles.placeText}>Khối</Text>
+              <Dropdown
+                title="Khối"
+                data={dataGade}
+                indexSelected={indexSelected.grade}
+                onPressItem={onPressItemGrade}
+                contentStyle={styles.contentDrop}
+              />
+            </View>
+            <View style={styles.teCoPlace}>
+              <Text style={styles.placeText}>Môn học</Text>
+              <Dropdown
+                title="Môn học"
+                data={dataSubject}
+                indexSelected={indexSelected.subject}
+                onPressItem={onPressItemSubject}
+                contentStyle={styles.contentDrop}
+              />
+            </View>
           </View>
           <View style={[styles.wrapSelect, { flexDirection: 'column' }]}>
+
+            <Text style={styles.placeText}>Bài tập</Text>
             <Dropdown
               title="Bài tập"
               data={dataHomeWork}
@@ -91,6 +101,7 @@ export default class ModalFillter extends Component {
               onPressItem={onPressItemHomework}
               contentStyle={styles.contentStyle}
             />
+            <Text style={[styles.placeText, { marginTop: 20 }]}>Lớp học</Text>
             <Dropdown
               title="Lớp"
               data={dataClass}
@@ -112,11 +123,12 @@ export default class ModalFillter extends Component {
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    backgroundColor: '#E8F6FF',
+    // backgroundColor: '#E8F6FF',
+    backgroundColor: '#F6F7F9',
   },
   wrapSelect: {
     flexDirection: 'row',
-    marginVertical: 8,
+    marginTop: 16,
     justifyContent: 'space-between',
     width: width - 40,
     paddingHorizontal: 16,
@@ -131,26 +143,39 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   btnViewStatistic: {
-    backgroundColor: '#2D9CDB',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
     marginTop: 50,
-    marginHorizontal: "30%"
+    marginHorizontal: "30%",
+    borderWidth: .5,
+    borderColor: '#2D9CDB'
   },
   txtBtn: {
-    color: '#FFF',
+    color: '#2D9CDB',
     marginHorizontal: 20,
     marginVertical: 10
   },
   contentStyle: {
-    marginVertical: 16,
     width: width - 40,
     marginHorizontal: 0,
-    height: 35,
-    borderRadius: 5,
+    height: 40,
+    borderRadius: 8,
     paddingLeft: 5,
-    paddingRight: 5
+    paddingRight: 5,
+    borderWidth: 1,
+    borderColor: "#E6EBF1",
+    shadowColor: "#c4c4c4",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
+    backgroundColor: '#fff',
+    marginTop: 5
   },
   imgClose: {
     width: 25,
@@ -171,12 +196,25 @@ const styles = StyleSheet.create({
   },
   contentDrop: {
     marginHorizontal: 0,
-    height: 35,
-    borderRadius: 5,
+    height: 40,
+    borderRadius: 8,
     fontFamily: "Nunito",
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
-    paddingLeft: 5
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderColor: "#E6EBF1",
+    width: width * 0.4,
+    shadowColor: "#c4c4c4",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
+    backgroundColor: '#fff',
+    marginTop: 5
   },
   headerNav: {
     flexDirection: 'row',
@@ -187,4 +225,13 @@ const styles = StyleSheet.create({
     // marginLeft: Platform.isPad ? "45%" : Platform.OS == 'ios' ? "45%" : 0
     // top: Platform.isPad ? 10 : Platform.OS == 'ios' ? 30 : 0
   },
+  teCoPlace: {
+    flexDirection: 'column'
+  },
+  placeText: {
+    fontFamily: "Nunito-LightItalic",
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
+    color: "#A1A1A3"
+  }
 });

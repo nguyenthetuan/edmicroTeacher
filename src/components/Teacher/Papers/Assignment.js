@@ -177,7 +177,7 @@ function Item(props) {
             <View
               style={[styles.btnDate, { backgroundColor: item.timeStart ? '#f0f0f0' : '#f0f0f0' }]}>
               <Text numberOfLines={1} style={styles.txtContentItem}>
-                {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
+                {moment(timeStart).format('DD-MM-YYYY, HH:mm A')}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -188,7 +188,7 @@ function Item(props) {
           >
             <View style={styles.btnDate}>
               <Text numberOfLines={1} style={styles.txtContentItem}>
-                {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
+                {moment(timeEnd).format('DD-MM-YYYY, HH:mm A')}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -556,8 +556,8 @@ const styles = StyleSheet.create({
   },
   txtCheckAllow: {
     fontFamily: 'Nunito-LightItalic',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(18),
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     color: '#2D9CDB'
   },
   viewName: {
