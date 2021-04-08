@@ -125,7 +125,7 @@ export default class MissionScreen extends Component {
       textSearch
     } = this.state;
     return (
-      <View style={{width :'100%'}}>
+      <View style={{ width: '100%' }}>
         <SearchComponent
           placeholder="Tìm kiếm"
           cancelColor="#2D9CDB"
@@ -259,6 +259,7 @@ const styles = StyleSheet.create({
   textSear: {
     paddingRight: 35,
     fontFamily: 'Nunito',
-    fontSize: RFFonsize(16)
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20)
   }
 });

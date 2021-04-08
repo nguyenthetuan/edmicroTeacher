@@ -64,9 +64,10 @@ export default class ModalFillter extends Component {
           <HeaderNavigation
             title={'Tuỳ chọn'}
             onRightAction={this.changeStateModale}
-            actionIcon={AppIcon.close_img}
+            actionIcon={require('../../../asserts/icon/iconCloseX.png')}
             isShow={false}
           />
+          <Text style={styles.placeText}>Năm học</Text>
           <Dropdown
             title="Năm học"
             data={DATA_YEAR}
@@ -74,6 +75,7 @@ export default class ModalFillter extends Component {
             onPressItem={this._selectYear}
             indexSelected={yearIndex}
           />
+          <Text style={styles.placeText}>Lớp học</Text>
           <Dropdown
             title="Lớp học"
             data={classSubject}
@@ -81,6 +83,7 @@ export default class ModalFillter extends Component {
             onPressItem={this._selectClass}
             indexSelected={classSubjectIndex}
           />
+          <Text style={styles.placeText}>Bài thi</Text>
           <Dropdown
             title="Bài thi"
             data={tests}
@@ -100,7 +103,7 @@ export default class ModalFillter extends Component {
 
 const styles = StyleSheet.create({
   contain: {
-    backgroundColor: '#E8F6FF',
+    backgroundColor: '#F6F7F9',
     alignItems: 'center',
     height: height - 50,
     borderTopLeftRadius: 10,
@@ -131,24 +134,25 @@ const styles = StyleSheet.create({
   contentStyle: {
     width: '90%',
     borderRadius: 5,
-    marginTop: 30,
-    height: 35,
+    marginTop: 5,
+    height: 40,
     paddingLeft: 10,
     fontFamily: 'Nunito',
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
   },
   btnViewStatistic: {
-    backgroundColor: '#2D9CDB',
-    flexDirection: 'row',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
     borderRadius: 5,
     marginTop: 50,
+    marginHorizontal: "30%",
+    borderWidth: .5,
+    borderColor: '#2D9CDB'
   },
   txtBtn: {
-    color: '#FFF',
+    color: '#2D9CDB',
     marginHorizontal: 20,
     marginVertical: 10,
     fontFamily: "Nunito",
@@ -156,4 +160,13 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(16),
     fontWeight: "500"
   },
+  placeText: {
+    fontFamily: "Nunito-LightItalic",
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
+    color: "#A1A1A3",
+    alignSelf: 'flex-start',
+    paddingLeft: width * 0.05,
+    marginTop: 16
+  }
 });

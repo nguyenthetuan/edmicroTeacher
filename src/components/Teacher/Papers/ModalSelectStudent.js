@@ -220,7 +220,7 @@ export default class ModalSelectStudent extends Component {
         if (!onSelect || onSelect(rowID, rowData) !== false) {
             highlightRow.highlight(rowID);
             await this.setState({
-                buttonText: !listSelectedTmp.length || listSelectedTmp.length === data.length ? 'Tất cả học sinh' : `${listSelectedTmp.length} học sinh`,
+                buttonText: !listSelectedTmp.length || listSelectedTmp.length === data.length ? 'Tất cả học sinh' : `Đã giao: ${listSelectedTmp.length} / ${data.length} học sinh`,
                 listSelected: listSelectedTmp
             });
             if (typeof (this.props.changeStatebuttonText) == 'function') {
