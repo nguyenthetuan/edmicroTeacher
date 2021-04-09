@@ -22,7 +22,12 @@ export default class UploadPDFStepByStep extends Component {
         super(props);
         this.state = {
             currentPosition: 0,
-            data: null
+            data: null,
+            navigationPDF: null,
+            StepOne: true,
+            StepTwo: false,
+            StepThree: false,
+            StepFour: false,
         }
     }
 
@@ -30,42 +35,69 @@ export default class UploadPDFStepByStep extends Component {
 
     }
 
-    handleNextStep = (index, data) => {
+    handleNextStep = (index, data, navigation) => {
+        let name = '';
+        switch (index) {
+            case 0: {
+                name = 'StepOne';
+                break;
+            }
+            case 1: {
+                name = 'StepTwo';
+                break;
+            }
+            case 2: {
+                name = 'StepThree';
+                break;
+            }
+            case 3: {
+                name = 'StepFour';
+                break;
+            }
+        }
         if (index == 0 && _.isEmpty(data)) {
-            // Global.resetStateStepOne();
+            // Global.resetStateStepOne);
             this.setState({ currentPosition: index, data: {} });
             return;
         }
         if (data) {
             this.setState({ data });
         }
-        this.setState({ currentPosition: index });
+        if (navigation) {
+            this.setState({ navigationPDF: navigation });
+        }
+        this.setState({ currentPosition: index, [name]: true });
     };
 
     onPressStepIndicator = (stepStatus, position) => {
-        const { data } = this.state;
+        const { data, navigationPDF } = this.state;
+        if (!navigationPDF) {
+            return;
+        }
         let name = '';
         switch (position) {
             case 0: {
-                name = 'StepOnePDF';
+                name = 'StepOne';
                 break;
             }
             case 1: {
-                name = 'StepTwoPDF';
+                name = 'StepTwo';
                 break;
             }
             case 2: {
-                name = 'StepThreePDF';
+                name = 'StepThree';
                 break;
             }
             case 3: {
-                name = 'StepFourPDF';
+                name = 'StepFour';
                 break;
             }
         }
         console.log("🚀 ~ file: UploadPDFStepByStep.js ~ line 63 ~ UploadPDFStepByStep ~ name", name)
-        this.props.navigation.navigate('StepTwoPDF');
-        this.handleNextStep(position, data);
+        if (this.state[name]) {
+            navigationPDF.navigate(name);
+            this.handleNextStep(position, data);
+        }
     }
 
     renderStepIndicator = (params) => {
