@@ -64,7 +64,7 @@ export default class StepOnePDF extends Component {
             urlFilePDFAS
         };
         const condition = this.validate();
-        if (condition) {
+        if (true) {
             this.props.screenProps.handleNextStep(1, data, this.props.navigation);
             this.props.navigation.navigate('StepTwo');
         } else {

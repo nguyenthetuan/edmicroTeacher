@@ -309,7 +309,7 @@ export default class StepTwoPDF extends Component {
                     <View style={styles.textInput}>
                         <TextInput
                             value={(Number(totalPointTL) + Number(totalPointTN)).toString().replace(/^0+/, '')}
-                            style={{ color: '#FF6213', fontFamily: 'Nunito-bold', fontSize: 18, lineHeight: 25, textAlign: 'center' }}
+                            style={{ color: '#FF6213', fontFamily: 'Nunito-bold', fontSize: 18, lineHeight: 25, textAlign: 'center', paddingVertical: 0 }}
                             keyboardType='decimal-pad'
                             editable={false}
                         />

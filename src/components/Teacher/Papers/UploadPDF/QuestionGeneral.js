@@ -66,7 +66,7 @@ export default function QuestionGeneral(props) {
                     </RippleButton>
                     <View style={{ width: 40, height: 30, }}>
                         <TextInput
-                            style={{ with: 40, height: 30, fontFamily: 'Nunito-bold', color: '#2D9CDB', textAlign: 'center' }}
+                            style={{ with: 40, height: 30, fontFamily: 'Nunito-bold', color: '#2D9CDB', textAlign: 'center', paddingVertical: 0 }}
                             onChangeText={onTotalQSChange}
                             keyboardType={'number-pad'}
                             value={props.type === 0 ? props.totalQSTN.toString() : props.totalQSTL.toString()}
@@ -81,7 +81,7 @@ export default function QuestionGeneral(props) {
                 <Text style={styles.textTitle}>Tổng điểm</Text>
                 <View style={styles.wrapTotalPoint}>
                     <TextInput
-                        style={{ height: 30, fontFamily: 'Nunito-bold', color: '#FF6213', textAlign: 'center' }}
+                        style={{ height: 30, fontFamily: 'Nunito-bold', color: '#FF6213', textAlign: 'center', paddingVertical: 0 }}
                         onChangeText={onTotalPointChange}
                         keyboardType={'decimal-pad'}
                         value={props.type === 0 ? props.totalPointTN.toString() : props.totalPointTL.toString()}

@@ -51,7 +51,7 @@ export default function ItemMultipleChoice(props) {
                 </View>
                 <View style={styles.inputPoint}>
                     <TextInput
-                        style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213' }}
+                        style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0 }}
                         textAlign={'center'}
                         value={Number(textPoint).toFixed(2)}
                         keyboardType='decimal-pad'
