@@ -119,9 +119,17 @@ import icon_remakeParacV3 from '../asserts/icon/icon_remakeParacV3.png';
 import icon_remakePeopleV3 from '../asserts/icon/icon_remakePeopleV3.png';
 import icon_toSendV3 from '../asserts/icon/icon_toSendV3.png';
 import icon_remakeHatV3 from '../asserts/icon/icon_remakeHatV3.png';
+import done_icon from '../asserts/icon/done_icon.png';
+import config_icon from '../asserts/icon/config_icon.png';
+import answer_icon from '../asserts/icon/answer_icon.png';
+import upload_icon from '../asserts/icon/upload_icon.png';
 import score_9 from '../asserts/appIcon/score_9.png';
 
 module.exports = {
+  done_icon,
+  config_icon,
+  answer_icon,
+  upload_icon,
   logo_onluyen,
   icon_minus,
   icon_plus,

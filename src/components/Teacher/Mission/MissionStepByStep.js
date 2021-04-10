@@ -39,8 +39,6 @@ export default class MissionStepByStep extends Component {
   };
 
   handleNextStep = (index, data) => {
-  console.log("🚀 ~ file: MissionStepByStep.js ~ line 42 ~ MissionStepByStep ~ data", data)
-  console.log("🚀 ~ file: MissionStepByStep.js ~ line 42 ~ MissionStepByStep ~ index", index)
     if (index == 0 && _.isEmpty(data)) {
       Global.resetStateStepOne();
       this.setState({ currentPosition: index, data: {} });
