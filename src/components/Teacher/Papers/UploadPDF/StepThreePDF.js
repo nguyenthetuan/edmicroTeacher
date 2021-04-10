@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TextInput, Dimensions, Keyboard } from 'react-native';
 import DropdownMultiSelect from '../../Homework/DropdownMultiSelect';
 import apiPapers from '../../../../services/apiPapersTeacher';
@@ -7,12 +8,12 @@ import dataHelper from '../../../../utils/dataHelper';
 import RippleButton from '../../../common-new/RippleButton';
 import Toast from 'react-native-easy-toast';
 import AnalyticsManager from '../../../../utils/AnalyticsManager';
-
+import { updateExamListAction } from '../../../../actions/paperAction';
 
 
 const { width, height } = Dimensions.get('window');
 
-export default class StepThreePDF extends Component {
+class StepThreePDF extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -267,6 +268,20 @@ export default class StepThreePDF extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(StepThreePDF);
 
 const styles = StyleSheet.create({
     rootView: {
