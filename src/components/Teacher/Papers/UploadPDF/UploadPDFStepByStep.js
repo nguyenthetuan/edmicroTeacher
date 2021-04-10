@@ -16,6 +16,7 @@ import { NavigationActions } from 'react-navigation';
 
 const labels = ['Upload', 'Đáp án', 'Cấu hình', 'Hoàn thành'];
 
+const ROUTER_NAME = ['StepOne', 'StepTwo', 'StepThree', 'StepFour'];
 
 export default class UploadPDFStepByStep extends Component {
     constructor(props) {
@@ -36,25 +37,7 @@ export default class UploadPDFStepByStep extends Component {
     }
 
     handleNextStep = (index, data, navigation) => {
-        let name = '';
-        switch (index) {
-            case 0: {
-                name = 'StepOne';
-                break;
-            }
-            case 1: {
-                name = 'StepTwo';
-                break;
-            }
-            case 2: {
-                name = 'StepThree';
-                break;
-            }
-            case 3: {
-                name = 'StepFour';
-                break;
-            }
-        }
+        let name = ROUTER_NAME[index];
         if (index == 0 && _.isEmpty(data)) {
             // Global.resetStateStepOne);
             this.setState({ currentPosition: index, data: {} });
@@ -66,7 +49,13 @@ export default class UploadPDFStepByStep extends Component {
         if (navigation) {
             this.setState({ navigationPDF: navigation });
         }
-        this.setState({ currentPosition: index, [name]: true });
+        let group_disable = {};
+        for (let i = 0; i < ROUTER_NAME.length; i++) {
+            if (i > index) {
+                group_disable[ROUTER_NAME[i]] = false;
+            }
+        }
+        this.setState({ currentPosition: index, [name]: true, ...group_disable });
     };
 
     onPressStepIndicator = (stepStatus, position) => {
@@ -74,26 +63,7 @@ export default class UploadPDFStepByStep extends Component {
         if (!navigationPDF) {
             return;
         }
-        let name = '';
-        switch (position) {
-            case 0: {
-                name = 'StepOne';
-                break;
-            }
-            case 1: {
-                name = 'StepTwo';
-                break;
-            }
-            case 2: {
-                name = 'StepThree';
-                break;
-            }
-            case 3: {
-                name = 'StepFour';
-                break;
-            }
-        }
-        console.log("🚀 ~ file: UploadPDFStepByStep.js ~ line 63 ~ UploadPDFStepByStep ~ name", name)
+        let name = ROUTER_NAME[position];;
         if (this.state[name]) {
             navigationPDF.navigate(name);
             this.handleNextStep(position, data);
