@@ -151,7 +151,7 @@ class ChangePassword extends Component {
                     />
                     <Button
                       vertical={10}
-                      center={true} btn={'rgb'}
+                      center={true}
                       title={BUTTON_UPDATE_PASS}
                       width={'100%'} circle={40}
                       style={{ backgroundColor: '#2D9CDB', height: 40 }}

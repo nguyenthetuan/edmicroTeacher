@@ -512,7 +512,6 @@ class Papers extends Component {
   onPress = () => {
     this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('QuestionLibrary', {
-        nagigation: this.props.nagigation,
         statusbar: 'light-content',
       }),
     );
@@ -526,23 +525,12 @@ class Papers extends Component {
   }
 
   onPressUploadPDF = () => {
-    console.log("onPressUploadPDF");
-    // const { listGrades, listSubjects } = this.state;
-    // this.setState({ visibleModalAdd: false }, () =>
-    //   this.props.navigation.navigate('UploadPDFStepByStep', {
-    //     nagigation: this.props.nagigation,
-    //     listGrades,
-    //     listSubjects,
-    //     statusbar: 'dark-content',
-    //   }),
-    // );
   };
 
   onPressCamera = () => {
     const { listGrades, listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
       this.props.navigation.navigate('MarkCamera', {
-        nagigation: this.props.nagigation,
         listGrades,
         listSubjects,
         statusbar: 'dark-content',
@@ -710,7 +698,7 @@ class Papers extends Component {
         <RippleButton
           onPress={() => { this.onPressChangeType(1) }}
           style={typeChange === 1 ? [styles.buttonActive,
-          { backgroundColor: '#56CCF2', borderColor: '#56CCF2' }] : styles.buttonNotActive}
+          { backgroundColor: '#334ca4', borderColor: '#334ca4' }] : styles.buttonNotActive}
         >
           <Text
             style={typeChange === 1 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
@@ -720,7 +708,7 @@ class Papers extends Component {
         <RippleButton
           onPress={() => { this.onPressChangeType(2) }}
           style={typeChange === 2 ? [styles.buttonActive,
-          { backgroundColor: '#33CBCB', borderColor: '#33CBCB' }] : styles.buttonNotActive}>
+          { backgroundColor: '#DB3546', borderColor: '#DB3546' }] : styles.buttonNotActive}>
           <Text
             style={typeChange === 2 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
             Chưa giao
@@ -731,6 +719,7 @@ class Papers extends Component {
   }
 
   render() {
+    console.log("render paper");
     const {
       loading,
       animation,
@@ -748,7 +737,6 @@ class Papers extends Component {
       dataFilter,
     } = this.state;
     const { user } = this.props;
-
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 390);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 50],
@@ -798,7 +786,7 @@ class Papers extends Component {
               <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
             )
           }}
-          initialNumToRender={5}
+          initialNumToRender={2}
           // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}
@@ -849,14 +837,15 @@ class Papers extends Component {
           listSubjects={listSubjects}
           activeSubject={this.activeSubject}
         />
-        {/* <ModalAddPaper
+        <ModalAddPaper
           onPress={this.onPress}
           closeModal={this.closeModal}
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
-          onPressUploadPDF={() => { alert(1) }}
+
+          onPressUploadPDF={this.onPressUploadPDF}
         // onPressCamera={this.onPressCamera}
-        /> */}
+        />
         <ModalOption
           visibleEdit={visibleEdit}
           _handleCloseModal={this._handleCloseModal}
@@ -935,14 +924,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    shadowColor: "#000",
+    shadowColor: "#c4c4c4",
     shadowOffset: {
       width: 0,
-      height: 2.5,
+      height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 2.5,
-    elevation: 5,
+    shadowOpacity: 0.20,
+    shadowRadius: 5,
+    elevation: 3
   },
   buttonNotActive: {
     flex: 1,

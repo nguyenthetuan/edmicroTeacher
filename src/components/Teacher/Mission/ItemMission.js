@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import AppIcon from '../../../utils/AppIcon';
 import { getIconSubject } from '../../../utils/Common';
 import moment from 'moment';
@@ -54,90 +54,93 @@ export default class ItemMission extends Component {
     const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm A')
     const { colors } = this.state;
     return (
-      <TouchableOpacity
-        style={[styles.contain, {
-          borderColor: data.status === modelStatus.unDelivered ? '#2D9CDB' : '#C4C4C4',
-        }]}
+      <TouchableWithoutFeedback
         onPress={this.goToMissionDetail}
       >
-        <View style={styles.leftImage}>
-          <Image
-            source={require('../../../asserts/images/icon_missionOpacity.png')}
-            style={styles.widthImage}
-          />
-          <Text style={styles.gradeClass}>{data.gradeName}</Text>
-        </View>
         <View
-          style={[styles.styFlexDirRow,
-          { flexDirection: 'column', marginLeft: 5 }]}
+          style={[styles.contain, {
+            borderColor: data.status === modelStatus.unDelivered ? '#2D9CDB' : '#c4c4c4',
+          }]}
         >
-          <Text
-            numberOfLines={1}
-            style={styles.styTxtHeader}>
-            {data.title}
-          </Text>
-          <View style={styles.hr} />
-          <View style={styles.rightRow}>
-            <View style={styles.contentMission}>
-              {this.renderElement(
-                AppIcon.icon_remakeHatV3,
-                'Bài kiểm tra',
-                data.countTest,
-                colors[0]
-              )}
-              {this.renderElement(
-                AppIcon.icon_paracClass,
-                'Bài tự luyện',
-                data.countPractice,
-                colors[1]
-              )}
-            </View>
-
-            <View style={styles.subjectColumn}>
-              <View style={{ marginLeft: 15 }}>
+          <View style={styles.leftImage}>
+            <Image
+              source={require('../../../asserts/images/icon_missionOpacity.png')}
+              style={styles.widthImage}
+            />
+            <Text style={styles.gradeClass}>{data.gradeName}</Text>
+          </View>
+          <View
+            style={[styles.styFlexDirRow,
+            { flexDirection: 'column', marginLeft: 5 }]}
+          >
+            <Text
+              numberOfLines={1}
+              style={styles.styTxtHeader}>
+              {data.title}
+            </Text>
+            <View style={styles.hr} />
+            <View style={styles.rightRow}>
+              <View style={styles.contentMission}>
                 {this.renderElement(
-                  getIconSubject(data.subjectCode),
-                  Common.getDisplaySubject(data.subjectCode)
+                  AppIcon.icon_remakeHatV3,
+                  'Bài kiểm tra',
+                  data.countTest,
+                  colors[0]
+                )}
+                {this.renderElement(
+                  AppIcon.icon_paracClass,
+                  'Bài tự luyện',
+                  data.countPractice,
+                  colors[1]
                 )}
               </View>
 
-              <View style={styles.flexDiAction}>
-                {data.status === modelStatus.unDelivered
-                  ?
-                  <FastImage
-                    source={require('../../../asserts/icon/icon_toSendV3.png')}
-                    style={{ height: 25, width: 25 }}
-                  />
-                  :
-                  <FastImage
-                    source={require('../../../asserts/icon/icon_paractoFinish.png')}
-                    style={{ height: 25, width: 25 }}
-                  />
-                }
-                {data.status === modelStatus.unDelivered
-                  ?
-                  <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
-                    {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
-                  </Text>
-                  :
-                  <Text style={[styles.txtButtomPractice,
-                  { color: data.stattus === 4 ? '#000' : '#c4c4c4' }]}>
-                    {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
-                  </Text>
-                }
+              <View style={styles.subjectColumn}>
+                <View style={{ marginLeft: 15 }}>
+                  {this.renderElement(
+                    getIconSubject(data.subjectCode),
+                    Common.getDisplaySubject(data.subjectCode)
+                  )}
+                </View>
+
+                <View style={styles.flexDiAction}>
+                  {data.status === modelStatus.unDelivered
+                    ?
+                    <FastImage
+                      source={require('../../../asserts/icon/icon_toSendV3.png')}
+                      style={{ height: 25, width: 25 }}
+                    />
+                    :
+                    <FastImage
+                      source={require('../../../asserts/icon/icon_paractoFinish.png')}
+                      style={{ height: 25, width: 25 }}
+                    />
+                  }
+                  {data.status === modelStatus.unDelivered
+                    ?
+                    <Text style={[styles.txtButtomPractice, { color: "#000" }]}>
+                      {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
+                    </Text>
+                    :
+                    <Text style={[styles.txtButtomPractice,
+                    { color: data.stattus === 4 ? '#000' : '#c4c4c4' }]}>
+                      {data.status === modelStatus.unDelivered ? 'Đã giao' : 'Chưa giao'}
+                    </Text>
+                  }
+                </View>
               </View>
             </View>
-          </View>
 
-          <View style={styles.dateDaly}>
-            <View style={{ flexDirection: 'row' }}>
-              <Image source={require('../../../asserts/icon/icon_delivery.png')} />
-              <Text style={styles.txtDeve}>Ngày tạo</Text>
+            <View style={styles.dateDaly}>
+              <View style={{ flexDirection: 'row' }}>
+                <Image source={require('../../../asserts/icon/icon_delivery.png')} />
+                <Text style={styles.txtDeve}>Ngày tạo</Text>
+              </View>
+              <Text style={styles.txtTime}>{timeCreateAt}</Text>
             </View>
-            <Text style={styles.txtTime}>{timeCreateAt}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
     borderColor: '#7E96EC',
     margin: 5,
     marginHorizontal: 16,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 5,
     marginTop: 15,
     flexDirection: 'row'

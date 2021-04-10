@@ -47,35 +47,26 @@ export default class ModalAddPaper extends PureComponent {
                             />
                         </View>
                         <View style={styles.bodyModal}>
-                            {/* <View style={styles.flexOption}> */}
-                            <RippleButton onPress={this.props.onPress}>
-                                <View style={styles.columnAdd}>
-                                    <Image
-                                        source={require('../../../asserts/icon/cloud.png')}
-                                    />
-                                    <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
-                                </View>
-                            </RippleButton>
-                            <RippleButton onPress={this.props.onPressCopy}>
-                                <View style={styles.columnAdd}>
-                                    <Image
-                                        source={require('../../../asserts/icon/icon-saochepbode.png')}
-                                    />
-                                    <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
-                                </View>
-                            </RippleButton>
-                            {/* </View> */}
+                            <View style={styles.flexOption}>
+                                <RippleButton onPress={this.props.onPress}>
+                                    <View style={styles.columnAdd}>
+                                        <Image
+                                            source={require('../../../asserts/icon/cloud.png')}
+                                        />
+                                        <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
+                                    </View>
+                                </RippleButton>
+                                <RippleButton onPress={this.props.onPressCopy}>
+                                    <View style={styles.columnAdd}>
+                                        <Image
+                                            source={require('../../../asserts/icon/icon-saochepbode.png')}
+                                        />
+                                        <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
+                                    </View>
+                                </RippleButton>
+                            </View>
 
-                            <RippleButton onPress={this.props.onPressUploadPDF}>
-                                <View style={styles.columnAdd}>
-                                    <Image
-                                        source={require('../../../asserts/icon/dowload.png')}
-                                    />
-                                    <Text style={styles.txtUpload}>Upload file .PDF</Text>
-                                </View>
-                            </RippleButton>
-
-                            {/* <View style={styles.flexOption}>
+                            <View style={styles.flexOption}>
                                 <RippleButton onPress={this.props.onPressUploadPDF}>
                                     <View style={styles.columnAdd}>
                                         <Image
@@ -93,7 +84,7 @@ export default class ModalAddPaper extends PureComponent {
                                         <Text style={styles.txtUpload}>Tạo bộ đề chấm điểm camera</Text>
                                     </View>
                                 </RippleButton>
-                            </View> */}
+                            </View>
                         </View>
                     </View>
                 </View>

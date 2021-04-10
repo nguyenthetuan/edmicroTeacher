@@ -3,6 +3,7 @@ import {
     View,
     StyleSheet,
     Text,
+    TouchableWithoutFeedback,
     TouchableOpacity,
     Image
 } from 'react-native';
@@ -47,15 +48,15 @@ export default class Item extends Component {
             <View
                 style={[
                     styles.itemTest,
-                    { borderColor: item.status === 4 ? "#56CCF2" : '#33CBCB' },
+                    { borderColor: item.status === 4 ? "#334ca4" : '#DB3546' },
                 ]}
                 onPress={this._handleClickDetail(payloadAssignment)}>
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                     onPress={() => this.props.onOpenModal(payloadAssignment)}>
                     <View
                         style={[
                             styles.topTest,
-                            { backgroundColor: item.status === 4 ? "#56CCF2" : '#33CBCB' },
+                            { backgroundColor: item.status === 4 ? "#334ca4" : '#DB3546' },
                         ]}>
                         <Text numberOfLines={1}
                             style={styles.txtName}>
@@ -74,9 +75,9 @@ export default class Item extends Component {
                             }}>...</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
 
-                <TouchableOpacity onPress={this._handleClickDetail(payloadAssignment)}>
+                <TouchableWithoutFeedback onPress={this._handleClickDetail(payloadAssignment)}>
                     <View style={styles.bodyTest}>
                         <View style={{ flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
                             <View style={styles.flexSubject}>
@@ -177,7 +178,7 @@ export default class Item extends Component {
                             </View>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
             </View>
         );
     }

@@ -104,6 +104,14 @@ class StatisticScreen extends Component {
         } = this.props;
         return (
             <SafeAreaView style={styles.container}>
+                <View style={styles.bgHeader}>
+                    <HeaderNavigation
+                        navigation={this.props.navigation}
+                        color={'#000'}
+                        title={'Thống kê'}
+                        back={true}
+                    />
+                </View>
                 {isLoading
                     ?
                     <ActivityIndicator size='small' color='gray' style={styles.isLoading} />
@@ -112,14 +120,6 @@ class StatisticScreen extends Component {
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         style={{ flex: 1 }}>
-                        <View style={styles.bgHeader}>
-                            <HeaderNavigation
-                                navigation={this.props.navigation}
-                                color={'#000'}
-                                title={'Thống kê'}
-                                back={true}
-                            />
-                        </View>
                         <Text style={styles.titleTask}>
                             Quản lý lớp học
                     </Text>
@@ -302,12 +302,11 @@ const styles = StyleSheet.create({
     },
     bgHeader: {
         backgroundColor: '#fff',
-        flex: 1
     },
     titleTask: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(21),
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
         color: '#000',
         marginLeft: 16,
         marginTop: 20,
@@ -321,8 +320,8 @@ const styles = StyleSheet.create({
     },
     status: {
         fontFamily: 'Nunito',
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(19),
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
         color: '#2D9CDB',
         marginLeft: 27,
         marginTop: 8,
@@ -330,15 +329,15 @@ const styles = StyleSheet.create({
     },
     txtOnline: {
         fontFamily: 'Nunito',
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(18),
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
         color: '#2D9CDB',
         marginLeft: 27
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(21),
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
         marginTop: 12,
         alignSelf: 'center',
     },
@@ -381,8 +380,8 @@ const styles = StyleSheet.create({
     },
     number: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(24),
-        lineHeight: RFFonsize(30),
+        fontSize: RFFonsize(20),
+        lineHeight: RFFonsize(24),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 18,
@@ -392,8 +391,8 @@ const styles = StyleSheet.create({
     },
     sumBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(32),
-        lineHeight: RFFonsize(42),
+        fontSize: RFFonsize(28),
+        lineHeight: RFFonsize(38),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 19.5,
@@ -462,7 +461,7 @@ const styles = StyleSheet.create({
     },
     numberBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(32),
+        fontSize: RFFonsize(28),
         alignSelf: 'center',
         textAlign: 'center',
         color: '#27AE60',

@@ -232,6 +232,17 @@ class HeaderMainPaper extends React.Component {
     );
   };
 
+  onPressCamera = () => {
+    const { listGrades, listSubjects } = this.state;
+    this.setState({ visibleModalAdd: false }, () =>
+      this.props.navigation.navigate('MarkCamera', {
+        listGrades,
+        listSubjects,
+        statusbar: 'dark-content',
+      }),
+    );
+  };
+
   onPressCopy = () => {
     const { listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
@@ -295,7 +306,6 @@ class HeaderMainPaper extends React.Component {
     });
 
     console.log("render paper");
-
     return (
       <View style={styles.container}>
         <RippleButton onPress={this.openDrawer}>
@@ -327,6 +337,12 @@ class HeaderMainPaper extends React.Component {
               style={{ top: -1 }}
             />
           </TouchableOpacity>
+          {/* <TouchableOpacity
+            style={styles.addPaper} onPress={this.onPressCamera} >
+            <Image
+              source={require('../../asserts/icon/icon_paperPlane.png')}
+            />
+          </TouchableOpacity> */}
         </View>
         <ModalAddPaper
           onPress={this.onPress}
@@ -334,6 +350,9 @@ class HeaderMainPaper extends React.Component {
           onPressCopy={this.onPressCopy}
           visibleModalAdd={visibleModalAdd}
           onPressUploadPDF={this.onPressUploadPDF}
+          onPressCamera={this.onPressCamera}
+          listGrades={this.listGrades}
+          listSubjects={this.listSubjects}
         />
       </View>
 

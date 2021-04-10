@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Platform,
   SafeAreaView,
+  TouchableWithoutFeedback,
   Alert
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
@@ -33,14 +34,23 @@ import HeaderNavigation from '../../common-new/HeaderNavigation';
 import ModalSelectStudent from './ModalSelectStudent';
 import { connect } from 'react-redux';
 import { updateExamListAction } from '../../../actions/paperAction';
-import classIcon from '../../../asserts/appIcon/icon_class.png';
+// import classIcon from '../../../asserts/appIcon/icon_class.png';
 import shadowStyle from '../../../themes/shadowStyle';
-
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import AwesomeButton from 'react-native-really-awesome-button';
 const { width, height } = Dimensions.get('screen');
+const horizontalMargin = 20;
+const slideWidth = width - 95;
+
+const sliderWidth = Dimensions.get('window').width;
+const itemWidth = slideWidth + horizontalMargin * 2;
+const itemHeight = height;
+
 
 const Stage = {
   begin: 1,
-  end: 2
+  end: 2,
+  activeSlide: 1
 }
 
 function Item(props) {
@@ -148,56 +158,50 @@ function Item(props) {
 
   return (
     <View style={styles.containerItem}>
-      {/* <View style={styles.headerItem}>
-        <Text style={styles.txtTitleItem}>{props.item.name}</Text>
-      </View> */}
       <View style={styles.contentItem}>
         <View style={styles.viewName}>
-          <Text style={styles.txtTitleItemContent}>Lớp</Text>
-          <View style={styles.inputName}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>{props.item.name}</Text>
-          </View>
+          <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
-        <View style={[styles.viewName, { top: 10 }]}>
+        {/* <View style={styles.viewName}>
           <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
           <View style={styles.inputName}>
             <Text numberOfLines={1} style={styles.txtContentItem}>{props.dataItem.name}</Text>
           </View>
-        </View>
-        <View style={[styles.viewDate, { top: 5 }]}>
-          <Text style={styles.txtTitleItemContent}>Bắt đầu</Text>
-          <TouchableOpacity
+        </View> */}
+        <View style={styles.viewDate}>
+          <Text style={styles.txtTitleItemContent}>Ngày bắt đầu</Text>
+          <TouchableWithoutFeedback
             disabled={item.timeStart}
             onPress={() => showDatePicker(Stage.begin)}
-            style={[styles.btnDate, { backgroundColor: item.timeStart ? '#E0E0E0' : '#E0E0E0' }]}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>
-              {moment(timeStart).format('DD-MM-YYYY, HH:mm')}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewDate}>
-          <Text style={styles.txtTitleItemContent}>Kết thúc</Text>
-          <TouchableOpacity
-            onPress={() => showDatePicker(Stage.end)}
-            style={styles.btnDate}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>
-              {moment(timeEnd).format('DD-MM-YYYY, HH:mm')}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewDate}>
-          <Text style={styles.txtTitleItemContent}>Học sinh</Text>
-          {/* <DropdownStudent
-            ref={dropdownStudent}
-            dataItem={item}
-            style={{ width: width - 32, marginTop: 8, height: 40, }}
-            dropdownStyle={{ width: width - 32 }}
-            options={item.students}
-          /> */}
-          <TouchableOpacity onPress={() => { handlePickStudent() }} style={styles.dropZuCha}>
-            <View style={styles.borDropRight}>
-              <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+          >
+            <View
+              style={[styles.btnDate, { backgroundColor: item.timeStart ? '#f0f0f0' : '#f0f0f0' }]}>
+              <Text numberOfLines={1} style={styles.txtContentItem}>
+                {moment(timeStart).format('DD-MM-YYYY, HH:mm A')}</Text>
             </View>
-            <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.viewDate}>
+          <Text style={styles.txtTitleItemContent}>Ngày kết thúc</Text>
+          <TouchableWithoutFeedback
+            onPress={() => showDatePicker(Stage.end)}
+          >
+            <View style={styles.btnDate}>
+              <Text numberOfLines={1} style={styles.txtContentItem}>
+                {moment(timeEnd).format('DD-MM-YYYY, HH:mm A')}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.viewDate}>
+          <Text style={styles.txtTitleItemContent}>Học sinh được giao bài tập</Text>
+          <TouchableWithoutFeedback onPress={() => { handlePickStudent() }}>
+            <View style={styles.dropZuCha}>
+              <View style={styles.borDropRight}>
+                <Icon name={showPickSutdent ? "chevron-up" : "chevron-down"} color={'#fff'} size={13} />
+              </View>
+              <Text style={{ color: '#2D9CDB', left: 15 }}>{buttonText}</Text>
+            </View>
+          </TouchableWithoutFeedback>
           <ModalSelectStudent
             ref={pickStudent}
             dataItem={item}
@@ -208,21 +212,30 @@ function Item(props) {
             handlePickStudent={handlePickStudent}
           />
         </View>
-        <TouchableOpacity
-          onPress={() => setCheck(!isCheck)}
-          style={styles.btnCheckAllow}>
-          <View style={styles.checkAllow}>
-            {
-              isCheck ? <Icon name="check" color={'#56CCF2'} size={18} /> : null
-            }
+        <TouchableWithoutFeedback onPress={() => setCheck(!isCheck)}>
+          <View
+            style={styles.btnCheckAllow}>
+            <View style={styles.checkAllow}>
+              {
+                isCheck ? <Icon name="check" color={'#56CCF2'} size={18} /> : null
+              }
+            </View>
+            <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
           </View>
-          <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </TouchableWithoutFeedback>
+        <AwesomeButton
           onPress={onAssignment}
-          style={[styles.btnAssignment, { ...shadowBtn }]}>
+          style={[styles.AweBtn, { ...shadowBtn }]}
+          height={45}
+          backgroundColor={'#2D9CDB'}
+          borderRadius={25}
+          backgroundActive={'#2D9DFE'}
+          backgroundShadow={'transparent'}
+          backgroundDarker={'transparent'}
+        >
           <Text style={styles.txtAssignment}>Giao bài</Text>
-        </TouchableOpacity>
+        </AwesomeButton>
+
       </View>
       {__DEV__ ? null : <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -230,7 +243,6 @@ function Item(props) {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />}
-
     </View >
   )
 }
@@ -284,7 +296,7 @@ class Assignment extends Component {
     return (
       <View style={styles.viewNotFound}>
         <Image source={require('../../../asserts/icon/iconNodata.png')} />
-        <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+        <Text style={styles.txtNotFound}>Không tìm lớp giao bài.</Text>
       </View>
     )
   }
@@ -294,6 +306,7 @@ class Assignment extends Component {
   }
 
   _handleGoBack = () => {
+    this.state.activeSlide;
     if (this.props.navigation.state.params.checked) {
       Globals.updatePaper();
       this.props.navigation.replace('QuestionLibrary')
@@ -302,40 +315,94 @@ class Assignment extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.timeMount != null) {
+      clearTimeout(this.timeMount);
+      this.timeMount = null;
+    }
+  }
+
+
+
   render() {
-    const { data } = this.state;
+    const { data, loading, activeSlide } = this.state;
     const dataItem = this.props.navigation.getParam('item');
     return (
       <View style={{ flex: 1 }}>
         <SafeAreaView style={styles.container} />
         <HeaderNavigation
-          backgroundColor={'#56CCF2'}
+          goBack={() => {
+            try {
+              this._carousel.snapToItem(0);
+              this.timeMount = setTimeout(() => {
+                this.props.navigation.goBack();
+              }, 350);
+            } catch (error) {
+              this.props.navigation.goBack();
+            }
+          }}
+          backgroundColor={'#359CDB'}
           color={'#fff'}
           title={dataItem.name}
           navigation={this.props.navigation}
-          goBack={() => this._handleGoBack()}
-          actionIcon={classIcon}
           iconAction={() => { this.props.navigation.pop(4) }}
-          actionColor='#fff'
         />
-        <FlatList
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-          data={data}
-          style={{ backgroundColor: '#fff' }}
-          keyExtractor={(item, index) => index.toString()}
-          // ListHeaderComponent={this._renderListHeader}
-          ListEmptyComponent={this._renderListEmpty}
-          renderItem={({ item, index }) => {
-            return <Item
-              item={item}
-              navigation={this.props.navigation}
-              onToast={(text) => this.onToast(text)}
-              dataItem={dataItem}
-              needUpdate={this.props.needUpdate}
-            />
-          }}
-        />
+        {
+          loading ? <ActivityIndicator style={{ flex: 1 }} /> : (data && data.length > 0)
+            ?
+            <>
+              <Pagination
+                dotsLength={data.length}
+                activeDotIndex={activeSlide || 0}
+                containerStyle={{
+                  height: height * 0.1
+                }}
+                dotStyle={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 10,
+                  backgroundColor: '#359CDB',
+                }}
+                inactiveDotStyle={{
+                  backgroundColor: '#c4c4c4'
+                }}
+                inactiveDotOpacity={0.6}
+                inactiveDotScale={0.7}
+              />
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                layout={'stack'}
+                layoutCardOffset={14}
+                data={data}
+                renderItem=
+                {({ item, index }) => {
+                  return <Item
+                    item={item}
+                    navigation={this.props.navigation}
+                    onToast={(text) => this.onToast(text)}
+                    dataItem={dataItem}
+                    needUpdate={this.props.needUpdate}
+                  />
+                }}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                itemHeight={itemHeight}
+                activeSlideOffset={1}
+                inactiveSlideOpacity={0.7}
+                containerCustomStyle={styles.slider}
+                contentContainerCustomStyle={styles.sliderContentContainer}
+                loopClonesPerSide={2}
+                autoplayDelay={500}
+                autoplayInterval={3000}
+                activeAnimationType='spring'
+                activeSlideAlignment='center'
+                onSnapToItem={(index) => this.setState({ activeSlide: index })}
+              />
+
+            </>
+            :
+            this._renderListEmpty()
+        }
         <Toast ref="toast" position={'bottom'} />
         <SafeAreaView />
       </View >
@@ -362,7 +429,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#56CCF2'
+    backgroundColor: '#359CDB'
   },
   wrapHeader: {
     flexDirection: 'row',
@@ -408,7 +475,17 @@ const styles = StyleSheet.create({
   containerItem: {
     borderRadius: 5,
     marginBottom: 16,
-    marginTop: 16
+    // marginTop: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+    flex: 1,
+    // backgroundColor: "#fff"
   },
   headerItem: {
     height: 30,
@@ -424,13 +501,17 @@ const styles = StyleSheet.create({
   },
   contentItem: {
     paddingHorizontal: 16,
-    paddingVertical: 12
+    paddingVertical: 12,
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 5
   },
   txtTitleItemContent: {
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
+    lineHeight: RFFonsize(18),
     color: '#828282',
+    marginTop: 10
   },
   btnAssignment: {
     alignSelf: 'center',
@@ -440,26 +521,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  AweBtn: {
+    alignSelf: 'center',
+    marginTop: "10%",
+    marginBottom: '20%',
+  },
   txtAssignment: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(18),
-    lineHeight: RFFonsize(21),
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20),
     fontWeight: '500',
     color: '#fff',
-    marginLeft: 76,
-    marginRight: 76,
-    marginTop: 14,
-    marginBottom: 14
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 6,
+    marginBottom: 6
   },
   checkAllow: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     borderWidth: 1,
     borderColor: '#56CCF2',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 7,
-    borderRadius: 2,
+    borderRadius: 4,
   },
   btnCheckAllow: {
     flexDirection: 'row',
@@ -469,9 +555,9 @@ const styles = StyleSheet.create({
 
   },
   txtCheckAllow: {
-    fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
+    fontFamily: 'Nunito-LightItalic',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     color: '#2D9CDB'
   },
   viewName: {
@@ -479,12 +565,11 @@ const styles = StyleSheet.create({
   },
   inputName: {
     height: 40,
-    flex: 1,
     backgroundColor: '#fff',
     borderRadius: 5,
     justifyContent: 'center',
     paddingHorizontal: 8,
-    marginTop: 8,
+    marginTop: 5,
     borderWidth: 0.5,
     borderColor: '#56CCF2',
   },
@@ -494,18 +579,29 @@ const styles = StyleSheet.create({
     color: '#2D9CDB',
     marginLeft: 10
   },
+  titleClass: {
+    fontFamily: 'Nunito-SemiBoldItalic',
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(22),
+    color: '#2D9CDB',
+    alignSelf: 'center',
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 0.8,
+    textShadowColor: '#f0f0f0',
+    marginTop: 6,
+    marginBottom: 10
+  },
   viewDate: {
     flexDirection: 'column',
-    marginTop: 10,
+    marginTop: 5,
   },
   btnDate: {
     height: 40,
-    flex: 1,
     backgroundColor: 'rgba(86, 204, 242, 0.2)',
     borderRadius: 5,
     justifyContent: 'center',
     paddingHorizontal: 8,
-    marginTop: 8,
+    marginTop: 5,
     borderWidth: 0.5,
     borderColor: '#56CCF2'
   },
@@ -522,8 +618,7 @@ const styles = StyleSheet.create({
     color: '#828282',
   },
   dropZuCha: {
-    width: width - 32,
-    marginTop: 8,
+    marginTop: 5,
     height: 40,
     borderWidth: 0.5,
     borderRadius: 5,
@@ -541,5 +636,11 @@ const styles = StyleSheet.create({
     right: 0,
     borderBottomRightRadius: 5,
     borderTopRightRadius: 5
-  }
+  },
+  slider: {
+    overflow: 'visible'
+  },
+  sliderContentContainer: {
+    paddingVertical: 10
+  },
 })

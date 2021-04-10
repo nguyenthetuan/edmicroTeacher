@@ -67,7 +67,7 @@ export default class MissionScreen extends Component {
     try {
       this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
     } catch (error) {
-      
+
     }
   }
 
@@ -125,15 +125,17 @@ export default class MissionScreen extends Component {
       textSearch
     } = this.state;
     return (
-      <SearchComponent
-        placeholder="Tìm kiếm"
-        cancelColor="#2D9CDB"
-        value={textSearch}
-        onChange={this.onChangeText}
-        onSearchClear={this.onSearchClear}
-        customSearchInputStyle={styles.textSear}
-        customCancelTextStyle={styles.txtCan}
-      />
+      <View style={{ width: '100%' }}>
+        <SearchComponent
+          placeholder="Tìm kiếm"
+          cancelColor="#2D9CDB"
+          value={textSearch}
+          onChange={this.onChangeText}
+          onSearchClear={this.onSearchClear}
+          customSearchInputStyle={styles.textSear}
+          customCancelTextStyle={styles.txtCan}
+        />
+      </View>
     );
   };
 
@@ -198,7 +200,7 @@ export default class MissionScreen extends Component {
             data={listMissionSearch}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderItem}
-            initialNumToRender={6}
+            initialNumToRender={3}
             bounces={false}
             scrollEventThrottle={1}
             ListFooterComponent={<View style={{ height: 120 }} />}
@@ -257,6 +259,7 @@ const styles = StyleSheet.create({
   textSear: {
     paddingRight: 35,
     fontFamily: 'Nunito',
-    fontSize: RFFonsize(16)
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20)
   }
 });

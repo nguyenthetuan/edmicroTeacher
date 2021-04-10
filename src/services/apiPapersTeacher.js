@@ -245,12 +245,25 @@ const uploadPDF = async ({ url, file }) => {
 }
 
 const assignmentContent = async ({ token, body }) => {
+  console.log(body);
   let response = await fetch(`${API_BASE}school-online/library/assignment-content/create/`, {
     method: 'POST',
     headers: getHeaders(token),
     body: JSON.stringify(body)
   });
+  console.log(response);
   let responseJson = await response.json();
+  return responseJson;
+}
+const UploadPdfCam = async ({ token, body }) => {
+  console.log(body);
+  let response = await fetch(`${API_BASE}school-online/library/assignment-pmg/create`, {
+    method: 'POST',
+    headers: getHeaders(token),
+    body: JSON.stringify(body)
+  });
+  let responseJson = await response.json();
+  console.log(responseJson);
   return responseJson;
 }
 
@@ -348,6 +361,7 @@ module.exports = {
   signedUrlContentPDF,
   uploadPDF,
   assignmentContent,
+  UploadPdfCam,
   getSubjects,
   getDetailSubject,
   getLearingTarget,

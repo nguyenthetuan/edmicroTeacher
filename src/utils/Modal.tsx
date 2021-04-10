@@ -17,7 +17,7 @@ const ModalFillter = (props: Props) => {
             animationIn={'slideInUp'}
             animationOut={'slideOutDown'}
             swipeDirection={'down'}
-            swipeThreshold={100}
+            swipeThreshold={300}
             onSwipeComplete={closeModal}
             useNativeDriver={Platform.OS == 'android'}
             propagateSwipe={true}

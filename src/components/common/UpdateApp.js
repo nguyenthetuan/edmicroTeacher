@@ -14,11 +14,10 @@ import {
 import * as AppIcon from '../../utils/AppIcon';
 import { WINDOW } from '../../constants/const';
 const { width, height } = WINDOW;
-import { urlCHPlay, urlAppStore } from '../../constants/appConst';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import { RFFonsize } from '../../utils/Fonts';
+import { ITUNES_APPLE_APP, GOOGLE_PLAY_APP } from '../../constants/http';
 export default class UpdateApp extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +36,7 @@ export default class UpdateApp extends Component {
     try {
       const usersCollection = await firestore()
         .collection('version')
-        .doc('versionAppOnluyen')
+        .doc('versionAppSchool')
         .get();
       const {
         messageAndroid,
@@ -71,7 +70,7 @@ export default class UpdateApp extends Component {
   _handleUpdateNow = () => {
     this._handleClose();
     if (Platform.OS == 'android') {
-      Linking.canOpenURL(urlCHPlay)
+      Linking.canOpenURL(GOOGLE_PLAY_APP)
         .then((supported) => {
           if (!supported) {
             Alert.alert(
@@ -79,12 +78,12 @@ export default class UpdateApp extends Component {
               'Cửa hàng CHPlay không thể truy cập. Bạn vui lòng thử lại!',
             );
           } else {
-            return Linking.openURL(urlCHPlay);
+            return Linking.openURL(GOOGLE_PLAY_APP);
           }
         })
         .catch((err) => console.log('err', err));
     } else {
-      Linking.canOpenURL(urlAppStore)
+      Linking.canOpenURL(ITUNES_APPLE_APP)
         .then((supported) => {
           if (!supported) {
             Alert.alert(
@@ -92,7 +91,7 @@ export default class UpdateApp extends Component {
               'Cửa hàng Apple Store không thể truy cập. Bạn vui lòng thử lại!',
             );
           } else {
-            return Linking.openURL(urlAppStore);
+            return Linking.openURL(ITUNES_APPLE_APP);
           }
         })
         .catch((err) => console.log('err', err));
@@ -131,14 +130,12 @@ export default class UpdateApp extends Component {
                 {Platform.OS == 'ios' ? messageIOS : messageAndroid}
               </Text>
             </ImageBackground>
-
             <View style={styles.wrapViewBtn}>
               <TouchableOpacity style={styles.wrapBtn}>
                 <Text style={styles.txtBtn} onPress={this._handleUpdateNow}>
                   Cập nhật ngay
                 </Text>
               </TouchableOpacity>
-
               {!isRequiredUpdate ? <TouchableOpacity
                 style={[styles.wrapBtn, { backgroundColor: '#5096BD' }]}
                 onPress={this._handleClose}>

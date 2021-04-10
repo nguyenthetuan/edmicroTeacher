@@ -179,7 +179,9 @@ export default class ModalSelectStudent extends Component {
             const { children } = row.props;
             switch (row.type.displayName) {
                 case 'TouchableHighlight': {
-                    return <TouchableHighlight {...props}>{children}</TouchableHighlight>;
+                    return <TouchableHighlight
+                        underlayColor="#f0f0f0"
+                        {...props}>{children}</TouchableHighlight>;
                 }
                 case 'TouchableOpacity': {
                     return <TouchableOpacity {...props}>{children}</TouchableOpacity>;
@@ -202,7 +204,9 @@ export default class ModalSelectStudent extends Component {
                     break;
             }
         }
-        return <TouchableHighlight {...preservedProps}>{row}</TouchableHighlight>;
+        return <TouchableHighlight
+            underlayColor="#f0f0f0"
+            {...preservedProps}>{row}</TouchableHighlight>;
     };
 
     async _onRowPress(rowData, rowID, highlightRow) {
@@ -216,7 +220,7 @@ export default class ModalSelectStudent extends Component {
         if (!onSelect || onSelect(rowID, rowData) !== false) {
             highlightRow.highlight(rowID);
             await this.setState({
-                buttonText: !listSelectedTmp.length || listSelectedTmp.length === data.length ? 'Tất cả học sinh' : `${listSelectedTmp.length} học sinh`,
+                buttonText: !listSelectedTmp.length || listSelectedTmp.length === data.length ? 'Tất cả học sinh' : `Đã giao: ${listSelectedTmp.length} / ${data.length} học sinh`,
                 listSelected: listSelectedTmp
             });
             if (typeof (this.props.changeStatebuttonText) == 'function') {
@@ -320,7 +324,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.0,
-
         elevation: 24,
     },
 })

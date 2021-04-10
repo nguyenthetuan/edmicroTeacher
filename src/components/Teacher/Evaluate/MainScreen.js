@@ -211,6 +211,7 @@ class MainScreen extends Component {
             style={styles.list}
             data={this.state.student}
             keyExtractor={(item, index) => index.toString()}
+            initialNumToRender={3}
             ListHeaderComponent={this.renderHeader}
             ListEmptyComponent={this.renderEmpty}
             renderItem={({ item }) => <RenderItem item={item} {...payload} />}
