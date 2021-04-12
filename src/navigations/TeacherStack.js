@@ -44,183 +44,187 @@ import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import TakePhotoCamera from '../components/Teacher/Papers/TakePhotoCamera';
 import { Platform } from 'react-native';
 import UploadPDFStepByStep from '../components/Teacher/Papers/UploadPDF/UploadPDFStepByStep';
+const LockNavigationOptions = {
+  header: null,
+  gesturesEnabled: false
+}
 
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   Class: {
     screen: Class,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ClassDetail: {
     screen: ClassDetail,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ExcerciseDetail: {
     screen: ExcerciseDetail,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   StatisticsPoints: {
     screen: StatisticsPoints,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ModlaLevelComplete: {
     screen: ModlaLevelComplete,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   QuestionLibrary: {
     screen: QuestionLibrary,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ListQuestionCopy: {
     screen: ListQuestionCopy,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ConfigQuestionCopy: {
     screen: ConfigQuestionCopy,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ConfigQuestion: {
     screen: ConfigQuestion,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   Assignment: {
     screen: Assignment,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MarkingView: {
     screen: MarkingView,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MarkingCamera: {
     screen: MarkingCamera,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   TakePhotoCamera: {
     screen: TakePhotoCamera,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MarkingWeb: {
     screen: MarkingWebScreen,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   Report: {
     screen: Homework,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MainHomeWork: {
     screen: MainHomeWork,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MarkCamera: {
     screen: MarkCamera,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   FullViewPDFAssessment: {
     screen: FullViewPDFAssessment,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   CopyFromSubjectExists: {
     screen: CopyFromSubjectExists,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ChangInfo: {
     screen: ChangInfo,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ChangePassword: {
     screen: ChangePassWord,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MockExample: {
     screen: MockExample,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MockExamDrawer: {
     screen: MockExamDrawer,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   MockResult: {
     screen: MockResult,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   UpdatePlan: {
     screen: UpdatePlan,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   V_UpdatePhone: {
     screen: V_UpdatePhone,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   TermsOfUse: {
     screen: TermsOfUse,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MissionStepByStep: {
     screen: MissionStepByStep,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   MissionDetail: {
     screen: MissionDetailScreen,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   MissionPlayWebView: {
     screen: MissionPlayWebView,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   MissonTestPlayWebView: {
     screen: MissonTestPlayWebView,
-    navigationOptions: { header: null, gesturesEnabled: false },
+    navigationOptions: LockNavigationOptions,
   },
   MissionStatisticsScreen: {
     screen: MissionStatisticsScreen,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   ExchangeGiftScreen: {
     screen: ExchangeGiftScreen,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   SaleGift: {
     screen: SaleGift,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   GiftDetail: {
     screen: GiftDetail,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   OfferGiftDetail: {
     screen: OfferGiftDetail,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   StatisticScreen: {
     screen: StatisticScreen,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   EditConfig: {
     screen: EditConfig,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   SearchScreen: {
     screen: SearchScreen,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   // WebViews:{
   //   screen: AppStoreScreen,
-  //   navigationOptions: { header: null, gesturesEnabled: true },
+  //   navigationOptions: LockNavigationOptions,
   // },
   HomeWorkResult: {
     screen: HomeWorkResult,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   UploadPDFStepByStep: {
     screen: UploadPDFStepByStep,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   },
   SchoolResultPDF: {
     screen: SchoolResultPDF,
-    navigationOptions: { header: null, gesturesEnabled: true },
+    navigationOptions: LockNavigationOptions,
   }
 }, Platform.OS == 'android' && transition);
 
