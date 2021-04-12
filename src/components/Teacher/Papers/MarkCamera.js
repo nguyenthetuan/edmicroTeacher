@@ -650,10 +650,9 @@ class MarkCamera extends Component {
                                                         data={listGrades}
                                                         onPressItem={(index) => this.onPressItemGrade(index)}
                                                     />
-                                                    <Text style={styles.textPlace}>Chọn khối</Text>
                                                 </View>
                                                 <Text style={styles.styTxtLabel}>Môn học</Text>
-                                                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
+                                                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]}>
                                                     <DropdownMultiSelect
                                                         containerStyle={{
                                                             marginHorizontal: 0,
@@ -663,7 +662,7 @@ class MarkCamera extends Component {
                                                         data={listSubjects}
                                                         onPressItem={(index) => this.onPressItemSubject(index)}
                                                     />
-                                                    <Text style={styles.textPlace}>Chọn môn</Text>
+
                                                 </View>
                                                 <Text style={styles.styTxtLabel}>Loại bài</Text>
                                                 <Dropdown
@@ -824,7 +823,7 @@ const styles = StyleSheet.create({
     buttonInSideAreaUploadPDF: {
         flexDirection: 'row',
         borderWidth: 0.5,
-        borderColor: '#FF6213',
+        borderColor: '#828282',
         borderStyle: "solid",
         borderRadius: 20,
         marginHorizontal: 5,
@@ -846,14 +845,14 @@ const styles = StyleSheet.create({
     },
     styTxtPlace: {
         marginHorizontal: 0,
-        borderWidth: 1,
-        borderColor: '#c4c4c4',
+        // borderWidth: 1,
+        // borderColor: '#c4c4c4',
         width: '100%',
         height: 40,
         marginBottom: 5,
         minWidth: width - 50,
         borderRadius: 5,
-        flexDirection: 'column'
+        backgroundColor:'#f0f0f0'
     },
     styleTitle: {
         fontFamily: 'Nunito',
@@ -989,7 +988,7 @@ const styles = StyleSheet.create({
         tintColor: '#828282'
     },
     textPlace: {
-        marginTop: -28,
+        marginTop: 10,
         paddingLeft: 5,
         fontFamily: 'Nunito-LightItalic',
         color: '#828282'

@@ -36,9 +36,9 @@ export default function DropdownMultiSelect(props) {
             let index = indexSelected[i];
             renderList.push(
                 <View style={[styles.wrapSelected, !isData && { borderWidth: 0, backgroundColor: 'transparent' }]}>
-                    <TouchableOpacity onPress={() => onPressMinus(index)} style={{ width: 30, height: 30, position: 'absolute', right: -10, top: -10, justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>
-                        <View style={{ width: 15, height: 15, borderWidth: 1, borderRadius: 10, borderColor: 'red', justifyContent: 'center', alignItems: 'center', backgroundColor: '#C4C4C4' }}>
-                            <Text style={{ fontWeight: '800', color: 'red', fontSize: 10, top: -5, right: -0.5 }}>_</Text>
+                    <TouchableOpacity onPress={() => onPressMinus(index)} style={{ width: 30, height: 30, position: 'absolute', right: -13, top: -14, justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>
+                        <View style={{ width: 15, height: 15, borderWidth: 0.5, borderRadius: 10, borderColor: '#2D9CDB', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
+                            <Text style={{ fontWeight: '800', color: '#2D9CDB', fontSize: 10, top: -5, right: -0.5 }}>_</Text>
                         </View>
                     </TouchableOpacity>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
@@ -133,13 +133,13 @@ const styles = StyleSheet.create({
     },
     wrapSelected: {
         height: 25,
-        borderWidth: 1,
-        borderColor: '#2D9CDB',
+        borderWidth: 0.5,
+        borderColor: '#c4c4c4',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
         paddingTop: 2,
-        backgroundColor: 'rgba(86, 204, 242, 0.3)',
+        backgroundColor: 'rgba(86, 204, 242, 0.2)',
         marginHorizontal: 5
     }
 });
