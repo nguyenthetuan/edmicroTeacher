@@ -634,8 +634,8 @@ class MarkCamera extends Component {
                                                             <Text style={styles.addPar}>Upload</Text>
                                                         </TouchableOpacity>
                                                         {urlFilePDF ?
-                                                            <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
-                                                                <Image source={AppIcon.search_pdf} style={{ alignSelf: "center", marginLeft: 19.5, tintColor: '#828282' }} />
+                                                            <TouchableOpacity style={[styles.buttonInSideAreaUploadPDF, { borderColor: '#56CCF2' }]} onPress={() => { this._onFullView(0) }}>
+                                                                <Image source={AppIcon.search_pdf} style={styles.pdfView} />
                                                                 <Text style={styles.addPar}>Xem</Text>
                                                             </TouchableOpacity>
                                                             : null
@@ -823,18 +823,10 @@ const styles = StyleSheet.create({
     buttonInSideAreaUploadPDF: {
         flexDirection: 'row',
         borderWidth: 0.5,
-        borderColor: '#828282',
+        borderColor: '#FF6213',
         borderStyle: "solid",
         borderRadius: 20,
-        marginHorizontal: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 3,
+        marginHorizontal: 5
     },
     styTxtLabel: {
         fontFamily: 'Nunito',
@@ -852,7 +844,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         minWidth: width - 50,
         borderRadius: 5,
-        backgroundColor:'#f0f0f0'
+        backgroundColor: '#f0f0f0'
     },
     styleTitle: {
         fontFamily: 'Nunito',
@@ -992,7 +984,11 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         fontFamily: 'Nunito-LightItalic',
         color: '#828282'
-
+    },
+    pdfView: {
+        alignSelf: "center",
+        marginLeft: 19.5,
+        tintColor: '#828282'
     }
 
 });
