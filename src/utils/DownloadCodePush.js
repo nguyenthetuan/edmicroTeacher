@@ -105,6 +105,7 @@ class DownloadCodePush extends Component {
 
     render() {
         const { status, receivedBytes, totalBytes } = this.state;
+        return (<View />);
         return (
             (status == STATUS.downloadPackage ||
                 status == STATUS.instalingUpdate ||
