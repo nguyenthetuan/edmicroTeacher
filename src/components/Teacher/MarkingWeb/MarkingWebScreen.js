@@ -20,7 +20,7 @@ export default class MarkingWebScreen extends PureComponent {
     componentDidMount() {
         if (Platform.OS === 'android') this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.onBackPressed.bind(this));
         const { assignmentId } = this.props.navigation.state.params.item;
-        let url = `${Config.PREFIX_URL}school/teacher/assessment/${assignmentId}/grade-v2`;
+        let url = `${Config.PREFIX_URL}school/teacher/assessment/${assignmentId}/grade-mobi`;
         this.setState({ url: url });
         dataHelper.getToken().then(({ token }) => {
             let myInjectedJs = `
@@ -41,21 +41,11 @@ export default class MarkingWebScreen extends PureComponent {
                 var timeHeader = null;
 
                 function initLoad(){
-                    var headers = document.getElementsByClassName('header-container');
-                    var fcFrame = document.getElementById('fc_frame');
-                    if(headers){
-                        isHeader = false;
-                        headers[0].setAttribute('style', 'display:none !important');
-                        window.ReactNativeWebView.postMessage("loadend");
-                        // clearInterval(timeHeader);
-                    }
-                    if(fcFrame){
-                        fcFrame.setAttribute('style', 'display:none !important');
-                    }
+                    window.ReactNativeWebView.postMessage("loadend");
                 }
-                timeHeader = setInterval(function() {
+                timeHeader = setTimeout(function() {
                     initLoad();
-                }, 500);
+                }, 1000);
             `;
             this.setState({
                 token: token,
@@ -116,7 +106,6 @@ export default class MarkingWebScreen extends PureComponent {
                     goBack={() => this.props.navigation.goBack()}
                     color={'#979797'}
                 />
-
                 <View style={{ flex: 1 }}>
                     <LearnPlaceholder visible={!isLoading} />
                     {(token && this.state.url != '') &&
