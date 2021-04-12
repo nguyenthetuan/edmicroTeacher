@@ -318,20 +318,72 @@ class MarkCamera extends Component {
         }
     }
 
+    // onPickPDF = async () => {
+    //     // this.setModalVisible(false);
+    //     try {
+    //         // CAMERA
+    //         this.action = 'picker';
+    //         const res = await DocumentPicker.pick({
+    //             type: [DocumentPicker.types.pdf],
+    //         });
+    //         //UPLOAD API
+    //         if (res) {
+    //             let url = res.uri;
+    //             let split = url.split('/');
+    //             let name = split.pop();
+    //             this.uploadFileToServer({ url, name });
+    //         }
+    //     } catch (err) {
+    //         this.toast.show('Tải lên PDF thất bại');
+    //         this.setState({ loadingUpload: false });
+    //         if (DocumentPicker.isCancel(err)) {
+    //             // User cancelled the picker, exit any dialogs or menus and move on
+    //         } else {
+    //             throw err;
+    //         }
+    //     }
+    // };
+
+
     onPickPDF = async () => {
-        this.setModalVisible(false);
         try {
-            // CAMERA
-            this.action = 'picker';
             const res = await DocumentPicker.pick({
                 type: [DocumentPicker.types.pdf],
             });
-            //UPLOAD API
+
             if (res) {
                 let url = res.uri;
                 let split = url.split('/');
                 let name = split.pop();
-                this.uploadFileToServer({ url, name });
+                this.setState({
+                    loadingUpload: true,
+                    pdfFile: name,
+                });
+                this.setState({
+                    loadingUpload: true,
+                });
+                const { token } = await dataHelper.getToken();
+                if (token) {
+                    const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
+                    if (resSignedUrl) {
+                        let file = await this.getBlob(url);
+                        const resUpload = await apiPapers.uploadPDF({
+                            url: resSignedUrl.preSignedUrl,
+                            file,
+                        });
+
+                        if (resUpload && resUpload.status === 200) {
+                            this.setState({
+                                urlFilePDF: resSignedUrl.urlFile,
+                                loadingUpload: false,
+                            });
+                            this.toast.show('Tải lên PDF thành công!');
+                        } else {
+                            this.toast.show('Tải lên PDF thất bại');
+                            this.setState({ loadingUpload: false });
+                        }
+                    }
+                }
             }
         } catch (err) {
             this.toast.show('Tải lên PDF thất bại');
@@ -343,6 +395,7 @@ class MarkCamera extends Component {
             }
         }
     };
+
 
     validation = () => {
         try {
@@ -387,22 +440,8 @@ class MarkCamera extends Component {
         }
     };
 
-    // getListFile() {
-    //     if (this.action == 'uploadImage') {
-    //         return [this.state.pdfFromImage];
-    //     } else if (this.action == 'uploadFile') {
-
-    //     } else {
-    //         return [this.state.urlFilePDF];
-    //     }
-    // }
-
     UploadPdfCam = async () => {
         Keyboard.dismiss();
-        // let question = [
-        //     ...this.selectAnswer.getListQuestions().data,
-        //     ...this.selectAnswer.getListQuestions().dataTL,
-        // ];
         if (this.validation()) {
             const {
                 gradeCode,
@@ -411,8 +450,6 @@ class MarkCamera extends Component {
                 assignmentType,
                 duration,
                 urlFilePDF,
-                urlImage,
-                // urlFileAnswerPDF,
             } = this.state;
             let body = {
                 gradeCode: gradeCode,
@@ -422,11 +459,9 @@ class MarkCamera extends Component {
                 isShare: true,
                 assignmentType,
                 duration: assignmentType ? parseInt(duration) * 60 : 300,
-                // question: question,
                 assignmentContentType: 1,
-                listFile: urlFilePDF
+                listFile: [urlFilePDF]
             };
-
             const { token } = await dataHelper.getToken();
             if (token) {
                 const res = await apiPapers.UploadPdfCam({ token, body });
@@ -540,7 +575,7 @@ class MarkCamera extends Component {
         const numColumns = this.getNumColumns();
         const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
         const points = this.selectAnswer?.getTotalPoint();
-        const { shadowBtn } = shadowStyle;;
+        const { shadowBtn } = shadowStyle;
         const { modalVisible } = this.state;
         return (
             <View style={{ flex: 1 }}>
@@ -587,33 +622,35 @@ class MarkCamera extends Component {
                                                                 onError={(error) => {
                                                                     console.log(error);
                                                                 }}
-                                                                style={styles.pdf}
                                                             />}
-                                                            <View style={styles.wrapEndAreaUploadPDF}>
-                                                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => this.setModalVisible(true)} >
-                                                                    <Image source={require('../../../asserts/icon/dowload.png')} style={{ alignSelf: "center", marginTop: 8 }} />
-                                                                    <Text style={styles.addPar}>Thêm bộ đề</Text>
-                                                                </TouchableOpacity>
-                                                                <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
-                                                                    <Text style={styles.addPar}>View</Text>
-                                                                </TouchableOpacity>
-                                                            </View>
+                                                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "Thêm bộ đề..."}</Text>
                                                         </View>
-                                                        <Text maxLength={20} numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile}</Text>
+                                                        <Text style={styles.note}>Lưu ý dung lượng không quá 5Mb!</Text>
                                                     </View>
-                                                    <Text style={styles.note}>
-                                                        Lưu ý! Bộ đề và đáp án được thêm dưới dạng file pdf.
-                                                        Dung lượng không quá 10MB!
-                                                  </Text>
+                                                    <View style={styles.wrapEndAreaUploadPDF}>
+                                                        {/* onPress={() => this.setModalVisible(true)} */}
+                                                        <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
+                                                            <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
+                                                            <Text style={styles.addPar}>Upload</Text>
+                                                        </TouchableOpacity>
+                                                        {urlFilePDF ?
+                                                            <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={() => { this._onFullView(0) }}>
+                                                                <Image source={AppIcon.search_pdf} style={{ alignSelf: "center", marginLeft: 19.5, tintColor: '#828282' }} />
+                                                                <Text style={styles.addPar}>Xem</Text>
+                                                            </TouchableOpacity>
+                                                            : null
+                                                        }
+                                                    </View>
                                                 </View>
                                                 <Text style={styles.styTxtLabel}>Khối </Text>
-                                                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
+                                                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]}>
                                                     <DropdownMultiSelect
                                                         contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
                                                         title="Khối"
                                                         data={listGrades}
                                                         onPressItem={(index) => this.onPressItemGrade(index)}
                                                     />
+                                                    <Text style={styles.textPlace}>Chọn khối</Text>
                                                 </View>
                                                 <Text style={styles.styTxtLabel}>Môn học</Text>
                                                 <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
@@ -626,10 +663,11 @@ class MarkCamera extends Component {
                                                         data={listSubjects}
                                                         onPressItem={(index) => this.onPressItemSubject(index)}
                                                     />
+                                                    <Text style={styles.textPlace}>Chọn môn</Text>
                                                 </View>
                                                 <Text style={styles.styTxtLabel}>Loại bài</Text>
                                                 <Dropdown
-                                                    contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5 }]}
+                                                    contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5, flexDirection: 'row' }]}
                                                     title="Loại Bài"
                                                     data={assignmentTypes}
                                                     indexSelected={0}
@@ -662,27 +700,24 @@ class MarkCamera extends Component {
                                             <Text style={styles.txtCreate}>Tạo bộ đề</Text>
                                         </RippleButton>
                                     </View>
+
                                 </TouchableWithoutFeedback>
-                                {/* <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-                                    <View style={[styles.viewPdf, { paddingBottom: this.state.showSelectAnswer ? 160 : 0 }]}></View>
-                                </View> */}
+
                             </ScrollView>
                         </KeyboardAvoidingView>
                         <Toast ref={ref => this.refToast = ref} position={'bottom'} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
                         {loadingUpload &&
                             <View>
-                                <ActivityIndicator />
+                                <ActivityIndicator size="small" style={{ marginTop: 16 }} />
                                 <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
                             </View>}
-
                     </View>
                     <Modal
                         animationType="slide"
                         transparent={true}
                         visible={modalVisible}
                     >
-
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
                                 <TouchableOpacity
@@ -747,10 +782,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    pdf: {
-        flex: 1,
-        width: '100%',
-    },
     txtUploadingPDF: {
         marginTop: 10,
         marginVertical: 3,
@@ -763,7 +794,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#fff',
         color: '#000',
-        fontFamily: 'Nunito-Regular',
+        fontFamily: 'Nunito-LightItalic',
         fontSize: RFFonsize(14),
         paddingStart: 10,
         marginBottom: 7,
@@ -781,12 +812,30 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(86, 204, 242, 0.15)',
         borderColor: 'rgba(86, 204, 242, 0.3)',
         borderRadius: 5,
+        height: 40,
+        justifyContent: 'center'
     },
     wrapEndAreaUploadPDF: {
-        flexDirection: 'column',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignSelf: 'flex-end',
+        marginTop: 16
     },
     buttonInSideAreaUploadPDF: {
-        marginHorizontal: 10
+        flexDirection: 'row',
+        borderWidth: 0.5,
+        borderColor: '#FF6213',
+        borderStyle: "solid",
+        borderRadius: 20,
+        marginHorizontal: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 3,
     },
     styTxtLabel: {
         fontFamily: 'Nunito',
@@ -803,7 +852,8 @@ const styles = StyleSheet.create({
         height: 40,
         marginBottom: 5,
         minWidth: width - 50,
-        borderRadius: 5
+        borderRadius: 5,
+        flexDirection: 'column'
     },
     styleTitle: {
         fontFamily: 'Nunito',
@@ -813,18 +863,21 @@ const styles = StyleSheet.create({
     addPar: {
         fontFamily: "Nunito",
         fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(18),
-        color: "#3596F3",
-        paddingTop: 6,
-        paddingBottom: 6,
-        alignSelf: 'center'
+        lineHeight: RFFonsize(19),
+        color: "#828282",
+        paddingTop: 5.5,
+        paddingBottom: 5.5,
+        alignSelf: 'center',
+        paddingRight: 19.5,
+        paddingLeft: 4
     },
     note: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
         textAlign: 'center',
-        color: "#EC407B"
+        color: "#EC407B",
+        paddingTop: 10
     },
     btnCreate: {
         backgroundColor: '#2D9CDB',
@@ -857,10 +910,12 @@ const styles = StyleSheet.create({
     },
     textPdfFile: {
         fontFamily: 'Nunito',
-        fontSize: RFFonsize(12),
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
         fontWeight: '400',
         color: '#2D9CDB',
-        maxWidth: 130
+        maxWidth: 130,
+        paddingLeft: 10,
     },
     centeredView: {
         flex: 1,
@@ -881,7 +936,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
+        elevation: 3,
         justifyContent: 'space-between',
         flexDirection: 'column'
     },
@@ -896,15 +951,6 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         position: 'absolute',
         right: 5
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
     },
     clickOption: {
         flexDirection: 'column',
@@ -936,6 +982,17 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingHorizontal: 5,
         paddingBottom: 5
+    },
+    wiIcon: {
+        alignSelf: "center",
+        marginLeft: 19.5,
+        tintColor: '#828282'
+    },
+    textPlace: {
+        marginTop: -28,
+        paddingLeft: 5,
+        fontFamily: 'Nunito-LightItalic',
+        color: '#828282'
 
     }
 
