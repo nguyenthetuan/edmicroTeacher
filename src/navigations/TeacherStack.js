@@ -12,7 +12,6 @@ import MarkingCamera from '../components/Teacher/MarkingCamera/MarkingCamera';
 import MarkingWebScreen from '../components/Teacher/MarkingWeb/MarkingWebScreen';
 import Homework from '../containers/teacher/homework/MainScreen';
 import MainHomeWork from '../containers/teacher/report/MainScreen';
-import UploadPDF from '../components/Teacher/Papers/UploadPDF';
 import CopyFromSubjectExists from '../components/Teacher/Papers/CopyFromSubjectExists';
 import ListQuestionCopy from '../components/Teacher/Papers/ListQuestionCopy';
 import ConfigQuestionCopy from '../components/Teacher/Papers/ConfigQuestionCopy';
@@ -44,6 +43,8 @@ import SearchScreen from '../components/common-new/SearchScreen';
 import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import TakePhotoCamera from '../components/Teacher/Papers/TakePhotoCamera';
 import { Platform } from 'react-native';
+import UploadPDFStepByStep from '../components/Teacher/Papers/UploadPDF/UploadPDFStepByStep';
+
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
@@ -111,10 +112,6 @@ const TeacherStack = createStackNavigator({
   },
   MainHomeWork: {
     screen: MainHomeWork,
-    navigationOptions: { header: null, gesturesEnabled: true },
-  },
-  UploadPDF: {
-    screen: UploadPDF,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   MarkCamera: {
@@ -215,6 +212,10 @@ const TeacherStack = createStackNavigator({
   // },
   HomeWorkResult: {
     screen: HomeWorkResult,
+    navigationOptions: { header: null, gesturesEnabled: true },
+  },
+  UploadPDFStepByStep: {
+    screen: UploadPDFStepByStep,
     navigationOptions: { header: null, gesturesEnabled: true },
   },
   SchoolResultPDF: {

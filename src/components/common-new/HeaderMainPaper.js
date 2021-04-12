@@ -223,7 +223,7 @@ class HeaderMainPaper extends React.Component {
   onPressUploadPDF = () => {
     const { listGrades, listSubjects } = this.state;
     this.setState({ visibleModalAdd: false }, () =>
-      this.props.navigation.navigate('UploadPDF', {
+      this.props.navigation.navigate('UploadPDFStepByStep', {
         nagigation: this.props.nagigation,
         listGrades,
         listSubjects,
