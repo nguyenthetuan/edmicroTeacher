@@ -35,6 +35,7 @@ import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import RippleButton from '../../common-new/RippleButton';
 import { AssignmentContentType } from '../../../models';
+import Kcolor from '../../../constants/Kcolor';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -393,16 +394,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
         </TouchableOpacity>
       </View>
     );
@@ -698,7 +699,7 @@ class Papers extends Component {
         <RippleButton
           onPress={() => { this.onPressChangeType(1) }}
           style={typeChange === 1 ? [styles.buttonActive,
-          { backgroundColor: '#334ca4', borderColor: '#334ca4' }] : styles.buttonNotActive}
+          { backgroundColor: '#87CEEB' }] : styles.buttonNotActive}
         >
           <Text
             style={typeChange === 1 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
@@ -708,7 +709,7 @@ class Papers extends Component {
         <RippleButton
           onPress={() => { this.onPressChangeType(2) }}
           style={typeChange === 2 ? [styles.buttonActive,
-          { backgroundColor: '#DB3546', borderColor: '#DB3546' }] : styles.buttonNotActive}>
+          { backgroundColor: '#87CEEB' }] : styles.buttonNotActive}>
           <Text
             style={typeChange === 2 ? styles.textButtonTabActive : styles.textButtonTabNotActive}>
             Chưa giao
@@ -919,8 +920,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     height: 32,
     borderWidth: .5,
-    borderColor: '#2D9CDB',
-    backgroundColor: '#2D9CDB',
+    borderColor: '#87CEEB',
+    backgroundColor: '#87CEEB',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,

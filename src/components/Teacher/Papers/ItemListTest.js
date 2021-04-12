@@ -12,6 +12,8 @@ import Common from '../../../utils/Common';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import { RFFonsize } from '../../../utils/Fonts';
+import Kcolor from '../../../constants/Kcolor';
+
 export default class Item extends Component {
     constructor(props) {
         super(props);
@@ -48,7 +50,7 @@ export default class Item extends Component {
             <View
                 style={[
                     styles.itemTest,
-                    { borderColor: item.status === 4 ? "#334ca4" : '#DB3546' },
+                    { borderColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
                 ]}
                 onPress={this._handleClickDetail(payloadAssignment)}>
                 <TouchableWithoutFeedback
@@ -56,7 +58,7 @@ export default class Item extends Component {
                     <View
                         style={[
                             styles.topTest,
-                            { backgroundColor: item.status === 4 ? "#334ca4" : '#DB3546' },
+                            { backgroundColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
                         ]}>
                         <Text numberOfLines={1}
                             style={styles.txtName}>

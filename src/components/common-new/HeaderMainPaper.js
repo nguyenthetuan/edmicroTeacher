@@ -227,7 +227,7 @@ class HeaderMainPaper extends React.Component {
         nagigation: this.props.nagigation,
         listGrades,
         listSubjects,
-        statusbar: 'dark-content',
+        statusbar: 'light-content',
       }),
     );
   };
