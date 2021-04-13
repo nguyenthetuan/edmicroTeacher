@@ -36,13 +36,14 @@ export default function ItemEssay(props) {
                 </View>
                 <View style={styles.inputPoint}>
                     <TextInput
-                        style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0 }}
+                        style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
                         textAlign={'center'}
-                        value={Number(textPoint).toFixed(2)}
+                        value={textPoint}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => setTextPoint(val)}
                         onBlur={onChangePointEachQS}
                         onFocus={onFocus}
+                        maxLength={3}
                     />
                 </View>
             </View>

@@ -8,6 +8,7 @@ export default class StepFourPDF extends Component {
 
     assignedMission = () => {
         const { item } = this.props.screenProps.data;
+        this.props.screenProps.navigation.pop(1);
         this.props.screenProps.navigation.navigate('Assignment', {
             item: item,
         });
