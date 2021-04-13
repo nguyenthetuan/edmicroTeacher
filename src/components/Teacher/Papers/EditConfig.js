@@ -10,7 +10,8 @@ import {
     Dimensions,
     ScrollView,
     SafeAreaView,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Image
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -22,7 +23,13 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import { RFFonsize } from '../../../utils/Fonts';
 import Api from '../../../services/apiClassTeacher';
 import shadowStyle from '../../../themes/shadowStyle';
+import ClassItem from './ClassItem';
+import SubjectItem from './SubjectItem';
+import ModalClass from './ModalClass';
+import ModalSubject from './ModalSubject';
+import AppIcon from '../../../utils/AppIcon'
 const { width } = Dimensions.get('window');
+const NAVBAR_HEIGHT = 220;
 
 class EditConfig extends Component {
     constructor(props) {
@@ -40,7 +47,9 @@ class EditConfig extends Component {
             loading: false,
             message: '',
             assignedCode: [],
-            totalUserDoing: 0
+            totalUserDoing: 0,
+            gradeActive: [],
+            subjectActive: [],
         }
     }
 
@@ -48,7 +57,7 @@ class EditConfig extends Component {
         const { data, listGrades, listSubjects } = this.props.navigation.state.params;
         const { assignedCode } = this.state;
         const assignmentId = data.assignmentId;
-
+        console.log('data', data)
         const { token } = await dataHelper.getToken();
         const response = await Api.getListClassAssigment({ token, assignmentId });
 
@@ -91,7 +100,9 @@ class EditConfig extends Component {
                 subjectCode: data.subjectCode,
                 listGrades: listGradeTmp,
                 listSubjects: listSubjectTmp,
-                assignedCode: assignedCode
+                assignedCode: assignedCode,
+                gradeActive: data.gradeCode,
+                subjectActive: data.subjectCode,
             });
         }
     }
@@ -136,115 +147,6 @@ class EditConfig extends Component {
             />
         );
     };
-
-    activeGrade = item => {
-        const { gradeCode, assignedCode, totalUserDoing } = this.state;
-        console.log("🚀 ~ file: EditConfig.js ~ line 144 ~ EditConfig ~ totalUserDoing", totalUserDoing)
-        const { listGrades } = this.props.navigation.state.params;
-
-        let gradeCodeTmp = gradeCode;
-        let listGradeTmp = listGrades.map(e => {
-            return { ...e, isActive: false };
-        });
-
-        const isAssigned = _.indexOf(assignedCode, item.gradeId) >= 0;
-        console.log("🚀 ~ file: EditConfig.js ~ line 152 ~ EditConfig ~ isAssigned", isAssigned)
-        if (isAssigned && totalUserDoing) {
-            return;
-        }
-        const index = _.indexOf(gradeCodeTmp, item.gradeId);
-        index < 0
-            ? (gradeCodeTmp = [...gradeCodeTmp, ...[item.gradeId]])
-            : (gradeCodeTmp = [
-                ...gradeCodeTmp.slice(0, index),
-                ...gradeCodeTmp.slice(index + 1),
-            ]);
-
-        gradeCodeTmp
-            .sort((a, b) => parseInt(b.substring(1)) - parseInt(a.substring(1)))
-            .map(gradeId => {
-                const i = _.indexOf(listGradeTmp.map(e => e.gradeId), gradeId);
-                if (i > -1) {
-                    listGradeTmp[i].isActive = true;
-                    listGradeTmp = this.moveArrayItem(listGradeTmp, i, 0);
-                }
-            });
-
-        this.setState({
-            gradeCode: gradeCodeTmp,
-            listGrades: listGradeTmp,
-        });
-    };
-
-    activeSubject = item => {
-        const { subjectCode, assignedCode, totalUserDoing } = this.state;
-        const { listSubjects } = this.props.navigation.state.params;
-
-        let subjectCodeTmp = subjectCode;
-        let listSubjectsTmp = listSubjects.map(e => {
-            return { ...e, isActive: false };
-        });
-
-        const isAssigned = _.indexOf(assignedCode, item.code) >= 0;
-        if (isAssigned && totalUserDoing) {
-            return;
-        }
-
-        const index = _.indexOf(subjectCodeTmp, item.code);
-        index < 0
-            ? (subjectCodeTmp = [...subjectCodeTmp, ...[item.code]])
-            : (subjectCodeTmp = [
-                ...subjectCodeTmp.slice(0, index),
-                ...subjectCodeTmp.slice(index + 1),
-            ]);
-
-        subjectCodeTmp.map(subjectId => {
-            const i = _.indexOf(listSubjectsTmp.map(e => e.code), subjectId);
-            if (i > -1) {
-                listSubjectsTmp[i].isActive = true;
-                listSubjectsTmp = this.moveArrayItem(listSubjectsTmp, i, 0);
-            }
-        });
-
-        this.setState({
-            subjectCode: subjectCodeTmp,
-            listSubjects: listSubjectsTmp,
-        });
-    };
-
-    _renderGrade = () => {
-        const { listGrades } = this.state;
-        return (
-            <FlatList
-                style={{ marginTop: 8 }}
-                data={listGrades}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={4}
-                renderItem={({ item, index }) => {
-                    return !item.isActive ? (
-                        <RippleButton
-                            style={styles.buttomGrade}
-                            onPress={() => this.activeGrade(item)}>
-                            <Text style={styles.txtItem}>{item.name}</Text>
-                        </RippleButton>
-                    ) : (
-                            <RippleButton
-                                style={styles.buttomActive}
-                                onPress={() => this.activeGrade(item)}>
-                                <View>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
-                }}
-                removeClippedSubviews={false}
-                // horizontal
-                // showsHorizontalScrollIndicator={false}
-                scrollEnabled={false}
-            />
-        );
-    };
-
 
     _validate = () => {
         const { name, time, gradeCode, subjectCode } = this.state;
@@ -316,15 +218,105 @@ class EditConfig extends Component {
         }
     };
 
+    _renderGrade = () => {
+        const { listGrades } = this.state;
+        return (
+            <FlatList
+                style={{ marginTop: 8 }}
+                data={listGrades}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={4}
+                renderItem={({ item, index }) => {
+                    return !item.isActive ? (
+                        <RippleButton
+                            style={styles.buttomGrade}
+                            onPress={() => this.activeGrade(item)}>
+                            <Text style={styles.txtItem}>{item.name}</Text>
+                        </RippleButton>
+                    ) : (
+                            <RippleButton
+                                style={styles.buttomActive}
+                                onPress={() => this.activeGrade(item)}>
+                                <View>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
+                }}
+                removeClippedSubviews={false}
+                // horizontal
+                // showsHorizontalScrollIndicator={false}
+                scrollEnabled={false}
+            />
+        );
+    };
+
     setText = ({ key, text }) => {
         var stateCopy = Object.assign({}, this.state);
         stateCopy[key] = text;
         this.setState(stateCopy);
     };
 
+    activeClass = async item => {
+        const { gradeActive } = this.state;
+        const index = _.indexOf(gradeActive, item.gradeId || item);
+        if (index < 0) {
+            gradeActive.push(item.gradeId)
+            await this.setState({ gradeActive, loading: true });
+            return;
+        }
+        gradeActive.splice(index, 1);
+        await this.setState({ gradeActive, loading: true }, () => {
+            console.log('gradeActive', this.state.gradeActive)
+        });
+    };
+
+    activeSubject = async item => {
+        const { subjectActive } = this.state;
+        const index = _.indexOf(subjectActive, item.code || item);
+        if (index < 0) {
+            subjectActive.push(item.code);
+            await this.setState({ subjectActive, loading: true }, () => {
+                console.log('gradeActive', this.state.gradeActive)
+            });
+            return;
+        }
+        subjectActive.splice(index, 1)
+        await this.setState({ subjectActive, loading: true });
+    };
+
+    renderHeaderFlastList() {
+        const {
+            gradeActive,
+            subjectActive,
+            listSubjects
+        } = this.state;
+        return (
+            <View style={styles.navbar}>
+                <ClassItem
+                    gradeActive={gradeActive}
+                    refModalClass={this.refModalClass}
+                    refFlatlist={this.refFlatlist}
+                    activeClass={this.activeClass}
+                    Icon={AppIcon.iconDowSelect}
+                    styleTitle={styles.styTxtLabel}
+                />
+                <SubjectItem
+                    subjectActive={subjectActive}
+                    listSubjects={listSubjects}
+                    refModalSubject={this.refModalSubject}
+                    refFlatlist={this.refFlatlist}
+                    activeSubject={this.activeSubject}
+                    Icon={AppIcon.iconDowSelect}
+                    styleTitle={styles.styTxtLabel}
+                />
+            </View>
+        );
+    }
+
     render() {
         const { shadowBtn } = shadowStyle;
-        const { name, loading, time, success, message, updating } = this.state;
+        const { name, listSubjects, time, gradeActive, listGrades, subjectActive } = this.state;
         const { data } = this.props.navigation.state.params;
         let disabled = data.assignmentType && time == '0' || time == '';
         disabled = !this._validate();
@@ -337,16 +329,14 @@ class EditConfig extends Component {
                     color={"#fff"}
                     backgroundColor={'#2D9CDB'}
                 />
-                <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-                    <KeyboardAvoidingView
+                    <View
                         behavior={'padding'}
                         style={{ flex: 1 }}
                     >
-                        <ScrollView
-                            contentContainerStyle={{ paddingVertical: 15 }}
-                            showsVerticalScrollIndicator={false}
+                        <View
+                            style={{ paddingVertical: 15, flex: 1 }}
                         >
-                            <Text style={styles.styTxtLabel}>Tên bài tập</Text>
+                            <Text style={[styles.styTxtLabel, { left: 15 }]}>Tên bài tập</Text>
                             <View style={styles.styWrapInutName}>
                                 <TextInput
                                     numberOfLines={1}
@@ -357,18 +347,11 @@ class EditConfig extends Component {
                                     }
                                 />
                             </View>
-                            <View style={{ marginTop: 8 }}>
-                                <Text style={styles.styTxtLabel}>Khối lớp</Text>
-                                {this._renderGrade()}
-                            </View>
-                            <View style={{ marginTop: 8 }}>
-                                <Text style={styles.styTxtLabel}>Môn học</Text>
-                                {this._renderSubject()}
-                            </View>
+                            {this.renderHeaderFlastList()}
                             {data && data.assignmentType ? (
-                                <View style={{ marginTop: 8 }}>
+                                <View style={{ marginTop: 40, marginLeft: 20 }}>
                                     <Text style={styles.styTxtLabel}>Thời gian</Text>
-                                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center', left: 0.05 * width }}>
+                                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center' }}>
                                         <View style={styles.styWrapInutTime}>
                                             <TextInput
                                                 value={time}
@@ -377,7 +360,7 @@ class EditConfig extends Component {
                                                 keyboardType={'number-pad'}
                                             />
                                         </View>
-                                        <Text style={[styles.styTxtLabel, { top: 4 }]}>Phút</Text>
+                                        <Text style={[styles.styTxtLabel, { top: 4, left: 10 }]}>Phút</Text>
                                     </View>
                                 </View>
                             ) : null}
@@ -396,10 +379,20 @@ class EditConfig extends Component {
                                     </RippleButton>
                                 </View>
                             </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
-                </TouchableWithoutFeedback>
-
+                        </View>
+                    </View>
+                <ModalClass
+                    ref={ref => this.refModalClass = ref}
+                    gradeActive={gradeActive}
+                    listGrades={listGrades}
+                    activeClass={this.activeClass}
+                />
+                <ModalSubject
+                    ref={ref => this.refModalSubject = ref}
+                    subjectActive={subjectActive}
+                    listSubjects={listSubjects}
+                    activeSubject={this.activeSubject}
+                />
             </View>
         )
     }
@@ -548,7 +541,6 @@ const styles = StyleSheet.create({
         color: '#828282',
         fontSize: RFFonsize(14),
         fontFamily: 'Nunito-Bold',
-        left: 15
     },
     styWrapInutName: {
         borderRadius: 4,
@@ -567,5 +559,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderColor: '#56CCF2',
         borderWidth: 0.5
-    }
+    },
+    navbar: {
+        top: 20,
+        left: 0,
+        right: 0,
+        height: NAVBAR_HEIGHT - 50,
+        backgroundColor: '#fff',
+        paddingHorizontal: 16,
+        justifyContent: 'center',
+    },
 })
