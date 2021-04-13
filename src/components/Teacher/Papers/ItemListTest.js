@@ -36,7 +36,7 @@ export default class Item extends Component {
             item.subjectCode && item.subjectCode.length > 0
                 ? item.subjectCode[0]
                 : '';
-        if (item.subjectCode.length > 1) {
+        if (item.subjectCode?.length > 1) {
             subjectCode = 'LIENMONHOC'
         }
         let gradeCode =
