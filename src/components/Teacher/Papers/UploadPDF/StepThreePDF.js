@@ -334,7 +334,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        bottom: 0
+        bottom: 0,
+        paddingLeft: 16
     },
     buttonNext: {
         width: 160,
@@ -344,7 +345,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // bottom: 50,
-        alignSelf: 'center',
     },
     textNext: {
         fontSize: 14,
