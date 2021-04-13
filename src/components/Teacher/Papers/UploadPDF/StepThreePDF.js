@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, TextInput, Dimensions, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Dimensions, Keyboard, TouchableOpacity, Image } from 'react-native';
 import DropdownMultiSelect from '../../Homework/DropdownMultiSelect';
 import apiPapers from '../../../../services/apiPapersTeacher';
 import Dropdown from '../../Homework/Dropdown';
@@ -9,7 +9,12 @@ import RippleButton from '../../../common-new/RippleButton';
 import Toast from 'react-native-easy-toast';
 import AnalyticsManager from '../../../../utils/AnalyticsManager';
 import { updateExamListAction } from '../../../../actions/paperAction';
-
+import ModalClass from '../ModalClass';
+import ModalSubject from '../ModalSubject';
+import _ from 'lodash';
+import { FlatList } from 'react-native-gesture-handler';
+import Common from '../../../../utils/Common';
+import AppIcon from '../../../../utils/AppIcon';
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,7 +35,9 @@ class StepThreePDF extends Component {
             ],
             assignmentType: 0,
             gradeCode: [],
-            subjectCode: []
+            subjectCode: [],
+            subjectActive: [],
+            gradeActive: []
         }
     }
 
@@ -68,26 +75,51 @@ class StepThreePDF extends Component {
         }
     };
 
-    onPressItemSubject = (indexList) => {
-        const { listSubjects } = this.state;
-        let arrTmp = [];
-        if (indexList.length) {
-            indexList.forEach(element => {
-                arrTmp.push(listSubjects[element].code)
-            });
+    // onPressItemSubject = (indexList) => {
+    //     const { listSubjects } = this.state;
+    //     let arrTmp = [];
+    //     if (indexList.length) {
+    //         indexList.forEach(element => {
+    //             arrTmp.push(listSubjects[element].code)
+    //         });
+    //     }
+    //     this.setState({ subjectCode: arrTmp });
+    // };
+
+    // onPressItemGrade = (indexList) => {
+    //     const { listGrades } = this.state;
+    //     let arrTmp = [];
+    //     if (indexList.length) {
+    //         indexList.forEach(element => {
+    //             arrTmp.push(listGrades[element].gradeId)
+    //         });
+    //     }
+    //     this.setState({ gradeCode: arrTmp });
+    // };
+
+    activeGrade = async item => {
+        const { gradeActive } = this.state;
+        const index = _.indexOf(gradeActive, item.gradeId || item);
+        if (index < 0) {
+            gradeActive.push(item.gradeId)
+            await this.setState({ gradeActive, loading: true, gradeCode: gradeActive });
+            console.log('gradeActive: ', gradeActive);
+            return;
         }
-        this.setState({ subjectCode: arrTmp });
+        gradeActive.splice(index, 1);
+        await this.setState({ gradeActive, loading: true, gradeCode: gradeActive });
     };
 
-    onPressItemGrade = (indexList) => {
-        const { listGrades } = this.state;
-        let arrTmp = [];
-        if (indexList.length) {
-            indexList.forEach(element => {
-                arrTmp.push(listGrades[element].gradeId)
-            });
+    activeSubject = async item => {
+        const { subjectActive } = this.state;
+        const index = _.indexOf(subjectActive, item.code || item);
+        if (index < 0) {
+            subjectActive.push(item.code);
+            await this.setState({ subjectActive, loading: true, subjectCode: subjectActive });
+            return;
         }
-        this.setState({ gradeCode: arrTmp });
+        subjectActive.splice(index, 1)
+        await this.setState({ subjectActive, loading: true, subjectCode: subjectActive });
     };
 
     createAssinment = async () => {
@@ -115,7 +147,6 @@ class StepThreePDF extends Component {
         const { token } = await dataHelper.getToken();
         if (token) {
             const res = await apiPapers.assignmentContent({ token, body });
-            console.log("🚀 ~ file: StepThreePDF.js ~ line 85 ~ StepThreePDF ~ createAssinment= ~ res", res)
             if (res && res.status === 0) {
                 this.toast.show('Tạo bộ đề thành công!');
                 // setTimeout(() => {
@@ -197,7 +228,7 @@ class StepThreePDF extends Component {
 
 
     render() {
-        const { listGrades, listSubjects, assignmentType, duration, assignmentTypes, name } = this.state;
+        const { listGrades, listSubjects, assignmentType, duration, assignmentTypes, name, gradeActive, subjectActive } = this.state;
         return (
             <View style={styles.rootView}>
                 <TextInput
@@ -209,27 +240,62 @@ class StepThreePDF extends Component {
                     placeholderTextColor={'#BDBDBD'}
                     style={styles.inputName}
                 />
+                <ModalClass
+                    ref={ref => this.refModalClass = ref}
+                    gradeActive={gradeActive}
+                    listGrades={listGrades}
+                    activeClass={this.activeGrade}
+                />
+                <ModalSubject
+                    ref={ref => this.refModalSubject = ref}
+                    subjectActive={subjectActive}
+                    listSubjects={listSubjects}
+                    activeSubject={this.activeSubject}
+                />
                 <Text style={styles.styTxtLabel}>Môn học</Text>
                 <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                    <DropdownMultiSelect
-                        key={1}
-                        containerStyle={{
-                            marginHorizontal: 0,
+                    <TouchableOpacity
+                        style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
+                        onPress={() => { this.refModalSubject.onOpen() }}
+                    >
+                        <Image source={AppIcon.icon_arrow_down} />
+                    </TouchableOpacity>
+                    <FlatList
+                        data={subjectActive}
+                        keyExtractor={(item, index) => index.toString()}
+                        showsVerticalScrollIndicator={false}
+                        horizontal
+                        renderItem={({ item, index }) => {
+                            const name = Common.getDisplaySubject(item);
+                            return (
+                                <View style={styles.buttomActive}>
+                                    <Text style={styles.txtItemActive}>{name}</Text>
+                                </View>
+                            )
                         }}
-                        contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
-                        title="Môn học"
-                        data={listSubjects}
-                        onPressItem={(index) => this.onPressItemSubject(index)}
                     />
                 </View>
                 <Text style={styles.styTxtLabel}>Khối lớp</Text>
                 <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                    <DropdownMultiSelect
-                        key={2}
-                        contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
-                        title="Khối lớp"
-                        data={listGrades}
-                        onPressItem={(index) => this.onPressItemGrade(index)}
+                    <TouchableOpacity
+                        style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
+                        onPress={() => { this.refModalClass.onOpen() }}
+                    >
+                        <Image source={AppIcon.icon_arrow_down} />
+                    </TouchableOpacity>
+                    <FlatList
+                        data={gradeActive}
+                        keyExtractor={(item, index) => index.toString()}
+                        showsVerticalScrollIndicator={false}
+                        horizontal
+                        renderItem={({ item, index }) => {
+                            const name = item?.replace('C', 'Lớp ');
+                            return (
+                                <View style={styles.buttomActive}>
+                                    <Text style={styles.txtItemActive}>{name}</Text>
+                                </View>
+                            )
+                        }}
                     />
                 </View>
                 <Text style={styles.styTxtLabel}>Dạng bài</Text>
@@ -307,6 +373,18 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 5
     },
+    buttomActive: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 25,
+        paddingHorizontal: 5,
+        borderColor: '#0085FF',
+        backgroundColor: '#89EAFF',
+        borderRadius: 3,
+        borderWidth: 1,
+        marginHorizontal: 2,
+        top: 7
+    },
     inputName: {
         height: 40,
         backgroundColor: '#fff',
@@ -319,6 +397,12 @@ const styles = StyleSheet.create({
         padding: 0,
         borderColor: '#C4C4C4',
         borderWidth: 1,
+    },
+    txtItemActive: {
+        fontFamily: 'Nunito-Bold',
+        fontWeight: 'bold',
+        fontSize: (12),
+        color: '#000',
     },
     textMinutes: {
         fontFamily: 'Nunito',
@@ -351,6 +435,7 @@ const styles = StyleSheet.create({
         lineHeight: 16,
         fontFamily: 'Nunito-bold',
         color: "#fff",
-        fontWeight: '800'
+        fontWeight: '800',
+        top: 2
     },
 })

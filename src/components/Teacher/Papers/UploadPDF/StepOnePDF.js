@@ -81,7 +81,7 @@ export default class StepOnePDF extends Component {
             if (res) {
                 let url = res.uri;
                 let split = url.split('/');
-                let name = split.pop();
+                let name = split.pop().replace(/%/g, ' ').replace(/20/g, '');
                 if (type === 0) {
                     this.setState({
                         loadingUpload: true,
