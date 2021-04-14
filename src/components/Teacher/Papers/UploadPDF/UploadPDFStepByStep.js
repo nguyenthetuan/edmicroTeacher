@@ -166,36 +166,41 @@ export default class UploadPDFStepByStep extends Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.contain}>
-                <HeaderNavigation
-                    title={'Câu hỏi PDF'}
-                    navigation={this.props.navigation}
-                    actionIcon={this.state.currentPosition == 1 ? Appicon.icon_octiconSettingsV3 : false}
-                    goBack={this.goBack}
-                    color={'#fff'}
-                    onRightAction={Global.nextToStepThreePDF}
-                // actionStyle={{tintColor:}}
-                />
-                <View style={{ backgroundColor: '#2D9CDB', paddingTop: 10 }}>
-                    <StepIndicator
-                        customStyles={customStyles}
-                        renderStepIndicator={this.renderStepIndicator}
-                        currentPosition={this.state.currentPosition}
-                        labels={labels}
-                        stepCount={4}
-                        renderLabel={this.renderText}
+            <View style={styles.contain}>
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#2D9CDB' }} />
+
+                <SafeAreaView style={styles.contain}>
+                    <HeaderNavigation
+                        title={'Câu hỏi PDF'}
+                        navigation={this.props.navigation}
+                        actionIcon={this.state.currentPosition == 1 ? Appicon.icon_octiconSettingsV3 : false}
+                        goBack={this.goBack}
+                        color={'#fff'}
+                        backgroundColor={'#2D9CDB'}
+                        onRightAction={Global.nextToStepThreePDF}
+                    // actionStyle={{tintColor:}}
                     />
-                </View>
-                <TopTabMissionContain
-                    screenProps={{
-                        ...this.props,
-                        handleNextStep: this.handleNextStep,
-                        token: this.token,
-                        data: this.state.data,
-                        goback: this.goBack,
-                    }}
-                />
-            </SafeAreaView >
+                    <View style={{ backgroundColor: '#2D9CDB', paddingTop: 10 }}>
+                        <StepIndicator
+                            customStyles={customStyles}
+                            renderStepIndicator={this.renderStepIndicator}
+                            currentPosition={this.state.currentPosition}
+                            labels={labels}
+                            stepCount={4}
+                            renderLabel={this.renderText}
+                        />
+                    </View>
+                    <TopTabMissionContain
+                        screenProps={{
+                            ...this.props,
+                            handleNextStep: this.handleNextStep,
+                            token: this.token,
+                            data: this.state.data,
+                            goback: this.goBack,
+                        }}
+                    />
+                </SafeAreaView  >
+            </View >
         )
     }
 }
@@ -203,7 +208,7 @@ export default class UploadPDFStepByStep extends Component {
 const styles = StyleSheet.create({
     contain: {
         flex: 1,
-        backgroundColor: '#2D9CDB'
+        backgroundColor: '#fff'
     },
 });
 
