@@ -317,7 +317,7 @@ class HeaderMainPaper extends React.Component {
             />
           </View>
         </RippleButton>
-        <View style={{ flex: 1, marginLeft: 10 }}>
+        <View style={{ flex: 1, marginLeft: 10, top: -2 }}>
           <Image source={require('../../asserts/icon/logo_onluyen.png')} />
         </View>
         <View style={styles.rowGif}>

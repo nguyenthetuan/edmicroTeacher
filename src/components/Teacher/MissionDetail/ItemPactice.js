@@ -1,17 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { RFFonsize } from '../../../utils/Fonts';
 
 export default function ItemPactice(props) {
     const { item } = props;
     return (
-        <TouchableOpacity style={styles.contain} onPress={() => {
+        <TouchableWithoutFeedback onPress={() => {
             props.show({ _id: item.problemId });
         }}>
-            <Text style={styles.styTxt} numberOfLines={1}>{item.problemName}</Text>
-            <View style={{}} />
-            <Text style={styles.styCount}> Yêu cầu hoàn thành: <Text style={{color:'#6ED8FB'}}>{item.percentDone}%</Text></Text>
-        </TouchableOpacity>
+            <View style={styles.contain}>
+                <Text style={styles.styTxt} numberOfLines={1}>{item.problemName}</Text>
+                <View style={{}} />
+                <Text style={styles.styCount}> Yêu cầu hoàn thành: <Text style={{ color: '#6ED8FB' }}>{item.percentDone}%</Text></Text>
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(12),
         letterSpacing: 0,
-        alignSelf: 'flex-end',  
+        alignSelf: 'flex-end',
         marginTop: 5
     }
 })
