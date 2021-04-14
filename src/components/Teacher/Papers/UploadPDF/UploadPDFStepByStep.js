@@ -12,6 +12,7 @@ import _ from 'lodash';
 import RippleButton from '../../../common-new/RippleButton';
 import HeaderNavigation from '../../../common-new/HeaderNavigation';
 import { NavigationActions } from 'react-navigation';
+import Global from '../../../../utils/Globals';
 
 
 const labels = ['Upload', 'Đáp án', 'Cấu hình', 'Hoàn thành'];
@@ -39,7 +40,6 @@ export default class UploadPDFStepByStep extends Component {
     handleNextStep = (index, data, navigation) => {
         let name = ROUTER_NAME[index];
         if (index == 0 && _.isEmpty(data)) {
-            // Global.resetStateStepOne);
             this.setState({ currentPosition: index, data: {} });
             return;
         }
@@ -170,9 +170,11 @@ export default class UploadPDFStepByStep extends Component {
                 <HeaderNavigation
                     title={'Câu hỏi PDF'}
                     navigation={this.props.navigation}
-                    actionIcon={false}
+                    actionIcon={this.state.currentPosition == 1 ? Appicon.icon_octiconSettingsV3 : false}
                     goBack={this.goBack}
                     color={'#fff'}
+                    onRightAction={Global.nextToStepThreePDF}
+                // actionStyle={{tintColor:}}
                 />
                 <View style={{ backgroundColor: '#2D9CDB', paddingTop: 10 }}>
                     <StepIndicator

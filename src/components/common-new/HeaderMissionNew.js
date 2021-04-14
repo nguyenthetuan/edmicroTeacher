@@ -58,7 +58,7 @@ export default class HeaderMissionNew extends React.Component {
                             tintColor={'#383838'} />
                     </View>
                 </RippleButton>
-                <View style={{ flex: 1, marginLeft: 10 }}>
+                <View style={{ flex: 1, marginLeft: 10, top: -2  }}>
                     <Image source={require('../../asserts/icon/logo_onluyen.png')} />
                 </View>
 

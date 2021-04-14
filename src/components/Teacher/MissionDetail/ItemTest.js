@@ -1,21 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 export default function ItemTest(props) {
     const { item } = props;
     return (
-        <TouchableOpacity style={styles.contain} onPress={() => {
+        <TouchableWithoutFeedback onPress={() => {
             props.show({ _id: item.testId });
         }}>
-            <Text style={styles.styTxt} numberOfLines={1}>{item.testName}</Text>
-            <View style={[styles.styWrapCount, { backgroundColor: '#FD9F4C' }]}>
-                <Text style={styles.styCount}>{item.markDone}đ</Text>
-            </View>
-            <View style={{ width: 10 }} />
-            {/* <View style={styles.styWrapCount}>
+            <View style={styles.contain}>
+                <Text style={styles.styTxt} numberOfLines={1}>{item.testName}</Text>
+                <View style={[styles.styWrapCount, { backgroundColor: '#FD9F4C' }]}>
+                    <Text style={styles.styCount}>{item.markDone}đ</Text>
+                </View>
+                <View style={{ width: 10 }} />
+                {/* <View style={styles.styWrapCount}>
                 <Text style={styles.styCount}>{item.countDone}</Text>
             </View> */}
-        </TouchableOpacity>
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 
