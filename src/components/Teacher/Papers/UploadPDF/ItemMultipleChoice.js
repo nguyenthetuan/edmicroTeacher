@@ -44,6 +44,13 @@ export default function ItemMultipleChoice(props) {
         props.onChangePointEachQS(index, textPoint);
     }
 
+    const onChangePoint = (point) => {
+        if (point[point.length - 1] == ',') {
+            point = `${point.substring(0, point.length - 1)}.`
+        }
+        setTextPoint(point);
+    }
+
     return (
         <View style={styles.itemWrap}>
             <View style={styles.wrapLeft}>
@@ -56,7 +63,7 @@ export default function ItemMultipleChoice(props) {
                         textAlign={'center'}
                         value={textPoint}
                         keyboardType='decimal-pad'
-                        onChangeText={(val) => setTextPoint(val)}
+                        onChangeText={(val) => onChangePoint(val)}
                         onBlur={onChangePointEachQS}
                         onFocus={onFocus}
                         maxLength={8}

@@ -28,6 +28,13 @@ export default function ItemEssay(props) {
         props.onKeyBoardShow(props.data.index);
     }
 
+    const onChangePoint = (point) => {
+        if (point[point.length - 1] == ',') {
+            point = `${point.substring(0, point.length - 1)}.`
+        }
+        setTextPoint(point);
+    }
+
     return (
         <View style={styles.itemWrap}>
             <View style={styles.wrapLeft}>
@@ -40,7 +47,7 @@ export default function ItemEssay(props) {
                         textAlign={'center'}
                         value={textPoint}
                         keyboardType='decimal-pad'
-                        onChangeText={(val) => setTextPoint(val)}
+                        onChangeText={(val) => onChangePoint(val)}
                         onBlur={onChangePointEachQS}
                         onFocus={onFocus}
                         maxLength={3}

@@ -17,8 +17,11 @@ export default function QuestionGeneral(props) {
         props.onTotalQSChange(val);
     }
 
-    const onTotalPointChange = (val) => {
-        props.onTotalPointChange(val);
+    const onTotalPointChange = (point) => {
+        if (point[point.length - 1] == ',') {
+            point = `${point.substring(0, point.length - 1)}.`
+        }
+        props.onTotalPointChange(point);
     }
 
     const deCrease = () => {
