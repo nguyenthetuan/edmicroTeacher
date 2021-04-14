@@ -40,6 +40,12 @@ import ModalAddPaper from './ModalAddPaper';
 import RNImageToPdf from 'react-native-image-to-pdf';
 import ImagePickerCrop from 'react-native-image-crop-picker';
 import TakePhotoCamera from './TakePhotoCamera';
+import ClassItem from './ClassItem';
+import SubjectItem from './SubjectItem';
+import ModalClass from './ModalClass';
+import ModalSubject from './ModalSubject';
+
+const NAVBAR_HEIGHT = 220;
 
 let baseUrl = 'file:///android_asset/';
 if (Platform.OS === 'ios') {
@@ -94,7 +100,9 @@ class MarkCamera extends Component {
             modalVisible: false,
             imgWidth: "100%",
             imgHeight: "100%",
-            pdfFromImage: ''
+            pdfFromImage: '',
+            listSubjects: [],
+            listGrades: []
         };
     }
 
@@ -501,28 +509,6 @@ class MarkCamera extends Component {
         }
     }
 
-    onPressItemSubject = (indexList) => {
-        const { listSubjects } = this.props.navigation.state.params;
-        let arrTmp = [];
-        if (indexList.length) {
-            indexList.forEach(element => {
-                arrTmp.push(listSubjects[element].code)
-            });
-        }
-        this.setState({ subjectCode: arrTmp });
-    };
-
-    onPressItemGrade = (indexList) => {
-        const { listGrades } = this.props.navigation.state.params;
-        let arrTmp = [];
-        if (indexList.length) {
-            indexList.forEach(element => {
-                arrTmp.push(listGrades[element].gradeId)
-            });
-        }
-        this.setState({ gradeCode: arrTmp });
-    };
-
     onPressItemAssignmentType = (index) => {
         const { assignmentTypes } = this.state;
         this.setState({ assignmentType: assignmentTypes[index].id, showSelectAnswer: false });
@@ -552,6 +538,73 @@ class MarkCamera extends Component {
         this.setState({ totalPoint: totalPoint });
     }
 
+    activeClass = async item => {
+        const { gradeActive } = this.state;
+        const index = _.indexOf(gradeActive, item.gradeId || item);
+        if (index < 0) {
+            gradeActive.push(item.gradeId)
+            await this.setState({
+                gradeActive,
+                gradeCode: gradeActive,
+                loading: true
+            });
+            return;
+        }
+        gradeActive.splice(index, 1);
+        await this.setState({
+            gradeActive,
+            gradeCode: gradeActive,
+            loading: true
+        });
+    };
+
+    activeSubject = async item => {
+        const { subjectActive } = this.state;
+        const index = _.indexOf(subjectActive, item.code || item);
+        if (index < 0) {
+            subjectActive.push(item.code);
+            await this.setState({
+                loading: true,
+                subjectCode:subjectActive,
+            });
+            return;
+        }
+        subjectActive.splice(index, 1)
+        await this.setState({
+            loading: true,
+            subjectCode:subjectActive,
+        });
+    };
+
+    renderHeaderFlastList = () => {
+        const {
+            gradeCode,
+            subjectCode,
+        } = this.state;
+        const {
+            listSubjects,
+        } = this.props.navigation.state.params;
+        return (
+            <View style={styles.navbar}>
+                <ClassItem
+                    gradeActive={gradeCode}
+                    onOpen={() => this.refModalClass.onOpen()}
+                    refFlatlist={this.refFlatlist}
+                    activeClass={this.activeClass}
+                    Icon={AppIcon.iconDowSelect}
+                />
+                <SubjectItem
+                    subjectActive={subjectCode}
+                    listSubjects={listSubjects}
+                    onOpen={() => this.refModalSubject.onOpen()}
+                    refFlatlist={this.refFlatlist}
+                    activeSubject={this.activeSubject}
+                    Icon={AppIcon.iconDowSelect}
+                />
+            </View>
+        );
+    }
+
     render() {
         const {
             listGrades,
@@ -564,21 +617,25 @@ class MarkCamera extends Component {
             totalQuestionTN,
             totalQuestionTL,
             assignmentTypes,
-            visibleViewAnswer,
+            modalVisible,
             loadingUpload,
             name,
             assignmentType,
             duration,
             viewFileFDF,
             typeQuestion,
+            gradeActive,
+            subjectActive,
+            gradeCode,
+            subjectCode
         } = this.state;
         const numColumns = this.getNumColumns();
         const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
         const points = this.selectAnswer?.getTotalPoint();
         const { shadowBtn } = shadowStyle;
-        const { modalVisible } = this.state;
         return (
             <View style={{ flex: 1 }}>
+
                 <SafeAreaView />
                 <SafeAreaView style={styles.container}>
                     <HeaderNavigation
@@ -642,28 +699,7 @@ class MarkCamera extends Component {
                                                         }
                                                     </View>
                                                 </View>
-                                                <Text style={styles.styTxtLabel}>Khối </Text>
-                                                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]}>
-                                                    <DropdownMultiSelect
-                                                        contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
-                                                        title="Khối"
-                                                        data={listGrades}
-                                                        onPressItem={(index) => this.onPressItemGrade(index)}
-                                                    />
-                                                </View>
-                                                <Text style={styles.styTxtLabel}>Môn học</Text>
-                                                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]}>
-                                                    <DropdownMultiSelect
-                                                        containerStyle={{
-                                                            marginHorizontal: 0,
-                                                        }}
-                                                        contentStyle={[styles.styTxtPlace, { borderWidth: 0 }]}
-                                                        title="Môn"
-                                                        data={listSubjects}
-                                                        onPressItem={(index) => this.onPressItemSubject(index)}
-                                                    />
-
-                                                </View>
+                                                {this.renderHeaderFlastList()}
                                                 <Text style={styles.styTxtLabel}>Loại bài</Text>
                                                 <Dropdown
                                                     contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5, flexDirection: 'row' }]}
@@ -742,6 +778,19 @@ class MarkCamera extends Component {
                             </View>
                         </View>
                     </Modal>
+                    <ModalClass
+                        ref={ref => this.refModalClass = ref}
+                        gradeActive={gradeCode}
+                        listGrades={listGrades}
+                        activeClass={this.activeClass}
+                    />
+                    <ModalSubject
+                        ref={ref => this.refModalSubject = ref}
+                        subjectActive={subjectCode}
+                        listSubjects={listSubjects}
+                        activeSubject={this.activeSubject}
+                        Icon={AppIcon.iconDowSelect}
+                    />
                 </SafeAreaView>
             </View>
         );
@@ -989,7 +1038,16 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginLeft: 19.5,
         tintColor: '#828282'
-    }
+    },
+    navbar: {
+        // position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: NAVBAR_HEIGHT - 50,
+        backgroundColor: '#fff',
+        justifyContent: 'center'
+    },
 
 });
 
