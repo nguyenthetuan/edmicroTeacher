@@ -19,7 +19,8 @@ export default class ClassItem extends Component {
         } catch (error) {
 
         }
-        this.props.refModalClass.onOpen()
+        console.log('props', this.props)
+        this.props.onOpen();
     }
 
     renderItem = ({ item }) => {

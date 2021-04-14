@@ -605,7 +605,7 @@ class Papers extends Component {
       <View style={styles.navbar}>
         <ClassItem
           gradeActive={gradeActive}
-          refModalClass={this.refModalClass}
+          onOpen={() => this.refModalClass.onOpen()}
           refFlatlist={this.refFlatlist}
           activeClass={this.activeClass}
           Icon={AppIcon.iconFilter}
@@ -613,7 +613,7 @@ class Papers extends Component {
         <SubjectItem
           subjectActive={subjectActive}
           listSubjects={listSubjects}
-          refModalSubject={this.refModalSubject}
+          onOpen={() => this.refModalSubject.onOpen()}
           refFlatlist={this.refFlatlist}
           activeSubject={this.activeSubject}
           Icon={AppIcon.iconFilter}
