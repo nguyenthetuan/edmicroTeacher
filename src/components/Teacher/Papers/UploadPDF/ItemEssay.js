@@ -45,7 +45,7 @@ export default function ItemEssay(props) {
                     <TextInput
                         style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
                         textAlign={'center'}
-                        value={textPoint}
+                        value={(Math.round(Number(textPoint) * 100) / 100).toString()}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => onChangePoint(val)}
                         onBlur={onChangePointEachQS}
