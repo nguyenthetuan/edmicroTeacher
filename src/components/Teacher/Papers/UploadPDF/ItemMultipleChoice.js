@@ -121,7 +121,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#DADADA',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     answerActive: {
         width: 30,
@@ -129,7 +138,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#4EBE3C',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     textAS: {
         fontFamily: 'Nunito-bold',
