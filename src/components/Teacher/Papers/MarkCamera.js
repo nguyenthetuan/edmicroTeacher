@@ -509,6 +509,29 @@ class MarkCamera extends Component {
         }
     }
 
+    onPressItemSubject = (indexList) => {
+        const { listSubjects } = this.props.navigation.state.params;
+        let arrTmp = [];
+        if (indexList.length) {
+            indexList.forEach(element => {
+                arrTmp.push(listSubjects[element].code)
+            });
+        }
+        this.setState({ subjectCode: arrTmp }, () => console.log('subjectCode', this.state.subjectCode));
+    };
+
+    onPressItemGrade = (indexList) => {
+        console.log('indexList', indexList)
+        const { listGrades } = this.props.navigation.state.params;
+        let arrTmp = [];
+        if (indexList.length) {
+            indexList.forEach(element => {
+                arrTmp.push(listGrades[element].gradeId)
+            });
+        }
+        this.setState({ gradeCode: arrTmp }, () => console.log('gradeCode', this.state.gradeCode));
+    };
+
     onPressItemAssignmentType = (index) => {
         const { assignmentTypes } = this.state;
         this.setState({ assignmentType: assignmentTypes[index].id, showSelectAnswer: false });
@@ -539,40 +562,38 @@ class MarkCamera extends Component {
     }
 
     activeClass = async item => {
-        const { gradeActive } = this.state;
-        const index = _.indexOf(gradeActive, item.gradeId || item);
+        const { gradeCode } = this.state;
+        const index = _.indexOf(gradeCode, item.gradeId || item);
         if (index < 0) {
-            gradeActive.push(item.gradeId)
+            gradeCode.push(item.gradeId)
             await this.setState({
-                gradeActive,
-                gradeCode: gradeActive,
+                gradeCode: gradeCode,
                 loading: true
             });
             return;
         }
-        gradeActive.splice(index, 1);
+        gradeCode.splice(index, 1);
         await this.setState({
-            gradeActive,
-            gradeCode: gradeActive,
+            gradeCode: gradeCode,
             loading: true
         });
     };
 
     activeSubject = async item => {
-        const { subjectActive } = this.state;
-        const index = _.indexOf(subjectActive, item.code || item);
+        const { subjectCode } = this.state;
+        const index = _.indexOf(subjectCode, item.code || item);
         if (index < 0) {
-            subjectActive.push(item.code);
+            subjectCode.push(item.code);
             await this.setState({
                 loading: true,
-                subjectCode:subjectActive,
+                subjectCode:subjectCode,
             });
             return;
         }
-        subjectActive.splice(index, 1)
+        subjectCode.splice(index, 1)
         await this.setState({
             loading: true,
-            subjectCode:subjectActive,
+            subjectCode:subjectCode,
         });
     };
 
@@ -624,8 +645,6 @@ class MarkCamera extends Component {
             duration,
             viewFileFDF,
             typeQuestion,
-            gradeActive,
-            subjectActive,
             gradeCode,
             subjectCode
         } = this.state;
