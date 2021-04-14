@@ -17,7 +17,7 @@ export default class ClassItem extends Component {
         try {
             this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
         } catch (error) {
-            
+
         }
         this.props.refModalClass.onOpen()
     }
@@ -35,11 +35,11 @@ export default class ClassItem extends Component {
     }
 
     render() {
-        const { gradeActive } = this.props;
+        const { gradeActive, Icon ,styleTitle} = this.props;
         return (
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={styles.txtClass}>Khối lớp</Text>
+                    <Text style={[styles.txtClass,styleTitle]}>Khối lớp</Text>
                 </View>
                 <View style={styles.styWrapClass}>
                     {/* <Image
@@ -60,11 +60,12 @@ export default class ClassItem extends Component {
                         <RippleButton
                             onPress={this.openModalClass}
                             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            style={{height:30,justifyContent:'center'}}
                         >
                             <Image
-                                source={require('../../../asserts/appIcon/icon_filter_plus.png')}
+                                source={Icon}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#2D9CDB' }}
+                                style={{ tintColor: '#2D9CDB',marginRight:10 }}
                             />
                         </RippleButton>
                     </View>
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         borderRadius: 3,
         borderColor: '#56CCF2',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     styIcon: {
         position: 'absolute',

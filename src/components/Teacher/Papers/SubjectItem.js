@@ -37,11 +37,11 @@ export default class SubjectItem extends Component {
     }
 
     render() {
-        const { subjectActive } = this.props;
+        const { subjectActive ,Icon,styleTitle} = this.props;
         return (
             <View>
                 <View style={styles.styWrapLabel}>
-                    <Text style={styles.txtClass}>Môn học</Text>
+                    <Text style={[styles.txtClass,styleTitle]}>Môn học</Text>
                 </View>
                 <View style={styles.styWrapClass}>
                     {/* <Image
@@ -61,11 +61,12 @@ export default class SubjectItem extends Component {
                         <RippleButton
                             onPress={this.openModalSubject}
                             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            style={{height:30,justifyContent:'center'}}
                         >
                             <Image
-                                source={require('../../../asserts/appIcon/icon_filter_plus.png')}
+                                source={Icon}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#2D9CDB' }}
+                                style={{ tintColor: '#2D9CDB',marginRight:10 }}
                             />
                         </RippleButton>
                     </View>

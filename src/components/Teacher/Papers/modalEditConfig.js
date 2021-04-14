@@ -20,7 +20,6 @@ import _ from 'lodash';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import { RFFonsize } from '../../../utils/Fonts';
-
 const { width, height } = Dimensions.get('window');
 
 export default class ModalConfigPaper extends Component {

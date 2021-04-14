@@ -36,6 +36,7 @@ import { RFFonsize } from '../../../utils/Fonts';
 import RippleButton from '../../common-new/RippleButton';
 import { AssignmentContentType } from '../../../models';
 import Kcolor from '../../../constants/Kcolor';
+import AppIcon from '../../../utils/AppIcon'
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -607,6 +608,7 @@ class Papers extends Component {
           refModalClass={this.refModalClass}
           refFlatlist={this.refFlatlist}
           activeClass={this.activeClass}
+          Icon={AppIcon.iconFilter}
         />
         <SubjectItem
           subjectActive={subjectActive}
@@ -614,6 +616,7 @@ class Papers extends Component {
           refModalSubject={this.refModalSubject}
           refFlatlist={this.refFlatlist}
           activeSubject={this.activeSubject}
+          Icon={AppIcon.iconFilter}
         />
       </View>
     );

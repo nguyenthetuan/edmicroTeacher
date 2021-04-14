@@ -124,6 +124,8 @@ import config_icon from '../asserts/icon/config_icon.png';
 import answer_icon from '../asserts/icon/answer_icon.png';
 import upload_icon from '../asserts/icon/upload_icon.png';
 import score_9 from '../asserts/appIcon/score_9.png';
+import iconDowSelect from '../asserts/icon/iconDowSelect.png';
+import iconFilter from '../asserts/appIcon/icon_filter_plus.png'
 
 module.exports = {
   done_icon,
@@ -232,5 +234,7 @@ module.exports = {
   icon_remakePeopleV3,
   icon_toSendV3,
   icon_remakeHatV3,
-  score_9
+  score_9,
+  iconDowSelect,
+  iconFilter,
 };
