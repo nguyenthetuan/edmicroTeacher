@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   Dimensions,
   StatusBar,
   Image
@@ -66,7 +66,7 @@ export default class ModalFillter extends Component {
             title={'Tuỳ chọn'}
             onRightAction={this.changeStateModale}
             // actionIcon={AppIcon.close_img}
-            actionIcon={require('../../../asserts/icon/iconCloseX.png')}
+            actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
             isShow={false}
           />
           <View style={[styles.wrapSelect1, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
@@ -111,9 +111,11 @@ export default class ModalFillter extends Component {
             />
           </View>
 
-          <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.handleStatistic}>
-            <Text style={styles.txtBtn}>Xem thống kê</Text>
-          </TouchableOpacity>
+          <TouchableWithoutFeedback onPress={this.handleStatistic}>
+            <View style={[styles.btnViewStatistic, { ...shadowBtn }]}>
+              <Text style={styles.txtBtn}>Xem thống kê</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </Modal >
     );

@@ -8,7 +8,8 @@ import {
   Animated,
   Dimensions,
   Platform,
-  Keyboard
+  Keyboard,
+  ActivityIndicator
 } from 'react-native';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
@@ -31,6 +32,7 @@ export default class MissionScreen extends Component {
       isAccessMission: false,
       onSearchClear: '',
       textSearch: '',
+      loading: true,
     }
     this._scroll_y = new Value(0)
     this.token = null;
@@ -139,11 +141,20 @@ export default class MissionScreen extends Component {
     );
   };
 
-  renderEmpty = () => (
-    <View style={styles.styWrapEmpty}>
-      <Text style={styles.styTxtEmpty}>Hiện tại không có nhiệm vụ nào</Text>
-    </View>
-  );
+  _listTestEmpty = () => {
+    const { loading } = this.state;
+    return (loading ?
+      <ActivityIndicator
+        size={'small'}
+        style={{ height: height / 1.5 }}
+        color="#F98E2F"
+      />
+      :
+      <View style={styles.styWrapEmpty}>
+        <Text style={styles.styTxtEmpty}>Hiện tại không có nhiệm vụ nào</Text>
+      </View>
+    );
+  };
 
   changePosition = event => {
     const { positionY } = this.state;
@@ -162,7 +173,7 @@ export default class MissionScreen extends Component {
       listMissionSearch,
     } = this.state;
     // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
-
+    const { isLoading } = this.props;
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 100],
@@ -203,8 +214,8 @@ export default class MissionScreen extends Component {
             initialNumToRender={3}
             bounces={false}
             scrollEventThrottle={1}
+            ListEmptyComponent={this._listTestEmpty}
             ListFooterComponent={<View style={{ height: 120 }} />}
-            ListEmptyComponent={this.renderEmpty}
             showsVerticalScrollIndicator={false}
             onScroll={Animated.event([
               {
@@ -219,6 +230,7 @@ export default class MissionScreen extends Component {
               }
             ]}
           />
+
         </SafeAreaView>
       </>
     );
