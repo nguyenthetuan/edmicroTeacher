@@ -60,6 +60,7 @@ class MenuTabTeacher extends Component {
       case 15: this.props.navigation.navigate('TermsOfUse', { statusbar: 'dark-content' }); break;
       case 16: this.props.navigation.navigate('ExchangeGiftScreen', { statusbar: 'light-content' }); break;
       case 17: this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'light-content' }); break;
+      case 18: this.props.navigation.navigate('EvaluateDraScreen', { statusbar: 'dark-content' }); break;
       default:
         break;
     }
@@ -137,7 +138,7 @@ class MenuTabTeacher extends Component {
               />
               <View style={MenuStyle.hrRow}></View>
               <MenuItem
-                onPress={() => this.handleClick(17)}
+                onPress={() => this.handleClick(18)}
                 source={require('../../asserts/icon/icon_menuEvaluate.png')}
                 title={'Đánh giá'}
                 rippleColor={rippleColor}

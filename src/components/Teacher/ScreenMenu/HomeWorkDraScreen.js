@@ -11,6 +11,9 @@ import {
     SafeAreaView
 } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { connect } from 'react-redux';
+import { fetchHomeworkAction } from '../../../actions/homeworkTeacherAction';
+import { updateExamListAction } from '../../../actions/paperAction';
 import { createAppContainer } from 'react-navigation';
 import LevelCompletion from '../../../containers/teacher/homework/LevelCompletion';
 import RightWrongRatio from '../../../containers/teacher/homework/RightWrongRatio';
@@ -127,7 +130,7 @@ const indexSelected = {
     class: 0,
 };
 
-export default function StatisticsPoints(props) {
+function HomeWorkDraScreen(props) {
     const toast = useRef();
     const modalFillter = useRef();
     const [data, setData] = useState({
@@ -522,6 +525,22 @@ export default function StatisticsPoints(props) {
         </SafeAreaView>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+      data: state.homeworkTeacher.data,
+      loading: state.homeworkTeacher.loading
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      fetchHomework: (payload) => { dispatch(fetchHomeworkAction(payload)) },
+      needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(HomeWorkDraScreen);
 
 const styles = StyleSheet.create({
     container: {
