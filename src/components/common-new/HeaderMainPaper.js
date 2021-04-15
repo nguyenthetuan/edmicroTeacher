@@ -3,9 +3,9 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableOpacity,
   Animated,
   FlatList,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 import RippleButton from '../common-new/RippleButton';
@@ -317,32 +317,28 @@ class HeaderMainPaper extends React.Component {
             />
           </View>
         </RippleButton>
-        <View style={{ flex: 1, marginLeft: 10, top: -2 }}>
-          <Image source={require('../../asserts/icon/logo_onluyen.png')} />
+        <View style={{ flex: 1, marginLeft: 10 }}>
+          <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
         <View style={styles.rowGif}>
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             onPress={() =>
               this.props.navigation.navigate('SearchScreen', { listPapers })
             }
-            style={styles.searchGif}
           >
-            <Image
-              source={require('../../asserts/icon/icon_searchPar.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.addPaper} onPress={this._handleAddPaper}>
-            <Image
-              source={require('../../asserts/icon/icon_addPar.png')}
-              style={{ top: -1 }}
-            />
-          </TouchableOpacity>
-          {/* <TouchableOpacity
-            style={styles.addPaper} onPress={this.onPressCamera} >
-            <Image
-              source={require('../../asserts/icon/icon_paperPlane.png')}
-            />
-          </TouchableOpacity> */}
+            <View style={styles.searchGif}>
+              <Image
+                source={require('../../asserts/icon/icon_searchAround.png')}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this._handleAddPaper}>
+            <View style={styles.addPaper}>
+              <Image
+                source={require('../../asserts/icon/icon_addPaper.png')}
+              />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
         <ModalAddPaper
           onPress={this.onPress}
@@ -387,12 +383,14 @@ const styles = StyleSheet.create({
   },
   searchGif: {
     // alignItems: 'flex-end',
-    alignSelf: "center"
+    alignSelf: "center",
+
   },
   addPaper: {
     alignItems: 'flex-end',
     marginHorizontal: 5,
-    marginLeft: 10
+    marginLeft: 16,
+    alignSelf: 'center'
   },
   rowGif: {
     flex: 1,

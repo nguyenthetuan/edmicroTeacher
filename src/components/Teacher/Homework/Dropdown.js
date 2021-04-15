@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import SelectModal from './SelectModal';
 import { RFFonsize } from '../../../utils/Fonts';
@@ -20,18 +20,20 @@ export default function Dropdown(props) {
   const isData = data && data[indexSelected];
   return (
     <View style={containerStyle}>
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         onPress={() => {
           showDropdown(!dropdownVisible);
           selectModal.current.onShowModal();
         }}
-        style={[styles.styBtn, contentStyle]}>
-        <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
-          {isData
-            ? data[indexSelected].className || data[indexSelected].name || ''
-            : title}
-        </Text>
-      </TouchableOpacity>
+      >
+        <View style={[styles.styBtn, contentStyle]}>
+          <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
+            {isData
+              ? data[indexSelected].className || data[indexSelected].name || ''
+              : title}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
       <SelectModal
         onHide={() => showDropdown(false)}
         ref={selectModal}
