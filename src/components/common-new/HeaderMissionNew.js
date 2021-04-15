@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
         fontWeight: '500',
-        color: '#000',
+        color: '#383838',
         alignSelf: 'center',
         padding: 5,
         paddingLeft: 10
