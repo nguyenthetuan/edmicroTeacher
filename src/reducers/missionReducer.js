@@ -2,6 +2,7 @@ import * as Types from '../constants/type';
 
 const initState = {
   isLoading: false,
+  isLoadingMission:true,
   listSubject: [],
   listMission: [],
   listCateHirachy: [],
@@ -27,12 +28,12 @@ export default function missionReducer(state = initState, action) {
     case Types.FETCH_LIST_MISSION:
       return {
         ...state,
-        isLoading: true,
+        isLoadingMission: true,
       };
     case Types.FETCH_LIST_MISSION_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isLoadingMission: false,
         listMission: action.data,
       };
     case Types.FETCH_CATEGORY_HIRACHY_MISSION:

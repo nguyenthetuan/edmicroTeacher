@@ -32,7 +32,6 @@ export default class MissionScreen extends Component {
       isAccessMission: false,
       onSearchClear: '',
       textSearch: '',
-      loading: true,
     }
     this._scroll_y = new Value(0)
     this.token = null;
@@ -142,8 +141,8 @@ export default class MissionScreen extends Component {
   };
 
   _listTestEmpty = () => {
-    const { loading } = this.state;
-    return (loading ?
+    const { isLoadingMission } = this.props;
+    return (isLoadingMission ?
       <ActivityIndicator
         size={'small'}
         style={{ height: height / 1.5 }}
@@ -173,7 +172,6 @@ export default class MissionScreen extends Component {
       listMissionSearch,
     } = this.state;
     // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
-    const { isLoading } = this.props;
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 100],
