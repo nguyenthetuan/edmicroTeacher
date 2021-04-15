@@ -13,7 +13,9 @@ class AnalyticsManager {
         event: string
      */
     track = async (event) => {
-        this.mixpanel(() => Mixpanel.track(event));
+        if(!__DEV__){
+            this.mixpanel(() => Mixpanel.track(event));
+        }
     };
 
     reset = async () => {
@@ -26,7 +28,9 @@ class AnalyticsManager {
         properties: Object
      */
     trackWithProperties = async (event, properties) => {
-        this.mixpanel(() => Mixpanel.trackWithProperties(event, properties));
+        if (!__DEV__) {
+            this.mixpanel(() => Mixpanel.trackWithProperties(event, properties));
+        }
     };
 
     /*
@@ -122,7 +126,9 @@ class AnalyticsManager {
     create a new mixpanel profile and the user will no longer be anonymous in Mixpanel)
      */
     set = async (properties) => {
-        this.mixpanel(() => Mixpanel.set(properties));
+        if (properties && properties.Role && properties.Role != '' && !__DEV__) {
+            this.mixpanel(() => Mixpanel.set(properties));
+        }
     };
 
 
