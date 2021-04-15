@@ -20,7 +20,7 @@ export const MenuItem = (props) => {
                 <Text style={MenuStyle.txtComponent}>{title}</Text>
                 <Icon
                     name={'angle-right'}
-                    color={'#4776AD'}
+                    color={'#757575'}
                     size={16}
                     style={[MenuStyle.angle]}
                 />
