@@ -16,7 +16,6 @@ import {
     Modal,
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
-    Pressable
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import RippleButton from '../../common-new/RippleButton';
@@ -65,6 +64,7 @@ const options = {
 class MarkCamera extends Component {
     constructor(props) {
         super(props);
+        const { listSubjects, listGrades } = this.props.navigation.state.params;
         this.state = {
             visibleModalAdd: false,
             visibleViewAnswer: true,
@@ -101,8 +101,8 @@ class MarkCamera extends Component {
             imgWidth: "100%",
             imgHeight: "100%",
             pdfFromImage: '',
-            listSubjects: [],
-            listGrades: []
+            listSubjects: listSubjects || [],
+            listGrades: listGrades || []
         };
     }
 
@@ -510,7 +510,7 @@ class MarkCamera extends Component {
     }
 
     onPressItemSubject = (indexList) => {
-        const { listSubjects } = this.props.navigation.state.params;
+        const { listSubjects } = this.state;
         let arrTmp = [];
         if (indexList.length) {
             indexList.forEach(element => {
@@ -521,8 +521,7 @@ class MarkCamera extends Component {
     };
 
     onPressItemGrade = (indexList) => {
-        console.log('indexList', indexList)
-        const { listGrades } = this.props.navigation.state.params;
+        const { listGrades } = this.state;
         let arrTmp = [];
         if (indexList.length) {
             indexList.forEach(element => {
@@ -565,18 +564,14 @@ class MarkCamera extends Component {
         const { gradeCode } = this.state;
         const index = _.indexOf(gradeCode, item.gradeId || item);
         if (index < 0) {
-            gradeCode.push(item.gradeId)
-            await this.setState({
-                gradeCode: gradeCode,
-                loading: true
+            this.setState({
+                gradeCode: [...gradeCode, item.gradeId],
             });
-            return;
+        } else {
+            this.setState({
+                gradeCode: [...gradeCode.splice(0, index), ...gradeCode.splice(index + 1)],
+            });
         }
-        gradeCode.splice(index, 1);
-        await this.setState({
-            gradeCode: gradeCode,
-            loading: true
-        });
     };
 
     activeSubject = async item => {
@@ -584,27 +579,23 @@ class MarkCamera extends Component {
         const index = _.indexOf(subjectCode, item.code || item);
         if (index < 0) {
             subjectCode.push(item.code);
-            await this.setState({
-                loading: true,
-                subjectCode:subjectCode,
+            this.setState({
+                subjectCode: subjectCode,
             });
-            return;
+        } else {
+            subjectCode.splice(index, 1)
+            this.setState({
+                subjectCode: subjectCode,
+            });
         }
-        subjectCode.splice(index, 1)
-        await this.setState({
-            loading: true,
-            subjectCode:subjectCode,
-        });
     };
 
     renderHeaderFlastList = () => {
         const {
             gradeCode,
             subjectCode,
+            listSubjects
         } = this.state;
-        const {
-            listSubjects,
-        } = this.props.navigation.state.params;
         return (
             <View style={styles.navbar}>
                 <ClassItem
@@ -654,7 +645,6 @@ class MarkCamera extends Component {
         const { shadowBtn } = shadowStyle;
         return (
             <View style={{ flex: 1 }}>
-
                 <SafeAreaView />
                 <SafeAreaView style={styles.container}>
                     <HeaderNavigation

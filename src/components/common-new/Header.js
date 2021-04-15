@@ -8,7 +8,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { RFFonsize } from '../../utils/Fonts';
 
 const HeaderPrimary = (props) => {
-    const { showLead = true, navigation, title } = props;
+    const { showLead = true, navigation, title,styleTitle } = props;
     return (
         <View style={styles.rowContainer}>
             {showLead ?
@@ -20,7 +20,7 @@ const HeaderPrimary = (props) => {
                 :
                 <View style={styles.boxAction} />
             }
-            <Text style={styles.textTitle}>{title}</Text>
+            <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
             <View style={styles.boxAction}>
             </View>
         </View>
