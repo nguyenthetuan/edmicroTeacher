@@ -59,6 +59,7 @@ class MenuTabTeacher extends Component {
       case 14: this.props.navigation.navigate('ChangePassword', { statusbar: 'light-content' }); break;
       case 15: this.props.navigation.navigate('TermsOfUse', { statusbar: 'dark-content' }); break;
       case 16: this.props.navigation.navigate('ExchangeGiftScreen', { statusbar: 'light-content' }); break;
+      case 17: this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'light-content' }); break;
       default:
         break;
     }
@@ -92,8 +93,8 @@ class MenuTabTeacher extends Component {
     const { modalVisible } = this.state;
     return (
       <React.Fragment>
-        <SafeAreaView style={MenuStyle.headerSafeview} />
-        <View style={MenuStyle.container} >
+        {/* <SafeAreaView style={MenuStyle.headerSafeview} /> */}
+        <View style={MenuStyle.container}>
           <HeaderMenu
             {...user}
             userGift={userGift}
@@ -134,6 +135,26 @@ class MenuTabTeacher extends Component {
                 title={'Liên hệ với chúng tôi'}
                 rippleColor={rippleColor}
               />
+              <View style={MenuStyle.hrRow}></View>
+              <MenuItem
+                onPress={() => this.handleClick(17)}
+                source={require('../../asserts/icon/icon_menuEvaluate.png')}
+                title={'Đánh giá'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
+                onPress={() => this.handleClick(17)}
+                source={require('../../asserts/appIcon/contactPhone.png')}
+                title={'Thống kê bài tập'}
+                rippleColor={rippleColor}
+              />
+              {/* <MenuItem
+                onPress={() => this.handleClick(17)}
+                source={require('../../asserts/icon/icon_menuMission.png')}
+                title={'Nhiệm vụ tự luyện'}
+                rippleColor={rippleColor}
+              /> */}
+              <View style={MenuStyle.hrRow}></View>
               <MenuItem
                 onPress={() => this.handleClick(15)}
                 source={require('../../asserts/appIcon/icSecurity.png')}
@@ -160,6 +181,7 @@ class MenuTabTeacher extends Component {
                 title={'Kiểm tra cập nhật'}
                 rippleColor={rippleColor}
               />
+              <View style={MenuStyle.hrRow}></View>
               <MenuItem
                 onPress={() => this.handleClick(6)}
                 source={AppIcon.logout}

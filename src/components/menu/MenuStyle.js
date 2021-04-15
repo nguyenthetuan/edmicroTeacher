@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 
 const MenuStyle = StyleSheet.create({
@@ -57,7 +57,7 @@ const MenuStyle = StyleSheet.create({
         lineHeight: RFFonsize(40),
         alignItems: 'center',
         marginTop: 6,
-        color: '#4776AD'
+        color: '#757575'
     },
     wrapNew: {
         borderRadius: 50,
@@ -71,7 +71,7 @@ const MenuStyle = StyleSheet.create({
         marginHorizontal: 5,
         width: 16,
         height: 16,
-        tintColor: '#4776AD'
+        tintColor: '#757575'
     },
     textVersion: {
         marginVertical: 5,
@@ -86,6 +86,11 @@ const MenuStyle = StyleSheet.create({
         marginHorizontal: 25,
         paddingVertical: 12,
         backgroundColor: '#fff',
+    },
+    hrRow: {
+        height: 1,
+        backgroundColor: '#f5f5f5',
+        marginVertical: 10
     }
 });
 
