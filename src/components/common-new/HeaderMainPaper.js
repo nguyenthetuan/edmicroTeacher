@@ -329,6 +329,7 @@ class HeaderMainPaper extends React.Component {
             <View style={styles.searchGif}>
               <Image
                 source={require('../../asserts/icon/icon_searchAround.png')}
+                style={{ tintColor: "#383838" }}
               />
             </View>
           </TouchableWithoutFeedback>
@@ -336,6 +337,7 @@ class HeaderMainPaper extends React.Component {
             <View style={styles.addPaper}>
               <Image
                 source={require('../../asserts/icon/icon_addPaper.png')}
+                style={{ tintColor: "#383838" }}
               />
             </View>
           </TouchableWithoutFeedback>

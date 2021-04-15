@@ -9,7 +9,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     listMission: state.mission.listMission,
-    isLoading: state.mission.isLoading,
+    isLoadingMission: state.mission.isLoadingMission,
   };
 };
 
