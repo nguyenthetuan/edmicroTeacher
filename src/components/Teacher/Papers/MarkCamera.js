@@ -274,7 +274,11 @@ class MarkCamera extends Component {
                 return;
             }
         }
-        this.props.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: type === 1 ? this.state.urlFileAnswerPDF : this.state.urlFilePDF, text: type == 1 ? 'Lời Giải' : 'Bộ đề PDF' });
+        this.props.navigation.navigate('FullViewPDFAssessment', {
+            urlFilePDF: type === 1 ? this.state.urlFileAnswerPDF : this.state.urlFilePDF,
+            text: type == 1 ? 'Lời Giải' : 'Bộ đề PDF',
+            statusbar: 'dark-content'
+        });
     };
 
     getNumColumns = () => {
@@ -586,14 +590,14 @@ class MarkCamera extends Component {
             subjectCode.push(item.code);
             await this.setState({
                 loading: true,
-                subjectCode:subjectCode,
+                subjectCode: subjectCode,
             });
             return;
         }
         subjectCode.splice(index, 1)
         await this.setState({
             loading: true,
-            subjectCode:subjectCode,
+            subjectCode: subjectCode,
         });
     };
 

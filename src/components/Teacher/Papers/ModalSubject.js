@@ -3,14 +3,13 @@ import {
     View,
     Text,
     StyleSheet,
-    Modal,
     Dimensions,
     FlatList,
     Image,
     TouchableOpacity,
     Platform
 } from 'react-native';
-import { Modalize } from 'react-native-modalize';
+import Modal from '../../../utils/Modal';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/Entypo';
 import CommonBeta from '../../../utils/CommonBeta';
@@ -25,9 +24,7 @@ export default class ModalSubject extends Component {
     }
 
     onOpen = () => {
-        this.setState({ visible: true }, () => {
-            this.modalizeRef.open();
-        });
+        this.setState({ visible: true });
     };
 
     onClose = () => {
@@ -47,18 +44,13 @@ export default class ModalSubject extends Component {
         const { visible } = this.state;
         const { listSubjects } = this.props;
         return (
-            <Modal visible={visible} transparent={true}>
-                <Modalize
-                    ref={ref => this.modalizeRef = ref}
-                    onClose={this.onClose}
-                    scrollViewProps={
-                        {
-                            scrollEnabled: false
-                        }
-                    }
-                    threshold={height / 1.5}
-                    modalHeight={height / 1.5}
-                >
+            <Modal
+                ref={ref => this.modalizeRef = ref}
+                visible={visible}
+                closeModal={this.onClose}
+                contentContainerStyle={{ height: height - height / 4 }}
+                transparent={true}>
+                <View style={{ width: width, flex: 1 }}>
                     <View
                         style={styles.styWrapTitle}
                     >
@@ -82,7 +74,7 @@ export default class ModalSubject extends Component {
                         style={styles.contain}
                         showsVerticalScrollIndicator={false}
                     />
-                </Modalize>
+                </View>
             </Modal>
         )
     }

@@ -312,8 +312,8 @@ class HeaderMainPaper extends React.Component {
           <View style={styles.button}>
             <Image
               source={require('../../asserts/icon/menu.png')}
-              style={{ tintColor: '#383838' }}
-              tintColor={'#383838'}
+              style={{ tintColor: '#222' }}
+              tintColor={'#222'}
             />
           </View>
         </RippleButton>
@@ -329,7 +329,7 @@ class HeaderMainPaper extends React.Component {
             <View style={styles.searchGif}>
               <Image
                 source={require('../../asserts/icon/icon_searchAround.png')}
-                style={{ tintColor: "#383838" }}
+                style={{ tintColor: "#222" }}
               />
             </View>
           </TouchableWithoutFeedback>
@@ -337,7 +337,7 @@ class HeaderMainPaper extends React.Component {
             <View style={styles.addPaper}>
               <Image
                 source={require('../../asserts/icon/icon_addPaper.png')}
-                style={{ tintColor: "#383838" }}
+                style={{ tintColor: "#222" }}
               />
             </View>
           </TouchableWithoutFeedback>

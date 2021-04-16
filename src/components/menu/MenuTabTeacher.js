@@ -145,7 +145,7 @@ class MenuTabTeacher extends Component {
               />
               <MenuItem
                 onPress={() => this.handleClick(17)}
-                source={require('../../asserts/appIcon/contactPhone.png')}
+                source={require('../../asserts/appIcon/statistatic_menu.png')}
                 title={'Thống kê bài tập'}
                 rippleColor={rippleColor}
               />

@@ -56,9 +56,10 @@ const MenuStyle = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         alignSelf: 'flex-start',
         lineHeight: RFFonsize(40),
+        fontWeight:'600',
         alignItems: 'center',
         marginTop: 6,
-        color: '#757575'
+        color: '#383838'
     },
     wrapNew: {
         borderRadius: 50,
@@ -71,8 +72,8 @@ const MenuStyle = StyleSheet.create({
     styleImage: {
         marginHorizontal: 5,
         width: 16,
-        height: 16,
-        tintColor: '#757575'
+        // height: 16,
+        tintColor: '#383838'
     },
     textVersion: {
         marginVertical: 5,
