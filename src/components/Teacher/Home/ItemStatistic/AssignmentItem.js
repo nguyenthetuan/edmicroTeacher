@@ -4,12 +4,6 @@ import {
     Text,
     StyleSheet,
     Dimensions,
-    Image,
-    TouchableOpacity,
-    ScrollView,
-    ActivityIndicator,
-    FlatList,
-    SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import dataHelper from '../../../../utils/dataHelper';
@@ -20,12 +14,10 @@ import {
     statisticAssignmentAction
 } from '../../../../actions/statisticAction';
 const { width } = Dimensions.get('window');
-import AppIcon from '../../../../utils/AppIcon';
 import ProgressBar from '../../../libs/ProgressBar';
 
 class AssignmentItem extends Component {
-    // assignment?.totalAssign ?
-    // (assignment?.totalAssign / assignment?.totalAssignment * 100) : 1
+
     getProgess = (assignment) => {
         const { totalAssign = 0, totalAssignment = 0 } = assignment;
         let progress = 0;
@@ -46,44 +38,36 @@ class AssignmentItem extends Component {
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê bài tập trong tuần</Text>
                     <Text numberOfLines={1}
-                        style={styles.status}>Số bài tập Thầy cô đã giao trong tuần vừa qua</Text>
+                        style={styles.status}>Số nhiệm vụ thầy cô giao</Text>
                     <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                         <View style={styles.flexLeft2}>
                             <Text numberOfLines={1}
                                 style={styles.sumBig}>{assignment?.totalAssignment}</Text>
+                            <Text style={styles.sum}>Tổng</Text>
                         </View>
-                        <Text style={styles.sum}>Tổng</Text>
                     </View>
                     <View style={styles.flexStatitics}>
-                        <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', marginLeft: 30 }}>
-                            <View style={styles.flexIcon}>
-                                <Image source={AppIcon.icon_dagiaoV3} />
-                                <Text style={styles.toSend}>Đã giao</Text>
+                        <View style={styles.bottomMiss}>
+                            <View style={styles.boxSmall}>
+                                <Text numberOfLines={1}
+                                    style={styles.numberBig}>{assignment?.totalAssign}</Text>
                             </View>
-                            <View style={styles.flexIcon}>
-                                <Image source={AppIcon.icon_chuagiaoV3} />
-                                <Text style={styles.toSend}>Chưa giao</Text>
-                            </View>
+                            <Text numberOfLines={2} style={styles.missionAssed}>Bài tập đã giao</Text>
                         </View>
-                        <View style={styles.countRight}>
-                            <View style={[styles.flexIcon, { paddingRight: 26, justifyContent: 'space-between', width: '90%' }]}>
-                                <Text style={styles.numberBig}>{assignment?.totalAssign}</Text>
+                        <View style={[styles.bottomMiss, { marginRight: 18 }]}>
+                            <View style={[styles.boxSmall, { backgroundColor: '#FF5747' }]}>
                                 <Text numberOfLines={1}
-                                    style={styles.mission}>Bài tập</Text>
+                                    style={styles.numberBig}>{assignment?.totalAssignmentNotAssign}</Text>
                             </View>
-                            <View style={[styles.flexIcon, { marginRight: 26, justifyContent: 'space-between', width: '90%' }]}>
-                                <Text style={[styles.numberBig, { color: "#EB5757" }]}>{assignment?.totalAssignmentNotAssign}</Text>
-                                <Text numberOfLines={1}
-                                    style={styles.mission}>Bài tập</Text>
-                            </View>
+                            <Text numberOfLines={2} style={styles.missionAssed}>Bài tập chưa giao</Text>
                         </View>
                     </View>
-                    <Text style={[styles.status, { color: '#000', marginTop: 26 }]}>Hoàn thành</Text>
+                    <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
                     <View style={styles.progressBar}>
                         <ProgressBar
                             progress={this.getProgess(assignment)}
                             color="#56BB73"
-                            widthProps={width - 185}
+                            widthProps={width - 230}
                             progressUnfilledColor="#BDBDBD"
                             style={{ height: 5, borderRadius: 10 }}
                         />
@@ -117,21 +101,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(AssignmentItem);
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    bgHeader: {
-        backgroundColor: '#fff',
-    },
-    titleTask: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(18),
-        color: '#000',
-        marginLeft: 16,
-        marginTop: 20,
-    },
     bodyTask: {
         backgroundColor: '#FAFAFA',
         marginLeft: 16,
@@ -144,16 +113,8 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
         color: '#2D9CDB',
-        marginLeft: 27,
-        marginTop: 8,
-        marginRight: 10
-    },
-    txtOnline: {
-        fontFamily: 'Nunito',
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
-        color: '#2D9CDB',
-        marginLeft: 27
+        textAlign: 'center',
+        marginTop: 6
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
@@ -165,79 +126,32 @@ const styles = StyleSheet.create({
     flexStatitics: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 16
-    },
-    flexLeft: {
-        backgroundColor: '#23D0F3',
-        borderRadius: 4,
-        marginTop: 10,
-        marginLeft: 50,
-        width: '30%'
-    },
-    flexLeft1: {
-        backgroundColor: '#F9B42E',
-        borderRadius: 4,
-        marginTop: 20,
-        marginLeft: 30
+        marginTop: 20
     },
     flexLeft2: {
         backgroundColor: '#BB6BD9',
-        borderRadius: 4,
+        borderRadius: 10,
         marginTop: 20,
-        marginLeft: 30
-    },
-    flexRight: {
-        backgroundColor: '#F9B42E',
-        borderRadius: 4,
-        marginTop: 10,
-        width: '30%',
-        marginRight: 30
-    },
-    heroIcon: {
         alignSelf: 'center',
-        marginBottom: 5,
-        width: 14,
-        height: 14,
-    },
-    number: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(20),
-        lineHeight: RFFonsize(24),
-        textAlign: 'center',
-        alignSelf: 'center',
-        marginTop: 18,
-        marginLeft: 10,
-        marginRight: 10,
-        color: '#fff'
+        flexDirection: 'column',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 3,
     },
     sumBig: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(18),
-        lineHeight: RFFonsize(24),
+        fontSize: RFFonsize(36),
+        lineHeight: RFFonsize(49),
         textAlign: 'center',
         alignSelf: 'center',
-        marginTop: 19.5,
-        marginBottom: 19.5,
-        marginLeft: 25,
-        marginRight: 25,
+        marginHorizontal: 23,
+        marginTop: 16,
         color: '#fff',
-    },
-    direction: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginTop: 14,
-        marginRight: 5,
-        marginBottom: 5,
-    },
-    countGroup: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(18),
-        color: '#fff',
-        fontWeight: '500',
-        marginLeft: 3,
-        alignSelf: 'center',
-        marginRight: 5
     },
     progressBar: {
         marginTop: 7,
@@ -249,18 +163,12 @@ const styles = StyleSheet.create({
     },
     rateSub: {
         fontSize: RFFonsize(12),
-        color: '#359CDB',
+        lineHeight: RFFonsize(16),
+        color: '#56BB73',
         fontFamily: 'Nunito-Bold',
         position: 'absolute',
-        right: 20
-    },
-    txtCount: {
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
-        color: '#359CDB',
-        fontFamily: 'Nunito-Bold',
-        alignSelf: 'center',
-        marginLeft: 5
+        right: 20,
+        textAlign: 'center',
     },
     shadow: {
         shadowColor: "#000",
@@ -269,47 +177,45 @@ const styles = StyleSheet.create({
             height: 3,
         },
         shadowOpacity: 0.30,
-        shadowRadius: 4.65,
+        shadowRadius: 8,
         elevation: 5,
         flex: 1
     },
     sum: {
         alignSelf: 'flex-end',
-        marginLeft: 3
-    },
-    flexIcon: {
-        flexDirection: 'row',
+        right: 5,
+        bottom: 5,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
+        textAlign: 'center',
+        color: '#fff',
     },
     numberBig: {
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(18),
+        lineHeight: RFFonsize(25),
         alignSelf: 'center',
         textAlign: 'center',
-        color: '#27AE60',
-
+        color: '#fff',
+        marginHorizontal: 9,
+        marginVertical: 7.5
     },
-    mission: {
-        alignSelf: 'center',
-        marginTop: 10,
-        marginLeft: 10,
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
-        paddingRight: 30,
+    bottomMiss: {
+        flexDirection: 'row',
+        flex: 1,
+        marginLeft: 19,
     },
-    toSend: {
-        marginLeft: 10,
-        marginTop: 5,
-        marginRight: 10,
-        fontFamily: 'Nunito',
-        fontSize: RFFonsize(12)
+    boxSmall: {
+        backgroundColor: '#1BC763',
+        borderRadius: 10,
+        padding: 7,
     },
-    isLoading: {
-        flex: 1
+    missionAssed: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        width: width * 0.18,
+        paddingHorizontal: 6,
+        marginTop: 25
     },
-    countRight: {
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
-        width: '35%',
-        marginLeft: 5
-    }
 })
