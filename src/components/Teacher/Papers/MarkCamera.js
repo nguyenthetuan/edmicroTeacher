@@ -117,15 +117,11 @@ class MarkCamera extends Component {
         ImagePicker.launchCamera(options, (response) => {
 
             if (response.didCancel) {
-                console.log('User cancelled image picker');
             } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
             } else {
                 const source = { uri: response.uri };
-                console.log('response', JSON.stringify(response));
                 this.setState({
                     filePath: response,
                     fileData: response.data,
@@ -171,11 +167,8 @@ class MarkCamera extends Component {
         };
         ImagePicker.launchImageLibrary(options, (response) => {
             if (response.didCancel) {
-                console.log('User cancelled image picker');
             } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
             } else {
                 const source = { uri: response.uri };
@@ -204,7 +197,6 @@ class MarkCamera extends Component {
             };
 
             const pdf = await RNImageToPdf.createPDFbyImages(options);
-            console.log('pdfdata', pdf);
             let url = pdf.filePath;
             let name = 'pdffile';
             this.uploadFileToServer({ url, name });
@@ -537,7 +529,6 @@ class MarkCamera extends Component {
     };
 
     onTextPointModalChange = (point) => {
-        console.log("🚀 ~ file: UploadPDF.js ~ line 412 ~ UploadPDF ~ point", point)
         // alert(1);
         if (point[point.length - 1] == ',') {
             point = `${point.substring(0, point.length - 1)}.`
@@ -561,7 +552,7 @@ class MarkCamera extends Component {
     }
 
     activeClass = async item => {
-        const { gradeCode } = this.state;
+        let { gradeCode } = this.state;
         const index = _.indexOf(gradeCode, item.gradeId || item);
         if (index < 0) {
             this.setState({
@@ -575,17 +566,16 @@ class MarkCamera extends Component {
     };
 
     activeSubject = async item => {
-        const { subjectCode } = this.state;
+        let { subjectCode } = this.state;
         const index = _.indexOf(subjectCode, item.code || item);
         if (index < 0) {
-            subjectCode.push(item.code);
             this.setState({
-                subjectCode: subjectCode,
+                subjectCode: [...subjectCode, item.code],
             });
         } else {
-            subjectCode.splice(index, 1)
+            let arrTmp = [...subjectCode.splice(0, index), ...subjectCode.splice(index + 1)]
             this.setState({
-                subjectCode: subjectCode,
+                subjectCode: arrTmp,
             });
         }
     };
@@ -811,6 +801,7 @@ const mapStateToProps = state => {
         updateListExam: state.paper.updateListExam
     };
 };
+
 const mapDispatchToProps = dispatch => {
     return {
         needUpdate: (payload) => dispatch(updateExamListAction(payload)),

@@ -37,7 +37,6 @@ import FreshchatComponent from '../../utils/FreshchatComponent';
 import { phoneNumberScheme, forgotPasswordValidate } from '../../utils/SchemaValidate';
 import { SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
-import TextFormField from '../common-new/TextFormField';
 
 const { width, height } = Dimensions.get('window');
 export default class ForgotPasswordScreen extends Component {
@@ -584,7 +583,6 @@ export default class ForgotPasswordScreen extends Component {
     }
     return;
   }
-
   render() {
     const {
       phoneNumber,
@@ -661,7 +659,7 @@ export default class ForgotPasswordScreen extends Component {
                     >
                       {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
                         <View style={{ width: width - width / 5, alignSelf: 'center' }}>
-                          {/* <InputPrimary
+                          <InputPrimary
                             label={'Số điện thoại'}
                             placeholder={'eg.09x....'}
                             value={values.phoneNumber}
@@ -671,14 +669,6 @@ export default class ForgotPasswordScreen extends Component {
                             error={(touched.phoneNumber && errors.phoneNumber) && errors.phoneNumber}
                             editable={this.state.isEditPhone}
                             keyboardType={'phone-pad'}
-                          /> */}
-                          <TextFormField
-                            label={'Số điện thoại'}
-                            placeholder={'eg.09x....'}
-                            onChangeText={handleChange('phoneNumber')}
-                            error={(touched.phoneNumber && errors.phoneNumber) && errors.phoneNumber}
-                            keyboardType={'phone-pad'}
-                            value={values.phoneNumber}
                           />
                           {this.renderAccountSearch(accountSearch)}
                           {_.isEmpty(accountSearch) && <RippleButton
