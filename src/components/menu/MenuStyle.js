@@ -71,7 +71,7 @@ const MenuStyle = StyleSheet.create({
     },
     styleImage: {
         marginHorizontal: 5,
-        width: 16,
+        width: 18,
         // height: 16,
         tintColor: '#383838'
     },

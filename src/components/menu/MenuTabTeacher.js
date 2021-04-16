@@ -106,6 +106,29 @@ class MenuTabTeacher extends Component {
             showsVerticalScrollIndicator={false}
             style={MenuStyle.scrollContainer}>
             <View style={MenuStyle.wrapEventDaily}>
+
+              <MenuItem
+                onPress={() => this.handleClick(18)}
+                source={require('../../asserts/icon/icon_menuEvaluate.png')}
+                title={'Đánh giá'}
+                rippleColor={rippleColor}
+              />
+              <MenuItem
+                onPress={() => this.handleClick(17)}
+                source={require('../../asserts/appIcon/statistatic_menu.png')}
+                title={'Thống kê bài tập'}
+                rippleColor={rippleColor}
+              />
+              {/* <MenuItem
+                onPress={() => this.handleClick(17)}
+                source={require('../../asserts/icon/icon_menuMission.png')}
+                title={'Nhiệm vụ tự luyện'}
+                rippleColor={rippleColor}
+              /> */}
+
+              <View style={MenuStyle.hrRow}></View>
+
+
               <MenuItem
                 onPress={() => this.handleClick(1)}
                 source={AppIcon.info_account}
@@ -136,25 +159,8 @@ class MenuTabTeacher extends Component {
                 title={'Liên hệ với chúng tôi'}
                 rippleColor={rippleColor}
               />
-              <View style={MenuStyle.hrRow}></View>
-              <MenuItem
-                onPress={() => this.handleClick(18)}
-                source={require('../../asserts/icon/icon_menuEvaluate.png')}
-                title={'Đánh giá'}
-                rippleColor={rippleColor}
-              />
-              <MenuItem
-                onPress={() => this.handleClick(17)}
-                source={require('../../asserts/appIcon/statistatic_menu.png')}
-                title={'Thống kê bài tập'}
-                rippleColor={rippleColor}
-              />
-              {/* <MenuItem
-                onPress={() => this.handleClick(17)}
-                source={require('../../asserts/icon/icon_menuMission.png')}
-                title={'Nhiệm vụ tự luyện'}
-                rippleColor={rippleColor}
-              /> */}
+
+
               <View style={MenuStyle.hrRow}></View>
               <MenuItem
                 onPress={() => this.handleClick(15)}
