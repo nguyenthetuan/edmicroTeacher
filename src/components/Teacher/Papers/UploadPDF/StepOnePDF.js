@@ -173,7 +173,7 @@ export default class StepOnePDF extends Component {
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
                 <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
-                <View style={{ width: '100%', height: 80, position: 'absolute', bottom: 0 }}>
+                <View style={{ width: '100%', height: 50, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>
                         <Text style={styles.textNext}>Tiếp tục</Text>
                     </RippleButton>
@@ -200,20 +200,30 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     textNext: {
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 16,
+        lineHeight: 18,
         fontFamily: 'Nunito-bold',
-        color: "#fff"
+        color: "#fff",
+        top: 2
     },
     buttonNext: {
-        width: 160,
-        height: 30,
-        borderRadius: 15,
+        width: 200,
+        height: 40,
+        borderRadius: 20,
         backgroundColor: '#2D9CDB',
         justifyContent: 'center',
         alignItems: 'center',
         // bottom: 50,
         alignSelf: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     txtUploadingPDF: {
         marginTop: 10,

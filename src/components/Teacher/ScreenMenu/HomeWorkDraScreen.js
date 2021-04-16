@@ -491,7 +491,7 @@ function HomeWorkDraScreen(props) {
                                 <Text style={styles.txtAssignment}>{props.data?.data.name || ''}</Text>
                                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
                                 {/* <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text> */}
-                                <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả ({timeExport})</Text>
+                                <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả {timeExport ? `(${timeExport})` : ''}</Text>
                             </View>
                         :
                         <View style={styles.wrapInfo}>
@@ -528,19 +528,19 @@ function HomeWorkDraScreen(props) {
 
 const mapStateToProps = state => {
     return {
-      data: state.homeworkTeacher.data,
-      loading: state.homeworkTeacher.loading
+        data: state.homeworkTeacher.data,
+        loading: state.homeworkTeacher.loading
     }
-  }
-  
-  const mapDispatchToProps = dispatch => {
+}
+
+const mapDispatchToProps = dispatch => {
     return {
-      fetchHomework: (payload) => { dispatch(fetchHomeworkAction(payload)) },
-      needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+        fetchHomework: (payload) => { dispatch(fetchHomeworkAction(payload)) },
+        needUpdate: (payload) => dispatch(updateExamListAction(payload)),
     }
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(HomeWorkDraScreen);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeWorkDraScreen);
 
 const styles = StyleSheet.create({
     container: {

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from 'react-native';
 import SelectModal from './SelectModal';
 import { RFFonsize } from '../../../utils/Fonts';
