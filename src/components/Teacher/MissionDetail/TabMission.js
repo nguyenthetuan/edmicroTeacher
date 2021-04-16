@@ -45,7 +45,7 @@ export default class TabMisson extends Component {
             .value();
         return (
             <View style={{ backgroundColor: '#FFF' }}>
-                <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 10 }]}>Tự luyện</Text>
+                <Text style={[styles.styTxtHeader, { color: '#000', marginHorizontal: 18 }]}>Tự luyện</Text>
                 <SectionList
                     sections={dataTemp}
                     keyExtractor={(item, index) => item + index}
@@ -71,7 +71,7 @@ export default class TabMisson extends Component {
         return (
             <View style={{ backgroundColor: '#FFF' }}>
                 <Text style={[styles.styTxtHeader,
-                { color: '#000', marginHorizontal: 10 }]}
+                { color: '#000', marginHorizontal: 18 }]}
                 >
                     Kiểm tra
                     </Text>

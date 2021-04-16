@@ -19,11 +19,12 @@ export default class SubjectItem extends Component {
         } catch (error) {
             
         }
-        this.props.refModalSubject.onOpen();
+        this.props.onOpen();
     }
 
     renderItem = ({ item }) => {
         const { listSubjects } = this.props;
+        console.log('listSubjects',listSubjects)
         let data = listSubjects.filter(ele => ele.code == item);
         data = data && data[0];
         return (
@@ -38,6 +39,7 @@ export default class SubjectItem extends Component {
 
     render() {
         const { subjectActive ,Icon,styleTitle} = this.props;
+        console.log('subjectxxx', subjectActive)
         return (
             <View>
                 <View style={styles.styWrapLabel}>

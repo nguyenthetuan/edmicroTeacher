@@ -4,9 +4,9 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
   StatusBar,
-  Platform
+  Platform,
+  TouchableWithoutFeedback
 } from 'react-native';
 import Dropdown from '../../../utils/Dropdown';
 import AppIcon from '../../../utils/AppIcon';
@@ -64,7 +64,7 @@ export default class ModalFillter extends Component {
           <HeaderNavigation
             title={'Tuỳ chọn'}
             onRightAction={this.changeStateModale}
-            actionIcon={require('../../../asserts/icon/iconCloseX.png')}
+            actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
             isShow={false}
           />
           <Text style={styles.placeText}>Năm học</Text>
@@ -92,9 +92,12 @@ export default class ModalFillter extends Component {
             indexSelected={testIndex}
           />
 
-          <TouchableOpacity style={[styles.btnViewStatistic, { ...shadowBtn }]} onPress={this.changeStateModale}>
-            <Text style={styles.txtBtn}>Xem thống kê</Text>
-          </TouchableOpacity>
+          <TouchableWithoutFeedback onPress={this.changeStateModale}>
+            <View style={[styles.btnViewStatistic, { ...shadowBtn }]}>
+
+              <Text style={styles.txtBtn}>Xem thống kê</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </Modal>
     );

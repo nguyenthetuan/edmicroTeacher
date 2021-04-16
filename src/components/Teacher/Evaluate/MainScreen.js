@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  Platform,
 } from 'react-native';
 import Header from '../Header';
 import dataHelper from '../../../utils/dataHelper';
@@ -17,14 +18,19 @@ import apiPapers from '../../../services/apiPapersTeacher';
 import { connect } from 'react-redux';
 import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from './ModalFillter';
-import { DATA_YEAR } from '../../../constants/const';
+import { DATA_YEAR, COL_STATISTATIC_WIDTH } from '../../../constants/const';
 import { convertSeconds } from '../../../utils/Utils';
 import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
 import HeaderMain from '../../common-new/HeaderMain';
 import FastImage from 'react-native-fast-image';
+import ItemName, { HeaderName } from './ItemName';
+import RenderItem, { HeaderItem } from './ItemStatistatic';
 
 const { width, height } = Dimensions.get('window');
+const row_item_width = COL_STATISTATIC_WIDTH;
+const row_name_width = width - (Platform.isPad ? 5 : 3) * row_item_width;
+
 class MainScreen extends Component {
   constructor(props) {
     super(props);
@@ -206,16 +212,67 @@ class MainScreen extends Component {
               style={styles.imgStatistics}
             />
           </View>
-          <FlatList
-            scrollEnabled={false}
-            style={styles.list}
-            data={this.state.student}
-            keyExtractor={(item, index) => index.toString()}
-            initialNumToRender={3}
-            ListHeaderComponent={this.renderHeader}
-            ListEmptyComponent={this.renderEmpty}
-            renderItem={({ item }) => <RenderItem item={item} {...payload} />}
-          />
+          {/* <View style={{ flexDirection: 'row' }}>
+            <FlatList
+              scrollEnabled={false}
+              style={styles.list}
+              data={this.state.student}
+              keyExtractor={(item, index) => index.toString()}
+              initialNumToRender={3}
+              ListHeaderComponent={this.renderHeader}
+              ListEmptyComponent={this.renderEmpty}
+              renderItem={({ item }) => <ItemName item={item} {...payload} />}
+            />
+            <ScrollView
+              onScroll={this.onScroll.bind(this)}
+              horizontal={true}
+              bounces={false}
+              scrollEventThrottle={1}
+              containerStyle={{ flex: 3 }}
+              showsHorizontalScrollIndicator={false}>
+              <View style={{ flexDirection: 'column', backgroundColor: 'red' }}>
+                <Text>dsadsa</Text>
+                <FlatList
+                  directionalLockEnabled={true}
+                  scrollEnabled={false}
+                  data={this.state.student}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item }) => <RenderItem item={item} {...payload} />}
+                />
+              </View>
+            </ScrollView>
+
+          </View> */}
+
+          <View style={{ flexDirection: 'row' }}>
+            <View>
+              <FlatList
+                style={{ width: row_name_width }}
+                scrollEnabled={false}
+                data={this.state.student}
+                keyExtractor={(item, index) => index.toString()}
+                ListHeaderComponent={() => <HeaderName currentExamTest={this.state.currentExamTest} />}
+                renderItem={({ item }) => <ItemName item={item} {...payload} />}
+              />
+            </View>
+            <ScrollView
+              // onScroll={this.onScroll.bind(this)}
+              horizontal={true}
+              bounces={false}
+              scrollEventThrottle={1}
+              showsHorizontalScrollIndicator={false}>
+              <View style={{ flexDirection: 'column' }}>
+                <FlatList
+                  directionalLockEnabled={true}
+                  ListHeaderComponent={() => <HeaderItem />}
+                  scrollEnabled={false}
+                  data={this.state.student}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item }) => <RenderItem row_item_width={row_item_width} item={item} {...payload} />}
+                />
+              </View>
+            </ScrollView>
+          </View>
         </ScrollView>
         <ModalFillter
           ref={'ModalFillter'}
@@ -228,88 +285,7 @@ class MainScreen extends Component {
   }
 }
 
-class RenderItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showInfo: false,
-    };
-  }
 
-  _handleClick = () => {
-    this.setState({ showInfo: !this.state.showInfo });
-  };
-
-  shouldComponentUpdate = (prevProps, nextState) => {
-    if (
-      prevProps.item != this.props.item ||
-      this.state.showInfo != nextState.showInfo
-    ) {
-      return true;
-    }
-    return false;
-  };
-
-  render() {
-    const { item, scores } = this.props;
-    const scoreCurrent =
-      scores.find(element => item.studentId == element.studentId) || {};
-    const { showInfo } = this.state;
-    return (
-      <View style={{ backgroundColor: '#2D9CDB' }}>
-        <View style={styles.containerItem}>
-          <View style={styles.viewItemName}>
-            <View style={{ flex: 1 }}>
-              <Image
-                source={require('../../../asserts/icon/ic_name_evaluate.png')}
-              />
-              <View style={[styles.dotOnline, { backgroundColor: '#91EDC6' }]} />
-            </View>
-            <View style={{ flex: 3 }} onPress={this._handleClick}>
-              {showInfo ? (
-                <Text style={styles.txtNameShow} numberOfLines={1}>
-                  {item.studentName}
-                </Text>
-              ) : (
-                  <Text style={styles.txtName} numberOfLines={1}>
-                    {item.studentName}
-                  </Text>
-                )}
-            </View>
-          </View>
-          {!_.isEmpty(scoreCurrent) ? (
-            <>
-              {/* Thời gian */}
-              <Text style={styles.txtItem}>
-                {convertSeconds(scoreCurrent.durationDoing) || 0}
-              </Text>
-              {/* Số câu đúng */}
-              <Text style={styles.txtItem}>
-                {scoreCurrent.totalCorrect || 0}
-              </Text>
-              {/* Số câu sai */}
-              <Text style={styles.txtItem}>
-                {scoreCurrent.totalIncorrect || 0}
-              </Text>
-              {/* Số câu bỏ qua */}
-              {/* <Text style={styles.txtItem}>{scoreCurrent.totalSkip || 0}</Text> */}
-              {/* Điểm */}
-              <Text style={styles.txtItem}>{scoreCurrent.score || 0}</Text>
-            </>
-          ) : (
-              <>
-                <Text style={styles.txtItem}>_</Text>
-                <Text style={styles.txtItem}>_</Text>
-                <Text style={styles.txtItem}>_</Text>
-                <Text style={styles.txtItem}>_</Text>
-                {/* <Text style={styles.txtItem}>_</Text> */}
-              </>
-            )}
-        </View>
-      </View>
-    );
-  }
-}
 
 const mapStateToProps = state => {
   return {
@@ -349,8 +325,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   list: {
-    marginTop: -5,
-    overflow: 'hidden',
+    flex: 1,
+    backgroundColor: 'gray'
   },
   containerHeader: {
     flex: 1,
@@ -396,7 +372,7 @@ const styles = StyleSheet.create({
   txtItem: {
     textAlign: 'center',
     alignSelf: 'center',
-    width: width * (1 / 8),
+    width: COL_STATISTATIC_WIDTH,
     fontSize: RFFonsize(10),
     color: '#000',
     fontFamily: 'Nunito-Regular',

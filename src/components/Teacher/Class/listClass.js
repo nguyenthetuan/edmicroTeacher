@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    height: 50,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -115,7 +114,6 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 1,
     backgroundColor: '#fff',
-    zIndex: 1
   },
   scroll_view: {
     flex: 1,

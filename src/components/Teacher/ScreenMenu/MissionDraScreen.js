@@ -11,7 +11,7 @@ import {
   Keyboard,
   ActivityIndicator
 } from 'react-native';
-import ItemMission from './ItemMission';
+import ItemMission from '../../Teacher/Mission/ItemMission';
 import dataHelper from '../../../utils/dataHelper';
 import Api from '../../../services/apiMission';
 import { isIphoneX } from 'react-native-iphone-x-helper';
@@ -22,7 +22,7 @@ const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class MissionScreen extends Component {
+export default class MissionDraScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,6 +32,7 @@ export default class MissionScreen extends Component {
       isAccessMission: false,
       onSearchClear: '',
       textSearch: '',
+      loading: true,
     }
     this._scroll_y = new Value(0)
     this.token = null;
@@ -141,8 +142,8 @@ export default class MissionScreen extends Component {
   };
 
   _listTestEmpty = () => {
-    const { isLoadingMission } = this.props;
-    return (isLoadingMission ?
+    const { loading } = this.state;
+    return (loading ?
       <ActivityIndicator
         size={'small'}
         style={{ height: height / 1.5 }}
@@ -172,6 +173,7 @@ export default class MissionScreen extends Component {
       listMissionSearch,
     } = this.state;
     // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
+    const { isLoading } = this.props;
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 100],
