@@ -38,6 +38,7 @@ import Checked from '../common-new/Checked';
 import TextLink from '../common-new/TextLink';
 import { Row, TextValidate, SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
+import AppIcon from '../../utils/AppIcon';
 
 const { width, height } = Dimensions.get('window');
 
@@ -294,16 +295,16 @@ class LoginWithPhoneScreen extends Component {
     return (
       <SafeAreaView style={container}>
         <StatusBar />
-        <HeaderPrimary showLead={false} title={'Đăng nhập'} />
+        <HeaderPrimary showLead={false} title={'Đăng nhập'} styleTitle={styles.title} />
         <KeyboardAwareScrollView
           contentContainerStyle={styles.viewKeyboard}
           showsVerticalScrollIndicator={false}
         >
-          <Text style={styles.titleTea}>Giáo Viên</Text>
+          {/* <Text style={styles.titleTea}>Giáo Viên</Text>
           <Text style={styles.teaDesc}>
             Ứng dụng hỗ trợ cho hoạt động dạy
             và học trong các trường phổ thông
-            </Text>
+            </Text> */}
           <SizedBox height={20} />
           <TextValidate errors={this.state.errors} />
           <SizedBox height={20} />
@@ -318,6 +319,9 @@ class LoginWithPhoneScreen extends Component {
           >
             {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
               <View>
+                <View style={{ alignItems: 'center' }}>
+                  <Image source={require('../../asserts/icon/ImageLogin.png')} />
+                </View>
                 <InputPrimary
                   label={'Tên đăng nhập'}
                   placeholder={'Nhập tên đăng nhập'}
@@ -336,6 +340,9 @@ class LoginWithPhoneScreen extends Component {
                   secureTextEntry
                   isValid={(touched.password && !errors.password)}
                   error={(touched.password && errors.password) && errors.password}
+                  secureTextEntry={this.state.isSecureTextEntry}
+                  suffixIconAction={() => this.showPassword()}
+                  suffixIcon={AppIcon.eye}
                 />
                 <Row>
                   <Checked
@@ -373,11 +380,17 @@ class LoginWithPhoneScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: RFFonsize(14),
+    color: '#000',
+    fontWeight: 'bold'
+  },
   btnLogin: {
-    backgroundColor: '#2D9CDB',
+    backgroundColor: '#54CEF5',
     height: 40,
     zIndex: 10,
-    borderRadius: 25,
+    borderRadius: 5,
     marginTop: 10
   },
   viewKeyboard: {
