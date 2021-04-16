@@ -47,6 +47,7 @@ import UploadPDFStepByStep from '../components/Teacher/Papers/UploadPDF/UploadPD
 import MissionDraScreen from '../components/Teacher/ScreenMenu/MissionDraScreen';
 import HomeWorkDraScreen from '../components/Teacher/ScreenMenu/HomeWorkDraScreen';
 import EvaluateDraScreen from '../components/Teacher/ScreenMenu/EvaluateDraScreen';
+import HomeScreen from  '../components/Teacher/Home/HomeScreen';
 const LockNavigationOptions = {
   header: null,
   gesturesEnabled: false
@@ -55,6 +56,10 @@ const LockNavigationOptions = {
 const TeacherStack = createStackNavigator({
   TabMainTeacher: {
     screen: TabMainTeacher,
+    navigationOptions: LockNavigationOptions,
+  },
+  HomeScreen:{
+    screen: HomeScreen,
     navigationOptions: LockNavigationOptions,
   },
   Class: {

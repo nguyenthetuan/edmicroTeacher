@@ -60,7 +60,7 @@ static void InitializeFlipper(UIApplication *application) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [Mixpanel sharedInstanceWithToken:@"99416f634093fec8494af1dc56be4a4f"];
-  [RNSplashScreen show];
+//  [RNSplashScreen show];
   return YES;
 }
 
