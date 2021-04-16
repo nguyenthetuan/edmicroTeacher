@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Dimensions
+} from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import AppIcon from '../../utils/AppIcon';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from './Avatar';
-import { formatNumber } from '../../utils/Common';
 import { RFFonsize } from '../../utils/Fonts';
+const { width, height } = Dimensions.get('window');
 
 class HeaderMenu extends React.PureComponent {
   constructor(props) {
@@ -123,7 +130,7 @@ const styles = StyleSheet.create({
   wrapUser: {
     flexDirection: 'row',
     paddingHorizontal: 5,
-    height: 130,
+    height: height * 0.22,
     // backgroundColor: '#3A608C',
     alignItems: 'center',
   },
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 13,
+    bottom: 15,
     right: 15
   },
   wrapChangeClass: {

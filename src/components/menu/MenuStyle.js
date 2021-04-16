@@ -8,7 +8,8 @@ const MenuStyle = StyleSheet.create({
     },
     headerSafeview: {
         flex: 0,
-        backgroundColor: '#3A608C'
+        // backgroundColor: '#3A608C',
+        backgroundColor: "transparent",
     },
     wrapUser: {
         flexDirection: "row",
