@@ -124,7 +124,6 @@ class Class extends Component {
         userPost = await dataHelper.getUserPost();
         userObj = JSON.parse(userPost);
         res = await apiUserHelper.refreshToken({ token: value });
-        console.log(res);
         if (res != '' && res.status === 200) {
           dataHelper.saveToken(res.access_token);
           return { token: res.access_token }
