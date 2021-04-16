@@ -4,7 +4,7 @@ import {
     StyleSheet,
     View,
     Dimensions,
-    TouchableOpacity,
+    TouchableWithoutFeedback,
     Image
 } from 'react-native';
 import SelectModal from './SelectModal';
@@ -22,19 +22,21 @@ export default function Dropdown(props) {
     const isData = data && data[indexSelected];
     return (
         <View style={containerStyle}>
-            <TouchableOpacity
+            <TouchableWithoutFeedback
                 onPress={() => {
                     showDropdown(!dropdownVisible);
                     selectModal.current.onShowModal();
                 }}
-                style={[styles.styBtn, contentStyle]}>
-                <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
-                    {isData
-                        ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName || ''
-                        : title}
-                </Text>
-                {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}
-            </TouchableOpacity>
+            >
+                <View style={[styles.styBtn, contentStyle]}>
+                    <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
+                        {isData
+                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName || ''
+                            : title}
+                    </Text>
+                    {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}
+                </View>
+            </TouchableWithoutFeedback>
             <SelectModal
                 onHide={() => showDropdown(false)}
                 ref={selectModal}

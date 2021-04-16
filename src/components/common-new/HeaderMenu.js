@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Dimensions
+} from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import AppIcon from '../../utils/AppIcon';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from './Avatar';
-import { formatNumber } from '../../utils/Common';
 import { RFFonsize } from '../../utils/Fonts';
+const { width, height } = Dimensions.get('window');
 
 class HeaderMenu extends React.PureComponent {
   constructor(props) {
@@ -23,15 +30,27 @@ class HeaderMenu extends React.PureComponent {
   }
 
   render() {
-    const { phoneNumber, userName, displayName, userId, timeCached, userGift } = this.props;
+    const {
+      phoneNumber,
+      userName,
+      displayName,
+      userId,
+      timeCached,
+      userGift
+    } = this.props;
     const source = getSourceAvatar(userId, timeCached);
     return (
-      <View style={styles.wrapUser}>
+      <ImageBackground source={require('../../asserts/images/banner_drawerMenu.png')}
+        style={styles.wrapUser}
+        resizeMode="stretch"
+      >
         <View style={styles.wrapInfo}>
-          <Avatar
-            source={source}
-            size={50}
-          />
+          <View style={styles.borderAva}>
+            <Avatar
+              source={source}
+              size={50}
+            />
+          </View>
           {/* {source ? (
             <Image
               style={styles.avatar}
@@ -48,7 +67,7 @@ class HeaderMenu extends React.PureComponent {
             )} */}
           <View style={{ marginLeft: 10 }}>
             <Text
-              style={{ color: '#FFF', fontSize: RFFonsize(11), fontFamily: 'Nunito-Bold' }}>
+              style={{ color: '#FFF', fontSize: RFFonsize(14), fontFamily: 'Nunito-Bold' }}>
               {displayName}
             </Text>
             {phoneNumber && phoneNumber.length >= 10 ? (
@@ -85,22 +104,18 @@ class HeaderMenu extends React.PureComponent {
           }
         </View>
         <View
-          style={[styles.changeClass]}
+          style={styles.changeClass}
         >
           <RippleButton
             onPress={this.ChangePassword}
           >
             <Text
-              style={{
-                fontFamily: 'Nunito-Regular',
-                color: '#FFF',
-                fontSize: RFFonsize(12),
-              }}>
+              style={styles.txtChange}>
               Đổi mật khẩu
           </Text>
           </RippleButton>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -115,8 +130,8 @@ const styles = StyleSheet.create({
   wrapUser: {
     flexDirection: 'row',
     paddingHorizontal: 5,
-    height: 100,
-    backgroundColor: '#3A608C',
+    height: height * 0.22,
+    // backgroundColor: '#3A608C',
     alignItems: 'center',
   },
   avatar: {
@@ -138,16 +153,15 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(20),
     fontFamily: 'Nunito-Bold',
   },
-
   changeClass: {
-    backgroundColor: '#4776AD',
+    backgroundColor: '#ffff',
     borderRadius: 4,
     paddingVertical: 3,
     paddingHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 15,
     right: 15
   },
   wrapChangeClass: {
@@ -168,8 +182,8 @@ const styles = StyleSheet.create({
   },
   txtInfo: {
     fontSize: RFFonsize(11),
-    fontFamily: 'Nunito-Regular',
-    color: '#C4C4C4',
+    fontFamily: 'Nunito',
+    color: '#fff',
     marginTop: 2,
   },
   styTxtEDPoint: {
@@ -182,5 +196,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  txtChange: {
+    fontFamily: 'Nunito-Regular',
+    color: '#FF6213',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    paddingHorizontal: 5,
+  },
+  borderAva: {
+    borderWidth: 2,
+    borderColor: '#f0f0f0',
+    borderRadius: 50
   }
 });

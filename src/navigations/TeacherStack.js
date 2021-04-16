@@ -44,6 +44,9 @@ import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import TakePhotoCamera from '../components/Teacher/Papers/TakePhotoCamera';
 import { Platform } from 'react-native';
 import UploadPDFStepByStep from '../components/Teacher/Papers/UploadPDF/UploadPDFStepByStep';
+import MissionDraScreen from '../components/Teacher/ScreenMenu/MissionDraScreen';
+import HomeWorkDraScreen from '../components/Teacher/ScreenMenu/HomeWorkDraScreen';
+import EvaluateDraScreen from '../components/Teacher/ScreenMenu/EvaluateDraScreen';
 const LockNavigationOptions = {
   header: null,
   gesturesEnabled: false
@@ -208,6 +211,18 @@ const TeacherStack = createStackNavigator({
   },
   SearchScreen: {
     screen: SearchScreen,
+    navigationOptions: LockNavigationOptions,
+  },
+  EvaluateDraScreen: {
+    screen: EvaluateDraScreen,
+    navigationOptions: LockNavigationOptions,
+  },
+  HomeWorkDraScreen: {
+    screen: HomeWorkDraScreen,
+    navigationOptions: LockNavigationOptions,
+  },
+  MissionDraScreen: {
+    screen: MissionDraScreen,
     navigationOptions: LockNavigationOptions,
   },
   // WebViews:{

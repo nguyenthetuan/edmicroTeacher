@@ -6,6 +6,7 @@ import RippleButton from '../../../libs/RippleButton';
 import QuestionGeneral from './QuestionGeneral';
 import TotalQuestionConfig from './TotalQuestionConfig';
 import Toast from 'react-native-easy-toast';
+import Global from '../../../../utils/Globals';
 
 const WIDTH_WRAP_BUTTON = 0.4 * Dimensions.get('window').width;
 export default class StepTwoPDF extends Component {
@@ -22,6 +23,8 @@ export default class StepTwoPDF extends Component {
     }
 
     componentDidMount() {
+        console.log("this.handleNextStepThree: ", this.handleNextStepThree);
+        Global.nextToStepThreePDF = this.handleNextStepThree;
         const { totalQSTN, totalQSTL } = this.state;
         let totalPointTN = 0;
         let totalPointTL = 0;
@@ -342,9 +345,9 @@ export default class StepTwoPDF extends Component {
                         />
                         <TotalQuestionConfig questionList={activeButtonIndex === 0 ? questionsTN : questionsTL} onChangeOptionAnswer={this.onChangeOptionAnswer} onChangePointEachQS={this.onChangePointEachQS} typeQuestion={activeButtonIndex} />
                         <View style={styles.wrapEnd}>
-                            <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepThree}>
+                            {/* <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepThree}>
                                 <Text style={styles.textNext}>Tiếp tục</Text>
-                            </RippleButton>
+                            </RippleButton> */}
                         </View>
                     </View>
                 </View>
@@ -381,7 +384,7 @@ const styles = StyleSheet.create({
     },
     wrapEnd: {
         width: '100%',
-        height: 50,
+        height: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },

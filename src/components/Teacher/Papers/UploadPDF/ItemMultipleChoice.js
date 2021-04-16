@@ -61,7 +61,7 @@ export default function ItemMultipleChoice(props) {
                     <TextInput
                         style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
                         textAlign={'center'}
-                        value={textPoint}
+                        value={(Math.round(Number(textPoint) * 100) / 100).toString()}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => onChangePoint(val)}
                         onBlur={onChangePointEachQS}
@@ -121,7 +121,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#DADADA',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     answerActive: {
         width: 30,
@@ -129,7 +138,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#4EBE3C',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     textAS: {
         fontFamily: 'Nunito-bold',

@@ -40,10 +40,10 @@ const initTab = createMaterialTopTabNavigator(
               Độ hoàn thành
             </Text>
           ) : (
-            <Text numberOfLines={1} style={styles.labelTabActive}>
-              Độ hoàn thành
-            </Text>
-          );
+              <Text numberOfLines={1} style={styles.labelTabActive}>
+                Độ hoàn thành
+              </Text>
+            );
         },
       },
     },
@@ -57,10 +57,10 @@ const initTab = createMaterialTopTabNavigator(
               Tỉ lệ Đ/S
             </Text>
           ) : (
-            <Text numberOfLines={1} style={styles.labelTabActive}>
-              Tỉ lệ Đ/S
-            </Text>
-          );
+              <Text numberOfLines={1} style={styles.labelTabActive}>
+                Tỉ lệ Đ/S
+              </Text>
+            );
         },
       },
     },
@@ -76,10 +76,10 @@ const initTab = createMaterialTopTabNavigator(
               Học sinh
             </Text>
           ) : (
-            <Text numberOfLines={1} style={styles.labelTabActive}>
-              Học sinh
-            </Text>
-          );
+              <Text numberOfLines={1} style={styles.labelTabActive}>
+                Học sinh
+              </Text>
+            );
         },
       },
     },
@@ -488,7 +488,7 @@ export default function StatisticsPoints(props) {
                 <Text style={styles.txtAssignment}>{props.data?.data.name || ''}</Text>
                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
                 {/* <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text> */}
-                <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả ({timeExport})</Text>
+                <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả {timeExport ? `(${timeExport})` : ''}</Text>
               </View>
             :
             <View style={styles.wrapInfo}>

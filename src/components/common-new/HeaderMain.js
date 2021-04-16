@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback
+} from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from '../common-new/Avatar';
@@ -31,20 +36,21 @@ export default class HeaderMain extends React.Component {
             <Image
               source={require('../../asserts/icon/menu.png')}
               style={{ tintColor: '#383838' }}
-              tintColor={'#383838'} />
+              tintColor={'#383838'}
+            />
           </View>
         </RippleButton>
         <View style={{ flex: 1, marginLeft: 10 }}>
-          <Image source={require('../../asserts/icon/logo_onluyen.png')} />
+          <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
-        <TouchableOpacity
-          onPress={this.navigateUser}
-          style={styles.btnAvatar}>
-          <Avatar
-            source={source}
-            size={25}
-          />
-        </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={this.navigateUser}>
+          <View style={styles.btnAvatar}>
+            <Avatar
+              source={source}
+              size={25}
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }

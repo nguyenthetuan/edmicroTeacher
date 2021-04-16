@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 
 const MenuStyle = StyleSheet.create({
@@ -8,7 +8,8 @@ const MenuStyle = StyleSheet.create({
     },
     headerSafeview: {
         flex: 0,
-        backgroundColor: '#3A608C'
+        // backgroundColor: '#3A608C',
+        backgroundColor: "transparent",
     },
     wrapUser: {
         flexDirection: "row",
@@ -55,9 +56,10 @@ const MenuStyle = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         alignSelf: 'flex-start',
         lineHeight: RFFonsize(40),
+        fontWeight:'600',
         alignItems: 'center',
         marginTop: 6,
-        color: '#4776AD'
+        color: '#383838'
     },
     wrapNew: {
         borderRadius: 50,
@@ -69,9 +71,9 @@ const MenuStyle = StyleSheet.create({
     },
     styleImage: {
         marginHorizontal: 5,
-        width: 16,
-        height: 16,
-        tintColor: '#4776AD'
+        width: 18,
+        // height: 16,
+        tintColor: '#383838'
     },
     textVersion: {
         marginVertical: 5,
@@ -86,6 +88,11 @@ const MenuStyle = StyleSheet.create({
         marginHorizontal: 25,
         paddingVertical: 12,
         backgroundColor: '#fff',
+    },
+    hrRow: {
+        height: 1,
+        backgroundColor: '#f5f5f5',
+        marginVertical: 10
     }
 });
 

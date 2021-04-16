@@ -70,5 +70,6 @@ module.exports = {
   resetStateStepOne: () => { },
   resetDataPracticeAdd: () => { },
   resetDataTestAdd: () => { },
-  resetDataSelect: () => { }
+  resetDataSelect: () => { },
+  nextToStepThreePDF: () => { }
 };

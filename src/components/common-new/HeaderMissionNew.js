@@ -59,7 +59,7 @@ export default class HeaderMissionNew extends React.Component {
                     </View>
                 </RippleButton>
                 <View style={{ flex: 1, marginLeft: 10 }}>
-                    <Image source={require('../../asserts/icon/logo_onluyen.png')} />
+                    <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
                 </View>
 
                 {isAccessMission
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
         fontWeight: '500',
-        color: '#000',
+        color: '#383838',
         alignSelf: 'center',
         padding: 5,
         paddingLeft: 10

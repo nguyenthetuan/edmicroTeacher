@@ -3,9 +3,9 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Dimensions,
-    Image
+    Image,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DropdownStudent from '../Papers/DropdownStudent';
@@ -154,14 +154,16 @@ class ItemClass extends Component {
                         </View>
                     </View>
                     <View style={styles.viewDate1}>
-                        <TouchableOpacity
+                        <TouchableWithoutFeedback
                             disabled={status}
                             onPress={this.showDatePicker}
-                            style={styles.btnDate}>
-                            <Text numberOfLines={1} style={styles.txtContentItem}>
-                                {moment(timeEnd).format('DD-MM-YYYY, hh:mm A')}
-                            </Text>
-                        </TouchableOpacity>
+                        >
+                            <View style={styles.btnDate}>
+                                <Text numberOfLines={1} style={styles.txtContentItem}>
+                                    {moment(timeEnd).format('DD-MM-YYYY, hh:mm A')}
+                                </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                         {/* <DropdownStudent
                             ref={ref => this.dropdownStudent = ref}
                             dataItem={dataItem}
@@ -171,13 +173,14 @@ class ItemClass extends Component {
                             options={this.state.students || item.students}
                             status={status}
                         /> */}
-                        <TouchableOpacity onPress={() => { this.handlePickStudent() }}
-                            style={styles.dropZuCha}>
-                            <View style={styles.borDropRight}>
-                                <Image source={require('../../../asserts/icon/icon_down.png')} />
+                        <TouchableWithoutFeedback onPress={() => { this.handlePickStudent() }}>
+                            <View style={styles.dropZuCha}>
+                                <View style={styles.borDropRight}>
+                                    <Image source={require('../../../asserts/icon/icon_down.png')} />
+                                </View>
+                                <Text style={{ color: '#2D9CDB', left: 15 }}>{this.state.buttonText || item.students.length + ' học sinh'}</Text>
                             </View>
-                            <Text style={{ color: '#2D9CDB', left: 15 }}>{this.state.buttonText || item.students.length + ' học sinh'}</Text>
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
 
                         <ModalSelectStudent
                             ref={ref => this.dropdownStudent = ref}
@@ -191,19 +194,22 @@ class ItemClass extends Component {
                             changeStatebuttonText={this.changeStatebuttonText}
                         />
                         {status ?
-                            <TouchableOpacity
+                            <TouchableWithoutFeedback
                                 onPress={this.goToMissionStatisticsScreen}
-                                style={[styles.btnAssignment, { backgroundColor: '#FD9F4C', ...shadowBtn }]}>
-                                <Text style={styles.txtAssignment}>Xem tiến độ</Text>
-                                {/* <Icon name={'check'} color={'#fff'} size={20} /> */}
-                            </TouchableOpacity>
+                            >
+                                <View style={[styles.btnAssignment, { backgroundColor: '#FD9F4C', ...shadowBtn }]}>
+                                    <Text style={styles.txtAssignment}>Xem tiến độ</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                             :
-                            <TouchableOpacity
+                            <TouchableWithoutFeedback
                                 onPress={this.onAssignment}
-                                style={[styles.btnAssignment, { ...shadowBtn }]}>
-                                <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
-                                {/* <Icon name={'check'} color={'#fff'} size={12} style={styles.widthCheck} /> */}
-                            </TouchableOpacity>
+                            >
+                                <View style={[styles.btnAssignment, { ...shadowBtn }]}>
+                                    <Text style={styles.txtAssignment}>Giao nhiệm vụ</Text>
+
+                                </View>
+                            </TouchableWithoutFeedback>
                         }
                     </View>
                 </View>
