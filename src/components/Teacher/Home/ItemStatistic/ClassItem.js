@@ -276,5 +276,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 3,
-    }
+    },
+    direction: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 6,
+        marginRight: 5,
+        marginBottom: 5,
+    },
+
+
 })
