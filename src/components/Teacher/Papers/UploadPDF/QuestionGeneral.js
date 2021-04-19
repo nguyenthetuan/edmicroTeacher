@@ -59,10 +59,14 @@ export default function QuestionGeneral(props) {
             url = urlFilePDFQS;
             title = 'Câu hỏi PDF';
         } else {
+            if (!urlFilePDFAS) {
+                props.toast.show('Không có file PDF đáp án!');
+                return;
+            }
             url = urlFilePDFAS;
             title = 'Đáp án PDF';
         }
-        props.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: url, text: title });
+        props.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: url, text: title, statusbar: 'dark-content' });
     }
 
     return (

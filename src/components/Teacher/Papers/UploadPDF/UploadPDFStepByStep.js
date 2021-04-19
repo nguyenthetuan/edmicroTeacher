@@ -167,13 +167,33 @@ export default class UploadPDFStepByStep extends Component {
         Global.nextToStepThreePDF();
     }
 
+    getBackgoundColor = () => {
+        let color = '#fff';
+        switch (this.state.currentPosition) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                color = 'rgba(86, 204, 242, 0.1)';
+                break;
+            }
+            case 2: {
+                break;
+            }
+            case 3: {
+                break;
+            }
+        }
+        return color;
+    }
+
 
     render() {
         return (
             <View style={styles.contain}>
                 <SafeAreaView style={{ flex: 0, backgroundColor: '#2D9CDB' }} />
 
-                <SafeAreaView style={styles.contain}>
+                <SafeAreaView style={[styles.contain, { backgroundColor: this.getBackgoundColor() }]}>
                     <HeaderNavigation
                         title={'Câu hỏi PDF'}
                         navigation={this.props.navigation}

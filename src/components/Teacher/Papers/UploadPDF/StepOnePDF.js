@@ -44,12 +44,13 @@ export default class StepOnePDF extends Component {
                 return;
             }
         }
-        this.props.screenProps.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: type === 1 ? this.state.urlFilePDFAS : this.state.urlFilePDFQS, text: type == 1 ? 'Lời Giải' : 'Bộ đề PDF' });
+        this.props.screenProps.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: type === 1 ? this.state.urlFilePDFAS : this.state.urlFilePDFQS, text: type == 1 ? 'Lời Giải' : 'Bộ đề PDF', statusbar: 'dark-content' });
     }
 
     validate = () => {
         const { urlFilePDFQS, urlFilePDFAS } = this.state;
-        if (!urlFilePDFQS || !urlFilePDFAS) {
+        // if (!urlFilePDFQS || !urlFilePDFAS) {
+        if (!urlFilePDFQS) {
             this.toast.show('Chưa upload file PDF!')
             return false;
         }
