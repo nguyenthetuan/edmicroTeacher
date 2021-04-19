@@ -12,7 +12,8 @@ import { RFFonsize } from '../../../../utils/Fonts';
 import ProgressBar from '../../../libs/ProgressBar';
 import { PieChart } from 'react-native-svg-charts';
 // import { Circle, G, Line } from "react-native-svg";
-
+import AwesomeButton from 'react-native-really-awesome-button';
+import shadowStyle from '../../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 class MissionItem extends React.PureComponent {
@@ -32,6 +33,7 @@ class MissionItem extends React.PureComponent {
     }
 
     render() {
+        const { shadowBtn } = shadowStyle;
         const { mission } = this.props;
         let data = [
             {
@@ -114,7 +116,21 @@ class MissionItem extends React.PureComponent {
                     </View>
 
 
-                    <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
+                    <AwesomeButton
+                        // onPress={onAssignment}
+                        style={[styles.AweBtn, { ...shadowBtn }]}
+                        height={35}
+                        backgroundColor={'#2D9CDB'}
+                        borderRadius={25}
+                        backgroundActive={'#2D9DFE'}
+                        backgroundShadow={'transparent'}
+                        backgroundDarker={'transparent'}
+                    >
+                        <Text style={styles.txtAssignment}> Xem chi tiết</Text>
+                    </AwesomeButton>
+
+
+                    {/* <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
                     <View style={styles.progressBar}>
                         <ProgressBar
                             progress={this.getProgess(mission)}
@@ -129,7 +145,8 @@ class MissionItem extends React.PureComponent {
                                 : 0
                             }%
                         </Text>
-                    </View>
+                    </View> */}
+
                 </View>
             </View>
         )
@@ -320,5 +337,20 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 3,
-    }
+    },
+    AweBtn: {
+        alignSelf: 'center',
+        marginTop: 20,
+        marginBottom: 16,
+    },
+    txtAssignment: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
+        color: '#fff',
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 6,
+        marginBottom: 6
+    },
 })

@@ -10,7 +10,8 @@ import dataHelper from '../../../../utils/dataHelper';
 import { RFFonsize } from '../../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 import ProgressBar from '../../../libs/ProgressBar';
-
+import AwesomeButton from 'react-native-really-awesome-button';
+import shadowStyle from '../../../../themes/shadowStyle';
 import { PieChart } from 'react-native-svg-charts';
 
 class AssignmentItem extends Component {
@@ -29,6 +30,7 @@ class AssignmentItem extends Component {
         return progress;
     }
     render() {
+        const { shadowBtn } = shadowStyle;
         const { assignment } = this.props;
         let data = [
             {
@@ -109,7 +111,21 @@ class AssignmentItem extends Component {
                         <Text style={styles.countNumber}>{assignment?.totalAssign}</Text>
                     </View>
 
-                    <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
+
+
+                    <AwesomeButton
+                        // onPress={onAssignment}
+                        style={[styles.AweBtn, { ...shadowBtn }]}
+                        height={35}
+                        backgroundColor={'#2D9CDB'}
+                        borderRadius={25}
+                        backgroundActive={'#2D9DFE'}
+                        backgroundShadow={'transparent'}
+                        backgroundDarker={'transparent'}
+                    >
+                        <Text style={styles.txtAssignment}> Xem chi tiết</Text>
+                    </AwesomeButton>
+                    {/* <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
                     <View style={styles.progressBar}>
                         <ProgressBar
                             progress={this.getProgess(assignment)}
@@ -124,7 +140,7 @@ class AssignmentItem extends Component {
                                 : 0
                             }%
                      </Text>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         )
@@ -165,7 +181,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
         lineHeight: RFFonsize(18),
-        marginTop: 12,
+        marginTop: 19,
         alignSelf: 'center',
     },
     flexStatitics: {
@@ -312,5 +328,20 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 3,
-    }
+    },
+    AweBtn: {
+        alignSelf: 'center',
+        marginTop: 20,
+        marginBottom: 16,
+    },
+    txtAssignment: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
+        color: '#fff',
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 6,
+        marginBottom: 6
+    },
 })
