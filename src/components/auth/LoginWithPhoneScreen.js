@@ -305,7 +305,9 @@ class LoginWithPhoneScreen extends Component {
             Ứng dụng hỗ trợ cho hoạt động dạy
             và học trong các trường phổ thông
             </Text> */}
-          <SizedBox height={20} />
+          <View style={{ alignItems: 'center' }}>
+            <Image source={require('../../asserts/icon/ImageLogin.png')} />
+          </View>
           <TextValidate errors={this.state.errors} />
           <SizedBox height={20} />
           <Formik
@@ -319,9 +321,6 @@ class LoginWithPhoneScreen extends Component {
           >
             {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
               <View>
-                <View style={{ alignItems: 'center' }}>
-                  <Image source={require('../../asserts/icon/ImageLogin.png')} />
-                </View>
                 <InputPrimary
                   label={'Tên đăng nhập'}
                   placeholder={'Nhập tên đăng nhập'}
@@ -391,7 +390,8 @@ const styles = StyleSheet.create({
     height: 40,
     zIndex: 10,
     borderRadius: 5,
-    marginTop: 10
+    marginTop: 10,
+    borderWidth: 0
   },
   viewKeyboard: {
     justifyContent: 'center',

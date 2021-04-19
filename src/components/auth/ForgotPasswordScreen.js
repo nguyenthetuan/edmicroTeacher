@@ -814,12 +814,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnLaylaimk: {
-    backgroundColor: '#2D9CDB',
+    backgroundColor: '#54CEF5',
     width: width - width / 5,
-    height: 50,
+    height: 40,
     alignSelf: 'center',
     marginTop: 20,
-    borderRadius: 100,
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center'
   },
