@@ -28,8 +28,14 @@ export default function QuestionGeneral(props) {
         let { totalQSTN, totalQSTL, type } = props;
         let count = 0;
         if (type === 0) {
+            if (totalQSTN == 0) {
+                return;
+            }
             count = totalQSTN - 1;
         } else {
+            if (totalQSTL == 0) {
+                return;
+            }
             count = totalQSTL - 1;
         }
         props.onTotalQSChange(count)
