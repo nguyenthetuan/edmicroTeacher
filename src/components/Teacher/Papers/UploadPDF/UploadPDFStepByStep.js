@@ -163,6 +163,10 @@ export default class UploadPDFStepByStep extends Component {
         ])
     }
 
+    onPressRight = () => {
+        Global.nextToStepThreePDF();
+    }
+
 
     render() {
         return (
@@ -177,7 +181,7 @@ export default class UploadPDFStepByStep extends Component {
                         goBack={this.goBack}
                         color={'#fff'}
                         backgroundColor={'#2D9CDB'}
-                        onRightAction={Global.nextToStepThreePDF}
+                        onRightAction={this.onPressRight}
                     // actionStyle={{tintColor:}}
                     />
                     <View style={{ backgroundColor: '#2D9CDB', paddingTop: 10 }}>
