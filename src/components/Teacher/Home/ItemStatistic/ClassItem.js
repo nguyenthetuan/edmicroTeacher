@@ -25,10 +25,7 @@ import ProgressBar from '../../../libs/ProgressBar';
 const { width, height } = Dimensions.get('window');
 
 class ClassItem extends Component {
-    // listClass?.totalStudentOnline
-    // ?
-    // (listClass?.totalStudentOnline / listClass?.totalStudent) >
-    //     100 ? 100 : (listClass?.totalStudentOnline / listClass?.totalStudent) : 1
+
     getProgess = (listClass) => {
         const { totalStudentOnline = 0, totalStudent = 0 } = listClass;
         let progress = 0;
@@ -43,17 +40,16 @@ class ClassItem extends Component {
         return progress;
     }
 
-
     constructor(props) {
         super(props);
         this.state = {
             activeSlide: 1,
             isLoading: true,
             bgBox: [
-                "#00CFF5",
-                "#FAB50F",
-                "#BC88FF",
-                "#E34D5C",
+                "#FF7630",
+                "#C699FF",
+                "#43A9E2",
+                "#2ABA67",
                 "#EB9CA8",
                 "#7C878E",
                 "#8A004F",
@@ -66,15 +62,11 @@ class ClassItem extends Component {
     }
     _renderItem = ({ item, index }) => {
         return (
-            <View style={{
-                marginTop: 10,
-                marginLeft: 10,
-                marginRight: 10
-            }}>
+            <View style={styles.shadowFlat}>
                 <View style={{
                     flexDirection: 'column',
                     backgroundColor: this.state.bgBox[index % this.state.bgBox.length],
-                    borderRadius: 5
+                    borderRadius: 10
                 }}>
                     <Text numberOfLines={2}
                         style={styles.number}>
@@ -101,7 +93,7 @@ class ClassItem extends Component {
             <View style={styles.shadow}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê số lượng các lớp</Text>
-                    <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lý</Text>
+                    <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lí</Text>
                     <View style={{ alignSelf: 'center', height: height * 0.25 }}>
                         <FlatList
                             data={[...classArray]}
@@ -115,7 +107,7 @@ class ClassItem extends Component {
                         />
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <Text style={[styles.txtOnline, { color: '#000' }]}>Số học sinh đang truy cập:</Text>
+                        <Text style={[styles.txtOnline, { color: '#828282' }]}>Số học sinh đang truy cập:</Text>
                         <Text style={styles.txtCount}>
                             {listClass?.totalStudentOnline}/{listClass?.totalStudent}
                         </Text>
@@ -124,7 +116,7 @@ class ClassItem extends Component {
                         <ProgressBar
                             progress={this.getProgess(listClass)}
                             color="#56BB73"
-                            widthProps={width - 185}Î
+                            widthProps={width - 230}
                             progressUnfilledColor="#BDBDBD"
                             style={{ height: 5, borderRadius: 10 }}
                         />
@@ -159,21 +151,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(ClassItem);
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    bgHeader: {
-        backgroundColor: '#fff',
-    },
-    titleTask: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(18),
-        color: '#000',
-        marginLeft: 16,
-        marginTop: 20,
-    },
     bodyTask: {
         backgroundColor: '#FAFAFA',
         marginLeft: 16,
@@ -186,65 +163,38 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
         color: '#2D9CDB',
-        marginLeft: 27,
-        marginTop: 8,
-        marginRight: 10
+        textAlign: 'center',
+        marginTop: 6,
     },
     txtOnline: {
         fontFamily: 'Nunito',
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
         color: '#2D9CDB',
         marginLeft: 27
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(18),
-        marginTop: 12,
+        lineHeight: RFFonsize(19),
+        marginTop: 19,
         alignSelf: 'center',
+        color: '#000'
     },
     flexStatitics: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
     },
-    flexLeft: {
-        backgroundColor: '#23D0F3',
-        borderRadius: 4,
-        marginTop: 10,
-        marginLeft: 50,
-        width: '30%'
-    },
-    flexLeft1: {
-        backgroundColor: '#F9B42E',
-        borderRadius: 4,
-        marginTop: 20,
-        marginLeft: 30
-    },
-    flexLeft2: {
-        backgroundColor: '#BB6BD9',
-        borderRadius: 4,
-        marginTop: 20,
-        marginLeft: 30
-    },
-    flexRight: {
-        backgroundColor: '#F9B42E',
-        borderRadius: 4,
-        marginTop: 10,
-        width: '30%',
-        marginRight: 30
-    },
     heroIcon: {
         alignSelf: 'center',
-        marginBottom: 5,
         width: 14,
         height: 14,
     },
     number: {
         fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(20),
+        fontSize: RFFonsize(18),
+        lineHeight: RFFonsize(25),
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 10,
@@ -264,13 +214,6 @@ const styles = StyleSheet.create({
         marginRight: 25,
         color: '#fff',
     },
-    direction: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginTop: 14,
-        marginRight: 5,
-        marginBottom: 5,
-    },
     countGroup: {
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(12),
@@ -282,7 +225,7 @@ const styles = StyleSheet.create({
         marginRight: 5
     },
     progressBar: {
-        marginTop: 7,
+        marginTop: 9,
         paddingRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -291,18 +234,20 @@ const styles = StyleSheet.create({
     },
     rateSub: {
         fontSize: RFFonsize(12),
-        color: '#359CDB',
+        lineHeight: RFFonsize(16),
+        color: '#56BB73',
         fontFamily: 'Nunito-Bold',
         position: 'absolute',
         right: 20,
+        textAlign: 'center',
     },
     txtCount: {
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
         color: '#359CDB',
-        fontFamily: 'Nunito-Bold',
+        fontFamily: 'Nunito',
         alignSelf: 'center',
-        marginLeft: 5
+        marginLeft: 7
     },
     shadow: {
         shadowColor: "#000",
@@ -311,7 +256,7 @@ const styles = StyleSheet.create({
             height: 3,
         },
         shadowOpacity: 0.30,
-        shadowRadius: 4.65,
+        shadowRadius: 8,
         elevation: 5,
         flex: 1
     },
@@ -319,31 +264,26 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginLeft: 3
     },
-    flexIcon: {
-        flexDirection: 'row',
-    },
-    mission: {
-        alignSelf: 'center',
-        marginTop: 10,
+    shadowFlat: {
+        marginTop: 20,
         marginLeft: 10,
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
-        paddingRight: 30,
-    },
-    toSend: {
-        marginLeft: 10,
-        marginTop: 5,
         marginRight: 10,
-        fontFamily: 'Nunito',
-        fontSize: RFFonsize(12)
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 3,
     },
-    isLoading: {
-        flex: 1
+    direction: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 6,
+        marginRight: 5,
+        marginBottom: 5,
     },
-    countRight: {
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
-        width: '35%',
-        marginLeft: 5
-    }
+
+
 })
