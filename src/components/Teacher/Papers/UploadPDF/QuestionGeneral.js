@@ -66,7 +66,7 @@ export default function QuestionGeneral(props) {
             url = urlFilePDFAS;
             title = 'Đáp án PDF';
         }
-        props.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: url, text: title });
+        props.navigation.navigate('FullViewPDFAssessment', { urlFilePDF: url, text: title, statusbar: 'dark-content' });
     }
 
     return (
