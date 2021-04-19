@@ -19,8 +19,34 @@ const { width, height } = Dimensions.get('window');
 
 const TabMainTeacher = createBottomTabNavigator(
   {
-
-   
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: 'Trang chủ',
+        tabBarIcon: ({ tintColor, focused }) => {
+          return !focused ? (
+            <Image
+              source={require('../asserts/appIcon/icon_homeOffi.png')}
+              resizeMode={'contain'}
+            />
+          ) : (
+              <Image
+                source={require('../asserts/appIcon/icon_homeOffi.png')}
+                resizeMode={'contain'}
+              />
+            );
+        },
+        tabBarLabel: Platform.isPad
+          ? 'Trang chủ'
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Trang chủ</Text>
+            ) : (
+                <Text style={styles.txtLabelActive}>Trang chủ</Text>
+              );
+          },
+      },
+    },
     Self: {
       screen: Class,
       navigationOptions: {
@@ -47,34 +73,6 @@ const TabMainTeacher = createBottomTabNavigator(
               <Text style={styles.txtLabel}>Lớp học</Text>
             ) : (
                 <Text style={styles.txtLabelActive}>Lớp học</Text>
-              );
-          },
-      },
-    },
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
-        title: 'Trang chủ',
-        tabBarIcon: ({ tintColor, focused }) => {
-          return !focused ? (
-            <Image
-              source={require('../asserts/appIcon/icon_homeOffi.png')}
-              resizeMode={'contain'}
-            />
-          ) : (
-              <Image
-                source={require('../asserts/appIcon/icon_homeOffi.png')}
-                resizeMode={'contain'}
-              />
-            );
-        },
-        tabBarLabel: Platform.isPad
-          ? 'Trang chủ'
-          : ({ focused }) => {
-            return !focused ? (
-              <Text style={styles.txtLabel}>Trang chủ</Text>
-            ) : (
-                <Text style={styles.txtLabelActive}>Trang chủ</Text>
               );
           },
       },
@@ -197,10 +195,9 @@ const TabMainTeacher = createBottomTabNavigator(
     //       },
     //   },
     // },
-
   },
   {
-    initialRouteName: 'Self',
+    initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: false,
