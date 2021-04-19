@@ -8,13 +8,10 @@ import {
 import { connect } from 'react-redux';
 import dataHelper from '../../../../utils/dataHelper';
 import { RFFonsize } from '../../../../utils/Fonts';
-import {
-    statisticClassAction,
-    statisticMissionAction,
-    statisticAssignmentAction
-} from '../../../../actions/statisticAction';
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 import ProgressBar from '../../../libs/ProgressBar';
+
+import { PieChart } from 'react-native-svg-charts';
 
 class AssignmentItem extends Component {
 
@@ -33,13 +30,33 @@ class AssignmentItem extends Component {
     }
     render() {
         const { assignment } = this.props;
+        let data = [
+            {
+                key: 1,
+                amount: assignment.totalAssign,
+                svg: { fill: '#F2B27C' },
+            },
+            {
+                key: 2,
+                amount: assignment.totalAssignmentNotAssign,
+                svg: { fill: '#40BCDF' }
+            },
+        ];
+
+        if ((assignment.totalAssign == 0 && assignment.totalAssignmentNotAssign == 0) || !assignment.totalAssignment) {
+            data.push({
+                key: 3,
+                amount: 1,
+                svg: { fill: '#c4c4c4' }
+            });
+        }
         return (
             <View style={[styles.shadow, { marginBottom: 10 }]}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê bài tập trong tuần</Text>
                     <Text numberOfLines={1}
                         style={styles.status}>Số nhiệm vụ thầy cô giao</Text>
-                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                    {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                         <View style={styles.flexLeft2}>
                             <Text numberOfLines={1}
                                 style={styles.sumBig}>{assignment?.totalAssignment}</Text>
@@ -61,7 +78,37 @@ class AssignmentItem extends Component {
                             </View>
                             <Text numberOfLines={2} style={styles.missionAssed}>Bài tập chưa giao</Text>
                         </View>
+                    </View> */}
+                    <View style={styles.shaodowPie}>
+                        <PieChart
+                            style={{ height: height * 0.2 }}
+                            valueAccessor={({ item }) => item.amount}
+                            data={data}
+                            spacing={10}
+                            outerRadius={'80%'}
+                            innerRadius={'45%'}
+                            labelRadius={10}
+                        />
+                        <View style={styles.Total}>
+                            <Text style={styles.TotalColor}>{assignment?.totalAssignment}</Text>
+                        </View>
                     </View>
+
+                    <View style={styles.note}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={[styles.noteColor, { backgroundColor: "#40BCDF" }]} />
+                            <Text style={styles.txtNote}>Bài tập chưa giao</Text>
+                        </View>
+                        <Text style={[styles.countNumber, { color: '#40BCDF' }]}>{assignment?.totalAssignmentNotAssign}</Text>
+                    </View>
+                    <View style={[styles.note, { marginTop: 10 }]}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={styles.noteColor} />
+                            <Text style={styles.txtNote}>Hoàn thành</Text>
+                        </View>
+                        <Text style={styles.countNumber}>{assignment?.totalAssign}</Text>
+                    </View>
+
                     <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
                     <View style={styles.progressBar}>
                         <ProgressBar
@@ -217,4 +264,53 @@ const styles = StyleSheet.create({
         paddingHorizontal: 6,
         marginTop: 25
     },
+    Total: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    TotalColor: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(24),
+        lineHeight: RFFonsize(34),
+        color: "#FF6213",
+    },
+    note: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 50
+    },
+    noteColor: {
+        backgroundColor: '#F2B27C',
+        width: 16,
+        height: 16
+    },
+    txtNote: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        color: "#828282",
+        alignSelf: 'center',
+        marginLeft: 16
+    },
+    countNumber: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: "#F2B27C",
+    },
+    shaodowPie: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 3,
+    }
 })

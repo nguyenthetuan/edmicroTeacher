@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
     View,
     Text,
     StyleSheet,
+    SafeAreaView,
     Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import dataHelper from '../../../../utils/dataHelper';
 import { RFFonsize } from '../../../../utils/Fonts';
-import {
-    statisticClassAction,
-    statisticMissionAction,
-    statisticAssignmentAction
-} from '../../../../actions/statisticAction';
-const { width } = Dimensions.get('window');
-import AppIcon from '../../../../utils/AppIcon';
 import ProgressBar from '../../../libs/ProgressBar';
+import { PieChart } from 'react-native-svg-charts';
+// import { Circle, G, Line } from "react-native-svg";
 
-class MissionItem extends Component {
+const { width, height } = Dimensions.get('window');
+
+class MissionItem extends React.PureComponent {
 
     getProgess = (mission) => {
         const { totalMissionAssign = 0, totalMission = 0 } = mission;
@@ -32,17 +30,39 @@ class MissionItem extends Component {
         }
         return progress;
     }
+
     render() {
         const { mission } = this.props;
+        let data = [
+            {
+                key: 1,
+                amount: mission.totalMissionAssign,
+                svg: { fill: '#FFD044' },
+            },
+            {
+                key: 2,
+                amount: mission.totalMissionNotAssign,
+                svg: { fill: '#7E96EC' }
+            },
+        ];
+
+        if ((mission.totalMissionAssign == 0 && mission.totalMissionNotAssign == 0) || !mission.totalMission) {
+            data.push({
+                key: 3,
+                amount: 1,
+                svg: { fill: '#c4c4c4' }
+            });
+        }
+
         return (
             <View style={styles.shadow}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê nhiệm vụ trong tuần</Text>
                     <Text style={styles.status}>Số nhiệm vụ Thầy cô đã giao</Text>
-                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                    {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                         <View style={styles.flexLeft1}>
                             <Text numberOfLines={1}
-                                style={styles.sumBig}>9{mission?.totalMission}</Text>
+                                style={styles.sumBig}>{mission?.totalMission}</Text>
                             <Text style={styles.sum}>Tổng</Text>
                         </View>
                     </View>
@@ -61,8 +81,39 @@ class MissionItem extends Component {
                             </View>
                             <Text numberOfLines={2} style={styles.missionAssed}>Nhiệm vụ chưa giao</Text>
                         </View>
-
+                    </View> */}
+                    <View style={styles.shaodowPie}>
+                        <PieChart
+                            style={{ height: height * 0.2 }}
+                            valueAccessor={({ item }) => item.amount}
+                            data={data}
+                            spacing={10}
+                            outerRadius={'80%'}
+                            innerRadius={'45%'}
+                            labelRadius={10}
+                        />
+                        <View style={styles.Total}>
+                            <Text style={styles.TotalColor}>{mission?.totalMission}</Text>
+                        </View>
                     </View>
+
+                    <View style={styles.note}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={[styles.noteColor, { backgroundColor: "#7E96EC" }]} />
+                            <Text style={styles.txtNote}>Nhiệm vụ chưa giao</Text>
+                        </View>
+                        <Text style={[styles.countNumber, { color: '#7E96EC' }]}>{mission?.totalMissionNotAssign}</Text>
+                    </View>
+
+                    <View style={[styles.note, { marginTop: 10 }]}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={styles.noteColor} />
+                            <Text style={styles.txtNote}>Hoàn thành</Text>
+                        </View>
+                        <Text style={styles.countNumber}>{mission?.totalMissionAssign}</Text>
+                    </View>
+
+
                     <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
                     <View style={styles.progressBar}>
                         <ProgressBar
@@ -220,5 +271,54 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         justifyContent: 'center',
+    },
+    note: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 50
+    },
+    noteColor: {
+        backgroundColor: '#FFD044',
+        width: 16,
+        height: 16
+    },
+    txtNote: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        color: "#828282",
+        alignSelf: 'center',
+        marginLeft: 16
+    },
+    countNumber: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: "#FFD044",
+    },
+    Total: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    TotalColor: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(24),
+        lineHeight: RFFonsize(34),
+        color: "#FF6213",
+    },
+    shaodowPie: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 3,
     }
 })
