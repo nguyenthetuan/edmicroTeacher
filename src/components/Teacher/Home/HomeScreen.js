@@ -151,11 +151,6 @@ class HomeScreen extends Component {
                     <StatisticHome
                         data={data}
                         navigation={this.props.navigation}
-                    // listClass={this.props.listClass}
-                    // mission={this.props.mission}
-                    // assignment={this.props.assignment}
-                    // classArray={this.props.classArray}
-                    // isLoading={this.props.isLoading}
                     />
                 </View>
             </View>

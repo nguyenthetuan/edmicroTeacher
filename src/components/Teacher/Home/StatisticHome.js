@@ -68,8 +68,7 @@ class StatisticHome extends Component {
                     activeSlideAlignment='center'
                     onSnapToItem={(index) => this.setState({ activeSlide: index })}
                 />
-
-                <Pagination
+                {/* <Pagination
                     dotsLength={data.length}
                     activeDotIndex={activeSlide || 0}
                     containerStyle={{
@@ -77,7 +76,7 @@ class StatisticHome extends Component {
                     }}
                     dotStyle={{
                         width: 30,
-                        height: 10,
+                        height: 5,
                         borderRadius: 10,
                         backgroundColor: '#359CDB',
                         marginHorizontal: -5,
@@ -85,12 +84,12 @@ class StatisticHome extends Component {
                     }}
                     inactiveDotStyle={{
                         backgroundColor: '#c4c4c4',
-                        width: 12,
-                        height: 12,
+                        width: 6,
+                        height: 6,
                     }}
                     inactiveDotOpacity={0.7}
                     inactiveDotScale={0.6}
-                />
+                /> */}
 
             </View>
         )

@@ -31,7 +31,7 @@ const TabMainTeacher = createBottomTabNavigator(
             />
           ) : (
               <Image
-                source={require('../asserts/appIcon/icon_homeOffi.png')}
+                source={require('../asserts/appIcon/icon_homeActive.png')}
                 resizeMode={'contain'}
               />
             );

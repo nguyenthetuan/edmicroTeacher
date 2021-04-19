@@ -116,7 +116,7 @@ class ClassItem extends Component {
                         <ProgressBar
                             progress={this.getProgess(listClass)}
                             color="#56BB73"
-                            widthProps={width - 230}
+                            widthProps={width - 200}
                             progressUnfilledColor="#BDBDBD"
                             style={{ height: 5, borderRadius: 10 }}
                         />
@@ -153,8 +153,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(ClassItem);
 const styles = StyleSheet.create({
     bodyTask: {
         backgroundColor: '#FAFAFA',
-        marginLeft: 16,
-        marginRight: 16,
         marginTop: 8,
         borderRadius: 10,
     },
@@ -171,7 +169,7 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(10),
         lineHeight: RFFonsize(14),
         color: '#2D9CDB',
-        marginLeft: 27
+        marginLeft: 27,
     },
     txtTask: {
         fontFamily: 'Nunito-Bold',
@@ -225,7 +223,7 @@ const styles = StyleSheet.create({
         marginRight: 5
     },
     progressBar: {
-        marginTop: 9,
+        marginTop: 5,
         paddingRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -256,7 +254,7 @@ const styles = StyleSheet.create({
             height: 3,
         },
         shadowOpacity: 0.30,
-        shadowRadius: 8,
+        shadowRadius: 6,
         elevation: 5,
         flex: 1
     },
