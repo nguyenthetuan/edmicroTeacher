@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import dataHelper from '../../utils/dataHelper';
 import HeaderNavigation from '../common/HeaderNavigation';
 import LoadingScreen from '../libs/LoadingScreen';
-import FormInput from '../common/FormInput';
+import InputPrimary from '../common-new/InputPrimary';
 import Button from '../common/Button';
 import { mainStyle } from '../../themes';
 import { changePasswordAction } from '../../actions/userAction';

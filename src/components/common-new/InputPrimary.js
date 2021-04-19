@@ -1,90 +1,79 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { RFFonsize } from '../../utils/Fonts';
-export default InputPrimary = (props) => {
-    getLabel = () => {
-        try {
-            const { label, isValid, error } = props;
-            if (!isValid && error) {
-                return error;
-            }
-            return label;
-        } catch (error) {
-            return label;
-        }
-    }
 
-    getBorderColor = () => {
-        try {
-            const { label, isValid, error } = props;
-            if (!isValid && error) {
-                return '#FF7300';
-            }
-            return '#B5B5B5';
-        } catch (error) {
-            return '#B5B5B5';
-        }
-    }
-
-    getLabelColor = () => {
-        try {
-            const { label, isValid, error } = props;
-            if (!isValid && error) {
-                return '#FF7300';
-            }
-            return '#000';
-        } catch (error) {
-            return '#000';
-        }
-    }
-
+export default function TextFormField(props) {
+    const { formStyle, error, isShowPassword, secureTextEntry = false, suffixIconAction, suffixIcon } = props;
+    const inputDecoration = formStyle == 'bottom' ? styles.inputDecorationBottomBorder : styles.inputDecorationBorder;
     return (
-        <View style={[
-            styles.containerStyle,
-            {
-                borderColor: getBorderColor()
-            },
-            props.containerStyle]}>
-            <Text numberOfLines={1} style={[styles.labelStyle,
-            { color: getLabelColor() },
-            props.labelStyle]}>{getLabel()}</Text>
-            <TextInput
-                {...props}
-                autoCapitalize='none'
-                value={props.value}
-                placeholderTextColor={'#BDBDBD'}
-                style={[styles.textInput, props.textInputStyle]} />
+        <View style={styles.formContainer}>
+            <Text style={styles.label}>{props.label}</Text>
+            <View style={[styles.inputDecoration, inputDecoration]}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholderTextColor={'#BDBDBD'}
+                    autoCorrect={false}
+                    autoCompleteType='off'
+                    autoCapitalize={"none"}
+                    {...props}
+                />
+                {suffixIcon &&
+                    <TouchableOpacity onPress={suffixIconAction}>
+                        <Image
+                            source={props.suffixIcon}
+                            style={[styles.suffixIcon, {
+                                tintColor: secureTextEntry ? '#E0E0E0' : '#54CEF5'
+                            }]} />
+                    </TouchableOpacity>
+                }
+            </View>
+            {error &&
+                <Text style={[styles.textInvalid]}>{error}</Text>
+            }
         </View>
     );
 }
 
-
 const styles = StyleSheet.create({
-    containerStyle: {
-        height: 54,
-        borderWidth: 1,
-        borderColor: '#B5B5B5',
-        justifyContent: 'center',
-        borderRadius: 54,
-        paddingHorizontal: 20,
+    formContainer: {
         marginBottom: 20,
     },
-    labelStyle: {
-        position: 'absolute',
-        top: -10,
-        left: 20,
-        backgroundColor: '#fff',
+    label: {
+        color: '#222222',
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(14),
+        lineHeight: 19,
+    },
+    inputDecoration: {
+        height: 42,
+        flexDirection: 'row',
         paddingHorizontal: 10,
-        fontFamily: 'Nunito-Regular',
-        fontSize: RFFonsize(16)
+        borderColor: '#54CEF5',
+        alignItems: 'center'
+    },
+    inputDecorationBorder: {
+        marginTop: 5,
+        borderWidth: 0.5,
+        borderRadius: 5, 
+        flexDirection: 'row'
+    },
+    inputDecorationBottomBorder: {
+        borderBottomWidth: 1,
+        flexDirection: 'row'
     },
     textInput: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        fontSize: RFFonsize(16),
-        paddingHorizontal: 10,
-        color: '#000',
-        fontFamily: 'Nunito-Regular'
+        fontFamily: 'Nunito-Regular',
+        flex: 1,
+        color: '#000'
     },
+    suffixIcon: {
+        alignSelf: 'center',
+        marginHorizontal: 10,
+    },
+    textInvalid: {
+        color: '#D22D3F',
+        fontFamily: 'Nunito-Regular',
+        fontSize: RFFonsize(11),
+        marginTop: 5
+    }
 });

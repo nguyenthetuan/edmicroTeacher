@@ -126,6 +126,7 @@ import upload_icon from '../asserts/icon/upload_icon.png';
 import score_9 from '../asserts/appIcon/score_9.png';
 import iconDowSelect from '../asserts/icon/iconDowSelect.png';
 import iconFilter from '../asserts/appIcon/icon_filter_plus.png'
+import eye from '../asserts/icon/eye.png';
 
 module.exports = {
   done_icon,
@@ -237,4 +238,5 @@ module.exports = {
   score_9,
   iconDowSelect,
   iconFilter,
+  eye,
 };

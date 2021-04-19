@@ -4,13 +4,13 @@ const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
     shadowBtn: {
-        shadowColor: "#f0f0f0",
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 5,
         },
         shadowOpacity: 0.2,
-        shadowRadius: 10,
+        shadowRadius: 5,
         elevation: 1.5
     },
 

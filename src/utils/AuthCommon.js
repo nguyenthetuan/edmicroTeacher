@@ -16,7 +16,7 @@ export const LOGIN_TYPE = {
 
 export const isExpried = (exp, curTime) => {
     let time = Number.parseInt(curTime) - Number.parseInt(exp);
-    console.log(time);
+    console.log(Number.parseInt(exp) - Number.parseInt(curTime));
     return time >= 300; // need chan
   };
   
