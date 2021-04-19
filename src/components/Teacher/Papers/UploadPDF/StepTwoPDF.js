@@ -353,7 +353,7 @@ export default class StepTwoPDF extends Component {
                         </View>
                     </View>
                 </View>
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
             </View>
         )
     }

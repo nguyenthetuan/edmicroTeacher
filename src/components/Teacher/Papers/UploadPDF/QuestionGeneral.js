@@ -1,12 +1,18 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, } from 'react-native';
 import RippleButton from '../../../libs/RippleButton';
 import AppIcon from '../../../../utils/AppIcon';
 
+const MAX_QS = 100;
+
 export default function QuestionGeneral(props) {
 
-    useEffect(() => {
+    const [totalQSTL, setTotalQSTL] = useState(0);
+    const [totalQSTN, setTotalQSTN] = useState(0);
 
+    useEffect(() => {
+        setTotalQSTL(props.totalQSTL);
+        setTotalQSTN(props.totalQSTN);
     }, [])
 
     const onPressButtonChangeTotal = (type) => {
@@ -14,7 +20,44 @@ export default function QuestionGeneral(props) {
     }
 
     const onTotalQSChange = (val) => {
-        props.onTotalQSChange(val);
+        let { type } = props;
+        if (type === 0) {
+            props.onTotalQSChange(totalQSTN);
+        } else {
+            props.onTotalQSChange(totalQSTL);
+        }
+    }
+
+    const chekValMax = (num) => {
+        let { type } = props;
+        // let num = type === 0 ? totalQSTN : totalQSTL;
+        if (num >= MAX_QS) {
+            props.toast.show('Tổng số câu tối đa 100 câu!')
+        }
+        return (num <= MAX_QS);
+    }
+
+    const _onTotalQSChangeInside = (val) => {
+        if (validateIsNotNum(Number(val))) {
+            props.toast.show('Số câu nhập vào phải là số tự nhiên!');
+            return;
+        }
+        if (!chekValMax(Number(val))) {
+            return false;
+        }
+
+        let { type } = props;
+        if (type === 0) {
+            setTotalQSTN(val);
+        } else {
+            setTotalQSTL(val);
+        }
+        return true;
+    }
+
+    const validateIsNotNum = (num) => {
+        let isInteger = Number.isInteger(num);
+        return !isInteger;
     }
 
     const onTotalPointChange = (point) => {
@@ -38,6 +81,10 @@ export default function QuestionGeneral(props) {
             }
             count = totalQSTL - 1;
         }
+        let countinue = _onTotalQSChangeInside(count);
+        if (!countinue) {
+            return;
+        }
         props.onTotalQSChange(count)
     }
 
@@ -45,9 +92,13 @@ export default function QuestionGeneral(props) {
         let { totalQSTN, totalQSTL, type } = props;
         let count = 0;
         if (type === 0) {
-            count = totalQSTN + 1;
+            count = Number(totalQSTN) + 1;
         } else {
-            count = totalQSTL + 1;
+            count = Number(totalQSTL) + 1;
+        }
+        let countinue = _onTotalQSChangeInside(count);
+        if (!countinue) {
+            return;
         }
         props.onTotalQSChange(count)
     }
@@ -80,9 +131,10 @@ export default function QuestionGeneral(props) {
                     <View style={{ width: 40, height: 30, }}>
                         <TextInput
                             style={{ with: 40, height: 30, fontFamily: 'Nunito-bold', color: '#2D9CDB', textAlign: 'center', paddingVertical: 0 }}
-                            onChangeText={onTotalQSChange}
+                            onChangeText={_onTotalQSChangeInside}
                             keyboardType={'number-pad'}
-                            value={props.type === 0 ? props.totalQSTN.toString() : props.totalQSTL.toString()}
+                            onBlur={onTotalQSChange}
+                            value={props.type === 0 ? totalQSTN.toString() : totalQSTL.toString()}
                         />
                     </View>
                     <RippleButton style={styles.buttonChangeTotal} onPress={inCrease}>
