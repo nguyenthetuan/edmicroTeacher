@@ -54,7 +54,7 @@ class AssignmentItem extends Component {
                             </View>
                             <Text numberOfLines={2} style={styles.missionAssed}>Bài tập đã giao</Text>
                         </View>
-                        <View style={[styles.bottomMiss, { marginRight: 18 }]}>
+                        <View style={styles.bottomMiss}>
                             <View style={[styles.boxSmall, { backgroundColor: '#FF5747' }]}>
                                 <Text numberOfLines={1}
                                     style={styles.numberBig}>{assignment?.totalAssignmentNotAssign}</Text>
@@ -67,7 +67,7 @@ class AssignmentItem extends Component {
                         <ProgressBar
                             progress={this.getProgess(assignment)}
                             color="#56BB73"
-                            widthProps={width - 230}
+                            widthProps={width - 200}
                             progressUnfilledColor="#BDBDBD"
                             style={{ height: 5, borderRadius: 10 }}
                         />
@@ -103,8 +103,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(AssignmentItem);
 const styles = StyleSheet.create({
     bodyTask: {
         backgroundColor: '#FAFAFA',
-        marginLeft: 16,
-        marginRight: 16,
         marginTop: 8,
         borderRadius: 10
     },
@@ -126,7 +124,8 @@ const styles = StyleSheet.create({
     flexStatitics: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20
+        marginTop: 20,
+        marginLeft: 16,
     },
     flexLeft2: {
         backgroundColor: '#BB6BD9',
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     progressBar: {
-        marginTop: 7,
+        marginTop: 5,
         paddingRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
             height: 3,
         },
         shadowOpacity: 0.30,
-        shadowRadius: 8,
+        shadowRadius: 6,
         elevation: 5,
         flex: 1
     },
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
     bottomMiss: {
         flexDirection: 'row',
         flex: 1,
-        marginLeft: 19,
+        justifyContent: 'center',
     },
     boxSmall: {
         backgroundColor: '#1BC763',

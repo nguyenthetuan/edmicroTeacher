@@ -42,7 +42,7 @@ class MissionItem extends Component {
                     <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                         <View style={styles.flexLeft1}>
                             <Text numberOfLines={1}
-                                style={styles.sumBig}>{mission?.totalMission}</Text>
+                                style={styles.sumBig}>9{mission?.totalMission}</Text>
                             <Text style={styles.sum}>Tổng</Text>
                         </View>
                     </View>
@@ -54,7 +54,7 @@ class MissionItem extends Component {
                             </View>
                             <Text numberOfLines={2} style={styles.missionAssed}>Nhiệm vụ đã giao</Text>
                         </View>
-                        <View style={[styles.bottomMiss, { marginRight: 18 }]}>
+                        <View style={styles.bottomMiss}>
                             <View style={[styles.boxSmall, { backgroundColor: '#FF5747' }]}>
                                 <Text numberOfLines={1}
                                     style={styles.numberBig}>{mission?.totalMissionNotAssign}</Text>
@@ -68,7 +68,7 @@ class MissionItem extends Component {
                         <ProgressBar
                             progress={this.getProgess(mission)}
                             color="#56BB73"
-                            widthProps={width - 230}
+                            widthProps={width - 200}
                             progressUnfilledColor="#BDBDBD"
                             style={{ height: 5, borderRadius: 10 }}
                         />
@@ -105,8 +105,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(MissionItem);
 const styles = StyleSheet.create({
     bodyTask: {
         backgroundColor: '#FAFAFA',
-        marginLeft: 16,
-        marginRight: 16,
         marginTop: 8,
         borderRadius: 10
     },
@@ -129,7 +127,8 @@ const styles = StyleSheet.create({
     flexStatitics: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20
+        marginTop: 20,
+        marginLeft: 16
     },
     flexLeft1: {
         backgroundColor: '#F9B42E',
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     progressBar: {
-        marginTop: 7,
+        marginTop: 5,
         paddingRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -180,8 +179,8 @@ const styles = StyleSheet.create({
             height: 3,
         },
         shadowOpacity: 0.30,
-        shadowRadius: 8,
-        elevation: 5,
+        shadowRadius: 6,
+        elevation: 3,
         flex: 1
     },
     sum: {
@@ -220,6 +219,6 @@ const styles = StyleSheet.create({
     bottomMiss: {
         flexDirection: 'row',
         flex: 1,
-        marginLeft: 19,
+        justifyContent: 'center',
     }
 })
