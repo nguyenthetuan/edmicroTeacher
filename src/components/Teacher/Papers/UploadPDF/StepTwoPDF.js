@@ -1,6 +1,6 @@
 import { stubArray } from 'lodash-es';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback, Keyboard, SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import RippleButton from '../../../libs/RippleButton';
 import QuestionGeneral from './QuestionGeneral';
@@ -209,7 +209,8 @@ export default class StepTwoPDF extends Component {
                 return;
             }
 
-            if (urlFilePDFQS === '' || urlFilePDFAS === '') {
+            // if (urlFilePDFQS === '' || urlFilePDFAS === '') {
+            if (urlFilePDFQS === '') {
                 this.toast.show('Chưa thêm bộ đề!');
                 return;
             }
@@ -342,6 +343,7 @@ export default class StepTwoPDF extends Component {
                             type={this.state.activeButtonIndex}
                             navigation={this.props.screenProps.navigation}
                             screenProps={this.props.screenProps}
+                            toast={this.toast}
                         />
                         <TotalQuestionConfig questionList={activeButtonIndex === 0 ? questionsTN : questionsTL} onChangeOptionAnswer={this.onChangeOptionAnswer} onChangePointEachQS={this.onChangePointEachQS} typeQuestion={activeButtonIndex} />
                         <View style={styles.wrapEnd}>

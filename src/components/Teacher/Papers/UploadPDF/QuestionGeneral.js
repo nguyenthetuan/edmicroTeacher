@@ -59,6 +59,10 @@ export default function QuestionGeneral(props) {
             url = urlFilePDFQS;
             title = 'Câu hỏi PDF';
         } else {
+            if (!urlFilePDFAS) {
+                props.toast.show('Không có file PDF đáp án!');
+                return;
+            }
             url = urlFilePDFAS;
             title = 'Đáp án PDF';
         }

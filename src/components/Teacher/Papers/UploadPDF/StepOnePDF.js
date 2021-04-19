@@ -49,7 +49,8 @@ export default class StepOnePDF extends Component {
 
     validate = () => {
         const { urlFilePDFQS, urlFilePDFAS } = this.state;
-        if (!urlFilePDFQS || !urlFilePDFAS) {
+        // if (!urlFilePDFQS || !urlFilePDFAS) {
+        if (!urlFilePDFQS) {
             this.toast.show('Chưa upload file PDF!')
             return false;
         }
