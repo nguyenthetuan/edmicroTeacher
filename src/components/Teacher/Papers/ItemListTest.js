@@ -50,7 +50,19 @@ export default class Item extends Component {
             <View
                 style={[
                     styles.itemTest,
-                    { borderColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
+                    {
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 1,
+                        },
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
+                        
+                        elevation: 2,
+                        borderWidth: 0
+                    },
+                    // { borderColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
                 ]}
                 onPress={this._handleClickDetail(payloadAssignment)}>
                 <TouchableWithoutFeedback
@@ -208,10 +220,9 @@ const styles = StyleSheet.create({
         width: "90%",
     },
     itemTest: {
-        borderRadius: 4,
+        borderRadius: 5,
         borderWidth: 0.5,
-        overflow: 'hidden',
-        marginTop: 16
+        marginTop: 16,
     },
     bodyTest: {
         paddingHorizontal: 11,
