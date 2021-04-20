@@ -10,7 +10,7 @@ import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import shadowStyle from '../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 export default class itemExercise extends Component {
@@ -42,8 +42,9 @@ export default class itemExercise extends Component {
 
   render() {
     const { item } = this.props;
+    const { shadowBtn } = shadowStyle;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { ...shadowBtn }]}>
         <View style={styles.top}>
           <Text style={styles.name}>{item.name}</Text>
         </View>
@@ -116,9 +117,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFF',
-    borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#56CCF2',
     paddingBottom: 18,
     marginHorizontal: 16,
   },
