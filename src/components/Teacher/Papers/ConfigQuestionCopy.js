@@ -312,8 +312,9 @@ class ConfigQuestion extends Component {
                 totalPoint,
             } = this.state;
             if (this.state.assignmentType == 1) {
-                if (this.state.duration <= 0) {
-                    alert('Vui lòng nhập thời gian làm bài');
+                console.log("this.state.duration: ", this.state.duration);
+                if (this.state.duration < 5) {
+                    alert('Thời gian làm bài phải từ 5 phút!');
                     return;
                 }
             }
