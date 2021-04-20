@@ -32,6 +32,10 @@ class MissionItem extends React.PureComponent {
         return progress;
     }
 
+    onMissionPress = () => {
+        this.props.navigation.navigate('Mission', { statusbar: 'dark-content' });
+    }
+
     render() {
         const { shadowBtn } = shadowStyle;
         const { mission } = this.props;
@@ -121,7 +125,7 @@ class MissionItem extends React.PureComponent {
 
 
                     <AwesomeButton
-                        // onPress={onAssignment}
+                        onPress={this.onMissionPress}
                         style={[styles.AweBtn, { ...shadowBtn }]}
                         height={35}
                         backgroundColor={'#2D9CDB'}

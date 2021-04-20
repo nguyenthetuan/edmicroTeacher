@@ -15,6 +15,9 @@ import shadowStyle from '../../../../themes/shadowStyle';
 import { PieChart } from 'react-native-svg-charts';
 
 class AssignmentItem extends Component {
+    constructor(props){
+        super(props);
+    }
 
     getProgess = (assignment) => {
         const { totalAssign = 0, totalAssignment = 0 } = assignment;
@@ -30,9 +33,9 @@ class AssignmentItem extends Component {
         return progress;
     }
 
-    // onAssignment = () => {
-    //     this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'dark-content' });
-    // }
+    onAssignment = () => {
+        this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'dark-content' }); 
+    }
 
     render() {
         const { shadowBtn } = shadowStyle;
@@ -122,7 +125,7 @@ class AssignmentItem extends Component {
 
 
                     <AwesomeButton
-                        onPress={this.onAssignment}
+                        onPress={this.onAssignment.bind(this)}
                         style={[styles.AweBtn, { ...shadowBtn }]}
                         height={35}
                         backgroundColor={'#2D9CDB'}
