@@ -61,12 +61,22 @@ class ClassItem extends Component {
         };
     }
     _renderItem = ({ item, index }) => {
+        const str = item.gradeId;
+        const res = str.substring(1, 4);
         return (
             <View style={styles.shadowFlat}>
                 <View style={{
                     flexDirection: 'column',
                     backgroundColor: this.state.bgBox[index % this.state.bgBox.length],
-                    borderRadius: 10
+                    borderRadius: 10,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3,
+                    elevation: 3,
                 }}>
                     <Text numberOfLines={2}
                         style={styles.number}>
@@ -83,6 +93,7 @@ class ClassItem extends Component {
                         </Text>
                     </View>
                 </View>
+                <Text style={[styles.color, { color: this.state.bgBox[index % this.state.bgBox.length] }]}> Lớp {res}</Text>
             </View>
 
         )
@@ -279,14 +290,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 10,
         marginRight: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-        elevation: 3,
     },
     direction: {
         flexDirection: 'row',
@@ -295,6 +298,13 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginBottom: 5,
     },
+    color: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        textAlign: 'center',
+        marginTop: 4
+    }
 
 
 })
