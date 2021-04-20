@@ -52,7 +52,6 @@ export default function ItemMultipleChoice(props) {
     }
 
     const render = useMemo(() => {
-        console.log("index: ", props.data.index);
         return (
             <>
                 <View style={styles.wrapLeft}>
