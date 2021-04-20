@@ -87,6 +87,18 @@ class ClassItem extends Component {
 
         )
     }
+    _listTestEmpty = () => {
+        const { isLoading } = this.props;
+        return (isLoading ?
+            <ActivityIndicator
+                size={'small'}
+                style={{ flex: 1 }}
+                color="#F98E2F"
+            />
+            :
+            <Text style={styles.styTxtEmpty}>Hiện tại không có lớp lớp quản lí</Text>
+        );
+    };
     render() {
         const { listClass, classArray } = this.props;
         return (
@@ -99,6 +111,7 @@ class ClassItem extends Component {
                             data={[...classArray]}
                             extraData={classArray}
                             numColumns={2}
+                            ListEmptyComponent={this._listTestEmpty}
                             keyExtractor={(item, index) => index.toString()}
                             showsHorizontalScrollIndicator={false}
                             stickyHeaderIndices={[0]}
