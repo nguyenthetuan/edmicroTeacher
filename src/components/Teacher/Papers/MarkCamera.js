@@ -689,10 +689,12 @@ class MarkCamera extends Component {
                                                     </View>
                                                     <View style={styles.wrapEndAreaUploadPDF}>
                                                         {/* onPress={() => this.setModalVisible(true)} */}
-                                                        <TouchableOpacity style={styles.buttonInSideAreaUploadPDF} onPress={this.onPickPDF}>
-                                                            <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
-                                                            <Text style={styles.addPar}>Upload</Text>
-                                                        </TouchableOpacity>
+                                                        <TouchableWithoutFeedback onPress={this.onPickPDF}>
+                                                            <View style={styles.buttonInSideAreaUploadPDF}>
+                                                                <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
+                                                                <Text style={styles.addPar}>Upload</Text>
+                                                            </View>
+                                                        </TouchableWithoutFeedback>
                                                         {urlFilePDF ?
                                                             <TouchableOpacity style={[styles.buttonInSideAreaUploadPDF, { borderColor: '#56CCF2' }]} onPress={() => { this._onFullView(0) }}>
                                                                 <Image source={AppIcon.search_pdf} style={styles.pdfView} />
@@ -738,9 +740,7 @@ class MarkCamera extends Component {
                                             <Text style={styles.txtCreate}>Tạo bộ đề</Text>
                                         </RippleButton>
                                     </View>
-
                                 </TouchableWithoutFeedback>
-
                             </ScrollView>
                         </KeyboardAvoidingView>
                         <Toast ref={ref => this.refToast = ref} position={'bottom'} />
@@ -846,7 +846,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#fff',
         color: '#000',
-        fontFamily: 'Nunito-LightItalic',
+        fontFamily: 'Nunito',
         fontSize: RFFonsize(14),
         paddingStart: 10,
         marginBottom: 7,
@@ -876,7 +876,7 @@ const styles = StyleSheet.create({
     buttonInSideAreaUploadPDF: {
         flexDirection: 'row',
         borderWidth: 0.5,
-        borderColor: '#FF6213',
+        borderColor: '#2D9CDB',
         borderStyle: "solid",
         borderRadius: 20,
         marginHorizontal: 5
@@ -885,7 +885,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito',
         fontSize: RFFonsize(14),
         fontWeight: '700',
-        marginTop: 15,
         marginBottom: 5
     },
     styTxtPlace: {

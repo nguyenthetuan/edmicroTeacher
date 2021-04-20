@@ -95,21 +95,8 @@ class ClassItem extends Component {
                 </View>
                 <Text style={[styles.color, { color: this.state.bgBox[index % this.state.bgBox.length] }]}> Lớp {res}</Text>
             </View>
-
         )
     }
-    _listTestEmpty = () => {
-        const { isLoading } = this.props;
-        return (isLoading ?
-            <ActivityIndicator
-                size={'small'}
-                style={{ flex: 1 }}
-                color="#F98E2F"
-            />
-            :
-            <Text style={styles.styTxtEmpty}>Hiện tại không có lớp lớp quản lí</Text>
-        );
-    };
     render() {
         const { listClass, classArray } = this.props;
         return (
@@ -125,7 +112,6 @@ class ClassItem extends Component {
                             data={[...classArray]}
                             extraData={classArray}
                             numColumns={2}
-                            ListEmptyComponent={this._listTestEmpty}
                             keyExtractor={(item, index) => index.toString()}
                             showsHorizontalScrollIndicator={false}
                             stickyHeaderIndices={[0]}
@@ -205,11 +191,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#000'
     },
-    flexStatitics: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
     heroIcon: {
         alignSelf: 'center',
         width: 14,
@@ -225,18 +206,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         color: '#fff'
-    },
-    sumBig: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(28),
-        lineHeight: RFFonsize(38),
-        textAlign: 'center',
-        alignSelf: 'center',
-        marginTop: 19.5,
-        marginBottom: 19.5,
-        marginLeft: 25,
-        marginRight: 25,
-        color: '#fff',
     },
     countGroup: {
         fontFamily: 'Nunito-Bold',
@@ -283,10 +252,6 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 3,
         flex: 1
-    },
-    sum: {
-        alignSelf: 'flex-end',
-        marginLeft: 3
     },
     shadowFlat: {
         marginTop: 10,

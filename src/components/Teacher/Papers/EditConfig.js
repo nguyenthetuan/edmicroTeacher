@@ -330,58 +330,58 @@ class EditConfig extends Component {
                     color={"#fff"}
                     backgroundColor={'#2D9CDB'}
                 />
+                <View
+                    behavior={'padding'}
+                    style={{ flex: 1 }}
+                >
                     <View
-                        behavior={'padding'}
-                        style={{ flex: 1 }}
+                        style={{ paddingVertical: 15, flex: 1 }}
                     >
-                        <View
-                            style={{ paddingVertical: 15, flex: 1 }}
-                        >
-                            <Text style={[styles.styTxtLabel, { left: 15 }]}>Tên bài tập</Text>
-                            <View style={styles.styWrapInutName}>
-                                <TextInput
-                                    numberOfLines={1}
-                                    value={name}
-                                    style={styles.txtTexinput}
-                                    onChangeText={text =>
-                                        this.setText({ key: 'name', text })
-                                    }
-                                />
-                            </View>
-                            {this.renderHeaderFlastList()}
-                            {data && data.assignmentType ? (
-                                <View style={{ marginTop: 40, marginLeft: 20 }}>
-                                    <Text style={styles.styTxtLabel}>Thời gian</Text>
-                                    <View style={{ flexDirection: 'row', height: 30, alignItems: 'center' }}>
-                                        <View style={styles.styWrapInutTime}>
-                                            <TextInput
-                                                value={time}
-                                                style={styles.txtTexinput}
-                                                onChangeText={text => this.setText({ key: 'time', text: text.trim() })}
-                                                keyboardType={'number-pad'}
-                                            />
-                                        </View>
-                                        <Text style={[styles.styTxtLabel, { top: 4, left: 10 }]}>Phút</Text>
+                        <Text style={[styles.styTxtLabel, { left: 15 }]}>Tên bài tập</Text>
+                        <View style={styles.styWrapInutName}>
+                            <TextInput
+                                numberOfLines={1}
+                                value={name}
+                                style={styles.txtTexinput}
+                                onChangeText={text =>
+                                    this.setText({ key: 'name', text })
+                                }
+                            />
+                        </View>
+                        {this.renderHeaderFlastList()}
+                        {data && data.assignmentType ? (
+                            <View style={{ marginTop: 40, marginLeft: 20 }}>
+                                <Text style={styles.styTxtLabel}>Thời gian</Text>
+                                <View style={{ flexDirection: 'row', height: 30, alignItems: 'center' }}>
+                                    <View style={styles.styWrapInutTime}>
+                                        <TextInput
+                                            value={time}
+                                            style={styles.txtTexinput}
+                                            onChangeText={text => this.setText({ key: 'time', text: text.trim() })}
+                                            keyboardType={'number-pad'}
+                                        />
                                     </View>
+                                    <Text style={[styles.styTxtLabel, { top: 4, left: 10 }]}>Phút</Text>
                                 </View>
-                            ) : null}
-                            <View style={styles.footer}>
-                                <RippleButton
-                                    onPress={() => this.props.navigation.goBack()}>
-                                    <View style={[styles.buttomCancel, { ...shadowBtn }]}>
-                                        <Text style={styles.txtButtom}>Huỷ</Text>
+                            </View>
+                        ) : null}
+                        <View style={styles.footer}>
+                            <RippleButton
+                                onPress={() => this.props.navigation.goBack()}>
+                                <View style={[styles.buttomCancel, { ...shadowBtn }]}>
+                                    <Text style={styles.txtButtom}>Huỷ</Text>
+                                </View>
+                            </RippleButton>
+                            <View style={{ marginStart: 40 }}>
+                                <RippleButton onPress={this.onUpdate} disabled={disabled}>
+                                    <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', ...shadowBtn }]}>
+                                        <Text style={styles.txtButtom}>Lưu</Text>
                                     </View>
                                 </RippleButton>
-                                <View style={{ marginStart: 40 }}>
-                                    <RippleButton onPress={this.onUpdate} disabled={disabled}>
-                                        <View style={[styles.buttomSave, { backgroundColor: disabled ? '#828282' : '#56CCF2', ...shadowBtn }]}>
-                                            <Text style={styles.txtButtom}>Lưu</Text>
-                                        </View>
-                                    </RippleButton>
-                                </View>
                             </View>
                         </View>
                     </View>
+                </View>
                 <ModalClass
                     ref={ref => this.refModalClass = ref}
                     gradeActive={gradeActive}
@@ -562,7 +562,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5
     },
     navbar: {
-        top: 20,
+        top: 5,
         left: 0,
         right: 0,
         height: NAVBAR_HEIGHT - 50,
