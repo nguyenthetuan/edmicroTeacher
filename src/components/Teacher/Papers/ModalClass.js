@@ -7,6 +7,7 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Modal from '../../../utils/Modal';
 import RippleButton from '../../common-new/RippleButton';
@@ -47,7 +48,7 @@ export default class ModalClass extends Component {
                 ref={ref => this.modalizeRef = ref}
                 visible={visible}
                 closeModal={this.onClose}
-                contentContainerStyle={{ height: height - height / 4 }}
+                contentContainerStyle={{ height: height - height / 4, backgroundColor: '#fff' }}
                 transparent={true}>
                 <View style={{ width: width, flex: 1 }}>
                     <View style={styles.styWrapTitle}>
@@ -154,10 +155,12 @@ class Item extends Component {
         const { isCheck } = this.state;
         return (
             <View style={[styles.styWrapElement, { margin: 5, }]}>
-                <TouchableOpacity onPress={this.onCheck} style={styles.styWrapElement}>
-                    <Image source={require('../../../asserts/icon/icon_remakeClassV3.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
-                    <Text style={styles.styTxtClass}>{item.name}</Text>
-                </TouchableOpacity>
+                <TouchableWithoutFeedback onPress={this.onCheck}>
+                    <View style={styles.styWrapElement}>
+                        <Image source={require('../../../asserts/icon/icon_remakeClassV3.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
+                        <Text style={styles.styTxtClass}>{item.name}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
                 <RippleButton onPress={this.onCheck}>
                     <View style={styles.styCheck} >
                         {isCheck ? <Icon name={'check'} size={20} color={'#56BB73'} /> : null}

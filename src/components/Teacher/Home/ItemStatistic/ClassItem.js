@@ -113,11 +113,14 @@ class ClassItem extends Component {
     render() {
         const { listClass, classArray } = this.props;
         return (
-            <View style={styles.shadow}>
+            <View style={[styles.shadow, {
+                backgroundColor: '#fff',
+                borderRadius: 8
+            }]}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê số lượng các lớp</Text>
                     <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lí</Text>
-                    <View style={{ alignSelf: 'center', height: height * 0.25 }}>
+                    <View style={{ alignSelf: 'center', height: height * 0.3, marginTop: 10 }}>
                         <FlatList
                             data={[...classArray]}
                             extraData={classArray}
@@ -176,7 +179,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ClassItem);
 
 const styles = StyleSheet.create({
     bodyTask: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#fff',
         marginTop: 8,
         borderRadius: 10,
     },
@@ -275,11 +278,11 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: 1,
         },
         shadowOpacity: 0.30,
         shadowRadius: 6,
-        elevation: 5,
+        elevation: 3,
         flex: 1
     },
     sum: {
@@ -287,7 +290,7 @@ const styles = StyleSheet.create({
         marginLeft: 3
     },
     shadowFlat: {
-        marginTop: 20,
+        marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
     },

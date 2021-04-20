@@ -15,7 +15,7 @@ import shadowStyle from '../../../../themes/shadowStyle';
 import { PieChart } from 'react-native-svg-charts';
 
 class AssignmentItem extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
@@ -34,7 +34,7 @@ class AssignmentItem extends Component {
     }
 
     onAssignment = () => {
-        this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'dark-content' }); 
+        this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'dark-content' });
     }
 
     render() {
@@ -61,7 +61,10 @@ class AssignmentItem extends Component {
             });
         }
         return (
-            <View style={[styles.shadow, { marginBottom: 10 }]}>
+            <View style={[styles.shadow, {
+                marginBottom: 10, backgroundColor: '#fff',
+                borderRadius: 8
+            }]}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê bài tập trong tuần</Text>
                     <Text numberOfLines={1}
@@ -176,7 +179,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AssignmentItem);
 
 const styles = StyleSheet.create({
     bodyTask: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#fff',
         marginTop: 8,
         borderRadius: 10
     },
@@ -247,11 +250,11 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: 1,
         },
         shadowOpacity: 0.30,
         shadowRadius: 6,
-        elevation: 5,
+        elevation: 3,
         flex: 1
     },
     sum: {

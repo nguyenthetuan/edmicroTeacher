@@ -61,7 +61,10 @@ class MissionItem extends React.PureComponent {
         }
 
         return (
-            <View style={styles.shadow}>
+            <View style={[styles.shadow, {
+                backgroundColor: '#fff',
+                borderRadius: 8
+            }]}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê nhiệm vụ trong tuần</Text>
                     <Text style={styles.status}>Số nhiệm vụ Thầy cô đã giao</Text>
@@ -180,7 +183,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MissionItem);
 
 const styles = StyleSheet.create({
     bodyTask: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#fff',
         marginTop: 8,
         borderRadius: 10
     },

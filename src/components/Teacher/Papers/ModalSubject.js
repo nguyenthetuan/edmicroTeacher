@@ -7,7 +7,8 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
-    Platform
+    Platform,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Modal from '../../../utils/Modal';
 import RippleButton from '../../common-new/RippleButton';
@@ -50,7 +51,7 @@ export default class ModalSubject extends Component {
                 closeModal={this.onClose}
                 contentContainerStyle={{ height: height - height / 4 }}
                 transparent={true}>
-                <View style={{ width: width, flex: 1 }}>
+                <View style={{ width: width, flex: 1, backgroundColor: '#fff' }}>
                     <View
                         style={styles.styWrapTitle}
                     >
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: 10,
         borderBottomWidth: 1,
-        borderColor: '#E0E0E0',
+        borderColor: '#ECECEC',
         flexDirection: 'row',
     },
     styClose: {
@@ -158,10 +159,12 @@ class Item extends Component {
         const icon = CommonBeta.getIconSubject(item.code);
         return (
             <View style={[styles.styWrapElement, { margin: 5, }]}>
-                <TouchableOpacity onPress={this.onCheck} style={styles.styWrapElement}>
-                    <Image source={icon} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
-                    <Text style={styles.styTxtClass}>{item.name}</Text>
-                </TouchableOpacity>
+                <TouchableWithoutFeedback onPress={this.onCheck} >
+                    <View style={styles.styWrapElement}>
+                        <Image source={icon} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
+                        <Text style={styles.styTxtClass}>{item.name}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
                 <RippleButton onPress={this.onCheck}>
                     <View style={styles.styCheck} >
                         {isCheck ? <Icon name={'check'} size={20} color={'#56BB73'} /> : null}
