@@ -161,7 +161,6 @@ class ClassItem extends Component {
 }
 
 
-
 const mapStateToProps = state => {
     return {
         listClass: state.statistic.listClass,
