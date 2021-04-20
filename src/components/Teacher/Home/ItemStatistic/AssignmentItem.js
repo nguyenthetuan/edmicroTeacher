@@ -13,7 +13,11 @@ import ProgressBar from '../../../libs/ProgressBar';
 import AwesomeButton from 'react-native-really-awesome-button';
 import shadowStyle from '../../../../themes/shadowStyle';
 import { PieChart } from 'react-native-svg-charts';
-
+import {
+    statisticClassAction,
+    statisticMissionAction,
+    statisticAssignmentAction
+} from '../../../../actions/statisticAction';
 class AssignmentItem extends Component {
     constructor(props) {
         super(props);
@@ -102,8 +106,6 @@ class AssignmentItem extends Component {
                         </View>
                         <Text style={styles.countNumber}>{assignment?.totalAssign}</Text>
                     </View>
-
-
                     <AwesomeButton
                         onPress={this.onAssignment.bind(this)}
                         style={[styles.AweBtn, { ...shadowBtn }]}
@@ -132,6 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload))
     };
 };
 
