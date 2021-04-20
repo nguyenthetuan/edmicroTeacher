@@ -13,6 +13,12 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  statisticClassAction,
+  statisticMissionAction,
+  statisticAssignmentAction
+} from '../../../actions/statisticAction';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -22,7 +28,8 @@ import ItemSectionListPrac from './ItemSectionListPrac';
 import { createMission } from '../../../services/apiMission';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
-export default class StepThree extends Component {
+
+class StepThree extends Component {
   constructor(props) {
     super(props);
     const {
@@ -109,6 +116,9 @@ export default class StepThree extends Component {
       this.props.navigation.navigate('StepFour');
       this.props.screenProps.handleNextStep(3);
       this.props.screenProps.getAssignmentByMission({ token: this.token, _id: response._id });
+      const { token, enumType } = await dataHelper.getToken();
+      const schoolYear = new Date().getFullYear();
+      this.props.fetchMissionAction({ token, enumType, schoolYear });
       this.setState({ isLoading: false });
     }
   };
@@ -331,6 +341,21 @@ export default class StepThree extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      fetchMissionAction: payload => dispatch(statisticMissionAction(payload)),
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StepThree);
+
 
 const styles = StyleSheet.create({
   contain: {

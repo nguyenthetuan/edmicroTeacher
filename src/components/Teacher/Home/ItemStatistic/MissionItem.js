@@ -14,6 +14,11 @@ import { PieChart } from 'react-native-svg-charts';
 // import { Circle, G, Line } from "react-native-svg";
 import AwesomeButton from 'react-native-really-awesome-button';
 import shadowStyle from '../../../../themes/shadowStyle';
+import {
+    statisticClassAction,
+    statisticMissionAction,
+    statisticAssignmentAction
+} from '../../../../actions/statisticAction';
 const { width, height } = Dimensions.get('window');
 
 class MissionItem extends React.PureComponent {
@@ -129,6 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchMissionAction: payload => dispatch(statisticMissionAction(payload)),
     };
 };
 

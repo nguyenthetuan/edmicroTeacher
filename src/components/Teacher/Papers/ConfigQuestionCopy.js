@@ -29,7 +29,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import WarningModal from '../../modals/WarningModal';
 import { updateExamListAction } from '../../../actions/paperAction';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import {
+    statisticAssignmentAction
+} from '../../../actions/statisticAction';
 
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -357,6 +359,10 @@ class ConfigQuestion extends Component {
                     this.closePopupCreate();
                     this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
+                    const { token, enumType } = await dataHelper.getToken();
+                    const schoolYear = new Date().getFullYear();
+                    this.props.fetchAssignmentAction({ token, enumType, schoolYear });
+
                     this.setState({ assignmentType: 0 });
                     this.props.navigation.navigate('Assignment', {
                         item: res,
@@ -1132,6 +1138,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload))
     };
 };
 

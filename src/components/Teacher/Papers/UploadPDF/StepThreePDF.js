@@ -9,6 +9,9 @@ import RippleButton from '../../../common-new/RippleButton';
 import Toast from 'react-native-easy-toast';
 import AnalyticsManager from '../../../../utils/AnalyticsManager';
 import { updateExamListAction } from '../../../../actions/paperAction';
+import {
+    statisticAssignmentAction
+} from '../../../../actions/statisticAction';
 import ModalClass from '../ModalClass';
 import ModalSubject from '../ModalSubject';
 import _ from 'lodash';
@@ -150,6 +153,9 @@ class StepThreePDF extends Component {
             const res = await apiPapers.assignmentContent({ token, body });
             if (res && res.status === 0) {
                 this.toast.show('Tạo bộ đề thành công!');
+                const { token, enumType } = await dataHelper.getToken();
+                const schoolYear = new Date().getFullYear();
+                this.props.fetchAssignmentAction({ token, enumType, schoolYear });
                 // setTimeout(() => {
                 //     // this.props.navigation.goBack();
                 // this.props.screenProps.navigation.navigate('Assignment', {
@@ -354,6 +360,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         needUpdate: (payload) => dispatch(updateExamListAction(payload)),
+        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload))
     }
 }
 export default connect(

@@ -157,6 +157,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchClassAction: payload => dispatch(statisticClassAction(payload))
     };
 };
 
