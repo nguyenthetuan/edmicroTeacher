@@ -33,6 +33,7 @@
 		842DA81B260F1F93007885CF /* s.png in Resources */ = {isa = PBXBuildFile; fileRef = 842DA819260F1F92007885CF /* s.png */; };
 		842DA81C260F1F93007885CF /* d.png in Resources */ = {isa = PBXBuildFile; fileRef = 842DA81A260F1F92007885CF /* d.png */; };
 		845F29DB252D7DEB009FB28A /* teacher.png in Resources */ = {isa = PBXBuildFile; fileRef = 845F29DA252D7DEA009FB28A /* teacher.png */; };
+		84828376262E76B000EA920A /* 1243X2689.png in Resources */ = {isa = PBXBuildFile; fileRef = 84828375262E76B000EA920A /* 1243X2689.png */; };
 		848BB3F4250CC7C800511F44 /* jqueryfastclick.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E5250CC7C600511F44 /* jqueryfastclick.js */; };
 		848BB3F5250CC7C800511F44 /* fontawesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E6250CC7C600511F44 /* fontawesome.min.css */; };
 		848BB3F6250CC7C800511F44 /* fastclick_min.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3E7250CC7C600511F44 /* fastclick_min.js */; };
@@ -48,7 +49,6 @@
 		848BB400250CC7C800511F44 /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3F1250CC7C700511F44 /* jquery.min.js */; };
 		848BB401250CC7C800511F44 /* MathJax.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3F2250CC7C700511F44 /* MathJax.min.js */; };
 		848BB402250CC7C800511F44 /* jquery-pull-touch.js in Resources */ = {isa = PBXBuildFile; fileRef = 848BB3F3250CC7C700511F44 /* jquery-pull-touch.js */; };
-		84C031CC26293D4000F06590 /* 1243X2689.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84C031CB26293D3F00F06590 /* 1243X2689.jpg */; };
 		9A548905C638480994F5C9DA /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 942D3ACC67BA47C9A474DD50 /* Nunito-Light.ttf */; };
 		9DB7183F554A44E49396039D /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F91D1A09FFB54546A2588693 /* Nunito-ExtraBold.ttf */; };
 		B0B7F8DFE502416799A1C042 /* Nunito-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD562E68F6EF4F98A5F45FFC /* Nunito-BlackItalic.ttf */; };
@@ -121,6 +121,7 @@
 		842DA819260F1F92007885CF /* s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s.png; sourceTree = "<group>"; };
 		842DA81A260F1F92007885CF /* d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = d.png; sourceTree = "<group>"; };
 		845F29DA252D7DEA009FB28A /* teacher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teacher.png; sourceTree = "<group>"; };
+		84828375262E76B000EA920A /* 1243X2689.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1243X2689.png; sourceTree = "<group>"; };
 		848BB3E3250CBC0D00511F44 /* school.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = school.entitlements; path = school/school.entitlements; sourceTree = "<group>"; };
 		848BB3E5250CC7C600511F44 /* jqueryfastclick.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jqueryfastclick.js; sourceTree = "<group>"; };
 		848BB3E6250CC7C600511F44 /* fontawesome.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = fontawesome.min.css; sourceTree = "<group>"; };
@@ -137,7 +138,6 @@
 		848BB3F1250CC7C700511F44 /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
 		848BB3F2250CC7C700511F44 /* MathJax.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MathJax.min.js; sourceTree = "<group>"; };
 		848BB3F3250CC7C700511F44 /* jquery-pull-touch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-pull-touch.js"; sourceTree = "<group>"; };
-		84C031CB26293D3F00F06590 /* 1243X2689.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1243X2689.jpg; sourceTree = "<group>"; };
 		93C385A9D4A05FD69350DA70 /* Pods-school-tvOSTests.releasestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-tvOSTests.releasestaging.xcconfig"; path = "Target Support Files/Pods-school-tvOSTests/Pods-school-tvOSTests.releasestaging.xcconfig"; sourceTree = "<group>"; };
 		93C3D99C7793B4FDFDE7AAD6 /* Pods-school-schoolTests.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-school-schoolTests.debugprod.xcconfig"; path = "Target Support Files/Pods-school-schoolTests/Pods-school-schoolTests.debugprod.xcconfig"; sourceTree = "<group>"; };
 		942D3ACC67BA47C9A474DD50 /* Nunito-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Light.ttf"; path = "../src/asserts/fonts/Nunito-Light.ttf"; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 		391006C2250F52B2008FF5D5 /* SplashScreen */ = {
 			isa = PBXGroup;
 			children = (
-				84C031CB26293D3F00F06590 /* 1243X2689.jpg */,
+				84828375262E76B000EA920A /* 1243X2689.png */,
 				845F29DA252D7DEA009FB28A /* teacher.png */,
 			);
 			name = SplashScreen;
@@ -552,11 +552,11 @@
 				848BB3F6250CC7C800511F44 /* fastclick_min.js in Resources */,
 				3D16A5D7A79E4639BC8B2FA4 /* Nunito-ExtraLightItalic.ttf in Resources */,
 				842DA81B260F1F93007885CF /* s.png in Resources */,
-				84C031CC26293D4000F06590 /* 1243X2689.jpg in Resources */,
 				848BB3F9250CC7C800511F44 /* font47 in Resources */,
 				82387D40B41E4BEAAD0B723D /* Nunito-Italic.ttf in Resources */,
 				848BB3FA250CC7C800511F44 /* bootstrap.min.css in Resources */,
 				9A548905C638480994F5C9DA /* Nunito-Light.ttf in Resources */,
+				84828376262E76B000EA920A /* 1243X2689.png in Resources */,
 				848BB3FC250CC7C800511F44 /* jquery.ui.touch-punch.min.js in Resources */,
 				848BB400250CC7C800511F44 /* jquery.min.js in Resources */,
 				848BB402250CC7C800511F44 /* jquery-pull-touch.js in Resources */,

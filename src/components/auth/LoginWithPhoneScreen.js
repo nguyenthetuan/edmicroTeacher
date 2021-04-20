@@ -336,7 +336,6 @@ class LoginWithPhoneScreen extends Component {
                   value={values.password}
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
-                  secureTextEntry
                   isValid={(touched.password && !errors.password)}
                   error={(touched.password && errors.password) && errors.password}
                   secureTextEntry={this.state.isSecureTextEntry}
