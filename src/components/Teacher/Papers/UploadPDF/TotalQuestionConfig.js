@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef, useState } from 'react';
+import React, { Component, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions, } from 'react-native';
 import ItemMultipleChoice from './ItemMultipleChoice';
 import ItemEssay from './ItemEssay';
