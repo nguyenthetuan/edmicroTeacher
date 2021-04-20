@@ -84,18 +84,22 @@ class MissionItem extends React.PureComponent {
                             <Text numberOfLines={2} style={styles.missionAssed}>Nhiệm vụ chưa giao</Text>
                         </View>
                     </View> */}
-                    <View style={styles.shaodowPie}>
-                        <PieChart
-                            style={{ height: height * 0.2 }}
-                            valueAccessor={({ item }) => item.amount}
-                            data={data}
-                            spacing={10}
-                            outerRadius={'80%'}
-                            innerRadius={'45%'}
-                            labelRadius={10}
-                        />
+                    <View>
+                        <View style={styles.shaodowPie}>
+                            <PieChart
+                                style={{ height: height * 0.2 }}
+                                valueAccessor={({ item }) => item.amount}
+                                data={data}
+                                spacing={10}
+                                outerRadius={'80%'}
+                                innerRadius={'45%'}
+                                labelRadius={10}
+                            />
+                        </View>
                         <View style={styles.Total}>
-                            <Text style={styles.TotalColor}>{mission?.totalMission}</Text>
+                            <Text style={[styles.TotalColor, {
+                                color: mission?.totalMission == 0 ? '#c4c4c4' : '#ff6213'
+                            }]}>{mission?.totalMission}</Text>
                         </View>
                     </View>
 
@@ -148,7 +152,7 @@ class MissionItem extends React.PureComponent {
                     </View> */}
 
                 </View>
-            </View>
+            </View >
         )
     }
 }

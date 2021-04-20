@@ -9,6 +9,7 @@ const { width } = Dimensions.get('window');
 import Common from '../../../utils/Common';
 import { RFFonsize } from '../../../utils/Fonts';
 import { color } from 'react-native-reanimated';
+import shadowStyle from '../../../themes/shadowStyle';
 const modelStatus = {
   unDelivered: 1,// chưa giao bài.
   delivered: 0,// đã giao bài.
@@ -58,8 +59,10 @@ export default class ItemMission extends Component {
         onPress={this.goToMissionDetail}
       >
         <View
-          style={[styles.contain, {
-            borderColor: data.status === modelStatus.unDelivered ? '#2D9CDB' : '#c4c4c4',
+          style={[styles.contain,
+          shadowStyle.shadowBtn,
+          {
+            // borderColor: data.status === modelStatus.unDelivered ? '#2D9CDB' : '#c4c4c4',
           }]}
         >
           <View style={styles.leftImage}>
@@ -153,6 +156,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 5,
     marginTop: 15,
+    backgroundColor: '#fff',
     flexDirection: 'row'
   },
   styTxtHeader: {
