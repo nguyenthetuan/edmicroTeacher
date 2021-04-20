@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, TextInput, Dimensions, Keyboard, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Dimensions, Keyboard, TouchableOpacity, Image, ScrollView } from 'react-native';
 import DropdownMultiSelect from '../../Homework/DropdownMultiSelect';
 import apiPapers from '../../../../services/apiPapersTeacher';
 import Dropdown from '../../Homework/Dropdown';
@@ -37,7 +37,8 @@ class StepThreePDF extends Component {
             gradeCode: [],
             subjectCode: [],
             subjectActive: [],
-            gradeActive: []
+            gradeActive: [],
+            scrollViewHeight: height - 300
         }
     }
 
@@ -211,11 +212,15 @@ class StepThreePDF extends Component {
         this.setState({ assignmentType: assignmentTypes[index].id, showSelectAnswer: false });
     };
 
-    onBlur = () => {
-        const { duration } = this.state;
-        if (duration === '0') {
-            this.setState({ duration: '5' })
-        }
+    onBlur = async () => {
+        this.setState({ scrollViewHeight: this.state.scrollViewHeight - 300 });
+    }
+    onFocus = async () => {
+
+        await this.setState({ scrollViewHeight: this.state.scrollViewHeight + 300 });
+        setTimeout(() => {
+            this.scrollView.scrollToEnd();
+        }, 0)
     }
 
     onChangeTextName = (val) => {
@@ -231,99 +236,106 @@ class StepThreePDF extends Component {
         const { listGrades, listSubjects, assignmentType, duration, assignmentTypes, name, gradeActive, subjectActive } = this.state;
         return (
             <View style={styles.rootView}>
-                <TextInput
-                    value={name}
-                    onChangeText={this.onChangeTextName}
-                    numberOfLines={1}
-                    returnKeyType={'done'}
-                    placeholder={'Nhập tên bài kiểm tra'}
-                    placeholderTextColor={'#BDBDBD'}
-                    style={styles.inputName}
-                />
-                <ModalClass
-                    ref={ref => this.refModalClass = ref}
-                    gradeActive={gradeActive}
-                    listGrades={listGrades}
-                    activeClass={this.activeGrade}
-                />
-                <ModalSubject
-                    ref={ref => this.refModalSubject = ref}
-                    subjectActive={subjectActive}
-                    listSubjects={listSubjects}
-                    activeSubject={this.activeSubject}
-                />
-                <Text style={styles.styTxtLabel}>Môn học</Text>
-                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                    <TouchableOpacity
-                        style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
-                        onPress={() => { this.refModalSubject.onOpen() }}
-                    >
-                        <Image source={AppIcon.icon_arrow_down} />
-                    </TouchableOpacity>
-                    <FlatList
-                        data={subjectActive}
-                        keyExtractor={(item, index) => index.toString()}
-                        showsVerticalScrollIndicator={false}
-                        horizontal
-                        renderItem={({ item, index }) => {
-                            const name = Common.getDisplaySubject(item);
-                            return (
-                                <View style={styles.buttomActive}>
-                                    <Text style={styles.txtItemActive}>{name}</Text>
-                                </View>
-                            )
-                        }}
+                <ScrollView
+                    contentContainerStyle={{ height: this.state.scrollViewHeight }}
+                    ref={ref => this.scrollView = ref}
+                >
+                    <TextInput
+                        value={name}
+                        onChangeText={this.onChangeTextName}
+                        numberOfLines={1}
+                        returnKeyType={'done'}
+                        placeholder={'Nhập tên bài kiểm tra'}
+                        placeholderTextColor={'#BDBDBD'}
+                        style={styles.inputName}
                     />
-                </View>
-                <Text style={styles.styTxtLabel}>Khối lớp</Text>
-                <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                    <TouchableOpacity
-                        style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
-                        onPress={() => { this.refModalClass.onOpen() }}
-                    >
-                        <Image source={AppIcon.icon_arrow_down} />
-                    </TouchableOpacity>
-                    <FlatList
-                        data={gradeActive}
-                        keyExtractor={(item, index) => index.toString()}
-                        showsVerticalScrollIndicator={false}
-                        horizontal
-                        renderItem={({ item, index }) => {
-                            const name = item?.replace('C', 'Lớp ');
-                            return (
-                                <View style={styles.buttomActive}>
-                                    <Text style={styles.txtItemActive}>{name}</Text>
-                                </View>
-                            )
-                        }}
+                    <ModalClass
+                        ref={ref => this.refModalClass = ref}
+                        gradeActive={gradeActive}
+                        listGrades={listGrades}
+                        activeClass={this.activeGrade}
                     />
-                </View>
-                <Text style={styles.styTxtLabel}>Dạng bài</Text>
-                <Dropdown
-                    contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5 }]}
-                    title="Dạng Bài"
-                    data={assignmentTypes}
-                    indexSelected={0}
-                    onPressItem={(index) =>
-                        this.onPressItemAssignmentType(index)
-                    }
-                />
-                {assignmentType ? (
-                    <View style={{ flex: 1, marginBottom: 10, marginTop: 25 }}>
-                        <TextInput
-                            value={duration.toString()}
-                            onChangeText={this.onChangeTextDuration}
-                            numberOfLines={1}
-                            returnKeyType={'done'}
-                            keyboardType={'decimal-pad'}
-                            maxLength={4}
-                            placeholder={'Mời nhập'}
-                            placeholderTextColor={'#BDBDBD'}
-                            style={[styles.inputName, { width: 100, height: 30, fontSize: 14 }]}
+                    <ModalSubject
+                        ref={ref => this.refModalSubject = ref}
+                        subjectActive={subjectActive}
+                        listSubjects={listSubjects}
+                        activeSubject={this.activeSubject}
+                    />
+                    <Text style={styles.styTxtLabel}>Môn học</Text>
+                    <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
+                        <TouchableOpacity
+                            style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
+                            onPress={() => { this.refModalSubject.onOpen() }}
+                        >
+                            <Image source={AppIcon.icon_arrow_down} />
+                        </TouchableOpacity>
+                        <FlatList
+                            data={subjectActive}
+                            keyExtractor={(item, index) => index.toString()}
+                            showsVerticalScrollIndicator={false}
+                            horizontal
+                            renderItem={({ item, index }) => {
+                                const name = Common.getDisplaySubject(item);
+                                return (
+                                    <View style={styles.buttomActive}>
+                                        <Text style={styles.txtItemActive}>{name}</Text>
+                                    </View>
+                                )
+                            }}
                         />
-                        <Text style={styles.textMinutes}>Phút</Text>
                     </View>
-                ) : null}
+                    <Text style={styles.styTxtLabel}>Khối lớp</Text>
+                    <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
+                        <TouchableOpacity
+                            style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
+                            onPress={() => { this.refModalClass.onOpen() }}
+                        >
+                            <Image source={AppIcon.icon_arrow_down} />
+                        </TouchableOpacity>
+                        <FlatList
+                            data={gradeActive}
+                            keyExtractor={(item, index) => index.toString()}
+                            showsVerticalScrollIndicator={false}
+                            horizontal
+                            renderItem={({ item, index }) => {
+                                const name = item?.replace('C', 'Lớp ');
+                                return (
+                                    <View style={styles.buttomActive}>
+                                        <Text style={styles.txtItemActive}>{name}</Text>
+                                    </View>
+                                )
+                            }}
+                        />
+                    </View>
+                    <Text style={styles.styTxtLabel}>Dạng bài</Text>
+                    <Dropdown
+                        contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5 }]}
+                        title="Dạng Bài"
+                        data={assignmentTypes}
+                        indexSelected={0}
+                        onPressItem={(index) =>
+                            this.onPressItemAssignmentType(index)
+                        }
+                    />
+                    {assignmentType ? (
+                        <View style={{ flex: 1, marginBottom: 10, marginTop: 25 }}>
+                            <TextInput
+                                value={duration.toString()}
+                                onChangeText={this.onChangeTextDuration}
+                                onFocus={this.onFocus}
+                                onBlur={this.onBlur}
+                                numberOfLines={1}
+                                returnKeyType={'done'}
+                                keyboardType={'decimal-pad'}
+                                maxLength={4}
+                                placeholder={'Mời nhập'}
+                                placeholderTextColor={'#BDBDBD'}
+                                style={[styles.inputName, { width: 100, height: 30, fontSize: 14 }]}
+                            />
+                            <Text style={styles.textMinutes}>Phút</Text>
+                        </View>
+                    ) : null}
+                </ScrollView>
                 <View style={styles.wrapEnd}>
                     <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepFour}>
                         <Text style={styles.textNext}>Tạo bộ đề</Text>
