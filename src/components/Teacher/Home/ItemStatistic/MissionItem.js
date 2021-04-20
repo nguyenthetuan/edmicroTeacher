@@ -349,8 +349,6 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(19),
         color: '#fff',
         marginLeft: 20,
-        marginRight: 20,
-        marginTop: 6,
-        marginBottom: 6
+        marginRight: 20
     },
 })

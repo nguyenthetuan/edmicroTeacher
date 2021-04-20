@@ -29,6 +29,11 @@ class AssignmentItem extends Component {
         }
         return progress;
     }
+
+    // onAssignment = () => {
+    //     this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'dark-content' });
+    // }
+
     render() {
         const { shadowBtn } = shadowStyle;
         const { assignment } = this.props;
@@ -112,9 +117,8 @@ class AssignmentItem extends Component {
                     </View>
 
 
-
                     <AwesomeButton
-                        // onPress={onAssignment}
+                        onPress={this.onAssignment}
                         style={[styles.AweBtn, { ...shadowBtn }]}
                         height={35}
                         backgroundColor={'#2D9CDB'}
@@ -340,8 +344,6 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(19),
         color: '#fff',
         marginLeft: 20,
-        marginRight: 20,
-        marginTop: 6,
-        marginBottom: 6
+        marginRight: 20
     },
 })
