@@ -51,35 +51,28 @@ export default function ItemMultipleChoice(props) {
         setTextPoint(point);
     }
 
-    const renderWithChange = useMemo(() => {
-        return (
-            <>
-                <View style={styles.wrapLeft}>
-                    <View style={styles.numQs}>
-                        <Text style={styles.textNumQS}>{(props.data.optionIdAnswer >= 0) ? `${(props.data.index + 1)}.${OPTIONS_ANSWER[props.data.optionIdAnswer]}` : (props.data.index + 1)}</Text>
-                    </View>
-                    <View style={styles.inputPoint}>
-                        <TextInput
-                            style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
-                            textAlign={'center'}
-                            value={(Math.round(Number(textPoint) * 100) / 100).toString()}
-                            keyboardType='decimal-pad'
-                            onChangeText={(val) => onChangePoint(val)}
-                            onBlur={onChangePointEachQS}
-                            onFocus={onFocus}
-                            maxLength={8}
-                        />
-                    </View>
-                </View>
-                <View style={styles.wrapRight}>
-                    {renderAnswers()}
-                </View>
-            </>
-        )
-    }, [JSON.stringify(props.data)])
     return (
         <View style={styles.itemWrap}>
-            {renderWithChange}
+            <View style={styles.wrapLeft}>
+                <View style={styles.numQs}>
+                    <Text style={styles.textNumQS}>{(props.data.optionIdAnswer >= 0) ? `${(props.data.index + 1)}.${OPTIONS_ANSWER[props.data.optionIdAnswer]}` : (props.data.index + 1)}</Text>
+                </View>
+                <View style={styles.inputPoint}>
+                    <TextInput
+                        style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
+                        textAlign={'center'}
+                        value={(Math.round(Number(textPoint) * 100) / 100).toString()}
+                        keyboardType='decimal-pad'
+                        onChangeText={(val) => onChangePoint(val)}
+                        onBlur={onChangePointEachQS}
+                        onFocus={onFocus}
+                        maxLength={8}
+                    />
+                </View>
+            </View>
+            <View style={styles.wrapRight}>
+                {renderAnswers()}
+            </View>
         </View>
     )
 }
