@@ -42,12 +42,12 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import { setListGrades, updateExamListAction } from '../../../actions/paperAction';
 
 const { width, height } = Dimensions.get('window');
-const HEIGHT_WEB = isIphoneX() ? height / 2 : height / 1.5;
+const HEIGHT_WEB = isIphoneX() ? height / 2 : height;
 let baseUrl = 'file:///android_asset/';
 const webViewScript = `
   setTimeout(function() { 
     window.ReactNativeWebView.postMessage(document.body.scrollHeight); 
-  }, 500);
+  }, 0);
 `;
 if (Platform.OS === 'ios') {
   baseUrl = 'web/';
@@ -84,6 +84,8 @@ class ConfigQuestion extends Component {
   }
   onHandleMessage(event) {
     const data = event.nativeEvent.data.split('---');
+    let { questions, totalPoint } = this.state;
+
     if (data[0] === 'warningWeb') {
       this.setState({ numberQuestion: data[1] }, () => {
         this.displayWarning(true);
@@ -105,7 +107,6 @@ class ConfigQuestion extends Component {
     }
 
     if (data[0] === 'enterPoint') {
-      let { questions, totalPoint } = this.state;
       let totalPointTemp = 0;
       const questionId = data[1];
       const value = parseFloat(data[2]) || 0;
@@ -119,7 +120,8 @@ class ConfigQuestion extends Component {
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
-      this.setState({ webheight: parseInt(event.nativeEvent.data) + 200 });
+      console.log('questions.length: ', questions.length);
+      this.setState({ webheight: parseInt(event.nativeEvent.data) + (questions.length === 1 ? 0 : 200) });
     }
     if (data[0] === 'matariaDetail') {
       this.getDetailMatarial();
@@ -340,13 +342,13 @@ class ConfigQuestion extends Component {
               <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
-              <RippleButton
-                key={`d${index}`}
-                style={styles.buttomActive}
-                onPress={() => this.activeSubject(item)}>
-                <Text style={styles.txtItemActive}>{item.name}</Text>
-              </RippleButton>
-            );
+            <RippleButton
+              key={`d${index}`}
+              style={styles.buttomActive}
+              onPress={() => this.activeSubject(item)}>
+              <Text style={styles.txtItemActive}>{item.name}</Text>
+            </RippleButton>
+          );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -387,11 +389,11 @@ class ConfigQuestion extends Component {
 
   getQuestionPostData = (data) => {
     try {
-      const questions = data.map((val, key)=>{
+      const questions = data.map((val, key) => {
         return {
           questionId: val.questionId,
-          index : key,
-          point : val.point,
+          index: key,
+          point: val.point,
           typeAnswer: val.typeAnswer
         }
       })
@@ -610,12 +612,12 @@ class ConfigQuestion extends Component {
     }
   };
 
-  onValueTimeChange = ( num ) => {
+  onValueTimeChange = (num) => {
     if (num[num.length - 1] == ',') {
       num = `${num.substring(0, num.length - 1)}.`
     }
     this.setState({ duration: num || '' });
-  } 
+  }
 
   render() {
     const {
@@ -1116,21 +1118,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                        <WebView
-                          ref={ref => (this.webview = ref)}
-                          source={{
-                            html: html.renderMatarialDetail(htmlContent, urlMedia),
-                            baseUrl,
-                          }}
-                          subjectId={'TOAN'}
-                          originWhitelist={['file://']}
-                          scalesPageToFit={false}
-                          javaScriptEnabled
-                          showsVerticalScrollIndicator={false}
-                          startInLoadingState={false}
-                          style={{ backgroundColor: '#fff' }}
-                        />
-                      )}
+                      <WebView
+                        ref={ref => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={false}
+                        style={{ backgroundColor: '#fff' }}
+                      />
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
