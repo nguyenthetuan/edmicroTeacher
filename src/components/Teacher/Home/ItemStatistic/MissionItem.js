@@ -51,7 +51,6 @@ class MissionItem extends React.PureComponent {
                 svg: { fill: '#7E96EC' }
             },
         ];
-
         if ((mission.totalMissionAssign == 0 && mission.totalMissionNotAssign == 0) || !mission.totalMission) {
             data.push({
                 key: 3,
@@ -68,29 +67,6 @@ class MissionItem extends React.PureComponent {
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê nhiệm vụ trong tuần</Text>
                     <Text style={styles.status}>Số nhiệm vụ Thầy cô đã giao</Text>
-                    {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                        <View style={styles.flexLeft1}>
-                            <Text numberOfLines={1}
-                                style={styles.sumBig}>{mission?.totalMission}</Text>
-                            <Text style={styles.sum}>Tổng</Text>
-                        </View>
-                    </View>
-                    <View style={styles.flexStatitics}>
-                        <View style={styles.bottomMiss}>
-                            <View style={styles.boxSmall}>
-                                <Text numberOfLines={1}
-                                    style={styles.numberBig}>{mission?.totalMissionAssign}</Text>
-                            </View>
-                            <Text numberOfLines={2} style={styles.missionAssed}>Nhiệm vụ đã giao</Text>
-                        </View>
-                        <View style={styles.bottomMiss}>
-                            <View style={[styles.boxSmall, { backgroundColor: '#FF5747' }]}>
-                                <Text numberOfLines={1}
-                                    style={styles.numberBig}>{mission?.totalMissionNotAssign}</Text>
-                            </View>
-                            <Text numberOfLines={2} style={styles.missionAssed}>Nhiệm vụ chưa giao</Text>
-                        </View>
-                    </View> */}
                     <View>
                         <View style={styles.shaodowPie}>
                             <PieChart
@@ -117,7 +93,6 @@ class MissionItem extends React.PureComponent {
                         </View>
                         <Text style={[styles.countNumber, { color: '#7E96EC' }]}>{mission?.totalMissionNotAssign}</Text>
                     </View>
-
                     <View style={[styles.note, { marginTop: 10 }]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.noteColor} />
@@ -125,8 +100,6 @@ class MissionItem extends React.PureComponent {
                         </View>
                         <Text style={styles.countNumber}>{mission?.totalMissionAssign}</Text>
                     </View>
-
-
                     <AwesomeButton
                         onPress={this.onMissionPress}
                         style={[styles.AweBtn, { ...shadowBtn }]}
@@ -139,25 +112,6 @@ class MissionItem extends React.PureComponent {
                     >
                         <Text style={styles.txtAssignment}> Xem chi tiết</Text>
                     </AwesomeButton>
-
-
-                    {/* <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
-                    <View style={styles.progressBar}>
-                        <ProgressBar
-                            progress={this.getProgess(mission)}
-                            color="#56BB73"
-                            widthProps={width - 200}
-                            progressUnfilledColor="#BDBDBD"
-                            style={{ height: 5, borderRadius: 10 }}
-                        />
-                        <Text style={styles.rateSub}>
-                            {mission?.totalMissionAssign ?
-                                Math.ceil((mission?.totalMissionAssign / mission?.totalMission) * 100)
-                                : 0
-                            }%
-                        </Text>
-                    </View> */}
-
                 </View>
             </View >
         )
@@ -185,7 +139,7 @@ const styles = StyleSheet.create({
     bodyTask: {
         backgroundColor: '#fff',
         marginTop: 8,
-        borderRadius: 10
+        borderRadius: 10,
     },
     status: {
         fontFamily: 'Nunito',
@@ -203,37 +157,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#000'
     },
-    flexStatitics: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
-        marginLeft: 16
-    },
-    flexLeft1: {
-        backgroundColor: '#F9B42E',
-        borderRadius: 10,
-        marginTop: 20,
-        alignSelf: 'center',
-        flexDirection: 'column',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-        elevation: 3,
-    },
-    sumBig: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(36),
-        lineHeight: RFFonsize(49),
-        textAlign: 'center',
-        alignSelf: 'center',
-        marginHorizontal: 23,
-        marginTop: 16,
-        color: '#fff',
-    },
     progressBar: {
         marginTop: 5,
         paddingRight: 10,
@@ -241,15 +164,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 27,
         marginBottom: 15
-    },
-    rateSub: {
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
-        color: '#56BB73',
-        fontFamily: 'Nunito-Bold',
-        position: 'absolute',
-        right: 20,
-        textAlign: 'center',
     },
     shadow: {
         shadowColor: "#000",
@@ -261,44 +175,6 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 3,
         flex: 1
-    },
-    sum: {
-        alignSelf: 'flex-end',
-        right: 5,
-        bottom: 5,
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(19),
-        textAlign: 'center',
-        color: '#fff',
-    },
-    numberBig: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(18),
-        lineHeight: RFFonsize(25),
-        alignSelf: 'center',
-        textAlign: 'center',
-        color: '#fff',
-        marginHorizontal: 9,
-        marginVertical: 7.5
-
-    },
-    boxSmall: {
-        backgroundColor: '#1BC763',
-        borderRadius: 10,
-        padding: 7,
-    },
-    missionAssed: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(10),
-        lineHeight: RFFonsize(14),
-        width: width * 0.18,
-        paddingHorizontal: 6,
-        marginTop: 25
-    },
-    bottomMiss: {
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'center',
     },
     note: {
         flexDirection: 'row',
@@ -351,7 +227,7 @@ const styles = StyleSheet.create({
     },
     AweBtn: {
         alignSelf: 'center',
-        marginTop: 20,
+        marginTop: "10%",
         marginBottom: 16,
     },
     txtAssignment: {

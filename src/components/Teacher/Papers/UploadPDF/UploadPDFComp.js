@@ -1,18 +1,17 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import RippleButton from '../../../common-new/RippleButton';
 import React, { Component } from 'react';
-
-
-
+import shadowStyle from '../../../../themes/shadowStyle';
 export default function UploadPDFComp(props) {
     const { fileName } = props;
+    const { shadowBtn } = shadowStyle;
     return (
         <View style={[styles.wrap, props.marginTop && { marginTop: props.marginTop }]}>
             <Text style={styles.titleText}>{props.title}</Text>
             <RippleButton style={styles.areaFileName} onPress={() => { props.buttons.callback1(props.buttons.typePDF) }}>
                 <Text style={styles.fileName} ellipsizeMode="tail" maxLength={100} numberOfLines={1}>{fileName || '...'}</Text>
             </RippleButton>
-            <View style={styles.wrapButton}>
+            <View style={[styles.wrapButton, { ...shadowBtn }]}>
                 <RippleButton style={styles.button1} onPress={() => { props.buttons.callback1(props.buttons.typePDF) }}>
                     <Image source={fileName ? props.buttons.icon1_2 : props.buttons.icon1} style={{ tintColor: props.buttons.titleColor }} />
                     <Text style={[styles.textButton, { color: props.buttons.titleColor }]}>{fileName ? props.buttons.titleButton1_2 : props.buttons.titleButton1}</Text>
@@ -70,42 +69,24 @@ const styles = StyleSheet.create({
         width: 100,
         height: 30,
         borderRadius: 15,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor: '#828282',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingHorizontal: 15,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
     },
     button1: {
         width: 100,
         height: 30,
         borderRadius: 15,
-        borderWidth: 1,
-        borderColor: '#FF6213',
+        borderWidth: 0.5,
+        borderColor: '#2D9CDB',
         marginRight: 24,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingHorizontal: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
+        paddingHorizontal: 10
     },
 
 })
