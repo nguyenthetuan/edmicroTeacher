@@ -1,17 +1,16 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import RippleButton from '../../../common-new/RippleButton';
 import React, { Component } from 'react';
-import shadowStyle from '../../../../themes/shadowStyle';
+
 export default function UploadPDFComp(props) {
     const { fileName } = props;
-    const { shadowBtn } = shadowStyle;
     return (
         <View style={[styles.wrap, props.marginTop && { marginTop: props.marginTop }]}>
             <Text style={styles.titleText}>{props.title}</Text>
             <RippleButton style={styles.areaFileName} onPress={() => { props.buttons.callback1(props.buttons.typePDF) }}>
                 <Text style={styles.fileName} ellipsizeMode="tail" maxLength={100} numberOfLines={1}>{fileName || '...'}</Text>
             </RippleButton>
-            <View style={[styles.wrapButton, { ...shadowBtn }]}>
+            <View style={[styles.wrapButton]}>
                 <RippleButton style={styles.button1} onPress={() => { props.buttons.callback1(props.buttons.typePDF) }}>
                     <Image source={fileName ? props.buttons.icon1_2 : props.buttons.icon1} style={{ tintColor: props.buttons.titleColor }} />
                     <Text style={[styles.textButton, { color: props.buttons.titleColor }]}>{fileName ? props.buttons.titleButton1_2 : props.buttons.titleButton1}</Text>
