@@ -7,23 +7,19 @@ import {
     ScrollView,
     Dimensions,
     FlatList,
-    TouchableOpacity,
     SafeAreaView,
-    StatusBar,
     Platform,
+    TouchableWithoutFeedback
 } from 'react-native';
-import Header from '../Header';
 import dataHelper from '../../../utils/dataHelper';
 import apiPapers from '../../../services/apiPapersTeacher';
 import { connect } from 'react-redux';
 import AppIcon from '../../../utils/AppIcon';
 import ModalFillter from '../../Teacher/Evaluate/ModalFillter';
 import { DATA_YEAR, COL_STATISTATIC_WIDTH } from '../../../constants/const';
-import { convertSeconds } from '../../../utils/Utils';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { RFFonsize } from '../../../utils/Fonts';
 import _ from 'lodash';
-import HeaderMain from '../../common-new/HeaderMain';
 import FastImage from 'react-native-fast-image';
 import ItemName, { HeaderName } from '../../Teacher/Evaluate/ItemName';
 import RenderItem, { HeaderItem } from '../../Teacher/Evaluate/ItemStatistatic';
@@ -195,21 +191,23 @@ class EvaluateDraScreen extends Component {
                     contentContainerStyle={{ paddingTop: 5 }}
                     showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>
-                        <TouchableOpacity
-                            style={styles.btnStatistics}
+                        <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                             onPress={this.goToStatisticsPoints}>
-                            <Image
-                                source={require('../../../asserts/icon/ic_analytics.png')}
-                            />
-                            <Text style={styles.txtStatistics}>Thống kê điểm</Text>
-                        </TouchableOpacity>
+                            <View style={styles.btnStatistics}>
+                                <Image
+                                    source={require('../../../asserts/icon/ic_analytics.png')}
+                                />
+                                <Text style={styles.txtStatistics}>Thống kê điểm</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
 
-                        <TouchableOpacity
-                            style={[styles.btnStatistics, { marginTop: 10 }]}
+                        <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                             onPress={this._handleClickFillter}>
-                            <Image source={AppIcon.icons_filter} />
-                            <Text style={styles.txtStatistics}>Tuỳ chọn</Text>
-                        </TouchableOpacity>
+                            <View style={[styles.btnStatistics, { marginTop: 10 }]}>
+                                <Image source={AppIcon.icons_filter} />
+                                <Text style={styles.txtStatistics}>Tuỳ chọn</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                         <FastImage
                             source={require('../../../asserts/images/banner_evaluate.png')}
                             resizeMode={FastImage.resizeMode.contain}

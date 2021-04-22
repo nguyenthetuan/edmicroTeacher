@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ScrollView,
   TextInput,
@@ -11,13 +10,12 @@ import {
   ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  statisticClassAction,
-  statisticMissionAction,
-  statisticAssignmentAction
+  statisticMissionAction
 } from '../../../actions/statisticAction';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
@@ -302,13 +300,16 @@ class StepThree extends Component {
 
             <View>
               <Text style={styles.styTxtLabel}>Mô tả</Text>
-              <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
-                <HTML
-                  html={htmlContent}
-                  imagesMaxWidth={Dimensions.get('window').width}
-                />
-                {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
-              </TouchableOpacity>
+              <TouchableWithoutFeedback
+                onPress={this.onOpenEditor}>
+                <View style={styles.styWrapDes}>
+                  <HTML
+                    html={htmlContent}
+                    imagesMaxWidth={Dimensions.get('window').width}
+                  />
+                  {!htmlContent ? <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> : null}
+                </View>
+              </TouchableWithoutFeedback>
             </View>
 
             {this.renderPractice()}
@@ -316,20 +317,22 @@ class StepThree extends Component {
           </ScrollView>
         </KeyboardAvoidingView>
         <View style={styles.styWrapBtn}>
-          <TouchableOpacity
-            style={styles.styBtnBack}
+          <TouchableWithoutFeedback
             onPress={this.handleNextStepTwo}>
-            <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
-          </TouchableOpacity>
-          <TouchableOpacity
+            <View style={styles.styBtnBack}>
+              <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
             disabled={!isVisiable}
-            style={[styles.styBtnNext, !isVisiable && { backgroundColor: 'rgba(0,0,0,0.5)' }]}
             onPress={this.handleNextStepFour}
           >
-            <Text style={styles.styTxtBtnNext}>
-              Bước tiếp theo
+            <View style={[styles.styBtnNext, !isVisiable && { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
+              <Text style={styles.styTxtBtnNext}>
+                Bước tiếp theo
             </Text>
-          </TouchableOpacity>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
 
         <ModalEditor
@@ -349,7 +352,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      fetchMissionAction: payload => dispatch(statisticMissionAction(payload)),
+    fetchMissionAction: payload => dispatch(statisticMissionAction(payload)),
 
   };
 };
@@ -399,8 +402,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
-    marginTop: 16,
-    marginBottom: 14
   },
   styWrapBtn: {
     flexDirection: 'row',
@@ -411,8 +412,9 @@ const styles = StyleSheet.create({
   styBtnBack: {
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
-    // marginBottom: 10,
-    width: 50, height: 50,
+    justifyContent: "center",
+    width: 50,
+    height: 50,
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Bold',

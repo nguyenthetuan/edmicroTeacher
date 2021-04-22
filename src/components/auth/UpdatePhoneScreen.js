@@ -9,8 +9,8 @@ import {
   StatusBar,
   Dimensions,
   Platform,
-  TouchableOpacity,
-  BackHandler
+  BackHandler,
+  TouchableWithoutFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
@@ -489,7 +489,7 @@ export default class UpdatePhoneScreen extends Component {
                                     fontSize: RFFonsize(13),
                                     color: '#757575'
                                   }}>Tôi không nhận được mã</Text>
-                                  <TouchableOpacity
+                                  <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                                     onPress={this.resendOTP}>
                                     <Text style={{
                                       marginStart: 17,
@@ -497,7 +497,7 @@ export default class UpdatePhoneScreen extends Component {
                                       fontSize: RFFonsize(14),
                                       color: '#2D9CDB'
                                     }}>Gửi lại OTP</Text>
-                                  </TouchableOpacity>
+                                  </TouchableWithoutFeedback >
                                 </View>
                                 <RippleButton
                                   size={180}
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(16),
-     color: '#000000',
+    color: '#000000',
     fontWeight: 'bold'
   },
   btnBack: {

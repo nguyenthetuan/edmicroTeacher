@@ -12,6 +12,7 @@ import dataHelper from '../../utils/dataHelper';
 import Api from '../../services/apiMission';
 import { RFFonsize } from '../../utils/Fonts';
 import shadowStyle from '../../themes/shadowStyle';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('window');
 
 export default class HeaderMissionNew extends React.Component {
@@ -64,19 +65,20 @@ export default class HeaderMissionNew extends React.Component {
 
                 {isAccessMission
                     &&
-                    <TouchableOpacity
-                        style={[styles.addMission, { ...shadowBtn }]}
+                    <TouchableWithoutFeedback  hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                         onPress={this.goToSetupMission}>
-                        {/* <Image
+                        <View style={[styles.addMission, { ...shadowBtn }]}>
+                            {/* <Image
                             source={require('../../asserts/icon/icon_missionPlus.png')}
                             style={{ width: 25, height: 25 }}
                         /> */}
-                        <Text style={styles.txtAdd}>Thêm nhiệm vụ</Text>
-                        <Image
-                            source={require('../../asserts/icon/icon_plusBox.png')}
-                            style={styles.iconFlus}
-                        />
-                    </TouchableOpacity>
+                            <Text style={styles.txtAdd}>Thêm nhiệm vụ</Text>
+                            <Image
+                                source={require('../../asserts/icon/icon_plusBox.png')}
+                                style={styles.iconFlus}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 }
             </View>
         );

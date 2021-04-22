@@ -159,14 +159,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     borderWidth: 1,
     borderColor: "#E6EBF1",
-    shadowColor: "#c4c4c4",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 2,
     backgroundColor: '#fff',
     marginTop: 5
   },
@@ -198,14 +190,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E6EBF1",
     width: width * 0.4,
-    shadowColor: "#c4c4c4",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 2,
     backgroundColor: '#fff',
     marginTop: 5
   },
