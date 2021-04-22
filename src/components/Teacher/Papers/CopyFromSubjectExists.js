@@ -248,12 +248,15 @@ export default class CopyFromSubjectExists extends Component {
                                         value={this.state.textPreviosSearch}
                                         onChangeText={this.onChangePreviosSearchText}
                                     />
-                                    <TouchableOpacity style={{ width: 20, height: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.onPressSearch() }}>
-                                        <IconAntDesign
-                                            name={'search1'}
-                                            style={styles.iconSearch}
-                                        />
-                                    </TouchableOpacity>
+                                    <TouchableWithoutFeedback
+                                        onPress={() => { this.onPressSearch() }}>
+                                        <View style={styles.searchIcon}>
+                                            <IconAntDesign
+                                                name={'search1'}
+                                                style={styles.iconSearch}
+                                            />
+                                        </View>
+                                    </TouchableWithoutFeedback>
                                 </View>
                                 <View style={styles.wrap2Dropdown}>
                                     <Dropdown
@@ -399,7 +402,9 @@ const styles = StyleSheet.create({
     },
     viewStatus: {
         width: '100%',
-        height: height - 230
+        height: height - 230,
+        paddingBottom: "10%",
+        backgroundColor: '#fff'
     },
     paperParacV3: {
         marginLeft: -60,
@@ -444,9 +449,17 @@ const styles = StyleSheet.create({
     },
     textLoadMore: {
         fontFamily: 'Nunito',
-        fontSize: 16,
-        fontWeight: '800',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        fontWeight: '500',
         color: '#55CCF2',
-        lineHeight: 20
+        textAlign:'center'
+    },
+    searchIcon: {
+        width: 20,
+        height: 20,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

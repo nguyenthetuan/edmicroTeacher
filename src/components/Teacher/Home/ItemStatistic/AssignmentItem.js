@@ -72,7 +72,7 @@ class AssignmentItem extends Component {
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê bài tập trong tuần</Text>
                     <Text numberOfLines={1}
-                        style={styles.status}>Số nhiệm vụ thầy cô giao</Text>
+                        style={styles.status}>Số bài tập thầy cô giao</Text>
                     <View>
                         <View style={styles.shaodowPie}>
                             <PieChart

@@ -342,13 +342,13 @@ class ConfigQuestion extends Component {
               <Text style={styles.txtItem}>{item.name}</Text>
             </RippleButton>
           ) : (
-            <RippleButton
-              key={`d${index}`}
-              style={styles.buttomActive}
-              onPress={() => this.activeSubject(item)}>
-              <Text style={styles.txtItemActive}>{item.name}</Text>
-            </RippleButton>
-          );
+              <RippleButton
+                key={`d${index}`}
+                style={styles.buttomActive}
+                onPress={() => this.activeSubject(item)}>
+                <Text style={styles.txtItemActive}>{item.name}</Text>
+              </RippleButton>
+            );
         }}
         removeClippedSubviews={false}
         horizontal
@@ -697,7 +697,8 @@ class ConfigQuestion extends Component {
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginTop: width < 380 ? 0.01 * width : 0.042 * width,
+                      // marginTop: width < 380 ? 0.01 * width : 0.042 * width,
+                      marginTop: 16,
                       alignItems: 'center',
                       justifyContent: 'space-between',
                     }}>
@@ -719,7 +720,7 @@ class ConfigQuestion extends Component {
 
                     {assignmentType !== 0 && (
                       <View>
-                        <Text style={styles.txtTitleGrade}>Thời gian(Phút)</Text>
+                        <Text style={[styles.txtTitleGrade, { paddingTop: 3 }]}>Thời gian(Phút)</Text>
                         <TextInput
                           style={styles.pickTime}
                           onChangeText={text => {
@@ -1122,21 +1123,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                      <WebView
-                        ref={ref => (this.webview = ref)}
-                        source={{
-                          html: html.renderMatarialDetail(htmlContent, urlMedia),
-                          baseUrl,
-                        }}
-                        subjectId={'TOAN'}
-                        originWhitelist={['file://']}
-                        scalesPageToFit={false}
-                        javaScriptEnabled
-                        showsVerticalScrollIndicator={false}
-                        startInLoadingState={false}
-                        style={{ backgroundColor: '#fff' }}
-                      />
-                    )}
+                        <WebView
+                          ref={ref => (this.webview = ref)}
+                          source={{
+                            html: html.renderMatarialDetail(htmlContent, urlMedia),
+                            baseUrl,
+                          }}
+                          subjectId={'TOAN'}
+                          originWhitelist={['file://']}
+                          scalesPageToFit={false}
+                          javaScriptEnabled
+                          showsVerticalScrollIndicator={false}
+                          startInLoadingState={false}
+                          style={{ backgroundColor: '#fff' }}
+                        />
+                      )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -1231,6 +1232,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 4,
     textAlign: 'center',
+    marginTop: 6
   },
   txtFooterheder: {
     color: '#828282',
