@@ -852,7 +852,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 0,
         borderColor: '#c4c4c4',
-        borderWidth: 1,
+        borderWidth: 0.5,
         paddingRight: 10
     },
     wrapAreaUploadPDF: {
@@ -895,7 +895,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         minWidth: width - 50,
         borderRadius: 5,
-        backgroundColor: '#f0f0f0'
+        backgroundColor: '#f0f0f0',
+        fontFamily: 'Nunito'
     },
     styleTitle: {
         fontFamily: 'Nunito',

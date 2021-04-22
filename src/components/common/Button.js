@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import RippleButton from '../libs/RippleButton';
 import themes from '../../themes/themeStyle';
 import shadowStyle from '../../themes/shadowStyle';

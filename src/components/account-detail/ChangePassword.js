@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Platform, View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Keyboard, SafeAreaView, Dimensions } from 'react-native';
+import {
+  Platform,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Keyboard,
+  SafeAreaView,
+  Dimensions
+} from 'react-native';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { Formik } from 'formik';
 import dataHelper from '../../utils/dataHelper';

@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Modal, Linking, Platform, Alert } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  Modal,
+  Linking,
+  Platform,
+  Alert,
+  TouchableWithoutFeedback
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIon from 'react-native-vector-icons/Ionicons';
 import Color from '../../constants/colors';
@@ -9,7 +19,6 @@ import {
   numberPhone
 } from '../../constants/appConst';
 import { RFFonsize } from '../../utils/Fonts';
-
 const { width, height } = Dimensions.get('window');
 
 export default class SettingContact extends Component {
@@ -46,17 +55,23 @@ export default class SettingContact extends Component {
         <View style={s.container}>
           <View style={s.modalContent}>
             <View style={s.viewHeader} />
-            <TouchableOpacity style={s.btnClose} onPress={this.handleClick} ><IconIon name={'md-close-circle'} size={20} color={'#fff'} /></TouchableOpacity>
+            <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+              onPress={this.handleClick}>
+              <View style={s.btnClose}>
+                <IconIon name={'md-close-circle'} size={20} color={'#fff'} />
+              </View>
+            </TouchableWithoutFeedback>
             <Text style={s.txtLienhe}>LIÊN HỆ</Text>
             <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>{descriptionContactForm}</Text>
             <Text style={s.text}>{descriptionContactForm1}</Text>
-            <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center' }}
+            <TouchableWithoutFeedback
               onPress={this.handleClickPhoneNumber('0969602660')}
             >
-              <Icon name={'phone'} size={15} color={'#03B3F2'} />
-              <Text style={{ color: '#03B3F2', fontSize: 18, marginLeft: 5, textDecorationLine: 'underline' }}>{numberPhone}</Text>
-            </TouchableOpacity>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name={'phone'} size={15} color={'#03B3F2'} />
+                <Text style={{ color: '#03B3F2', fontSize: 18, marginLeft: 5, textDecorationLine: 'underline' }}>{numberPhone}</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <View style={s.viewOpacity} />
