@@ -347,7 +347,7 @@ class ConfigQuestion extends Component {
             });
             formData.append('question', JSON.stringify(this.filterQuestions(data.questions)));
             try {
-                const { token } = await dataHelper.getToken();
+                const { token, enumType } = await dataHelper.getToken();
                 const response = await apiPapers.createQuestion({ token, formData });
                 if (response.status === 0) {
                     this.refs.toast.show('Tạo bộ đề thành công!');
@@ -359,7 +359,6 @@ class ConfigQuestion extends Component {
                     this.closePopupCreate();
                     this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
-                    const { token, enumType } = await dataHelper.getToken();
                     const schoolYear = new Date().getFullYear();
                     this.props.fetchAssignmentAction({ token, enumType, schoolYear });
 
@@ -582,12 +581,20 @@ class ConfigQuestion extends Component {
         });
     };
 
-    onValueChangeDuration = (val) => {
-        if (!val || isNaN(val)) {
-            this.setState({ duration: ('') })
-        } else {
-            this.setState({ duration: parseInt(val) })
+    // onValueChangeDuration = (val) => {
+    //     if (!val || isNaN(val)) {
+    //         this.setState({ duration: ('') })
+    //     } else {
+    //         this.setState({ duration: parseInt(val) })
+    //     }
+    // }
+
+
+    onValueTimeChange = (num) => {
+        if (num[num.length - 1] == ',') {
+            num = `${num.substring(0, num.length - 1)}.`
         }
+        this.setState({ duration: num || '' });
     }
 
     render() {
@@ -782,8 +789,8 @@ class ConfigQuestion extends Component {
                             {!!this.state.assignmentType && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', top: 10, paddingHorizontal: 20 }}>
                                 <Text style={[{ marginLeft: 4, marginRight: 4, top: 4 }, styles.textInPopupCreate]}>Thời gian:</Text>
                                 <TextInput
-                                    style={{ width: '20%', height: 30, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, marginTop: 10, backgroundColor: '#fff', color: '#2D9CDB', paddingVertical: 0 }}
-                                    onChangeText={(value) => { this.onValueChangeDuration(value) }}
+                                    style={styles.minute}
+                                    onChangeText={(value) => { this.onValueTimeChange(value) }}
                                     keyboardType={'numeric'}
                                     value={this.state.duration.toString()}
                                     ref={(ref) => { this.textInput2 = ref }}
@@ -1127,6 +1134,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 25
+    },
+    minute: {
+        width: '20%',
+        height: 30,
+        borderWidth: 1,
+        paddingHorizontal: 5,
+        borderRadius: 5,
+        marginTop: 10,
+        backgroundColor: '#fff',
+        color: '#2D9CDB',
+        paddingVertical: 0
     }
 })
 
