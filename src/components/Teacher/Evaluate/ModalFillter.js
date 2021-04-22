@@ -24,12 +24,8 @@ export default class ModalFillter extends Component {
 
   changeStateModale = () => {
     const { isShowModal } = this.state;
-    if (!isShowModal) {
-      StatusBar.setBarStyle('light-content');
-    } else {
-      StatusBar.setBarStyle('dark-content');
-    }
-    this.setState({ isShowModal: !isShowModal });
+    this.modalizeRef.onOpen();
+    // this.setState({ isShowModal: !isShowModal });
   }
 
   _selectYear = (index, item) => {
@@ -57,14 +53,17 @@ export default class ModalFillter extends Component {
     const { isShowModal } = this.state;
     return (
       <Modal
+        ref={ref => this.modalizeRef = ref}
         visible={isShowModal}
+        modalHeight={height - height / 8}
+        // title={'Tuỳ chọn'}
         closeModal={this.changeStateModale}
       >
         <View style={styles.contain}>
           <HeaderNavigation
             title={'Tuỳ chọn'}
-            onRightAction={this.changeStateModale}
-            actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
+            // onRightAction={this.changeStateModale}
+            // actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
             isShow={false}
           />
           <Text style={styles.placeText}>Năm học</Text>

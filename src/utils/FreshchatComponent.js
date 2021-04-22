@@ -174,12 +174,12 @@ export default class FreshchatComponent extends Component {
 
   render() {
     const { count } = this.state;
-    const { style } = this.props;
+    const { style,navigation } = this.props;
     return (
       <TouchableOpacity
         style={[styles.wrapIntercom, style]}
         onPress={this.registerUnidentifiedUser}>
-        <Image source={AppIcon.icon_freshchat} resizeMode={'contain'} />
+        <Image source={AppIcon.icon_freshchat} resizeMode={'contain'}  />
         {count > 0 && (
           <View style={styles.wrapTxtIntercom}>
             <Text style={styles.txtIntercom}>{count}</Text>
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 10,
     bottom: isIphoneX() ? 100 : 65,
-    right: 5,
+    right: 10,
     alignItems: 'center',
   },
   txtIntercom: {

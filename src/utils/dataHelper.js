@@ -35,6 +35,26 @@ const saveUserName = async (token) => {
     return e;
   }
 };
+
+
+export const saveFCMToken = async (token) => {
+  try {
+    await AsyncStorage.setItem('@FCMToken', token);
+    return 'THANH_CONG';
+  } catch (e) {
+    return e;
+  }
+};
+
+export const getFCMToken = async () => {
+  try {
+    let fcmToken = await AsyncStorage.getItem('@FCMToken');
+    return fcmToken;
+  } catch (e) {
+    return "";
+  }
+};
+
 const removeItem = async (item) => {
   try {
     await AsyncStorage.setItem('RememberMe_Onluyen', item);

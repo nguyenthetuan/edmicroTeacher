@@ -4,7 +4,8 @@ import {
     Text,
     SafeAreaView,
     Animated,
-    AppState
+    AppState,
+    ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
@@ -91,6 +92,7 @@ class HomeScreen extends Component {
                     return { token: res.access_token }
                 }
             } else if (isRefresh(exp, curTime, iat)) {
+                console.log("isRefresh");
                 userPost = await dataHelper.getUserPost();
                 userObj = JSON.parse(userPost);
                 res = await apiUserHelper.refreshToken({ token: value });
@@ -137,7 +139,7 @@ class HomeScreen extends Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { user, isLoading } = this.props;
         const { data } = this.state;
         return (
             <View style={HomeStyle.container}>
@@ -148,10 +150,15 @@ class HomeScreen extends Component {
                 />
                 <WellcomeTxt />
                 <View style={HomeStyle.body}>
-                    <StatisticHome
-                        data={data}
-                        navigation={this.props.navigation}
-                    />
+                    {
+                        isLoading ?
+                            <ActivityIndicator size="small" style={{ flex: 1 }} />
+                            :
+                            <StatisticHome
+                                data={data}
+                                navigation={this.props.navigation}
+                            />
+                    }
                 </View>
             </View>
         )

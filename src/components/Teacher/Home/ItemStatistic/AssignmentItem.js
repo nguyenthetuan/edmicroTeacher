@@ -10,10 +10,18 @@ import dataHelper from '../../../../utils/dataHelper';
 import { RFFonsize } from '../../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 import ProgressBar from '../../../libs/ProgressBar';
-
+import AwesomeButton from 'react-native-really-awesome-button';
+import shadowStyle from '../../../../themes/shadowStyle';
 import { PieChart } from 'react-native-svg-charts';
-
+import {
+    statisticClassAction,
+    statisticMissionAction,
+    statisticAssignmentAction
+} from '../../../../actions/statisticAction';
 class AssignmentItem extends Component {
+    constructor(props) {
+        super(props);
+    }
 
     getProgess = (assignment) => {
         const { totalAssign = 0, totalAssignment = 0 } = assignment;
@@ -28,7 +36,13 @@ class AssignmentItem extends Component {
         }
         return progress;
     }
+
+    onAssignment = () => {
+        this.props.navigation.navigate('HomeWorkDraScreen', { statusbar: 'dark-content' });
+    }
+
     render() {
+        const { shadowBtn } = shadowStyle;
         const { assignment } = this.props;
         let data = [
             {
@@ -51,46 +65,30 @@ class AssignmentItem extends Component {
             });
         }
         return (
-            <View style={[styles.shadow, { marginBottom: 10 }]}>
+            <View style={[styles.shadow, {
+                marginBottom: 10, backgroundColor: '#fff',
+                borderRadius: 8
+            }]}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê bài tập trong tuần</Text>
                     <Text numberOfLines={1}
                         style={styles.status}>Số nhiệm vụ thầy cô giao</Text>
-                    {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                        <View style={styles.flexLeft2}>
-                            <Text numberOfLines={1}
-                                style={styles.sumBig}>{assignment?.totalAssignment}</Text>
-                            <Text style={styles.sum}>Tổng</Text>
+                    <View>
+                        <View style={styles.shaodowPie}>
+                            <PieChart
+                                style={{ height: height * 0.2 }}
+                                valueAccessor={({ item }) => item.amount}
+                                data={data}
+                                spacing={10}
+                                outerRadius={'80%'}
+                                innerRadius={'45%'}
+                                labelRadius={10}
+                            />
                         </View>
-                    </View>
-                    <View style={styles.flexStatitics}>
-                        <View style={styles.bottomMiss}>
-                            <View style={styles.boxSmall}>
-                                <Text numberOfLines={1}
-                                    style={styles.numberBig}>{assignment?.totalAssign}</Text>
-                            </View>
-                            <Text numberOfLines={2} style={styles.missionAssed}>Bài tập đã giao</Text>
-                        </View>
-                        <View style={styles.bottomMiss}>
-                            <View style={[styles.boxSmall, { backgroundColor: '#FF5747' }]}>
-                                <Text numberOfLines={1}
-                                    style={styles.numberBig}>{assignment?.totalAssignmentNotAssign}</Text>
-                            </View>
-                            <Text numberOfLines={2} style={styles.missionAssed}>Bài tập chưa giao</Text>
-                        </View>
-                    </View> */}
-                    <View style={styles.shaodowPie}>
-                        <PieChart
-                            style={{ height: height * 0.2 }}
-                            valueAccessor={({ item }) => item.amount}
-                            data={data}
-                            spacing={10}
-                            outerRadius={'80%'}
-                            innerRadius={'45%'}
-                            labelRadius={10}
-                        />
                         <View style={styles.Total}>
-                            <Text style={styles.TotalColor}>{assignment?.totalAssignment}</Text>
+                            <Text style={[styles.TotalColor, {
+                                color: assignment?.totalAssignment == 0 ? '#c4c4c4' : '#ff6213'
+                            }]}>{assignment?.totalAssignment}</Text>
                         </View>
                     </View>
 
@@ -108,23 +106,18 @@ class AssignmentItem extends Component {
                         </View>
                         <Text style={styles.countNumber}>{assignment?.totalAssign}</Text>
                     </View>
-
-                    <Text style={[styles.status, { color: '#828282', marginTop: 20, textAlign: 'left', marginLeft: 27 }]}>Hoàn thành</Text>
-                    <View style={styles.progressBar}>
-                        <ProgressBar
-                            progress={this.getProgess(assignment)}
-                            color="#56BB73"
-                            widthProps={width - 200}
-                            progressUnfilledColor="#BDBDBD"
-                            style={{ height: 5, borderRadius: 10 }}
-                        />
-                        <Text style={styles.rateSub}>
-                            {assignment?.totalAssign ?
-                                Math.ceil((assignment?.totalAssign / assignment?.totalAssignment) * 100)
-                                : 0
-                            }%
-                     </Text>
-                    </View>
+                    <AwesomeButton
+                        onPress={this.onAssignment.bind(this)}
+                        style={[styles.AweBtn]}
+                        height={35}
+                        backgroundColor={'#2D9CDB'}
+                        borderRadius={25}
+                        backgroundActive={'#2D9DFE'}
+                        backgroundShadow={'transparent'}
+                        backgroundDarker={'transparent'}
+                    >
+                        <Text style={styles.txtAssignment}> Xem chi tiết</Text>
+                    </AwesomeButton>
                 </View>
             </View>
         )
@@ -141,6 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload))
     };
 };
 
@@ -149,7 +143,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AssignmentItem);
 
 const styles = StyleSheet.create({
     bodyTask: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#fff',
         marginTop: 8,
         borderRadius: 10
     },
@@ -165,39 +159,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
         lineHeight: RFFonsize(18),
-        marginTop: 12,
+        marginTop: 19,
         alignSelf: 'center',
-    },
-    flexStatitics: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
-        marginLeft: 16,
-    },
-    flexLeft2: {
-        backgroundColor: '#BB6BD9',
-        borderRadius: 10,
-        marginTop: 20,
-        alignSelf: 'center',
-        flexDirection: 'column',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-        elevation: 3,
-    },
-    sumBig: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(36),
-        lineHeight: RFFonsize(49),
-        textAlign: 'center',
-        alignSelf: 'center',
-        marginHorizontal: 23,
-        marginTop: 16,
-        color: '#fff',
     },
     progressBar: {
         marginTop: 5,
@@ -207,62 +170,16 @@ const styles = StyleSheet.create({
         marginLeft: 27,
         marginBottom: 15
     },
-    rateSub: {
-        fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
-        color: '#56BB73',
-        fontFamily: 'Nunito-Bold',
-        position: 'absolute',
-        right: 20,
-        textAlign: 'center',
-    },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: 1,
         },
         shadowOpacity: 0.30,
         shadowRadius: 6,
-        elevation: 5,
+        elevation: 3,
         flex: 1
-    },
-    sum: {
-        alignSelf: 'flex-end',
-        right: 5,
-        bottom: 5,
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(19),
-        textAlign: 'center',
-        color: '#fff',
-    },
-    numberBig: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(18),
-        lineHeight: RFFonsize(25),
-        alignSelf: 'center',
-        textAlign: 'center',
-        color: '#fff',
-        marginHorizontal: 9,
-        marginVertical: 7.5
-    },
-    bottomMiss: {
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'center',
-    },
-    boxSmall: {
-        backgroundColor: '#1BC763',
-        borderRadius: 10,
-        padding: 7,
-    },
-    missionAssed: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(10),
-        lineHeight: RFFonsize(14),
-        width: width * 0.18,
-        paddingHorizontal: 6,
-        marginTop: 25
     },
     Total: {
         position: 'absolute',
@@ -312,5 +229,18 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 3,
-    }
+    },
+    AweBtn: {
+        alignSelf: 'center',
+        marginTop: "10%",
+        marginBottom: 16,
+    },
+    txtAssignment: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
+        color: '#fff',
+        marginLeft: 20,
+        marginRight: 20
+    },
 })

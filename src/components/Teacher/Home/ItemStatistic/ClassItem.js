@@ -61,12 +61,22 @@ class ClassItem extends Component {
         };
     }
     _renderItem = ({ item, index }) => {
+        const str = item.gradeId;
+        const res = str.substring(1, 4);
         return (
             <View style={styles.shadowFlat}>
                 <View style={{
                     flexDirection: 'column',
                     backgroundColor: this.state.bgBox[index % this.state.bgBox.length],
-                    borderRadius: 10
+                    borderRadius: 10,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3,
+                    elevation: 3,
                 }}>
                     <Text numberOfLines={2}
                         style={styles.number}>
@@ -83,18 +93,21 @@ class ClassItem extends Component {
                         </Text>
                     </View>
                 </View>
+                <Text style={[styles.color, { color: this.state.bgBox[index % this.state.bgBox.length] }]}> Lớp {res}</Text>
             </View>
-
         )
     }
     render() {
         const { listClass, classArray } = this.props;
         return (
-            <View style={styles.shadow}>
+            <View style={[styles.shadow, {
+                backgroundColor: '#fff',
+                borderRadius: 8
+            }]}>
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê số lượng các lớp</Text>
                     <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lí</Text>
-                    <View style={{ alignSelf: 'center', height: height * 0.25 }}>
+                    <View style={{ alignSelf: 'center', height: height * 0.3, marginTop: 10 }}>
                         <FlatList
                             data={[...classArray]}
                             extraData={classArray}
@@ -134,7 +147,6 @@ class ClassItem extends Component {
 }
 
 
-
 const mapStateToProps = state => {
     return {
         listClass: state.statistic.listClass,
@@ -145,6 +157,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchClassAction: payload => dispatch(statisticClassAction(payload))
     };
 };
 
@@ -152,7 +165,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ClassItem);
 
 const styles = StyleSheet.create({
     bodyTask: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#fff',
         marginTop: 8,
         borderRadius: 10,
     },
@@ -179,11 +192,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#000'
     },
-    flexStatitics: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
     heroIcon: {
         alignSelf: 'center',
         width: 14,
@@ -199,18 +207,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         color: '#fff'
-    },
-    sumBig: {
-        fontFamily: 'Nunito-Bold',
-        fontSize: RFFonsize(28),
-        lineHeight: RFFonsize(38),
-        textAlign: 'center',
-        alignSelf: 'center',
-        marginTop: 19.5,
-        marginBottom: 19.5,
-        marginLeft: 25,
-        marginRight: 25,
-        color: '#fff',
     },
     countGroup: {
         fontFamily: 'Nunito-Bold',
@@ -251,29 +247,17 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: 1,
         },
         shadowOpacity: 0.30,
         shadowRadius: 6,
-        elevation: 5,
+        elevation: 3,
         flex: 1
     },
-    sum: {
-        alignSelf: 'flex-end',
-        marginLeft: 3
-    },
     shadowFlat: {
-        marginTop: 20,
+        marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-        elevation: 3,
     },
     direction: {
         flexDirection: 'row',
@@ -282,6 +266,13 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginBottom: 5,
     },
+    color: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        textAlign: 'center',
+        marginTop: 4
+    }
 
 
 })

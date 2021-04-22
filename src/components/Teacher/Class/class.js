@@ -38,10 +38,17 @@ class Class extends Component {
     const { token } = await dataHelper.getToken();
     this.props.userGiftAction({ token });
     const response = await Api.getListClass({ token });
-    this.setState({
-      isLoading: false,
-      data: response && response,
-    });
+    if (response) {
+      this.setState({
+        isLoading: false,
+        data: response && response,
+      });
+    } else {
+      this.setState({
+        isLoading: false,
+        data: [],
+      });
+    }
   }
 
   _getData = async () => {

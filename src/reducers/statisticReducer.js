@@ -21,7 +21,14 @@ export default function statisticReducer(state = initState, action) {
                 ...state,
                 isLoading: false,
                 listClass: listClass,
-                classArray: listClass.data
+                classArray: listClass.data ? listClass.data : []
+            }
+        case Types.STATISTIC_CLASS_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                listClass: [],
+                classArray: []
             }
         case Types.STATISTIC_MISSION_ACTION:
             return {
@@ -34,6 +41,12 @@ export default function statisticReducer(state = initState, action) {
                 isLoading: false,
                 mission: action.data.data
             }
+        case Types.STATISTIC_MISSION_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                mission: []
+            }
         case Types.STATISTIC_ASSIGNMENT_ACTION:
             return {
                 ...state,
@@ -44,6 +57,12 @@ export default function statisticReducer(state = initState, action) {
                 ...state,
                 isLoading: false,
                 assignment: action.data.data
+            }
+        case Types.STATISTIC_ASSIGNMENT_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                assignment: []
             }
         default:
             return state;

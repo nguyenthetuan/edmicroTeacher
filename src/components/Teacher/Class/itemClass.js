@@ -168,10 +168,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
     // flex: 1,
-    borderWidth: 1,
+    borderWidth: 0,
     marginTop: 20,
     borderRadius: 5,
-    overflow: 'hidden',
+    // overflow: 'hidden',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   top: {
     // flex: 1,

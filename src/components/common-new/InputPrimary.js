@@ -3,16 +3,21 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import { RFFonsize } from '../../utils/Fonts';
 
 export default function TextFormField(props) {
+    const [isFocus, setInputFocus] = React.useState(false);
     const { formStyle, error, isShowPassword, secureTextEntry = false, suffixIconAction, suffixIcon } = props;
     const inputDecoration = formStyle == 'bottom' ? styles.inputDecorationBottomBorder : styles.inputDecorationBorder;
     return (
         <View style={styles.formContainer}>
             <Text style={styles.label}>{props.label}</Text>
-            <View style={[styles.inputDecoration, inputDecoration]}>
+            <View style={[styles.inputDecoration, inputDecoration, {
+                borderColor: isFocus ? '#54CEF5' : '#c4c4c4'
+            }]}>
                 <TextInput
                     style={styles.textInput}
                     placeholderTextColor={'#BDBDBD'}
                     autoCorrect={false}
+                    onFocus={(f) => setInputFocus(f)}
+                    onEndEditing={(b) => setInputFocus(false)}
                     autoCompleteType='off'
                     autoCapitalize={"none"}
                     {...props}
@@ -48,13 +53,13 @@ const styles = StyleSheet.create({
         height: 42,
         flexDirection: 'row',
         paddingHorizontal: 10,
-        borderColor: '#54CEF5',
+        borderColor: '#c4c4c4',
         alignItems: 'center'
     },
     inputDecorationBorder: {
         marginTop: 5,
         borderWidth: 0.5,
-        borderRadius: 5, 
+        borderRadius: 5,
         flexDirection: 'row'
     },
     inputDecorationBottomBorder: {

@@ -920,7 +920,7 @@ class MarkingView extends Component {
                     borderColor: '#C4C4C4',
                     alignSelf: 'center',
                   }}>
-                  <TextInput
+                  {/* <TextInput
                     onChangeText={text => {
                       this.onChangeTextComment(text);
                     }}
@@ -929,7 +929,7 @@ class MarkingView extends Component {
                     }
                     multiline={true}
                     autoFocus={true}
-                  />
+                  /> */}
                   <RippleButton
                     style={styles.buttonSubmit}
                     rippleContainerBorderRadius={10}
@@ -942,7 +942,7 @@ class MarkingView extends Component {
                         fontFamily: 'Nunito',
                         fontSize: RFFonsize(12),
                       }}>
-                      Nhận xét
+                      Lưu
                     </Text>
                   </RippleButton>
                 </View>
@@ -1145,8 +1145,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 5,
-    bottom: 5,
-    padding: 5,
+    top: 30,
+    width: 40,
+    height: 30,
   },
   buttonOK: {
     width: 60,

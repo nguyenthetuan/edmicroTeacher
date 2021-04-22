@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { RFFonsize } from '../../../utils/Fonts';
-
+import shadowStyle from '../../../themes/shadowStyle';
 export default function ItemPactice(props) {
     const { item } = props;
+    const { shadowBtn } = shadowStyle;
     return (
         <TouchableWithoutFeedback onPress={() => {
             props.show({ _id: item.problemId });
         }}>
-            <View style={styles.contain}>
+            <View style={[styles.contain, { ...shadowBtn }]}>
                 <Text style={styles.styTxt} numberOfLines={1}>{item.problemName}</Text>
                 <View style={{}} />
                 <Text style={styles.styCount}> Yêu cầu hoàn thành: <Text style={{ color: '#6ED8FB' }}>{item.percentDone}%</Text></Text>
@@ -19,12 +20,11 @@ export default function ItemPactice(props) {
 
 const styles = StyleSheet.create({
     contain: {
-        borderWidth: 1,
+        backgroundColor: "#fff",
         marginHorizontal: 20,
         marginTop: 5,
         padding: 10,
         borderRadius: 5,
-        borderColor: '#56CCF2',
         flexDirection: 'column',
     },
     styTxt: {
