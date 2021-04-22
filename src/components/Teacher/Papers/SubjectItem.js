@@ -17,33 +17,33 @@ export default class SubjectItem extends Component {
         try {
             this.props.refFlatlist.scrollToIndex({ animated: true, index: 0 });
         } catch (error) {
-            
+
         }
         this.props.onOpen();
     }
 
     renderItem = ({ item }) => {
         const { listSubjects } = this.props;
-        console.log('listSubjects',listSubjects)
+        console.log('listSubjects', listSubjects)
         let data = listSubjects.filter(ele => ele.code == item);
         data = data && data[0];
         return (
             <View style={styles.buttomActive}>
-                <RippleButton style={styles.styIcon} onPress={() => this.props.activeSubject(item)}>
+                {/* <RippleButton style={styles.styIcon} onPress={() => this.props.activeSubject(item)}>
                     <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
-                </RippleButton>
+                </RippleButton> */}
                 <Text style={styles.txtItemActive}>{data.name}</Text>
             </View>
         )
     }
 
     render() {
-        const { subjectActive ,Icon,styleTitle} = this.props;
+        const { subjectActive, Icon, styleTitle } = this.props;
         console.log('subjectxxx', subjectActive)
         return (
             <View>
                 <View style={styles.styWrapLabel}>
-                    <Text style={[styles.txtClass,styleTitle]}>Môn học</Text>
+                    <Text style={[styles.txtClass, styleTitle]}>Môn học</Text>
                 </View>
                 <View style={styles.styWrapClass}>
                     {/* <Image
@@ -63,12 +63,12 @@ export default class SubjectItem extends Component {
                         <RippleButton
                             onPress={this.openModalSubject}
                             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            style={{height:30,justifyContent:'center'}}
+                            style={{ height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}
                         >
                             <Image
                                 source={Icon}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#2D9CDB',marginRight:10 }}
+                                style={{ tintColor: '#2D9CDB' }}
                             />
                         </RippleButton>
                     </View>

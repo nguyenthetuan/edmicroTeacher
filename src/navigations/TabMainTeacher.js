@@ -267,7 +267,7 @@ class TabBarComponent extends React.Component {
   render() {
     return (
       <View>
-        <FreshchatComponent />
+        <FreshchatComponent navigation={this.props.navigation}/>
         <BottomTabBar {...this.props} />
       </View>
     );

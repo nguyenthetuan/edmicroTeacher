@@ -58,24 +58,26 @@ export default class Item extends Component {
                         },
                         shadowOpacity: 0.20,
                         shadowRadius: 1.41,
-                        
+
                         elevation: 2,
                         borderWidth: 0
                     },
                     // { borderColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
                 ]}
                 onPress={this._handleClickDetail(payloadAssignment)}>
-                <TouchableWithoutFeedback
-                    onPress={() => this.props.onOpenModal(payloadAssignment)}>
-                    <View
-                        style={[
-                            styles.topTest,
-                            { backgroundColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
-                        ]}>
-                        <Text numberOfLines={1}
-                            style={styles.txtName}>
-                            {item.name}
-                        </Text>
+                <View
+                    style={[
+                        styles.topTest,
+                        { backgroundColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
+                    ]}>
+                    <Text numberOfLines={1}
+                        style={styles.txtName}>
+                        {item.name}
+                    </Text>
+                    <TouchableWithoutFeedback
+                        onPress={() => this.props.onOpenModal(payloadAssignment)}
+                        hitSlop={{ top: 10, left: 10, right: 10, left: 10 }}
+                    >
                         <View
                             style={{
                                 alignItems: 'center',
@@ -85,11 +87,11 @@ export default class Item extends Component {
                             }}>
                             <Text style={{
                                 transform: [{ rotate: '90deg' }],
-                                fontSize: 20, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 10
+                                fontSize: 20, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 5
                             }}>...</Text>
                         </View>
-                    </View>
-                </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+                </View>
 
                 <TouchableWithoutFeedback onPress={this._handleClickDetail(payloadAssignment)}>
                     <View style={styles.bodyTest}>

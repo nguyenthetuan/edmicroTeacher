@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 15,
     backgroundColor: '#fff',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    elevation: 3
   },
   styTxtHeader: {
     marginTop: 2,

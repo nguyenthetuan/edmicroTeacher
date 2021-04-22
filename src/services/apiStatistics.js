@@ -1,5 +1,6 @@
 import { API_BASE, getHeaders } from '../constants/setting';
 import _ from 'lodash';
+import fetch from './fetchWithTimeout';
 // const API_STATIS = 'https://api-dev.onluyen.vn/swagger/index.html?urls.primaryName=SCHOOL#/Statistic';
 
 export const statisticClass = async ({ token }) => {

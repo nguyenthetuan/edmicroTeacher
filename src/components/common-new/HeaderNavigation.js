@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, TouchableWithoutFeedback } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import { RFFonsize } from '../../utils/Fonts';
 
@@ -41,15 +41,14 @@ export default class HeaderNavigation extends React.Component {
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
                 {isShow ?
-                    <RippleButton onPress={this.onGoback}>
+                    <TouchableWithoutFeedback onPress={this.onGoback} hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}>
                         <View style={styles.button}>
-                            {/* <Icon name="arrow-left" color={color || "#383838"} size={25} /> */}
                             <Image
                                 style={{ tintColor: color }}
                                 source={require('../../asserts/icon/icon_arrowLeftv3.png')}
                             />
                         </View>
-                    </RippleButton>
+                    </TouchableWithoutFeedback>
                     :
                     <View style={styles.btnAvatar} />
                 }

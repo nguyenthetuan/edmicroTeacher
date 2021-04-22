@@ -326,14 +326,14 @@ class HeaderMainPaper extends React.Component {
               this.props.navigation.navigate('SearchScreen', { listPapers })
             }
           >
-            <View style={styles.searchGif}>
+            <View style={styles.searchGif} hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}>
               <Image
                 source={require('../../asserts/icon/icon_searchAround.png')}
                 style={{ tintColor: "#222" }}
               />
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={this._handleAddPaper}>
+          <TouchableWithoutFeedback onPress={this._handleAddPaper}  hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}>
             <View style={styles.addPaper}>
               <Image
                 source={require('../../asserts/icon/icon_addPaper.png')}

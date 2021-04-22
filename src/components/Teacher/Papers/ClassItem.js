@@ -27,20 +27,20 @@ export default class ClassItem extends Component {
         const name = item?.replace('C', 'Lớp ');
         return (
             <View style={styles.buttomActive}>
-                <RippleButton style={styles.styIcon} onPress={() => this.props.activeClass(item)}>
+                {/* <RippleButton style={styles.styIcon} onPress={() => this.props.activeClass(item)}>
                     <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
-                </RippleButton>
+                </RippleButton> */}
                 <Text style={styles.txtItemActive}>{name}</Text>
             </View>
         )
     }
 
     render() {
-        const { gradeActive, Icon ,styleTitle} = this.props;
+        const { gradeActive, Icon, styleTitle } = this.props;
         return (
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={[styles.txtClass,styleTitle]}>Khối lớp</Text>
+                    <Text style={[styles.txtClass, styleTitle]}>Khối lớp</Text>
                 </View>
                 <View style={styles.styWrapClass}>
                     {/* <Image
@@ -61,12 +61,12 @@ export default class ClassItem extends Component {
                         <RippleButton
                             onPress={this.openModalClass}
                             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            style={{height:30,justifyContent:'center'}}
+                            style={{ height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}
                         >
                             <Image
                                 source={Icon}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#2D9CDB',marginRight:10 }}
+                                style={{ tintColor: '#2D9CDB', }}
                             />
                         </RippleButton>
                     </View>

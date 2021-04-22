@@ -92,6 +92,7 @@ class HomeScreen extends Component {
                     return { token: res.access_token }
                 }
             } else if (isRefresh(exp, curTime, iat)) {
+                console.log("isRefresh");
                 userPost = await dataHelper.getUserPost();
                 userObj = JSON.parse(userPost);
                 res = await apiUserHelper.refreshToken({ token: value });

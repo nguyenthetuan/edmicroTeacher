@@ -8,7 +8,8 @@ import {
     Image,
     TouchableOpacity,
     Platform,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    ScrollView
 } from 'react-native';
 import Modal from '../../../utils/Modal';
 import RippleButton from '../../common-new/RippleButton';
@@ -18,6 +19,9 @@ import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
+const outSideHeight = height / 4;
+const modalHeight = height - outSideHeight;
+
 export default class ModalSubject extends Component {
 
     state = {
@@ -25,14 +29,15 @@ export default class ModalSubject extends Component {
     }
 
     onOpen = () => {
-        this.setState({ visible: true });
+        // this.setState({ visible: true });
+        this.modalizeRef.onOpen();
     };
 
     onClose = () => {
         this.setState({ visible: false });
     }
 
-    renderItem = ({ item }) => <Item item={item} {...this.props} />
+    renderItem = ({ item, index }) => <Item item={item} index={index} {...this.props} />
 
     componentWillUnmount() {
         // fix Warning: Can't perform a React state update on an unmounted component
@@ -49,29 +54,15 @@ export default class ModalSubject extends Component {
                 ref={ref => this.modalizeRef = ref}
                 visible={visible}
                 closeModal={this.onClose}
-                contentContainerStyle={{ height: height - height / 4 }}
+                modalHeight={modalHeight}
+                title={'Chọn môn'}
                 transparent={true}>
                 <View style={{ width: width, flex: 1, backgroundColor: '#fff' }}>
-                    <View
-                        style={styles.styWrapTitle}
-                    >
-                        <Text style={styles.styTitle}>Chọn môn</Text>
-                        {Platform.OS == 'android' &&
-                            < TouchableOpacity
-                                onPress={this.onClose}
-                            >
-                                <Image
-                                    source={AppIcon.close_img}
-                                    resizeMode={'stretch'}
-                                    style={styles.styClose}
-                                />
-                            </TouchableOpacity>}
-                    </View>
                     <FlatList
                         data={listSubjects}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
-                        ListHeaderComponent={this.renderHeader}
+                        ListFooterComponent={() => <View style={{ height: outSideHeight }} />}
                         style={styles.contain}
                         showsVerticalScrollIndicator={false}
                     />
@@ -154,22 +145,22 @@ class Item extends Component {
     }
 
     render() {
-        const { item } = this.props;
+        const { item, index } = this.props;
         const { isCheck } = this.state;
         const icon = CommonBeta.getIconSubject(item.code);
         return (
             <View style={[styles.styWrapElement, { margin: 5, }]}>
-                <TouchableWithoutFeedback onPress={this.onCheck} >
+                <TouchableWithoutFeedback onPress={this.onCheck}>
                     <View style={styles.styWrapElement}>
                         <Image source={icon} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
                         <Text style={styles.styTxtClass}>{item.name}</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <RippleButton onPress={this.onCheck}>
+                <TouchableWithoutFeedback onPress={this.onCheck} hitSlop={{ top: 10, bottom: 10, right: 10, left: 15 }}>
                     <View style={styles.styCheck} >
                         {isCheck ? <Icon name={'check'} size={20} color={'#56BB73'} /> : null}
                     </View>
-                </RippleButton>
+                </TouchableWithoutFeedback>
             </View>
         )
     }

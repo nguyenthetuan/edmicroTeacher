@@ -639,7 +639,6 @@ class MarkCamera extends Component {
         const { shadowBtn } = shadowStyle;
         return (
             <View style={{ flex: 1 }}>
-                <SafeAreaView />
                 <SafeAreaView style={styles.container}>
                     <HeaderNavigation
                         navigation={this.props.navigation}
