@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableWithoutFeedback
+} from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 const Footer = ({ title, link, onPress }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity onPress={onPress}>
+            <TouchableWithoutFeedback onPress={onPress}>
                 <Text style={styles.textLink}>{link}</Text>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
         </View>
     );
 }
