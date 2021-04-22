@@ -444,9 +444,11 @@ class ConfigQuestion extends Component {
 
       try {
         this.setState({ loading: true });
+        console.log("config token: ");
         const { token } = await dataHelper.getToken();
+        console.log("config token: ", token);
+
         const response = await apiPapers.createQuestion({ token, formData });
-        console.log("response: ", JSON.stringify(response));
         if (response.status === 0) {
           this.refToast.show('Tạo bộ đề thành công!');
           const setQuestion = await dataHelper.saveQuestion([]);
@@ -462,10 +464,12 @@ class ConfigQuestion extends Component {
               loading: false,
             },
             () =>
-              this.props.navigation.navigate('Assignment', {
+              {
+                this.props.navigation.navigate('Assignment', {
                 item: { ...res, id: res.assignmentId },
                 checked: true,
-              }),
+              });
+            }
           );
           // cau hinh thanh cong
           AnalyticsManager.trackWithProperties('School Teacher', {

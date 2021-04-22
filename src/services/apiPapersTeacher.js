@@ -285,10 +285,13 @@ const createQuestion = async ({ token, formData }) => {
 }
 
 const getAssignmentConfig = async ({ token, id }) => {
+  console.log('token: ', token);
+  console.log('id: ', id);
   let response = await fetch(`${API_BASE}school-online/library/assignment/config/${id}`, {
     method: 'GET',
     headers: getHeaders(token)
   });
+  console.log("responseJson: ", JSON.stringify(response));
   let responseJson = await response.json();
   return responseJson;
 }

@@ -349,11 +349,13 @@ class ConfigQuestion extends Component {
             try {
                 const { token } = await dataHelper.getToken();
                 const response = await apiPapers.createQuestion({ token, formData });
+                let tokenTmp = token;
                 if (response.status === 0) {
                     this.refs.toast.show('Tạo bộ đề thành công!');
                     const setQuestion = await dataHelper.saveQuestion([]);
+
                     const res = await apiPapers.getAssignmentConfig({
-                        token,
+                        token: tokenTmp,
                         id: response.id,
                     });
                     this.closePopupCreate();
@@ -459,16 +461,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                            <RippleButton
-                                key={`b${index}`}
-                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                                onPress={() => this.activeGrade(item)}>
-                                <View
-                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
+                        <RippleButton
+                            key={`b${index}`}
+                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                            onPress={() => this.activeGrade(item)}>
+                            <View
+                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                <Text style={styles.txtItemActive}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -497,16 +499,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                            <RippleButton
-                                key={`d${index}`}
-                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                                onPress={() => this.activeSubject(item)}>
-                                <View
-                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
+                        <RippleButton
+                            key={`d${index}`}
+                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                            onPress={() => this.activeSubject(item)}>
+                            <View
+                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                <Text style={styles.txtItemActive}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    );
                 }}
                 removeClippedSubviews={false}
                 horizontal
