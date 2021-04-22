@@ -1,5 +1,5 @@
 import AppConst from '../constants/appConst';
-
+import { Alert, Platform, Linking } from 'react-native'
 import mathIcon from '../asserts/icon/icon_toanV3.png';
 import phyIcon from '../asserts/icon/icon_vatlyV3.png';
 import chemIcon from '../asserts/icon/icon_hoaV3.png';
@@ -207,9 +207,20 @@ const getImageHeaderSubject = (id) => {
     }
 };
 
+export const openChatMessenger = () => {
+    Linking.canOpenURL('https://www.messenger.com/t/107393598090271').then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        Linking.openURL("https://www.messenger.com/t/107393598090271");
+      }
+    }).catch(err => console.log(err));
+  }
+
 module.exports = {
     getIconSubject,
     getImageHeaderSubject,
     getImageTeacher,
-    checkIsNullWithZero
+    checkIsNullWithZero,
+    openChatMessenger
 }

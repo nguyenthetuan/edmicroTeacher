@@ -19,6 +19,7 @@ import jwtDecode from 'jwt-decode';
 import apiUserHelper from '../services/apiUserHelper';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../utils/Fonts';
+import { openChatMessenger } from './CommonBeta';
 
 const APP_ID = '8d0af544-bbe3-4d5b-bd87-3ed6e2338a35';
 const APP_KEY = '97de673e-7c15-46d6-9a22-875bf38f2ecf';
@@ -148,6 +149,8 @@ export default class FreshchatComponent extends Component {
   }
 
   registerUnidentifiedUser() {
+    openChatMessenger();
+    return;
     try {
       // Intercom.displayMessenger();
       Freshchat.showConversations();
@@ -172,14 +175,16 @@ export default class FreshchatComponent extends Component {
     // Intercom.removeEventListener(Intercom.Notifications.UNREAD_COUNT, this._onUnreadChange);
   }
 
+
+
   render() {
     const { count } = this.state;
-    const { style,navigation } = this.props;
+    const { style, navigation } = this.props;
     return (
       <TouchableOpacity
         style={[styles.wrapIntercom, style]}
         onPress={this.registerUnidentifiedUser}>
-        <Image source={AppIcon.icon_freshchat} resizeMode={'contain'}  />
+        <Image source={require('../asserts/icon/icon_msg.png')} resizeMode={'contain'} style={{height:80,width:80}}/>
         {count > 0 && (
           <View style={styles.wrapTxtIntercom}>
             <Text style={styles.txtIntercom}>{count}</Text>
