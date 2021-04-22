@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   Image,
-  TouchableOpacity,
   ScrollView,
   Text,
   Dimensions,
   StyleSheet,
   ActivityIndicator,
+  TouchableWithoutFeedback
 } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import dataHelper from '../../../utils/dataHelper';
@@ -134,45 +134,52 @@ export default class Plan extends Component {
                 style={styles.styRipper}
                 resizeMode={'contain'}
               />
-              <TouchableOpacity
-                onPress={this._handleClick(1, targer)}>
+              <TouchableWithoutFeedback
+              // onPress={this._handleClick(1, targer)}
+              >
                 <View>
-                  <Text style={styles.txtTitle}>Mục tiêu</Text>
+                  <View>
+                    <Text style={styles.txtTitle}>Mục tiêu</Text>
+                  </View>
+                  <View style={styles.wrapContent}>
+                    {targer ? (
+                      <View style={styles.wrapTxtContent}>
+                        <Text
+                          style={styles.txtEmpty}
+                          numberOfLines={numberOfLines1}
+                        >
+                          {targer}
+                        </Text>
+                        {
+                          targer?.toString()?.split('').length > 500 &&
+                          <>
+                            {
+                              numberOfLines1 ?
+                                <TouchableWithoutFeedback onPress={this._handleClickMore(1)}>
+                                  <Text style={styles.styTxtMore}>Xem thêm</Text>
+                                </TouchableWithoutFeedback>
+                                :
+                                <TouchableWithoutFeedback onPress={this._handleClickMore(1, true)}>
+                                  <Text style={styles.styTxtMore}>Thu gọn</Text>
+                                </TouchableWithoutFeedback>
+                            }
+                          </>
+                        }
+                      </View>
+                    ) : (
+                        <ActivityIndicator size={'small'} color={'#333'} />
+                      )}
+                    <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+                      onPress={this._handleClick(1, targer)}>
+                      <Image
+                        source={require('../../../asserts/icon/icEditName.png')}
+                        style={styles.imgEdit}
+                      />
+                    </TouchableWithoutFeedback>
+
+                  </View>
                 </View>
-                <View style={styles.wrapContent}>
-                  {targer ? (
-                    <View style={styles.wrapTxtContent}>
-                      <Text
-                        style={styles.txtEmpty}
-                        numberOfLines={numberOfLines1}
-                      >
-                        {targer}
-                      </Text>
-                      {
-                        targer?.toString()?.split('').length > 500 &&
-                        <>
-                          {
-                            numberOfLines1 ?
-                              <TouchableOpacity onPress={this._handleClickMore(1)} >
-                                <Text style={styles.styTxtMore}>Xem thêm</Text>
-                              </TouchableOpacity>
-                              :
-                              <TouchableOpacity onPress={this._handleClickMore(1, true)}>
-                                <Text style={styles.styTxtMore}>Thu gọn</Text>
-                              </TouchableOpacity>
-                          }
-                        </>
-                      }
-                    </View>
-                  ) : (
-                      <ActivityIndicator size={'small'} color={'#333'} />
-                    )}
-                  <Image
-                    source={require('../../../asserts/icon/icEditName.png')}
-                    style={styles.imgEdit}
-                  />
-                </View>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
               <Image
                 source={require('../../../asserts/images/Rectangle.png')}
                 resizeMode={"contain"}
@@ -189,37 +196,45 @@ export default class Plan extends Component {
                 style={styles.styRipper}
                 resizeMode={'contain'}
               />
-              <TouchableOpacity onPress={this._handleClick(2, requirements)}>
-                <Text style={styles.txtTitle}>Yêu cầu cần đạt</Text>
-                <View style={styles.wrapContent}>
-                  {requirements ? (
-                    <View style={styles.wrapTxtContent}>
-                      <Text style={styles.txtEmpty} numberOfLines={numberOfLines2}>{requirements}</Text>
-                      {
-                        requirements?.split('') > 500 &&
-                        <>
-                          {
-                            numberOfLines2 ?
-                              <TouchableOpacity onPress={this._handleClickMore(2)}>
-                                <Text style={styles.styTxtMore}>Xem thêm</Text>
-                              </TouchableOpacity>
-                              :
-                              <TouchableOpacity onPress={this._handleClickMore(2, true)}>
-                                <Text style={styles.styTxtMore}>Thu gọn</Text>
-                              </TouchableOpacity>
-                          }
-                        </>
-                      }
-                    </View>
-                  ) : (
-                      <ActivityIndicator size={'small'} color={'#333'} />
-                    )}
-                  <Image
-                    source={require('../../../asserts/icon/icEditName.png')}
-                    style={styles.imgEdit}
-                  />
+              <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+              // onPress={this._handleClick(2, requirements)}
+              >
+                <View>
+                  <Text style={styles.txtTitle}>Yêu cầu cần đạt</Text>
+                  <View style={styles.wrapContent}>
+                    {requirements ? (
+                      <View style={styles.wrapTxtContent}>
+                        <Text style={styles.txtEmpty} numberOfLines={numberOfLines2}>{requirements}</Text>
+                        {
+                          requirements?.split('') > 500 &&
+                          <>
+                            {
+                              numberOfLines2 ?
+                                <TouchableWithoutFeedback onPress={this._handleClickMore(2)}>
+                                  <Text style={styles.styTxtMore}>Xem thêm</Text>
+                                </TouchableWithoutFeedback>
+                                :
+                                <TouchableWithoutFeedback onPress={this._handleClickMore(2, true)}>
+                                  <Text style={styles.styTxtMore}>Thu gọn</Text>
+                                </TouchableWithoutFeedback>
+                            }
+                          </>
+                        }
+                      </View>
+                    ) : (
+                        <ActivityIndicator size={'small'} color={'#333'} />
+                      )}
+                    <TouchableWithoutFeedback
+                      onPress={this._handleClick(2, requirements)}
+                      hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}>
+                      <Image
+                        source={require('../../../asserts/icon/icEditName.png')}
+                        style={styles.imgEdit}
+                      />
+                    </TouchableWithoutFeedback>
+                  </View>
                 </View>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
             <Image source={require('../../../asserts/images/Rectangle.png')} resizeMode={'contain'} style={styles.styRect} />
           </View>
@@ -232,38 +247,45 @@ export default class Plan extends Component {
                 style={styles.styRipper}
                 resizeMode={'contain'}
               />
-              <TouchableOpacity
-                onPress={this._handleClick(3, content)}>
-                <Text style={styles.txtTitle}>Nội dung dạy học</Text>
-                <View style={styles.wrapContent}>
-                  {content ? (
-                    <View style={styles.wrapTxtContent}>
-                      <Text style={styles.txtEmpty} numberOfLines={numberOfLines3}>{content}</Text>
-                      {
-                        content?.split('').length > 500 &&
-                        <>
-                          {
-                            numberOfLines3 ?
-                              <TouchableOpacity onPress={this._handleClickMore(3)}>
-                                <Text style={styles.styTxtMore}>Xem thêm</Text>
-                              </TouchableOpacity>
-                              :
-                              <TouchableOpacity onPress={this._handleClickMore(3, true)}>
-                                <Text style={styles.styTxtMore}>Thu gọn</Text>
-                              </TouchableOpacity>
-                          }
-                        </>
-                      }
-                    </View>
-                  ) : (
-                      <ActivityIndicator size={'small'} color={'#333'} />
-                    )}
-                  <Image
-                    source={require('../../../asserts/icon/icEditName.png')}
-                    style={styles.imgEdit}
-                  />
+              <TouchableWithoutFeedback
+                hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}>
+                <View>
+                  <Text style={styles.txtTitle}>Nội dung dạy học</Text>
+                  <View style={styles.wrapContent}>
+                    {content ? (
+                      <View style={styles.wrapTxtContent}>
+                        <Text style={styles.txtEmpty} numberOfLines={numberOfLines3}>{content}</Text>
+                        {
+                          content?.split('').length > 500 &&
+                          <>
+                            {
+                              numberOfLines3 ?
+                                <TouchableWithoutFeedback onPress={this._handleClickMore(3)}>
+                                  <Text style={styles.styTxtMore}>Xem thêm</Text>
+                                </TouchableWithoutFeedback>
+                                :
+                                <TouchableWithoutFeedback onPress={this._handleClickMore(3, true)}>
+                                  <Text style={styles.styTxtMore}>Thu gọn</Text>
+                                </TouchableWithoutFeedback>
+                            }
+                          </>
+                        }
+                      </View>
+                    ) : (
+                        <ActivityIndicator size={'small'} color={'#333'} />
+                      )}
+                    <TouchableWithoutFeedback
+                      onPress={this._handleClick(3, content)}
+                      hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+                    >
+                      <Image
+                        source={require('../../../asserts/icon/icEditName.png')}
+                        style={styles.imgEdit}
+                      />
+                    </TouchableWithoutFeedback>
+                  </View>
                 </View>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
             <Image source={require('../../../asserts/images/Rectangle.png')} resizeMode={"contain"} style={styles.styRect} />
           </View>
@@ -292,8 +314,8 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#828282',
-    flex: 1,
-    paddingVertical:10,
+    flex: 1, 
+    paddingVertical: 10,
   },
   buttonCancel: {
     color: '#FFF',
