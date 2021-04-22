@@ -107,7 +107,7 @@ class MissionItem extends React.PureComponent {
                     </View>
                     <AwesomeButton
                         onPress={this.onMissionPress}
-                        style={[styles.AweBtn, { ...shadowBtn }]}
+                        style={[styles.AweBtn]}
                         height={35}
                         backgroundColor={'#2D9CDB'}
                         borderRadius={25}

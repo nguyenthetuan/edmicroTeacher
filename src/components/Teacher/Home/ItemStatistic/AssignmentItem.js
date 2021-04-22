@@ -108,7 +108,7 @@ class AssignmentItem extends Component {
                     </View>
                     <AwesomeButton
                         onPress={this.onAssignment.bind(this)}
-                        style={[styles.AweBtn, { ...shadowBtn }]}
+                        style={[styles.AweBtn]}
                         height={35}
                         backgroundColor={'#2D9CDB'}
                         borderRadius={25}
