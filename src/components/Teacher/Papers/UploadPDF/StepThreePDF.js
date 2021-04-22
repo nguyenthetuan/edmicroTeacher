@@ -255,18 +255,7 @@ class StepThreePDF extends Component {
                         placeholderTextColor={'#BDBDBD'}
                         style={styles.inputName}
                     />
-                    <ModalClass
-                        ref={ref => this.refModalClass = ref}
-                        gradeActive={gradeActive}
-                        listGrades={listGrades}
-                        activeClass={this.activeGrade}
-                    />
-                    <ModalSubject
-                        ref={ref => this.refModalSubject = ref}
-                        subjectActive={subjectActive}
-                        listSubjects={listSubjects}
-                        activeSubject={this.activeSubject}
-                    />
+
                     <Text style={styles.styTxtLabel}>Môn học</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                         <TouchableOpacity
@@ -347,6 +336,18 @@ class StepThreePDF extends Component {
                         <Text style={styles.textNext}>Tạo bộ đề</Text>
                     </RippleButton>
                 </View>
+                <ModalClass
+                    ref={ref => this.refModalClass = ref}
+                    gradeActive={gradeActive}
+                    listGrades={listGrades}
+                    activeClass={this.activeGrade}
+                />
+                <ModalSubject
+                    ref={ref => this.refModalSubject = ref}
+                    subjectActive={subjectActive}
+                    listSubjects={listSubjects}
+                    activeSubject={this.activeSubject}
+                />
                 <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
             </View>
         )

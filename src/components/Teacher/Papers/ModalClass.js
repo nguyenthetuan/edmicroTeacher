@@ -54,7 +54,8 @@ export default class ModalClass extends Component {
                 closeModal={this.onClose}
                 modalHeight={modalHeight}
                 title={'Chọn lớp'}
-                transparent={true}>
+                transparent={false}
+                >
                 <View style={{ width: width, flex: 1, backgroundColor: '#fff' }}>
                     <FlatList
                         data={listGrades}
