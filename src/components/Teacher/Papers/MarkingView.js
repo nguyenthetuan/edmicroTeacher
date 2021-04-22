@@ -920,7 +920,7 @@ class MarkingView extends Component {
                     borderColor: '#C4C4C4',
                     alignSelf: 'center',
                   }}>
-                  {/* <TextInput
+                  <TextInput
                     onChangeText={text => {
                       this.onChangeTextComment(text);
                     }}
@@ -929,8 +929,8 @@ class MarkingView extends Component {
                     }
                     multiline={true}
                     autoFocus={true}
-                  /> */}
-                  <RippleButton
+                  />
+                  {/* <RippleButton
                     style={styles.buttonSubmit}
                     rippleContainerBorderRadius={10}
                     onPress={() => {
@@ -944,7 +944,7 @@ class MarkingView extends Component {
                       }}>
                       Lưu
                     </Text>
-                  </RippleButton>
+                  </RippleButton> */}
                 </View>
               )}
             </View>

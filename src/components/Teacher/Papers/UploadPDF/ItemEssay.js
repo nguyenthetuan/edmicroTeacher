@@ -5,10 +5,10 @@ import { TextInput } from 'react-native-gesture-handler';
 export default function ItemEssay(props) {
 
     useEffect(() => {
-        setTextPoint(props.data.textPoint);
+        setTextPoint(props.data.textPoint.substring(0, props.data.textPoint.indexOf('.') + 3));
     }, [props.data.textPoint])
 
-    const [textPoint, setTextPoint] = useState(props.data.textPoint);
+    const [textPoint, setTextPoint] = useState(props.data.textPoint.substring(0, props.data.textPoint.indexOf('.') + 3));
 
     const { index } = props.data;
 
@@ -32,7 +32,7 @@ export default function ItemEssay(props) {
         if (point[point.length - 1] == ',') {
             point = `${point.substring(0, point.length - 1)}.`
         }
-        setTextPoint(point);
+        setTextPoint(point.substring(0, point.indexOf('.') + 3));
     }
 
     return (

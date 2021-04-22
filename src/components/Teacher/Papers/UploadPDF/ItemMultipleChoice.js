@@ -6,10 +6,10 @@ const OPTIONS_ANSWER = ['A', 'B', 'C', 'D'];
 export default function ItemMultipleChoice(props) {
 
     useEffect(() => {
-        setTextPoint(props.data.textPoint);
+        setTextPoint(props.data.textPoint.substring(0, props.data.textPoint.indexOf('.') + 3));
     }, [props.data.textPoint])
 
-    const [textPoint, setTextPoint] = useState(props.data.textPoint);
+    const [textPoint, setTextPoint] = useState(props.data.textPoint.substring(0, props.data.textPoint.indexOf('.') + 3));
 
     const { index } = props.data;
 
@@ -48,7 +48,7 @@ export default function ItemMultipleChoice(props) {
         if (point[point.length - 1] == ',') {
             point = `${point.substring(0, point.length - 1)}.`
         }
-        setTextPoint(point);
+        setTextPoint(point.substring(0, point.indexOf('.') + 3));
     }
 
     return (
@@ -61,7 +61,7 @@ export default function ItemMultipleChoice(props) {
                     <TextInput
                         style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
                         textAlign={'center'}
-                        value={(Math.round(Number(textPoint) * 100) / 100).toString()}
+                        value={textPoint}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => onChangePoint(val)}
                         onBlur={onChangePointEachQS}
