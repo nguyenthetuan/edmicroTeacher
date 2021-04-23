@@ -8,7 +8,7 @@ const TextLink = (props) => {
         <TouchableOpacity onPress={onPress}>
             <Text style={[styles.textLink, {
                 textDecorationLine: 'underline',
-                color: '#757575',
+                color: '#56CCF2',
                 fontFamily: 'Nunito-Regular'
             }]}>{title}</Text>
         </TouchableOpacity>

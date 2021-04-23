@@ -7,6 +7,7 @@ import {
     Text,
     Platform,
     Dimensions,
+    TouchableWithoutFeedback
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import _ from 'lodash';
@@ -30,12 +31,14 @@ export default class ModalAddPaper extends PureComponent {
                         <View style={styles.topModal}>
                             <Text style={styles.txtTitleModal}>Tạo bộ đề</Text>
                             <View style={{ position: 'absolute', right: 5, top: 3 }}>
-                                <RippleButton onPress={this.props.closeModal}>
+                                <TouchableWithoutFeedback hitSlop={{
+                                    left: 10, right: 10
+                                }} onPress={this.props.closeModal} >
                                     <Image
                                         source={require('../../../asserts/icon/icCloseModal.png')}
                                         style={{ height: 22, width: 22 }}
                                     />
-                                </RippleButton>
+                                </TouchableWithoutFeedback>
                             </View>
                         </View>
                         <Text style={styles.textTilteModal}>Hãy chọn loại bộ đề muốn tạo</Text>

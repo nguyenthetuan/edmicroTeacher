@@ -7,6 +7,7 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Modal from '../../../utils/Modal';
 import RippleButton from '../../common-new/RippleButton';
@@ -16,6 +17,9 @@ import { RFFonsize } from '../../../utils/Fonts';
 
 const { width, height } = Dimensions.get('window');
 
+const outSideHeight = height / 4;
+const modalHeight = height - outSideHeight;
+
 export default class ModalClass extends Component {
 
     state = {
@@ -23,7 +27,8 @@ export default class ModalClass extends Component {
     }
 
     onOpen = () => {
-        this.setState({ visible: true });
+        // this.setState({ visible: true });
+        this.modalizeRef.onOpen();
     };
 
     onClose = () => {
@@ -47,28 +52,17 @@ export default class ModalClass extends Component {
                 ref={ref => this.modalizeRef = ref}
                 visible={visible}
                 closeModal={this.onClose}
-                contentContainerStyle={{ height: height - height / 4 }}
-                transparent={true}>
-                <View style={{ width: width, flex: 1 }}>
-                    <View style={styles.styWrapTitle}>
-                        <Text style={styles.styTitle}>Chọn lớp</Text>
-                        {Platform.OS == 'android' &&
-                            < TouchableOpacity
-                                onPress={this.onClose}
-                            >
-                                <Image
-                                    source={AppIcon.close_img}
-                                    resizeMode={'stretch'}
-                                    style={styles.styClose}
-                                />
-                            </TouchableOpacity>}
-                    </View>
+                modalHeight={modalHeight}
+                title={'Chọn lớp'}
+                transparent={false}
+                >
+                <View style={{ width: width, flex: 1, backgroundColor: '#fff' }}>
                     <FlatList
                         data={listGrades}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
-                        ListHeaderComponent={this.renderHeader}
                         style={styles.contain}
+                        ListFooterComponent={() => <View style={{ height: outSideHeight }} />}
                         showsVerticalScrollIndicator={false}
                     />
                 </View>
@@ -154,12 +148,14 @@ class Item extends Component {
         const { isCheck } = this.state;
         return (
             <View style={[styles.styWrapElement, { margin: 5, }]}>
-                <TouchableOpacity onPress={this.onCheck} style={styles.styWrapElement}>
-                    <Image source={require('../../../asserts/icon/icon_remakeClassV3.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
-                    <Text style={styles.styTxtClass}>{item.name}</Text>
-                </TouchableOpacity>
-                <RippleButton onPress={this.onCheck}>
-                    <View style={styles.styCheck} >
+                <TouchableWithoutFeedback onPress={this.onCheck}>
+                    <View style={styles.styWrapElement}>
+                        <Image source={require('../../../asserts/icon/icon_remakeClassV3.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
+                        <Text style={styles.styTxtClass}>{item.name}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <RippleButton onPress={this.onCheck} hitSlop={{ top: 10, right: 20, bottom: 10, left: 20 }}>
+                    <View style={styles.styCheck}>
                         {isCheck ? <Icon name={'check'} size={20} color={'#56BB73'} /> : null}
                     </View>
                 </RippleButton>

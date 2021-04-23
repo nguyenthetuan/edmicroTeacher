@@ -930,7 +930,7 @@ class MarkingView extends Component {
                     multiline={true}
                     autoFocus={true}
                   />
-                  <RippleButton
+                  {/* <RippleButton
                     style={styles.buttonSubmit}
                     rippleContainerBorderRadius={10}
                     onPress={() => {
@@ -942,9 +942,9 @@ class MarkingView extends Component {
                         fontFamily: 'Nunito',
                         fontSize: RFFonsize(12),
                       }}>
-                      Nhận xét
+                      Lưu
                     </Text>
-                  </RippleButton>
+                  </RippleButton> */}
                 </View>
               )}
             </View>
@@ -1145,8 +1145,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 5,
-    bottom: 5,
-    padding: 5,
+    top: 30,
+    width: 40,
+    height: 30,
   },
   buttonOK: {
     width: 60,

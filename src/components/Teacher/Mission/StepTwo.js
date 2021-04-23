@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableWithoutFeedback
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
@@ -91,18 +97,20 @@ export default class StepTwo extends Component {
           }}
         />
         <View style={styles.styWrapBtn}>
-          <TouchableOpacity
-            style={styles.styBtnBack}
+          <TouchableWithoutFeedback
             onPress={this.handleNextStepOne}>
-            <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.styBtnNext}
+            <View style={styles.styBtnBack}>
+              <Icon name={'arrowleft'} style={styles.styTxtBtnNext} />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
             onPress={this.handleNextStepThree}>
-            <Text style={styles.styTxtBtnNext}>
-              Bước tiếp theo
+            <View style={styles.styBtnNext}>
+              <Text style={styles.styTxtBtnNext}>
+                Bước tiếp theo
             </Text>
-          </TouchableOpacity>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
       </View>
@@ -134,7 +142,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D9CDB',
     borderRadius: 25,
     marginBottom: 10,
-    width: 50, height: 50
+    width: 50,
+    height: 50,
+    justifyContent: "center"
   },
   styWrapBtn: {
     flexDirection: 'row',
@@ -148,8 +158,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: "500",
-    marginTop: 16,
-    marginBottom: 14
   },
   styTxtLabel: {
     fontFamily: 'Nunito-Bold',

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   SafeAreaView,
   ScrollView,
@@ -10,7 +9,8 @@ import {
   TextInput,
   Dimensions,
   Platform,
-  Image
+  Image,
+  TouchableWithoutFeedback
 } from 'react-native';
 import ModalEditor from '../../common-new/Editor';
 import HTML from 'react-native-render-html';
@@ -145,9 +145,11 @@ export default class StepOne extends Component {
               value={nameMission}
               onChangeText={nameMission => this.setState({ nameMission })}
             />
-            <TouchableOpacity style={styles.iconEdit}>
-              <Image source={AppIcon.icon_editNameMission} style={styles.clIcon} />
-            </TouchableOpacity>
+            <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}>
+              <View style={styles.iconEdit}>
+                <Image source={AppIcon.icon_editNameMission} style={styles.clIcon} />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <Text style={[styles.styTxtLabel, { marginTop: 20 }]}>Khối</Text>
           <View style={styles.viewRNPicker}>
@@ -204,21 +206,24 @@ export default class StepOne extends Component {
             />
           </View>
           <Text style={[styles.styTxtLabel, { marginTop: 24 }]}>Mô tả</Text>
-          <TouchableOpacity style={styles.styWrapDes} onPress={this.onOpenEditor}>
-            {!htmlContent ?
-              <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> :
-              <HTML
-                html={htmlContent}
-                imagesMaxWidth={Dimensions.get('window').width}
-                baseFontStyle={{ color: '#000' }}
-              />}
-          </TouchableOpacity>
+          <TouchableWithoutFeedback onPress={this.onOpenEditor}>
+            <View style={styles.styWrapDes}>
+              {!htmlContent ?
+                <Text style={styles.styTxtPlacehoder}>Viết mô tả cho nhiệm vụ này...</Text> :
+                <HTML
+                  html={htmlContent}
+                  imagesMaxWidth={Dimensions.get('window').width}
+                  baseFontStyle={{ color: '#000' }}
+                />}
+            </View>
+          </TouchableWithoutFeedback>
         </ScrollView>
-        <TouchableOpacity
-          style={styles.styBtnNext}
+        <TouchableWithoutFeedback
           onPress={this.handleNextStepTwo}>
-          <Text style={styles.styTxtBtnNext}>Bước tiếp theo</Text>
-        </TouchableOpacity>
+          <View style={styles.styBtnNext}>
+            <Text style={styles.styTxtBtnNext}>Bước tiếp theo</Text>
+          </View>
+        </TouchableWithoutFeedback>
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
         <ModalEditor
           ref={ref => (this.modalEditor = ref)}

@@ -16,23 +16,14 @@ import { RFFonsize } from '../../../utils/Fonts';
 import Modal from '../../../utils/Modal';
 import shadowStyle from '../../../themes/shadowStyle';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 export default class ModalFillter extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isShowModal: false,
-    }
   }
 
   changeStateModale = () => {
-    const { isShowModal } = this.state;
-    if (!isShowModal) {
-      StatusBar.setBarStyle('light-content');
-    } else {
-      StatusBar.setBarStyle('dark-content');
-    }
-    this.setState({ isShowModal: !isShowModal });
+    this.modalizeRef.onOpen();
   }
 
   handleStatistic = () => {
@@ -54,19 +45,19 @@ export default class ModalFillter extends Component {
       onPressItemHomework,
       onPressItemClass,
     } = this.props;
-    const { isShowModal } = this.state;
     return (
       <Modal
-        visible={isShowModal}
+        ref={ref => this.modalizeRef = ref}
         closeModal={this.changeStateModale}
+        modalHeight={height - height / 8}
       >
         <SafeAreaView style={{ backgroundColor: '#F6F7F9' }} />
         <View style={styles.contain}>
           <HeaderNavigation
             title={'Tuỳ chọn'}
-            onRightAction={this.changeStateModale}
+            // onRightAction={this.changeStateModale}
             // actionIcon={AppIcon.close_img}
-            actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
+            // actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
             isShow={false}
           />
           <View style={[styles.wrapSelect1, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>
@@ -168,14 +159,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     borderWidth: 1,
     borderColor: "#E6EBF1",
-    shadowColor: "#c4c4c4",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 2,
     backgroundColor: '#fff',
     marginTop: 5
   },
@@ -207,14 +190,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E6EBF1",
     width: width * 0.4,
-    shadowColor: "#c4c4c4",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 2,
     backgroundColor: '#fff',
     marginTop: 5
   },

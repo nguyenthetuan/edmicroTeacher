@@ -138,6 +138,7 @@ const renderHtmlQuestionDetail = (
 
   for (let i = 0; i < totalAll; i++) {
     let typeData = data[i].typeViewContent;
+    console.log("🚀 ~ file: webViewConfigQuestion.js ~ line 141 ~ typeData", typeData)
     if (typeData == 1) {
       //contentHtml
       html += `<div style="overflow:auto;padding: 10px 15px;border-bottom: 1px solid #eaeaea" class="q_material">

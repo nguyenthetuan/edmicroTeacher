@@ -13,8 +13,8 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" image="1243X2689.jpg" id="gsE-5E-BDo">
-                    <rect key="frame" x="61" y="44" width="356" height="277"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" image="1243X2689.png" id="gsE-5E-BDo">
+                    <rect key="frame" x="0.0" y="-33" width="487" height="513"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
             </subviews>
@@ -28,6 +28,6 @@
         </view>
     </objects>
     <resources>
-        <image name="1243X2689.jpg" width="1243" height="2689"/>
+        <image name="1243X2689.png" width="1243" height="2689"/>
     </resources>
 </document>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Platform } from 'react-native'
 import Ripple from 'react-native-material-ripple';
 import { View } from 'react-native';
 import debounce from 'lodash.debounce';
@@ -9,9 +10,9 @@ export default class RippleButton extends Component {
 	render() {
 		const { shadowBtn } = shadowStyle;
 		return (
-			<View style={shadowBtn}>
+			<View style={Platform.OS == 'ios' ? shadowBtn : null}>
 				<Ripple
-					style={{ borderRadius: 300 }}
+					style={[{ borderRadius: 300 }]}
 					rippleColor={this.props.color ? this.props.color : Color.colorRippleMain}
 					// rippleColor={Color.colorRippleMain}
 					rippleDuration={this.props.duration ? this.props.duration : Dimens.rippleDurationDefault}

@@ -26,6 +26,22 @@ const refreshTokenV2 = async (body) => {
   return responseJson;
 };
 
+const refreshToken = async (payload) => {
+  const { token } = payload;
+  let response = await fetch(`${API_BASE_OAUTH}account/refresh`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Referer': 'https://app.onluyen.vn',
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  let responseJson = await response.json();
+  return responseJson;
+};
+
 
 
 const getAccountStatistic = ({ token }) => {
@@ -512,6 +528,7 @@ const updateFreshchatId = async (payload) => {
 }
 
 module.exports = {
+  refreshToken,
   refreshTokenV2,
   getAccountStatistic,
   getPayment,

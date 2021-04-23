@@ -1,4 +1,5 @@
 import {API_BASE, getHeaders} from '../constants/setting';
+import fetch from './fetchWithTimeout';
 
 const getListClass = async ({token}) => {
   let response = await fetch(`${API_BASE}school-online/class/teacher/`, {

@@ -6,10 +6,10 @@ const OPTIONS_ANSWER = ['A', 'B', 'C', 'D'];
 export default function ItemMultipleChoice(props) {
 
     useEffect(() => {
-        setTextPoint(props.data.textPoint);
+        setTextPoint(props.data.textPoint.substring(0, props.data.textPoint.indexOf('.') + 3));
     }, [props.data.textPoint])
 
-    const [textPoint, setTextPoint] = useState(props.data.textPoint);
+    const [textPoint, setTextPoint] = useState(props.data.textPoint.substring(0, props.data.textPoint.indexOf('.') + 3));
 
     const { index } = props.data;
 
@@ -48,38 +48,31 @@ export default function ItemMultipleChoice(props) {
         if (point[point.length - 1] == ',') {
             point = `${point.substring(0, point.length - 1)}.`
         }
-        setTextPoint(point);
+        setTextPoint(point.substring(0, point.indexOf('.') + 3));
     }
 
-    const render = useMemo(() => {
-        return (
-            <>
-                <View style={styles.wrapLeft}>
-                    <View style={styles.numQs}>
-                        <Text style={styles.textNumQS}>{(props.data.optionIdAnswer >= 0) ? `${(props.data.index + 1)}.${OPTIONS_ANSWER[props.data.optionIdAnswer]}` : (props.data.index + 1)}</Text>
-                    </View>
-                    <View style={styles.inputPoint}>
-                        <TextInput
-                            style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
-                            textAlign={'center'}
-                            value={(Math.round(Number(textPoint) * 100) / 100).toString()}
-                            keyboardType='decimal-pad'
-                            onChangeText={(val) => onChangePoint(val)}
-                            onBlur={onChangePointEachQS}
-                            onFocus={onFocus}
-                            maxLength={8}
-                        />
-                    </View>
-                </View>
-                <View style={styles.wrapRight}>
-                    {renderAnswers()}
-                </View>
-            </>
-        )
-    }, [JSON.stringify(props.data)])
     return (
         <View style={styles.itemWrap}>
-            {render}
+            <View style={styles.wrapLeft}>
+                <View style={styles.numQs}>
+                    <Text style={styles.textNumQS}>{(props.data.optionIdAnswer >= 0) ? `${(props.data.index + 1)}.${OPTIONS_ANSWER[props.data.optionIdAnswer]}` : (props.data.index + 1)}</Text>
+                </View>
+                <View style={styles.inputPoint}>
+                    <TextInput
+                        style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
+                        textAlign={'center'}
+                        value={textPoint}
+                        keyboardType='decimal-pad'
+                        onChangeText={(val) => onChangePoint(val)}
+                        onBlur={onChangePointEachQS}
+                        onFocus={onFocus}
+                        maxLength={8}
+                    />
+                </View>
+            </View>
+            <View style={styles.wrapRight}>
+                {renderAnswers()}
+            </View>
         </View>
     )
 }

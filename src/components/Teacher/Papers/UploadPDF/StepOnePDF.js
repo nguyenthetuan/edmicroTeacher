@@ -32,7 +32,6 @@ export default class StepOnePDF extends Component {
     };
 
     onPressZoom = (type) => {
-        console.log("🚀 ~ file: StepOnePDF.js ~ line 35 ~ StepOnePDF ~ type", type)
         if (type === 1) {
             if (!this.state.urlFilePDFAS) {
                 this.toast.show('Chưa có tài liệu PDF');

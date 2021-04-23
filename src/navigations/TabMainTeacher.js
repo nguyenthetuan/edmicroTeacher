@@ -4,8 +4,8 @@ import { Image, Text, Platform, StyleSheet, Dimensions } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import Class from '../components/Teacher/Class/class';
-import Evaluate from '../components/Teacher/Evaluate/MainScreen';
-import Homework from '../containers/teacher/homework/MainScreen';
+// import Evaluate from '../components/Teacher/Evaluate/MainScreen';
+// import Homework from '../containers/teacher/homework/MainScreen';
 import Papers from '../components/Teacher/Papers/paper';
 import AppIcon from '../utils/AppIcon';
 import MenuTabTeacher from '../components/menu/MenuTabTeacher';
@@ -13,11 +13,40 @@ import classIcon from '../asserts/icon/icon_class_unactive.png';
 import classIconActive from '../asserts/icon/icon_class_active.png';
 import FreshchatComponent from '../utils/FreshchatComponent';
 import MissionScreen from '../containers/teacher/Mission/MissionContainer';
+import HomeScreen from '../components/Teacher/Home/HomeScreen'
 import { RFFonsize } from '../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
 const TabMainTeacher = createBottomTabNavigator(
   {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: 'Trang chủ',
+        tabBarIcon: ({ tintColor, focused }) => {
+          return !focused ? (
+            <Image
+              source={require('../asserts/appIcon/icon_homeOffi.png')}
+              resizeMode={'contain'}
+            />
+          ) : (
+              <Image
+                source={require('../asserts/appIcon/icon_homeActive.png')}
+                resizeMode={'contain'}
+              />
+            );
+        },
+        tabBarLabel: Platform.isPad
+          ? 'Trang chủ'
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Trang chủ</Text>
+            ) : (
+                <Text style={styles.txtLabelActive}>Trang chủ</Text>
+              );
+          },
+      },
+    },
     Self: {
       screen: Class,
       navigationOptions: {
@@ -108,66 +137,67 @@ const TabMainTeacher = createBottomTabNavigator(
           },
       },
     },
-    Evaluate: {
-      screen: Evaluate,
-      navigationOptions: {
-        title: 'Đánh giá',
-        tabBarIcon: ({ tintColor, focused }) => {
-          return !focused ? (
-            <Image
-              color={tintColor}
-              source={AppIcon.iconEvaluate}
-              resizeMode={'contain'}
-            />
-          ) : (
-              <Image
-                color={tintColor}
-                source={AppIcon.iconEvaluateActive}
-                resizeMode={'contain'}
-              />
-            );
-        },
-        tabBarLabel: Platform.isPad
-          ? 'Đánh Giá'
-          : ({ focused }) => {
-            return !focused ? (
-              <Text style={styles.txtLabel}>Đánh giá</Text>
-            ) : (
-                <Text style={styles.txtLabelActive}>Đánh giá</Text>
-              );
-          },
-      },
-    },
-    HomeWork: {
-      screen: Homework,
-      navigationOptions: {
-        title: 'Bài tập',
-        drawerLockMode: 'locked-closed',
-        tabBarIcon: ({ tintColor, focused }) => {
-          return !focused ? (
-            <Image
-              color={tintColor}
-              source={AppIcon.iconExercise}
-              resizeMode={'contain'}
-            />
-          ) : (
-              <Image color={tintColor} source={AppIcon.iconHomeWorkActive} />
-            );
-        },
-        tabBarLabel: Platform.isPad
-          ? 'Bài tập'
-          : ({ focused }) => {
-            return !focused ? (
-              <Text style={styles.txtLabel}>Bài tập</Text>
-            ) : (
-                <Text style={styles.txtLabelActive}>Bài tập</Text>
-              );
-          },
-      },
-    },
+    // Evaluate: {
+    //   screen: Evaluate,
+    //   navigationOptions: {
+    //     title: 'Đánh giá',
+    //     tabBarIcon: ({ tintColor, focused }) => {
+    //       return !focused ? (
+    //         <Image
+    //           color={tintColor}
+    //           source={AppIcon.iconEvaluate}
+    //           resizeMode={'contain'}
+    //         />
+    //       ) : (
+    //           <Image
+    //             color={tintColor}
+    //             source={AppIcon.iconEvaluateActive}
+    //             resizeMode={'contain'}
+    //           />
+    //         );
+    //     },
+    //     tabBarLabel: Platform.isPad
+    //       ? 'Đánh Giá'
+    //       : ({ focused }) => {
+    //         return !focused ? (
+    //           <Text style={styles.txtLabel}>Đánh giá</Text>
+    //         ) : (
+    //             <Text style={styles.txtLabelActive}>Đánh giá</Text>
+    //           );
+    //       },
+    //   },
+    // },
+
+    // HomeWork: {
+    //   screen: Homework,
+    //   navigationOptions: {
+    //     title: 'Bài tập',
+    //     drawerLockMode: 'locked-closed',
+    //     tabBarIcon: ({ tintColor, focused }) => {
+    //       return !focused ? (
+    //         <Image
+    //           color={tintColor}
+    //           source={AppIcon.iconExercise}
+    //           resizeMode={'contain'}
+    //         />
+    //       ) : (
+    //           <Image color={tintColor} source={AppIcon.iconHomeWorkActive} />
+    //         );
+    //     },
+    //     tabBarLabel: Platform.isPad
+    //       ? 'Bài tập'
+    //       : ({ focused }) => {
+    //         return !focused ? (
+    //           <Text style={styles.txtLabel}>Bài tập</Text>
+    //         ) : (
+    //             <Text style={styles.txtLabelActive}>Bài tập</Text>
+    //           );
+    //       },
+    //   },
+    // },
   },
   {
-    initialRouteName: 'Self',
+    initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: false,
@@ -237,7 +267,7 @@ class TabBarComponent extends React.Component {
   render() {
     return (
       <View>
-        <FreshchatComponent />
+        <FreshchatComponent navigation={this.props.navigation}/>
         <BottomTabBar {...this.props} />
       </View>
     );

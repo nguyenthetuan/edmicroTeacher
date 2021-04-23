@@ -475,7 +475,9 @@ export default class ModalLevelComplete extends Component {
                   </Text>
                   <TouchableOpacity
                     style={styles.imageClose}
-                    onPress={() => this._closeModal()}>
+                    onPress={() => this._closeModal()}
+                    hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+                  >
                     <Image source={AppIcon.icon_close_modal} />
                   </TouchableOpacity>
                 </View>

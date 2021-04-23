@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-
+import shadowStyle from '../../../themes/shadowStyle';
 export default function ItemTest(props) {
     const { item } = props;
+    const { shadowBtn } = shadowStyle;
     return (
         <TouchableWithoutFeedback onPress={() => {
             props.show({ _id: item.testId });
         }}>
-            <View style={styles.contain}>
+            <View style={[styles.contain, { ...shadowBtn }]}>
                 <Text style={styles.styTxt} numberOfLines={1}>{item.testName}</Text>
                 <View style={[styles.styWrapCount, { backgroundColor: '#FD9F4C' }]}>
                     <Text style={styles.styCount}>{item.markDone}đ</Text>
@@ -23,13 +24,13 @@ export default function ItemTest(props) {
 
 const styles = StyleSheet.create({
     contain: {
-        borderWidth: 1,
         marginHorizontal: 20,
         marginTop: 5,
         padding: 10,
         borderRadius: 5,
-        borderColor: '#56CCF2',
         flexDirection: 'row',
+        backgroundColor: '#fff'
+
     },
     styTxt: {
         fontFamily: 'Nunito-Regular',

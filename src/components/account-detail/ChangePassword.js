@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import { Platform, View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Keyboard, SafeAreaView, Dimensions } from 'react-native';
+import {
+  Platform,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Keyboard,
+  SafeAreaView,
+  Dimensions
+} from 'react-native';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { Formik } from 'formik';
 import dataHelper from '../../utils/dataHelper';
 import HeaderNavigation from '../common/HeaderNavigation';
 import LoadingScreen from '../libs/LoadingScreen';
-import FormInput from '../common/FormInput';
+import InputPrimary from '../common-new/InputPrimary';
 import Button from '../common/Button';
 import { mainStyle } from '../../themes';
 import { changePasswordAction } from '../../actions/userAction';

@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   View,
-  TouchableOpacity,
   Dimensions,
   Image,
   FlatList,
@@ -225,7 +224,7 @@ function Item(props) {
         </TouchableWithoutFeedback>
         <AwesomeButton
           onPress={onAssignment}
-          style={[styles.AweBtn, { ...shadowBtn }]}
+          style={[styles.AweBtn]}
           height={45}
           backgroundColor={'#2D9CDB'}
           borderRadius={25}
