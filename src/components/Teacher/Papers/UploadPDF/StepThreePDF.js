@@ -152,7 +152,12 @@ class StepThreePDF extends Component {
         if (token) {
             const res = await apiPapers.assignmentContent({ token, body });
             if (res && res.status === 0) {
-                this.toast.show('Tạo bộ đề thành công!');
+                this.toast.show(
+                    <View style={styles.styleTostSuccess}>
+                        <Image source={require('../../../../asserts/images/Exclude.png')} />
+                        <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
+                    </View>
+                );
                 const { token, enumType } = await dataHelper.getToken();
                 const schoolYear = new Date().getFullYear();
                 this.props.fetchAssignmentAction({ token, enumType, schoolYear });
@@ -370,6 +375,29 @@ export default connect(
 )(StepThreePDF);
 
 const styles = StyleSheet.create({
+    txtSuccess: {
+        color: '#fff',
+        fontWeight: 'bold'
+    },
+    styleTostError: {
+        backgroundColor: 'red',
+        height: 60,
+        width: width - 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        margin: 0,
+        borderRadius: 5
+    },
+    styleTostSuccess: {
+        height: 80,
+        width: width - 40,
+        alignItems: 'center',
+        backgroundColor: '#4DE1A3',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 20
+    },
     rootView: {
         flex: 1,
         backgroundColor: '#fff',
