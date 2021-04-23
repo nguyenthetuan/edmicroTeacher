@@ -714,7 +714,7 @@ class MarkingView extends Component {
       return (
         <RippleButton
           onPress={() => {
-            this.onButtonQuestionPress(index);
+            // this.onButtonQuestionPress(index);
           }}
           style={[
             styles.buttonQuestion,
