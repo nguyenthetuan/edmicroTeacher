@@ -17,6 +17,7 @@ import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 import ItemInfo from '../../modals/ItemInfo';
+import AppIcon from '../../../utils/AppIcon';
 import shadowStyle from '../../../themes/shadowStyle';
 export default class ModalMockExamStart extends Component {
   constructor(props) {
@@ -84,47 +85,52 @@ export default class ModalMockExamStart extends Component {
                 {!_.isEmpty(data) && !isLoading ? (
                   <>
                     <Text style={styles.name}>{data.title}</Text>
-                    {/* <View style={styles.wrapTime}>
-                      <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image
-                          source={require('../../../asserts/appIcon/iconSum.png')}
-                        />
-                        <Text
-                          style={{
-                            fontFamily: 'Nunito-Regular',
-                            fontSize: RFFonsize(12),
-                            marginLeft: 9,
-                          }}>
-                          Tổng số câu
-                          </Text>
-                      </View>
-                      <View style={styles.stylLine} />
-                      <Text style={styles.sum}>{data.totalQuestion}</Text>
-                    </View> */}
-                    <View>
+                    <Image source={require('../../../asserts/images/image_modalStart.png')}
+                      style={{ alignSelf: 'center', marginTop: 16 }} />
+                    <View style={styles.totalView}>
                       <ItemInfo number={data.totalQuestion} type={'Total'} />
-                      <ItemInfo number={data.correctAnswer} type={'True'} />
-                      <ItemInfo number={data.inCorrectAnswer} type={'False'} />
-                      <ItemInfo number={data.totalSkip} type={'Skip'} />
-                      <ItemInfo number={data.speed} type={'Speed'} />
                       <ItemInfo number={data.totalDurationDoing} type={'TimePratice'} />
-                      <ItemInfo number={data.accuracy} type={'Acur'} />
+                      <ItemInfo number={(data.speed).toFixed(2)} type={'Speed'} />
+                      <ItemInfo number={(data.accuracy).toFixed(2)} type={'Acur'} />
+                    </View>
+                    <View style={styles.boxRow}>
+                      <View style={styles.cusStatis}>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image source={AppIcon.r_correct} style={{ alignSelf: 'center' }} />
+                          <Text style={styles.txtTitle}>Số câu đúng</Text>
+                        </View>
+                        <Text style={styles.numberCount}>
+                          {data.correctAnswer}</Text>
+                      </View>
+                      <View style={styles.cusStatis}>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image source={AppIcon.r_false} style={{ alignSelf: 'center' }} />
+                          <Text style={styles.txtTitle}>Số câu sai</Text>
+                        </View>
+                        <Text style={styles.numberCount}>{data.inCorrectAnswer}</Text>
+                      </View>
+                      <View style={styles.cusStatis}>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image source={AppIcon.icon_number_of_skip} style={{ alignSelf: 'center' }} />
+                          <Text style={styles.txtTitle}>Số câu bỏ qua</Text>
+                        </View>
+                        <Text style={styles.numberCount}>{data.totalSkip}</Text>
+                      </View>
+
                     </View>
                     <View style={styles.wrapTime}>
-                      <TouchableOpacity
-                        onPress={() => this._startMockExam()}
-                        style={[styles.btnStart, { ...shadowBtn }]}>
-                        <Text style={styles.txtButon}>
-                          {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
-                          Làm thử
+                      <TouchableWithoutFeedback onPress={() => this._startMockExam()}>
+                        <View style={[styles.btnStart, { ...shadowBtn }]}>
+                          <Text style={styles.txtButon}>
+                            Làm thử
                         </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => this.setState({ visible: false })}
-                        style={[styles.btnBack, { ...shadowBtn }]}>
-                        <Text style={styles.txtButon}>Quay lại</Text>
-                      </TouchableOpacity>
+                        </View>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback onPress={() => this.setState({ visible: false })}>
+                        <View style={[styles.btnBack, { ...shadowBtn }]}>
+                          <Text style={styles.txtButon}>Quay lại</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     </View>
                   </>
                 ) : (
@@ -149,14 +155,15 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: '#fff',
     borderRadius: 5,
-    alignItems: 'center',
     padding: 13,
   },
   name: {
     fontSize: RFFonsize(18),
-    fontFamily: 'Nunito-Regular',
+    lineHeight: RFFonsize(22),
+    fontFamily: 'Nunito-Bold',
     color: '#2D9CDB',
-    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 6
   },
   message: {
     textAlign: 'center',
@@ -176,10 +183,11 @@ const styles = StyleSheet.create({
     color: '#2D9CDB',
   },
   txtButon: {
+    fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
-    fontFamily: 'Nunito-Regular',
+    lineHeight: RFFonsize(18),
     color: '#fff',
-    fontWeight: 'bold',
+    marginVertical: 3
   },
   stylLine: {
     height: 1,
@@ -196,21 +204,18 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     marginTop: 23,
+    marginBottom: 5
   },
   btnStart: {
-    height: 35,
     backgroundColor: '#55B619',
     borderRadius: 5,
-    // paddingHorizontal: 50,
     paddingVertical: 5,
     width: 0.4 * width,
     alignItems: 'center'
   },
   btnBack: {
-    height: 35,
     backgroundColor: '#F98E2F',
     borderRadius: 5,
-    // paddingHorizontal: 50,
     width: 0.4 * width,
     alignItems: 'center',
     paddingVertical: 5,
@@ -220,4 +225,33 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     marginLeft: 9,
   },
+  boxRow: {
+    flexDirection: 'column',
+    marginTop: 16
+  },
+  totalView: {
+    flexDirection: 'row',
+    // marginHorizontal: 16,
+    alignSelf: 'center',
+    marginTop: 10
+  },
+  cusStatis: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    marginTop: 10
+  },
+  txtTitle: {
+    color: '#000',
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    marginLeft: 10,
+    alignSelf: 'center',
+  },
+  numberCount: {
+    fontFamily: 'Nunito-Bold',
+    color: '#2D9CDB',
+    fontSize: RFFonsize(14),
+    alignSelf: 'center'
+  }
 });

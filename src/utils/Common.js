@@ -278,7 +278,7 @@ const getDescription = (data) => {
 const getLabel = (type) => {
   switch (type) {
     case 'Total':
-      return 'Tổng số câu';
+      return 'Số câu';
     case 'True':
       return 'Số câu đúng';
     case 'False':
@@ -286,7 +286,7 @@ const getLabel = (type) => {
     case 'Acur':
       return 'Độ chính xác';
     case 'Speed':
-      return 'Tốc độ trả lời';
+      return 'Tốc độ';
     case 'Pause':
       return 'Số lần tạm dừng';
     case 'Skip':
@@ -304,9 +304,9 @@ const getLabel = (type) => {
     case 'FalseAndSkip':
       return 'Số câu sai và bỏ qua';
     case 'TimePratice':
-      return 'Thời gian luyện tập';
+      return 'Thời gian';
     case 'TimePratice':
-      return 'Thời gian kiểm tra';
+      return 'Thời gian';
     default:
       return '';
   }

@@ -32,7 +32,7 @@ const Tab = createMaterialTopTabNavigator(
     lazy: false,
     tabBarOptions: {
       upperCaseLabel: false,
-      pressOpacity: 0.5,
+      pressOpacity: 1,
       activeTintColor: '#56CCF2',
       inactiveTintColor: '#C4C4C4',
       allowFontScaling: true,

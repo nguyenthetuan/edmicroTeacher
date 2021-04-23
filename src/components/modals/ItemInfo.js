@@ -45,10 +45,10 @@ export default class ItemInfo extends Component {
     }
     return (
       <Animated.View style={[styles.rowItem, { transform: [{ scale: this.state.scaleText }] }]}>
-        <Animated.Image source={Common.getIconModal(status)} resizeMode={'contain'} />
-        <Text style={[styles.textItem, { color: '#000' }]}>{`${Common.getLabel(status)}`}</Text>
-        <View style={styles.stylLine} />
+        <Animated.Image source={Common.getIconModal(status)} resizeMode={'contain'} style={{ alignSelf: 'center' }} />
+        {/* <View style={styles.stylLine} /> */}
         <Text style={[styles.textNumber, { color: Common.getTextColor(status) || '#000' }]}>{number}</Text>
+        <Text style={[styles.textItem, { color: '#000' }]}>{`${Common.getLabel(status)}`}</Text>
       </Animated.View>
     );
   }
@@ -68,23 +68,26 @@ ItemInfo.propTypes = {
 
 const styles = StyleSheet.create({
   rowItem: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     paddingVertical: 7,
     marginTop: 5,
-    width: '100%'
+    paddingHorizontal: 16,
+    alignSelf: "center",
   },
   textItem: {
     color: '#5bc0de',
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(14),
-    marginLeft: 10,
-    alignSelf: 'flex-end',
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    alignSelf: 'center',
+    marginTop: 5,
   },
   textNumber: {
     fontFamily: 'Nunito-Bold',
     color: '#000',
     fontSize: RFFonsize(14),
-    alignSelf: 'flex-end'
+    alignSelf: 'center',
+    marginTop: 5,
   },
   stylLine: {
     height: 1,

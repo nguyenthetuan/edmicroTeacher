@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   Platform,
+  TouchableWithoutFeedback
 } from 'react-native';
 import AppIcon from './AppIcon';
 import {
@@ -20,6 +21,7 @@ import apiUserHelper from '../services/apiUserHelper';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../utils/Fonts';
 import { openChatMessenger } from './CommonBeta';
+import shadowStyle from '../themes/shadowStyle';
 
 const APP_ID = '8d0af544-bbe3-4d5b-bd87-3ed6e2338a35';
 const APP_KEY = '97de673e-7c15-46d6-9a22-875bf38f2ecf';
@@ -175,22 +177,22 @@ export default class FreshchatComponent extends Component {
     // Intercom.removeEventListener(Intercom.Notifications.UNREAD_COUNT, this._onUnreadChange);
   }
 
-
-
   render() {
     const { count } = this.state;
     const { style, navigation } = this.props;
+    const { shadowBtn } = shadowStyle;
     return (
-      <TouchableOpacity
-        style={[styles.wrapIntercom, style]}
+      <TouchableWithoutFeedback
         onPress={this.registerUnidentifiedUser}>
-        <Image source={require('../asserts/icon/icon_msg.png')} resizeMode={'contain'} style={{height:80,width:80}}/>
-        {count > 0 && (
-          <View style={styles.wrapTxtIntercom}>
-            <Text style={styles.txtIntercom}>{count}</Text>
-          </View>
-        )}
-      </TouchableOpacity>
+        <View style={[styles.wrapIntercom, style, shadowBtn]}>
+          <Image source={require('../asserts/icon/icon_msg.png')} style={styles.borInbox} />
+          {count > 0 && (
+            <View style={styles.wrapTxtIntercom}>
+              <Text style={styles.txtIntercom}>{count}</Text>
+            </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -202,6 +204,9 @@ const styles = StyleSheet.create({
     bottom: isIphoneX() ? 100 : 65,
     right: 10,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    padding: 1.5
   },
   txtIntercom: {
     fontWeight: '600',
@@ -219,4 +224,9 @@ const styles = StyleSheet.create({
     top: -10,
     right: 0,
   },
+  borInbox: {
+    height: 60,
+    width: 60,
+    paddingHorizontal: 1
+  }
 });
