@@ -14,8 +14,6 @@ import AwesomeButton from 'react-native-really-awesome-button';
 import shadowStyle from '../../../../themes/shadowStyle';
 import { PieChart } from 'react-native-svg-charts';
 import {
-    statisticClassAction,
-    statisticMissionAction,
     statisticAssignmentAction
 } from '../../../../actions/statisticAction';
 class AssignmentItem extends Component {
@@ -44,10 +42,11 @@ class AssignmentItem extends Component {
     render() {
         const { shadowBtn } = shadowStyle;
         const { assignment } = this.props;
+        const subtraction = assignment?.totalAssignment - assignment?.totalAssignmentNotAssign;
         let data = [
             {
                 key: 1,
-                amount: assignment.totalAssign,
+                amount: subtraction,
                 svg: { fill: '#F2B27C' },
             },
             {
@@ -104,7 +103,8 @@ class AssignmentItem extends Component {
                             <View style={styles.noteColor} />
                             <Text style={styles.txtNote}>Hoàn thành</Text>
                         </View>
-                        <Text style={styles.countNumber}>{assignment?.totalAssign}</Text>
+                        {/* <Text style={styles.countNumber}>{assignment?.totalAssign}</Text> */}
+                        <Text style={styles.countNumber}>{assignment?.totalAssignment - assignment?.totalAssignmentNotAssign}</Text>
                     </View>
                     <AwesomeButton
                         onPress={this.onAssignment.bind(this)}

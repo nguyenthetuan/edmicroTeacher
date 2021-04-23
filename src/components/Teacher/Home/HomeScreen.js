@@ -5,7 +5,10 @@ import {
     SafeAreaView,
     Animated,
     AppState,
-    ActivityIndicator
+    ActivityIndicator,
+    RefreshControl,
+    ScrollView,
+    Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
@@ -25,7 +28,7 @@ import {
     statisticMissionAction,
     statisticAssignmentAction
 } from '../../../actions/statisticAction';
-
+const { height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 
 
@@ -148,18 +151,28 @@ class HomeScreen extends Component {
                     {...user}
                     navigation={this.props.navigation}
                 />
-                <WellcomeTxt />
-                <View style={HomeStyle.body}>
-                    {
-                        isLoading ?
-                            <ActivityIndicator size="small" style={{ flex: 1 }} />
-                            :
-                            <StatisticHome
-                                data={data}
-                                navigation={this.props.navigation}
-                            />
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={false}
+                            onRefresh={this.checkToken}
+                        />
                     }
-                </View>
+                    showsVerticalScrollIndicator={false}
+                    style={{ paddingBottom: 50 }}>
+                    <WellcomeTxt />
+                    <View style={HomeStyle.body}>
+                        {
+                            isLoading ?
+                                <ActivityIndicator size="small" style={{ flex: 1, height: height * 0.5 }} />
+                                :
+                                <StatisticHome
+                                    data={data}
+                                    navigation={this.props.navigation}
+                                />
+                        }
+                    </View>
+                </ScrollView>
             </View>
         )
     }
