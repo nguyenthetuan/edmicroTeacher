@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingVertical: 7,
     marginTop: 5,
-    paddingHorizontal: 2,
+    paddingHorizontal: 16,
     alignSelf: "center",
   },
   textItem: {
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
-    marginLeft: 10,
     alignSelf: 'center',
     marginTop: 5,
   },

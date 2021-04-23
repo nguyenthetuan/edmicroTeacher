@@ -17,6 +17,7 @@ import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 import ItemInfo from '../../modals/ItemInfo';
+import AppIcon from '../../../utils/AppIcon';
 import shadowStyle from '../../../themes/shadowStyle';
 export default class ModalMockExamStart extends Component {
   constructor(props) {
@@ -89,21 +90,30 @@ export default class ModalMockExamStart extends Component {
                     <View style={styles.totalView}>
                       <ItemInfo number={data.totalQuestion} type={'Total'} />
                       <ItemInfo number={data.totalDurationDoing} type={'TimePratice'} />
-                      <ItemInfo number={data.speed} type={'Speed'} />
-                      <ItemInfo number={data.accuracy} type={'Acur'} />
+                      <ItemInfo number={(data.speed).toFixed(2)} type={'Speed'} />
+                      <ItemInfo number={(data.accuracy).toFixed(2)} type={'Acur'} />
                     </View>
                     <View style={styles.boxRow}>
                       <View style={styles.cusStatis}>
-                        <Text style={styles.txtTitle}>Số câu đúng</Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image source={AppIcon.r_correct} style={{ alignSelf: 'center' }} />
+                          <Text style={styles.txtTitle}>Số câu đúng</Text>
+                        </View>
                         <Text style={styles.numberCount}>
                           {data.correctAnswer}</Text>
                       </View>
                       <View style={styles.cusStatis}>
-                        <Text style={styles.txtTitle}>Số câu sai</Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image source={AppIcon.r_false} style={{ alignSelf: 'center' }} />
+                          <Text style={styles.txtTitle}>Số câu sai</Text>
+                        </View>
                         <Text style={styles.numberCount}>{data.inCorrectAnswer}</Text>
                       </View>
                       <View style={styles.cusStatis}>
-                        <Text style={styles.txtTitle}>Số câu bỏ qua</Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image source={AppIcon.icon_number_of_skip} style={{ alignSelf: 'center' }} />
+                          <Text style={styles.txtTitle}>Số câu bỏ qua</Text>
+                        </View>
                         <Text style={styles.numberCount}>{data.totalSkip}</Text>
                       </View>
 
@@ -217,7 +227,6 @@ const styles = StyleSheet.create({
   },
   boxRow: {
     flexDirection: 'column',
-    marginHorizontal: 5,
     marginTop: 16
   },
   totalView: {
@@ -228,7 +237,8 @@ const styles = StyleSheet.create({
   },
   cusStatis: {
     flexDirection: "row",
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop: 10
   },
   txtTitle: {
     color: '#000',
@@ -237,13 +247,11 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(16),
     marginLeft: 10,
     alignSelf: 'center',
-    marginTop: 5,
   },
   numberCount: {
     fontFamily: 'Nunito-Bold',
     color: '#2D9CDB',
     fontSize: RFFonsize(14),
-    alignSelf: 'center',
-    marginTop: 5,
+    alignSelf: 'center'
   }
 });

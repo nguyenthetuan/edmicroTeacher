@@ -304,9 +304,9 @@ const getLabel = (type) => {
     case 'FalseAndSkip':
       return 'Số câu sai và bỏ qua';
     case 'TimePratice':
-      return 'Thời gian luyện tập';
+      return 'Thời gian';
     case 'TimePratice':
-      return 'Thời gian kiểm tra';
+      return 'Thời gian';
     default:
       return '';
   }
