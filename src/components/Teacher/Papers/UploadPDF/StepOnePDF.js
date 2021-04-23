@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Dimensions } from 'react-native';
 import UploadPDFComp from './UploadPDFComp';
 import AppIcon from '../../../../utils/AppIcon';
 import RippleButton from '../../../libs/RippleButton';
@@ -7,8 +7,7 @@ import DocumentPicker from 'react-native-document-picker';
 import dataHelper from '../../../../utils/dataHelper';
 import Toast from 'react-native-easy-toast';
 import apiPapers from '../../../../services/apiPapersTeacher';
-
-
+const { width, height } = Dimensions.get('window')
 
 export default class StepOnePDF extends Component {
     constructor(props) {
@@ -35,7 +34,9 @@ export default class StepOnePDF extends Component {
         console.log("🚀 ~ file: StepOnePDF.js ~ line 35 ~ StepOnePDF ~ type", type)
         if (type === 1) {
             if (!this.state.urlFilePDFAS) {
-                this.toast.show('Chưa có tài liệu PDF');
+                this.toast.show(
+                    ' Error Chưa có tài liệu PDF'
+                    );
                 return;
             }
         } else {
@@ -173,7 +174,7 @@ export default class StepOnePDF extends Component {
                 <UploadPDFComp title='Bộ đề PDF' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTost} />
                 <View style={{ width: '100%', height: 50, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>
                         <Text style={styles.textNext}>Tiếp tục</Text>
@@ -185,6 +186,13 @@ export default class StepOnePDF extends Component {
 }
 
 const styles = StyleSheet.create({
+    styleTost: {
+        backgroundColor: 'red',
+        height: 80,
+        width: width-40,
+        justifyContent:'center',
+        alignItems:'center'
+    },
     container: {
         flex: 1,
         marginTop: 10,

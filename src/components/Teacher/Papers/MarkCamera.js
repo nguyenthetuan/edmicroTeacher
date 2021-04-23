@@ -257,7 +257,7 @@ class MarkCamera extends Component {
     _onFullView = (type) => {
         if (type == 1) {
             if (!this.state.urlFileAnswerPDF) {
-                this.toast.show('Chưa có tài liệu PDF');
+                this.toast.show('Chưa có tài liệu PDF!')
                 return;
             }
         } else {
@@ -313,7 +313,14 @@ class MarkCamera extends Component {
                         urlFilePDF: resSignedUrl.urlFile,
                         loadingUpload: false,
                     });
-                    this.toast.show('Tải lên PDF thành công!');
+                    this.refToast.show(<View style={styles.styleTostSuccess}>
+                        <Image source={require('../../../asserts/images/Exclude.png')} />
+                        <View>
+                            <Text style={styles.txtSuccess}>Success</Text>
+                            <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
+                        </View>
+                    </View>)
+
                 } else {
                     this.toast.show('Tải lên PDF thất bại!');
                     this.setState({ loadingUpload: false });
@@ -381,7 +388,13 @@ class MarkCamera extends Component {
                                 urlFilePDF: resSignedUrl.urlFile,
                                 loadingUpload: false,
                             });
-                            this.toast.show('Tải lên PDF thành công!');
+                            this.refToast.show(<View style={styles.styleTostSuccess}>
+                                <Image source={require('../../../asserts/images/Exclude.png')} />
+                                <View style={{ marginLeft: 20 }}>
+                                    <Text style={styles.txtSuccess}>Success</Text>
+                                    <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
+                                </View>
+                            </View>)
                         } else {
                             this.toast.show('Tải lên PDF thất bại');
                             this.setState({ loadingUpload: false });
@@ -415,6 +428,7 @@ class MarkCamera extends Component {
             } = this.state;
             if (!name) {
                 this.toast.show('Chưa nhập tên bộ đề!');
+
                 return;
             }
             if (!gradeCode.length) {
@@ -470,7 +484,11 @@ class MarkCamera extends Component {
             if (token) {
                 const res = await apiPapers.UploadPdfCam({ token, body });
                 if (res && res.status === 1) {
-                    this.refToast.show('Tạo bộ đề thành công!');
+                    this.refToast.show(
+                        <View style={styles.styleTostSuccess}>
+                            <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
+                        </View>
+                    );
                     setTimeout(() => {
                         // this.props.navigation.goBack();
                         this.props.navigation.navigate('Assignment', {
@@ -742,7 +760,7 @@ class MarkCamera extends Component {
                                 </TouchableWithoutFeedback>
                             </ScrollView>
                         </KeyboardAvoidingView>
-                        <Toast ref={ref => this.refToast = ref} position={'bottom'} />
+                        <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} style={{ padding: 0 }} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
                         {loadingUpload &&
                             <View>
@@ -816,6 +834,29 @@ export default connect(
 )(MarkCamera);
 
 const styles = StyleSheet.create({
+    txtSuccess: {
+        color: '#fff',
+        fontWeight: 'bold'
+    },
+    styleTostError: {
+        backgroundColor: 'red',
+        height: 60,
+        width: width - 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        margin: 0,
+        borderRadius: 5
+    },
+    styleTostSuccess: {
+        height: 80,
+        width: width - 40,
+        alignItems: 'center',
+        backgroundColor: '#4DE1A3',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 20
+    },
     container: {
         flex: 1,
         backgroundColor: '#FFF',
