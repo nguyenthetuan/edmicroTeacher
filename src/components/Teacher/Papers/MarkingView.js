@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   Animated,
   SafeAreaView,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
@@ -448,6 +449,21 @@ class MarkingView extends Component {
     this.setState({ currentIndex: index });
   };
 
+  onPressPublicScore = () => {
+    Alert.alert('Thông báo', 'Bạn có chắc chắn muốn công bố điểm cho cả lớp không? Lưu ý: Các câu, các bài làm chưa được chấm sẽ bị 0 điểm.', [
+      {
+        text: 'Xác nhận',
+        onPress: () => {
+          this.publicedScore();
+        }
+      },
+      {
+        text: 'Hủy bỏ',
+        onPress: () => { }
+      },
+    ])
+  }
+
   publicedScore = async () => {
     const isErr = this.checkScore();
     const { selectedValueClass, listClassAssigned, listStudentAssigned } = this.state;
@@ -504,7 +520,7 @@ class MarkingView extends Component {
           </View>
           <RippleButton
             style={styles.buttonReleasePoint}
-            onPress={() => this.publicedScore()}>
+            onPress={() => this.onPressPublicScore()}>
             <Text style={{ fontFamily: 'Nunito', fontSize: RFFonsize(12), color: '#fff' }}>
               Công bố điểm
             </Text>
