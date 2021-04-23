@@ -5,14 +5,13 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback
 } from 'react-native';
-import RippleButton from '../common-new/RippleButton';
-import AppIcon from '../../utils/AppIcon';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from './Avatar';
 import { RFFonsize } from '../../utils/Fonts';
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 class HeaderMenu extends React.PureComponent {
   constructor(props) {
@@ -103,18 +102,17 @@ class HeaderMenu extends React.PureComponent {
               : null
           }
         </View>
-        <View
-          style={styles.changeClass}
+
+        <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+          onPress={this.ChangePassword}
         >
-          <RippleButton
-            onPress={this.ChangePassword}
-          >
+          <View style={styles.changeClass}>
             <Text
               style={styles.txtChange}>
               Đổi mật khẩu
           </Text>
-          </RippleButton>
-        </View>
+          </View>
+        </TouchableWithoutFeedback>
       </ImageBackground>
     );
   }
