@@ -197,7 +197,8 @@ export default class UploadPDFStepByStep extends Component {
                     <HeaderNavigation
                         title={'Câu hỏi PDF'}
                         navigation={this.props.navigation}
-                        actionIcon={this.state.currentPosition == 1 ? Appicon.icon_octiconSettingsV3 : false}
+                        // actionIcon={this.state.currentPosition == 1 ? Appicon.icon_octiconSettingsV3 : false}
+                        actionIcon={false}
                         goBack={this.goBack}
                         color={'#fff'}
                         backgroundColor={'#2D9CDB'}
