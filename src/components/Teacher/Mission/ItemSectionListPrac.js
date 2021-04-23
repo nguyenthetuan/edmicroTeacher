@@ -19,7 +19,7 @@ export default class ItemSectionListPrac extends Component {
     count: 1,
     percentCount: 100
   }
-  
+
   changeTextScore = (score) => {
     score = parseFloat(score) || '';
     const { item } = this.props;
@@ -47,9 +47,22 @@ export default class ItemSectionListPrac extends Component {
         {
           text: 'Đặt lại',
           onPress: () => {
-            item.countDone = '1';
-            item.percentCount = '1',
-              this.setState({ percentCount: '1' });
+            item.countDone = '100';
+            item.percentCount = '100',
+              this.setState({ percentCount: '100' });
+          }
+        }
+      ]);
+      return;
+    }
+    if (percentCount > 100) {
+      Alert.alert('Thông báo', 'Số lần làm bài phải nhỏ hơn 100', [
+        {
+          text: 'Đặt lại',
+          onPress: () => {
+            item.countDone = '100';
+            item.percentCount = '100',
+              this.setState({ percentCount: '100' });
           }
         }
       ]);
@@ -65,7 +78,7 @@ export default class ItemSectionListPrac extends Component {
       this.setState({ score: 7 });
     }
     if (percentCount == '' || percentCount == 0) {
-      this.setState({ percentCount: 1 });
+      this.setState({ percentCount: 100 });
     }
   }
 
