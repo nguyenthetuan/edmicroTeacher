@@ -13,7 +13,7 @@ export default function TotalQuestionConfig(props) {
         let numberQuestion = props.questionList?.length;
         if (numberQuestion) {
             let flatlistHeightTmp = numberQuestion * ITEM_HEIGHT;
-            setFlatlistHeight(flatlistHeightTmp);
+            setFlatlistHeight(flatlistHeightTmp + 5);
         }
     }, [props.questionList])
 
@@ -71,7 +71,7 @@ export default function TotalQuestionConfig(props) {
                 data={props.questionList}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ width: '100%', height: flatlistHeight + 5 }}
+                contentContainerStyle={{ width: '100%', height: flatlistHeight }}
                 onLayout={(e) => {
                     console.log(e.nativeEvent.layout);
                 }}
