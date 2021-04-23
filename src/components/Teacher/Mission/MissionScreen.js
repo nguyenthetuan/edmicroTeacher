@@ -125,17 +125,22 @@ export default class MissionScreen extends Component {
     const {
       textSearch
     } = this.state;
+    const { isLoadingMission } = this.props;
     return (
       <View style={{ width: '100%' }}>
-        <SearchComponent
-          placeholder="Tìm kiếm"
-          cancelColor="#2D9CDB"
-          value={textSearch}
-          onChange={this.onChangeText}
-          onSearchClear={this.onSearchClear}
-          customSearchInputStyle={styles.textSear}
-          customCancelTextStyle={styles.txtCan}
-        />
+        {isLoadingMission ?
+          null
+          :
+          <SearchComponent
+            placeholder="Tìm kiếm"
+            cancelColor="#2D9CDB"
+            value={textSearch}
+            onChange={this.onChangeText}
+            onSearchClear={this.onSearchClear}
+            customSearchInputStyle={styles.textSear}
+            customCancelTextStyle={styles.txtCan}
+          />
+        }
       </View>
     );
   };
@@ -166,7 +171,7 @@ export default class MissionScreen extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, isLoadingMission } = this.props;
     const {
       positionY,
       listMissionSearch,
@@ -222,11 +227,7 @@ export default class MissionScreen extends Component {
             ],
               { useNativeDriver: true }
             )}
-            style={[
-              styles.scroll_view,
-              {
-              }
-            ]}
+            style={styles.scroll_view}
           />
 
         </SafeAreaView>
