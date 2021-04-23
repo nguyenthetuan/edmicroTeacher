@@ -347,9 +347,9 @@ export default class StepTwoPDF extends Component {
                         />
                         <TotalQuestionConfig questionList={activeButtonIndex === 0 ? questionsTN : questionsTL} onChangeOptionAnswer={this.onChangeOptionAnswer} onChangePointEachQS={this.onChangePointEachQS} typeQuestion={activeButtonIndex} />
                         <View style={styles.wrapEnd}>
-                            {/* <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepThree}>
+                            <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepThree}>
                                 <Text style={styles.textNext}>Tiếp tục</Text>
-                            </RippleButton> */}
+                            </RippleButton>
                         </View>
                     </View>
                 </View>
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     },
     wrapEnd: {
         width: '100%',
-        height: 5,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center'
     },

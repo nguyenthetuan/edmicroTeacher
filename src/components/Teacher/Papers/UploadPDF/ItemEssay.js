@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 export default function ItemEssay(props) {
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 5,
         backgroundColor: '#DADADA',
-        borderWidth: 0.5,
+        borderWidth: Platform.OS == 'android' ? 1 : 0.5,
         borderColor: '#828282',
         justifyContent: 'center'
     },

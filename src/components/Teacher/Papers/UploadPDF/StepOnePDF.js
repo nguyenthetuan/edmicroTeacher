@@ -32,7 +32,6 @@ export default class StepOnePDF extends Component {
     };
 
     onPressZoom = (type) => {
-        console.log("🚀 ~ file: StepOnePDF.js ~ line 35 ~ StepOnePDF ~ type", type)
         if (type === 1) {
             if (!this.state.urlFilePDFAS) {
                 this.toast.show('Chưa có tài liệu PDF');
@@ -65,7 +64,7 @@ export default class StepOnePDF extends Component {
             urlFilePDFAS
         };
         const condition = this.validate();
-        if (condition) {
+        if (true) {
             this.props.screenProps.handleNextStep(1, data, this.props.navigation);
             this.props.navigation.navigate('StepTwo');
         } else {
@@ -224,7 +223,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
 
-        elevation: 4,
+        elevation: 2.5,
     },
     txtUploadingPDF: {
         marginTop: 10,

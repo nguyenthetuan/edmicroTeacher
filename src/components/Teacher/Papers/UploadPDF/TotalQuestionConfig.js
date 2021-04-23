@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef, useState } from 'react';
+import React, { Component, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions, } from 'react-native';
 import ItemMultipleChoice from './ItemMultipleChoice';
 import ItemEssay from './ItemEssay';
@@ -71,7 +71,7 @@ export default function TotalQuestionConfig(props) {
                 data={props.questionList}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ width: '100%', height: flatlistHeight }}
+                contentContainerStyle={{ width: '100%', height: flatlistHeight + 5 }}
                 onLayout={(e) => {
                     console.log(e.nativeEvent.layout);
                 }}
