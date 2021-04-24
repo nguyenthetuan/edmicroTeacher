@@ -93,7 +93,6 @@ export default class ModalFillter extends Component {
 
           <TouchableWithoutFeedback onPress={this.changeStateModale}>
             <View style={[styles.btnViewStatistic, { ...shadowBtn }]}>
-
               <Text style={styles.txtBtn}>Xem thống kê</Text>
             </View>
           </TouchableWithoutFeedback>

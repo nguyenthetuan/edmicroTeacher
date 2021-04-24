@@ -421,7 +421,8 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
     color: '#000',
-    marginLeft: 10
+    marginLeft: 10,
+    marginTop: 6
   },
   styWrapSubject: {
     borderWidth: 0.5,
@@ -440,7 +441,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   styTxtInfo: {
-    fontFamily: 'Nunito-Regular',
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
+    color: '#000',
   },
   styWrapElement: {
     borderWidth: 1,

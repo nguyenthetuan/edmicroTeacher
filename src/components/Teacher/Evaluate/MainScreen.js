@@ -241,7 +241,6 @@ class MainScreen extends Component {
                 />
               </View>
             </ScrollView>
-
           </View> */}
 
           <View style={{ flexDirection: 'row' }}>

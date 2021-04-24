@@ -84,7 +84,7 @@ export default class ModalAddPaper extends PureComponent {
                                             source={require('../../../asserts/icon/icon_paperPlane.png')}
                                             style={{ tintColor: '#2D9CDB' }}
                                         />
-                                        <Text style={styles.txtUpload}>Tạo bộ đề chấm điểm camera</Text>
+                                        <Text style={styles.txtUpload}>Tạo bộ đề bằng camera</Text>
                                     </View>
                                 </RippleButton>
                             </View>
@@ -147,10 +147,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignContent: 'center',
         justifyContent: 'space-between',
-        marginHorizontal: 5,
         borderRadius: 1,
-        marginLeft: 10,
-        marginRight: 10
+        marginHorizontal: 10,
+        marginBottom: 10
     },
     txtUpload: {
         fontFamily: 'Nunito-Regular',

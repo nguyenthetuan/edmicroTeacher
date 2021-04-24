@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert,
+  TouchableWithoutFeedback
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -105,6 +106,25 @@ export default class ItemSectionListPrac extends Component {
     item.percentCount = percentCount;
     this.setState({ percentCount });
   }
+  confirmRemove = () => {
+    const { item } = this.props;
+    Alert.alert(
+      '',
+      'Bạn có muốn xoá nhiệm vụ' + " " + (item.name || item.testName) + "?",
+      [
+        {
+          text: 'Huỷ',
+          onPress: () => { },
+          style: 'Huỷ',
+        },
+        {
+          text: 'Xoá',
+          onPress: () => { this.props.onPress() }
+        },
+      ],
+      { cancelable: false },
+    );
+  }
 
   render() {
     const { item, isTest } = this.props;
@@ -126,16 +146,17 @@ export default class ItemSectionListPrac extends Component {
             onEndEditing={this.onEndEditing}
           />}
           {!isTest && <View style={styles.viewCount}>
-            <TouchableOpacity
-              style={styles.iconLeft}
+            <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
               onPress={this.handleSubCount}
             >
-              <Icon
-                name={'minus'}
-                size={8}
-                color={Platform.OS == 'android' ? '#FFF' : '#828282'}
-              />
-            </TouchableOpacity>
+              <View style={styles.iconLeft} >
+                <Icon
+                  name={'minus'}
+                  size={8}
+                  color={Platform.OS == 'android' ? '#FFF' : '#828282'}
+                />
+              </View>
+            </TouchableWithoutFeedback>
             <TextInput
               ref={ref => this.refCount = ref}
               placeholder={'0'}
@@ -146,23 +167,25 @@ export default class ItemSectionListPrac extends Component {
               onChangeText={this.changeTextCount}
               onEndEditing={this.onEndEditing}
             />
-            <TouchableOpacity
-              style={styles.iconRight}
+            <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
               onPress={this.handlePlusCount}
             >
-              <Icon
-                name={'plus'}
-                size={8}
-                color={Platform.OS == 'android' ? '#FFF' : '#828282'}
-              />
-            </TouchableOpacity>
+              <View style={styles.iconRight}>
+                <Icon
+                  name={'plus'}
+                  size={8}
+                  color={Platform.OS == 'android' ? '#FFF' : '#828282'}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>}
-          <TouchableOpacity
-            style={styles.styWrapIcon}
-            onPress={this.props.onPress}
+          <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+            onPress={this.confirmRemove}
           >
-            <IconFeather name={'delete'} style={styles.styIcon} />
-          </TouchableOpacity>
+            <View style={styles.styWrapIcon}>
+              <IconFeather name={'delete'} style={styles.styIcon} />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );
@@ -205,6 +228,7 @@ const styles = StyleSheet.create({
   },
   styWrapIcon: {
     alignSelf: 'center',
+    marginLeft: 10
   },
   viewCount: {
     flexDirection: 'row',

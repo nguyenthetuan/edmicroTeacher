@@ -8,7 +8,7 @@ import TotalQuestionConfig from './TotalQuestionConfig';
 import Toast from 'react-native-easy-toast';
 import Global from '../../../../utils/Globals';
 
-const WIDTH_WRAP_BUTTON = 0.4 * Dimensions.get('window').width;
+const WIDTH_WRAP_BUTTON = 0.5 * Dimensions.get('window').width;
 export default class StepTwoPDF extends Component {
     constructor(props) {
         super(props);

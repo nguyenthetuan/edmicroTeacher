@@ -126,14 +126,16 @@ export default class PracticeTab extends Component {
           &&
           <Text style={[styles.headerTextTitle, { alignSelf: 'center', marginTop: 100 }]}>Không tìm thấy dữ liệu</Text>
         }
-        <Accordion
-          sections={listCateTest}
-          activeSections={this.state.activeSections}
-          renderHeader={this._renderHeader}
-          renderContent={this._renderContent}
-          onChange={this._updateSections}
-          underlayColor={'#EEFAFE'}
-        />
+        <View style={{ marginTop: 16 }}>
+          <Accordion
+            sections={listCateTest}
+            activeSections={this.state.activeSections}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent}
+            onChange={this._updateSections}
+            underlayColor={'#EEFAFE'}
+          />
+        </View>
       </ScrollView>
     );
   }
@@ -155,8 +157,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderColor: '#BDBDBD',
     flexDirection: 'row',
-    marginTop: 16,
-    backgroundColor:'#fff'
+    marginTop: 6,
+    backgroundColor: '#fff'
   },
   headerTextIndex: {
     fontFamily: 'Nunito-Bold',
