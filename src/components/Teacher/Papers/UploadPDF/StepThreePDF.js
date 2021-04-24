@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, TextInput, Dimensions, Keyboard, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Dimensions,
+    Keyboard,
+    TouchableOpacity,
+    Image,
+    ScrollView,
+    FlatList,
+    TouchableWithoutFeedback
+} from 'react-native';
 import DropdownMultiSelect from '../../Homework/DropdownMultiSelect';
 import apiPapers from '../../../../services/apiPapersTeacher';
 import Dropdown from '../../Homework/Dropdown';
@@ -15,10 +27,10 @@ import {
 import ModalClass from '../ModalClass';
 import ModalSubject from '../ModalSubject';
 import _ from 'lodash';
-import { FlatList } from 'react-native-gesture-handler';
 import Common from '../../../../utils/Common';
 import AppIcon from '../../../../utils/AppIcon';
-
+import { RFFonsize } from '../../../../utils/Fonts';
+import Icon from 'react-native-vector-icons/FontAwesome';
 const { width, height } = Dimensions.get('window');
 
 class StepThreePDF extends Component {
@@ -257,18 +269,27 @@ class StepThreePDF extends Component {
                         numberOfLines={1}
                         returnKeyType={'done'}
                         placeholder={'Nhập tên bài kiểm tra'}
-                        placeholderTextColor={'#BDBDBD'}
+                        placeholderTextColor={'#979797'}
                         style={styles.inputName}
                     />
 
                     <Text style={styles.styTxtLabel}>Môn học</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                        <TouchableOpacity
-                            style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
+                        <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+                            <Text style={styles.titleDes}>Môn học</Text>
+                        </View>
+                        <TouchableWithoutFeedback
                             onPress={() => { this.refModalSubject.onOpen() }}
                         >
-                            <Image source={AppIcon.icon_arrow_down} />
-                        </TouchableOpacity>
+                            <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
+                                <Icon
+                                    name={'angle-down'}
+                                    size={25}
+                                    color={Platform.OS == 'android' ? '#979797' : '#000'}
+                                    style={styles.icon}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
                         <FlatList
                             data={subjectActive}
                             keyExtractor={(item, index) => index.toString()}
@@ -286,12 +307,21 @@ class StepThreePDF extends Component {
                     </View>
                     <Text style={styles.styTxtLabel}>Khối lớp</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                        <TouchableOpacity
-                            style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}
+                        <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+                            <Text style={styles.titleDes}>Khối lớp</Text>
+                        </View>
+                        <TouchableWithoutFeedback
                             onPress={() => { this.refModalClass.onOpen() }}
                         >
-                            <Image source={AppIcon.icon_arrow_down} />
-                        </TouchableOpacity>
+                            <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
+                                <Icon
+                                    name={'angle-down'}
+                                    size={25}
+                                    color={Platform.OS == 'android' ? '#979797' : '#000'}
+                                    style={styles.icon}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
                         <FlatList
                             data={gradeActive}
                             keyExtractor={(item, index) => index.toString()}
@@ -412,7 +442,8 @@ const styles = StyleSheet.create({
         height: 40,
         marginBottom: 5,
         minWidth: width - 50,
-        borderRadius: 4.5
+        borderRadius: 4.5,
+        flexDirection: "row"
     },
     styTxtLabel: {
         fontFamily: 'Nunito',
@@ -463,15 +494,12 @@ const styles = StyleSheet.create({
     wrapEnd: {
         width: '100%',
         height: 50,
-        justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute',
+        alignSelf: 'center',
         bottom: 0,
-        paddingLeft: 16
     },
     buttonNext: {
         width: 160,
-        height: 30,
         borderRadius: 15,
         backgroundColor: '#2D9CDB',
         justifyContent: 'center',
@@ -479,11 +507,23 @@ const styles = StyleSheet.create({
         // bottom: 50,
     },
     textNext: {
-        fontSize: 14,
-        lineHeight: 16,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
         fontFamily: 'Nunito-bold',
         color: "#fff",
-        fontWeight: '800',
-        top: 2
+        marginVertical: 7
     },
+    icon: {
+        zIndex: -1,
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        color: '#979797'
+    },
+    titleDes: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
+        color: "#979797",
+        paddingLeft: 5
+    }
 })
