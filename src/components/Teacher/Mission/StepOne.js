@@ -253,7 +253,10 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     height: 45,
     backgroundColor: '#fff',
-    paddingRight: 40
+    paddingRight: 40,
+    fontFamily: "Nunito-Regular",
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18)
   },
   styWrapDes: {
     paddingHorizontal: 16,
@@ -331,10 +334,10 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 5,
     color: '#000',
     fontFamily: 'Nunito-Regular',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
     height: 35,
-    margin: 16,
-    // borderWidth: 1,
-    // borderColor: '#979797',
+    margin: 16
   },
   underline: {
     borderTopWidth: 0,
@@ -343,11 +346,11 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 5,
     borderTopWidth: 0,
     color: '#000',
-    // backgroundColor:'red',
     height: 45,
+    margin: 8,
     fontFamily: 'Nunito-Regular',
-    // borderWidth: 1,
-    // borderColor: '#999',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18)
   }
 });
 
