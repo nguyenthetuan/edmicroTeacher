@@ -77,7 +77,7 @@ class RenderItem extends Component {
             scores.find(element => item.studentId == element.studentId) || {};
         const { showInfo } = this.state;
         return (
-            <View style={{ backgroundColor: '#2D9CDB' }}>
+            <View style={{ backgroundColor: '#03466C' }}>
                 <View style={styles.containerItem}>
                     {!_.isEmpty(scoreCurrent) ? (
                         <>
@@ -141,7 +141,8 @@ const styles = StyleSheet.create({
     containerHeader: {
         flexDirection: 'row',
         height: 50,
-        backgroundColor: '#2D9CDB',
+        backgroundColor: '#03466C',
+        borderTopRightRadius:11
     },
     txtHeader: {
         fontSize: RFFonsize(8),
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
         width: COL_STATISTATIC_WIDTH
     },
     containerItem: {
-        backgroundColor: '#C6F1FF',
+        backgroundColor: '#03466C',
         marginBottom: 0.5,
         flexDirection: 'row',
         height: 40,
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: COL_STATISTATIC_WIDTH,
         fontSize: RFFonsize(10),
-        color: '#000',
+        color: '#fff',
         fontFamily: 'Nunito-Regular',
     },
     dotOnline: {

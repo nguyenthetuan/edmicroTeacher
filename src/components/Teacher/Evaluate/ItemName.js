@@ -23,6 +23,12 @@ export class HeaderName extends Component {
         const { currentExamTest } = this.props;
         return (
             <View style={styles.wrapContain}>
+                <View style={{ alignItems: 'flex-start' }}>
+                    <View style={{ alignItems: 'center',marginLeft:6 }}>
+                        <Image source={require('../../../asserts/icon/iconUser.png')} />
+                        <Text style={styles.textName}>Họ và tên</Text>
+                    </View>
+                </View>
                 {!_.isEmpty(currentExamTest.examName) && (
                     <View style={styles.wrapTitle}>
                         <Text style={styles.styTxtExaName}>{currentExamTest.examName}</Text>
@@ -62,7 +68,7 @@ class ItemName extends Component {
             scores.find(element => item.studentId == element.studentId) || {};
         const { showInfo } = this.state;
         return (
-            <View style={{ backgroundColor: '#2D9CDB' }}>
+            <View style={{ backgroundColor: '#03466C' }}>
                 <View style={styles.containerItem}>
                     <View style={styles.viewItemName}>
                         <View style={{}}>
@@ -92,6 +98,11 @@ class ItemName extends Component {
 export default ItemName;
 
 const styles = StyleSheet.create({
+    textName: {
+        color: '#fff',
+        fontSize: 10,
+        marginTop:7
+    },
     container: {
         flex: 1,
         minHeight: 200,
@@ -137,7 +148,7 @@ const styles = StyleSheet.create({
         width: width * (1 / 8),
     },
     containerItem: {
-        backgroundColor: '#C6F1FF',
+        backgroundColor: '#03466C',
         marginBottom: 0.5,
         flexDirection: 'row',
         height: 40,
@@ -175,9 +186,10 @@ const styles = StyleSheet.create({
         borderRadius: 2,
     },
     txtName: {
-        fontSize: RFFonsize(12),
-        color: '#000',
+        fontSize: RFFonsize(10),
+        color: '#fff',
         fontFamily: 'Nunito-Regular',
+        fontWeight:'bold'
     },
     txtNameShow: {
         fontSize: RFFonsize(12),
@@ -210,8 +222,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     wrapContain: {
-        backgroundColor: '#2D9CDB',
+        backgroundColor: '#03466C',
         paddingTop: 5,
-        height: 50
+        height: 50,
+        borderTopLeftRadius:11
     },
 });
