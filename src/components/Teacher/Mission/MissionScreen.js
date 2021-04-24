@@ -192,44 +192,45 @@ export default class MissionScreen extends Component {
     return (
       <>
         <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
-          <Animated.View
-            style={[
-              styles.header,
-              {
-                transform: [{ translateY: translateY }],
-              }
-            ]}
-          >
-            <Animated.View style={{
-              opacity: _header_opacity
-            }}>
-              <HeaderMissionNew
-                navigation={this.props.navigation}
-              />
-              {this.renderHeader()}
-            </Animated.View>
-          </Animated.View>
-          <AnimatedFlatList
-            ref={(fl) => this.refFlatlist = fl}
-            data={listMissionSearch}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={this.renderItem}
-            initialNumToRender={3}
-            bounces={false}
-            scrollEventThrottle={1}
-            ListEmptyComponent={this._listTestEmpty}
-            ListFooterComponent={<View style={{ height: 120 }} />}
-            showsVerticalScrollIndicator={false}
-            onScroll={Animated.event([
-              {
-                nativeEvent: { contentOffset: { y: this._scroll_y } }
-              }
-            ],
-              { useNativeDriver: true }
-            )}
-            style={styles.scroll_view}
+          <HeaderMissionNew
+            navigation={this.props.navigation}
           />
-
+          <View style={{ flex: 1, overflow: 'hidden' }}>
+            <Animated.View
+              style={[
+                styles.header,
+                {
+                  transform: [{ translateY: translateY }],
+                }
+              ]}
+            >
+              <Animated.View style={{
+                opacity: _header_opacity
+              }}>
+                {this.renderHeader()}
+              </Animated.View>
+            </Animated.View>
+            <AnimatedFlatList
+              ref={(fl) => this.refFlatlist = fl}
+              data={listMissionSearch}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={this.renderItem}
+              initialNumToRender={3}
+              bounces={false}
+              scrollEventThrottle={1}
+              ListEmptyComponent={this._listTestEmpty}
+              ListFooterComponent={<View style={{ height: 70 }} />}
+              showsVerticalScrollIndicator={true}
+              onScroll={Animated.event([
+                {
+                  nativeEvent: { contentOffset: { y: this._scroll_y } }
+                }
+              ],
+                { useNativeDriver: true }
+              )}
+              style={styles.scroll_view}
+            />
+          </View>
         </SafeAreaView>
       </>
     );
@@ -249,18 +250,18 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   header: {
-    height: 100,
+    height: 60,
     position: 'absolute',
     right: 0,
     left: 0,
-    top: isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 0,
+    top: 0,
     zIndex: 1,
     backgroundColor: '#fff',
     zIndex: 1
   },
   scroll_view: {
     flex: 1,
-    paddingTop: 100,
+    paddingTop: 50,
   },
   txtCan: {
     fontFamily: 'Nunito',

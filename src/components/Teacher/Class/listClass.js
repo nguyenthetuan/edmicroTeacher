@@ -45,20 +45,10 @@ class ListClass extends React.Component {
 
     return (
       <SafeAreaView style={styles.safe_area_view}>
-        <Animated.View
-          style={[
-            styles.header,
-            {
-              transform: [{ translateY: translateY }],
-              opacity: _header_opacity
-            }
-          ]}
-        >
-          <HeaderMain
-            {...user}
-            navigation={navigation}
-          />
-        </Animated.View>
+        <HeaderMain
+          {...user}
+          navigation={navigation}
+        />
         {isLoading ?
           <ClassHolder />
           :
@@ -68,7 +58,7 @@ class ListClass extends React.Component {
               {
               }
             ]}
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
             bounces={false}
             scrollEventThrottle={1}
             initialNumToRender={3}
@@ -90,7 +80,7 @@ class ListClass extends React.Component {
               { useNativeDriver: true }
             )}
             renderItem={this._renderItem}
-            ListFooterComponent={() => <View style={{ height: 60 }} />}
+            ListFooterComponent={() => <View style={{ height: 10 }} />}
             data={data}
           />
         }
@@ -117,7 +107,6 @@ const styles = StyleSheet.create({
   },
   scroll_view: {
     flex: 1,
-    paddingTop: 50,
     paddingHorizontal: 16
   },
 })

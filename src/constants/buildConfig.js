@@ -9,8 +9,8 @@ export const VERSION_CODE_ANDROID = 8;
  * Update version code push
  */
 export const BUILD_NUMBER_CODE_PUSH = {
-    ios: '07',
-    android: '09'
+    ios: '09',
+    android: '10'
 };
 
 export const APP_VERSION_NAME = DeviceInfo.getVersion();

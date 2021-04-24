@@ -755,53 +755,56 @@ class Papers extends Component {
 
     return (
       <SafeAreaView style={styles.fill}>
-        <Animated.View
-          style={[
-            styles.header,
-            {
-              transform: [{ translateY: translateY }],
-              opacity: _header_opacity
-            }
-          ]}
-        >
-          <HeaderMainPaper
-            {...user}
-            navigation={this.props.navigation}
-            onChangeText={this.onChangeText}
-            textSearch={this.state.textSearch}
-            searchPaper={this.searchPaper}
-          />
-          {this.renderHeaderFlastList()}
-          {this.createTabButton()}
-        </Animated.View>
-        <AnimatedFlatList
-          style={{ paddingHorizontal: 16, paddingTop: 280 }}
-          data={dataFilter}
-          ref={(fl) => this.refFlatlist = fl}
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item, index) => index.toString()}
-          extraData={dataFilter}
-          ListEmptyComponent={this._listTestEmpty}
-          ListFooterComponent={this._listTestFooter}
-          ListFooterComponent={<View style={{ height: 300 }} />}
-          renderItem={({ item, index }) => {
-            return (
-              <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-            )
-          }}
-          initialNumToRender={2}
-          // ListHeaderComponent={this.renderHeaderFlastList()}
-          bounces={false}
-          scrollEventThrottle={1}
-          onScroll={Animated.event([
-            {
-              nativeEvent: { contentOffset: { y: this._scroll_y } }
-            }
-          ],
-            { useNativeDriver: true }
-          )}
+        <HeaderMainPaper
+          {...user}
+          navigation={this.props.navigation}
+          onChangeText={this.onChangeText}
+          textSearch={this.state.textSearch}
+          searchPaper={this.searchPaper}
         />
+        <View style={{ overflow: 'hidden', flex: 1 }}>
+          <Animated.View
+            style={[
+              styles.header,
+              {
+                transform: [{ translateY: translateY }],
+                opacity: _header_opacity
+              }
+            ]}
+          >
+            {this.renderHeaderFlastList()}
+            {this.createTabButton()}
+          </Animated.View>
+          <AnimatedFlatList
+            style={{ paddingHorizontal: 16, paddingTop: 220 }}
+            data={dataFilter}
+            ref={(fl) => this.refFlatlist = fl}
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={true}
+            keyExtractor={(item, index) => index.toString()}
+            extraData={dataFilter}
+            removeClippedSubviews={true}
+            ListEmptyComponent={this._listTestEmpty}
+            ListFooterComponent={this._listTestFooter}
+            ListFooterComponent={<View style={{ height: 240 }} />}
+            renderItem={({ item, index }) => {
+              return (
+                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+              )
+            }}
+            initialNumToRender={2}
+            // ListHeaderComponent={this.renderHeaderFlastList()}
+            bounces={false}
+            scrollEventThrottle={1}
+            onScroll={Animated.event([
+              {
+                nativeEvent: { contentOffset: { y: this._scroll_y } }
+              }
+            ],
+              { useNativeDriver: true }
+            )}
+          />
+        </View>
         {visibleModalEdit ? (
           <ModalEditConfig
             onVisible={visible => this.onVisibleModalEdit(visible)}
@@ -902,11 +905,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    height: 285,
+    height: 225,
     position: 'absolute',
     right: 0,
     left: 0,
-    top: isIphoneX() ? 40 : Platform.OS == 'ios' ? 20 : 0,
+    top: 0,
     zIndex: 1,
     backgroundColor: '#fff'
   },

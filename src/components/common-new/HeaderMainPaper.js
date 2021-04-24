@@ -293,19 +293,6 @@ class HeaderMainPaper extends React.Component {
       listPapers,
       visibleModalAdd,
     } = this.state;
-    const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
-    const _header_opacity = _diff_clamp_scroll_y.interpolate({
-      inputRange: [0, 50],
-      outputRange: [1, 1],
-      extrapolate: 'clamp'
-    })
-    let translateY = _diff_clamp_scroll_y.interpolate({
-      inputRange: [0, 330],
-      outputRange: [0, -330],
-      extrapolate: 'clamp',
-    });
-
-    console.log("render paper");
     return (
       <View style={styles.container}>
         <RippleButton onPress={this.openDrawer}>
