@@ -170,7 +170,9 @@ class EvaluateDraScreen extends Component {
             testIndex,
             yearIndex,
             scores,
+            currentExamTest
         } = this.state;
+        console.log('classSubject', classSubjectIndex)
         const payload = {
             classSubject,
             tests,
@@ -183,15 +185,19 @@ class EvaluateDraScreen extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <HeaderNavigation
-                    title={'Đánh giá'}
+                    title={'Kiểm tra đánh giá'}
                     navigation={this.props.navigation}
+                    actionIcon={AppIcon.ic_analytics}
+                    actionIconTwo={AppIcon.icons_filter}
+                    iconAction={this.goToStatisticsPoints}
+                    iconActionTwo={this._handleClickFillter}
                 />
                 <ScrollView
-                    style={{ zIndex: 1 }}
+                    style={{ zIndex: 1, flex: 1 }}
                     contentContainerStyle={{ paddingTop: 5 }}
                     showsVerticalScrollIndicator={false}>
-                    <View style={styles.container}>
-                        <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+                    <View style={[styles.body]}>
+                        {/* <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                             onPress={this.goToStatisticsPoints}>
                             <View style={styles.btnStatistics}>
                                 <Image
@@ -207,12 +213,22 @@ class EvaluateDraScreen extends Component {
                                 <Image source={AppIcon.icons_filter} />
                                 <Text style={styles.txtStatistics}>Tuỳ chọn</Text>
                             </View>
-                        </TouchableWithoutFeedback>
-                        <FastImage
+                        </TouchableWithoutFeedback> */}
+                        {/* <FastImage
                             source={require('../../../asserts/images/banner_evaluate.png')}
                             resizeMode={FastImage.resizeMode.contain}
                             style={styles.imgStatistics}
-                        />
+                        /> */}
+
+                        {/* <FastImage
+                            source={require('../../../asserts/images/banner_evaluate.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={styles.imgStatistics}
+                        /> */}
+                    </View>
+                    <View style={styles.header}>
+                        <Text style={{ color: '#1181C1' }}>{currentExamTest.examName}</Text>
+                        <Text style={{ color: '#424242', fontSize: 12, marginTop: 7, marginBottom: 30 }}>{currentExamTest.name}</Text>
                     </View>
                     {/* <View style={{ flexDirection: 'row' }}>
             <FlatList
@@ -255,6 +271,7 @@ class EvaluateDraScreen extends Component {
                                 keyExtractor={(item, index) => index.toString()}
                                 ListHeaderComponent={() => <HeaderName currentExamTest={this.state.currentExamTest} />}
                                 renderItem={({ item }) => <ItemName item={item} {...payload} />}
+
                             />
                         </View>
                         <ScrollView
@@ -298,15 +315,26 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {};
 };
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
 )(EvaluateDraScreen);
 
 const styles = StyleSheet.create({
+    header: {
+        marginTop: 32,
+        marginLeft: 16,
+    },
     container: {
         flex: 1,
         minHeight: 200,
+    },
+    body: {
+        // flex: 1,
+        // minHeight: 200,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
     btnStatistics: {
         flexDirection: 'row',
@@ -324,7 +352,7 @@ const styles = StyleSheet.create({
         marginEnd: 16,
         width: 220,
         height: 200,
-        position: 'absolute',
+        // position: 'absolute',
     },
     list: {
         flex: 1,
