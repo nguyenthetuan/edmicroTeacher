@@ -722,7 +722,7 @@ class MarkCamera extends Component {
                                                     </View>
                                                 </View>
                                                 {this.renderHeaderFlastList()}
-                                                <Text style={styles.styTxtLabel}>Loại bài</Text>
+                                                <Text style={[styles.styTxtLabel, { marginTop: 4 }]}>Loại bài</Text>
                                                 <Dropdown
                                                     contentStyle={[styles.styTxtPlace, { paddingHorizontal: 5, flexDirection: 'row' }]}
                                                     title="Loại Bài"
@@ -966,7 +966,7 @@ const styles = StyleSheet.create({
     btnCreate: {
         backgroundColor: '#2D9CDB',
         borderRadius: 5,
-        marginTop: 20,
+        marginTop: "10%",
         marginHorizontal: '25%',
     },
     txtCreate: {

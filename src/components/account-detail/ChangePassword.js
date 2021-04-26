@@ -66,10 +66,16 @@ class ChangePassword extends Component {
           this.props.makeRequestchangePassword({ token, userName, passwordNew, passwordOld, resolve, reject });
         }).then(response => {
           if (response.status === 200) {
-            this.refs.toast.show(CHANGE_PASSWORD_SUCCESS_MSG, DURATION.LENGTH_LONG);
             dataHelper.saveUserPass('');
             dataHelper.saveUserPost('');
-            this.props.navigation.goBack(null);
+            // this.props.navigation.goBack(null);
+            this.refToast.show(<View style={styles.styleTostSuccess}>
+              <Image source={require('../../asserts/images/Exclude.png')} />
+              <View style={{ paddingLeft: 16 }}>
+                <Text style={styles.txtSuccess}>Success</Text>
+                <Text style={styles.txtSuccess}>Đổi mật khẩu thành công!!</Text>
+              </View>
+            </View>)
           } else {
             this.setState({ errorValidate: response.message, isChange: false },
               () => {
@@ -82,7 +88,9 @@ class ChangePassword extends Component {
           this.setState({ passwordNew: '', passwordOld: '', passwordNewAgain: '', errorValidate: '', isChange: false });
         }).catch(err => {
           resetForm();
-          this.refs.toast.show(CHANGE_PASSWORD_FAILD_MSG, DURATION.LENGTH_LONG);
+          this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: "#c4c4c4" }]}>
+            <Text style={styles.txtSuccess}> Đổi mật khẩu thất bại!</Text>
+          </View>)
           this.setState({ passwordNew: '', passwordOld: '', passwordNewAgain: '', errorValidate: '', isChange: false });
         });
       });
@@ -173,8 +181,7 @@ class ChangePassword extends Component {
 
                 )}
               </Formik>
-
-
+              <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} style={{ padding: 0 }} />
 
               {/* <View style={{ marginTop: 20 }}>
                 <Text style={{ paddingTop: 10, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15, lineHeight: 19 }}>Mật khẩu hiện tại</Text>
@@ -282,5 +289,19 @@ const styles = StyleSheet.create({
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(11),
+  },
+  styleTostSuccess: {
+    height: 80,
+    width: width - 40,
+    alignItems: 'center',
+    backgroundColor: '#4DE1A3',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 20,
+    borderRadius: 5
+  },
+  txtSuccess: {
+    color: '#fff',
+    fontWeight: 'bold'
   },
 })
