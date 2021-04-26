@@ -116,11 +116,23 @@ export default class Item extends Component {
                                     {Common.getDisplaySubject(subjectCode)}</Text>
                             </View>
                             <View style={styles.flexSenten}>
-                                <FastImage
-                                    source={require('../../../asserts/icon/icon_remakeParacV3.png')}
-                                    style={{ width: 25, height: 25 }}
-                                />
-                                <Text style={styles.txtQuestion}>{item.totalQuestion} câu</Text>
+                                {item.totalQuestion == 0 ?
+                                    <>
+                                        <FastImage
+                                            source={require('../../../asserts/icon/icon_remakeParacV3.png')}
+                                            style={styles.alignIcon}
+                                        />
+                                        <Text style={[styles.txtQuestion, { textDecorationLine: 'line-through' }]}>{item.totalQuestion} câu</Text>
+                                    </>
+                                    :
+                                    <>
+                                        <FastImage
+                                            source={require('../../../asserts/icon/icon_remakeParacV3.png')}
+                                            style={{ width: 25, height: 25 }}
+                                        />
+                                        <Text style={styles.txtQuestion}>{item.totalQuestion} câu</Text>
+                                    </>
+                                }
                             </View>
                         </View>
 
@@ -279,4 +291,5 @@ const styles = StyleSheet.create({
         height: 25,
         alignSelf: 'center'
     }
+
 });

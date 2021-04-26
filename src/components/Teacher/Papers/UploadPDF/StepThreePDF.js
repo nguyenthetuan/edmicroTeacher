@@ -179,7 +179,7 @@ class StepThreePDF extends Component {
                 //     item: { ...res, name: name, id: res.id },
                 // });
                 // }, 500);
-                // this.props.needUpdate(true);
+                this.props.needUpdate(true);
                 // cau hinh thanh cong
                 AnalyticsManager.trackWithProperties('School Teacher', {
                     action: 'CREATEASSIGNMENT',
@@ -285,7 +285,7 @@ class StepThreePDF extends Component {
                     <Text style={styles.styTxtLabel}>Môn học</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                         <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
-                            <Text style={styles.titleDes}>Môn học</Text>
+                            {!subjectActive.length && <Text style={styles.titleDes}>Môn học</Text>}
                         </View>
                         <TouchableWithoutFeedback
                             onPress={() => { this.refModalSubject.onOpen() }}
@@ -317,7 +317,7 @@ class StepThreePDF extends Component {
                     <Text style={styles.styTxtLabel}>Khối lớp</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
                         <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
-                            <Text style={styles.titleDes}>Khối lớp</Text>
+                            {!gradeActive.length && <Text style={styles.titleDes}>Khối lớp</Text>}
                         </View>
                         <TouchableWithoutFeedback
                             onPress={() => { this.refModalClass.onOpen() }}
