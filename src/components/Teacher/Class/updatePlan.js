@@ -18,6 +18,7 @@ import RippleButton from '../../common-new/RippleButton';
 import Globals from '../../../utils/Globals';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import { RFFonsize } from '../../../utils/Fonts';
+import AwesomeButton from 'react-native-really-awesome-button';
 import shadowStyle from '../../../themes/shadowStyle';
 
 const { width, height } = Dimensions.get('window');
@@ -75,7 +76,7 @@ export default class UpdatePlan extends Component {
           />
           <View style={[styles.body]}>
             <TextInput
-              style={[styles.textInput]}
+              style={[styles.textInput, { ...shadowBtn }]}
               multiline={true}
               placeholder='Nhập nội dung...'
               placeholderTextColor='#828282'
@@ -83,11 +84,23 @@ export default class UpdatePlan extends Component {
               onChangeText={text => this.onChange(text)}
               editable={!isLoading}
             />
-            <RippleButton onPress={this.save}>
+            {/* <RippleButton onPress={this.save}>
               <View style={[styles.btn, { alignSelf: 'center', ...shadowBtn }]}>
                 <Text style={styles.txtBtn}>Cập nhật</Text>
               </View>
-            </RippleButton>
+            </RippleButton> */}
+            <AwesomeButton
+              onPress={this.save}
+              style={[styles.AweBtn]}
+              height={43}
+              backgroundColor={'#2D9CDB'}
+              borderRadius={25}
+              backgroundActive={'#2D9DFE'}
+              backgroundShadow={'transparent'}
+              backgroundDarker={'transparent'}
+            >
+              <Text style={styles.txtAssignment}>Cập nhật</Text>
+            </AwesomeButton>
           </View>
         </SafeAreaView>
         {isLoading && <ActivityIndicator size='small' color='#2D9CDB' style={styles.styActivity} />}
@@ -98,7 +111,8 @@ export default class UpdatePlan extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#E3F3F9',
+    // backgroundColor: '#E3F3F9',
+    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'center'
   },
@@ -117,9 +131,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingLeft: 15,
     paddingTop: 11,
-    borderWidth: 1,
-    borderColor: '#2D9CDB',
+    // borderWidth: 1,
+    // borderColor: '#2D9CDB',
     textAlignVertical: 'top',
+
   },
   btn: {
     alignContent: 'center',
@@ -143,5 +158,21 @@ const styles = StyleSheet.create({
     height,
     backgroundColor: '#000',
     opacity: .5
-  }
+  },
+  AweBtn: {
+    alignSelf: 'center',
+    marginTop: "10%",
+    marginBottom: '20%',
+  },
+  txtAssignment: {
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(16),
+    lineHeight: RFFonsize(20),
+    fontWeight: '500',
+    color: '#fff',
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 6,
+    marginBottom: 6
+  },
 })
