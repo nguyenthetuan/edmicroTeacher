@@ -65,7 +65,7 @@ export default class StepOnePDF extends Component {
             urlFilePDFAS
         };
         const condition = this.validate();
-        if (true) {
+        if (condition) {
             this.props.screenProps.handleNextStep(1, data, this.props.navigation);
             this.props.navigation.navigate('StepTwo');
         } else {
@@ -170,7 +170,7 @@ export default class StepOnePDF extends Component {
                         <ActivityIndicator />
                         <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
                     </View>}
-                <UploadPDFComp title='Bộ đề PDF' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
+                <UploadPDFComp title='Bộ đề PDF *' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
                 <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTost} />
