@@ -179,7 +179,7 @@ class StepThreePDF extends Component {
                 //     item: { ...res, name: name, id: res.id },
                 // });
                 // }, 500);
-                // this.props.needUpdate(true);
+                this.props.needUpdate(true);
                 // cau hinh thanh cong
                 AnalyticsManager.trackWithProperties('School Teacher', {
                     action: 'CREATEASSIGNMENT',
