@@ -7,6 +7,7 @@ import QuestionGeneral from './QuestionGeneral';
 import TotalQuestionConfig from './TotalQuestionConfig';
 import Toast from 'react-native-easy-toast';
 import Global from '../../../../utils/Globals';
+import BounceAnim from '../../../anim/BounceAnim';
 
 const WIDTH_WRAP_BUTTON = 0.5 * Dimensions.get('window').width;
 export default class StepTwoPDF extends Component {
@@ -202,6 +203,7 @@ export default class StepTwoPDF extends Component {
             let totalPoint = (Number(totalPointTL) + Number(totalPointTN)).toString().replace(/^0+/, '');
             if (parseFloat(totalPoint) !== 10) {
                 this.toast.show('Tổng điểm chưa bằng 10!');
+                this.bounceAnimRef.startAnimation()
                 return;
             }
             if ((questionsTN.length + questionsTL.length) === 0) {
@@ -310,14 +312,14 @@ export default class StepTwoPDF extends Component {
             <View style={styles.container} onTouchStart={() => { Keyboard.dismiss(); }}>
                 <View style={styles.wrapTextOnTop}>
                     <Text style={styles.textTitleTotalPoint}>Tổng số điểm trắc nghiệm và tự luận</Text>
-                    <View style={styles.textInput}>
+                    <BounceAnim style={styles.textInput} duration={2000} ref={(ref) => this.bounceAnimRef = ref}>
                         <TextInput
                             value={(Number(totalPointTL) + Number(totalPointTN)).toString().replace(/^0+/, '')}
                             style={{ color: '#FF6213', fontFamily: 'Nunito-bold', fontSize: 18, lineHeight: 25, textAlign: 'center', paddingVertical: 0, top: 2 }}
                             keyboardType='decimal-pad'
                             editable={false}
                         />
-                    </View>
+                    </BounceAnim>
                 </View>
                 <View style={styles.wrapContent}>
                     <View style={styles.wrapTypeButtons}>

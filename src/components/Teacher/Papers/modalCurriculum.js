@@ -94,10 +94,14 @@ export default class ModalCurriculum extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (JSON.stringify(nextProps.data) !== JSON.stringify(this.props.data)) {
+      const { dataDefault } = this.state;
       this.setState({
         selectItem: { name: '', code: '' },
         data: nextProps.data,
       });
+      if (!dataDefault.length) {
+        this.setState({ dataDefault: nextProps.data })
+      }
     }
     return true;
   }
@@ -121,6 +125,19 @@ export default class ModalCurriculum extends Component {
 
   backBtn = ({ data }) => {
     const { dataDefault } = this.state
+
+    if (this.arrayHistoryFilter.length === 0) {
+      return;
+    }
+    if (this.arrayHistoryFilter.length === 1) {
+      this.arrayHistoryFilter.pop()
+      this.setState({
+        searchKey: '',
+        data: dataDefault,
+        searched: true
+      });
+      return;
+    }
     let reslult = [];
     _.map(dataDefault, (element) => {
       if (element.parentCode === this.arrayHistoryFilter[this.arrayHistoryFilter.length - 1]) {
@@ -225,6 +242,7 @@ export default class ModalCurriculum extends Component {
       value
     } = this.props;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
+
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={{ flex: 1 }} onPress={() => this.setState({ visible: true })}>
@@ -243,8 +261,8 @@ export default class ModalCurriculum extends Component {
                 </TouchableOpacity>
               </View>
             ) : (
-                <View />
-              )}
+              <View />
+            )}
             <View style={styles.icDow}>
               <Ionicons
                 name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}

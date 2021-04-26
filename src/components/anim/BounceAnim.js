@@ -10,28 +10,29 @@ export default class BounceAnim extends Component {
 	}
 
 	componentDidMount() {
-		this.startAnimation();
+		// this.startAnimation();
 	}
 
-	startAnimation() {
-		Animated.spring(
+	startAnimation = async () => {
+		await this.setState({ value: new Animated.Value(0) })
+		await Animated.spring(
 			this.state.value,
 			{
-				toValue: 2,
+				toValue: 6,
 				duration: this.props.duration ? this.props.duration : 2000,
-				useNativeDriver: false
 			}
 		).start();
+
 	}
 
 	render() {
-		const marginLeft = this.state.value.interpolate({
-			inputRange: [0, 1, 2],
-			outputRange: [0, -50, 0],
+		const top = this.state.value.interpolate({
+			inputRange: [0, 1, 2, 3, 4, 5, 6],
+			outputRange: [0, 5, 0, 5, 0, 5, 0],
 		});
 		return (
 			<Animated.View
-				style={{ ...this.props.style, marginLeft }}>
+				style={{ ...this.props.style, top }}>
 				{this.props.children}
 			</Animated.View>
 		);
