@@ -78,6 +78,9 @@ class HomeScreen extends Component {
             let res = null;
             if (isExpried(exp, curTime) == true) {
                 userPost = await dataHelper.getUserPost();
+                if (userPost == '') {
+                    this.props.navigation.navigate('Auth');
+                }
                 userObj = JSON.parse(userPost);
                 switch (userObj.loginType) {
                     case LOGIN_TYPE.PHONE:
