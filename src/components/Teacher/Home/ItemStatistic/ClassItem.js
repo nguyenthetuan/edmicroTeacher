@@ -15,9 +15,7 @@ import { connect } from 'react-redux';
 import dataHelper from '../../../../utils/dataHelper';
 import { RFFonsize } from '../../../../utils/Fonts';
 import {
-    statisticClassAction,
-    statisticMissionAction,
-    statisticAssignmentAction
+    statisticClassAction
 } from '../../../../actions/statisticAction';
 import AppIcon from '../../../../utils/AppIcon';
 import ProgressBar from '../../../libs/ProgressBar';
@@ -107,18 +105,18 @@ class ClassItem extends Component {
                 <View style={styles.bodyTask}>
                     <Text style={styles.txtTask}>Thống kê số lượng các lớp</Text>
                     <Text style={styles.status}>Số lớp, học sinh Thầy cô đang quản lí</Text>
-                    <View style={{ alignSelf: 'center', height: height * 0.3, marginTop: 10 }}>
-                        <FlatList
-                            data={[...classArray]}
-                            extraData={classArray}
-                            numColumns={2}
-                            keyExtractor={(item, index) => index.toString()}
-                            showsHorizontalScrollIndicator={false}
-                            stickyHeaderIndices={[0]}
-                            renderItem={this._renderItem}
-                            style={{ backgroundColor: 'transparent', flexDirection: 'row' }}
-                        />
-                    </View>
+                    {/* <View style={{ alignSelf: 'center', marginTop: 10 }}> */}
+                    <FlatList
+                        data={[...classArray]}
+                        extraData={[classArray]}
+                        numColumns={2}
+                        keyExtractor={(item, index) => index.toString()}
+                        showsHorizontalScrollIndicator={false}
+                        stickyHeaderIndices={[0]}
+                        renderItem={this._renderItem}
+                        style={{ backgroundColor: 'transparent', flexDirection: 'row', alignSelf: 'center' }}
+                    />
+                    {/* </View> */}
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
                         <Text style={[styles.txtOnline, { color: '#828282' }]}>Số học sinh đang truy cập:</Text>
                         <Text style={styles.txtCount}>
@@ -252,7 +250,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.30,
         shadowRadius: 6,
         elevation: 3,
-        flex: 1
+        flex: 1,
+        height: height * 0.3
     },
     shadowFlat: {
         marginTop: 10,
