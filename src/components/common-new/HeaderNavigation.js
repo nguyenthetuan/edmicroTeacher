@@ -93,7 +93,7 @@ export default class HeaderNavigation extends React.Component {
                         </View>
                     </TouchableWithoutFeedback >
                     :
-                    <View style={styles.btnAvatar} />
+                    null
                 }
             </View>
         );

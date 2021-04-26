@@ -456,13 +456,13 @@ class QuestionLibrary extends Component {
             title={'Ngân hàng câu hỏi'}
             color={'white'}
             navigation={this.props.navigation}
-            // actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
+            actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
             actionStyle={{ borderRadius: 0 }}
-          // onRightAction={() => this.configurationQuestion()}
+          onRightAction={() => this.configurationQuestion()}
           />
-          <TouchableOpacity style={[styles.buttonCreateAssessment, { ...shadowBtn }]} onPress={() => this.configurationQuestion()}>
+          {/* <TouchableOpacity style={[styles.buttonCreateAssessment, { ...shadowBtn }]} onPress={() => this.configurationQuestion()}>
             <Text style={styles.textCreateAssessment}>Cấu hình</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.wrapSelectQuestion}>
             <View style={{ flex: 0.45 }}>
               <ModalConfigLibrary
