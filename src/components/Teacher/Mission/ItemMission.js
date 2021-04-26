@@ -52,8 +52,12 @@ export default class ItemMission extends Component {
   }
   render() {
     const { data } = this.props;
-    const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm A')
+    const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm A');
     const { colors } = this.state;
+    const time = data.createAt;
+    const dateNow = new Date().getTime() / 1000;
+    const dateCreated = new Date(time).getTime();
+    let isMissionNew = dateNow - dateCreated <= 24 * 60 * 60;
     return (
       <TouchableWithoutFeedback
         onPress={this.goToMissionDetail}
@@ -76,11 +80,18 @@ export default class ItemMission extends Component {
             style={[styles.styFlexDirRow,
             { flexDirection: 'column', marginLeft: 5 }]}
           >
-            <Text
-              numberOfLines={1}
-              style={styles.styTxtHeader}>
-              {data.title}
-            </Text>
+
+            <View style={styles.titleVNew}>
+              <Text
+                numberOfLines={1}
+                style={styles.styTxtHeader}>
+                {data.title}
+              </Text>
+              {isMissionNew == true ?
+                <Image source={require('../../../asserts/icon/icon_new24h.png')} style={styles.new24h} />
+                : null
+              }
+            </View>
             <View style={styles.hr} />
             <View style={styles.rightRow}>
               <View style={styles.contentMission}>
@@ -169,6 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginLeft: 5,
     marginRight: 10,
+    width: "85%"
   },
   styFlexDirRow: {
     flexDirection: 'row',
@@ -260,6 +272,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 8,
     justifyContent: 'space-between'
+  },
+  new24h: {
+    width: 30,
+    height: 30,
+    alignSelf: 'center',
+  },
+  titleVNew: {
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    marginRight: 10
   }
 });
 

@@ -256,7 +256,16 @@ class StepThreePDF extends Component {
 
 
     render() {
-        const { listGrades, listSubjects, assignmentType, duration, assignmentTypes, name, gradeActive, subjectActive } = this.state;
+        const {
+            listGrades,
+            listSubjects,
+            assignmentType,
+            duration,
+            assignmentTypes,
+            name,
+            gradeActive,
+            subjectActive
+        } = this.state;
         return (
             <View style={styles.rootView}>
                 <ScrollView

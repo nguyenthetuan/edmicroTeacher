@@ -322,7 +322,10 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   styTxtPlacehoder: {
-    color: '#979797'
+    color: '#979797',
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18)
   },
   clIcon: {
     tintColor: '#979797'

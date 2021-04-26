@@ -46,6 +46,13 @@ export default class Item extends Component {
             gradeCode,
             subjectCode,
         };
+        const time = item.timeCreate;
+        const dateNow = new Date().getTime() / 1000;
+        const dateCreated = new Date(time).getTime();
+        console.log("dateNow     :" + dateNow);
+        console.log("dateCreated :" + dateCreated);
+        let isPaperNew = dateNow - dateCreated <= 24 * 60 * 60;
+        // console.log(isPaperNew);
         return (
             <View
                 style={[
@@ -58,7 +65,6 @@ export default class Item extends Component {
                         },
                         shadowOpacity: 0.20,
                         shadowRadius: 1.41,
-
                         elevation: 2,
                         borderWidth: 0
                     },
@@ -74,6 +80,10 @@ export default class Item extends Component {
                         style={styles.txtName}>
                         {item.name}
                     </Text>
+                    {isPaperNew == true ?
+                        <Image source={require('../../../asserts/icon/icon_new24h.png')} style={styles.new24h} />
+                        : null
+                    }
                     <TouchableWithoutFeedback
                         onPress={() => this.props.onOpenModal(payloadAssignment)}
                         hitSlop={{ top: 10, left: 10, right: 10, left: 10 }}
@@ -219,7 +229,7 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(19),
         color: '#FFF',
         alignSelf: 'center',
-        width: "90%",
+        width: "85%",
     },
     itemTest: {
         borderRadius: 5,
@@ -263,5 +273,10 @@ const styles = StyleSheet.create({
     },
     flexSenten: {
         flexDirection: 'row',
+    },
+    new24h: {
+        width: 25,
+        height: 25,
+        alignSelf: 'center'
     }
 });
