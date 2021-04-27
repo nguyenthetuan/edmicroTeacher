@@ -389,14 +389,20 @@ class MarkCamera extends Component {
                                 loadingUpload: false,
                             });
                             this.refToast.show(<View style={styles.styleTostSuccess}>
-                                <Image source={require('../../../asserts/images/Exclude.png')} />
-                                <View style={{ marginLeft: 20 }}>
+                                <Image source={require('../../../asserts/images/Exclude.png')} style={{ width: 50, height: 50, marginLeft: 20 }} />
+                                <View>
                                     <Text style={styles.txtSuccess}>Success</Text>
                                     <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
                                 </View>
+                                <Text style={styles.xstoast}>X</Text>
                             </View>)
                         } else {
-                            this.toast.show('Tải lên PDF thất bại');
+                            this.toast.show(<View style={styles.styleTostFaild}>
+                                <View style={{ marginLeft: 20 }}>
+                                    <Text style={styles.txtSuccess}>Faild</Text>
+                                    <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
+                                </View>
+                            </View>);
                             this.setState({ loadingUpload: false });
                         }
                     }
@@ -427,28 +433,52 @@ class MarkCamera extends Component {
                 // totalPoint
             } = this.state;
             if (!name) {
-                this.toast.show('Chưa nhập tên bộ đề!');
+                // this.toast.show('Chưa nhập tên bộ đề!');
+                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa nhập tên bộ đề!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>)
 
                 return;
             }
             if (!gradeCode.length) {
-                this.toast.show('Chưa chọn khối!');
+                // this.toast.show('Chưa chọn khối!');
+                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa chọn khối!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>)
                 return;
             }
             if (!subjectCode.length) {
-                this.toast.show('Chưa chọn môn học!');
+                // this.toast.show('Chưa chọn môn học!');
+                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa chọn môn học!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>)
                 return;
             }
             if (assignmentType && !duration) {
-                this.toast.show('Chưa nhập thời gian kiểm tra!');
+                // this.toast.show('Chưa nhập thời gian kiểm tra!');
+                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa nhập thời gian kiểm tra!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>)
                 return;
             }
             if (assignmentType && duration && duration < 1) {
-                this.toast.show('Thời gian kiểm tra phải lớn hơn 1 phút!');
+                // this.toast.show('Thời gian kiểm tra phải lớn hơn 1 phút!');
+                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Thời gian kiểm tra phải lớn hơn 1 phút!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>)
                 return;
             }
             if (!urlFilePDF) {
-                this.toast.show('Chưa thêm bộ đề!');
+                // this.toast.show('Chưa thêm bộ đề!');
+                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa thêm bộ đề!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>)
                 return;
             }
             return true;
@@ -651,6 +681,7 @@ class MarkCamera extends Component {
             gradeCode,
             subjectCode
         } = this.state;
+        const backgroundColor = this.props;
         const numColumns = this.getNumColumns();
         const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
         const points = this.selectAnswer?.getTotalPoint();
@@ -760,7 +791,7 @@ class MarkCamera extends Component {
                                 </TouchableWithoutFeedback>
                             </ScrollView>
                         </KeyboardAvoidingView>
-                        <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} style={{ padding: 0 }} />
+                        <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess, { backgroundColor: backgroundColor }]} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
                         {loadingUpload &&
                             <View>
@@ -836,7 +867,9 @@ export default connect(
 const styles = StyleSheet.create({
     txtSuccess: {
         color: '#fff',
-        fontWeight: 'bold'
+        fontFamily: "Nunito-Bold",
+        fontSize: RFFonsize(13),
+        lineHeight: RFFonsize(17)
     },
     styleTostError: {
         backgroundColor: 'red',
@@ -849,13 +882,26 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     styleTostSuccess: {
-        height: 80,
-        width: width - 40,
+        flex: 1,
+        height: 70,
+        width: width - 70,
+        backgroundColor: '#16BDA9',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#4DE1A3',
+        alignSelf: "center",
+        borderRadius: 10,
+    },
+    styleTostFaild: {
+        height: 70,
+        width: width - 70,
+        backgroundColor: '#c4c4c4',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 20
+        alignSelf: "center",
+        borderRadius: 10,
+        padding: 0,
+        flex: 1
     },
     container: {
         flex: 1,
@@ -1092,6 +1138,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center'
     },
+    xstoast: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        color: "#fff",
+        top: -15,
+        right: 5
+    }
 
 });
 
