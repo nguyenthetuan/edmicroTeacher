@@ -237,7 +237,7 @@ export default class StepTwoPDF extends Component {
             while (i < questionsTN.length && checkChooseOption)
 
             if (!checkChooseOption) {
-                this.animationStart(i);
+                this.animationPage1Start(i);
                 this.toast.show('Chưa chọn hết đáp án cho câu hỏi!');
                 return;
             }
@@ -253,6 +253,7 @@ export default class StepTwoPDF extends Component {
             } while (j < questionsTL.length && checkPointTL)
 
             if (!checkPointTL) {
+                this.animationPage2Start(j);
                 this.toast.show('Chưa chọn hết điểm cho câu hỏi!');
                 return;
             }
@@ -263,9 +264,17 @@ export default class StepTwoPDF extends Component {
         }
     };
 
-    animationStart = async (index) => {
+    animationPage1Start = async (index) => {
         if (this.state.activeButtonIndex !== 0) {
             await this.onPressButtonType(0);
+        }
+        setTimeout(() => {
+            this.setState({ indexConditionFailed: index });
+        }, 0);
+    }
+    animationPage2Start = async (index) => {
+        if (this.state.activeButtonIndex !== 1) {
+            await this.onPressButtonType(1);
         }
         setTimeout(() => {
             this.setState({ indexConditionFailed: index });
