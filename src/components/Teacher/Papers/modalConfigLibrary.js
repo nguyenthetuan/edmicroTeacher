@@ -116,7 +116,6 @@ export default class ModalConfigLibrary extends Component {
                     style={{
                       width: 24,
                       height: 24,
-                      backgroundColor: '#AAE5F9',
                       borderRadius: 1,
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -124,7 +123,7 @@ export default class ModalConfigLibrary extends Component {
                     <Ionicons
                       name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
                       size={16}
-                      color="#fff"
+                      color="#828282"
                     />
                   </View>
                 </View>
@@ -213,8 +212,8 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(12),
-    color: '#FFF',
+    fontSize: RFFonsize(14),
+    color: '#000',
   },
   txtTitleModal: {
     color: '#2D9CDB',
@@ -248,12 +247,14 @@ const styles = StyleSheet.create({
   },
   btnModal: {
     backgroundColor: '#FFF',
-    height: 24,
+    height: 40,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     borderRadius: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#C4C4C4'
   },
 });

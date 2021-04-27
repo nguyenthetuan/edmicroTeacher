@@ -249,7 +249,7 @@ export default class ModalCurriculum extends Component {
               <Ionicons
                 name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
                 size={18}
-                color="#fff"
+                color="#828282"
               />
             </View>
           </View>
@@ -297,7 +297,11 @@ export default class ModalCurriculum extends Component {
                         }
                         }
                       >
-                        <Image source={require('../../../asserts/icon/iconHome.png')} style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }} resizeMode='contain' />
+                        <Image
+                          source={require('../../../asserts/icon/iconHome.png')}
+                          style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }}
+                          resizeMode='contain'
+                        />
                       </TouchableOpacity>
                       <TextInput
                         style={styles.TextInput}
@@ -347,21 +351,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1,
-    // justifyContent: 'flex-end',
-    // paddingTop: Platform.OS == 'ios' ? (isIphoneX() ? 30 : 10) : 10,
   },
   content: {
     backgroundColor: '#FFFF',
-    // height: 220,
     borderRadius: 5,
-    // position: 'absolute',
     width: width,
-    // right: 0,
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(12),
-    color: '#FFF',
+    fontSize: RFFonsize(14),
+    color: '#000',
     marginBottom: 2
   },
   topheader: {
@@ -370,7 +369,6 @@ const styles = StyleSheet.create({
     padding: 30,
     justifyContent: 'space-between',
     paddingLeft: 23,
-    // position: 'absolute',
     width,
     top: 0 - 40,
     height: 40,
@@ -406,7 +404,6 @@ const styles = StyleSheet.create({
   icDow: {
     width: 25,
     height: 25,
-    backgroundColor: '#AAE5F9',
     borderRadius: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -418,15 +415,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     borderRadius: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor:'#C4C4C4',
+    height:40
   },
   wrapElementSelect: {
     maxWidth: '50%',
     borderWidth: 0.5,
     borderColor: '#E0E0E0',
     marginLeft: 3,
-    // marginTop: 5,
-    // marginBottom: 5,
     borderRadius: 5
   },
   wrapEmpty: {

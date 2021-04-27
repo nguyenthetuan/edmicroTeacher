@@ -33,10 +33,12 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { AlertNoti } from '../../../utils/Common';
 import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
-import HeaderNavigation from '../../common-new/HeaderNavigation';
+import HeaderConfigQuestion from '../../common-new/HeaderConfigQuestion';
+import Header from '../../common-new/Header';
 import { RFFonsize } from '../../../utils/Fonts';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import shadowStyle from '../../../themes/shadowStyle';
+import ModalFilteQuestionLibrary from './ModalFilteQuestionLibrary'
 
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
@@ -49,6 +51,143 @@ if (Platform.OS === 'ios') {
 const { Value, timing } = Animated;
 const AnimatedWebView = Animated.createAnimatedComponent(WebView);
 const { width, height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  btnClose: {
+    alignSelf: 'flex-end',
+    marginRight: 10,
+    marginTop: 10,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 2
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#107CB9',
+  },
+  header: {
+    backgroundColor: '#56CCF2',
+    zIndex: 99,
+  },
+  topheader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: width < 380 ? 20 : 15,
+    paddingVertical: 10,
+    marginTop: HEIGHT_TOPBAR,
+  },
+  bodyHeader: {
+    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginTop: 18,
+    zIndex: 1,
+  },
+  txtTitle: {
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(14),
+    color: '#FFF',
+  },
+  rightHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    paddingRight: width < 380 ? 20 : 15,
+  },
+  totalAddQuestion: {
+    marginLeft: 16,
+    fontSize: RFFonsize(12),
+    fontFamily: 'Nunito-Bold',
+    color: '#000000',
+  },
+  buttomTop: {
+    backgroundColor: '#0091EA',
+    marginTop: 20,
+    position: 'absolute',
+    alignItems: 'center',
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 4,
+    right: 15,
+    bottom: 15,
+  },
+  wrapSelectQuestion: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: 0,
+    minHeight: 150,
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  wrapPageAndNumberQuesion: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+    // zIndex: 10,
+  },
+  containerModal: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    height: 200,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 16
+  },
+  bodyModal: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    height: 500,
+    justifyContent: 'center',
+    overflow: 'hidden'
+    // paddingHorizontal: 10,
+    // paddingVertical: 10
+  },
+  buttonCreateAssessment: {
+    width: 80,
+    height: 20,
+    borderRadius: 5,
+    backgroundColor: '#F49A31',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 20,
+    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 15) : 15,
+    zIndex: 2,
+  },
+  textCreateAssessment: {
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    fontWeight: '400',
+    color: '#fff',
+  },
+  styleTitle: {
+    flex: 0,
+    color: '#fff',
+    fontSize: RFFonsize(14),
+    fontWeight: 'bold'
+  },
+  txtFilter: {
+    color: '#E59553',
+    fontFamily: 'Nunito',
+    fontSize: RFFonsize(12),
+    fontWeight: 'bold'
+  },
+  headerFilter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    marginTop: 13,
+    marginBottom: 26
+  },
+  styleBody: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
+  }
+});
 
 class QuestionLibrary extends Component {
   constructor(props) {
@@ -83,7 +222,8 @@ class QuestionLibrary extends Component {
       isLoadingModal: true,
       listSkills: [],
       urlMedia: '',
-      idMatarial: ''
+      idMatarial: '',
+      isModalQustionLibrary: false
     };
     this.webComponent = null;
   }
@@ -147,6 +287,7 @@ class QuestionLibrary extends Component {
       })
     }
   }
+
   _onTop = () => {
     // this.webview.postMessage('onTop');
     this.webComponent._onTop();
@@ -331,18 +472,48 @@ class QuestionLibrary extends Component {
     }
   };
 
-  searchPaper = async (isAllowRerennder) => {
-    const key = this.getKeyCache(this.state.objectSearch);
+  searchPaper = async (objectSearchs) => {
+    const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
     try {
       const { token } = await dataHelper.getToken();
       const response = await apiPapers.searchPaper({
         token: token,
-        body: this.state.objectSearch,
+        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
         key: key,
       });
       const responseCount = await apiPapers.countSearch({
         token: token,
-        body: this.state.objectSearch,
+        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
+      });
+      const { totalQuestion } = responseCount;
+      if (response && response.length > 0) {
+        this.setState({
+          questions: !!response && response,
+          totalQuestion,
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          questions: [],
+          totalQuestion: 0
+        });
+      }
+    } catch (error) { }
+  };
+
+  filter = async (objectSearchs) => {
+    this.setState({ objectSearch: objectSearchs })
+    const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
+    try {
+      const { token } = await dataHelper.getToken();
+      const response = await apiPapers.searchPaper({
+        token: token,
+        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
+        key: key,
+      });
+      const responseCount = await apiPapers.countSearch({
+        token: token,
+        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
       });
       const { totalQuestion } = responseCount;
       if (response && response.length > 0) {
@@ -411,6 +582,17 @@ class QuestionLibrary extends Component {
     this.setState({ isLoadingModal: false })
   }
 
+  rederTextHeader = () => {
+    const { objectSearch, subject, element, lerningTarget } = this.state;
+    var textHeader = ''
+    for (var name in objectSearch) {
+      if (objectSearch[name]) {
+        textHeader = `${objectSearch[name]}`
+      }
+    }
+    return textHeader
+  }
+
   render() {
     const { shadowBtn } = shadowStyle;
     const {
@@ -427,8 +609,10 @@ class QuestionLibrary extends Component {
       isLoadingModal,
       curriculumCode,
       urlMedia,
-      listSkills
+      listSkills,
+      isModalQustionLibrary,
     } = this.state;
+    console.log('objectSearch', objectSearch)
     const level = [
       { name: 'Nhận biết', code: '0' },
       { name: 'Thông hiểu', code: '1' },
@@ -447,23 +631,21 @@ class QuestionLibrary extends Component {
       outputRange: [0, -330],
       extrapolate: 'clamp',
     });
-
     return (
       <View style={styles.container}>
         <SafeAreaView />
         <SafeAreaView style={styles.container}>
-          <HeaderNavigation
-            title={'Ngân hàng câu hỏi'}
+          <Header
+            title={'Ngân Hàng Câu Hỏi'}
             color={'white'}
             navigation={this.props.navigation}
-            actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
+            actionIcon={require('../../../asserts/icon/icon_add.png')}
             actionStyle={{ borderRadius: 0 }}
-          onRightAction={() => this.configurationQuestion()}
+            onRightAction={() => this.configurationQuestion()}
+            styleTitle={styles.styleTitle}
+            colorBtnBack={'#ffffff'}
           />
-          {/* <TouchableOpacity style={[styles.buttonCreateAssessment, { ...shadowBtn }]} onPress={() => this.configurationQuestion()}>
-            <Text style={styles.textCreateAssessment}>Cấu hình</Text>
-          </TouchableOpacity> */}
-          <View style={styles.wrapSelectQuestion}>
+          {/* <View style={styles.wrapSelectQuestion}>
             <View style={{ flex: 0.45 }}>
               <ModalConfigLibrary
                 title="Câu Hỏi"
@@ -513,19 +695,27 @@ class QuestionLibrary extends Component {
                 onPress={(value) => this.onPress(6, value)}
               />
             </View>
-          </View>
+          </View> */}
           <View
-            style={{ flex: 1, backgroundColor: '#FFF' }}
+            style={styles.styleBody}
             onLayout={(event) => {
               var { x, y, width, height } = event.nativeEvent.layout;
               this.setState({
                 height: height,
               });
             }}>
+            <View style={styles.headerFilter}>
+              <Text style={styles.txtFilter}>{this.rederTextHeader().textHeader}</Text>
+              <TouchableOpacity onPress={() => this.setState({ isModalQustionLibrary: true })}>
+                <Image source={require('../../../asserts/icon/iconFilter.png')} />
+              </TouchableOpacity>
+            </View>
             {isLoading && <LearnPlaceholder />}
             <View style={styles.wrapPageAndNumberQuesion}>
               <Text style={styles.totalAddQuestion}>
-                Số câu hỏi đã thêm: {listQuestionAdded.length}
+                Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
+                  {listQuestionAdded.length}
+                </Text>
               </Text>
               <PaginationUtils
                 ref={'PaginationUtils'}
@@ -588,12 +778,23 @@ class QuestionLibrary extends Component {
             onHandleMessage={this.onHandleMessage}
             onClose={() => this.setState({ isModal: false })}
           />
+          <ModalFilteQuestionLibrary
+            isModal={isModalQustionLibrary}
+            _handleCloseModal={() => this.setState({ isModalQustionLibrary: false })}
+            subject={subject}
+            element={element}
+            lerningTarget={lerningTarget}
+            listSkills={listSkills}
+            filter={this.filter}
+            code={this.props.user.userName}
+          />
         </SafeAreaView>
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
       </View>
     );
   }
 }
+
 class WebViewComponent extends Component {
   constructor(props) {
     super(props);
@@ -717,122 +918,12 @@ class ModalQuestion extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  btnClose: {
-    alignSelf: 'flex-end',
-    marginRight: 10,
-    marginTop: 10,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 2
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#56CCF2',
-  },
-  header: {
-    backgroundColor: '#56CCF2',
-    zIndex: 99,
-  },
-  topheader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: width < 380 ? 20 : 15,
-    paddingVertical: 10,
-    marginTop: HEIGHT_TOPBAR,
-  },
-  bodyHeader: {
-    paddingHorizontal: 16,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginTop: 18,
-    zIndex: 1,
-  },
-  txtTitle: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(14),
-    color: '#FFF',
-  },
-  rightHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
-    paddingRight: width < 380 ? 20 : 15,
-  },
-  totalAddQuestion: {
-    marginLeft: 16,
-    fontSize: RFFonsize(12),
-    fontFamily: 'Nunito-Bold',
-    color: '#159FDA',
-    marginTop: 10,
-  },
-  buttomTop: {
-    backgroundColor: '#0091EA',
-    marginTop: 20,
-    position: 'absolute',
-    alignItems: 'center',
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderRadius: 4,
-    right: 15,
-    bottom: 15,
-  },
-  wrapSelectQuestion: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: 0,
-    minHeight: 150,
-    paddingHorizontal: 20,
-    marginTop: 10,
-  },
-  wrapPageAndNumberQuesion: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-    // zIndex: 10,
-  },
-  containerModal: {
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    height: 200,
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 16
-  },
-  bodyModal: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    height: 500,
-    justifyContent: 'center',
-    overflow: 'hidden'
-    // paddingHorizontal: 10,
-    // paddingVertical: 10
-  },
-  buttonCreateAssessment: {
-    width: 80,
-    height: 20,
-    borderRadius: 5,
-    backgroundColor: '#F49A31',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    right: 20,
-    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 15) : 15,
-    zIndex: 2,
-  },
-  textCreateAssessment: {
-    fontFamily: 'Nunito',
-    fontSize: RFFonsize(12),
-    fontWeight: '400',
-    color: '#fff',
-  }
-});
+
 
 const mapStateToProps = (state) => {
   return {
     paper: state.paper,
+    user: state.user
   };
 };
 const mapDispatchToProps = (dispatch) => {
