@@ -20,6 +20,7 @@ export default class StepTwoPDF extends Component {
             totalQSTL: 0,
             totalPointTN: 0,
             totalPointTL: 0,
+            indexConditionFailed: -1
         }
     }
 
@@ -190,6 +191,7 @@ export default class StepTwoPDF extends Component {
     }
 
     validation = () => {
+        this.setState({ indexConditionFailed: -1 })
         try {
             const {
                 questionsTN,
@@ -223,21 +225,32 @@ export default class StepTwoPDF extends Component {
             // }
 
             let checkChooseOption = true;
-            questionsTN.map((e) => {
-                if (e.optionIdAnswer === -1) {
+
+            let i = 0;
+            do {
+                if (questionsTN[i].optionIdAnswer === -1) {
                     checkChooseOption = false;
+                    break;
                 }
-            });
+                i++;
+            }
+            while (i < questionsTN.length && checkChooseOption)
+
             if (!checkChooseOption) {
+                this.animationStart(i);
                 this.toast.show('Chưa chọn hết đáp án cho câu hỏi!');
                 return;
             }
             let checkPointTL = true;
-            questionsTL.map((e) => {
-                if (e.point === 0) {
+            let j = 0;
+
+            do {
+                if (questionsTL[j].point === 0) {
                     checkPointTL = false;
+                    break;
                 }
-            });
+                j++
+            } while (j < questionsTL.length && checkPointTL)
 
             if (!checkPointTL) {
                 this.toast.show('Chưa chọn hết điểm cho câu hỏi!');
@@ -249,6 +262,15 @@ export default class StepTwoPDF extends Component {
             return false;
         }
     };
+
+    animationStart = async (index) => {
+        if (this.state.activeButtonIndex !== 0) {
+            await this.onPressButtonType(0);
+        }
+        setTimeout(() => {
+            this.setState({ indexConditionFailed: index });
+        }, 0);
+    }
 
     handleNextStepThree = () => {
         const { questionsTL, questionsTN } = this.state;
@@ -322,20 +344,21 @@ export default class StepTwoPDF extends Component {
                     </BounceAnim>
                 </View>
                 <View style={styles.wrapContent}>
-                    <View style={styles.wrapTypeButtons}>
+                    <View style={styles.wrapTypeButtons} >
                         <View style={[activeButtonIndex === 0 ? styles.wrapTypeButtonActive : styles.wrapTypeButtonInActive, activeButtonIndex === 0 && { borderTopRightRadius: 10 }]}>
                             <RippleButton style={activeButtonIndex === 0 ? styles.buttonTypeActive : styles.buttonTypeInActive} radius={15} onPress={() => { this.onPressButtonType(0) }}>
                                 <Text style={styles.textButtonType}>Trắc nghiệm</Text>
                             </RippleButton >
                         </View>
                         <View style={[activeButtonIndex === 1 ? styles.wrapTypeButtonActive : styles.wrapTypeButtonInActive, activeButtonIndex === 1 && { borderTopLeftRadius: 10 }, { alignItems: 'flex-end' }]}>
-                            <RippleButton style={activeButtonIndex === 1 ? styles.buttonTypeActive : styles.buttonTypeInActive} radius={15} onPress={() => { this.onPressButtonType(1) }}>
+                            <RippleButton style={activeButtonIndex === 1 ? styles.buttonTypeActive : styles.buttonTypeInActive} radius={15} onPress={() => { this.onPressButtonType(1) }} >
                                 <Text style={styles.textButtonType}>Tự luận</Text>
                             </RippleButton>
                         </View>
                     </View>
                     <View style={[styles.wrapQS, activeButtonIndex === 0 ? { borderTopRightRadius: 10 } : { borderTopLeftRadius: 10 }]}>
                         <QuestionGeneral
+
                             onTotalPointChange={this.onTotalPointChange}
                             onTotalQSChange={this.onTotalQSChange}
                             totalPointTN={this.state.totalPointTN}
@@ -347,7 +370,13 @@ export default class StepTwoPDF extends Component {
                             screenProps={this.props.screenProps}
                             toast={this.toast}
                         />
-                        <TotalQuestionConfig questionList={activeButtonIndex === 0 ? questionsTN : questionsTL} onChangeOptionAnswer={this.onChangeOptionAnswer} onChangePointEachQS={this.onChangePointEachQS} typeQuestion={activeButtonIndex} />
+                        <TotalQuestionConfig
+                            questionList={activeButtonIndex === 0 ? questionsTN : questionsTL}
+                            onChangeOptionAnswer={this.onChangeOptionAnswer}
+                            onChangePointEachQS={this.onChangePointEachQS}
+                            typeQuestion={activeButtonIndex}
+                            indexConditionFailed={this.state.indexConditionFailed}
+                        />
                         <View style={styles.wrapEnd}>
                             <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepThree}>
                                 <Text style={styles.textNext}>Tiếp tục</Text>
