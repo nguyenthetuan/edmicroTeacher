@@ -70,11 +70,12 @@ class ChangePassword extends Component {
             dataHelper.saveUserPost('');
             // this.props.navigation.goBack(null);
             this.refToast.show(<View style={styles.styleTostSuccess}>
-              <Image source={require('../../asserts/images/Exclude.png')} />
-              <View style={{ paddingLeft: 16 }}>
+              <Image source={require('../../asserts/images/Exclude.png')} style={{ width: 50, height: 50, marginLeft: 20 }} />
+              <View>
                 <Text style={styles.txtSuccess}>Success</Text>
-                <Text style={styles.txtSuccess}>Đổi mật khẩu thành công!!</Text>
+                <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
               </View>
+              <Text style={styles.xstoast}>X</Text>
             </View>)
           } else {
             this.setState({ errorValidate: response.message, isChange: false },
@@ -181,7 +182,7 @@ class ChangePassword extends Component {
 
                 )}
               </Formik>
-              <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} style={{ padding: 0 }} />
+              <Toast ref={ref => this.refToast = ref} position={'top'} style={styles.styleTostSuccess} />
 
               {/* <View style={{ marginTop: 20 }}>
                 <Text style={{ paddingTop: 10, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15, lineHeight: 19 }}>Mật khẩu hiện tại</Text>
@@ -290,18 +291,40 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(11),
   },
-  styleTostSuccess: {
-    height: 80,
-    width: width - 40,
-    alignItems: 'center',
-    backgroundColor: '#4DE1A3',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 20,
-    borderRadius: 5
-  },
   txtSuccess: {
     color: '#fff',
-    fontWeight: 'bold'
+    fontFamily: "Nunito-Bold",
+    fontSize: RFFonsize(13),
+    lineHeight: RFFonsize(17)
   },
+  styleTostSuccess: {
+    flex: 1,
+    height: 70,
+    width: width - 70,
+    backgroundColor: '#16BDA9',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: "center",
+    borderRadius: 10,
+  },
+  styleTostFaild: {
+    height: 70,
+    width: width - 70,
+    backgroundColor: '#c4c4c4',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: "center",
+    borderRadius: 10,
+    padding: 0,
+    flex: 1
+  },
+  xstoast: {
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    color: "#fff",
+    top: -15,
+    right: 5
+  }
+
 })
