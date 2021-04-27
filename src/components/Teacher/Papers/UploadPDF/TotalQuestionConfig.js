@@ -2,6 +2,7 @@ import React, { Component, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions, } from 'react-native';
 import ItemMultipleChoice from './ItemMultipleChoice';
 import ItemEssay from './ItemEssay';
+import BounceAnim from '../../../anim/BounceAnim';
 
 const ITEM_HEIGHT = 35;
 
@@ -12,11 +13,21 @@ export default function TotalQuestionConfig(props) {
         setQuestions(props.questionList);
         let numberQuestion = props.questionList?.length;
         if (numberQuestion) {
+            itemsMultiChoiceRef.current = itemsMultiChoiceRef.current.slice(0, numberQuestion);
+            itemsEsaayRef.current = itemsEsaayRef.current.slice(0, numberQuestion);
             let flatlistHeightTmp = numberQuestion * ITEM_HEIGHT;
             setFlatlistHeight(flatlistHeightTmp + 5);
         }
     }, [props.questionList])
 
+    useEffect(() => {
+        if (props.indexConditionFailed > -1) {
+            startAnimation(props.indexConditionFailed);
+        }
+    }, [props.indexConditionFailed])
+
+    const itemsMultiChoiceRef = useRef([]);
+    const itemsEsaayRef = useRef([]);
 
     const [questions, setQuestions] = useState(props.questionList)
     const [isShowKeyboard, setIsShowKeyboard] = useState(false);
@@ -50,6 +61,15 @@ export default function TotalQuestionConfig(props) {
         setIsShowKeyboard(false);
     }
 
+    const startAnimation = (index) => {
+        console.log("startAnimation: ");
+        if (props.typeQuestion === 0) {
+            itemsMultiChoiceRef.current[index].startAnimation()
+        } else {
+            itemsEsaayRef.current[index].startAnimation()
+        }
+    }
+
     return (
         <View style={styles.rootView}>
             <View style={styles.itemWrap}>
@@ -78,23 +98,27 @@ export default function TotalQuestionConfig(props) {
                 renderItem={({ item, index }) => {
                     if (props.typeQuestion === 0) {
                         return (
-                            <ItemMultipleChoice
-                                data={item}
-                                onChangeOptionAnswer={onChangeOptionAnswer}
-                                onChangePointEachQS={onChangePointEachQS}
-                                onKeyBoardShow={onKeyBoardShow}
-                                onKeyBoardBlur={onKeyBoardBlur}
-                            />
+                            <BounceAnim duration={2000} ref={el => itemsMultiChoiceRef.current[index] = el}>
+                                <ItemMultipleChoice
+                                    data={item}
+                                    onChangeOptionAnswer={onChangeOptionAnswer}
+                                    onChangePointEachQS={onChangePointEachQS}
+                                    onKeyBoardShow={onKeyBoardShow}
+                                    onKeyBoardBlur={onKeyBoardBlur}
+                                />
+                            </BounceAnim>
                         )
                     } else {
                         return (
-                            <ItemEssay
-                                data={item}
-                                onChangeOptionAnswer={onChangeOptionAnswer}
-                                onChangePointEachQS={onChangePointEachQS}
-                                onKeyBoardShow={onKeyBoardShow}
-                                onKeyBoardBlur={onKeyBoardBlur}
-                            />
+                            <BounceAnim duration={2000} ref={el => itemsEsaayRef.current[index] = el}>
+                                <ItemEssay
+                                    data={item}
+                                    onChangeOptionAnswer={onChangeOptionAnswer}
+                                    onChangePointEachQS={onChangePointEachQS}
+                                    onKeyBoardShow={onKeyBoardShow}
+                                    onKeyBoardBlur={onKeyBoardBlur}
+                                />
+                            </BounceAnim>
                         )
                     }
                 }}
