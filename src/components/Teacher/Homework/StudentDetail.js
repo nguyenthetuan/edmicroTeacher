@@ -141,6 +141,13 @@ function ModalDetail(props) {
             });
         }
     }
+    let arrayOrdered = [];
+    for (const ob in item.questionResult) {
+        arrayOrdered.push({ [ob]: item.questionResult[ob] });
+    }
+    arrayOrdered = arrayOrdered.sort((a, b) => {
+        return Object.keys(a)[0].localeCompare(Object.keys(b)[0]);
+    })
 
     return (
         <View style={styles.centeredView}>
@@ -187,7 +194,7 @@ function ModalDetail(props) {
                         <FlatList
                             showsVerticalScrollIndicator={false}
                             style={{ marginTop: 25 }}
-                            data={Object.values(item.questionResult)}
+                            data={arrayOrdered}
                             numColumns={5}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item, index }) => {
@@ -198,8 +205,9 @@ function ModalDetail(props) {
                                         marginBottom: 6,
                                         width: 20,
                                         height: 20,
-                                        backgroundColor: item > -1 && item < 3 ? colors[item] : colors[0]
-                                    }} />
+                                        backgroundColor: Object.values(item) > -1 && Object.values(item) < 3 ? colors[Object.values(item)] : colors[0]
+                                    }} >
+                                    </View>
                                 )
                             }}
                         />
@@ -283,6 +291,7 @@ export default function StudentDetail(props) {
     }
 
     const detailStudent = async (item) => {
+        console.log("🚀 ~ file: StudentDetail.js ~ line 286 ~ detailStudent ~ item", item)
         const { token } = await dataHelper.getToken();
         const response = await apiHomework.getStudentDetail({ token, assignId: props.screenProps?.data?.data.assignId, studentId: item.studentId })
         setPoint(response.data.totalScore);
@@ -291,7 +300,6 @@ export default function StudentDetail(props) {
     }
 
     const renderItem = ({ item, index }) => {
-        console.log("🚀 ~ file: StudentDetail.js ~ line 291 ~ renderItem ~ item", item)
         const progress = getProcess(item);
         const status = getStatus(item, point);
         return (
