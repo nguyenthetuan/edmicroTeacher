@@ -382,7 +382,7 @@ class MarkCamera extends Component {
                                 urlFilePDF: resSignedUrl.urlFile,
                                 loadingUpload: false,
                             });
-                            this.refToast.show(<ToastSuccess />)
+                            this.refToast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
                         } else {
                             this.toast.show(<View style={styles.styleTostFaild}>
                                 <View style={{ marginLeft: 20 }}>

@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
 const { width } = Dimensions.get('window');
 import { RFFonsize } from '../../utils/Fonts';
-const ToastSuccess = () => {
+
+const ToastSuccess = (props) => {
+    const { title } = props;
     return (
         <View style={styles.styleTostSuccess}>
             <Image source={require('../../asserts/images/Exclude.png')} style={{ width: 50, height: 50, marginLeft: 20 }} />
             <View>
                 <Text style={styles.txtSuccess}>Success</Text>
-                <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
+                <Text style={styles.txtSuccess}>{title}</Text>
             </View>
             <Text style={styles.xstoast}>X</Text>
         </View>
