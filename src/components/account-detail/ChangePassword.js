@@ -27,6 +27,7 @@ import {
 } from '../../constants/message';
 import _ from 'lodash';
 import { changePasswordValidate } from '../../utils/SchemaValidate';
+import ToastSuccess from '../common-new/ToastSuccess';
 
 const { width, height } = Dimensions.get('window');
 class ChangePassword extends Component {
@@ -69,14 +70,9 @@ class ChangePassword extends Component {
             dataHelper.saveUserPass('');
             dataHelper.saveUserPost('');
             // this.props.navigation.goBack(null);
-            this.refToast.show(<View style={styles.styleTostSuccess}>
-              <Image source={require('../../asserts/images/Exclude.png')} style={{ width: 50, height: 50, marginLeft: 20 }} />
-              <View>
-                <Text style={styles.txtSuccess}>Success</Text>
-                <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
-              </View>
-              <Text style={styles.xstoast}>X</Text>
-            </View>)
+            this.refToast.show(
+              <ToastSuccess title={"Đổi mật khẩu thành công!"} />
+            )
           } else {
             this.setState({ errorValidate: response.message, isChange: false },
               () => {
