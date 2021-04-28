@@ -54,7 +54,7 @@ const MenuStyle = StyleSheet.create({
         fontSize: RFFonsize(14),
         flex: 1,
         fontFamily: 'Nunito-Bold',
-        alignSelf: 'flex-start',
+        alignSelf: 'center',
         lineHeight: RFFonsize(40),
         fontWeight:'600',
         alignItems: 'center',
