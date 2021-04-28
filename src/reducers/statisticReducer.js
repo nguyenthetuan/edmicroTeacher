@@ -5,7 +5,8 @@ const initState = {
     listClass: [],
     mission: [],
     assignment: [],
-    classArray: []
+    classArray: [],
+    diaryActive: []
 };
 
 export default function statisticReducer(state = initState, action) {
@@ -63,6 +64,23 @@ export default function statisticReducer(state = initState, action) {
                 ...state,
                 isLoading: false,
                 assignment: []
+            }
+        case Types.DIARY_ACTIVE_ACTION:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case Types.DIARY_ACTIVE_SUCCESS_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                diaryActive: action.data.data
+            }
+        case Types.DIARY_ACTIVE_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                diaryActive: []
             }
         default:
             return state;
