@@ -48,13 +48,17 @@ class HomeScreen extends Component {
         await this.onRefreshToken();
         this.setTimeoutRefresh();
         this.initData();
-        this.getDataStatistics();
+        // this.getDataStatistics();
     }
 
     initData = async () => {
         const { token } = await dataHelper.getToken();
         const payload = getUserByToken(token);
         this.props.makeRequestProfile(payload);
+        this.getDataStatistics();
+    }
+    onRefresh = () => {
+        this.initData();
     }
 
     setTimeoutRefresh = () => {
@@ -158,7 +162,7 @@ class HomeScreen extends Component {
                     refreshControl={
                         <RefreshControl
                             refreshing={false}
-                            onRefresh={this.checkToken}
+                            onRefresh={this.onRefresh}
                         />
                     }
                     showsVerticalScrollIndicator={false}
