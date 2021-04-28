@@ -26,7 +26,8 @@ import { setProfileUserAction } from '../../../actions/userAction';
 import {
     statisticClassAction,
     statisticMissionAction,
-    statisticAssignmentAction
+    statisticAssignmentAction,
+    diaryActiveAction
 } from '../../../actions/statisticAction';
 const { height } = Dimensions.get('window');
 const { Value, timing } = Animated;
@@ -138,6 +139,7 @@ class HomeScreen extends Component {
         this.props.fetchClassAction({ token, schoolYear });
         this.props.fetchMissionAction({ token, enumType, schoolYear });
         this.props.fetchAssignmentAction({ token, enumType, schoolYear });
+        this.props.fetchDiaryActiveAction({ token, enumType, schoolYear });
     }
 
     componentWillUnmount() {
@@ -194,6 +196,7 @@ const mapStateToProps = state => {
         assignment: state.statistic.assignment,
         isLoading: state.statistic.isLoading,
         classArray: state.statistic.classArray,
+        diaryActive: state.statistic.diaryActive
     };
 };
 
@@ -202,7 +205,8 @@ const mapDispatchToProps = dispatch => {
         makeRequestProfile: payload => dispatch(setProfileUserAction(payload)),
         fetchClassAction: payload => dispatch(statisticClassAction(payload)),
         fetchMissionAction: payload => dispatch(statisticMissionAction(payload)),
-        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload))
+        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload)),
+        fetchDiaryActiveAction: payload => dispatch(diaryActiveAction(payload))
     };
 };
 

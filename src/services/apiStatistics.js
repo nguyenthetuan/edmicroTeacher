@@ -4,7 +4,7 @@ import fetch from './fetchWithTimeout';
 // const API_STATIS = 'https://api-dev.onluyen.vn/swagger/index.html?urls.primaryName=SCHOOL#/Statistic';
 
 export const statisticClass = async ({ token }) => {
-// console.log(`${API_BASE}school-online/statistic/class/${schoolYear}`);
+    // console.log(`${API_BASE}school-online/statistic/class/${schoolYear}`);
     const schoolYear = new Date().getFullYear();
     const response = await fetch(`${API_BASE}school-online/statistic/class/2020`, {
         method: 'POST',
@@ -34,6 +34,16 @@ export const statisticAssignment = async ({ token, enumType }) => {
     return responseJson;
 }
 
+//  diaryActive - nhật ký hoạt động 
+export const diaryActive = async ({ token, enumType }) => {
+    const schoolYear = new Date().getFullYear();
+    const response = await fetch(`${API_BASE}school-online/statistic/activity/${enumType}/${schoolYear}`, {
+        method: 'POST',
+        headers: getHeaders(token)
+    });
+    const responseJson = await response.json();
+    return responseJson;
+}
 
 
 
