@@ -58,7 +58,7 @@ const MenuStyle = StyleSheet.create({
         lineHeight: RFFonsize(40),
         fontWeight:'600',
         alignItems: 'center',
-        marginTop: 6,
+        // marginTop: 6,
         color: '#383838'
     },
     wrapNew: {
