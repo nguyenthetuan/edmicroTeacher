@@ -1370,7 +1370,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 4,
     right: 15,
-    bottom: 15,
+    bottom: Platform.OS === 'ios' ? 15 : 60,
   },
   btnSwitch: {
     marginRight: 15,
