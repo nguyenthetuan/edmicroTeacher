@@ -7,6 +7,8 @@ import DocumentPicker from 'react-native-document-picker';
 import dataHelper from '../../../../utils/dataHelper';
 import Toast from 'react-native-easy-toast';
 import apiPapers from '../../../../services/apiPapersTeacher';
+import { RFFonsize } from '../../../../utils/Fonts';
+import ToastSuccess from '../../../common-new/ToastSuccess';
 const { width, height } = Dimensions.get('window')
 
 export default class StepOnePDF extends Component {
@@ -34,13 +36,17 @@ export default class StepOnePDF extends Component {
         if (type === 1) {
             if (!this.state.urlFilePDFAS) {
                 this.toast.show(
-                    ' Error Chưa có tài liệu PDF'
-                    );
+                    <View style={styles.styleTostFaild}>
+                        <Text style={styles.txtSuccess}>Chưa có tài liệu PDF!</Text>
+                    </View>);
                 return;
             }
         } else {
             if (!this.state.urlFilePDFQS) {
-                this.toast.show('Chưa có tài liệu PDF');
+                this.toast.show(
+                    <View style={styles.styleTostFaild}>
+                        <Text style={styles.txtSuccess}>Chưa có tài liệu PDF!</Text>
+                    </View>);
                 return;
             }
         }
@@ -51,7 +57,10 @@ export default class StepOnePDF extends Component {
         const { urlFilePDFQS, urlFilePDFAS } = this.state;
         // if (!urlFilePDFQS || !urlFilePDFAS) {
         if (!urlFilePDFQS) {
-            this.toast.show('Chưa upload file PDF!')
+            this.toast.show(
+                <View style={styles.styleTostFaild}>
+                    <Text style={styles.txtSuccess}>Chưa Upload Pdf!!</Text>
+                </View>);
             return false;
         }
         return true;
@@ -106,28 +115,35 @@ export default class StepOnePDF extends Component {
                             url: resSignedUrl.preSignedUrl,
                             file,
                         });
-
                         if (resUpload && resUpload.status === 200) {
+
                             if (type === 0) {
                                 this.setState({
                                     urlFilePDFQS: resSignedUrl.urlFile,
                                     loadingUpload: false,
                                 });
+                                this.toast.show(<ToastSuccess />);
                             } else {
                                 this.setState({
                                     urlFilePDFAS: resSignedUrl.urlFile,
                                     loadingUpload: false,
                                 });
+                                this.toast.show(<ToastSuccess />)
                             }
                         } else {
-                            this.toast.show('Tải lên PDF thất bại');
+                            this.toast.show(<View style={styles.styleTostFaild}>
+                                <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
+                            </View>);
                             this.setState({ loadingUpload: false });
                         }
                     }
                 }
             }
         } catch (err) {
-            this.toast.show('Tải lên PDF thất bại');
+            // this.toast.show('Tải lên PDF thất bại');
+            this.toast.show(<View style={styles.styleTostFaild}>
+                <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
+            </View>);
             this.setState({ loadingUpload: false });
             if (DocumentPicker.isCancel(err)) {
                 // User cancelled the picker, exit any dialogs or menus and move on
@@ -173,7 +189,7 @@ export default class StepOnePDF extends Component {
                 <UploadPDFComp title='Bộ đề PDF *' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTost} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} style={styles.styleTostFaild} />
                 <View style={{ width: '100%', height: 50, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>
                         <Text style={styles.textNext}>Tiếp tục</Text>
@@ -185,13 +201,6 @@ export default class StepOnePDF extends Component {
 }
 
 const styles = StyleSheet.create({
-    styleTost: {
-        backgroundColor: 'red',
-        height: 80,
-        width: width-40,
-        justifyContent:'center',
-        alignItems:'center'
-    },
     container: {
         flex: 1,
         marginTop: 10,
@@ -240,5 +249,42 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
         fontSize: 12,
         textAlign: 'center',
+    },
+    xstoast: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        color: "#fff",
+        top: -15,
+        right: 15
+    },
+    styleTostFaild: {
+        height: 60,
+        width: width - 70,
+        backgroundColor: '#c4c4c4',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: "center",
+        borderRadius: 10,
+        padding: 0,
+        flex: 1
+    },
+    styleTostSuccess: {
+        flex: 1,
+        height: 70,
+        width: width - 70,
+        backgroundColor: '#16BDA9',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: "center",
+        borderRadius: 10,
+    },
+    txtSuccess: {
+        color: '#fff',
+        fontFamily: "Nunito-Bold",
+        fontSize: RFFonsize(13),
+        lineHeight: RFFonsize(17),
+        marginLeft: 20
     },
 })
