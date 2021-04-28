@@ -43,6 +43,7 @@ import ClassItem from './ClassItem';
 import SubjectItem from './SubjectItem';
 import ModalClass from './ModalClass';
 import ModalSubject from './ModalSubject';
+import ToastSuccess from '../../common-new/ToastSuccess';
 
 const NAVBAR_HEIGHT = 220;
 
@@ -313,14 +314,7 @@ class MarkCamera extends Component {
                         urlFilePDF: resSignedUrl.urlFile,
                         loadingUpload: false,
                     });
-                    this.refToast.show(<View style={styles.styleTostSuccess}>
-                        <Image source={require('../../../asserts/images/Exclude.png')} />
-                        <View>
-                            <Text style={styles.txtSuccess}>Success</Text>
-                            <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
-                        </View>
-                    </View>)
-
+                    this.refToast.show(<ToastSuccess />)
                 } else {
                     this.toast.show('Tải lên PDF thất bại!');
                     this.setState({ loadingUpload: false });
@@ -388,14 +382,7 @@ class MarkCamera extends Component {
                                 urlFilePDF: resSignedUrl.urlFile,
                                 loadingUpload: false,
                             });
-                            this.refToast.show(<View style={styles.styleTostSuccess}>
-                                <Image source={require('../../../asserts/images/Exclude.png')} style={{ width: 50, height: 50, marginLeft: 20 }} />
-                                <View>
-                                    <Text style={styles.txtSuccess}>Success</Text>
-                                    <Text style={styles.txtSuccess}>Tải lên PDF thành công!</Text>
-                                </View>
-                                <Text style={styles.xstoast}>X</Text>
-                            </View>)
+                            this.refToast.show(<ToastSuccess />)
                         } else {
                             this.toast.show(<View style={styles.styleTostFaild}>
                                 <View style={{ marginLeft: 20 }}>
@@ -1143,7 +1130,7 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(12),
         color: "#fff",
         top: -15,
-        right: 5
+        right: 15
     }
 
 });
