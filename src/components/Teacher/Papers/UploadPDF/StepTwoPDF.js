@@ -228,6 +228,9 @@ export default class StepTwoPDF extends Component {
 
             let i = 0;
             do {
+                if (!questionsTN.length) {
+                    break;
+                }
                 if (questionsTN[i].optionIdAnswer === -1) {
                     checkChooseOption = false;
                     break;
@@ -245,6 +248,9 @@ export default class StepTwoPDF extends Component {
             let j = 0;
 
             do {
+                if (!questionsTL.length) {
+                    break;
+                }
                 if (questionsTL[j].point === 0) {
                     checkPointTL = false;
                     break;
@@ -367,7 +373,6 @@ export default class StepTwoPDF extends Component {
                     </View>
                     <View style={[styles.wrapQS, activeButtonIndex === 0 ? { borderTopRightRadius: 10 } : { borderTopLeftRadius: 10 }]}>
                         <QuestionGeneral
-
                             onTotalPointChange={this.onTotalPointChange}
                             onTotalQSChange={this.onTotalQSChange}
                             totalPointTN={this.state.totalPointTN}
