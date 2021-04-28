@@ -120,7 +120,6 @@ class ConfigQuestion extends Component {
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
-      console.log('questions.length: ', questions.length);
       this.setState({ webheight: parseInt(event.nativeEvent.data) + (questions.length === 1 ? 0 : 200) });
     }
     if (data[0] === 'matariaDetail') {
@@ -166,10 +165,6 @@ class ConfigQuestion extends Component {
       let typeOne = 0;
       let typeTwo = 0;
       let typeThree = 0;
-      let pointOne = 0;
-      let pointTwo = 0;
-      let pointThree = 0;
-      let pointFour = 0;
       questions.forEach(element => {
         switch (element.levelQuestion) {
           case 0:
