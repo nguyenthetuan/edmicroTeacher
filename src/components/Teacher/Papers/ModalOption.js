@@ -32,6 +32,11 @@ export default class ModalOption extends PureComponent {
             });
         } catch (error) { }
     }
+
+    openModal = () => {
+        alert(1);
+    }
+
     render() {
         const { visibleEdit, animation, assignmentContentType, dataSelected } = this.props;
         return (

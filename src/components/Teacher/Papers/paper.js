@@ -395,16 +395,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
         </TouchableOpacity>
       </View>
     );
@@ -487,7 +487,7 @@ class Papers extends Component {
   };
 
   _onOpenModal = item => (payloadAssignment, visibleEdit = true) => {
-    console.log(item);
+    // this.optionRef.openModal();
     this.setState(
       {
         visibleEdit,
@@ -752,7 +752,7 @@ class Papers extends Component {
       outputRange: [0, -390],
       extrapolate: 'clamp',
     });
-
+    console.log("render paper");
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMainPaper
@@ -854,6 +854,7 @@ class Papers extends Component {
         // onPressCamera={this.onPressCamera}
         />
         <ModalOption
+          ref={(refModal) => this.optionRef = refModal}
           visibleEdit={visibleEdit}
           _handleCloseModal={this._handleCloseModal}
           _handleClickDetail={this._handleClickDetail}
