@@ -18,6 +18,7 @@ import HeaderMain from '../../common-new/HeaderMain';
 import HomeStyle from './HomeStyle';
 import WellcomeTxt from './WellcomeTxt';
 import StatisticHome from './StatisticHome';
+import DiaryActive from './DiaryActive';
 import apiUserHelper from '../../../services/apiUserHelper';
 import { LOGIN_TYPE, isExpried, isRefresh } from '../../../utils/AuthCommon';
 import dataHelper from '../../../utils/dataHelper';
@@ -150,7 +151,7 @@ class HomeScreen extends Component {
     }
 
     render() {
-        const { user, isLoading } = this.props;
+        const { user, isLoading, diaryActive, countdiaryActive } = this.props;
         const { data } = this.state;
         return (
             <View style={HomeStyle.container}>
@@ -180,6 +181,9 @@ class HomeScreen extends Component {
                                 />
                         }
                     </View>
+                    <View style={HomeStyle.bodyDiaryAc}>
+                        <DiaryActive diaryActive={diaryActive} countdiaryActive={countdiaryActive} />
+                    </View>
                 </ScrollView>
             </View>
         )
@@ -195,7 +199,8 @@ const mapStateToProps = state => {
         assignment: state.statistic.assignment,
         isLoading: state.statistic.isLoading,
         classArray: state.statistic.classArray,
-        diaryActive: state.statistic.diaryActive
+        diaryActive: state.statistic.diaryActive,
+        countdiaryActive: state.statistic.countdiaryActive
     };
 };
 

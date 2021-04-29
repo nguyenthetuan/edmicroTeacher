@@ -62,6 +62,47 @@ const HomeStyle = StyleSheet.create({
         left: 0,
         zIndex: 1,
         backgroundColor: '#fff',
+    },
+    titleDes: {
+        fontFamily: "Nunito-Bold",
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(19),
+        color: "#000",
+        marginLeft: 17
+    },
+    bodyDiaryAc: {
+        flex: 1,
+        marginTop: 40,
+        marginBottom: 50
+    },
+    countStatis: {
+        backgroundColor: '#78D0ED',
+        borderRadius: 5,
+        // marginHorizontal: "10%",
+    },
+    bgCount: {
+        backgroundColor: '#FDC214',
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5
+    },
+    titleCount: {
+        textAlign: 'center',
+        fontFamily: "Nunito-Bold",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: "#fff",
+        alignSelf: 'center',
+        marginVertical: 6
+    },
+    txtCount: {
+        alignItems: 'center'
+    },
+    viewNumber: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 30,
+        marginVertical: 15
+
     }
 
 });
