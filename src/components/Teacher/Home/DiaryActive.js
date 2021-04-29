@@ -8,6 +8,7 @@ import {
 import HomeStyle from './HomeStyle';
 import { connect } from 'react-redux';
 import dataHelper from '../../../utils/dataHelper';
+import { RFFonsize } from '../../../utils/Fonts'
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 10;
 const slideWidth = width - 100;
@@ -43,13 +44,16 @@ class DiaryActive extends Component {
         const dataSets = countdiaryActive.map(val => val.totalCheckPoint);
         dataSets.unshift(0);
         dataSets.push(0);
-
+        const dataLabels = countdiaryActive.map(val => val.dateTime);
+        dataLabels.unshift("");
+        dataLabels.push("");
         const chartConfig = {
             backgroundGradientFrom: "#fff",
             backgroundGradientFromOpacity: 0,
             backgroundGradientTo: "#fff",
             backgroundGradientToOpacity: 0.5,
             color: (opacity = 1) => `rgba(120, 208, 237, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(3, 2, 2, ${opacity})`,
             strokeWidth: 3, // optional, default 3
             barPercentage: 1,
             useShadowColorFromDataset: false, // optional
@@ -68,6 +72,7 @@ class DiaryActive extends Component {
                 <Text style={HomeStyle.titleDes} >Nhật ký hoạt động</Text>
                 <LineChart
                     data={{
+                        labels: dataLabels,
                         datasets: [{ data: dataChart }]
                     }}
                     width={Dimensions.get("window").width} // from react-native
@@ -79,7 +84,7 @@ class DiaryActive extends Component {
                         borderRadius: 16
                     }}
                 />
-                {(countdiaryActive && countdiaryActive.length > 0) &&
+                {/* {(countdiaryActive && countdiaryActive.length > 0) &&
                     <Carousel
                         ref={(c) => { this._carousel = c; }}
                         layout={'default'}
@@ -100,7 +105,7 @@ class DiaryActive extends Component {
                         activeSlideAlignment='center'
                         onSnapToItem={(index) => this.setState({ activeSlide: index })}
                     />
-                }
+                } */}
             </View>
         )
     }

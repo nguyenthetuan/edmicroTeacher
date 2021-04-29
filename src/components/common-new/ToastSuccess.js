@@ -9,7 +9,7 @@ const ToastSuccess = (props) => {
         <View style={styles.styleTostSuccess}>
             <Image source={require('../../asserts/images/Exclude.png')} style={{ width: 50, height: 50, marginLeft: 20 }} />
             <View>
-                <Text style={styles.txtSuccess}>Success</Text>
+                <Text style={styles.txtSuccess}>Thành công!</Text>
                 <Text style={styles.txtSuccess}>{title}</Text>
             </View>
             <Text style={styles.xstoast}>X</Text>

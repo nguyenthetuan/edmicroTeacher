@@ -140,10 +140,7 @@ export default class StepOnePDF extends Component {
                 }
             }
         } catch (err) {
-            // this.toast.show('Tải lên PDF thất bại');
-            this.toast.show(<View style={styles.styleTostFaild}>
-                <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
-            </View>);
+            //null
             this.setState({ loadingUpload: false });
             if (DocumentPicker.isCancel(err)) {
                 // User cancelled the picker, exit any dialogs or menus and move on
