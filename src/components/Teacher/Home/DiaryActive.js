@@ -14,7 +14,6 @@ const slideWidth = width - 100;
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = slideWidth + horizontalMargin * 2;
 const itemHeight = height;
-// import { LineChart, Grid } from 'react-native-svg-charts';
 import {
     LineChart
 } from "react-native-chart-kit";
@@ -28,25 +27,27 @@ class DiaryActive extends Component {
         };
     }
     _renderItem = ({ item, index }) => {
-        console.log('item', item);
         return (
             <View style={HomeStyle.countStatis}>
-                <View style={HomeStyle.bgCount}><Text style={HomeStyle.titleCount}>{item.totalCheckPoint}</Text></View>
+                <View style={HomeStyle.bgCount}><Text style={HomeStyle.titleCount}>{item?.dateTime}</Text></View>
                 <View style={HomeStyle.viewNumber}>
                     <Text style={HomeStyle.titleCount}>Số câu hỏi đã giao </Text>
-                    <Text style={HomeStyle.titleCount}>{item.totalCheckPoint}</Text>
+                    <Text style={HomeStyle.titleCount}>{item?.totalCheckPoint}</Text>
                 </View>
             </View>
         )
     }
     render() {
         const { diaryActive, countdiaryActive } = this.props;
-        console.log('diaryActive', diaryActive);
-        // const data = [50, 10, 50];
+
+        const dataSets = countdiaryActive.map(val => val.totalCheckPoint);
+        dataSets.unshift(0);
+        dataSets.push(0);
+
         const chartConfig = {
-            backgroundGradientFrom: "#78D0ED",
+            backgroundGradientFrom: "#fff",
             backgroundGradientFromOpacity: 0,
-            backgroundGradientTo: " #78D0ED",
+            backgroundGradientTo: "#fff",
             backgroundGradientToOpacity: 0.5,
             color: (opacity = 1) => `rgba(120, 208, 237, ${opacity})`,
             strokeWidth: 3, // optional, default 3
@@ -61,31 +62,13 @@ class DiaryActive extends Component {
                 stroke: "#78D0ED"
             }
         };
+        const dataChart = dataSets;
         return (
             <View style={HomeStyle.container}>
                 <Text style={HomeStyle.titleDes} >Nhật ký hoạt động</Text>
-                {/* <LineChart
-                    style={{ height: 200 }}
-                    data={data}
-                    svg={{ stroke: 'rgb(134, 65, 244)' }}
-                    contentInset={{ top: 20, bottom: 20 }}
-                >
-                    <Grid animated={true} />
-                </LineChart> */}
                 <LineChart
                     data={{
-                        datasets: [
-                            {
-                                data: [
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100,
-                                    Math.random() * 100
-                                ]
-                            }
-                        ]
+                        datasets: [{ data: dataChart }]
                     }}
                     width={Dimensions.get("window").width} // from react-native
                     height={220}
@@ -96,26 +79,28 @@ class DiaryActive extends Component {
                         borderRadius: 16
                     }}
                 />
-                <Carousel
-                    ref={(c) => { this._carousel = c; }}
-                    layout={'default'}
-                    layoutCardOffset={14}
-                    data={[countdiaryActive]}
-                    renderItem={this._renderItem}
-                    sliderWidth={sliderWidth}
-                    itemWidth={itemWidth}
-                    itemHeight={itemHeight}
-                    activeSlideOffset={1}
-                    inactiveSlideOpacity={0.7}
-                    containerCustomStyle={styles.slider}
-                    contentContainerCustomStyle={styles.sliderContentContainer}
-                    loopClonesPerSide={2}
-                    autoplayDelay={500}
-                    autoplayInterval={3000}
-                    activeAnimationType='decay'
-                    activeSlideAlignment='center'
-                    onSnapToItem={(index) => this.setState({ activeSlide: index })}
-                />
+                {(countdiaryActive && countdiaryActive.length > 0) &&
+                    <Carousel
+                        ref={(c) => { this._carousel = c; }}
+                        layout={'default'}
+                        layoutCardOffset={14}
+                        data={countdiaryActive}
+                        renderItem={this._renderItem}
+                        sliderWidth={sliderWidth}
+                        itemWidth={itemWidth}
+                        itemHeight={itemHeight}
+                        activeSlideOffset={1}
+                        inactiveSlideOpacity={0.7}
+                        containerCustomStyle={styles.slider}
+                        contentContainerCustomStyle={styles.sliderContentContainer}
+                        loopClonesPerSide={2}
+                        autoplayDelay={500}
+                        autoplayInterval={3000}
+                        activeAnimationType='decay'
+                        activeSlideAlignment='center'
+                        onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                    />
+                }
             </View>
         )
     }
