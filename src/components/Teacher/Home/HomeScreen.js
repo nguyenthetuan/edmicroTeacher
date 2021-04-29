@@ -74,7 +74,6 @@ class HomeScreen extends Component {
 
     onRefreshToken = async () => {
         const value = await AsyncStorage.getItem('@token');
-        console.log("onRefreshToken");
         if (value !== null && value !== '') {
             const curTime = Math.floor(Date.now() / 1000);
             const { iat, exp } = jwtDecode(value);
