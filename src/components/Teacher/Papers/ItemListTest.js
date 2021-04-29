@@ -46,12 +46,12 @@ export default class Item extends Component {
             gradeCode,
             subjectCode,
         };
-        const time = item.timeCreate;
-        const dateNow = new Date().getTime() / 1000;
-        const dateCreated = new Date(time).getTime();
-        console.log("dateNow     :" + dateNow);
-        console.log("dateCreated :" + dateCreated);
-        let isPaperNew = dateNow - dateCreated <= 24 * 60 * 60;
+        // const time = item.timeCreate;
+        // const dateNow = new Date().getTime() / 1000;
+        // const dateCreated = new Date(time).getTime();
+        // console.log("dateNow     :" + dateNow);
+        // console.log("dateCreated :" + dateCreated);
+        // let isPaperNew = dateNow - dateCreated <= 24 * 60 * 60;
         // console.log(isPaperNew);
         return (
             <View
@@ -80,10 +80,10 @@ export default class Item extends Component {
                         style={styles.txtName}>
                         {item.name}
                     </Text>
-                    {isPaperNew == true ?
+                    {/* {isPaperNew == true ?
                         <Image source={require('../../../asserts/icon/icon_new24h.png')} style={styles.new24h} />
                         : null
-                    }
+                    } */}
                     <TouchableWithoutFeedback
                         onPress={() => this.props.onOpenModal(payloadAssignment)}
                         hitSlop={{ top: 10, left: 10, right: 10, left: 10 }}

@@ -54,10 +54,10 @@ export default class ItemMission extends Component {
     const { data } = this.props;
     const timeCreateAt = moment(data.createAt * 1000).format('DD-MM-YYYY, hh:mm A');
     const { colors } = this.state;
-    const time = data.createAt;
-    const dateNow = new Date().getTime() / 1000;
-    const dateCreated = new Date(time).getTime();
-    let isMissionNew = dateNow - dateCreated <= 24 * 60 * 60;
+    // const time = data.createAt;
+    // const dateNow = new Date().getTime() / 1000;
+    // const dateCreated = new Date(time).getTime();
+    // let isMissionNew = dateNow - dateCreated <= 24 * 60 * 60;
     return (
       <TouchableWithoutFeedback
         onPress={this.goToMissionDetail}
@@ -87,10 +87,10 @@ export default class ItemMission extends Component {
                 style={styles.styTxtHeader}>
                 {data.title}
               </Text>
-              {isMissionNew == true ?
+              {/* {isMissionNew == true ?
                 <Image source={require('../../../asserts/icon/icon_new24h.png')} style={styles.new24h} />
                 : null
-              }
+              } */}
             </View>
             <View style={styles.hr} />
             <View style={styles.rightRow}>
