@@ -392,7 +392,7 @@ class StepThreePDF extends Component {
                     listSubjects={listSubjects}
                     activeSubject={this.activeSubject}
                 />
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'}  style={styles.styleTostSuccess}/>
             </View>
         )
     }
