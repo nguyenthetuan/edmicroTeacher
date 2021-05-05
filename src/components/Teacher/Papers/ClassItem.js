@@ -36,7 +36,7 @@ export default class ClassItem extends Component {
     }
 
     render() {
-        const { gradeActive, Icon, styleTitle } = this.props;
+        const { gradeActive, Icon, styleTitle, style } = this.props;
         return (
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -48,7 +48,7 @@ export default class ClassItem extends Component {
                         source={require('../../../asserts/images/iconHome.png')}
                         resizeMode={'contain'}
                     /> */}
-                    <View style={styles.styWrapClassIn}>
+                    <View style={[styles.styWrapClassIn, style]}>
                         <FlatList
                             data={gradeActive}
                             keyExtractor={(item, index) => index.toString()}
