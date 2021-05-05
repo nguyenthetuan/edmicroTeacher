@@ -380,100 +380,6 @@ class QuestionLibrary extends Component {
     }, () => this.searchPaper())
   }
 
-  onPress = (value, item) => {
-    this.refs.PaginationUtils.resetState();
-    const { objectSearch } = this.state;
-    switch (value) {
-      case 1:
-        this.setState(
-          {
-            objectSearch: {
-              ...objectSearch,
-              author: item.code,
-              indexPage: 0,
-            },
-            isLoading: true,
-          },
-          () => this.searchPaper(),
-        );
-        break;
-      case 2:
-        this.setState(
-          {
-            objectSearch: {
-              ...objectSearch,
-              curriculumCode: item.code,
-              indexPage: 0,
-            },
-            isLoading: true,
-            lerningTarget: [],
-          },
-          () => {
-            this.getDetailSubject();
-          },
-        );
-        break;
-      case 3:
-        this.setState(
-          {
-            objectSearch: {
-              ...objectSearch,
-              curriculumCode: item.id,
-              indexPage: 0,
-            },
-            isLoading: true,
-          },
-          () => this.getLearingTarget(),
-        );
-        break;
-      case 4:
-        this.setState(
-          {
-            objectSearch: {
-              ...objectSearch,
-              learningTargetsCode: (item.code && [item.code]) || [],
-              indexPage: 0,
-            },
-            isLoading: true,
-          },
-          () => {
-            this.getListSkills();
-            this.searchPaper();
-          }
-        );
-        break;
-      case 5:
-        this.setState({
-          objectSearch: {
-            ...objectSearch,
-            indexPage: 0,
-            skill: item.code
-          },
-          isLoading: true,
-        }, () => {
-          this.searchPaper()
-        })
-        break;
-      case 6:
-        {
-          this.setState(
-            {
-              objectSearch: {
-                ...objectSearch,
-                levelKnowledge: (item.code && [item.code]) || [],
-                indexPage: 0,
-              },
-              isLoading: true,
-            },
-            () => this.searchPaper(),
-          );
-        }
-        break;
-      default:
-        break;
-    }
-  };
-
   searchPaper = async (objectSearchs) => {
     const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
     try {
@@ -504,7 +410,7 @@ class QuestionLibrary extends Component {
   };
 
   filter = async (objectSearchs) => {
-    this.setState({ objectSearch: objectSearchs })
+    this.setState({ objectSearch: objectSearchs, isLoading: true })
     const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
     try {
       const { token } = await dataHelper.getToken();
