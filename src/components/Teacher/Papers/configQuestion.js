@@ -739,17 +739,14 @@ class ConfigQuestion extends Component {
                         })
                       }
                       value={name}
-                      isShowPassword={true}
                       onSubmitEditing={Keyboard.dismiss}
                       isSecureTextEntry={this.state.isSecureTextEntry}
-                      showPassword={() => this.showPassword()}
-                    // bgColor="#FFF"
                     />
                   </View>
 
                   <View>
                     {!_.isEmpty(listGrades) && (
-                      <View style={{ marginTop: 16 }}>
+                      <View style={{ marginTop: 10 }}>
                         {/* <Text
                           style={[
                             styles.txtTitleGrade,
@@ -761,7 +758,7 @@ class ConfigQuestion extends Component {
                       </View>
                     )}
                     {!_.isEmpty(listSubjects) && (
-                      <View style={{ marginTop: 8 }}>
+                      <View style={{ marginTop: 10 }}>
                         {/* <Text
                           style={[
                             styles.txtTitleGrade,
@@ -1037,7 +1034,7 @@ class ConfigQuestion extends Component {
                       <View style={[styles.btnOption, shadowBtn, { marginTop: 14 }]}>
                         <MaterialCommunityIcons
                           name="delete-sweep"
-                          size={23}
+                          size={26}
                           color="#fff"
                         />
                         <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
@@ -1162,20 +1159,20 @@ class ConfigQuestion extends Component {
               </View>
             </TouchableWithoutFeedback>
           </Modal>
-          <ModalClass
-            ref={ref => this.refModalClass = ref}
-            gradeActive={gradeCode}
-            listGrades={listGrades}
-            activeClass={this.activeClass}
-          />
-          <ModalSubject
-            ref={ref => this.refModalSubject = ref}
-            subjectActive={subjectCode}
-            listSubjects={listSubjects}
-            activeSubject={this.activeSubject}
-            Icon={AppIcon.iconDowSelect}
-          />
         </SafeAreaView>
+        <ModalClass
+          ref={ref => this.refModalClass = ref}
+          gradeActive={gradeCode}
+          listGrades={listGrades}
+          activeClass={this.activeClass}
+        />
+        <ModalSubject
+          ref={ref => this.refModalSubject = ref}
+          subjectActive={subjectCode}
+          listSubjects={listSubjects}
+          activeSubject={this.activeSubject}
+          Icon={AppIcon.iconDowSelect}
+        />
         <Toast ref={ref => (this.refToast = ref)} position={'bottom'} />
       </View>
     );
@@ -1446,7 +1443,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   input: {
-    paddingTop: 9
+    paddingTop: 9,
+    paddingRight: 10
   },
   borBorder: {
     width: width - 220,
@@ -1482,11 +1480,12 @@ const styles = StyleSheet.create({
   },
   styleTick: {
     backgroundColor: '#56BB73',
-    height: 16,
-    width: 16,
+    height: 18,
+    width: 18,
     borderWidth: 0.5,
     borderColor: '#fff',
     borderRadius: 1,
+    borderStyle: "solid",
   },
   btnOption: {
     flexDirection: 'row',
