@@ -52,9 +52,9 @@ export default class ModalConfigLibrary extends Component {
 
   selectItem = ({ item, index }) => {
     const { indexItem } = this.state;
-    if (index === indexItem) {
-      return;
-    }
+    // if (index === indexItem) {
+    //   return;
+    // }
     this.setState(
       {
         selectItem: item,
