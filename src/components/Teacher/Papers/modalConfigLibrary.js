@@ -89,12 +89,12 @@ export default class ModalConfigLibrary extends Component {
           >
             {(!_.isEmpty(selectItem) && selectItem.name) ||
               (!_.isEmpty(value) && value.name) ? (
-                <Text style={styles.txtSelectItem} numberOfLines={1}>
-                  {selectItem.name || value.name}
-                </Text>
-              ) : (
-                <View />
-              )}
+              <Text style={styles.txtSelectItem} numberOfLines={1}>
+                {selectItem.name || value.name}
+              </Text>
+            ) : (
+              <View />
+            )}
             <View
               style={{
                 flexDirection: 'row',
@@ -116,7 +116,6 @@ export default class ModalConfigLibrary extends Component {
                     style={{
                       width: 24,
                       height: 24,
-                      backgroundColor: '#AAE5F9',
                       borderRadius: 1,
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -124,7 +123,7 @@ export default class ModalConfigLibrary extends Component {
                     <Ionicons
                       name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
                       size={16}
-                      color="#fff"
+                      color="#828282"
                     />
                   </View>
                 </View>
@@ -171,17 +170,17 @@ export default class ModalConfigLibrary extends Component {
                               <Text style={styles.txtActive}>{item.name}</Text>
                             </TouchableOpacity>
                           ) : (
-                              <TouchableOpacity
-                                onPress={() => this.selectItem({ item, index })}
-                                style={{
-                                  marginHorizontal: 15,
-                                  width: (widthItem && `${widthItem}%`) || '100%',
-                                  marginTop: 25,
-                                  alignItems: 'center',
-                                }}>
-                                <Text style={styles.txtItem}>{item.name}</Text>
-                              </TouchableOpacity>
-                            );
+                            <TouchableOpacity
+                              onPress={() => this.selectItem({ item, index })}
+                              style={{
+                                marginHorizontal: 15,
+                                width: (widthItem && `${widthItem}%`) || '100%',
+                                marginTop: 25,
+                                alignItems: 'center',
+                              }}>
+                              <Text style={styles.txtItem}>{item.name}</Text>
+                            </TouchableOpacity>
+                          );
                         }}
                       />
                     </ScrollView>
@@ -213,8 +212,9 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(12),
-    color: '#FFF',
+    fontSize: RFFonsize(14),
+    color: '#000',
+    marginBottom: 3,
   },
   txtTitleModal: {
     color: '#2D9CDB',
@@ -228,11 +228,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#C4C4C4',
   },
   txtSelectItem: {
-    color: '#828282',
+    color: '#000',
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
-    marginLeft: 5,
-    // width: '50%'
+    marginLeft: 10,
   },
   txtActive: {
     fontFamily: 'Nunito-Bold',
@@ -248,12 +247,14 @@ const styles = StyleSheet.create({
   },
   btnModal: {
     backgroundColor: '#FFF',
-    height: 24,
+    height: 40,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     borderRadius: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#C4C4C4'
   },
 });

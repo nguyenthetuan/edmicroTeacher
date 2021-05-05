@@ -53,12 +53,12 @@ export default class PaginationUtils extends Component {
             onPress={this.handleClickIndex(i)}
             style={[
               styles.wrapElement,
-              { backgroundColor: indexCurrent == i ? '#159FDA' : '#FFF' },
+              { backgroundColor: indexCurrent == i ? '#107CB9' : '#FFF' },
             ]}>
             <Text
               style={[
                 styles.txtNumber,
-                { color: indexCurrent == i ? '#FFF' : '#159FDA' },
+                { color: indexCurrent == i ? '#fff' : 'rgba(2, 31, 47, 0.4)' },
               ]}>
               {i + 1}
             </Text>
@@ -130,25 +130,25 @@ export default class PaginationUtils extends Component {
     return (
       <View style={styles.contain}>
         <Text style={styles.txtTotal}>
-          Tổng số câu hỏi: {totalQuestion || 0}
+          Tổng số câu hỏi: <Text style={{ color: '#159FDA' }} num>{totalQuestion || 0}    </Text>
         </Text>
         {totalQuestion ? (
           <View style={styles.wrapPagination}>
             <TouchableOpacity
               style={styles.wrapElement}
               onPress={this.handleClickLeft}>
-              <Icon name={'angle-left'} size={23} color={'#159FDA'} />
+              <Icon name={'angle-left'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
             </TouchableOpacity>
             {this.renderPagination()}
             <TouchableOpacity
               style={styles.wrapElement}
               onPress={this.handleClickRight}>
-              <Icon name={'angle-right'} size={23} color={'#159FDA'} />
+              <Icon name={'angle-right'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
             </TouchableOpacity>
           </View>
         ) : (
-            <></>
-          )}
+          <></>
+        )}
       </View>
     );
   }
@@ -166,18 +166,19 @@ const styles = StyleSheet.create({
   },
   txtTotal: {
     fontFamily: 'Nunito-Bold',
-    color: '#159FDA',
+    color: '#000',
     fontSize: RFFonsize(12),
-    marginVertical: 5,
+    marginBottom: 10
   },
   wrapElement: {
     borderWidth: 1,
-    borderColor: '#159FDA',
+    borderColor: '#C4C4C4',
     width: 25,
     height: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 1,
+    marginHorizontal: 8,
+    borderRadius: 2
   },
   txtNumber: {
     color: '#159FDA',

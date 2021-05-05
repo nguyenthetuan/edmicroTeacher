@@ -228,7 +228,7 @@ export default class ModalCurriculum extends Component {
   };
 
   render() {
-    const {
+    let {
       visible,
       dropdownVisible,
       selectItem,
@@ -241,6 +241,7 @@ export default class ModalCurriculum extends Component {
       colum,
       value
     } = this.props;
+    selectItem = _.isEmpty(value) ? selectItem : value;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
 
     return (
@@ -256,7 +257,6 @@ export default class ModalCurriculum extends Component {
                   <Text style={styles.txtSelectItem} numberOfLines={1}>
                     {selectItem.name}
                   </Text>
-                  {/* <Text style={{ color: '#757575', fontSize: 10 }}>x</Text> */}
                   <Image source={AppIcon.close_img} style={styles.clickClose} />
                 </TouchableOpacity>
               </View>
@@ -267,7 +267,7 @@ export default class ModalCurriculum extends Component {
               <Ionicons
                 name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
                 size={18}
-                color="#fff"
+                color="#828282"
               />
             </View>
           </View>
@@ -315,7 +315,11 @@ export default class ModalCurriculum extends Component {
                         }
                         }
                       >
-                        <Image source={require('../../../asserts/icon/iconHome.png')} style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }} resizeMode='contain' />
+                        <Image
+                          source={require('../../../asserts/icon/iconHome.png')}
+                          style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }}
+                          resizeMode='contain'
+                        />
                       </TouchableOpacity>
                       <TextInput
                         style={styles.TextInput}
@@ -365,22 +369,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1,
-    // justifyContent: 'flex-end',
-    // paddingTop: Platform.OS == 'ios' ? (isIphoneX() ? 30 : 10) : 10,
   },
   content: {
     backgroundColor: '#FFFF',
-    // height: 220,
     borderRadius: 5,
-    // position: 'absolute',
     width: width,
-    // right: 0,
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(12),
-    color: '#FFF',
-    marginBottom: 2
+    fontSize: RFFonsize(14),
+    color: '#000',
+    marginBottom: 3
   },
   topheader: {
     backgroundColor: '#2D9CDB',
@@ -388,7 +387,6 @@ const styles = StyleSheet.create({
     padding: 30,
     justifyContent: 'space-between',
     paddingLeft: 23,
-    // position: 'absolute',
     width,
     top: 0 - 40,
     height: 40,
@@ -414,7 +412,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   txtSelectItem: {
-    color: '#828282',
+    color: '#000',
     fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
@@ -424,7 +422,6 @@ const styles = StyleSheet.create({
   icDow: {
     width: 25,
     height: 25,
-    backgroundColor: '#AAE5F9',
     borderRadius: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -436,16 +433,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     borderRadius: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#C4C4C4',
+    height: 40
   },
   wrapElementSelect: {
     maxWidth: '50%',
     borderWidth: 0.5,
-    borderColor: '#E0E0E0',
-    marginLeft: 3,
-    // marginTop: 5,
-    // marginBottom: 5,
-    borderRadius: 5
+    borderColor: '#333',
+    marginLeft: 5,
+    borderRadius: 3
   },
   wrapEmpty: {
     flex: 1,

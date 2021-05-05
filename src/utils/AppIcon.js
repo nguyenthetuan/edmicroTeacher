@@ -128,6 +128,7 @@ import iconDowSelect from '../asserts/icon/iconDowSelect.png';
 import iconFilter from '../asserts/appIcon/icon_filter_plus.png'
 import eye from '../asserts/icon/eye.png';
 import ic_analytics from '../asserts//icon/ic_analytics.png'
+import icon_add from '../asserts/icon/icon_add.png'
 
 module.exports = {
   done_icon,
@@ -241,4 +242,5 @@ module.exports = {
   iconFilter,
   eye,
   ic_analytics,
+  icon_add,
 };
