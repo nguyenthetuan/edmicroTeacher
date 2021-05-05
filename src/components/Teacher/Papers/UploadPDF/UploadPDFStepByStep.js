@@ -266,9 +266,9 @@ const topTabMission = createMaterialTopTabNavigator(
         StepThree: {
             screen: StepThree,
         },
-        StepFour: {
-            screen: StepFour
-        }
+        // StepFour: {
+        //     screen: StepFour
+        // }
     },
     {
         tabBarOptions: {

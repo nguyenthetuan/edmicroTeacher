@@ -47,7 +47,8 @@ import UploadPDFStepByStep from '../components/Teacher/Papers/UploadPDF/UploadPD
 import MissionDraScreen from '../components/Teacher/ScreenMenu/MissionDraScreen';
 import HomeWorkDraScreen from '../components/Teacher/ScreenMenu/HomeWorkDraScreen';
 import EvaluateDraScreen from '../components/Teacher/ScreenMenu/EvaluateDraScreen';
-import HomeScreen from  '../components/Teacher/Home/HomeScreen';
+import HomeScreen from '../components/Teacher/Home/HomeScreen';
+import StepFourPDF from '../components/Teacher/Papers/UploadPDF/StepFourPDF';
 const LockNavigationOptions = {
   header: null,
   gesturesEnabled: false
@@ -58,7 +59,7 @@ const TeacherStack = createStackNavigator({
     screen: TabMainTeacher,
     navigationOptions: LockNavigationOptions,
   },
-  HomeScreen:{
+  HomeScreen: {
     screen: HomeScreen,
     navigationOptions: LockNavigationOptions,
   },
@@ -244,6 +245,10 @@ const TeacherStack = createStackNavigator({
   },
   SchoolResultPDF: {
     screen: SchoolResultPDF,
+    navigationOptions: LockNavigationOptions,
+  },
+  UploadPDFCompleted: {
+    screen: StepFourPDF,
     navigationOptions: LockNavigationOptions,
   }
 }, Platform.OS == 'android' && transition);
