@@ -46,7 +46,7 @@ export default class StepFourPDF extends Component {
                     <Image
                         // source={AppIcon.image_createCompleteV3}
                         source={require('../../../../asserts/images/image_createCompleteV3.png')}
-                        style={{ marginTop: 80 }} />
+                        style={{ marginTop: 80, width: '80%' }} resizeMode='contain' />
                     <View style={styles.styWrapBtn}>
                         <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                             <Text style={styles.styTxtBtn}>Giao bài tập</Text>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     styWrapBtn: {
         alignItems: 'center',
         position: 'absolute',
-        bottom: 0
+        bottom: 10
     },
     styTxtBtn: {
         color: '#FFF',
