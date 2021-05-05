@@ -51,7 +51,7 @@ export default class StepFourPDF extends Component {
                         <TouchableOpacity style={styles.styBtn} onPress={this.assignedMission}>
                             <Text style={styles.styTxtBtn}>Giao bài tập</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#FF6213', marginTop: 10 }]} onPress={this.props.navigation.goback}>
+                        <TouchableOpacity style={[styles.styBtn, { backgroundColor: '#FF6213', marginTop: 10 }]} onPress={() => { this.props.navigation.goBack() }}>
                             <Text style={styles.styTxtBtn}>Quay lại</Text>
                         </TouchableOpacity>
                     </View>
