@@ -211,7 +211,7 @@ export default class ModalCurriculum extends Component {
   };
 
   render() {
-    const {
+    let {
       visible,
       dropdownVisible,
       selectItem,
@@ -224,6 +224,7 @@ export default class ModalCurriculum extends Component {
       colum,
       value
     } = this.props;
+    selectItem = _.isEmpty(value) ? selectItem : value;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
     return (
       <View style={{ flex: 1 }}>
@@ -238,13 +239,12 @@ export default class ModalCurriculum extends Component {
                   <Text style={styles.txtSelectItem} numberOfLines={1}>
                     {selectItem.name}
                   </Text>
-                  {/* <Text style={{ color: '#757575', fontSize: 10 }}>x</Text> */}
                   <Image source={AppIcon.close_img} style={styles.clickClose} />
                 </TouchableOpacity>
               </View>
             ) : (
-                <View />
-              )}
+              <View />
+            )}
             <View style={styles.icDow}>
               <Ionicons
                 name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     color: '#000',
-    marginBottom: 2
+    marginBottom: 3
   },
   topheader: {
     backgroundColor: '#2D9CDB',
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   txtSelectItem: {
-    color: '#828282',
+    color: '#000',
     fontSize: RFFonsize(11),
     fontFamily: 'Nunito-Regular',
     marginLeft: 5,
@@ -417,15 +417,15 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor:'#C4C4C4',
-    height:40
+    borderColor: '#C4C4C4',
+    height: 40
   },
   wrapElementSelect: {
     maxWidth: '50%',
     borderWidth: 0.5,
-    borderColor: '#E0E0E0',
-    marginLeft: 3,
-    borderRadius: 5
+    borderColor: '#333',
+    marginLeft: 5,
+    borderRadius: 3
   },
   wrapEmpty: {
     flex: 1,

@@ -172,14 +172,15 @@ const styles = StyleSheet.create({
     color: '#E59553',
     fontFamily: 'Nunito',
     fontSize: RFFonsize(12),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    flex: 1,
   },
   headerFilter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     marginTop: 13,
-    marginBottom: 26
+    marginBottom: 26,
   },
   styleBody: {
     flex: 1,
@@ -226,6 +227,7 @@ class QuestionLibrary extends Component {
       isModalQustionLibrary: false
     };
     this.webComponent = null;
+    this.refModalFilter = null;
   }
 
   displayWarning(b) {
@@ -612,7 +614,6 @@ class QuestionLibrary extends Component {
       listSkills,
       isModalQustionLibrary,
     } = this.state;
-    console.log('objectSearch', objectSearch)
     const level = [
       { name: 'Nhận biết', code: '0' },
       { name: 'Thông hiểu', code: '1' },
@@ -645,57 +646,6 @@ class QuestionLibrary extends Component {
             styleTitle={styles.styleTitle}
             colorBtnBack={'#ffffff'}
           />
-          {/* <View style={styles.wrapSelectQuestion}>
-            <View style={{ flex: 0.45 }}>
-              <ModalConfigLibrary
-                title="Câu Hỏi"
-                data={[
-                  { name: 'Câu hỏi công khai', code: '' },
-                  { name: 'Câu hỏi của tôi', code: this.props.userName },
-                ]}
-                onPress={(value) => this.onPress(1, value)}
-                colum={2}
-                widthItem={40}
-                value={{ name: 'Câu hỏi công khai', code: '' }}
-              />
-              <ModalConfigLibrary
-                title="Môn Học"
-                data={subject}
-                onPress={(value) => this.onPress(2, value)}
-                colum={2}
-                widthItem={40}
-                value={subject && subject[0]}
-              />
-              <ModalConfigLibrary
-                title="Giáo trình"
-                data={element}
-                onPress={(value) => this.onPress(3, value)}
-                value={!_.isEmpty(element) && element[0]}
-              />
-            </View>
-            <View style={{ flex: 0.45 }}>
-              <ModalCurriculum
-                title="Đơn vị kiến thức"
-                height={this.state.height}
-                data={lerningTarget}
-                onPress={(value) => this.onPress(4, value)}
-              />
-              <ModalConfigLibrary
-                title="Dạng bài"
-                data={listSkills}
-                onPress={value => this.onPress(5, value)}
-                colum={2}
-                widthItem={40}
-              />
-              <ModalConfigLibrary
-                title="Cấp độ"
-                data={level}
-                colum={2}
-                widthItem={40}
-                onPress={(value) => this.onPress(6, value)}
-              />
-            </View>
-          </View> */}
           <View
             style={styles.styleBody}
             onLayout={(event) => {
@@ -705,7 +655,7 @@ class QuestionLibrary extends Component {
               });
             }}>
             <View style={styles.headerFilter}>
-              <Text style={styles.txtFilter}>{this.rederTextHeader().textHeader}</Text>
+              <Text style={styles.txtFilter} numberOfLines={1}>{this.refModalFilter?.getRenderText()}</Text>
               <TouchableOpacity onPress={() => this.setState({ isModalQustionLibrary: true })}>
                 <Image source={require('../../../asserts/icon/iconFilter.png')} />
               </TouchableOpacity>
@@ -735,16 +685,16 @@ class QuestionLibrary extends Component {
                 />
 
               ) : (
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: 200,
-                    }}>
-                    <Text>Không có dữ liệu</Text>
-                  </View>
-                )}
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 200,
+                  }}>
+                  <Text>Không có dữ liệu</Text>
+                </View>
+              )}
               {!_.isEmpty(this.state.questions) && (
                 <TouchableOpacity
                   style={styles.buttomTop}
@@ -779,6 +729,7 @@ class QuestionLibrary extends Component {
             onClose={() => this.setState({ isModal: false })}
           />
           <ModalFilteQuestionLibrary
+            ref={ref => this.refModalFilter = ref}
             isModal={isModalQustionLibrary}
             _handleCloseModal={() => this.setState({ isModalQustionLibrary: false })}
             subject={subject}
@@ -818,6 +769,8 @@ class WebViewComponent extends Component {
       questions,
       listQuestionAdded,
     } = this.props;
+
+    console.log("render webview");
     return (
       <WebView
         ref={(ref) => (this.webview = ref)}

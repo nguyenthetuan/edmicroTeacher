@@ -1,28 +1,16 @@
 import React, { Component } from 'react';
 import {
   View,
-  Image,
   StyleSheet,
-  FlatList,
-  TextInput,
-  Animated,
-  Keyboard,
-  Modal,
-  Text,
-  TouchableWithoutFeedback,
   Dimensions,
-  ScrollView,
-  ActivityIndicator,
 } from 'react-native';
-import RippleButton from '../../common-new/RippleButton';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
-import Toast, { DURATION } from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
-import { RFFonsize } from '../../../utils/Fonts';
 import ModalConfigLibrary from './modalConfigLibrary';
 import ModalCurriculum from './modalCurriculum';
-
+import Modal from 'react-native-modal';
+import { element } from 'prop-types';
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -75,20 +63,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#828282',
     alignSelf: 'center'
   }
-})
+});
+
+const level = [
+  { name: 'Nhận biết', code: '0' },
+  { name: 'Thông hiểu', code: '1' },
+  { name: 'Vận dụng', code: '2' },
+  { name: 'Vận dụng cao', code: '3' },
+];
 
 export default class ModalConfigPaper extends Component {
   constructor(props) {
     super(props)
-    const { subject, isModal, listSkills,
-      element, lerningTarget, code } = this.props
+    const {
+      subject,
+      isModal,
+      listSkills,
+      element,
+      lerningTarget,
+      code
+    } = this.props
     this.state = {
       subject: subject || [],
       isModal: isModal || false,
       element: element || [],
       lerningTarget: lerningTarget || [],
       listSkills: listSkills || [],
-      level: [],
       objectSearch: {
         author: '',
         curriculumCode: '',
@@ -101,17 +101,34 @@ export default class ModalConfigPaper extends Component {
         skill: null,
         typeAnswer: [],
       },
-      code: code || ''
+      filterQuestion: [
+        { name: 'Câu hỏi công khai', code: '' },
+        { name: 'Câu hỏi của tôi', code },
+      ],
+
+      // value filter
+      valueQuestion: { name: 'Câu hỏi công khai', code: '' },
+      valueSubject: subject[0],
+      valueCurriculum: element[0],
+      valueUnitOfKnowledge: null,
+      valueTypeOfExercise: null,
+      valueLevel: null,
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.subject !== this.props.subject) {
-      this.setState({ subject: nextProps.subject })
+      this.setState({
+        subject: nextProps.subject,
+        valueSubject: nextProps.subject[0],
+      });
     }
-    // if (nextProps.element !== this.props.element) {
-    //   this.setState({ element: nextProps.element })
-    // }
+    if (nextProps.element !== this.props.element) {
+      this.setState({
+        element: nextProps.element,
+        valueCurriculum: nextProps.element[0]
+      });
+    }
     if (nextProps.lerningTarget !== this.props.lerningTarget) {
       this.setState({ lerningTarget: nextProps.lerningTarget })
     }
@@ -137,11 +154,10 @@ export default class ModalConfigPaper extends Component {
         await this.setState(
           {
             element: response && response,
+            valueCurriculum: response[0],
             objectSearch: {
               ...objectSearch,
-              // curriculumCode: response && response[0].id,
             },
-            // isLoading: false,
           },
         );
         this.filters();
@@ -182,7 +198,6 @@ export default class ModalConfigPaper extends Component {
   }
 
   onPress = (value, item) => {
-    // this.refs.PaginationUtils.resetState();
     const { objectSearch } = this.state;
     switch (value) {
       case 1:
@@ -194,6 +209,7 @@ export default class ModalConfigPaper extends Component {
               indexPage: 0,
             },
             isLoading: true,
+            valueQuestion: item,
           },
           () => this.filters(),
         );
@@ -208,6 +224,9 @@ export default class ModalConfigPaper extends Component {
             },
             isLoading: true,
             lerningTarget: [],
+            valueSubject: item,
+            valueUnitOfKnowledge: null,
+            valueTypeOfExercise: null,
           },
           () => {
             this.filters();
@@ -224,6 +243,7 @@ export default class ModalConfigPaper extends Component {
               indexPage: 0,
             },
             isLoading: true,
+            valueCurriculum: item,
           },
           () => {
             this.filters();
@@ -240,6 +260,7 @@ export default class ModalConfigPaper extends Component {
               indexPage: 0,
             },
             isLoading: true,
+            valueUnitOfKnowledge: item,
           },
           () => {
             this.filters();
@@ -255,6 +276,7 @@ export default class ModalConfigPaper extends Component {
             skill: item.code
           },
           isLoading: true,
+          valueTypeOfExercise: item,
         }, () => {
           this.filters()
         })
@@ -269,6 +291,7 @@ export default class ModalConfigPaper extends Component {
                 indexPage: 0,
               },
               isLoading: true,
+              valueLevel: item,
             },
             () => this.filters(),
           );
@@ -279,74 +302,121 @@ export default class ModalConfigPaper extends Component {
     }
   };
 
+  getRenderText = () => {
+    const {
+      valueQuestion,
+      valueSubject,
+      valueCurriculum,
+      valueUnitOfKnowledge,
+      valueTypeOfExercise,
+      valueLevel,
+    } = this.state;
+    const nameQuestion = valueQuestion?.name || '';
+    const nameSubject = valueSubject?.name || '';
+    const nameCurriculum = valueCurriculum?.name || '';
+    const nameUnitOfKnowledge = valueUnitOfKnowledge?.name || '';
+    const nameTypeOfExercise = valueTypeOfExercise?.name || '';
+    const nameLevel = valueLevel?.name || '';
+    if (nameQuestion && nameSubject && nameCurriculum && nameUnitOfKnowledge && nameTypeOfExercise && nameLevel) {
+      return `${nameQuestion}/${nameSubject}/${nameCurriculum}/${nameUnitOfKnowledge}/${nameTypeOfExercise}/${nameLevel}`;
+    }
+    if (nameQuestion && nameSubject && nameCurriculum && nameUnitOfKnowledge && nameTypeOfExercise) {
+      return `${nameQuestion}/${nameSubject}/${nameCurriculum}/${nameUnitOfKnowledge}/${nameTypeOfExercise}`;
+    }
+    if (nameQuestion && nameSubject && nameCurriculum && nameUnitOfKnowledge) {
+      return `${nameQuestion}/${nameSubject}/${nameCurriculum}/${nameUnitOfKnowledge}`;
+    }
+    if (nameQuestion && nameSubject && nameCurriculum) {
+      return `${nameQuestion}/${nameSubject}/${nameCurriculum}`;
+    }
+    if (nameQuestion && nameSubject && nameCurriculum) {
+      return `${nameQuestion}/${nameSubject}/${nameCurriculum}`;
+    }
+    if (nameQuestion && nameSubject) {
+      return `${nameQuestion}/${nameSubject}`;
+    }
+    if (nameQuestion) {
+      return `${nameQuestion}/`;
+    }
+    return '';
+  }
+
   render() {
-    const level = [
-      { name: 'Nhận biết', code: '0' },
-      { name: 'Thông hiểu', code: '1' },
-      { name: 'Vận dụng', code: '2' },
-      { name: 'Vận dụng cao', code: '3' },
-    ];
     const { isModal } = this.props;
-    const { subject, code,
-      element, lerningTarget, listSkills } = this.state;
-    console.log('element', element)
+    const {
+      element,
+      subject,
+      listSkills,
+      lerningTarget,
+      filterQuestion,
+
+      valueQuestion,
+      valueSubject,
+      valueCurriculum,
+      valueUnitOfKnowledge,
+      valueTypeOfExercise,
+      valueLevel,
+    } = this.state;
     return (
-      <Modal visible={isModal} transparent={true}>
-        <TouchableWithoutFeedback onPressOut={this.props._handleCloseModal}>
-          <View style={styles.containerModal}>
-            <TouchableWithoutFeedback>
-              <View style={styles.wrapModal}>
-                <View style={styles.indicator} />
-                <View style={styles.wrapSelectQuestion}>
-                  <ModalConfigLibrary
-                    title="Câu Hỏi"
-                    data={[
-                      { name: 'Câu hỏi công khai', code: '' },
-                      { name: 'Câu hỏi của tôi', code: code },
-                    ]}
-                    onPress={(value) => this.onPress(1, value)}
-                    colum={2}
-                    widthItem={40}
-                    value={{ name: 'Câu hỏi công khai', code: '' }}
-                  />
-                  <ModalConfigLibrary
-                    title="Môn Học"
-                    data={subject}
-                    onPress={(value) => this.onPress(2, value)}
-                    colum={2}
-                    widthItem={40}
-                    value={subject && subject[0]}
-                  />
-                  <ModalConfigLibrary
-                    title="Giáo trình"
-                    data={element}
-                    onPress={(value) => this.onPress(3, value)}
-                    value={!_.isEmpty(element) && element[0]}
-                  />
-                  <ModalCurriculum
-                    title="Đơn vị kiến thức"
-                    data={lerningTarget}
-                    onPress={(value) => this.onPress(4, value)}
-                  />
-                  <ModalConfigLibrary
-                    title="Dạng bài"
-                    data={listSkills}
-                    onPress={value => this.onPress(5, value)}
-                    colum={2}
-                    widthItem={40}
-                  />
-                  <ModalConfigLibrary
-                    title="Cấp độ"
-                    data={level}
-                    colum={2}
-                    widthItem={40}
-                    onPress={(value) => this.onPress(6, value)}
-                  />
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
+      <Modal
+        isVisible={isModal}
+        style={{ margin: 0 }}
+        transparent={true}
+        onBackdropPress={this.props._handleCloseModal}
+      // onSwipeComplete={this.props._handleCloseModal}
+      // swipeDirection={'down'}
+      >
+        <View style={styles.wrapModal}>
+          <View style={styles.indicator} />
+          <View style={styles.wrapSelectQuestion}>
+            <ModalConfigLibrary
+              title="Câu hỏi"
+              data={filterQuestion}
+              onPress={(value) => this.onPress(1, value)}
+              colum={2}
+              widthItem={40}
+              value={valueQuestion}
+            />
+            <ModalConfigLibrary
+              title="Môn học"
+              data={subject}
+              onPress={(value) => this.onPress(2, value)}
+              colum={2}
+              widthItem={40}
+              // value={subject && subject[0]}
+              value={valueSubject}
+            />
+            <ModalConfigLibrary
+              title="Giáo trình"
+              data={element}
+              onPress={(value) => this.onPress(3, value)}
+              // value={!_.isEmpty(element) && element[0]}
+              value={valueCurriculum}
+            />
+            <ModalCurriculum
+              title="Đơn vị kiến thức"
+              data={lerningTarget}
+              onPress={(value) => this.onPress(4, value)}
+              value={valueUnitOfKnowledge}
+            />
+            <ModalConfigLibrary
+              title="Dạng bài"
+              data={listSkills}
+              onPress={value => this.onPress(5, value)}
+              colum={2}
+              widthItem={40}
+              value={valueTypeOfExercise}
+            />
+            <ModalConfigLibrary
+              title="Cấp độ"
+              data={level}
+              colum={2}
+              widthItem={40}
+              onPress={(value) => this.onPress(6, value)}
+              value={valueLevel}
+            />
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
     );
   }

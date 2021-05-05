@@ -130,7 +130,7 @@ export default class PaginationUtils extends Component {
     return (
       <View style={styles.contain}>
         <Text style={styles.txtTotal}>
-          Tổng số câu hỏi: <Text style={{ color: '#159FDA' }}>{totalQuestion || 0}</Text>
+          Tổng số câu hỏi: <Text style={{ color: '#159FDA' }} num>{totalQuestion || 0}    </Text>
         </Text>
         {totalQuestion ? (
           <View style={styles.wrapPagination}>
@@ -147,8 +147,8 @@ export default class PaginationUtils extends Component {
             </TouchableOpacity>
           </View>
         ) : (
-            <></>
-          )}
+          <></>
+        )}
       </View>
     );
   }

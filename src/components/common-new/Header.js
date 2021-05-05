@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-
-import leadIcon from '../../asserts/icon/back_arrow.png';
-import Ripple from 'react-native-material-ripple';
-import RippleButton from '../libs/RippleButton';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { RFFonsize } from '../../utils/Fonts';
 import AppIcon from '../../utils/AppIcon';
@@ -82,7 +78,7 @@ const styles = StyleSheet.create({
     btnAvatar: {
         height: 38,
         width: 38,
-        marginLeft: 10,
+        marginLeft: 20,
         borderRadius: 19,
         justifyContent: 'center',
         alignItems: 'center',

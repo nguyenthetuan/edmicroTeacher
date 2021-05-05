@@ -89,12 +89,12 @@ export default class ModalConfigLibrary extends Component {
           >
             {(!_.isEmpty(selectItem) && selectItem.name) ||
               (!_.isEmpty(value) && value.name) ? (
-                <Text style={styles.txtSelectItem} numberOfLines={1}>
-                  {selectItem.name || value.name}
-                </Text>
-              ) : (
-                <View />
-              )}
+              <Text style={styles.txtSelectItem} numberOfLines={1}>
+                {selectItem.name || value.name}
+              </Text>
+            ) : (
+              <View />
+            )}
             <View
               style={{
                 flexDirection: 'row',
@@ -170,17 +170,17 @@ export default class ModalConfigLibrary extends Component {
                               <Text style={styles.txtActive}>{item.name}</Text>
                             </TouchableOpacity>
                           ) : (
-                              <TouchableOpacity
-                                onPress={() => this.selectItem({ item, index })}
-                                style={{
-                                  marginHorizontal: 15,
-                                  width: (widthItem && `${widthItem}%`) || '100%',
-                                  marginTop: 25,
-                                  alignItems: 'center',
-                                }}>
-                                <Text style={styles.txtItem}>{item.name}</Text>
-                              </TouchableOpacity>
-                            );
+                            <TouchableOpacity
+                              onPress={() => this.selectItem({ item, index })}
+                              style={{
+                                marginHorizontal: 15,
+                                width: (widthItem && `${widthItem}%`) || '100%',
+                                marginTop: 25,
+                                alignItems: 'center',
+                              }}>
+                              <Text style={styles.txtItem}>{item.name}</Text>
+                            </TouchableOpacity>
+                          );
                         }}
                       />
                     </ScrollView>
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     color: '#000',
+    marginBottom: 3,
   },
   txtTitleModal: {
     color: '#2D9CDB',
@@ -227,11 +228,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#C4C4C4',
   },
   txtSelectItem: {
-    color: '#828282',
+    color: '#000',
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
-    marginLeft: 5,
-    // width: '50%'
+    marginLeft: 10,
   },
   txtActive: {
     fontFamily: 'Nunito-Bold',
