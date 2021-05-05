@@ -195,6 +195,7 @@ class StepThreePDF extends Component {
     }
 
     handleNextStepFour = async () => {
+        const { duration, assignmentType, subjectActive } = this.state;
         let validate = this.validation();
         if (!validate) {
             return;
@@ -203,11 +204,14 @@ class StepThreePDF extends Component {
         let res = await this.createAssinment();
         const data = {
             ...this.props.screenProps.data,
-            item: res.item
+            item: res.item,
+            duration, assignmentType, subjectActive
         };
         if (res.status == 0) {
             this.props.screenProps.handleNextStep(3, data);
-            this.props.navigation.navigate('StepFour');
+            this.props.screenProps.navigation.replace('UploadPDFCompleted', {
+                data: data,
+            });
         } else {
             this.toast.show('Tải bộ đề lên không thành công!')
         }
@@ -392,7 +396,7 @@ class StepThreePDF extends Component {
                     listSubjects={listSubjects}
                     activeSubject={this.activeSubject}
                 />
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'}  style={styles.styleTostSuccess}/>
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} />
             </View>
         )
     }
