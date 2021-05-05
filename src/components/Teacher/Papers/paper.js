@@ -37,6 +37,7 @@ import RippleButton from '../../common-new/RippleButton';
 import { AssignmentContentType } from '../../../models';
 import Kcolor from '../../../constants/Kcolor';
 import AppIcon from '../../../utils/AppIcon'
+import TourView from '../../../utils/TourView';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -85,6 +86,23 @@ class Papers extends Component {
   };
 
   componentDidMount() {
+    // setTimeout(() => {
+    //   try {
+    //     this.dataRef = [
+    //       {
+    //         reff: this.searchRef,
+    //         hint: 'Tìm kiếm bộ đề'
+    //       },
+    //       {
+    //         reff: this.addRef,
+    //         hint: 'Tạo bộ đề mới'
+    //       },
+    //     ];
+    //     this.tour.onMeasure(this.dataRef);
+    //   } catch (error) {
+
+    //   }
+    // }, 2000);
     this.getData();
   }
 
@@ -756,6 +774,8 @@ class Papers extends Component {
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMainPaper
+          searchRef={(r) => this.searchRef = r}
+          addRef={(a) => this.addRef = a}
           {...user}
           navigation={this.props.navigation}
           onChangeText={this.onChangeText}
@@ -864,6 +884,7 @@ class Papers extends Component {
           dataSelected={dataSelected}
           deletePaper={this.deletePaper}
         />
+        <TourView ref={(tv) => this.tour = tv} />
       </SafeAreaView>
     );
   }

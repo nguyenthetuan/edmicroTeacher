@@ -19,6 +19,7 @@ import { updateExamListAction } from '../../actions/paperAction';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import apiPapers from '../../services/apiPapersTeacher';
 import { setListGrades, setListSubject } from '../../actions/paperAction';
+import { CustomeButtonRef } from './CustomeButtonRef';
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -308,26 +309,18 @@ class HeaderMainPaper extends React.Component {
           <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
         <View style={styles.rowGif}>
-          <TouchableWithoutFeedback
+          <CustomeButtonRef
+            ref={this.props.searchRef}
             onPress={() =>
               this.props.navigation.navigate('SearchScreen', { listPapers })
             }
-          >
-            <View style={styles.searchGif} hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}>
-              <Image
-                source={require('../../asserts/icon/icon_searchAround.png')}
-                style={{ tintColor: "#222" }}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={this._handleAddPaper}  hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}>
-            <View style={styles.addPaper}>
-              <Image
-                source={require('../../asserts/icon/icon_addPaper.png')}
-                style={{ tintColor: "#222" }}
-              />
-            </View>
-          </TouchableWithoutFeedback>
+            icon={require('../../asserts/icon/icon_searchAround.png')}
+          />
+          <CustomeButtonRef
+            ref={this.props.addRef}
+            onPress={this._handleAddPaper}
+            icon={require('../../asserts/icon/icon_addPaper.png')}
+          />
         </View>
         <ModalAddPaper
           onPress={this.onPress}

@@ -81,8 +81,9 @@ function TourView(props, ref) {
         hintText.current = dataRef.current[index].hint;
         console.log(hintText.current);
         console.log(dataRef.current[index].reff);
-
+        alert(dataRef.current[index].reff);
         dataRef.current[index].reff.measure(async (fx, fy, w, h, px, py) => {
+            alert(px);
             await setShow(true);
             await setPosition({ ...position, top: py, left: px });
         }, err => {
@@ -157,11 +158,11 @@ function TourView(props, ref) {
                             }]} />
                         </TouchableWithoutFeedback>
                     </Animated.View>
-                    <StepView {...props}
+                    {/* <StepView {...props}
                         onPress={onPress}
                         position={position}
                         scale={scale}
-                        hintText={hintText.current} />
+                        hintText={hintText.current} /> */}
                 </View>
             </View>
             :
