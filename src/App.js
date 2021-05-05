@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TextInput } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { Provider } from 'react-redux';
+import { getTrackingStatus, requestTrackingPermission } from 'react-native-tracking-transparency';
 import store from './store/index';
 import sagaMiddleware from './middleware/sagaMiddleWare';
 import rootSaga from './sagas/rootSaga';
@@ -26,21 +27,26 @@ import DownloadCodePushApp from './utils/DownloadCodePush';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.initMixpanel();
     this.getActiveRoute = this.getActiveRoute.bind(this);
     this.version = '';
+  }
+
+  async componentDidMount() {
+    this.updataVersionApp();
+    console.disableYellowBox = true;
+    await requestTrackingPermission();
+    const trackingStatus = await getTrackingStatus();
+    if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+      // enable tracking features
+      this.initMixpanel();
+      Mixpanel.sharedInstanceWithToken(Common.MixpanelToken);
+    }
+    this.configureTextProps();
   }
 
   async initMixpanel() {
     this.mixpanel = new MixpanelInstance(Common.MixpanelToken);
     await this.mixpanel.initialize();
-  }
-
-  componentDidMount() {
-    Mixpanel.sharedInstanceWithToken(Common.MixpanelToken);
-    this.updataVersionApp();
-    console.disableYellowBox = true;
-    this.configureTextProps();
   }
 
   updataVersionApp = async () => {

@@ -458,7 +458,7 @@ class QuestionLibrary extends Component {
             navigation={this.props.navigation}
             actionIcon={require('../../../asserts/icon/icon_octiconSettingsV3.png')}
             actionStyle={{ borderRadius: 0 }}
-          onRightAction={() => this.configurationQuestion()}
+            onRightAction={() => this.configurationQuestion()}
           />
           {/* <TouchableOpacity style={[styles.buttonCreateAssessment, { ...shadowBtn }]} onPress={() => this.configurationQuestion()}>
             <Text style={styles.textCreateAssessment}>Cấu hình</Text>

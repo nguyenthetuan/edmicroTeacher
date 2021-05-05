@@ -69,6 +69,8 @@
 	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires to access your photo library to show image on profile</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Ứng dụng thu thập thông tin để thống kê số lượng bài tập về nhà và nhiệm vụ được giao. Thông tin của người dùng sẽ không được sử dụng cho mục đích quảng cáo hay chia sẻ với bên thứ ba</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nunito-Black.ttf</string>
