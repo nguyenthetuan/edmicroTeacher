@@ -153,14 +153,14 @@ class MenuTabTeacher extends Component {
                 title={'Cập nhật số điện thoại'}
                 rippleColor={rippleColor}
               />
-              <MenuItem
-                onPress={() => this.handleClick(12)}
-                source={require('../../asserts/appIcon/contactPhone.png')}
-                title={'Liên hệ với chúng tôi'}
-                rippleColor={rippleColor}
-              />
-
-
+              {Platform.OS == 'android' &&
+                <MenuItem
+                  onPress={() => this.handleClick(12)}
+                  source={require('../../asserts/appIcon/contactPhone.png')}
+                  title={'Liên hệ với chúng tôi'}
+                  rippleColor={rippleColor}
+                />
+              }
               <View style={MenuStyle.hrRow}></View>
               <MenuItem
                 onPress={() => this.handleClick(15)}
