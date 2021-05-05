@@ -38,7 +38,7 @@ export default class SubjectItem extends Component {
     }
 
     render() {
-        const { subjectActive, Icon, styleTitle } = this.props;
+        const { subjectActive, Icon, styleTitle, style } = this.props;
         console.log('subjectxxx', subjectActive)
         return (
             <View>
@@ -51,7 +51,7 @@ export default class SubjectItem extends Component {
                         source={require('../../../asserts/icon/subject.png')}
                         resizeMode={'contain'}
                     /> */}
-                    <View style={styles.styWrapClassIn}>
+                    <View style={[styles.styWrapClassIn, style]}>
                         <FlatList
                             data={subjectActive}
                             keyExtractor={(item, index) => index.toString()}
@@ -68,7 +68,7 @@ export default class SubjectItem extends Component {
                             <Image
                                 source={Icon}
                                 resizeMode={'contain'}
-                                style={{ tintColor: '#2D9CDB' }}
+                                style={{ tintColor: '#2D9CDB'}}
                             />
                         </RippleButton>
                     </View>
