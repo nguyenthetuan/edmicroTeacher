@@ -79,16 +79,15 @@ export default class HeaderPaper extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
+    paddingVertical: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
   },
   viewTitle: {
-    alignSelf: 'center',
-    height: 30,
+    // alignSelf: 'center',
     // alignItems: 'center',
     // justifyContent: 'center'
   },
@@ -96,12 +95,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   textTitleHeader: {
+    marginLeft: 15,
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
     fontSize: RFFonsize(16),
-    flex: 1,
-    alignSelf: 'center',
-    top: -2
   },
   btnAvatar: {
     height: 38,
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   octiconSetting: {
-    paddingRight: 5
+    paddingRight: 5,
   },
   btnLeft: {
     color: '#fff'

@@ -92,7 +92,7 @@ class EditConfig extends Component {
 
             this.setState({
                 ...this.state,
-                name: data.name,
+                name: data?.name,
                 grade: data.gradeCode[0],
                 subject: data.subjectCode[0],
                 time: `${data.duration / 60}`,

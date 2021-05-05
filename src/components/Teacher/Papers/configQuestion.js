@@ -1432,7 +1432,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     right: 20,
-    top: Platform.OS == 'ios' ? (isIphoneX() ? 10 : 10) : 10,
+    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 12) : 12,
     zIndex: 1,
   },
   textCreateAssessment: {

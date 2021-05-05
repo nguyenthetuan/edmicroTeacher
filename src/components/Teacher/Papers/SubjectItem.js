@@ -32,7 +32,7 @@ export default class SubjectItem extends Component {
                 {/* <RippleButton style={styles.styIcon} onPress={() => this.props.activeSubject(item)}>
                     <Image source={AppIcon.icon_closeItemV3} style={styles.widthClose} />
                 </RippleButton> */}
-                <Text style={styles.txtItemActive}>{data.name}</Text>
+                <Text style={styles.txtItemActive}>{data?.name}</Text>
             </View>
         )
     }
