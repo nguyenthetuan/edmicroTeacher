@@ -280,6 +280,8 @@ export default class CopyFromSubjectExists extends Component {
                                     // height={this.state.height}
                                     data={this.state.targetLearning}
                                     onPress={(value) => this.onPress(value)}
+                                    styleTitle={{ color: '#fff' }}
+                                    borderStyle={{ height: 30, borderRadius: 5, borderColor: "#fff" }}
                                 />
                             </View>
 
@@ -453,7 +455,7 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(16),
         fontWeight: '500',
         color: '#55CCF2',
-        textAlign:'center'
+        textAlign: 'center'
     },
     searchIcon: {
         width: 20,

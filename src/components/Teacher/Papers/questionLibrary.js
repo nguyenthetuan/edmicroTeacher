@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
   Text,
   Platform,
   Dimensions,
@@ -14,13 +13,9 @@ import {
   Animated,
   ScrollView
 } from 'react-native';
-import RippleButton from '../../common-new/RippleButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { WebView } from 'react-native-webview';
 import MathJaxLibs from '../../../utils/webViewBankQuestion';
 import WarningModal from '../../modals/WarningModal';
-import ModalConfigLibrary from './modalConfigLibrary';
-import ModalCurriculum from './modalCurriculum';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import { connect } from 'react-redux';
@@ -33,7 +28,6 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import { AlertNoti } from '../../../utils/Common';
 import HTML from "react-native-render-html";
 import html from '../../../utils/ModalMatarial'
-import HeaderConfigQuestion from '../../common-new/HeaderConfigQuestion';
 import Header from '../../common-new/Header';
 import { RFFonsize } from '../../../utils/Fonts';
 import { isIphoneX } from 'react-native-iphone-x-helper';
@@ -187,6 +181,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5
+  },
+  reload: {
+    padding: 5,
+    marginTop: 10,
+    alignSelf: 'center',
+    backgroundColor: '#828282',
+    borderRadius: 5
   }
 });
 
@@ -562,9 +563,9 @@ class QuestionLibrary extends Component {
             }}>
             <View style={styles.headerFilter}>
               <Text style={styles.txtFilter} numberOfLines={1}>{this.refModalFilter?.getRenderText()}</Text>
-              <TouchableOpacity onPress={() => this.setState({ isModalQustionLibrary: true })}>
+              <TouchableWithoutFeedback onPress={() => this.setState({ isModalQustionLibrary: true })}>
                 <Image source={require('../../../asserts/icon/iconFilter.png')} />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
             {isLoading && <LearnPlaceholder />}
             <View style={styles.wrapPageAndNumberQuesion}>
@@ -591,27 +592,28 @@ class QuestionLibrary extends Component {
                 />
 
               ) : (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 200,
-                  }}>
-                  <Text>Không có dữ liệu</Text>
-                </View>
-              )}
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginBottom: 200,
+                    }}>
+                    <Text>Không có dữ liệu</Text>
+                  </View>
+                )}
               {!_.isEmpty(this.state.questions) && (
-                <TouchableOpacity
-                  style={styles.buttomTop}
+                <TouchableWithoutFeedback
                   onPress={() => this._onTop()}>
-                  <Image
-                    source={require('../../../asserts/appIcon/icUp.png')}
-                    resizeMode="contain"
-                    style={{ height: 20, width: 20 }}
-                  />
-                  <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-                </TouchableOpacity>
+                  <View style={styles.buttomTop} >
+                    <Image
+                      source={require('../../../asserts/appIcon/icUp.png')}
+                      resizeMode="contain"
+                      style={{ height: 20, width: 20 }}
+                    />
+                    <Text style={{ color: '#FAFAFA' }}>TOP</Text>
+                  </View>
+                </TouchableWithoutFeedback>
               )}
             </View>
           </View>
@@ -735,23 +737,23 @@ class ModalQuestion extends Component {
           <View style={styles.containerModal}>
             <TouchableWithoutFeedback>
               <View style={styles.bodyModal}>
-                <TouchableOpacity
-                  style={styles.btnClose}
+                <TouchableWithoutFeedback
                   onPress={onClose}>
-                  <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
-                </TouchableOpacity>
+                  <View style={styles.btnClose}>
+                    <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
+                  </View>
+                </TouchableWithoutFeedback>
                 {isLoadingModal && htmlContent ?
                   <ActivityIndicator color='red' style={{ justifyContent: 'center', alignItems: 'center', }} />
                   :
                   !htmlContent ?
                     <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
                       <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                      <TouchableOpacity
-                        style={{ padding: 5, marginTop: 10, alignSelf: 'center', backgroundColor: '#828282', borderRadius: 5 }}
-                        onPress={getDetailMatarial}
-                      >
-                        <Text style={{ color: '#fff' }}>Tải lại</Text>
-                      </TouchableOpacity>
+                      <TouchableWithoutFeedback onPress={getDetailMatarial}>
+                        <View style={styles.reload}>
+                          <Text style={{ color: '#fff' }}>Tải lại</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     </View> :
                     <WebView
                       ref={(ref) => (this.webview = ref)}

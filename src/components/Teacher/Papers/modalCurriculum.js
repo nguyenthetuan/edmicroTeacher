@@ -239,127 +239,131 @@ export default class ModalCurriculum extends Component {
       title,
       widthItem,
       colum,
-      value
+      value,
+      styleTitle,
+      borderStyle
     } = this.props;
     selectItem = _.isEmpty(value) ? selectItem : value;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
 
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity style={{ flex: 1 }} onPress={() => this.setState({ visible: true })}>
-          <Text style={styles.txtTitle}>{title}</Text>
-          <View style={styles.wrapModal}>
-            {!_.isEmpty(selectItem) && selectItem.name ? (
-              <View style={styles.wrapElementSelect}>
-                <TouchableOpacity
-                  style={{ flexDirection: 'row' }}
-                  onPress={() => this.deleteItem()}>
-                  <Text style={styles.txtSelectItem} numberOfLines={1}>
-                    {selectItem.name}
-                  </Text>
-                  <Image source={AppIcon.close_img} style={styles.clickClose} />
-                </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={() => this.setState({ visible: true })}>
+          <View style={{ flex: 1 }} >
+            <Text style={[styles.txtTitle, styleTitle]}>{title}</Text>
+            <View style={[styles.wrapModal, borderStyle]}>
+              {!_.isEmpty(selectItem) && selectItem.name ? (
+                <View style={styles.wrapElementSelect}>
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row' }}
+                    onPress={() => this.deleteItem()}>
+                    <Text style={styles.txtSelectItem} numberOfLines={1}>
+                      {selectItem.name}
+                    </Text>
+                    <Image source={AppIcon.close_img} style={styles.clickClose} />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                  <View />
+                )}
+              <View style={styles.icDow}>
+                <Ionicons
+                  name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
+                  size={18}
+                  color="#828282"
+                />
               </View>
-            ) : (
-              <View />
-            )}
-            <View style={styles.icDow}>
-              <Ionicons
-                name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
-                size={18}
-                color="#828282"
-              />
             </View>
-          </View>
 
-          <Modal visible={visible} transparent={true}>
-            <TouchableWithoutFeedback
-              style={[styles.container, { height: this.props.height }]}
-              onPress={() => this._closeModal()}
-            >
-              <View style={styles.container}>
-                <TouchableWithoutFeedback >
-                  <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    backgroundColor: '#2D9CDB',
-                    paddingHorizontal: 16,
-                    height: 80,
-                    alignContent: 'flex-end',
-                    paddingBottom: 10
-                  }}>
-                    <TouchableOpacity
-                      style={{ alignSelf: 'flex-end', marginBottom: 3 }}
-                      onPress={() => {
-                        this.setState({
-                          visible: false,
-                          searchKey: '',
-                        })
-                      }
-                      }>
-                      <Image
-                        style={{ tintColor: '#fff' }}
-                        source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
-                      />
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
-                      <TouchableOpacity style={{ marginRight: 10 }} onPress={() => this.backBtn({ data })}>
-                        <AntDesign name='arrowleft' size={20} style={{ color: '#fff' }} />
-                      </TouchableOpacity>
+            <Modal visible={visible} transparent={true}>
+              <TouchableWithoutFeedback
+                style={[styles.container, { height: this.props.height }]}
+                onPress={() => this._closeModal()}
+              >
+                <View style={styles.container}>
+                  <TouchableWithoutFeedback >
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      backgroundColor: '#2D9CDB',
+                      paddingHorizontal: 16,
+                      height: 80,
+                      alignContent: 'flex-end',
+                      paddingBottom: 10
+                    }}>
                       <TouchableOpacity
+                        style={{ alignSelf: 'flex-end', marginBottom: 3 }}
                         onPress={() => {
                           this.setState({
-                            data: this.props.data,
+                            visible: false,
                             searchKey: '',
                           })
                         }
-                        }
-                      >
+                        }>
                         <Image
-                          source={require('../../../asserts/icon/iconHome.png')}
-                          style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }}
-                          resizeMode='contain'
+                          style={{ tintColor: '#fff' }}
+                          source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
                         />
                       </TouchableOpacity>
-                      <TextInput
-                        style={styles.TextInput}
-                        onChangeText={(Text) =>
-                          this.setState({ searchKey: Text })
-                        }
-                        value={searchKey}
-                        onLayout={(e) =>
-                          (heightTextInput = e.nativeEvent.layout.height)
-                        }
-                      />
-                      <TouchableOpacity
-                        style={{
-                          position: 'absolute',
-                          right: 4,
-                          top: 4,
-                          height: 18,
-                          width: 24,
-                        }}>
-                        <EvilIcons name="search" size={20} color="#FFF" />
-                      </TouchableOpacity>
+                      <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
+                        <TouchableOpacity style={{ marginRight: 10 }} onPress={() => this.backBtn({ data })}>
+                          <AntDesign name='arrowleft' size={20} style={{ color: '#fff' }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({
+                              data: this.props.data,
+                              searchKey: '',
+                            })
+                          }
+                          }
+                        >
+                          <Image
+                            source={require('../../../asserts/icon/iconHome.png')}
+                            style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }}
+                            resizeMode='contain'
+                          />
+                        </TouchableOpacity>
+                        <TextInput
+                          style={styles.TextInput}
+                          onChangeText={(Text) =>
+                            this.setState({ searchKey: Text })
+                          }
+                          value={searchKey}
+                          onLayout={(e) =>
+                            (heightTextInput = e.nativeEvent.layout.height)
+                          }
+                        />
+                        <TouchableOpacity
+                          style={{
+                            position: 'absolute',
+                            right: 4,
+                            top: 4,
+                            height: 18,
+                            width: 24,
+                          }}>
+                          <EvilIcons name="search" size={20} color="#FFF" />
+                        </TouchableOpacity>
+                      </View>
                     </View>
+                  </TouchableWithoutFeedback>
+                  <View style={styles.content}>
+                    <FlatList
+                      data={fliter}
+                      keyExtractor={(item, index) => index.toString()}
+                      renderItem={this.renderItem}
+                      ListEmptyComponent={this.renderListEmptyComponent}
+                      onLayout={(e) =>
+                        (heightContent = e.nativeEvent.layout.height)
+                      }
+                    />
                   </View>
-                </TouchableWithoutFeedback>
-                <View style={styles.content}>
-                  <FlatList
-                    data={fliter}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={this.renderItem}
-                    ListEmptyComponent={this.renderListEmptyComponent}
-                    onLayout={(e) =>
-                      (heightContent = e.nativeEvent.layout.height)
-                    }
-                  />
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
-            <SafeAreaView />
-          </Modal>
-        </TouchableOpacity>
+              </TouchableWithoutFeedback>
+              <SafeAreaView />
+            </Modal>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
