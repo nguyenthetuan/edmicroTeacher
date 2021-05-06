@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { RFFonsize } from '../utils/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class PaginationUtils extends Component {
@@ -126,12 +126,19 @@ export default class PaginationUtils extends Component {
   };
 
   render() {
-    const { totalQuestion } = this.props;
+    const { totalQuestion, countQuestion } = this.props;
     return (
       <View style={styles.contain}>
-        <Text style={styles.txtTotal}>
-          Tổng số câu hỏi: <Text style={{ color: '#159FDA' }} num>{totalQuestion || 0}    </Text>
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.totalAddQuestion}>
+            Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
+              {countQuestion}
+            </Text>
+          </Text>
+          <Text style={styles.txtTotal}>
+            Tổng số câu hỏi: <Text style={{ color: '#159FDA' }} num>{totalQuestion || 0}    </Text>
+          </Text>
+        </View>
         {totalQuestion ? (
           <View style={styles.wrapPagination}>
             <TouchableOpacity
@@ -147,13 +154,14 @@ export default class PaginationUtils extends Component {
             </TouchableOpacity>
           </View>
         ) : (
-          <></>
-        )}
+            <></>
+          )}
       </View>
     );
   }
 }
 
+const { width } = Dimensions.get('window')
 const styles = StyleSheet.create({
   contain: {
     justifyContent: 'center',
@@ -183,5 +191,17 @@ const styles = StyleSheet.create({
   txtNumber: {
     color: '#159FDA',
     fontFamily: 'Nunito-Regular',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: width,
+    paddingLeft: 10
+  },
+  totalAddQuestion: {
+    marginLeft: 16,
+    fontSize: RFFonsize(12),
+    fontFamily: 'Nunito-Bold',
+    color: '#000000',
   },
 });
