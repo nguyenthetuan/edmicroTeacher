@@ -123,17 +123,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   wrapPageAndNumberQuesion: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 5,
-    // zIndex: 10,
   },
   containerModal: {
     backgroundColor: 'rgba(0,0,0,0.6)',
     height: 200,
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 16
   },
   bodyModal: {
     backgroundColor: '#fff',
@@ -468,7 +464,7 @@ class QuestionLibrary extends Component {
         isLoading: true,
       },
       () => {
-        this.searchPaper(true);
+        this.searchPaper();
       },
     );
   };
@@ -568,16 +564,21 @@ class QuestionLibrary extends Component {
             </View>
             {isLoading && <LearnPlaceholder />}
             <View style={styles.wrapPageAndNumberQuesion}>
-              <Text style={styles.totalAddQuestion}>
-                Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
-                  {listQuestionAdded.length}
+              {/* <View>
+                <Text style={styles.totalAddQuestion}>
+                  Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
+                    {listQuestionAdded.length}
+                  </Text>
                 </Text>
-              </Text>
-              <PaginationUtils
-                ref={'PaginationUtils'}
-                totalQuestion={totalQuestion}
-                handleNextPage={this.handleNextPage}
-              />
+              </View> */}
+              <View style={{ alignSelf: 'flex-end' }}>
+                <PaginationUtils
+                  ref={'PaginationUtils'}
+                  totalQuestion={totalQuestion}
+                  handleNextPage={this.handleNextPage}
+                  countQuestion={listQuestionAdded.length}
+                />
+              </View>
             </View>
             <View style={{ flex: 1, backgroundColor: '#FFF' }}>
               {!_.isEmpty(this.state.questions) ? (
@@ -591,16 +592,16 @@ class QuestionLibrary extends Component {
                 />
 
               ) : (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 200,
-                  }}>
-                  <Text>Không có dữ liệu</Text>
-                </View>
-              )}
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginBottom: 200,
+                    }}>
+                    <Text>Không có dữ liệu</Text>
+                  </View>
+                )}
               {!_.isEmpty(this.state.questions) && (
                 <TouchableOpacity
                   style={styles.buttomTop}
