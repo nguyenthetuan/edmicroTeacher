@@ -804,9 +804,8 @@ class Papers extends Component {
             keyExtractor={(item, index) => index.toString()}
             extraData={dataFilter}
             removeClippedSubviews={true}
-            ListEmptyComponent={this._listTestEmpty}
-            ListFooterComponent={this._listTestFooter}
-            ListFooterComponent={<View style={{ height: 240 }} />}
+            listEmptyComponent={this._listTestEmpty}
+            listFooterComponent={this._listTestFooter}
             _onOpenModal={this._onOpenModal}
             onScroll={Animated.event([
               {
@@ -910,8 +909,8 @@ const FlastlistCus = forwardRef((props, ref) => {
           keyExtractor={(item, index) => index.toString()}
           extraData={data}
           removeClippedSubviews={true}
-          ListEmptyComponent={props.ListEmptyComponent}
-          ListFooterComponent={props.ListFooterComponent}
+          ListEmptyComponent={props.listEmptyComponent}
+          ListFooterComponent={props.listFooterComponent}
           ListFooterComponent={<View style={{ height: 240 }} />}
           renderItem={({ item, index }) => {
             return (
@@ -919,7 +918,6 @@ const FlastlistCus = forwardRef((props, ref) => {
             )
           }}
           initialNumToRender={2}
-          // ListHeaderComponent={this.renderHeaderFlastList()}
           bounces={false}
           scrollEventThrottle={1}
           onScroll={props.onScroll}
