@@ -340,7 +340,7 @@ class QuestionLibrary extends Component {
             // isLoading: false,
           },
         );
-        this.searchPaper();
+        // this.searchPaper();
         this.getLearingTarget();
       }
     } catch (error) {
@@ -378,6 +378,7 @@ class QuestionLibrary extends Component {
   }
 
   searchPaper = async (objectSearchs) => {
+    console.log("search Paper");
     const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
     try {
       const { token } = await dataHelper.getToken();
@@ -593,16 +594,16 @@ class QuestionLibrary extends Component {
                 />
 
               ) : (
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: 200,
-                    }}>
-                    <Text>Không có dữ liệu</Text>
-                  </View>
-                )}
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 200,
+                  }}>
+                  <Text>Không có dữ liệu</Text>
+                </View>
+              )}
               {!_.isEmpty(this.state.questions) && (
                 <TouchableWithoutFeedback
                   onPress={() => this._onTop()}>

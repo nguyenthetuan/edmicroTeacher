@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useRef, useMemo, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import {
   View,
   StyleSheet,
@@ -413,16 +413,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-              <Text
-                style={{
-                  color: '#000',
-                  fontFamily: 'Nunito-Bold',
-                  fontSize: RFFonsize(14),
-                  textAlign: 'center',
-                }}>
-                Xem thêm
-              </Text>
-            )}
+            <Text
+              style={{
+                color: '#000',
+                fontFamily: 'Nunito-Bold',
+                fontSize: RFFonsize(14),
+                textAlign: 'center',
+              }}>
+              Xem thêm
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -741,7 +741,6 @@ class Papers extends Component {
   }
 
   render() {
-    console.log("render paper");
     const {
       loading,
       animation,
@@ -770,7 +769,6 @@ class Papers extends Component {
       outputRange: [0, -390],
       extrapolate: 'clamp',
     });
-    console.log("render paper");
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMainPaper
@@ -795,7 +793,7 @@ class Papers extends Component {
             {this.renderHeaderFlastList()}
             {this.createTabButton()}
           </Animated.View>
-          <AnimatedFlatList
+          <FlastlistCus
             style={{ paddingHorizontal: 16, paddingTop: 220 }}
             data={dataFilter}
             ref={(fl) => this.refFlatlist = fl}
@@ -804,18 +802,9 @@ class Papers extends Component {
             keyExtractor={(item, index) => index.toString()}
             extraData={dataFilter}
             removeClippedSubviews={true}
-            ListEmptyComponent={this._listTestEmpty}
-            ListFooterComponent={this._listTestFooter}
-            ListFooterComponent={<View style={{ height: 240 }} />}
-            renderItem={({ item, index }) => {
-              return (
-                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-              )
-            }}
-            initialNumToRender={2}
-            // ListHeaderComponent={this.renderHeaderFlastList()}
-            bounces={false}
-            scrollEventThrottle={1}
+            listEmptyComponent={this._listTestEmpty}
+            listFooterComponent={this._listTestFooter}
+            _onOpenModal={this._onOpenModal}
             onScroll={Animated.event([
               {
                 nativeEvent: { contentOffset: { y: this._scroll_y } }
@@ -889,6 +878,57 @@ class Papers extends Component {
     );
   }
 }
+
+
+const FlastlistCus = forwardRef((props, ref) => {
+
+  const refFlastList = useRef();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(props.data);
+  }, [props.data])
+
+  useImperativeHandle(ref, () => ({
+    scrollToIndex: ({ animated, index }) => {
+      refFlastList.current?.scrollToIndex({ animated, index });
+    },
+  }));
+
+  const render =
+    useMemo(() => {
+      return (
+        <AnimatedFlatList
+          style={{ paddingHorizontal: 16, paddingTop: 220 }}
+          data={data}
+          ref={refFlastList}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={true}
+          keyExtractor={(item, index) => index.toString()}
+          extraData={data}
+          removeClippedSubviews={true}
+          ListEmptyComponent={props.listEmptyComponent}
+          ListFooterComponent={props.listFooterComponent}
+          ListFooterComponent={<View style={{ height: 240 }} />}
+          renderItem={({ item, index }) => {
+            return (
+              <ItemListTest item={item} onOpenModal={props._onOpenModal(item)} />
+            )
+          }}
+          initialNumToRender={2}
+          bounces={false}
+          scrollEventThrottle={1}
+          onScroll={props.onScroll}
+        />
+      )
+    }, [data]);
+
+  return (
+    <>
+      {render}
+    </>
+  )
+})
 
 const styles = StyleSheet.create({
 
