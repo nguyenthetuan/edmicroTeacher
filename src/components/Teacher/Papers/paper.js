@@ -741,7 +741,6 @@ class Papers extends Component {
   }
 
   render() {
-    console.log("render paper");
     const {
       loading,
       animation,
@@ -770,7 +769,6 @@ class Papers extends Component {
       outputRange: [0, -390],
       extrapolate: 'clamp',
     });
-    console.log("render paper");
     return (
       <SafeAreaView style={styles.fill}>
         <HeaderMainPaper

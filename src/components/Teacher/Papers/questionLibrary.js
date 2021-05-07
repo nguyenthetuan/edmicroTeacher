@@ -322,7 +322,6 @@ class QuestionLibrary extends Component {
   };
 
   getDetailSubject = async () => {
-    console.log('getDetailSubject');
     const { objectSearch } = this.state;
     try {
       const { token } = await dataHelper.getToken();
@@ -350,7 +349,6 @@ class QuestionLibrary extends Component {
   };
 
   getLearingTarget = async () => {
-    console.log('getLearingTarget');
     const { objectSearch } = this.state;
     try {
       const { token } = await dataHelper.getToken();
@@ -410,7 +408,6 @@ class QuestionLibrary extends Component {
   };
 
   filter = async (objectSearchs) => {
-    console.log("Filter");
     this.setState({ objectSearch: objectSearchs, isLoading: true })
     const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
     try {
