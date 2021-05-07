@@ -4,12 +4,16 @@ import {
     Text,
     StyleSheet,
     FlatList,
-    TouchableOpacity,
     Image,
     Modal,
     Linking,
     Dimensions,
+    TouchableWithoutFeedback,
+    ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
+import dataHelper from '../../utils/dataHelper';
+import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
 import moment from 'moment';
 import { imageDefault } from '../../utils/Common';
 import Icon from 'react-native-vector-icons/Feather';
@@ -17,48 +21,69 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { copyToClipboard } from '../../utils/Common';
 import { RFFonsize } from '../../utils/Fonts';
+import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
-export default class HistoryGift extends Component {
+class HistoryGift extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listHistory: [],
+            isLoading: false,
+        }
+    }
+
+    componentDidMount() {
+        this.getHistory();
+    }
+
+    getHistory = async () => {
+        const { token } = await dataHelper.getToken();
+        this.props.getListHistoryGift({ token, page: 0 });
+    }
+
+
 
     renderItem = ({ item, index }) => {
-        const { user } = this.props.screenProps;
+        const { user } = this.props;
         const isColor = item.point > user.totalEDPoint;
         item.image = item.image?.includes('http') ? item.image : imageDefault;
+        const { shadowBtn } = shadowStyle;
         return (
-            <TouchableOpacity
-                style={styles.listSale}
+            <TouchableWithoutFeedback
                 onPress={this.handleClickItem(item)}
             >
-                <View style={styles.flexLeft}>
-                    <Image
-                        source={{ uri: item.image }}
-                        style={styles.sizeIcon}
-                        resizeMode={'contain'}
-                    />
-                </View>
-                <View style={styles.flexRight}>
-                    <Text style={styles.txtTitle}>{item.giftName}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 16 }}>
-                        <Text style={styles.txtMark}>Đổi điểm</Text>
-                        <View style={styles.changeCoin}>
-                            <Image
-                                style={styles.widthIcon}
-                                source={require('../../asserts/icon/icon_coinGiftV3.png')}
-                            />
-                            <Text
-                                numberOfLines={1}
-                                style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
-                            >{item.point}</Text>
-                        </View>
+                <View style={[styles.listSale, shadowBtn]}>
+                    <View style={styles.flexLeft}>
+                        <Image
+                            source={{ uri: item.image }}
+                            style={styles.sizeIcon}
+                            resizeMode={'contain'}
+                        />
                     </View>
-                    <Text
-                        style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}
-                    >
-                        {moment(item.time).format('HH:MM - DD/MM/YYYY')}
-                    </Text>
+                    <View style={styles.flexRight}>
+                        <Text style={styles.txtTitle}>{item.giftName}</Text>
+                        <View style={{ flexDirection: 'row', marginTop: 16 }}>
+                            <Text style={styles.txtMark}>Đổi điểm</Text>
+                            <View style={styles.changeCoin}>
+                                <Image
+                                    style={styles.widthIcon}
+                                    source={require('../../asserts/icon/icon_coinGiftV3.png')}
+                                />
+                                <Text
+                                    numberOfLines={1}
+                                    style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
+                                >{item.point}</Text>
+                            </View>
+                        </View>
+                        <Text
+                            style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}
+                        >
+                            {moment(item.time).format('HH:MM - DD/MM/YYYY')}
+                        </Text>
+                    </View>
                 </View>
-            </TouchableOpacity >
+            </TouchableWithoutFeedback>
         );
     };
 
@@ -82,20 +107,26 @@ export default class HistoryGift extends Component {
     }
 
     render() {
-        const { listHistory } = this.props.screenProps;
+        const { listHistory, isLoading } = this.props;
         return (
             <View style={styles.contain}>
-                <FlatList
-                    data={listHistory}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={this.renderItem}
-                    showsVerticalScrollIndicator={false}
-                    ListEmptyComponent={this.renderEmpty}
-                />
-                <ModalCard
+                {
+                    isLoading ?
+                        <ActivityIndicator size="small" style={{ flex: 1 }} />
+                        :
+                        <FlatList
+                            data={listHistory}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={this.renderItem}
+                            showsVerticalScrollIndicator={false}
+                            ListEmptyComponent={this.renderEmpty}
+                        />
+                }
+
+                {/* <ModalCard
                     ref={ref => this.refModalCard = ref}
                     refsToast={() => this.toastRef.show('Copy thành công')}
-                />
+                /> */}
                 <Toast
                     ref={ref => this.toastRef = ref}
                     position={'center'}
@@ -105,97 +136,99 @@ export default class HistoryGift extends Component {
     }
 }
 
-class ModalCard extends Component {
+// class ModalCard extends Component {
 
-    state = {
-        visible: false,
-        item: {}
-    }
+//     state = {
+//         visible: false,
+//         item: {}
+//     }
 
-    changeStateVisible = (item = {}) => {
-        const { visible } = this.state;
-        this.setState({ visible: !visible, item });
-    }
+//     changeStateVisible = (item = {}) => {
+//         const { visible } = this.state;
+//         this.setState({ visible: !visible, item });
+//     }
 
-    handleRechargeNow = () => {
-        const { item } = this.state;
-        let phoneNumber = '';
-        let code = item.gift;
-        code = code.replace(/[ -]+/g, '');
-        if (Platform.OS !== 'android') {
-            phoneNumber = `telprompt:*100*${code}\%23`;
-        }
-        else {
-            phoneNumber = `tel://*100*${code}\%23`;
-        }
-        Linking.canOpenURL(phoneNumber)
-            .then(supported => {
-                if (!supported) {
-                    Alert.alert('Phone number is not available');
-                } else {
-                    return Linking.openURL(phoneNumber);
-                }
-            })
-            .catch(err => console.log('err', err));
-    }
+//     handleRechargeNow = () => {
+//         const { item } = this.state;
+//         let phoneNumber = '';
+//         let code = item.gift;
+//         code = code.replace(/[ -]+/g, '');
+//         if (Platform.OS !== 'android') {
+//             phoneNumber = `telprompt:*100*${code}\%23`;
+//         }
+//         else {
+//             phoneNumber = `tel://*100*${code}\%23`;
+//         }
+//         Linking.canOpenURL(phoneNumber)
+//             .then(supported => {
+//                 if (!supported) {
+//                     Alert.alert('Phone number is not available');
+//                 } else {
+//                     return Linking.openURL(phoneNumber);
+//                 }
+//             })
+//             .catch(err => console.log('err', err));
+//     }
 
-    onclickCopyToClipboard = () => {
-        const { item } = this.state;
-        const isCopy = copyToClipboard(item.gift);
-        if (isCopy) {
-            this.props.refsToast();
-        }
-    }
+//     onclickCopyToClipboard = () => {
+//         const { item } = this.state;
+//         const isCopy = copyToClipboard(item.gift);
+//         if (isCopy) {
+//             this.props.refsToast();
+//         }
+//     }
 
-    render() {
-        const { visible, item } = this.state;
-        return (
-            <Modal visible={visible} transparent={true} >
-                <View style={styles.styWrapModal}>
-                    <View style={styles.styWrapContent}>
-                        <TouchableOpacity
-                            style={{ alignSelf: 'flex-end' }}
-                            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-                            onPress={this.changeStateVisible}
-                        >
-                            <IconAntDesign name={'closecircleo'} style={{ fontSize: 20 }} />
-                        </TouchableOpacity>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={styles.styWrapImg}>
-                                <Image
-                                    source={{ uri: item.image }}
-                                    resizeMode={'contain'}
-                                    style={styles.styImageModal}
-                                />
-                            </View>
-                            <View style={{ marginHorizontal: 5 }}>
-                                <Text style={{ fontFamily: 'Nunito-Bold' }}>{item.giftName}</Text>
-                                <Text style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}>
-                                    {moment(item.time).format('HH:MM - DD/MM/YYYY')}
-                                </Text>
-                            </View>
-                        </View>
-                        <View style={styles.stWrapGiftCode}>
-                            <Text style={styles.styTxtGift}>{item.gift}</Text>
-                            <TouchableOpacity
-                                onPress={this.onclickCopyToClipboard}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <Icon name={'copy'} style={{ color: '#828282', fontSize: 20 }} />
-                            </TouchableOpacity>
-                        </View>
-                        <TouchableOpacity
-                            style={{ alignSelf: 'flex-end' }}
-                            onPress={this.handleRechargeNow}
-                        >
-                            <Text style={styles.styTxtBtn}>Nạp ngay</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-        )
-    }
-}
+//     render() {
+//         const { visible, item } = this.state;
+//         return (
+//             <Modal visible={visible} transparent={true} >
+//                 <View style={styles.styWrapModal}>
+//                     <View style={styles.styWrapContent}>
+//                         <TouchableWithoutFeedback
+//                             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+//                             onPress={this.changeStateVisible}
+//                         >
+//                             <View style={{ alignSelf: 'flex-end' }}>
+//                                 <IconAntDesign name={'closecircleo'} style={{ fontSize: 20 }} />
+//                             </View>
+//                         </TouchableWithoutFeedback>
+//                         <View style={{ flexDirection: 'row' }}>
+//                             <View style={styles.styWrapImg}>
+//                                 <Image
+//                                     source={{ uri: item.image }}
+//                                     resizeMode={'contain'}
+//                                     style={styles.styImageModal}
+//                                 />
+//                             </View>
+//                             <View style={{ marginHorizontal: 5 }}>
+//                                 <Text style={{ fontFamily: 'Nunito-Bold' }}>{item.giftName}</Text>
+//                                 <Text style={[styles.txtMark, { alignSelf: 'flex-start', marginTop: 8 }]}>
+//                                     {moment(item.time).format('HH:MM - DD/MM/YYYY')}
+//                                 </Text>
+//                             </View>
+//                         </View>
+//                         <View style={styles.stWrapGiftCode}>
+//                             <Text style={styles.styTxtGift}>{item.gift}</Text>
+//                             <TouchableWithoutFeedback
+//                                 onPress={this.onclickCopyToClipboard}
+//                                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+//                             >
+//                                 <Icon name={'copy'} style={{ color: '#828282', fontSize: 20 }} />
+//                             </TouchableWithoutFeedback>
+//                         </View>
+//                         <TouchableWithoutFeedback
+//                             onPress={this.handleRechargeNow}
+//                         >
+//                             <View style={{ alignSelf: 'flex-end' }}>
+//                                 <Text style={styles.styTxtBtn}>Nạp ngay</Text>
+//                             </View>
+//                         </TouchableWithoutFeedback>
+//                     </View>
+//                 </View>
+//             </Modal>
+//         )
+//     }
+// }
 
 const styles = StyleSheet.create({
     contain: {
@@ -203,14 +236,6 @@ const styles = StyleSheet.create({
     },
     listSale: {
         backgroundColor: '#fff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5.84,
-        elevation: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: 16,
@@ -239,7 +264,7 @@ const styles = StyleSheet.create({
     txtTitle: {
         fontFamily: 'Nunito-Bold',
         fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(16),
+        lineHeight: RFFonsize(19),
         color: '#000',
         marginTop: 20
     },
@@ -271,6 +296,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: "70%",
         marginLeft: 10,
+        bottom: 10
     },
     styWrapModal: {
         flex: 1,
@@ -333,3 +359,21 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Regular'
     }
 })
+
+
+
+const mapStateToProps = state => {
+    return {
+        user: state.gift.user,
+        listHistory: state.gift.listHistory,
+        isLoading: state.gift.isLoading
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getListHistoryGift: payload => dispatch(getListHistoryAction(payload))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryGift);

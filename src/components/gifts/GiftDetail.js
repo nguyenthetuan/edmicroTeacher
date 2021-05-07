@@ -5,11 +5,11 @@ import {
     StyleSheet,
     Dimensions,
     Image,
-    TouchableOpacity,
     TextInput,
     ScrollView,
     KeyboardAvoidingView,
-    Alert
+    Alert,
+    TouchableWithoutFeedback
 } from 'react-native';
 import HeaderNavigation from '../common/HeaderNavigation';
 import * as Api from '../../services/apiGift';
@@ -30,7 +30,7 @@ import { DotIndicator } from 'react-native-indicators';
 class GiftDetail extends Component {
     state = {
         formData: {},
-        resultGift: '1234567812345678',
+        resultGift: "12312313123",
         visibleModalCard: false,
         isLoading: false
     }
@@ -46,6 +46,7 @@ class GiftDetail extends Component {
             giftId: dataGift.id,
             address: {
                 name: user.displayName,
+                // userName: formData['userName'],
                 phoneNumber: formData['phoneNumber'],
                 email: formData['email'],
                 address: formData['address']
@@ -58,23 +59,27 @@ class GiftDetail extends Component {
                     await this.setState({ isLoading: true });
                     const response = await Api.giftExchange({ token, params });
                     await this.setState({ isLoading: false });
-                    if (_.isEmpty(response.result)) {
-                        Alert.alert('Thông báo', response.errorMessage[0]);
-                        return;
-                    }
+                    // if (_.isEmpty(response.result)) {
+                    //     Alert.alert('Thông báo', response.errorMessage[0]);
+                    //     return;
+                    // }
                     await this.setState({ resultGift: response.result });
-                    if (dataGift.receiveGift == 'NOW') {
-                        this.refModalCard.onVisibleModalCard();
-                    } else {
-                        Alert.alert('Thông báo', 'Đổi thưởng thành công', [
-                            { text: 'Đóng', onPress: this.props.navigation.goBack }
-                        ]);
-                    }
+                    // if (dataGift.receiveGift == 'NOW') {
+                    //     this.refModalCard.onVisibleModalCard();
+                    // } else {
+                    //     Alert.alert('Thông báo', 'Đổi thưởng thành công', [
+                    //         { text: 'Đóng', onPress: this.props.navigation.goBack }
+                    //     ]);
+                    // }
+                    // Alert.alert('Thông báo', 'Đổi thưởng thành công', [
+                    //     { text: 'Đóng', onPress: this.props.navigation.goBack }
+                    // ]);
                     this.props.makeRequestProfile({ token });
                     this.props.getListGiftAction({ token, page: 0 });
                     this.props.getListHistoryGift({ token, page: 0 });
                 }
             },
+
             {
                 text: 'Quay lại',
             }
@@ -90,8 +95,14 @@ class GiftDetail extends Component {
 
     checkInput = () => {
         const { formData } = this.state;
-        if (_.isEmpty(formData['phoneNumber']) || formData['phoneNumber'].trim() == '') {
-            formData['phoneNumber'] = '';
+        // if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
+        //     formData['userName'] = '';
+        //     this.setState({ formData });
+        //     Alert.alert('Thông báo', 'Bạn chưa nhập họ tên');
+        //     return true;
+        // }
+        if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
+            formData['userName'] = '';
             this.setState({ formData });
             Alert.alert('Thông báo', 'Bạn chưa điền số điện thoại');
             return true;
@@ -115,10 +126,12 @@ class GiftDetail extends Component {
         const { dataGift } = this.props.navigation.state.params;
         const { formData, resultGift, visibleModalCard, isLoading } = this.state;
         dataGift.resultGift = resultGift;
+        console.log('dataGift', dataGift);
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
                 <HeaderNavigation
-                    title={dataGift.name}
+                    // title={dataGift.giftName}
+                    title={"Đổi quà"}
                     navigation={this.props.navigation}
                     bgColor={'#2D9CDB'} colorIcon={'#FFF'}
                     back={true}
@@ -130,6 +143,7 @@ class GiftDetail extends Component {
                         <Image
                             source={{ uri: dataGift.image }}
                             style={styles.contrain}
+                            resizeMode="contain"
                         />
                         <Text style={styles.titleCate}>
                             {dataGift.giftName}
@@ -146,33 +160,40 @@ class GiftDetail extends Component {
                                 {formatNumber(parseInt(dataGift.point))}
                             </Text>
                         </View>
-                        {dataGift.receiveGift == 'DELIVERY' && <>
-                            <FormInput
-                                lable={'Số điện thoại người nhận'}
-                                placeholder={'+84903456789'}
-                                icon={'phone'}
-                                keyboardType='phone-pad'
-                                onChangeText={this.onChangeText('phoneNumber')}
-                                value={formData['phoneNumber']}
-                                letterSpacing={0.5}
-                            />
-
-                            <FormInput
-                                lable={'Địa chỉ người nhận'}
-                                placeholder={'Lý thường Kiệt, Hà Nội'}
-                                icon={'map-pin'}
-                                onChangeText={this.onChangeText('address')}
-                                value={formData['address']}
-                            />
-
-                            <FormInput
-                                lable={'Email người nhận'}
-                                placeholder={'onluyenvn@gmail.com'}
-                                icon={'mail'}
-                                onChangeText={this.onChangeText('email')}
-                                value={formData['email']}
-                            />
-                        </>}
+                        {/* {dataGift.receiveGift == 'DELIVERY' && <> */}
+                        {/* <FormInput
+                            lable={'Họ và tên'}
+                            placeholder={'Nhập tên'}
+                            icon={'user'}
+                            keyboardType='phone-pad'
+                            onChangeText={this.onChangeText('userName')}
+                            value={formData['userName']}
+                            letterSpacing={0.5}
+                        /> */}
+                        <FormInput
+                            lable={'Số điện thoại người nhận'}
+                            placeholder={'+84903456789'}
+                            icon={'phone'}
+                            keyboardType='phone-pad'
+                            onChangeText={this.onChangeText('phoneNumber')}
+                            value={formData['phoneNumber']}
+                            letterSpacing={0.5}
+                        />
+                        <FormInput
+                            lable={'Địa chỉ người nhận'}
+                            placeholder={'Lý thường Kiệt, Hà Nội'}
+                            icon={'map-pin'}
+                            onChangeText={this.onChangeText('address')}
+                            value={formData['address']}
+                        />
+                        <FormInput
+                            lable={'Email người nhận'}
+                            placeholder={'onluyenvn@gmail.com'}
+                            icon={'mail'}
+                            onChangeText={this.onChangeText('email')}
+                            value={formData['email']}
+                        />
+                        {/* </>} */}
 
                         {isLoading
                             ?
@@ -180,13 +201,13 @@ class GiftDetail extends Component {
                                 <DotIndicator color={'#2D9CDB'} size={6} count={8} />
                             </View>
                             :
-                            <TouchableOpacity
-                                style={styles.bgSubmit}
+                            <TouchableWithoutFeedback
                                 onPress={this.giftExchange}
                             >
-                                <Text style={styles.txtSub}>Đổi quà</Text>
-                            </TouchableOpacity>
-
+                                <View style={styles.bgSubmit}>
+                                    <Text style={styles.txtSub}>Đổi quà</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         }
 
                     </ScrollView>
@@ -234,6 +255,7 @@ class FormInput extends Component {
 const mapStateToProp = (state) => {
     return {
         user: state.gift.user,
+        listHistory: state.gift.listHistory,
     }
 }
 
@@ -289,9 +311,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 100,
         height: 100,
-        marginTop: 28,
-        borderWidth: 1,
-        borderColor: '#c4c4c4'
+        marginTop: 28
     },
     titleCate: {
         fontFamily: "Nunito-Bold",
@@ -302,19 +322,18 @@ const styles = StyleSheet.create({
     },
     bgSubmit: {
         backgroundColor: '#2D9CDB',
-        borderColor: 25,
+        borderColor: 20,
         alignSelf: 'center',
         borderRadius: 25,
-        marginTop: 20
+        marginTop: "10%",
+        paddingHorizontal: 50,
+        paddingVertical: 10
     },
     txtSub: {
         fontFamily: 'Nunito-Bold',
         color: '#fff',
-        fontSize: RFFonsize(16),
-        marginTop: 14,
-        marginBottom: 14,
-        marginLeft: 76,
-        marginRight: 76,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18)
     },
     description: {
         fontFamily: 'Nunito',

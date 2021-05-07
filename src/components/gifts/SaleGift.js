@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
 import TabOfferHis from '../gifts/tabTop/TabOfferHis';
+import HistoryGift from './HistoryGift'
 import { RFFonsize } from '../../utils/Fonts';
 class SaleGift extends Component {
 
@@ -59,12 +60,13 @@ class SaleGift extends Component {
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
                 <HeaderNavigation
-                    title={'Đổi quà'}
+                    title={'Lịch sử đổi quà'}
                     navigation={this.props.navigation}
                     bgColor={'#2D9CDB'} colorIcon={'#FFF'}
                     back={true}
                 />
-                <TabOfferHis screenProps={this.props} />
+                {/* <TabOfferHis screenProps={this.props} /> */}
+                <HistoryGift />
                 <SafeAreaView />
             </View>
         )
