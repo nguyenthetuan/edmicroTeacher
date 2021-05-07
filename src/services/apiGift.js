@@ -26,7 +26,7 @@ export const getListGift = async ({ token, page }) => {
 export const getHistoryGift = async ({ token, page }) => {
     // const limit = (page + 1) * 10;
     // const response = await fetch(`${API_GIFT}dev/gift/history?limit=${limit}`, {
-        const response = await fetch(`https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/gift/history?limit=12`, {
+    const response = await fetch(`https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/gift/history?limit=12`, {
         method: 'GET',
         headers: getHeaders(token)
     });
@@ -35,12 +35,15 @@ export const getHistoryGift = async ({ token, page }) => {
 }
 
 export const giftExchange = async ({ token, params }) => {
-    // const response = await fetch(`${API_GIFT}gift/exchange`, {
-    const response = await fetch(`https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/gift/exchange`, {
-        method: 'POST',
-        headers: getHeaders(token),
-        body: JSON.stringify(params)
-    });
-    const responseJson = await response.json();
-    return responseJson;
+    try {
+        const response = await fetch('https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/gift/exchange', {
+            method: 'POST',
+            headers: getHeaders(token),
+            body: JSON.stringify(params)
+        });
+        const responseJson = await response.json();
+        return responseJson;
+    } catch (error) {
+    }
+
 }

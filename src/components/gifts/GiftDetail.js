@@ -34,36 +34,44 @@ class GiftDetail extends Component {
         visibleModalCard: false,
         isLoading: false
     }
+
     giftExchange = async () => {
         const { dataGift } = this.props.navigation.state.params;
-        if (dataGift.receiveGift == 'DELIVERY' && this.checkInput()) {
+        if (this.checkInput()) {
             return;
         }
         const { token } = await dataHelper.getToken();
         const { formData } = this.state;
         const { user } = this.props;
         const params = {
-            giftId: dataGift.id,
+            giftId: dataGift.giftId,
             address: {
                 name: user.displayName,
                 // userName: formData['userName'],
                 phoneNumber: formData['phoneNumber'],
                 email: formData['email'],
                 address: formData['address']
-            }
+            },
+            campaignId: dataGift.campaignId
         };
         Alert.alert('Thông báo', 'Bạn có chắc muốn đổi thưởng?', [
             {
                 text: 'Xác nhận',
                 onPress: async () => {
-                    await this.setState({ isLoading: true });
+                    this.setState({ isLoading: true });
+                    // try {
+                    //     const response = await Api.giftExchange({ token, params });
+                    //     console.log('responsexx', response)
+                    // } catch (error) {
+                    //     console.log('errxx', error)
+                    // }
                     const response = await Api.giftExchange({ token, params });
-                    await this.setState({ isLoading: false });
+                    this.setState({ isLoading: false });
                     // if (_.isEmpty(response.result)) {
                     //     Alert.alert('Thông báo', response.errorMessage[0]);
                     //     return;
                     // }
-                    await this.setState({ resultGift: response.result });
+                    // this.setState({ resultGift: response.result });
                     // if (dataGift.receiveGift == 'NOW') {
                     //     this.refModalCard.onVisibleModalCard();
                     // } else {
@@ -77,6 +85,7 @@ class GiftDetail extends Component {
                     this.props.makeRequestProfile({ token });
                     this.props.getListGiftAction({ token, page: 0 });
                     this.props.getListHistoryGift({ token, page: 0 });
+                    this.props.navigation.goBack()
                 }
             },
 
@@ -95,12 +104,12 @@ class GiftDetail extends Component {
 
     checkInput = () => {
         const { formData } = this.state;
-        // if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
-        //     formData['userName'] = '';
-        //     this.setState({ formData });
-        //     Alert.alert('Thông báo', 'Bạn chưa nhập họ tên');
-        //     return true;
-        // }
+        if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
+            formData['userName'] = '';
+            this.setState({ formData });
+            Alert.alert('Thông báo', 'Bạn chưa nhập họ tên');
+            return true;
+        }
         if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
             formData['userName'] = '';
             this.setState({ formData });
@@ -126,7 +135,6 @@ class GiftDetail extends Component {
         const { dataGift } = this.props.navigation.state.params;
         const { formData, resultGift, visibleModalCard, isLoading } = this.state;
         dataGift.resultGift = resultGift;
-        console.log('dataGift', dataGift);
         return (
             <View style={[styles.container, { backgroundColor: '#FFF' }]} >
                 <HeaderNavigation
@@ -161,7 +169,7 @@ class GiftDetail extends Component {
                             </Text>
                         </View>
                         {/* {dataGift.receiveGift == 'DELIVERY' && <> */}
-                        {/* <FormInput
+                        <FormInput
                             lable={'Họ và tên'}
                             placeholder={'Nhập tên'}
                             icon={'user'}
@@ -169,7 +177,7 @@ class GiftDetail extends Component {
                             onChangeText={this.onChangeText('userName')}
                             value={formData['userName']}
                             letterSpacing={0.5}
-                        /> */}
+                        />
                         <FormInput
                             lable={'Số điện thoại người nhận'}
                             placeholder={'+84903456789'}
@@ -193,8 +201,6 @@ class GiftDetail extends Component {
                             onChangeText={this.onChangeText('email')}
                             value={formData['email']}
                         />
-                        {/* </>} */}
-
                         {isLoading
                             ?
                             <View style={{ marginTop: 40 }}>
@@ -256,6 +262,7 @@ const mapStateToProp = (state) => {
     return {
         user: state.gift.user,
         listHistory: state.gift.listHistory,
+        gift: state.gift
     }
 }
 
