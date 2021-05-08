@@ -17,7 +17,6 @@ import {
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
 } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
 import RippleButton from '../../common-new/RippleButton';
 import DropdownMultiSelect from '../Homework/DropdownMultiSelect';
 import Dropdown from '../Homework/Dropdown';
@@ -115,7 +114,7 @@ class MarkCamera extends Component {
                 path: 'images',
             },
         };
-        ImagePicker.launchCamera(options, (response) => {
+        ImagePickerCrop.launchCamera(options, (response) => {
 
             if (response.didCancel) {
             } else if (response.error) {
@@ -161,45 +160,45 @@ class MarkCamera extends Component {
     launchImageLibrary = () => {
         this.setModalVisible(false);
         let options = {
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
+            multiple: true,
+            includeBase64: true,
         };
-        ImagePicker.launchImageLibrary(options, (response) => {
+        ImagePickerCrop.openPicker(options).then((response) => {
             if (response.didCancel) {
             } else if (response.error) {
             } else if (response.customButton) {
                 alert(response.customButton);
             } else {
-                const source = { uri: response.uri };
-                this.setState({
-                    filePath: response,
-                    fileData: response.data,
-                    fileUri: response.uri
-                });
-                this.convertImageToPdf(response.uri);
+                const sourceURL = [];
+                for (let i = 0; i < response.length; i++) {
+                    const element = response[i];
+                    sourceURL.push(`${element.path}`);
+                }
+                this.convertImageToPdf(sourceURL, new Date().getTime());
             }
         });
 
     }
 
-    convertImageToPdf = async (sourceURL) => {
+    convertImageToPdf = async (sourceURL, name) => {
         try {
             const options = {
-                imagePaths: [sourceURL],
-                name: 'PDFName',
+                imagePaths: sourceURL,
+                name,
                 maxSize: {
                     // optional maximum image dimension - larger images will be resized
                     width: 300,
-                    height: 300,
+                    height: Math.round(height / width * 300),
                 },
                 quality: .7, // optional compression paramter
             };
 
             const pdf = await RNImageToPdf.createPDFbyImages(options);
             let url = pdf.filePath;
-            let name = 'pdffile';
+            // this.setState({
+            //     urlFilePDF: `${url}`,
+            // });
+            // return;
             this.uploadFileToServer({ url, name });
 
         } catch (e) {
@@ -285,125 +284,54 @@ class MarkCamera extends Component {
     };
 
     uploadFileToServer = async ({ url, name }) => {
-        this.setState({
-            loadingUpload: true,
-            pdfFile: name,
-        });
-        this.setState({
-            loadingUpload: true,
-        });
-        console.log("URL PDF " + url);
-        const { token } = await dataHelper.getToken();
-        if (token) {
+        try {
+            this.setState({
+                loadingUpload: true,
+                pdfFile: name,
+            });
+            const { token } = await dataHelper.getToken();
             const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
-            console.log(resSignedUrl);
             if (resSignedUrl) {
-                // console.log("ok done");
                 let file = await this.getBlob(url);
-                console.log(file);
                 const resUpload = await apiPapers.uploadPDF({
                     url: resSignedUrl.preSignedUrl,
                     file,
                 });
-
-                const resJson = await resUpload.json();
-                console.log(resJson);
 
                 if (resUpload && resUpload.status === 200) {
                     this.setState({
                         urlFilePDF: resSignedUrl.urlFile,
                         loadingUpload: false,
                     });
-                    this.refToast.show(<ToastSuccess />)
+                    this.refToast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
                 } else {
-                    this.toast.show('Tải lên PDF thất bại!');
+                    this.toast.show(<View style={styles.styleTostFaild}>
+                        <View style={{ marginLeft: 20 }}>
+                            <Text style={styles.txtSuccess}>Faild</Text>
+                            <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
+                        </View>
+                    </View>);
                     this.setState({ loadingUpload: false });
-                }
-            }
-        }
-    }
-
-    // onPickPDF = async () => {
-    //     // this.setModalVisible(false);
-    //     try {
-    //         // CAMERA
-    //         this.action = 'picker';
-    //         const res = await DocumentPicker.pick({
-    //             type: [DocumentPicker.types.pdf],
-    //         });
-    //         //UPLOAD API
-    //         if (res) {
-    //             let url = res.uri;
-    //             let split = url.split('/');
-    //             let name = split.pop();
-    //             this.uploadFileToServer({ url, name });
-    //         }
-    //     } catch (err) {
-    //         this.toast.show('Tải lên PDF thất bại');
-    //         this.setState({ loadingUpload: false });
-    //         if (DocumentPicker.isCancel(err)) {
-    //             // User cancelled the picker, exit any dialogs or menus and move on
-    //         } else {
-    //             throw err;
-    //         }
-    //     }
-    // };
-
-
-    onPickPDF = async () => {
-        try {
-            const res = await DocumentPicker.pick({
-                type: [DocumentPicker.types.pdf],
-            });
-
-            if (res) {
-                let url = res.uri;
-                let split = url.split('/');
-                let name = split.pop();
-                this.setState({
-                    loadingUpload: true,
-                    pdfFile: name,
-                });
-                this.setState({
-                    loadingUpload: true,
-                });
-                const { token } = await dataHelper.getToken();
-                if (token) {
-                    const resSignedUrl = await apiPapers.signedUrlContentPDF({ token });
-                    if (resSignedUrl) {
-                        let file = await this.getBlob(url);
-                        const resUpload = await apiPapers.uploadPDF({
-                            url: resSignedUrl.preSignedUrl,
-                            file,
-                        });
-
-                        if (resUpload && resUpload.status === 200) {
-                            this.setState({
-                                urlFilePDF: resSignedUrl.urlFile,
-                                loadingUpload: false,
-                            });
-                            this.refToast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
-                        } else {
-                            this.toast.show(<View style={styles.styleTostFaild}>
-                                <View style={{ marginLeft: 20 }}>
-                                    <Text style={styles.txtSuccess}>Faild</Text>
-                                    <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
-                                </View>
-                            </View>);
-                            this.setState({ loadingUpload: false });
-                        }
-                    }
                 }
             }
         } catch (err) {
             this.toast.show('Tải lên PDF thất bại');
             this.setState({ loadingUpload: false });
-            if (DocumentPicker.isCancel(err)) {
-                // User cancelled the picker, exit any dialogs or menus and move on
-            } else {
-                throw err;
-            }
         }
+    }
+
+    onPickPDF = async () => {
+        const res = await DocumentPicker.pick({
+            type: [DocumentPicker.types.pdf],
+        });
+        if (res) {
+            let url = res.uri;
+            let split = url.split('/');
+            let name = split.pop();
+            this.uploadFileToServer({ url, name });
+            return;
+        }
+        this.toast.show('Tải lên PDF thất bại');
     };
 
 
@@ -707,34 +635,48 @@ class MarkCamera extends Component {
                                                 />
                                                 <View style={styles.wrapAreaUploadPDF}>
                                                     <View>
-                                                        <View style={styles.wrapMiniPDF}>
-                                                            {!!urlFilePDF && <Pdf
-                                                                ref={(ref) => (this.pdf = ref)}
-                                                                source={{ uri: urlFilePDF, cache: true }}
-                                                                onLoadComplete={(numberOfPages, filePath) => { }}
-                                                                onError={(error) => {
-                                                                    console.log(error);
-                                                                }}
-                                                            />}
-                                                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "Thêm bộ đề..."}</Text>
-                                                        </View>
+                                                        <TouchableWithoutFeedback
+
+                                                            onPress={() => { this._onFullView(0) }}
+                                                        >
+                                                            <View style={styles.wrapMiniPDF}>
+                                                                {!!urlFilePDF && <Pdf
+                                                                    ref={(ref) => (this.pdf = ref)}
+                                                                    source={{ uri: urlFilePDF, cache: true }}
+                                                                    onLoadComplete={(numberOfPages, filePath) => { }}
+                                                                    onError={(error) => {
+                                                                        console.log(error);
+                                                                    }}
+                                                                />}
+                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "Thêm bộ đề..."}</Text>
+                                                            </View>
+                                                        </TouchableWithoutFeedback>
                                                         <Text style={styles.note}>Lưu ý dung lượng không quá 5Mb!</Text>
                                                     </View>
                                                     <View style={styles.wrapEndAreaUploadPDF}>
                                                         {/* onPress={() => this.setModalVisible(true)} */}
-                                                        <TouchableWithoutFeedback onPress={this.onPickPDF}>
-                                                            <View style={styles.buttonInSideAreaUploadPDF}>
-                                                                <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
-                                                                <Text style={styles.addPar}>Upload</Text>
-                                                            </View>
-                                                        </TouchableWithoutFeedback>
-                                                        {urlFilePDF ?
+                                                        <View style={{ flexDirection: 'row' }}>
+                                                            <TouchableWithoutFeedback onPress={this.onPickPDF}>
+                                                                <View style={styles.buttonInSideAreaUploadPDF}>
+                                                                    <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
+                                                                    <Text style={styles.addPar}>Upload PDF</Text>
+                                                                </View>
+                                                            </TouchableWithoutFeedback>
+
+                                                            <TouchableWithoutFeedback onPress={this.launchImageLibrary}>
+                                                                <View style={styles.buttonInSideAreaUploadPDF}>
+                                                                    <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
+                                                                    <Text style={styles.addPar}>Chọn ảnh</Text>
+                                                                </View>
+                                                            </TouchableWithoutFeedback>
+                                                        </View>
+                                                        {/* {urlFilePDF ?
                                                             <TouchableOpacity style={[styles.buttonInSideAreaUploadPDF, { borderColor: '#56CCF2' }]} onPress={() => { this._onFullView(0) }}>
                                                                 <Image source={AppIcon.search_pdf} style={styles.pdfView} />
                                                                 <Text style={styles.addPar}>Xem</Text>
                                                             </TouchableOpacity>
                                                             : null
-                                                        }
+                                                        } */}
                                                     </View>
                                                 </View>
                                                 {this.renderHeaderFlastList()}
