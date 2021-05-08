@@ -65,23 +65,38 @@ class StepThreePDF extends Component {
         const { gradeCode, subjectCode, name, assignmentType, duration } = this.state;
         try {
             if (!name) {
-                this.toast.show('Chưa nhập tên bộ đề!');
+                this.toast.show(<View style={styles.styleWarnig}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa nhập tên bộ đề!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>);
                 return;
             }
             if (!subjectCode.length) {
-                this.toast.show('Chưa chọn môn học!');
+                this.toast.show(<View style={styles.styleWarnig}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa chọn môn học!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>);
                 return;
             }
             if (!gradeCode.length) {
-                this.toast.show('Chưa chọn khối!');
+                this.toast.show(<View style={styles.styleWarnig}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa chọn khối!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>);
                 return;
             }
             if (assignmentType && !duration) {
-                this.toast.show('Chưa nhập thời gian kiểm tra!');
+                this.toast.show(<View style={styles.styleWarnig}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa nhập thời gian kiểm tra!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>);
                 return;
             }
             if (assignmentType && duration && duration < 5) {
-                this.toast.show('Thời gian kiểm tra phải lớn hơn 5 phút!');
+                this.toast.show(<View style={styles.styleWarnig}>
+                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Thời gian kiểm tra phải lớn hơn 5 phút!</Text>
+                    <Text style={styles.xstoast}>X</Text>
+                </View>);
                 return;
             }
             return true;
@@ -396,7 +411,7 @@ class StepThreePDF extends Component {
                     listSubjects={listSubjects}
                     activeSubject={this.activeSubject}
                 />
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} style={styles.styleWarnig} />
             </View>
         )
     }
@@ -420,7 +435,8 @@ export default connect(
 const styles = StyleSheet.create({
     txtSuccess: {
         color: '#fff',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        left: 10
     },
     styleTostError: {
         backgroundColor: 'red',
@@ -538,5 +554,23 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(18),
         color: "#979797",
         paddingLeft: 5
+    },
+    styleWarnig: {
+        flex: 1,
+        height: 60,
+        width: width - 90,
+        backgroundColor: '#F8AA66',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: "center",
+        borderRadius: 10,
+    },
+    xstoast: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(14),
+        color: "#fff",
+        top: -12,
+        right: 5
     }
 })

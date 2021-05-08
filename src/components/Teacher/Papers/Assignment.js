@@ -37,8 +37,9 @@ import { updateExamListAction } from '../../../actions/paperAction';
 import shadowStyle from '../../../themes/shadowStyle';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AwesomeButton from 'react-native-really-awesome-button';
+import ToastSuccess from '../../common-new/ToastSuccess';
 const { width, height } = Dimensions.get('screen');
-const horizontalMargin = 20;
+const horizontalMargin = 10;
 const slideWidth = width - 95;
 
 const sliderWidth = Dimensions.get('window').width;
@@ -102,11 +103,21 @@ function Item(props) {
 
   const validate = () => {
     if (moment(timeStart).format('DD-MM-YYYY, HH:mm') === moment(timeEnd).format('DD-MM-YYYY, HH:mm')) {
-      props.onToast('Thời gian không hợp lệ!')
+      props.onToast(
+        <View style={[styles.styleWarning, { backgroundColor: '#F8AA66' }]}>
+          <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Thời gian không hợp lệ!</Text>
+          <Text style={styles.xstoast}>X</Text>
+        </View>
+      )
       return false
     }
     if (timeEnd < Date.now()) {
-      props.onToast('Thời gian không hợp lệ!')
+      props.onToast(
+        <View style={[styles.styleWarning, { backgroundColor: '#F8AA66' }]}>
+          <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Thời gian không hợp lệ!</Text>
+          <Text style={styles.xstoast}>X</Text>
+        </View>
+      )
       return false
     }
     return true;
@@ -134,7 +145,8 @@ function Item(props) {
             body
           })
           if (response && response.status === 1) {
-            props.onToast('Giao bài thành công!');
+            // props.onToast('Giao bài thành công!');
+            props.onToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
             props.needUpdate(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
             AnalyticsManager.trackWithProperties('School Teacher', {
@@ -236,12 +248,14 @@ function Item(props) {
         </AwesomeButton>
 
       </View>
-      {__DEV__ ? null : <DateTimePickerModal
+      {/* {__DEV__ ? null : */}
+      <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
-      />}
+      />
+      {/* } */}
     </View >
   )
 }
@@ -326,6 +340,7 @@ class Assignment extends Component {
   render() {
     const { data, loading, activeSlide } = this.state;
     const dataItem = this.props.navigation.getParam('item');
+    const backgroundColor = this.props;
     return (
       <View style={{ flex: 1 }}>
         <SafeAreaView style={styles.container} />
@@ -370,7 +385,7 @@ class Assignment extends Component {
               />
               <Carousel
                 ref={(c) => { this._carousel = c; }}
-                layout={'stack'}
+                layout={'default'}
                 layoutCardOffset={14}
                 data={data}
                 renderItem=
@@ -402,7 +417,7 @@ class Assignment extends Component {
             :
             this._renderListEmpty()
         }
-        <Toast ref="toast" position={'bottom'} />
+        <Toast ref="toast" position={'bottom'} style={[styles.styleTostSuccess, { backgroundColor: backgroundColor }]} />
         <SafeAreaView />
       </View >
     )
@@ -642,4 +657,39 @@ const styles = StyleSheet.create({
   sliderContentContainer: {
     paddingVertical: 10
   },
+  styleTostSuccess: {
+    flex: 1,
+    height: 70,
+    width: width - 70,
+    backgroundColor: '#16BDA9',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: "center",
+    borderRadius: 10,
+  },
+  styleWarning: {
+    flex: 1,
+    height: 60,
+    width: width - 90,
+    backgroundColor: '#16BDA9',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: "center",
+    borderRadius: 10,
+  },
+  txtSuccess: {
+    color: '#fff',
+    fontFamily: "Nunito-Bold",
+    fontSize: RFFonsize(13),
+    lineHeight: RFFonsize(17)
+  },
+  xstoast: {
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    color: "#fff",
+    top: -12,
+    right: 10
+  }
 })
