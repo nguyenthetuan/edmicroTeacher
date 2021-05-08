@@ -26,7 +26,10 @@ import {
 } from '../../actions/giftAction';
 import ModalCard from './ModalCard';
 import { DotIndicator } from 'react-native-indicators';
+import ToastSuccess from '../common-new/ToastSuccess';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
+const { width, height } = Dimensions.get('window');
 class GiftDetail extends Component {
     state = {
         formData: {},
@@ -85,7 +88,11 @@ class GiftDetail extends Component {
                     this.props.makeRequestProfile({ token });
                     this.props.getListGiftAction({ token, page: 0 });
                     this.props.getListHistoryGift({ token, page: 0 });
-                    this.props.navigation.goBack()
+                    this.setState({ formData: {} }, () => {
+                        this.refToast.show(
+                            <ToastSuccess title={"Đổi quà thành công!"} />
+                        )
+                    })
                 }
             },
 
@@ -223,6 +230,7 @@ class GiftDetail extends Component {
                     dataGift={dataGift}
                     visible={visibleModalCard}
                 />
+                <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} />
             </View >
         )
     }
@@ -371,6 +379,23 @@ const styles = StyleSheet.create({
     viewForm: {
         marginHorizontal: 15,
         marginTop: 10
-    }
+    },
+    txtSuccess: {
+        color: '#fff',
+        fontFamily: "Nunito-Bold",
+        fontSize: RFFonsize(13),
+        lineHeight: RFFonsize(17)
+    },
+    styleTostSuccess: {
+        flex: 1,
+        height: 70,
+        width: width - 70,
+        backgroundColor: '#16BDA9',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: "center",
+        borderRadius: 10,
+    },
 })
 

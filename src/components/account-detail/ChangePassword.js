@@ -178,8 +178,7 @@ class ChangePassword extends Component {
 
                 )}
               </Formik>
-              <Toast ref={ref => this.refToast = ref} position={'top'} style={styles.styleTostSuccess} />
-
+              <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} />
               {/* <View style={{ marginTop: 20 }}>
                 <Text style={{ paddingTop: 10, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15, lineHeight: 19 }}>Mật khẩu hiện tại</Text>
                 <FormInput
