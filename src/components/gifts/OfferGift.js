@@ -12,6 +12,7 @@ import {
 import { imageDefault } from '../../utils/Common';
 import Toast from 'react-native-easy-toast';
 import { RFFonsize } from '../../utils/Fonts';
+import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 export default class OfferGift extends Component {
@@ -34,10 +35,11 @@ export default class OfferGift extends Component {
         const { user } = this.props.screenProps;
         const isColor = item.point > user.totalEDPoint;
         item.image = item.image?.includes('http') ? item.image : imageDefault;
+        const { shadowBtn } = shadowStyle;
         return (
             <TouchableOpacity
                 onPress={this.handleClickItem(item)}
-                style={styles.listSale}>
+                style={[styles.listSale, shadowBtn]}>
                 <View style={styles.flexLeft}>
                     <Image
                         source={{ uri: item.image }}
@@ -47,7 +49,7 @@ export default class OfferGift extends Component {
                 </View>
                 <View style={styles.flexRight}>
                     <Text style={styles.txtTitle}>{item.giftName}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 16 }}>
                         <Text style={styles.txtMark}>Đổi điểm</Text>
                         <View style={styles.changeCoin}>
                             <Image
@@ -60,6 +62,10 @@ export default class OfferGift extends Component {
                                 style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
                             >{item.point}</Text>
                         </View>
+                    </View>
+                    <View style={styles.limitSala}>
+                        <Text style={styles.txtSalaNum}>Số lượng còn lại:</Text>
+                        <Text style={[styles.txtSalaNum, { left: 5, color: '#007BFF' }]}>{item.remainQuantity}</Text>
                     </View>
                 </View>
             </TouchableOpacity >
@@ -79,11 +85,12 @@ export default class OfferGift extends Component {
     }
 
     render() {
-        const { listGift } = this.props.screenProps;
+        const { listItems } = this.props;
+        console.log(listItems);
         return (
             <View style={styles.contain}>
                 <FlatList
-                    data={listGift}
+                    data={listItems}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={this.renderItem}
                     showsVerticalScrollIndicator={false}
@@ -104,14 +111,6 @@ const styles = StyleSheet.create({
     },
     listSale: {
         backgroundColor: '#fff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5.84,
-        elevation: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: 16,
@@ -158,14 +157,13 @@ const styles = StyleSheet.create({
     txtMark: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
-        color: '#828282',
+        color: '#000',
         alignSelf: 'center'
     },
     widthIcon: {
         width: 20,
         height: 20,
         marginLeft: 16,
-        marginTop: 2,
         marginBottom: 2,
         alignSelf: 'center'
     },
@@ -186,4 +184,14 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
         fontSize: RFFonsize(16)
     },
+    limitSala: {
+        flexDirection: 'row',
+        marginVertical: 10
+    },
+    txtSalaNum: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#000'
+    }
 })

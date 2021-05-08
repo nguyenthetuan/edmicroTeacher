@@ -5,11 +5,11 @@ import {
     StyleSheet,
     Dimensions,
     Image,
-    TouchableOpacity,
     FlatList,
     ActivityIndicator,
     Alert,
-    SafeAreaView
+    SafeAreaView,
+    TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
@@ -20,8 +20,21 @@ import dataHelper from '../../utils/dataHelper';
 import { getSourceAvatar } from '../../utils/Helper';
 import { imageDefault, formatNumber } from '../../utils/Common';
 import { RFFonsize } from '../../utils/Fonts';
+import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
+let pageIndex = 0;
 class ExchangeGiftScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listGift: [],
+            listItems: [],
+            page: 1,
+            isLoading: false,
+        }
+    }
+
+
     componentDidMount() {
         this.getDataInfo();
     }
@@ -49,37 +62,42 @@ class ExchangeGiftScreen extends Component {
     renderItem = ({ item, index }) => {
         const { user } = this.props;
         const isColor = item.point > user.totalEDPoint;
+        const { shadowBtn } = shadowStyle;
         item.image = item.image?.includes('http') ? item.image : imageDefault;
         return (
-            <TouchableOpacity
-                onPress={this.handleClickItem(item)}
-                style={styles.listSale}>
-                <View style={styles.flexLeft}>
-                    <Image
-                        source={{
-                            uri: item.image
-                        }}
-                        style={styles.sizeIcon}
-                        resizeMode={'contain'}
-                    />
-                </View>
-                <View style={styles.flexRight}>
-                    <Text style={styles.txtTitle}>{item.giftName}</Text>
-                    <View style={styles.btnChange}>
-                        <Text style={styles.txtMark}>Đổi điểm</Text>
-                        <View style={styles.changeCoin}>
-                            <Image
-                                style={styles.widthIcon}
-                                source={require('../../asserts/icon/icon_coinGiftV3.png')}
-                            />
-                            <Text
-                                numberOfLines={1}
-                                style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
-                            >{formatNumber(parseInt(item.point))}</Text>
+            <TouchableWithoutFeedback onPress={this.handleClickItem(item)}>
+                <View style={[styles.listSale, shadowBtn]}>
+                    <View style={styles.flexLeft}>
+                        <Image
+                            source={{
+                                uri: item.image
+                            }}
+                            style={styles.sizeIcon}
+                            resizeMode={'contain'}
+                        />
+                    </View>
+                    <View style={styles.flexRight}>
+                        <Text style={styles.txtTitle}>{item.giftName}</Text>
+                        <View style={styles.btnChange}>
+                            <Text style={styles.txtMark}>Điểm</Text>
+                            <View style={styles.changeCoin}>
+                                <Image
+                                    style={styles.widthIcon}
+                                    source={require('../../asserts/icon/icon_coinGiftV3.png')}
+                                />
+                                <Text
+                                    numberOfLines={1}
+                                    style={[styles.txtNumber, { color: isColor ? '#FF6213' : '#4776AD' }]}
+                                >{formatNumber(parseInt(item.point))}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.limitSala}>
+                            <Text style={styles.txtSalaNum}>Số lượng còn lại:</Text>
+                            <Text style={[styles.txtSalaNum, { left: 5, color: '#007BFF' }]}>{item.remainQuantity}</Text>
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity >
+            </TouchableWithoutFeedback>
         );
     };
 
@@ -94,16 +112,18 @@ class ExchangeGiftScreen extends Component {
                 colors={['#56CCF2', '#20BDFF']}
                 style={styles.cardUser}
             >
-                <TouchableOpacity
-                    style={styles.sale}
+                <TouchableWithoutFeedback
                     onPress={() => {
                         navigation.navigate('SaleGift',
-                            { statusbar: 'light-content' });
+                            { statusbar: 'light-content' }
+                        );
                     }}
                 >
-                    <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
-                    <Text style={styles.txtDiamond}>Ưu đãi</Text>
-                </TouchableOpacity>
+                    <View style={styles.sale}>
+                        <Image source={AppIcon.icon_diamondV3} style={styles.icon_diamondV3} />
+                        <Text style={styles.txtDiamond}>Lịch sử</Text>
+                    </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.flexSpace}>
                     <View style={styles.viewUser}>
                         <View style={styles.avatar}>
@@ -143,11 +163,26 @@ class ExchangeGiftScreen extends Component {
         )
     }
 
+    // renderFooter = () => {
+    //     return (
+    //         this.state.isLoading ?
+    //             <View style={styles.loader}>
+    //                 <ActivityIndicator size="small" />
+    //             </View> : null
+    //     )
+    // }
+
+    // handleLoadMore = () => {
+    //     this.setState({ page: this.state.page + 1, isLoading: true }, this.state.listItems.pageSize);
+    // }
+
+
     render() {
         const {
             navigation,
             isLoading,
-            listGift
+            listGift,
+            listItems,
         } = this.props;
         return (
             <View style={[styles.container]} >
@@ -172,13 +207,16 @@ class ExchangeGiftScreen extends Component {
                             />
                         </View>
                         <FlatList
-                            data={listGift}
+                            data={listItems}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={this.renderItem}
                             ListHeaderComponent={this.renderHeader}
                             stickyHeaderIndices={[0]}
                             showsVerticalScrollIndicator={false}
                             ListEmptyComponent={this.renderEmpty}
+                            // onEndReached={this.handleLoadMore}
+                            // onEndReachedThreshold={0}
+                            // ListFooterComponent={this.renderFooter}
                         />
                     </>
                 }
@@ -299,14 +337,6 @@ const styles = StyleSheet.create({
     },
     listSale: {
         backgroundColor: '#fff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5.84,
-        elevation: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: 16,
@@ -354,7 +384,7 @@ const styles = StyleSheet.create({
     txtMark: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
-        color: '#828282',
+        color: '#000',
         alignSelf: 'center'
     },
     widthIcon: {
@@ -380,7 +410,6 @@ const styles = StyleSheet.create({
     btnChange: {
         flexDirection: 'row',
         marginTop: 16,
-        marginBottom: 16
     },
     styWrapEmpty: {
         height: height / 2,
@@ -392,6 +421,20 @@ const styles = StyleSheet.create({
         color: '#828282',
         letterSpacing: 0.5,
         fontSize: RFFonsize(16)
+    },
+    limitSala: {
+        flexDirection: 'row',
+        marginVertical: 10
+    },
+    txtSalaNum: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#000'
+    },
+    loader: {
+        marginTop: 10,
+        alignItems: 'center',
     }
 
 })
@@ -402,6 +445,8 @@ const mapStateToProps = state => {
     return {
         user: state.gift.user,
         listGift: state.gift.listGift,
+        listItems: state.gift.listItems,
+        listHistory: state.gift.listHistory,
         isLoading: state.gift.isLoading
     };
 };
