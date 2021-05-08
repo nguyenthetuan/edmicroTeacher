@@ -9,7 +9,8 @@ import {
     ActivityIndicator,
     Alert,
     SafeAreaView,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    ImageBackground
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
@@ -108,10 +109,9 @@ class ExchangeGiftScreen extends Component {
         } = this.props;
         const { uri } = getSourceAvatar(user.userId);
         return (
-            <LinearGradient
-                colors={['#56CCF2', '#20BDFF']}
-                style={styles.cardUser}
-            >
+            <ImageBackground source={require('../../asserts/images/banner_drawerMenu.png')}
+                style={styles.draWer}
+                resizeMode="stretch">
                 <TouchableWithoutFeedback
                     onPress={() => {
                         navigation.navigate('SaleGift',
@@ -151,7 +151,8 @@ class ExchangeGiftScreen extends Component {
                         style={styles.iconElip}
                     />
                 </View>
-            </LinearGradient>
+            </ImageBackground>
+
         );
     }
 
@@ -193,18 +194,13 @@ class ExchangeGiftScreen extends Component {
                     colorIcon={'#FFF'}
                     back={true}
                 />
-                {isLoading ?
+                {/* {isLoading ?
                     <ActivityIndicator color={'#2D9CDB'}
                         size={'small'}
                         style={styles.ActivityIndicator} />
-                    :
-                    <>
+                    : */}
+                    <View>
                         <View style={styles.backbg}>
-                            <Image
-                                source={require('../../asserts/icon/icon_elipHeaderV3.png')}
-                                resizeMode={'stretch'}
-                                style={styles.iconElip}
-                            />
                         </View>
                         <FlatList
                             data={listItems}
@@ -214,12 +210,12 @@ class ExchangeGiftScreen extends Component {
                             stickyHeaderIndices={[0]}
                             showsVerticalScrollIndicator={false}
                             ListEmptyComponent={this.renderEmpty}
-                            // onEndReached={this.handleLoadMore}
-                            // onEndReachedThreshold={0}
-                            // ListFooterComponent={this.renderFooter}
+                        // onEndReached={this.handleLoadMore}
+                        // onEndReachedThreshold={0}
+                        // ListFooterComponent={this.renderFooter}
                         />
-                    </>
-                }
+                    </View>
+                {/* } */}
                 <SafeAreaView />
             </View>
         )
@@ -340,9 +336,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: 16,
-        marginTop: 16,
+        marginVertical: 8,
         marginRight: 16,
-        borderRadius: 4
+        borderRadius: 4,
+        flex: 1
     },
     flexLeft: {
         width: '30%'
@@ -435,8 +432,15 @@ const styles = StyleSheet.create({
     loader: {
         marginTop: 10,
         alignItems: 'center',
+    },
+    draWer: {
+        flex: 1,
+        borderRadius: 4,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#fff',
+        marginHorizontal: 16,
     }
-
 })
 
 

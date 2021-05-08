@@ -9,7 +9,8 @@ import {
     Linking,
     Dimensions,
     TouchableWithoutFeedback,
-    ActivityIndicator
+    ActivityIndicator,
+    SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: 16,
-        marginTop: 16,
+        marginVertical: 8,
         marginRight: 16,
         borderRadius: 4
     },

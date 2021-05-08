@@ -31,6 +31,8 @@ import Common from '../../../../utils/Common';
 import AppIcon from '../../../../utils/AppIcon';
 import { RFFonsize } from '../../../../utils/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ToastFaild from '../../../common-new/ToastFaild';
+import ToastSuccess from '../../../common-new/ToastSuccess';
 const { width, height } = Dimensions.get('window');
 
 class StepThreePDF extends Component {
@@ -65,38 +67,33 @@ class StepThreePDF extends Component {
         const { gradeCode, subjectCode, name, assignmentType, duration } = this.state;
         try {
             if (!name) {
-                this.toast.show(<View style={styles.styleWarnig}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa nhập tên bộ đề!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>);
+                this.refToast.show(
+                    <ToastFaild title="Chưa nhập tên bộ đề!" />
+                );
                 return;
             }
             if (!subjectCode.length) {
-                this.toast.show(<View style={styles.styleWarnig}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa chọn môn học!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>);
+                this.refToast.show(
+                    <ToastFaild title="Chưa chọn môn học!" />
+                );
                 return;
             }
             if (!gradeCode.length) {
-                this.toast.show(<View style={styles.styleWarnig}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa chọn khối!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>);
+                this.refToast.show(
+                    <ToastFaild title="Chưa chọn khối!" />
+                );
                 return;
             }
             if (assignmentType && !duration) {
-                this.toast.show(<View style={styles.styleWarnig}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Chưa nhập thời gian kiểm tra!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>);
+                this.refToast.show(
+                    <ToastFaild title="Chưa nhập thời gian kiểm tra!" />
+                );
                 return;
             }
             if (assignmentType && duration && duration < 5) {
-                this.toast.show(<View style={styles.styleWarnig}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 16 }]}>Thời gian kiểm tra phải lớn hơn 5 phút!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>);
+                this.refToast.show(
+                    <ToastFaild title="Thời gian kiểm tra phải lớn hơn 5 phút!" />
+                );
                 return;
             }
             return true;
@@ -180,10 +177,11 @@ class StepThreePDF extends Component {
             const res = await apiPapers.assignmentContent({ token, body });
             if (res && res.status === 0) {
                 this.toast.show(
-                    <View style={styles.styleTostSuccess}>
-                        <Image source={require('../../../../asserts/images/Exclude.png')} />
-                        <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
-                    </View>
+                    // <View style={styles.styleTostSuccess}>
+                    //     <Image source={require('../../../../asserts/images/Exclude.png')} />
+                    //     <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
+                    // </View>
+                    <ToastSuccess title="Tạo bộ đề thành công!" />
                 );
                 const { token, enumType } = await dataHelper.getToken();
                 const schoolYear = new Date().getFullYear();
@@ -411,7 +409,8 @@ class StepThreePDF extends Component {
                     listSubjects={listSubjects}
                     activeSubject={this.activeSubject}
                 />
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} style={styles.styleWarnig} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
+                <Toast ref={(ref) => (this.refToast = ref)} position={'center'} />
             </View>
         )
     }

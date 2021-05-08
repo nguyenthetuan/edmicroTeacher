@@ -43,10 +43,11 @@ export default class HeaderPaper extends React.PureComponent {
       buttonRightText,
       notRightButton,
       iconColor,
-      marginLeft
+      marginLeft,
+      bgColor
     } = this.props;
     return (
-      <View style={[styles.container, { backgroundColor: backgroundColor }]}>
+      <View style={[styles.container, { backgroundColor: backgroundColor }, bgColor]}>
         <RippleButton
           onPress={this.onGoback}
           style={styles.button}

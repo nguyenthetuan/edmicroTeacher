@@ -46,6 +46,8 @@ import ModalClass from './ModalClass';
 import SubjectItem from './SubjectItem';
 import ModalSubject from './ModalSubject';
 import ClassItem from './ClassItem';
+import ToastFaild from '../../common-new/ToastFaild';
+import ToastSuccess from '../../common-new/ToastSuccess';
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height;
 let baseUrl = 'file:///android_asset/';
@@ -495,7 +497,6 @@ class ConfigQuestion extends Component {
 
         const response = await apiPapers.createQuestion({ token, formData });
         if (response.status === 0) {
-          this.refToast.show('Tạo bộ đề thành công!');
           const setQuestion = await dataHelper.saveQuestion([]);
           const res = await apiPapers.getAssignmentConfig({
             token,
@@ -508,12 +509,14 @@ class ConfigQuestion extends Component {
               name: '',
               loading: false,
             },
-            () => {
-              this.props.navigation.navigate('Assignment', {
-                item: { ...res, id: res.assignmentId },
-                checked: true,
-              });
-            }
+            this.toast.show((<ToastSuccess title={"Tạo bộ đề thành công!"} />), 1500,
+              () => {
+                this.props.navigation.navigate('Assignment', {
+                  item: { ...res, id: res.assignmentId },
+                  checked: true,
+                });
+              }
+            )
           );
           // cau hinh thanh cong
           AnalyticsManager.trackWithProperties('School Teacher', {
@@ -530,7 +533,8 @@ class ConfigQuestion extends Component {
         console.log('error', error);
       }
     } else {
-      AlertNoti('Vui lòng điền đầy đủ thông tin');
+      // AlertNoti('Vui lòng điền đầy đủ thông tin');
+      this.refToast.show(<ToastFaild title="Vui lòng điền đầy đủ thông tin" />);
     }
   };
 
@@ -692,7 +696,7 @@ class ConfigQuestion extends Component {
     const { shadowBtn } = shadowStyle;
     return (
       <View style={styles.container}>
-        <SafeAreaView />
+        <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
         <SafeAreaView>
           <HeaderPaper
             title={'Cấu hình câu hỏi'}
@@ -701,6 +705,7 @@ class ConfigQuestion extends Component {
             onRightAction={() => this.config()}
             loading={loading}
             notRightButton={true}
+            bgColor={{ backgroundColor: "#117DB9" }}
           />
           <TouchableWithoutFeedback onPress={this.config}>
             <View style={[styles.buttonCreateAssessment, shadowBtn]} >
@@ -709,7 +714,8 @@ class ConfigQuestion extends Component {
           </TouchableWithoutFeedback>
           <ScrollView
             contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
-            ref={'ScrollView'}>
+            ref={'ScrollView'}
+          >
             <View>
               <View style={styles.bodyHeader}>
                 <View style={{ flex: 1 }}>
@@ -1042,7 +1048,6 @@ class ConfigQuestion extends Component {
                       </View>
                     </TouchableWithoutFeedback>
                   </View>
-
                   <View style={styles.flexColumn}>
                     <TouchableWithoutFeedback
                       onPress={() => this.setState({ totalPoint: 10 }, () => this.updateScore())}>
@@ -1175,6 +1180,8 @@ class ConfigQuestion extends Component {
           Icon={AppIcon.iconDowSelect}
         />
         <Toast ref={ref => (this.refToast = ref)} position={'bottom'} />
+        <Toast ref={ref => (this.toast = ref)} position={'bottom'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
+
       </View>
     );
   }
@@ -1214,7 +1221,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#117DB9',
+    // backgroundColor: '#117DB9',
+    backgroundColor: "transparent",
   },
   topheader: {
     flexDirection: 'row',
