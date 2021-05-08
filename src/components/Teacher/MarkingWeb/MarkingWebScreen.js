@@ -5,7 +5,7 @@ import * as dataHelper from '../../../utils/dataHelper';
 import LearnPlaceholder from '../../shim/LearnPlaceholder';
 import Config from 'react-native-config';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
-
+import global from '../../../utils/Globals';
 export default class MarkingWebScreen extends PureComponent {
     constructor(props) {
         super(props);
@@ -60,8 +60,8 @@ export default class MarkingWebScreen extends PureComponent {
     }
 
     _goBack = () => {
-        // this.props.navigation.goBack();
-        // if (typeof (global.updateDataCompetitionStep) == 'function') global.updateDataCompetitionStep();
+        this.props.navigation.goBack();
+        if (typeof (global.updatePaper) == 'function') global.updatePaper();
     }
 
     _onMessage = (event) => {
@@ -103,7 +103,7 @@ export default class MarkingWebScreen extends PureComponent {
                     title={name || ''}
                     navigation={this.props.navigation}
                     actionIcon={false}
-                    goBack={() => this.props.navigation.goBack()}
+                    goBack={this._goBack}
                     color={'#979797'}
                 />
                 <View style={{ flex: 1 }}>
