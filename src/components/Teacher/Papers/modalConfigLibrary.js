@@ -13,7 +13,6 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -83,53 +82,54 @@ export default class ModalConfigLibrary extends Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <Text style={styles.txtTitle}>{title}</Text>
-          <TouchableOpacity
-            style={styles.btnModal}
+          <TouchableWithoutFeedback
             onPress={() => this.setState({ visible: true })}
           >
-            {(!_.isEmpty(selectItem) && selectItem.name) ||
-              (!_.isEmpty(value) && value.name) ? (
-              <Text style={styles.txtSelectItem} numberOfLines={1}>
-                {selectItem.name || value.name}
-              </Text>
-            ) : (
-              <View />
-            )}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              {activeButtom && !_.isEmpty(selectItem) && selectItem.name ? (
-                <TouchableOpacity onPress={() => this.deleteItem()}>
-                  <Text
-                    style={{ fontSize: RFFonsize(12), color: '#757575', marginRight: 5 }}>
-                    x
+            <View style={styles.btnModal}>
+              {(!_.isEmpty(selectItem) && selectItem.name) ||
+                (!_.isEmpty(value) && value.name) ? (
+                  <Text style={styles.txtSelectItem} numberOfLines={1}>
+                    {selectItem.name || value.name}
                   </Text>
-                </TouchableOpacity>
-              ) : null}
-              {
-                <View
-                >
+                ) : (
+                  <View />
+                )}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {activeButtom && !_.isEmpty(selectItem) && selectItem.name ? (
+                  <TouchableWithoutFeedback onPress={() => this.deleteItem()}>
+                    <Text
+                      style={{ fontSize: RFFonsize(12), color: '#757575', marginRight: 5 }}>
+                      x
+                  </Text>
+                  </TouchableWithoutFeedback>
+                ) : null}
+                {
                   <View
-                    style={{
-                      width: 24,
-                      height: 24,
-                      borderRadius: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Ionicons
-                      name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
-                      size={16}
-                      color="#828282"
-                    />
+                  >
+                    <View
+                      style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Ionicons
+                        name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
+                        size={16}
+                        color="#828282"
+                      />
+                    </View>
                   </View>
-                </View>
-              }
+                }
+              </View>
             </View>
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
 
           <Modal visible={visible} transparent={true}>
             <TouchableWithoutFeedback
@@ -159,28 +159,28 @@ export default class ModalConfigLibrary extends Component {
                         }}
                         renderItem={({ item, index }) => {
                           return selectItem && selectItem.name === item.name && selectItem.id === item.id ? (
-                            <TouchableOpacity
-                              onPress={() => this.selectItem({ item, index })}
-                              style={{
+                            <TouchableWithoutFeedback onPress={() => this.selectItem({ item, index })}>
+                              <View style={{
                                 marginHorizontal: 15,
                                 width: (widthItem && `${widthItem}%`) || '100%',
                                 marginTop: 25,
                                 alignItems: 'center',
                               }}>
-                              <Text style={styles.txtActive}>{item.name}</Text>
-                            </TouchableOpacity>
+                                <Text style={styles.txtActive}>{item.name}</Text>
+                              </View>
+                            </TouchableWithoutFeedback>
                           ) : (
-                            <TouchableOpacity
-                              onPress={() => this.selectItem({ item, index })}
-                              style={{
-                                marginHorizontal: 15,
-                                width: (widthItem && `${widthItem}%`) || '100%',
-                                marginTop: 25,
-                                alignItems: 'center',
-                              }}>
-                              <Text style={styles.txtItem}>{item.name}</Text>
-                            </TouchableOpacity>
-                          );
+                              <TouchableWithoutFeedback onPress={() => this.selectItem({ item, index })}>
+                                <View style={{
+                                  marginHorizontal: 15,
+                                  width: (widthItem && `${widthItem}%`) || '100%',
+                                  marginTop: 25,
+                                  alignItems: 'center',
+                                }}>
+                                  <Text style={styles.txtItem}>{item.name}</Text>
+                                </View>
+                              </TouchableWithoutFeedback>
+                            );
                         }}
                       />
                     </ScrollView>
@@ -228,9 +228,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#C4C4C4',
   },
   txtSelectItem: {
-    color: '#000',
+    color: '#383838',
     fontSize: RFFonsize(12),
-    fontFamily: 'Nunito-Regular',
+    lineHeight: RFFonsize(16),
+    fontFamily: 'Nunito',
     marginLeft: 10,
   },
   txtActive: {

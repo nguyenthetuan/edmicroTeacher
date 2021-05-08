@@ -721,7 +721,7 @@ class ConfigQuestion extends Component {
                     <Text
                       style={[
                         { color: '#000', fontSize: RFFonsize(14), lineHeight: RFFonsize(19), fontFamily: 'Nunito-Bold', marginTop: 4 },
-                        errors.name && { color: '#EB5757' },
+                        // errors.name && { color: '#EB5757' },
                       ]}>
                       Tên bài tập
                   </Text>
@@ -819,13 +819,14 @@ class ConfigQuestion extends Component {
                         />
                       </View>
                     )}
+
                     <View style={styles.rowAlign}>
                       <Text
                         style={{
                           color: '#000',
                           fontFamily: 'Nunito-Bold',
-                          fontSize: RFFonsize(14),
-                          lineHeight: RFFonsize(19),
+                          fontSize: RFFonsize(13),
+                          lineHeight: RFFonsize(17),
                           marginRight: 15,
                           marginBottom: 5
                         }}>
@@ -869,7 +870,7 @@ class ConfigQuestion extends Component {
                           <Text style={styles.txtTitleFooter}>Nhận biết</Text>
                         )}
                         {this.getTotalTypeQuestion(questions).typeTwo !== 0 && (
-                          <Text style={styles.txtTitleFooter}>Thông hiều</Text>
+                          <Text style={styles.txtTitleFooter}>Thông hiểu</Text>
                         )}
                         {this.getTotalTypeQuestion(questions).typeThree !== 0 && (
                           <Text style={styles.txtTitleFooter}>Vận dụng</Text>
@@ -1256,14 +1257,14 @@ const styles = StyleSheet.create({
   },
   pickTime: {
     height: 40,
-    width: width - 280,
+    width: 100,
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
-    color: '#828282',
-    fontFamily: 'Nunito-Regular',
+    color: '#000',
+    fontFamily: 'Nunito',
     backgroundColor: '#fff',
     // paddingVertical: 3,
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
     borderRadius: 5,
     textAlign: 'center',
     marginTop: 3,
@@ -1447,13 +1448,13 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   borBorder: {
-    width: width - 220,
+    width: width - 240,
     borderWidth: 1,
     marginLeft: 0,
     height: 40,
     borderColor: '#c4c4c4',
     backgroundColor: 'transparent',
-    marginTop: 4
+    marginTop: 4,
   },
   icon: {
     zIndex: -1,
