@@ -3,6 +3,8 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  Text,
+  TouchableWithoutFeedback
 } from 'react-native';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
@@ -10,6 +12,7 @@ import dataHelper from '../../../utils/dataHelper';
 import ModalConfigLibrary from './modalConfigLibrary';
 import ModalCurriculum from './modalCurriculum';
 import Modal from 'react-native-modal';
+import { RFFonsize } from '../../../utils/Fonts';
 import { element } from 'prop-types';
 const { width, height } = Dimensions.get('window');
 
@@ -58,11 +61,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   indicator: {
-    height: 5,
-    width: 40,
-    borderRadius: 4,
-    backgroundColor: '#828282',
-    alignSelf: 'center'
+    // height: 5,
+    // width: 40,
+    // borderRadius: 4,
+    // backgroundColor: '#828282',
+    alignSelf: 'flex-end',
+    right: 15,
+    top: -10
+  },
+  closeModal: {
+    fontFamily: 'Nunito-Regular',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
+    color: '#E59553'
   }
 });
 
@@ -303,6 +314,7 @@ export default class ModalConfigPaper extends Component {
     }
   };
 
+
   getRenderText = () => {
     const {
       valueQuestion,
@@ -342,6 +354,10 @@ export default class ModalConfigPaper extends Component {
     return '';
   }
 
+  closeOnpress = () => {
+    this.props._handleCloseModal();
+  }
+
   render() {
     const { isModal } = this.props;
     const {
@@ -358,6 +374,7 @@ export default class ModalConfigPaper extends Component {
       valueTypeOfExercise,
       valueLevel,
     } = this.state;
+
     return (
       <Modal
         isVisible={isModal}
@@ -368,7 +385,14 @@ export default class ModalConfigPaper extends Component {
       // swipeDirection={'down'}
       >
         <View style={styles.wrapModal}>
-          <View style={styles.indicator} />
+          <TouchableWithoutFeedback
+            hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+            onPress={this.closeOnpress}
+          >
+            <View style={styles.indicator}>
+              <Text style={styles.closeModal}>Đóng</Text>
+            </View>
+          </TouchableWithoutFeedback>
           <View style={styles.wrapSelectQuestion}>
             <ModalConfigLibrary
               title="Câu hỏi"

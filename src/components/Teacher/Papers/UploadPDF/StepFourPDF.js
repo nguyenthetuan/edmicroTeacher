@@ -10,7 +10,7 @@ export default class StepFourPDF extends Component {
     }
 
     componentDidMount = () => {
-        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBarStyle('light-content');
     }
 
     assignedMission = () => {
@@ -18,6 +18,7 @@ export default class StepFourPDF extends Component {
         this.props.navigation.pop(1);
         this.props.navigation.navigate('Assignment', {
             item: item,
+            statusbar: 'light-content'
         });
     }
 

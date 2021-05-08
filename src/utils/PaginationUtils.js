@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  TouchableWithoutFeedback
+} from 'react-native';
 import { RFFonsize } from '../utils/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class PaginationUtils extends Component {
@@ -27,20 +34,26 @@ export default class PaginationUtils extends Component {
     const arrElement = new Array();
     let element;
     const elementDotEnd = (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         key={'elementDotEnd'}
         onPress={this.handleClickDot('+')}
-        style={styles.wrapElement}>
-        <Text style={styles.txtNumber}>...</Text>
-      </TouchableOpacity>
+        hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+      >
+        <View style={styles.wrapElement}>
+          <Text style={styles.txtNumber}>...</Text>
+        </View>
+      </TouchableWithoutFeedback>
     );
     const elementDotStart = (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         key={'elementDotStart'}
         onPress={this.handleClickDot('-')}
-        style={styles.wrapElement}>
-        <Text style={styles.txtNumber}>...</Text>
-      </TouchableOpacity>
+        hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+      >
+        <View style={styles.wrapElement}>
+          <Text style={styles.txtNumber}>...</Text>
+        </View>
+      </TouchableWithoutFeedback>
     );
     if (indexStart >= indexEnd - 3 && indexStart) {
       arrElement.push(elementDotStart);
@@ -48,21 +61,24 @@ export default class PaginationUtils extends Component {
     for (let i = 0; i < length; i++) {
       if (i < indexEnd && indexStart <= i) {
         element = (
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             key={i}
             onPress={this.handleClickIndex(i)}
-            style={[
+            hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+          >
+            <View style={[
               styles.wrapElement,
-              { backgroundColor: indexCurrent == i ? '#107CB9' : '#FFF' },
+              { backgroundColor: indexCurrent == i ? '#107CB9' : '#FFF',borderColor: indexCurrent ==i ? '#107CB9' : "#c4c4c4"} ,
             ]}>
-            <Text
-              style={[
-                styles.txtNumber,
-                { color: indexCurrent == i ? '#fff' : 'rgba(2, 31, 47, 0.4)' },
-              ]}>
-              {i + 1}
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={[
+                  styles.txtNumber,
+                  { color: indexCurrent == i ? '#fff' : 'rgba(2, 31, 47, 0.4)' },
+                ]}>
+                {i + 1}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         );
         arrElement.push(element);
       }
@@ -141,17 +157,21 @@ export default class PaginationUtils extends Component {
         </View>
         {totalQuestion ? (
           <View style={styles.wrapPagination}>
-            <TouchableOpacity
-              style={styles.wrapElement}
+            <TouchableWithoutFeedback
+              hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
               onPress={this.handleClickLeft}>
-              <Icon name={'angle-left'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
-            </TouchableOpacity>
+              <View style={styles.wrapElement}>
+                <Icon name={'angle-left'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
+              </View>
+            </TouchableWithoutFeedback>
             {this.renderPagination()}
-            <TouchableOpacity
-              style={styles.wrapElement}
+            <TouchableWithoutFeedback
+              hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
               onPress={this.handleClickRight}>
-              <Icon name={'angle-right'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
-            </TouchableOpacity>
+              <View style={styles.wrapElement}>
+                <Icon name={'angle-right'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         ) : (
             <></>
@@ -186,7 +206,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 8,
-    borderRadius: 2
+    borderRadius: 2,
+    borderStyle: 'solid',
   },
   txtNumber: {
     color: '#159FDA',

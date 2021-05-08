@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     columnAdd: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 20
     },
     topModal: {
         backgroundColor: '#7E96EC',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderRadius: 1,
         marginHorizontal: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     txtUpload: {
         fontFamily: 'Nunito-Regular',

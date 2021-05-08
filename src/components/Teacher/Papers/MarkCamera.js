@@ -501,17 +501,15 @@ class MarkCamera extends Component {
             if (token) {
                 const res = await apiPapers.UploadPdfCam({ token, body });
                 if (res && res.status === 1) {
-                    this.refToast.show(
-                        <View style={styles.styleTostSuccess}>
-                            <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
-                        </View>
+                    this.refToast.show((<ToastSuccess title={"Tạo bộ đề thành công!"} />), 500,
+                        () => {
+                            this.props.navigation.navigate('Assignment', {
+                                item: { ...res, name: name, id: res.id, },
+                                statusbar: 'light-content'
+                            }
+                            );
+                        }
                     );
-                    setTimeout(() => {
-                        // this.props.navigation.goBack();
-                        this.props.navigation.navigate('Assignment', {
-                            item: { ...res, name: name, id: res.id },
-                        });
-                    }, 500);
                     this.props.needUpdate(true);
                     // cau hinh thanh cong
                     AnalyticsManager.trackWithProperties('School Teacher', {

@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     marginTop: 13,
-    marginBottom: 26,
+    marginBottom: 16,
   },
   styleBody: {
     flex: 1,
@@ -559,7 +559,9 @@ class QuestionLibrary extends Component {
             }}>
             <View style={styles.headerFilter}>
               <Text style={styles.txtFilter} numberOfLines={1}>{this.refModalFilter?.getRenderText()}</Text>
-              <TouchableWithoutFeedback onPress={() => this.setState({ isModalQustionLibrary: true })}>
+              <TouchableWithoutFeedback
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                onPress={() => this.setState({ isModalQustionLibrary: true })}>
                 <Image source={require('../../../asserts/icon/iconFilter.png')} />
               </TouchableWithoutFeedback>
             </View>
