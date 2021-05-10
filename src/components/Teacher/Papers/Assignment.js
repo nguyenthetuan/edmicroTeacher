@@ -1,4 +1,4 @@
-import React, { Component, useState, useRef } from 'react';
+import React, { Component, useState, useRef, useEffect, useCallback } from 'react';
 import {
   Text,
   StyleSheet,
@@ -59,6 +59,8 @@ function Item(props) {
   const pickStudent = useRef();
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
+  const [isDisable, setIsDisable] = useState(true);
+
 
   const [timeStart, setTimeStart] = useState(
     item.timeStart
@@ -75,6 +77,11 @@ function Item(props) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [showPickSutdent, setShowPickSutdent] = useState(false);
   const [buttonText, setButtonText] = useState(student ? `${student} học sinh` : 'Tất cả học sinh');
+
+  // useEffect(() => {
+  //   setIsDisable(false);
+  // }, [shadowBtn])
+
 
   const showDatePicker = (stage) => {
     setStage(stage);
@@ -93,11 +100,20 @@ function Item(props) {
     setDatePickerVisibility(false);
   };
 
+  checkDisable = (date) => {
+    if (date > Date.now() && date > item.timeEnd * 1000 && date !== timeEnd) {
+      setIsDisable(false);
+    } else {
+      setIsDisable(true);
+    }
+  }
+
   const handleConfirm = (date) => {
     if (_ = stage == Stage.begin) {
       setTimeStart(date);
     } else {
       setTimeEnd(date);
+      checkDisable(date);
     }
     hideDatePicker();
   };
@@ -143,6 +159,7 @@ function Item(props) {
             // props.onToast('Giao bài thành công!');
             props.onRefToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
             props.needUpdate(true);
+            setIsDisable(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
             AnalyticsManager.trackWithProperties('School Teacher', {
               action: 'ASSIGNMENT',
@@ -233,11 +250,12 @@ function Item(props) {
           onPress={onAssignment}
           style={[styles.AweBtn]}
           height={45}
-          backgroundColor={'#2D9CDB'}
+          backgroundColor={isDisable ? '#DADADA' : '#2D9DFE'}
           borderRadius={25}
           backgroundActive={'#2D9DFE'}
           backgroundShadow={'transparent'}
           backgroundDarker={'transparent'}
+          disabled={isDisable}
         >
           <Text style={styles.txtAssignment}>Giao bài</Text>
         </AwesomeButton>
