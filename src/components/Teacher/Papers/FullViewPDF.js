@@ -18,6 +18,7 @@ export default class FullViewPDFAssessment extends Component {
                     navigation={this.props.navigation}
                     color={'#979797'}
                     iconColor='#000'
+                    createPaper={true}
                 />
                 <Pdf
                     ref={(ref) => (this.pdf = ref)}

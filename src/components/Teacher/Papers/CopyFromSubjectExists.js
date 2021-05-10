@@ -236,6 +236,7 @@ export default class CopyFromSubjectExists extends Component {
                             navigation={this.props.navigation}
                             color={'#fff'}
                             notRightButton={true}
+                            createPaper={true}
                         />
                         <View style={styles.wrapDropdown}>
                             <Image source={AppIcon.image_headerPaperV3} style={styles.imageHeaderLeft} />
@@ -401,6 +402,7 @@ const styles = StyleSheet.create({
     flexColumn: {
         flex: 1,
         marginLeft: -5,
+        bottom: 5
     },
     viewStatus: {
         width: '100%',

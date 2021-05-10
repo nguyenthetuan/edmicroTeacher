@@ -5,12 +5,14 @@ import {
   Image,
   TouchableOpacity,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
+import shadowStyle from '../../../themes/shadowStyle';
 export default class HeaderPaper extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -44,8 +46,11 @@ export default class HeaderPaper extends React.PureComponent {
       notRightButton,
       iconColor,
       marginLeft,
-      bgColor
+      bgColor,
+      createPaper,
+      leftTitle
     } = this.props;
+    const { shadowBtn } = shadowStyle;
     return (
       <View style={[styles.container, { backgroundColor: backgroundColor }, bgColor]}>
         <RippleButton
@@ -60,8 +65,8 @@ export default class HeaderPaper extends React.PureComponent {
         <View style={styles.viewTitle}>
           <Text numberOfLines={1}
             style={[styles.textTitleHeader, {
-              color: color || '#383838',
-            }]}>{title}</Text>
+              color: color || '#383838'
+            }, leftTitle]}>{title}</Text>
         </View>
         {!notRightButton
           ?
@@ -70,6 +75,16 @@ export default class HeaderPaper extends React.PureComponent {
             style={styles.octiconSetting}>
             <Image source={AppIcon.icon_octiconSettingsV3} />
           </TouchableOpacity>
+          :
+          <View style={{ width: 10 }} />
+        }
+        {!createPaper
+          ?
+          <TouchableWithoutFeedback onPress={this.config}>
+            <View style={[styles.buttonCreateAssessment, shadowBtn]} >
+              <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
+            </View>
+          </TouchableWithoutFeedback>
           :
           <View style={{ width: 10 }} />
         }
@@ -82,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 15,
     flexDirection: 'row',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
@@ -136,5 +151,22 @@ const styles = StyleSheet.create({
   },
   btnLeft: {
     color: '#fff'
-  }
+  },
+  buttonCreateAssessment: {
+    width: 80,
+    height: 25,
+    borderRadius: 5,
+    backgroundColor: '#FDC214',
+    justifyContent: 'center',
+    right: 20,
+    zIndex: 1,
+  },
+  textCreateAssessment: {
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
+    color: '#fff',
+    alignSelf: 'center'
+  },
+
 });

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 import AppIcon from '../../utils/AppIcon';
-
 const navigateUser = (props) => {
     const { onRightAction } = props;
     if (onRightAction) {
@@ -15,10 +13,11 @@ const navigateUser = (props) => {
 }
 
 const HeaderPrimary = (props) => {
-    const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack, } = props;
+    const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack } = props;
+    const { bgColorActive } = props;
     return (
-        <View style={styles.rowContainer}>
-            <View style={{flexDirection:'row', alignItems:'center'}}>
+        <View style={[styles.rowContainer, bgColorActive]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {showLead ?
                     <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
                         <View style={styles.boxAction}>
@@ -45,7 +44,7 @@ const HeaderPrimary = (props) => {
                 :
                 <View style={styles.btnAvatar} />
             }
-        </View>
+        </View >
     );
 }
 
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
         height: 52,
         alignItems: 'center',
         marginHorizontal: 10,
-        justifyContent:'space-between'
+        justifyContent: 'space-between',
     },
     boxAction: {
         width: 40,
@@ -73,7 +72,8 @@ const styles = StyleSheet.create({
         flex: 1,
         color: '#757575',
         fontSize: RFFonsize(16),
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Nunito-Bold',
     },
     btnAvatar: {
         height: 38,
@@ -89,3 +89,4 @@ const styles = StyleSheet.create({
         borderRadius: 25,
     },
 });
+

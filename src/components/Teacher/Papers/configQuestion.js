@@ -48,6 +48,7 @@ import ModalSubject from './ModalSubject';
 import ClassItem from './ClassItem';
 import ToastFaild from '../../common-new/ToastFaild';
 import ToastSuccess from '../../common-new/ToastSuccess';
+
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height;
 let baseUrl = 'file:///android_asset/';
@@ -706,12 +707,8 @@ class ConfigQuestion extends Component {
             loading={loading}
             notRightButton={true}
             bgColor={{ backgroundColor: "#117DB9" }}
+            leftTitle={{ marginLeft: -50 }}
           />
-          <TouchableWithoutFeedback onPress={this.config}>
-            <View style={[styles.buttonCreateAssessment, shadowBtn]} >
-              <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
-            </View>
-          </TouchableWithoutFeedback>
           <ScrollView
             contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
             ref={'ScrollView'}
@@ -1432,24 +1429,6 @@ const styles = StyleSheet.create({
   },
   btnSwitch: {
     marginRight: 15,
-  },
-  buttonCreateAssessment: {
-    width: 80,
-    height: 25,
-    borderRadius: 5,
-    backgroundColor: '#FDC214',
-    justifyContent: 'center',
-    position: 'absolute',
-    right: 20,
-    top: Platform.OS == 'ios' ? (isIphoneX() ? 12 : 12) : 12,
-    zIndex: 1,
-  },
-  textCreateAssessment: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(10),
-    lineHeight: RFFonsize(14),
-    color: '#fff',
-    alignSelf: 'center'
   },
   input: {
     paddingTop: 9,
