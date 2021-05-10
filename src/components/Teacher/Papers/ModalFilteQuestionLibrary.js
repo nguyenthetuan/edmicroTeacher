@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
     // borderRadius: 4,
     // backgroundColor: '#828282',
     alignSelf: 'flex-end',
-    right: 15,
+    right: 20,
     top: -10
   },
   closeModal: {
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(18),
-    color: '#E59553'
+    color: '#000'
   }
 });
 

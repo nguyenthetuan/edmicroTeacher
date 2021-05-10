@@ -5,8 +5,9 @@ import {
     StyleSheet,
     SafeAreaView,
     Dimensions,
-    TouchableOpacity,
-    ActivityIndicator, Alert
+    TouchableWithoutFeedback,
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import HeaderPaper from './HeaderPaper';
 import apiPapers from '../../../services/apiPapersTeacher';
@@ -110,104 +111,106 @@ export default class ListQuestionCopy extends Component {
             <View>
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
                 {/* <View style={styles.root}> */}
-                    <View style={styles.header}>
-                        <HeaderPaper
-                            // title={'Bộ đề có sẵn'}
-                            navigation={this.props.navigation}
-                            color={'#fff'}
-                            buttonRightText={'Cấu hình bộ đề'}
-                            onRightAction={this.copySubjectMatter}
-                            title={data.name}
-                        />
-                        <View style={styles.headerContent}>
-                            <View style={styles.headerContentLeft}>
-                                <View style={styles.flexRow}>
-                                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                                        <Text style={styles.textNormalName}>Môn: </Text>
-                                        <View style={{ height: 20, paddingHorizontal: 0, borderColor: '#fff' }}>
-                                            <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
-                                        </View>
+                <View style={styles.header}>
+                    <HeaderPaper
+                        // title={'Bộ đề có sẵn'}
+                        navigation={this.props.navigation}
+                        color={'#fff'}
+                        buttonRightText={'Cấu hình bộ đề'}
+                        onRightAction={this.copySubjectMatter}
+                        title={data.name}
+                        createPaper={true}
+                    />
+                    <View style={styles.headerContent}>
+                        <View style={styles.headerContentLeft}>
+                            <View style={styles.flexRow}>
+                                <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                    <Text style={[styles.textNormalName, { fontSize: RFFonsize(14) }]}>Môn: </Text>
+                                    <View style={{ height: 20, paddingHorizontal: 0, borderColor: '#fff' }}>
+                                        <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                                        <Text style={styles.textNormalName}>Lớp: </Text>
-                                        <View style={{ height: 20, paddingHorizontal: 0, left: 4.5, borderColor: '#fff' }}>
-                                            <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity
-                                        style={styles.rightHeader}
-                                        // onPress={() => { this.}}
-                                        onPress={this.copySubjectMatter}
-                                    >
-                                        <Text style={styles.txtRightHeader}>{`Sao chép bộ đề` || `Lưu cấu hình`}</Text>
-                                    </TouchableOpacity>
                                 </View>
-                            </View>
-                            <View style={styles.headerLineTitle}>
-                                <Text style={styles.textTitle}>Loại câu hỏi</Text>
-                            </View>
-                            <View style={styles.headerContentRight}>
-                                {!!this.state[`knowledge0`] && <View style={styles.headerLineParams}>
-                                    <View style={styles.leftParams}>
-                                        <Text style={styles.textNormalName}>{knowledgeText['0']}</Text>
+                                <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                    <Text style={[styles.textNormalName, { fontSize: RFFonsize(14) }]}>Lớp: </Text>
+                                    <View style={{ height: 20, paddingHorizontal: 0, left: 4.5, borderColor: '#fff' }}>
+                                        <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
                                     </View>
-                                    <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge0`]} câu</Text>
+                                </View>
+                                <TouchableWithoutFeedback
+                                    hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                                    onPress={this.copySubjectMatter}
+                                >
+                                    <View style={styles.rightHeader}>
+                                        <Text style={styles.txtRightHeader}>{`Sao chép bộ đề` || `Lưu cấu hình`}</Text>
                                     </View>
-                                </View>}
-                                <View style={styles.borderWidthColumn} />
-                                {!!this.state[`knowledge1`] && <View style={styles.headerLineParams}>
-                                    <View style={styles.leftParams}>
-                                        <Text style={styles.textNormalName}>{knowledgeText['1']}</Text>
-                                    </View>
-                                    <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge1`]} câu</Text>
-                                    </View>
-                                </View>}
-                                <View style={styles.borderWidthColumn} />
-                                {!!this.state[`knowledge2`] && < View style={styles.headerLineParams}>
-                                    <View style={styles.leftParams}>
-                                        <Text style={styles.textNormalName}>{knowledgeText['2']}</Text>
-                                    </View>
-                                    <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge2`]} câu</Text>
-                                    </View>
-                                </View>}
-                                {!!this.state[`knowledge3`] && <View style={styles.headerLineParams}>
-                                    <View style={styles.leftParams}>
-                                        <Text style={styles.textNormalName}>{knowledgeText['3']}</Text>
-                                    </View>
-                                    <View style={styles.rightParams}>
-                                        <Text style={styles.textNormal}>{this.state[`knowledge3`]} câu</Text>
-                                    </View>
-                                </View>}
+                                </TouchableWithoutFeedback>
                             </View>
                         </View>
+                        <View style={styles.headerLineTitle}>
+                            <Text style={styles.textTitle}>Loại câu hỏi</Text>
+                        </View>
+                        <View style={styles.headerContentRight}>
+                            {!!this.state[`knowledge0`] && <View style={styles.headerLineParams}>
+                                <View style={styles.leftParams}>
+                                    <Text style={styles.textNormalName}>{knowledgeText['0']}</Text>
+                                </View>
+                                <View style={styles.rightParams}>
+                                    <Text style={styles.textNormal}>{this.state[`knowledge0`]} câu</Text>
+                                </View>
+                            </View>}
+                            {/* <View style={styles.borderWidthColumn} /> */}
+                            {!!this.state[`knowledge1`] && <View style={styles.headerLineParams}>
+                                <View style={styles.leftParams}>
+                                    <Text style={styles.textNormalName}>{knowledgeText['1']}</Text>
+                                </View>
+                                <View style={styles.rightParams}>
+                                    <Text style={styles.textNormal}>{this.state[`knowledge1`]} câu</Text>
+                                </View>
+                            </View>}
+                            {/* <View style={styles.borderWidthColumn} /> */}
+                            {!!this.state[`knowledge2`] && < View style={styles.headerLineParams}>
+                                <View style={styles.leftParams}>
+                                    <Text style={styles.textNormalName}>{knowledgeText['2']}</Text>
+                                </View>
+                                <View style={styles.rightParams}>
+                                    <Text style={styles.textNormal}>{this.state[`knowledge2`]} câu</Text>
+                                </View>
+                            </View>}
+                            {!!this.state[`knowledge3`] && <View style={styles.headerLineParams}>
+                                <View style={styles.leftParams}>
+                                    <Text style={styles.textNormalName}>{knowledgeText['3']}</Text>
+                                </View>
+                                <View style={styles.rightParams}>
+                                    <Text style={styles.textNormal}>{this.state[`knowledge3`]} câu</Text>
+                                </View>
+                            </View>}
+                        </View>
                     </View>
-                    <View style={{ width: '100%', height: height - 220 }}>
-                        <WebView
-                            ref={(ref) => (this.webview = ref)}
-                            source={{
-                                html: htmlHelper.renderHtmlListQuestionCopy
-                                    (this.filterDataRender(data.questions)),
-                                baseUrl,
-                            }}
-                            onMessage={this.onHandleMessage.bind(this)}
-                            originWhitelist={['file://']}
-                            scalesPageToFit={false}
-                            javaScriptEnabled
-                            showsVerticalScrollIndicator={false}
-                            startInLoadingState={true}
-                        />
-                    </View>
-                    <WarningModal
-                        ref={'warningModal'}
-                        navigation={this.props.navigation}
-                        visible={this.state.visibleModalWarning}
-                        hideModal={() => this.displayWarning(false)}
-                        numberQuestion={this.state.numberQuestion}
-                        subjectId={'TOAN'}
+                </View>
+                <View style={{ width: '100%', height: height - 220 }}>
+                    <WebView
+                        ref={(ref) => (this.webview = ref)}
+                        source={{
+                            html: htmlHelper.renderHtmlListQuestionCopy
+                                (this.filterDataRender(data.questions)),
+                            baseUrl,
+                        }}
+                        onMessage={this.onHandleMessage.bind(this)}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={true}
                     />
+                </View>
+                <WarningModal
+                    ref={'warningModal'}
+                    navigation={this.props.navigation}
+                    visible={this.state.visibleModalWarning}
+                    hideModal={() => this.displayWarning(false)}
+                    numberQuestion={this.state.numberQuestion}
+                    subjectId={'TOAN'}
+                />
                 {/* </View> */}
             </View >
         )
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
     header: {
         width: '100%',
         backgroundColor: '#56CCF2',
-        height: 200,
+        height: height * 0.25,
         paddingHorizontal: 5
     },
     headerContent: {
@@ -239,19 +242,20 @@ const styles = StyleSheet.create({
     },
     headerContentRight: {
         flex: 1,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         borderWidth: 1,
         borderRadius: 4,
         borderColor: '#fff',
         marginBottom: 10,
         flexDirection: 'row',
-        paddingHorizontal: 15,
+        paddingHorizontal: 5,
     },
     headerLineParams: {
         borderColor: '#fff',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignSelf: 'center',
+        flex: 1
     },
     headerLineTitle: {
         height: 25,
@@ -275,17 +279,16 @@ const styles = StyleSheet.create({
     },
     textNormal: {
         fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(22),
+        lineHeight: RFFonsize(20),
         textAlign: 'center',
         fontFamily: 'Nunito-bold',
         color: '#fff',
     },
     textNormalName: {
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(19),
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(18),
         fontFamily: 'Nunito',
-        color: '#fff',
-        top: 2,
+        color: '#fff'
     },
     textName: {
         fontSize: RFFonsize(14),
@@ -319,6 +322,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 13,
         marginBottom: 13,
-        borderColor: '#fff'
+        borderColor: '#fff',
     }
 })

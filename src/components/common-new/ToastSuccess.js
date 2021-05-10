@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(12),
         color: "#fff",
         top: -15,
-        right: 15
+        right: 10
     }
 })

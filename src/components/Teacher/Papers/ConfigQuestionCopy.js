@@ -32,8 +32,8 @@ import { RFFonsize } from '../../../utils/Fonts';
 import {
     statisticAssignmentAction
 } from '../../../actions/statisticAction';
-
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+import ToastFaild from '../../common-new/ToastFaild';
+import ToastSuccess from '../../common-new/ToastSuccess';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Dropdown from '../Homework/Dropdown';
 import apiService from '../../../services/apiPracticeHelper';
@@ -186,11 +186,14 @@ class ConfigQuestion extends Component {
         let questionList = data.questions;
         let count = listChecked.filter((a) => (a == true)).length;
         if (count == listChecked.length) {
-            this.refs.toast.show('Bộ đề phải có câu hỏi!');
+            // this.toast.show('Bộ đề phải có câu hỏi!');
+            this.toast.show(
+                <ToastFaild title="Bộ đề phải có câu hỏi!" />
+            )
             return;
         }
         if (!count) {
-            this.refs.toast.show('Phải chọn ít nhất 1 câu hỏi!')
+            this.toast.show(<ToastFaild title="Phải chọn ít nhất 1 câu hỏi!" />)
             return;
         }
         for (let i = listChecked.length - 1; i >= 0; i--) {
@@ -236,7 +239,7 @@ class ConfigQuestion extends Component {
         let count = listChecked.filter((a) => (a == true)).length;
         if (count > 1 || count == 0) {
 
-            this.refs.toast.show('Xin vui lòng chọn 1 câu hỏi');
+            this.toast.show(<ToastFaild title="Xin vui lòng chọn 1 câu hỏi" />);
             return;
         }
         this.setState({ hidePopUp: false })
@@ -316,12 +319,15 @@ class ConfigQuestion extends Component {
             if (this.state.assignmentType == 1) {
                 console.log("this.state.duration: ", this.state.duration);
                 if (this.state.duration < 5) {
-                    alert('Thời gian làm bài phải từ 5 phút!');
+                    // alert('Thời gian làm bài phải từ 5 phút!');
+                    this.toast.show(
+                        <ToastFaild title="Thời gian làm bài phải từ 5 phút!" />
+                    )
                     return;
                 }
             }
             if (totalPoint < 10 || totalPoint > 10) {
-                AlertNoti('Vui lòng nhập tổng điểm bằng 10');
+                this.toast.show(<ToastFaild title="Vui lòng nhập tổng điểm bằng 10" />);
                 return;
             }
             const formData = new FormData();
@@ -351,7 +357,19 @@ class ConfigQuestion extends Component {
                 const response = await apiPapers.createQuestion({ token, formData });
                 let tokenTmp = token;
                 if (response.status === 0) {
-                    this.refs.toast.show('Tạo bộ đề thành công!');
+                    // this.refToast.show((<ToastSuccess title="Tạo bộ đề thành công!" />), 1500)
+                    this.refToast.show((<ToastSuccess title="Tạo bộ đề thành công!" />), 1500,
+                        () => {
+                            this.props.navigation.navigate('Assignment', {
+                                item: res,
+                                payloadAssignment: {
+                                    gradeCode: res.gradeCode,
+                                    subjectCode: res.subjectCode,
+                                },
+                                statusbar: 'light-content',
+                            });
+                        }
+                    )
                     const setQuestion = await dataHelper.saveQuestion([]);
 
                     const res = await apiPapers.getAssignmentConfig({
@@ -363,23 +381,17 @@ class ConfigQuestion extends Component {
                     // this.props.navigation.navigate('CopyFromSubjectExists');
                     const schoolYear = new Date().getFullYear();
                     this.props.fetchAssignmentAction({ token, enumType, schoolYear });
-
                     this.setState({ assignmentType: 0 });
-                    this.props.navigation.navigate('Assignment', {
-                        item: res,
-                        payloadAssignment: {
-                            gradeCode: res.gradeCode,
-                            subjectCode: res.subjectCode,
-                        },
-                        statusbar: 'light-content',
-                    });
                 }
 
             } catch (error) {
                 this.setState({ loading: false })
             }
         } else {
-            alert('Vui lòng điền đầy đủ thông tin');
+            // alert('Vui lòng điền đầy đủ thông tin');
+            this.toast.show(
+                <ToastFaild title="Vui lòng điền đầy đủ thông tin" />
+            )
         }
     };
 
@@ -387,11 +399,11 @@ class ConfigQuestion extends Component {
     onPressButtonPopUp() {
         let { value, eachQSPoint, data, listChecked } = this.state;
         if (value <= 0 || value >= eachQSPoint.length || !value) {
-            this.refs.toast.show('Vị trí không tồn tại. Vị trí phải là số tự nhiên.')
+            this.toast.show(<ToastFaild title="Vị trí không tồn tại. Vị trí phải là số tự nhiên" />);
             return;
         }
         if (isNaN(value)) {
-            this.refs.toast.show('Vị trí không tồn tại. Vị trí phải là số tự nhiên.')
+            this.toast.show(<ToastFaild title="Vị trí không tồn tại. Vị trí phải là số tự nhiên" />);
             return;
         }
         const valueChecked = listChecked.indexOf(true);
@@ -411,11 +423,12 @@ class ConfigQuestion extends Component {
     copySubject = () => {
         const { totalPoint } = this.state;
         if (totalPoint != 10) {
-            Alert.alert('Thông báo', 'Vui lòng nhập tổng điểm bằng 10', [
-                {
-                    text: "OK",
-                }
-            ])
+            // Alert.alert('Thông báo', 'Vui lòng nhập tổng điểm bằng 10', [
+            //     {
+            //         text: "OK",
+            //     }
+            // ])
+            this.toast.show(<ToastFaild title="Thông báo', 'Vui lòng nhập tổng điểm bằng 10" />)
         } else {
             this.setState({ hidePopupCreate: false })
         }
@@ -460,16 +473,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                        <RippleButton
-                            key={`b${index}`}
-                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                            onPress={() => this.activeGrade(item)}>
-                            <View
-                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                <Text style={styles.txtItemActive}>{item.name}</Text>
-                            </View>
-                        </RippleButton>
-                    );
+                            <RippleButton
+                                key={`b${index}`}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                                onPress={() => this.activeGrade(item)}>
+                                <View
+                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -498,16 +511,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                        <RippleButton
-                            key={`d${index}`}
-                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                            onPress={() => this.activeSubject(item)}>
-                            <View
-                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                <Text style={styles.txtItemActive}>{item.name}</Text>
-                            </View>
-                        </RippleButton>
-                    );
+                            <RippleButton
+                                key={`d${index}`}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                                onPress={() => this.activeSubject(item)}>
+                                <View
+                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -615,6 +628,7 @@ class ConfigQuestion extends Component {
                                 // notRightButton={true}
                                 onRightAction={this.copySubject}
                                 title={data.name}
+                                createPaper={true}
                             />
                             <View style={styles.headerContent}>
                                 <View style={styles.headerContentLeft}>
@@ -830,7 +844,8 @@ class ConfigQuestion extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>}
-                <Toast ref="toast" position={'center'} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
+                <Toast ref={(ref) => (this.refToast = ref)} position={'center'} style={styles.styleTostSuccess} />
                 <WarningModal
                     ref={'warningModal'}
                     navigation={this.props.navigation}
@@ -852,7 +867,7 @@ const styles = StyleSheet.create({
     header: {
         width: '100%',
         backgroundColor: '#56CCF2',
-        height: 200,
+        height: height * 0.25,
         paddingHorizontal: 5
     },
     headerContent: {
@@ -1027,7 +1042,7 @@ const styles = StyleSheet.create({
     },
     textNormal: {
         fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(22),
+        lineHeight: RFFonsize(20),
         textAlign: 'center',
         fontFamily: 'Nunito-bold',
         color: '#fff',
@@ -1147,7 +1162,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         color: '#2D9CDB',
         paddingVertical: 0
-    }
+    },
+    styleTostSuccess: {
+        flex: 1,
+        height: 70,
+        width: width - 70,
+        backgroundColor: '#16BDA9',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: "center",
+        borderRadius: 10,
+    },
 })
 
 const mapStateToProps = state => {

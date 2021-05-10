@@ -9,6 +9,7 @@ import Toast from 'react-native-easy-toast';
 import apiPapers from '../../../../services/apiPapersTeacher';
 import { RFFonsize } from '../../../../utils/Fonts';
 import ToastSuccess from '../../../common-new/ToastSuccess';
+import ToastFaild from '../../../common-new/ToastFaild';
 const { width, height } = Dimensions.get('window')
 
 export default class StepOnePDF extends Component {
@@ -57,10 +58,12 @@ export default class StepOnePDF extends Component {
         const { urlFilePDFQS, urlFilePDFAS } = this.state;
         // if (!urlFilePDFQS || !urlFilePDFAS) {
         if (!urlFilePDFQS) {
-            this.toast.show(
-                <View style={styles.styleTostFaild}>
-                    <Text style={styles.txtSuccess}>Chưa Upload Pdf!!</Text>
-                </View>);
+            this.refToast.show(
+                // <View style={styles.styleTostFaild}>
+                //     <Text style={styles.txtSuccess}>Chưa Upload Pdf!!</Text>
+                // </View>
+                <ToastFaild title="Chưa Upload Pdf!!" />
+            );
             return false;
         }
         return true;
@@ -131,9 +134,9 @@ export default class StepOnePDF extends Component {
                                 this.toast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
                             }
                         } else {
-                            this.toast.show(<View style={styles.styleTostFaild}>
-                                <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
-                            </View>);
+                            this.refToast.show(
+                                <ToastFaild title="Tải lên PDF thất bại!" />
+                            );
                             this.setState({ loadingUpload: false });
                         }
                     }
@@ -186,7 +189,8 @@ export default class StepOnePDF extends Component {
                 <UploadPDFComp title='Bộ đề PDF *' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} style={styles.styleTostFaild} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'center'} style={styles.styleTostSuccess} />
+                <Toast ref={(ref) => (this.refToast = ref)} position={'center'} />
                 <View style={{ width: '100%', height: 50, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>
                         <Text style={styles.textNext}>Tiếp tục</Text>

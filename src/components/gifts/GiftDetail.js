@@ -342,7 +342,8 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginTop: "10%",
         paddingHorizontal: 50,
-        paddingVertical: 10
+        paddingVertical: 10,
+        marginBottom: "10%"
     },
     txtSub: {
         fontFamily: 'Nunito-Bold',

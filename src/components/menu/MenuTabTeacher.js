@@ -106,7 +106,6 @@ class MenuTabTeacher extends Component {
             showsVerticalScrollIndicator={false}
             style={MenuStyle.scrollContainer}>
             <View style={MenuStyle.wrapEventDaily}>
-
               <MenuItem
                 onPress={() => this.handleClick(18)}
                 source={require('../../asserts/icon/icon_menuEvaluate.png')}

@@ -482,6 +482,7 @@ class UploadPDF extends Component {
             iconColor='#000'
             notRightButton={true}
             marginLeft={-25}
+            createPaper={true}
           />
 
           <TouchableOpacity

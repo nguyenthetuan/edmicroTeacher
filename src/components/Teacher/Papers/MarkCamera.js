@@ -43,7 +43,7 @@ import SubjectItem from './SubjectItem';
 import ModalClass from './ModalClass';
 import ModalSubject from './ModalSubject';
 import ToastSuccess from '../../common-new/ToastSuccess';
-
+import ToastFaild from '../../common-new/ToastFaild';
 const NAVBAR_HEIGHT = 220;
 
 let baseUrl = 'file:///android_asset/';
@@ -257,12 +257,12 @@ class MarkCamera extends Component {
     _onFullView = (type) => {
         if (type == 1) {
             if (!this.state.urlFileAnswerPDF) {
-                this.toast.show('Chưa có tài liệu PDF!')
+                this.toast.show(<ToastFaild title="Chưa có tài liệu PDF!" />)
                 return;
             }
         } else {
             if (!this.state.urlFilePDF) {
-                this.toast.show('Chưa có tài liệu PDF');
+                this.toast.show(<ToastFaild title="Chưa có tài liệu PDF" />);
                 return;
             }
         }
@@ -305,12 +305,7 @@ class MarkCamera extends Component {
                     });
                     this.refToast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
                 } else {
-                    this.toast.show(<View style={styles.styleTostFaild}>
-                        <View style={{ marginLeft: 20 }}>
-                            <Text style={styles.txtSuccess}>Faild</Text>
-                            <Text style={styles.txtSuccess}>Tải lên PDF thất bại!</Text>
-                        </View>
-                    </View>);
+                    this.toast.show(<ToastFaild title="Tải lên PDF thất bại!" />);
                     this.setState({ loadingUpload: false });
                 }
             }
@@ -331,9 +326,7 @@ class MarkCamera extends Component {
             this.uploadFileToServer({ url, name });
             return;
         }
-        this.toast.show('Tải lên PDF thất bại');
     };
-
 
     validation = () => {
         try {
@@ -348,52 +341,40 @@ class MarkCamera extends Component {
                 // totalPoint
             } = this.state;
             if (!name) {
-                // this.toast.show('Chưa nhập tên bộ đề!');
-                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa nhập tên bộ đề!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>)
+                this.toast.show(
+                    <ToastFaild title="Chưa nhập tên bộ đề!" />
+                )
 
                 return;
             }
             if (!gradeCode.length) {
-                // this.toast.show('Chưa chọn khối!');
-                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa chọn khối!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>)
+                this.toast.show(
+                    <ToastFaild title="Chưa chọn khối!" />
+                )
                 return;
             }
             if (!subjectCode.length) {
-                // this.toast.show('Chưa chọn môn học!');
-                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa chọn môn học!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>)
+                this.toast.show(
+                    <ToastFaild title="Chưa chọn môn học!" />
+                )
                 return;
             }
             if (assignmentType && !duration) {
-                // this.toast.show('Chưa nhập thời gian kiểm tra!');
-                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa nhập thời gian kiểm tra!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>)
+                this.toast.show(
+                    <ToastFaild title="Chưa nhập thời gian kiểm tra!" />
+                )
                 return;
             }
             if (assignmentType && duration && duration < 1) {
-                // this.toast.show('Thời gian kiểm tra phải lớn hơn 1 phút!');
-                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Thời gian kiểm tra phải lớn hơn 1 phút!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>)
+                this.toast.show(
+                    <ToastFaild title="Thời gian kiểm tra phải lớn hơn 1 phút!" />
+                )
                 return;
             }
             if (!urlFilePDF) {
-                // this.toast.show('Chưa thêm bộ đề!');
-                this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: '#F8AA66' }]}>
-                    <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Chưa thêm bộ đề!</Text>
-                    <Text style={styles.xstoast}>X</Text>
-                </View>)
+                this.toast.show(
+                    <ToastFaild title="Chưa thêm bộ đề!" />
+                )
                 return;
             }
             return true;
@@ -719,7 +700,7 @@ class MarkCamera extends Component {
                             </ScrollView>
                         </KeyboardAvoidingView>
                         <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess, { backgroundColor: backgroundColor }]} />
-                        <Toast ref={(ref) => (this.toast = ref)} position={'bottom'} />
+                        <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
                         {loadingUpload &&
                             <View>
                                 <ActivityIndicator size="small" style={{ marginTop: 16 }} />
