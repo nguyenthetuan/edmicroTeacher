@@ -80,7 +80,7 @@ export default class HeaderPaper extends React.PureComponent {
         }
         {!createPaper
           ?
-          <TouchableWithoutFeedback onPress={this.config}>
+          <TouchableWithoutFeedback onPress={this.props.onRightAction}>
             <View style={[styles.buttonCreateAssessment, shadowBtn]} >
               <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
             </View>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#FDC214',
     justifyContent: 'center',
-    right: 20,
+    right: 10,
     zIndex: 1,
   },
   textCreateAssessment: {
