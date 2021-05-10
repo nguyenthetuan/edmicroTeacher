@@ -38,6 +38,7 @@ import shadowStyle from '../../../themes/shadowStyle';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AwesomeButton from 'react-native-really-awesome-button';
 import ToastSuccess from '../../common-new/ToastSuccess';
+import ToastFaild from '../../common-new/ToastFaild';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 10;
 const slideWidth = width - 95;
@@ -104,19 +105,13 @@ function Item(props) {
   const validate = () => {
     if (moment(timeStart).format('DD-MM-YYYY, HH:mm') === moment(timeEnd).format('DD-MM-YYYY, HH:mm')) {
       props.onToast(
-        <View style={[styles.styleWarning, { backgroundColor: '#F8AA66' }]}>
-          <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Thời gian không hợp lệ!</Text>
-          <Text style={styles.xstoast}>X</Text>
-        </View>
+        <ToastFaild title="Thời gian không hợp lệ!" />
       )
       return false
     }
     if (timeEnd < Date.now()) {
       props.onToast(
-        <View style={[styles.styleWarning, { backgroundColor: '#F8AA66' }]}>
-          <Text style={[styles.txtSuccess, { marginLeft: 20 }]}>Thời gian không hợp lệ!</Text>
-          <Text style={styles.xstoast}>X</Text>
-        </View>
+        <ToastFaild title="Thời gian không hợp lệ!" />
       )
       return false
     }
@@ -146,7 +141,7 @@ function Item(props) {
           })
           if (response && response.status === 1) {
             // props.onToast('Giao bài thành công!');
-            props.onToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
+            props.onRefToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
             props.needUpdate(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
             AnalyticsManager.trackWithProperties('School Teacher', {
@@ -156,13 +151,13 @@ function Item(props) {
               subject: subjectCode
             });
           } else {
-            props.onToast('Có lỗi xảy ra vui lòng thử lại!')
+            props.onToast(<ToastFaild title="Có lỗi xảy ra vui lòng thử lại!" />)
           }
         } catch (error) {
         }
 
       } else {
-        props.onToast('Có lỗi xảy ra vui lòng thử lại!')
+        props.onToast(<ToastFaild title="Có lỗi xảy ra vui lòng thử lại!" />)
       }
     }
   }
@@ -315,7 +310,10 @@ class Assignment extends Component {
   }
 
   onToast = (text) => {
-    this.refs.toast.show(text, DURATION.LENGTH_LONG);
+    this.toast.show(text)
+  }
+  onRefToast = (text) => {
+    this.refToast.show(text)
   }
 
   _handleGoBack = () => {
@@ -394,6 +392,7 @@ class Assignment extends Component {
                     item={item}
                     navigation={this.props.navigation}
                     onToast={(text) => this.onToast(text)}
+                    onRefToast={(text) => this.onRefToast(text)}
                     dataItem={dataItem}
                     needUpdate={this.props.needUpdate}
                   />
@@ -417,7 +416,8 @@ class Assignment extends Component {
             :
             this._renderListEmpty()
         }
-        <Toast ref="toast" position={'bottom'} style={[styles.styleTostSuccess, { backgroundColor: backgroundColor }]} />
+        <Toast ref={(ref) => (this.refToast = ref)} position={'top'} style={styles.styleTostSuccess} />
+        <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
         <SafeAreaView />
       </View >
     )
