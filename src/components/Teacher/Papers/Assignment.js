@@ -164,6 +164,7 @@ function Item(props) {
             // props.onToast('Giao bài thành công!');
             props.onToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
             props.needUpdate(true);
+            setIsDisable(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
             AnalyticsManager.trackWithProperties('School Teacher', {
               action: 'ASSIGNMENT',
