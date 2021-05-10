@@ -78,10 +78,10 @@ class Papers extends Component {
     this._indexPage = 0;
     this._pageSize = 50;
     Globals.onPressCamera = this.onPressCamera.bind(this);
-    Globals.updatePaper = this.refreshData.bind(this);
+    Globals.updatePaper = this.getData.bind(this);
   }
 
-  refreshData = async () => {
+  refreshData = () => {
     this.getData();
   };
 
