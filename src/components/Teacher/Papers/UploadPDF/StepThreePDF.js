@@ -176,13 +176,13 @@ class StepThreePDF extends Component {
         if (token) {
             const res = await apiPapers.assignmentContent({ token, body });
             if (res && res.status === 0) {
-                this.toast.show(
-                    // <View style={styles.styleTostSuccess}>
-                    //     <Image source={require('../../../../asserts/images/Exclude.png')} />
-                    //     <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
-                    // </View>
-                    <ToastSuccess title="Tạo bộ đề thành công!" />
-                );
+                // this.toast.show(
+                //     // <View style={styles.styleTostSuccess}>
+                //     //     <Image source={require('../../../../asserts/images/Exclude.png')} />
+                //     //     <Text style={styles.txtSuccess}>Tạo bộ đề thành công!</Text>
+                //     // </View>
+                //     <ToastSuccess title="Tạo bộ đề thành công!" />
+                // );
                 const { token, enumType } = await dataHelper.getToken();
                 const schoolYear = new Date().getFullYear();
                 this.props.fetchAssignmentAction({ token, enumType, schoolYear });
@@ -409,8 +409,8 @@ class StepThreePDF extends Component {
                     listSubjects={listSubjects}
                     activeSubject={this.activeSubject}
                 />
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
-                <Toast ref={(ref) => (this.refToast = ref)} position={'center'} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
+                <Toast ref={(ref) => (this.refToast = ref)} position={'top'} />
             </View>
         )
     }
@@ -504,6 +504,8 @@ const styles = StyleSheet.create({
         padding: 0,
         borderColor: '#C4C4C4',
         borderWidth: 1,
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(20)
     },
     txtItemActive: {
         fontFamily: 'Nunito-Bold',

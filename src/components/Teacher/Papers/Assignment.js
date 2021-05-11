@@ -335,11 +335,19 @@ class Assignment extends Component {
   }
 
   _handleGoBack = () => {
-    this.state.activeSlide;
-    if (this.props.navigation.state.params.checked) {
-      Globals.updatePaper();
-      this.props.navigation.replace('QuestionLibrary')
-    } else {
+    try {
+      this._carousel?.snapToItem(0);
+      this.timeMount = setTimeout(() => {
+        const pop = this.props.navigation.state.params.pop;
+        if (pop) {
+          Globals.updatePaper();
+          this.props.navigation.pop(pop);
+        } else {
+          this.props.navigation.goBack();
+        }
+      }, 350);
+    } catch (error) {
+      console.log(error);
       this.props.navigation.goBack();
     }
   }
@@ -361,16 +369,17 @@ class Assignment extends Component {
       <View style={{ flex: 1 }}>
         <SafeAreaView style={styles.container} />
         <HeaderNavigation
-          goBack={() => {
-            try {
-              this._carousel.snapToItem(0);
-              this.timeMount = setTimeout(() => {
-                this.props.navigation.goBack();
-              }, 350);
-            } catch (error) {
-              this.props.navigation.goBack();
-            }
-          }}
+          // goBack={() => {
+          //   try {
+          //     this._carousel.snapToItem(0);
+          //     this.timeMount = setTimeout(() => {
+          //       this.props.navigation.goBack();
+          //     }, 350);
+          //   } catch (error) {
+          //     this.props.navigation.goBack();
+          //   }
+          // }}
+          goBack={this._handleGoBack}
           backgroundColor={'#359CDB'}
           color={'#fff'}
           title={dataItem.name}

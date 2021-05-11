@@ -14,7 +14,7 @@ import {
   ScrollView,
   Modal,
   ActivityIndicator,
-  Alert
+  Alert,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -48,7 +48,7 @@ import ModalSubject from './ModalSubject';
 import ClassItem from './ClassItem';
 import ToastFaild from '../../common-new/ToastFaild';
 import ToastSuccess from '../../common-new/ToastSuccess';
-
+import ModalSuccess from './ModalSuccess/ModalSuccess';
 const { width, height } = Dimensions.get('window');
 const HEIGHT_WEB = isIphoneX() ? height / 2 : height;
 let baseUrl = 'file:///android_asset/';
@@ -88,6 +88,8 @@ class ConfigQuestion extends Component {
       htmlContent: '',
       urlMedia: '',
       loading: false,
+      modalVisible: false,
+      resSuccess: null,
     };
   }
   onHandleMessage(event) {
@@ -451,6 +453,10 @@ class ConfigQuestion extends Component {
     }
   }
 
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
+
   config = async () => {
     if (this.validate()) {
       const {
@@ -503,38 +509,36 @@ class ConfigQuestion extends Component {
             token,
             id: response.id,
           });
-          this.setState(
-            {
-              listGrades: this.props.paper.listGrade,
-              listSubjects: this.props.paper.listSubject,
-              name: '',
-              loading: false,
-            },
-            this.toast.show((<ToastSuccess title={"Tạo bộ đề thành công!"} />), 1500,
+          if (res && res.assignmentId) {
+            this.setState(
+              {
+                listGrades: this.props.paper.listGrade,
+                listSubjects: this.props.paper.listSubject,
+                name: '',
+                loading: false,
+                resSuccess: res,
+              },
               () => {
-                this.props.navigation.navigate('Assignment', {
-                  item: { ...res, id: res.assignmentId },
-                  checked: true,
-                });
+                this.setModalVisible(true)
               }
-            )
-          );
-          // cau hinh thanh cong
-          AnalyticsManager.trackWithProperties('School Teacher', {
-            action: 'CREATEASSIGNMENT',
-            mobile: Platform.OS,
-            grade: gradeCode,
-            subject: subjectCode,
-          });
-          Globals.updatePaper();
-          this.props.needUpdate(true);
+            );
+            // cau hinh thanh cong
+            AnalyticsManager.trackWithProperties('School Teacher', {
+              action: 'CREATEASSIGNMENT',
+              mobile: Platform.OS,
+              grade: gradeCode,
+              subject: subjectCode,
+            });
+            Globals.updatePaper();
+            this.props.needUpdate(true);
+          }
         }
+        // lam them alert bao loi neu co
       } catch (error) {
         this.setState({ loading: false })
         console.log('error', error);
       }
     } else {
-      // AlertNoti('Vui lòng điền đầy đủ thông tin');
       this.refToast.show(<ToastFaild title="Vui lòng điền đầy đủ thông tin" />);
     }
   };
@@ -672,6 +676,17 @@ class ConfigQuestion extends Component {
     this.setState({ duration: num || '' });
   }
 
+
+  goToAssigned = () => {
+    const { resSuccess } = this.state;
+    this.setModalVisible();
+    this.props.navigation.replace('Assignment', {
+      item: { ...resSuccess, id: resSuccess.assignmentId },
+      pop: 3,
+      statusbar: 'light-content',
+    });
+  };
+
   render() {
     const {
       name,
@@ -692,7 +707,8 @@ class ConfigQuestion extends Component {
       subjectCode,
       urlMedia,
       loading,
-      gradeCode
+      gradeCode,
+      modalVisible
     } = this.state;
     const { shadowBtn } = shadowStyle;
     return (
@@ -1162,6 +1178,17 @@ class ConfigQuestion extends Component {
               </View>
             </TouchableWithoutFeedback>
           </Modal>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+          >
+            <ModalSuccess
+              data={this.state.resSuccess}
+              navigation={this.props.navigation}
+              goToAssigned={this.goToAssigned}
+            />
+          </Modal>
         </SafeAreaView>
         <ModalClass
           ref={ref => this.refModalClass = ref}
@@ -1176,9 +1203,8 @@ class ConfigQuestion extends Component {
           activeSubject={this.activeSubject}
           Icon={AppIcon.iconDowSelect}
         />
-        <Toast ref={ref => (this.refToast = ref)} position={'bottom'} />
-        <Toast ref={ref => (this.toast = ref)} position={'bottom'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
-
+        <Toast ref={ref => (this.refToast = ref)} position={'top'} />
+        <Toast ref={ref => (this.toast = ref)} position={'top'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
       </View>
     );
   }
