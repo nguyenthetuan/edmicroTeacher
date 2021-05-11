@@ -44,6 +44,7 @@ import ModalClass from './ModalClass';
 import ModalSubject from './ModalSubject';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
+import ModalSuccess from './ModalSuccess/ModalSuccess';
 const NAVBAR_HEIGHT = 220;
 
 let baseUrl = 'file:///android_asset/';
@@ -102,7 +103,8 @@ class MarkCamera extends Component {
             imgHeight: "100%",
             pdfFromImage: '',
             listSubjects: listSubjects || [],
-            listGrades: listGrades || []
+            listGrades: listGrades || [],
+            resSuccess: null,
         };
     }
 
@@ -207,9 +209,6 @@ class MarkCamera extends Component {
 
     }
 
-    setModalVisible = (visible) => {
-        this.setState({ modalVisible: visible });
-    }
 
     onClickItem = async (index, optionIdAnswer, point) => {
         await this.setState({
@@ -384,6 +383,10 @@ class MarkCamera extends Component {
         }
     };
 
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+
     UploadPdfCam = async () => {
         Keyboard.dismiss();
         if (this.validation()) {
@@ -410,15 +413,12 @@ class MarkCamera extends Component {
             if (token) {
                 const res = await apiPapers.UploadPdfCam({ token, body });
                 if (res && res.status === 1) {
-                    this.refToast.show((<ToastSuccess title={"Tạo bộ đề thành công!"} />), 500,
-                        () => {
-                            this.props.navigation.navigate('Assignment', {
-                                item: { ...res, name: name, id: res.id, },
-                                statusbar: 'light-content'
-                            }
-                            );
-                        }
-                    );
+                    const response = await apiPapers.getAssignmentConfig({
+                        token: token,
+                        id: res.data,
+                    });
+                    await this.setState({ resSuccess: response });
+                    await this.setModalVisible(true);
                     this.props.needUpdate(true);
                     // cau hinh thanh cong
                     AnalyticsManager.trackWithProperties('School Teacher', {
@@ -551,6 +551,16 @@ class MarkCamera extends Component {
                 />
             </View>
         );
+    }
+
+    goToAssigned = () => {
+        const { resSuccess } = this.state;
+        this.setModalVisible(false);
+        this.props.navigation.navigate('Assignment', {
+            item: { ...resSuccess, name: resSuccess.name, id: resSuccess.id, },
+            pop: 2,
+            statusbar: 'light-content',
+        });
     }
 
     render() {
@@ -699,7 +709,7 @@ class MarkCamera extends Component {
                                 </TouchableWithoutFeedback>
                             </ScrollView>
                         </KeyboardAvoidingView>
-                        <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess, { backgroundColor: backgroundColor }]} />
+                        <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess]} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
                         {loadingUpload &&
                             <View>
@@ -707,7 +717,7 @@ class MarkCamera extends Component {
                                 <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
                             </View>}
                     </View>
-                    <Modal
+                    {/* <Modal
                         animationType="slide"
                         transparent={true}
                         visible={modalVisible}
@@ -736,7 +746,8 @@ class MarkCamera extends Component {
                                 </View>
                             </View>
                         </View>
-                    </Modal>
+                    </Modal> */}
+
                     <ModalClass
                         ref={ref => this.refModalClass = ref}
                         gradeActive={gradeCode}
@@ -750,6 +761,17 @@ class MarkCamera extends Component {
                         activeSubject={this.activeSubject}
                         Icon={AppIcon.iconDowSelect}
                     />
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={modalVisible}
+                    >
+                        <ModalSuccess
+                            navigation={this.props.navigation}
+                            goToAssigned={this.goToAssigned}
+                            data={this.state.resSuccess}
+                        />
+                    </Modal>
                 </SafeAreaView>
             </View>
         );

@@ -8,10 +8,10 @@ import {
     TextInput,
     Image,
     TouchableWithoutFeedback,
-    TouchableOpacity,
     FlatList,
     Keyboard,
-    Alert
+    Alert,
+    Modal
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
@@ -38,7 +38,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import Dropdown from '../Homework/Dropdown';
 import apiService from '../../../services/apiPracticeHelper';
 import { RotationGestureHandler } from 'react-native-gesture-handler';
-
+import ModalSuccess from './ModalSuccess/ModalSuccess';
 
 const { width, height } = Dimensions.get('window');
 let baseUrl = 'file:///android_asset/';
@@ -81,6 +81,8 @@ class ConfigQuestion extends Component {
             gradeCode: [],
             subjectCode: [],
             numberQuestion: 0,
+            modalVisible: false,
+            resSuccess: null,
         }
     }
 
@@ -303,9 +305,14 @@ class ConfigQuestion extends Component {
         return data;
     }
 
+
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+
+
     config = async () => {
         const data = this.props.navigation.state.params.data;
-
         if (this.validate()) {
             const {
                 gradeCode,
@@ -357,31 +364,30 @@ class ConfigQuestion extends Component {
                 const response = await apiPapers.createQuestion({ token, formData });
                 let tokenTmp = token;
                 if (response.status === 0) {
-                    // this.refToast.show((<ToastSuccess title="Tạo bộ đề thành công!" />), 1500)
-                    this.refToast.show((<ToastSuccess title="Tạo bộ đề thành công!" />), 1500,
-                        () => {
-                            this.props.navigation.navigate('Assignment', {
-                                item: res,
-                                payloadAssignment: {
-                                    gradeCode: res.gradeCode,
-                                    subjectCode: res.subjectCode,
-                                },
-                                statusbar: 'light-content',
-                            });
-                        }
-                    )
+                    // this.refToast.show((<ToastSuccess title="Tạo bộ đề thành công!" />), 1500,
+                    //     () => {
+                    //         this.props.navigation.navigate('Assignment', {
+                    //             item: res,
+                    //             payloadAssignment: {
+                    //                 gradeCode: res.gradeCode,
+                    //                 subjectCode: res.subjectCode,
+                    //             },
+                    //             statusbar: 'light-content',
+                    //         });
+                    //     }
+                    // )
                     const setQuestion = await dataHelper.saveQuestion([]);
-
                     const res = await apiPapers.getAssignmentConfig({
                         token: tokenTmp,
                         id: response.id,
                     });
-                    this.closePopupCreate();
+                    await this.setState({ assignmentType: 0, resSuccess: res });
+                    await this.closePopupCreate();
+                    await this.setModalVisible(true);
                     this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
                     const schoolYear = new Date().getFullYear();
                     this.props.fetchAssignmentAction({ token, enumType, schoolYear });
-                    this.setState({ assignmentType: 0 });
                 }
 
             } catch (error) {
@@ -612,9 +618,25 @@ class ConfigQuestion extends Component {
         this.setState({ duration: num || '' });
     }
 
+
+    goToAssigned = () => {
+        const { resSuccess } = this.state;
+        this.setModalVisible(false);
+        this.props.navigation.navigate('Assignment', {
+            item: resSuccess,
+            payloadAssignment: {
+                gradeCode: resSuccess.gradeCode,
+                subjectCode: resSuccess.subjectCode,
+            },
+            pop: 4,
+            statusbar: 'light-content',
+        });
+    }
+
     render() {
         const data = this.props.navigation.state.params.data;
         const { listSubjects } = this.props.navigation.state.params;
+        const { modalVisible, resSuccess } = this.state;
         return (
             <View >
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
@@ -645,13 +667,14 @@ class ConfigQuestion extends Component {
                                                 <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
                                             </View>
                                         </View>
-                                        <TouchableOpacity
-                                            style={styles.rightHeader}
+                                        <TouchableWithoutFeedback
                                             navigation={this.props.navigation}
                                             onPress={this.copySubject}
                                         >
-                                            <Text style={styles.txtRightHeader}>{`Lưu cấu hình`}</Text>
-                                        </TouchableOpacity>
+                                            <View style={styles.rightHeader}>
+                                                <Text style={styles.txtRightHeader}>{`Lưu cấu hình`}</Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
                                     </View>
                                     <View style={styles.totalCountQuest}>
                                         <View style={styles.textIcon}>
@@ -672,55 +695,59 @@ class ConfigQuestion extends Component {
                                         </View>
                                     </View>
                                 </View>
-
                                 <View style={styles.bottomOfHeader}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                                         <View style={styles.flexColumn}>
-                                            <TouchableOpacity
-                                                style={styles.actionTwo}
+                                            <TouchableWithoutFeedback
                                                 onPress={() => { this.onChangePosition() }}
                                             >
-                                                <Image source={AppIcon.icon_actionOneV3} />
-                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Sắp xếp lại</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity
-                                                style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}
+                                                <View style={styles.actionTwo}>
+                                                    <Image source={AppIcon.icon_actionOneV3} />
+                                                    <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Sắp xếp lại</Text>
+                                                </View>
+                                            </TouchableWithoutFeedback>
+
+                                            <TouchableWithoutFeedback
                                                 onPress={() => { this.deleteCheckedQs() }}
                                             >
-                                                <MaterialCommunityIcons
-                                                    name="delete-sweep"
-                                                    size={23}
-                                                    color="#828282"
-                                                />
-                                                <Text style={[styles.textHeader, { left: 5, right: 5 }]}>Xóa câu đã chọn</Text>
-                                            </TouchableOpacity>
+                                                <View style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}>
+                                                    <MaterialCommunityIcons
+                                                        name="delete-sweep"
+                                                        size={23}
+                                                        color="#828282"
+                                                    />
+                                                    <Text style={[styles.textHeader, { left: 5, right: 5 }]}>Xóa câu đã chọn</Text>
+                                                </View>
+                                            </TouchableWithoutFeedback>
                                         </View>
 
                                         <View style={styles.flexColumn}>
-                                            <TouchableOpacity
-                                                style={styles.actionOne}
+                                            <TouchableWithoutFeedback
                                                 onPress={() => { this.onPressDecidePoint() }}
                                             >
-                                                <Image source={AppIcon.icon_actionTwoV3} />
-                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chia điểm</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity
-                                                style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}
+                                                <View style={styles.actionOne}>
+                                                    <Image source={AppIcon.icon_actionTwoV3} />
+                                                    <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chia điểm</Text>
+                                                </View>
+                                            </TouchableWithoutFeedback>
+                                            <TouchableWithoutFeedback
                                                 onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}
                                             >
-                                                <CheckBox
-                                                    disabled={false}
-                                                    value={this.state.toggleCheckBox}
-                                                    onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
-                                                    boxType="square"
-                                                    style={{
-                                                        width: 18,
-                                                        height: 18,
-                                                        marginLeft: 10,
-                                                    }}
-                                                />
-                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chọn tất cả</Text>
-                                            </TouchableOpacity>
+                                                <View style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}>
+                                                    <CheckBox
+                                                        disabled={false}
+                                                        value={this.state.toggleCheckBox}
+                                                        onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
+                                                        boxType="square"
+                                                        style={{
+                                                            width: 18,
+                                                            height: 18,
+                                                            marginLeft: 10,
+                                                        }}
+                                                    />
+                                                    <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chọn tất cả</Text>
+                                                </View>
+                                            </TouchableWithoutFeedback>
                                         </View>
                                     </View>
                                 </View>
@@ -747,9 +774,9 @@ class ConfigQuestion extends Component {
                             <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
                         </TouchableOpacity> */}
                         <View style={{ width: 20, height: 20, borderRadius: 10, position: 'absolute', zIndex: 20, right: 5, top: 5 }}>
-                            <TouchableOpacity onPress={() => { this.setState({ hidePopUp: true }) }} >
+                            <TouchableWithoutFeedback onPress={() => { this.setState({ hidePopUp: true }) }} >
                                 <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
-                            </TouchableOpacity>
+                            </TouchableWithoutFeedback>
                         </View>
                         <Text style={styles.textPopUp}>Đến vị trí</Text>
                         <TextInput
@@ -758,94 +785,99 @@ class ConfigQuestion extends Component {
                             keyboardType={'decimal-pad'}
                             value={this.state.value}
                         />
-                        <TouchableOpacity onPress={() => { this.onPressButtonPopUp() }} style={styles.buttonPopUp}>
-                            <Text style={{ color: '#fff' }}>Chuyển</Text>
-                        </TouchableOpacity>
+                        <TouchableWithoutFeedback onPress={() => { this.onPressButtonPopUp() }} >
+                            <View style={styles.buttonPopUp}>
+                                <Text style={{ color: '#fff' }}>Chuyển</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
 
                     </View>}
                 </View>
-                {!this.state.hidePopupCreate && <View style={styles.blackLayer}>
-                    <TouchableWithoutFeedback
-                        style={styles.popUpCreate}
-                        onPress={() => { this.textInput.blur(); Keyboard.dismiss() }}
-                    >
-                        <View style={[styles.popUpCreate, { borderWidth: 1 }]}>
-                            <View style={{ width: '100%', paddingHorizontal: 20, zIndex: 1 }}>
-                                <Text style={[styles.textInPopupCreate, { marginTop: 30 }]}>Nhập tên bài kiểm tra</Text>
-                                <TextInput
-                                    style={styles.inputTitle}
-                                    onChangeText={(value) => { this.onValueChangeNameTest(value) }}
-                                    keyboardType={'default'}
-                                    value={this.state.name}
-                                    placeholder={'Tên bài kiểm tra'}
-                                    ref={(ref) => { this.textInput = ref }}
-                                />
-                            </View>
-                            <View style={{ zIndex: 1, flexDirection: 'column', width: '100%', paddingHorizontal: 20, marginTop: 30 }}>
-                                <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Môn học</Text>
-                                {this._renderSubject()}
-                            </View>
-                            <View style={{ zIndex: 1, flexDirection: 'column', width: '100%', paddingHorizontal: 20, marginTop: 10 }}>
-                                <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Khối</Text>
-                                {this._renderGrade()}
-                            </View>
-                            <View style={{ zIndex: 1, flexDirection: 'row', width: '100%', paddingHorizontal: 20, marginTop: 20, alignItems: 'center' }}>
-                                <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Dạng bài</Text>
-                                <Dropdown
-                                    containerStyle={{
-                                        marginHorizontal: 0,
-                                    }}
-                                    contentStyle={{ marginHorizontal: 10, borderWidth: 1, borderColor: '#56CCF2' }}
-                                    title="Dạng bài"
-                                    data={type}
-                                    onPressItem={(index) => this.onValueChangeTypeExam(index)}
-                                    indexSelected={0}
-                                />
-                            </View>
-                            {!!this.state.assignmentType && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', top: 10, paddingHorizontal: 20 }}>
-                                <Text style={[{ marginLeft: 4, marginRight: 4, top: 4 }, styles.textInPopupCreate]}>Thời gian:</Text>
-                                <TextInput
-                                    style={styles.minute}
-                                    onChangeText={(value) => { this.onValueTimeChange(value) }}
-                                    keyboardType={'numeric'}
-                                    value={this.state.duration.toString()}
-                                    ref={(ref) => { this.textInput2 = ref }}
-                                />
-                                <Text style={[styles.textInPopupCreate, { top: 4, marginLeft: 5 }]}>phút</Text>
-                            </View>}
-                            <View style={{ flexDirection: 'row', marginTop: 21, width: '100%', paddingHorizontal: 20 }}>
-                                <Text style={[styles.textInPopupCreate, { alignSelf: 'center' }]}>Giải thích trắc nghiệm</Text>
-                                <CheckBox
-                                    disabled={false}
-                                    value={this.state.isExplain}
-                                    onValueChange={(newValue) => { this.onTickCheckBoxExpand(newValue) }}
-                                    boxType="square"
-                                    style={{ width: 30, height: 30, marginLeft: 24, alignSelf: 'center' }}
-                                />
-                            </View>
-                            <View style={styles.viewList}>
-                                <Text style={[styles.textInPopupCreate, { color: '#000', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
-                                    <Text style={[styles.textInPopupCreate, { color: '#2D9CDB', alignSelf: 'center', marginRight: 30 }]}>{data.questions.length} câu</Text>
-                                    <Text style={[styles.textInPopupCreate, { color: '#FF6213', alignSelf: 'center', marginLeft: 10 }]}>{this.state.totalPoint} điểm</Text>
+                {
+                    !this.state.hidePopupCreate && <View style={styles.blackLayer}>
+                        <TouchableWithoutFeedback
+                            style={styles.popUpCreate}
+                            onPress={() => { this.textInput.blur(); Keyboard.dismiss() }}
+                        >
+                            <View style={[styles.popUpCreate, { borderWidth: 1 }]}>
+                                <View style={{ width: '100%', paddingHorizontal: 20, zIndex: 1 }}>
+                                    <Text style={[styles.textInPopupCreate, { marginTop: 30 }]}>Nhập tên bài kiểm tra</Text>
+                                    <TextInput
+                                        style={styles.inputTitle}
+                                        onChangeText={(value) => { this.onValueChangeNameTest(value) }}
+                                        keyboardType={'default'}
+                                        value={this.state.name}
+                                        placeholder={'Tên bài kiểm tra'}
+                                        ref={(ref) => { this.textInput = ref }}
+                                    />
+                                </View>
+                                <View style={{ zIndex: 1, flexDirection: 'column', width: '100%', paddingHorizontal: 20, marginTop: 30 }}>
+                                    <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Môn học</Text>
+                                    {this._renderSubject()}
+                                </View>
+                                <View style={{ zIndex: 1, flexDirection: 'column', width: '100%', paddingHorizontal: 20, marginTop: 10 }}>
+                                    <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Khối</Text>
+                                    {this._renderGrade()}
+                                </View>
+                                <View style={{ zIndex: 1, flexDirection: 'row', width: '100%', paddingHorizontal: 20, marginTop: 20, alignItems: 'center' }}>
+                                    <Text style={[{ marginRight: 4 }, styles.textInPopupCreate]}>Dạng bài</Text>
+                                    <Dropdown
+                                        containerStyle={{
+                                            marginHorizontal: 0,
+                                        }}
+                                        contentStyle={{ marginHorizontal: 10, borderWidth: 1, borderColor: '#56CCF2' }}
+                                        title="Dạng bài"
+                                        data={type}
+                                        onPressItem={(index) => this.onValueChangeTypeExam(index)}
+                                        indexSelected={0}
+                                    />
+                                </View>
+                                {!!this.state.assignmentType && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', top: 10, paddingHorizontal: 20 }}>
+                                    <Text style={[{ marginLeft: 4, marginRight: 4, top: 4 }, styles.textInPopupCreate]}>Thời gian:</Text>
+                                    <TextInput
+                                        style={styles.minute}
+                                        onChangeText={(value) => { this.onValueTimeChange(value) }}
+                                        keyboardType={'numeric'}
+                                        value={this.state.duration.toString()}
+                                        ref={(ref) => { this.textInput2 = ref }}
+                                    />
+                                    <Text style={[styles.textInPopupCreate, { top: 4, marginLeft: 5 }]}>phút</Text>
+                                </View>}
+                                <View style={{ flexDirection: 'row', marginTop: 21, width: '100%', paddingHorizontal: 20 }}>
+                                    <Text style={[styles.textInPopupCreate, { alignSelf: 'center' }]}>Giải thích trắc nghiệm</Text>
+                                    <CheckBox
+                                        disabled={false}
+                                        value={this.state.isExplain}
+                                        onValueChange={(newValue) => { this.onTickCheckBoxExpand(newValue) }}
+                                        boxType="square"
+                                        style={{ width: 30, height: 30, marginLeft: 24, alignSelf: 'center' }}
+                                    />
+                                </View>
+                                <View style={styles.viewList}>
+                                    <Text style={[styles.textInPopupCreate, { color: '#000', alignSelf: 'center' }]}>Cấu trúc bài tập</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+                                        <Text style={[styles.textInPopupCreate, { color: '#2D9CDB', alignSelf: 'center', marginRight: 30 }]}>{data.questions.length} câu</Text>
+                                        <Text style={[styles.textInPopupCreate, { color: '#FF6213', alignSelf: 'center', marginLeft: 10 }]}>{this.state.totalPoint} điểm</Text>
+                                    </View>
+                                </View>
+                                <TouchableWithoutFeedback
+                                    onPress={() => { this.onPressCreate() }}
+                                >
+                                    <View style={styles.createPost}>
+                                        <Text style={styles.buttonPopUpText}>Tạo bài</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <View style={{ width: 30, height: 30, borderRadius: 10, position: 'absolute', zIndex: 20, right: 5, top: 10 }}>
+                                    <TouchableWithoutFeedback onPress={() => { this.closePopupCreate() }} >
+                                        <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
+                                    </TouchableWithoutFeedback>
                                 </View>
                             </View>
-                            <TouchableOpacity
-                                style={styles.createPost}
-                                onPress={() => { this.onPressCreate() }}
-                            >
-                                <Text style={styles.buttonPopUpText}>Tạo bài</Text>
-                            </TouchableOpacity>
-                            <View style={{ width: 30, height: 30, borderRadius: 10, position: 'absolute', zIndex: 20, right: 5, top: 10 }}>
-                                <TouchableOpacity onPress={() => { this.closePopupCreate() }} >
-                                    <Image source={require('../../../asserts/icon/icCloseModal.png')} style={{ tintColor: '#828282', }} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>}
-                <Toast ref={(ref) => (this.toast = ref)} position={'center'} />
-                <Toast ref={(ref) => (this.refToast = ref)} position={'center'} style={styles.styleTostSuccess} />
+                        </TouchableWithoutFeedback>
+                    </View>
+                }
+                <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
+                <Toast ref={(ref) => (this.refToast = ref)} position={'top'} style={styles.styleTostSuccess} />
                 <WarningModal
                     ref={'warningModal'}
                     navigation={this.props.navigation}
@@ -854,6 +886,17 @@ class ConfigQuestion extends Component {
                     numberQuestion={this.state.numberQuestion}
                     subjectId={'TOAN'}
                 />
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <ModalSuccess
+                        navigation={this.props.navigation}
+                        goToAssigned={this.goToAssigned}
+                        data={this.state.resSuccess}
+                    />
+                </Modal>
             </View >
         )
     }

@@ -6,13 +6,15 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Dimensions
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
+const { width } = Dimensions.get('window');
 export default class HeaderPaper extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -86,7 +88,7 @@ export default class HeaderPaper extends React.PureComponent {
             </View>
           </TouchableWithoutFeedback>
           :
-          <View style={{ width: 10 }} />
+          null
         }
       </View>
     );
@@ -115,6 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
     fontSize: RFFonsize(16),
+    width: width * 0.7
   },
   btnAvatar: {
     height: 38,
