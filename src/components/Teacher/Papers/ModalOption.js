@@ -52,66 +52,79 @@ export default class ModalOption extends PureComponent {
                                     <RippleItem onPress={this.props._handleClickDetail(1)}>
                                         <View style={styles.wrapElementModal}>
                                             <Image
-                                                source={require('../../../asserts/icon/icDetail.png')}
+                                                source={require('../../../asserts/icon/icon_optionDetail.png')}
                                             />
                                             <Text style={styles.txtModalDetail}>Chi tiết</Text>
                                         </View>
                                     </RippleItem>
                                     {assignmentContentType !== 1 && (
-                                        <RippleItem onPress={this.props._handleClickDetail(2)}>
-                                            <View style={styles.wrapElementModal}>
-                                                <Image
-                                                    source={require('../../../asserts/icon/icBackup.png')}
-                                                />
-                                                <Text style={styles.txtModalDetail}>Tạo bản sao</Text>
-                                            </View>
-                                        </RippleItem>
+                                        <>
+                                            <View style={styles.hr} />
+                                            <RippleItem onPress={this.props._handleClickDetail(2)}>
+                                                <View style={styles.wrapElementModal}>
+                                                    <Image
+                                                        source={require('../../../asserts/icon/icon_optionCopy.png')}
+                                                    />
+                                                    <Text style={styles.txtModalDetail}>Tạo bản sao</Text>
+                                                </View>
+                                            </RippleItem>
+                                        </>
                                     )}
+                                    <View style={styles.hr} />
                                     <RippleItem onPress={() => this.props._OpenModal(3)}>
                                         <View style={styles.wrapElementModal}>
                                             <Image
-                                                source={require('../../../asserts/icon/icEditName.png')}
+                                                source={require('../../../asserts/icon/icon_optionEdit.png')}
                                             />
                                             <Text style={styles.txtModalDetail}>Sửa tên</Text>
                                         </View>
                                     </RippleItem>
                                     {/* {!this.state.totalUserDoing && <RippleItem onPress={() => this.props._OpenModal(4)}> */}
                                     {true && <RippleItem onPress={() => this.props._OpenModal(4)}>
-                                        <View style={styles.wrapElementModal}>
-                                            <Image
-                                                source={require('../../../asserts/icon/icConfig.png')}
-                                            />
-                                            <Text style={styles.txtModalDetail}>Sửa cấu hình</Text>
-                                        </View>
-                                    </RippleItem>}
-                                    {dataSelected && dataSelected.status !== 4 && (
-                                        <RippleItem onPress={this.props.deletePaper}>
+                                        <>
+                                            <View style={styles.hr} />
                                             <View style={styles.wrapElementModal}>
                                                 <Image
-                                                    source={require('../../../asserts/icon/icDelete.png')}
+                                                    source={require('../../../asserts/icon/icon_optionSetting.png')}
                                                 />
-                                                <Text style={styles.txtModalDetail}>Xóa bài tập</Text>
+                                                <Text style={styles.txtModalDetail}>Sửa cấu hình</Text>
                                             </View>
-                                        </RippleItem>
+                                        </>
+                                    </RippleItem>}
+                                    {dataSelected && dataSelected.status !== 4 && (
+                                        <>
+                                            <View style={styles.hr} />
+                                            <RippleItem onPress={this.props.deletePaper}>
+                                                <View style={styles.wrapElementModal}>
+                                                    <Image
+                                                        source={require('../../../asserts/icon/icon_optionDelete.png')}
+                                                    />
+                                                    <Text style={styles.txtModalDetail}>Xóa bài tập</Text>
+                                                </View>
+                                            </RippleItem>
+                                        </>
                                     )}
-
+                                    <View style={styles.hr} />
                                     <RippleItem onPress={this.props._handleClickDetail(4)}>
                                         <View style={styles.wrapElementModal}>
                                             <Image
-                                                source={require('../../../asserts/icon/icRegistration.png')}
+                                                source={require('../../../asserts/icon/icon_optionSendPaper.png')}
                                             />
                                             <Text style={styles.txtModalDetail}>Giao bài tập</Text>
                                         </View>
                                     </RippleItem>
                                     {dataSelected?.countCheckPoint > 0 &&
-                                        <RippleItem onPress={this.props._handleClickDetail(7)}>
-                                            <View style={styles.wrapElementModal}>
-                                                <Image
-                                                    source={require('../../../asserts/icon/icMarkingPoint.png')}
-                                                />
-                                                <Text style={styles.txtModalDetail}>Chấm điểm ({dataSelected.countCheckPoint} bài)</Text>
-                                            </View>
-                                        </RippleItem>
+                                        <>
+                                            <View style={styles.hr} />
+                                            <RippleItem onPress={this.props._handleClickDetail(7)}>
+                                                <View style={styles.wrapElementModal}>
+                                                    <Image
+                                                        source={require('../../../asserts/icon/icMarkingPoint.png')}
+                                                    />
+                                                    <Text style={styles.txtModalDetail}>Chấm điểm ({dataSelected.countCheckPoint} bài)</Text>
+                                                </View>
+                                            </RippleItem>
+                                        </>
                                     }
                                 </View>
                             </Animatable.View>
@@ -171,4 +184,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Regular',
         marginLeft: 25,
     },
+    hr: {
+        backgroundColor: '#DADADA',
+        height: 0.5
+    }
 });
