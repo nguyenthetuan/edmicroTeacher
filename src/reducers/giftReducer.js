@@ -5,7 +5,8 @@ const initState = {
     user: {},
     listGift: [],
     listHistory: [],
-    listItems: []
+    listItems: [],
+    landingPage: []
 };
 
 export default function giftReducer(state = initState, action) {
@@ -60,6 +61,23 @@ export default function giftReducer(state = initState, action) {
                 ...state,
                 isLoading: false,
                 listHistory: []
+            }
+        case Types.LANDING_PAGE_ACTION:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case Types.LANDING_PAGE_SUCCESS_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                landingPage: action.data.result
+            }
+        case Types.LANDING_PAGE_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                landingPage: []
             }
         default:
             return state;

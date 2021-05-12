@@ -10,17 +10,19 @@ import {
     Alert,
     SafeAreaView,
     TouchableWithoutFeedback,
-    ImageBackground
+    ImageBackground,
+    Modal
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
 import LinearGradient from 'react-native-linear-gradient';
 import AppIcon from '../../utils/AppIcon';
-import { userGiftAction, getListGiftAction, getListHistoryAction } from '../../actions/giftAction';
+import { userGiftAction, getListGiftAction, getListHistoryAction, getLandingCampaignAction } from '../../actions/giftAction';
 import dataHelper from '../../utils/dataHelper';
 import { getSourceAvatar } from '../../utils/Helper';
 import { imageDefault, formatNumber } from '../../utils/Common';
 import { RFFonsize } from '../../utils/Fonts';
+import StylePopup from './StylesModal/StylePopup';
 import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 let pageIndex = 0;
@@ -32,6 +34,7 @@ class ExchangeGiftScreen extends Component {
             listItems: [],
             page: 1,
             isLoading: false,
+            modalVisible: true
         }
     }
 
@@ -45,6 +48,7 @@ class ExchangeGiftScreen extends Component {
         this.props.makeRequestProfile({ token });
         this.props.getListGiftAction({ token, page: 0 });
         this.props.getListHistoryGift({ token, page: 0 });
+        this.props.getLandingCampaignAction({ token });
     }
 
     handleClickItem = item => () => {
@@ -58,6 +62,10 @@ class ExchangeGiftScreen extends Component {
             status: 'light-content',
             dataGift: item
         });
+    }
+
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
     }
 
     renderItem = ({ item, index }) => {
@@ -157,12 +165,23 @@ class ExchangeGiftScreen extends Component {
     }
 
     renderEmpty = () => {
+        const { isLoading } = this.props;
         return (
-            <View style={styles.styWrapEmpty}>
-                <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
-            </View>
+            <>
+                {
+                    isLoading ?
+                        <ActivityIndicator color={'#2D9CDB'} size={'small'} style={styles.ActivityIndicator} />
+                        :
+                        <View style={styles.styWrapEmpty}>
+                            <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
+                        </View>
+                }
+            </>
         )
     }
+
+
+
 
     // renderFooter = () => {
     //     return (
@@ -184,7 +203,9 @@ class ExchangeGiftScreen extends Component {
             isLoading,
             listGift,
             listItems,
+            landingPage
         } = this.props;
+        const { modalVisible } = this.state;
         return (
             <View style={[styles.container]} >
                 <HeaderNavigation
@@ -199,23 +220,51 @@ class ExchangeGiftScreen extends Component {
                         size={'small'}
                         style={styles.ActivityIndicator} />
                     : */}
-                    <View>
-                        <View style={styles.backbg}>
-                        </View>
-                        <FlatList
-                            data={listItems}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={this.renderItem}
-                            ListHeaderComponent={this.renderHeader}
-                            stickyHeaderIndices={[0]}
-                            showsVerticalScrollIndicator={false}
-                            ListEmptyComponent={this.renderEmpty}
-                        // onEndReached={this.handleLoadMore}
-                        // onEndReachedThreshold={0}
-                        // ListFooterComponent={this.renderFooter}
-                        />
+                <View>
+                    <View style={styles.backbg}>
                     </View>
+                    <FlatList
+                        data={listItems}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={this.renderItem}
+                        ListHeaderComponent={this.renderHeader}
+                        stickyHeaderIndices={[0]}
+                        showsVerticalScrollIndicator={false}
+                        ListEmptyComponent={this.renderEmpty}
+                    // onEndReached={this.handleLoadMore}
+                    // onEndReachedThreshold={0}
+                    // ListFooterComponent={this.renderFooter}
+                    />
+                </View>
                 {/* } */}
+
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View style={StylePopup.rgbaColor}>
+                        <View style={StylePopup.centeredView}>
+                            <TouchableWithoutFeedback
+                                hitSlop={{ top: 10, right: 10, left: 10, }}
+                                onPress={() => this.setModalVisible(!modalVisible)}
+                            >
+                                <View style={styles.closeModal}>
+                                    <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
+                                </View>
+                            </TouchableWithoutFeedback>
+
+                            <Image source={require('../../asserts/images/banner_drawerMenu.png')} />
+
+                            <FlatList
+                                data={landingPage}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={this.renderLanding}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        </View>
+                    </View>
+                </Modal>
                 <SafeAreaView />
             </View>
         )
@@ -440,6 +489,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fff',
         marginHorizontal: 16,
+    },
+    closeModal: {
+        alignItems: 'flex-end',
+        right: 10,
+        top: 10
     }
 })
 
@@ -451,6 +505,7 @@ const mapStateToProps = state => {
         listGift: state.gift.listGift,
         listItems: state.gift.listItems,
         listHistory: state.gift.listHistory,
+        landingPage: state.gift.landingPage,
         isLoading: state.gift.isLoading
     };
 };
@@ -459,7 +514,8 @@ const mapDispatchToProps = dispatch => {
     return {
         makeRequestProfile: payload => dispatch(userGiftAction(payload)),
         getListGiftAction: payload => dispatch(getListGiftAction(payload)),
-        getListHistoryGift: payload => dispatch(getListHistoryAction(payload))
+        getListHistoryGift: payload => dispatch(getListHistoryAction(payload)),
+        getLandingCampaignAction: payload => dispatch(getLandingCampaignAction(payload))
     };
 };
 

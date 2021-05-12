@@ -47,3 +47,16 @@ export const giftExchange = async ({ token, params }) => {
     }
 
 }
+
+export const landingCampaign = async ({ token, params }) => {
+    try {
+        const response = await fetch('https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/campaign/campaignuser', {
+            method: 'GET',
+            headers: getHeaders(token)
+        });
+        const responseJson = await response.json();
+        return responseJson;
+    } catch (error) {
+    }
+
+}
