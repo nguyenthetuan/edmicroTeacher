@@ -58,5 +58,15 @@ export const landingCampaign = async ({ token, params }) => {
         return responseJson;
     } catch (error) {
     }
-
+}
+export const topCampaign = async ({ token }) => {
+    try {
+        const response = await fetch(' https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/campaign/topcampaign', {
+            method: 'POST',
+            headers: getHeaders(token)
+        });
+        const responseJson = await response.json();
+        return responseJson;
+    } catch (error) {
+    }
 }

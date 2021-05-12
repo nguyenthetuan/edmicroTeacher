@@ -10,7 +10,9 @@ import {
     getListHistorySuccessAction,
     getListHistoryFaildAction,
     getLandingCampaignSuccessAction,
-    getLandingCampaignFaildAction
+    getLandingCampaignFaildAction,
+    topCampaignSuccessAction,
+    topCampaignFaildAction
 } from '../actions/giftAction';
 
 function* fetchInfoUserGift(action) {
@@ -47,10 +49,19 @@ function* fetchLandingPageGift(action) {
         yield put(getLandingCampaignFaildAction({ result: [] }));
     }
 }
+function* fetchTopCampainGift(action) {
+    try {
+        const response = yield Api.topCampaign(action.payload);
+        yield put(topCampaignSuccessAction(response));
+    } catch (error) {
+        yield put(topCampaignFaildAction({ result: {} }));
+    }
+}
 
 export function* watchApiGift() {
     yield takeLatest(Types.USER_GIFT_ACTION, fetchInfoUserGift);
     yield takeLatest(Types.LIST_GIFT_ACTION, fetchListGift);
     yield takeLatest(Types.HISTORY_GIFT_ACTION, fetchListHistoryGift);
     yield takeLatest(Types.LANDING_PAGE_ACTION, fetchLandingPageGift);
+    yield takeLatest(Types.TOP_CAMPAIGN_ACTION, fetchTopCampainGift);
 }

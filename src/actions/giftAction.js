@@ -16,3 +16,8 @@ export const getListHistoryFaildAction = (error) => ({ type: Types.HISTORY_GIFT_
 export const getLandingCampaignAction = (payload) => ({ type: Types.LANDING_PAGE_ACTION, payload });
 export const getLandingCampaignSuccessAction = (data) => ({ type: Types.LANDING_PAGE_SUCCESS_ACTION, data });
 export const getLandingCampaignFaildAction = (error) => ({ type: Types.LANDING_PAGE_FAILD_ACTION, error });
+
+export const topCampaignAction = (payload) => ({ type: Types.TOP_CAMPAIGN_ACTION, payload });
+export const topCampaignSuccessAction = (data) => ({ type: Types.TOP_CAMPAIGN_SUCCESS_ACTION, data });
+export const topCampaignFaildAction = (error) => ({ type: Types.TOP_CAMPAIGN_FAILD_ACTION, error });
+

@@ -11,18 +11,26 @@ import {
     SafeAreaView,
     TouchableWithoutFeedback,
     ImageBackground,
-    Modal
+    Modal,
+    ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderNavigation from '../common/HeaderNavigation';
 import LinearGradient from 'react-native-linear-gradient';
 import AppIcon from '../../utils/AppIcon';
-import { userGiftAction, getListGiftAction, getListHistoryAction, getLandingCampaignAction } from '../../actions/giftAction';
+import {
+    userGiftAction,
+    getListGiftAction,
+    getListHistoryAction,
+    getLandingCampaignAction,
+    topCampaignAction
+} from '../../actions/giftAction';
 import dataHelper from '../../utils/dataHelper';
 import { getSourceAvatar } from '../../utils/Helper';
 import { imageDefault, formatNumber } from '../../utils/Common';
 import { RFFonsize } from '../../utils/Fonts';
-import StylePopup from './StylesModal/StylePopup';
+
+import Description from './Description';
 import shadowStyle from '../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 let pageIndex = 0;
@@ -34,7 +42,7 @@ class ExchangeGiftScreen extends Component {
             listItems: [],
             page: 1,
             isLoading: false,
-            modalVisible: true
+            modalVisible: true,
         }
     }
 
@@ -42,13 +50,13 @@ class ExchangeGiftScreen extends Component {
     componentDidMount() {
         this.getDataInfo();
     }
-
     getDataInfo = async () => {
         const { token } = await dataHelper.getToken();
         this.props.makeRequestProfile({ token });
         this.props.getListGiftAction({ token, page: 0 });
         this.props.getListHistoryGift({ token, page: 0 });
         this.props.getLandingCampaignAction({ token });
+        this.props.topCampaignAction({ token });
     }
 
     handleClickItem = item => () => {
@@ -203,7 +211,7 @@ class ExchangeGiftScreen extends Component {
             isLoading,
             listGift,
             listItems,
-            landingPage
+            landingPage,
         } = this.props;
         const { modalVisible } = this.state;
         return (
@@ -243,27 +251,19 @@ class ExchangeGiftScreen extends Component {
                     transparent={true}
                     visible={modalVisible}
                 >
-                    <View style={StylePopup.rgbaColor}>
-                        <View style={StylePopup.centeredView}>
-                            <TouchableWithoutFeedback
-                                hitSlop={{ top: 10, right: 10, left: 10, }}
-                                onPress={() => this.setModalVisible(!modalVisible)}
-                            >
-                                <View style={styles.closeModal}>
-                                    <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
-                                </View>
-                            </TouchableWithoutFeedback>
-
-                            <Image source={require('../../asserts/images/banner_drawerMenu.png')} />
-
-                            <FlatList
-                                data={landingPage}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={this.renderLanding}
-                                showsVerticalScrollIndicator={false}
-                            />
+                    {/* <TouchableWithoutFeedback
+                        hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                        onPress={() => setModalVisible(!modalVisible)}
+                    >
+                        <View style={styles.closeModal}>
+                            <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
                         </View>
-                    </View>
+                    </TouchableWithoutFeedback> */}
+                    <Description
+                        navigation={this.props.navigation}
+                        setModalVisible={this.props.setModalVisible}
+                        landingPage={this.props.landingPage}
+                    />
                 </Modal>
                 <SafeAreaView />
             </View>
@@ -506,6 +506,7 @@ const mapStateToProps = state => {
         listItems: state.gift.listItems,
         listHistory: state.gift.listHistory,
         landingPage: state.gift.landingPage,
+        topCampaign: state.gift.topCampaign,
         isLoading: state.gift.isLoading
     };
 };
@@ -515,7 +516,8 @@ const mapDispatchToProps = dispatch => {
         makeRequestProfile: payload => dispatch(userGiftAction(payload)),
         getListGiftAction: payload => dispatch(getListGiftAction(payload)),
         getListHistoryGift: payload => dispatch(getListHistoryAction(payload)),
-        getLandingCampaignAction: payload => dispatch(getLandingCampaignAction(payload))
+        getLandingCampaignAction: payload => dispatch(getLandingCampaignAction(payload)),
+        topCampaignAction: payload => dispatch(topCampaignAction(payload)),
     };
 };
 
