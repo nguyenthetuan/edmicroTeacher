@@ -8,6 +8,7 @@ const initState = {
     listItems: [],
     landingPage: [],
     topCampaign: {},
+    itemCampa: []
 };
 
 export default function giftReducer(state = initState, action) {
@@ -72,13 +73,15 @@ export default function giftReducer(state = initState, action) {
             return {
                 ...state,
                 isLoading: false,
-                landingPage: action.data.result
+                landingPage: action.data.result,
+                itemCampa: action.data.result.giftsCampaign
             }
         case Types.LANDING_PAGE_FAILD_ACTION:
             return {
                 ...state,
                 isLoading: false,
-                landingPage: []
+                landingPage: [],
+                itemCampa: []
             }
         case Types.TOP_CAMPAIGN_ACTION:
             return {

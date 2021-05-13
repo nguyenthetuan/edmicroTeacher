@@ -42,14 +42,20 @@ class ExchangeGiftScreen extends Component {
             listItems: [],
             page: 1,
             isLoading: false,
-            modalVisible: true,
+            modalVisible: false,
         }
     }
 
-
     componentDidMount() {
         this.getDataInfo();
+        this.showPopup();
     }
+    showPopup = () => {
+        setTimeout(() => {
+            this.setState({ modalVisible: true })
+        }, 1000)
+    }
+
     getDataInfo = async () => {
         const { token } = await dataHelper.getToken();
         this.props.makeRequestProfile({ token });
@@ -74,6 +80,10 @@ class ExchangeGiftScreen extends Component {
 
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
+    }
+
+    setCloseModal = (visible) => {
+        this.setState({ modalVisible: false })
     }
 
     renderItem = ({ item, index }) => {
@@ -188,23 +198,6 @@ class ExchangeGiftScreen extends Component {
         )
     }
 
-
-
-
-    // renderFooter = () => {
-    //     return (
-    //         this.state.isLoading ?
-    //             <View style={styles.loader}>
-    //                 <ActivityIndicator size="small" />
-    //             </View> : null
-    //     )
-    // }
-
-    // handleLoadMore = () => {
-    //     this.setState({ page: this.state.page + 1, isLoading: true }, this.state.listItems.pageSize);
-    // }
-
-
     render() {
         const {
             navigation,
@@ -212,6 +205,7 @@ class ExchangeGiftScreen extends Component {
             listGift,
             listItems,
             landingPage,
+            itemCampa
         } = this.props;
         const { modalVisible } = this.state;
         return (
@@ -251,18 +245,13 @@ class ExchangeGiftScreen extends Component {
                     transparent={true}
                     visible={modalVisible}
                 >
-                    {/* <TouchableWithoutFeedback
-                        hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
-                        onPress={() => setModalVisible(!modalVisible)}
-                    >
-                        <View style={styles.closeModal}>
-                            <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
-                        </View>
-                    </TouchableWithoutFeedback> */}
                     <Description
                         navigation={this.props.navigation}
                         setModalVisible={this.props.setModalVisible}
+                        setCloseModal={this.setCloseModal}
+                        modalVisible={this.state.modalVisible}
                         landingPage={this.props.landingPage}
+                        itemCampa={this.props.itemCampa}
                     />
                 </Modal>
                 <SafeAreaView />
@@ -507,7 +496,8 @@ const mapStateToProps = state => {
         listHistory: state.gift.listHistory,
         landingPage: state.gift.landingPage,
         topCampaign: state.gift.topCampaign,
-        isLoading: state.gift.isLoading
+        isLoading: state.gift.isLoading,
+        itemCampa: state.gift.itemCampa,
     };
 };
 
