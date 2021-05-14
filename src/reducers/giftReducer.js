@@ -5,7 +5,10 @@ const initState = {
     user: {},
     listGift: [],
     listHistory: [],
-    listItems: []
+    listItems: [],
+    landingPage: [],
+    topCampaign: {},
+    itemCampa: []
 };
 
 export default function giftReducer(state = initState, action) {
@@ -60,6 +63,42 @@ export default function giftReducer(state = initState, action) {
                 ...state,
                 isLoading: false,
                 listHistory: []
+            }
+        case Types.LANDING_PAGE_ACTION:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case Types.LANDING_PAGE_SUCCESS_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                landingPage: action.data.result,
+                itemCampa: action.data.result.giftsCampaign
+            }
+        case Types.LANDING_PAGE_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                landingPage: [],
+                itemCampa: []
+            }
+        case Types.TOP_CAMPAIGN_ACTION:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case Types.TOP_CAMPAIGN_SUCCESS_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                topCampaign: action.data?.items,
+            }
+        case Types.TOP_CAMPAIGN_FAILD_ACTION:
+            return {
+                ...state,
+                isLoading: false,
+                topCampaign: {},
             }
         default:
             return state;
