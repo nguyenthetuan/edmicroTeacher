@@ -349,10 +349,10 @@ export default function StudentDetail(props) {
                         </TouchableOpacity> */}
                                         <TouchableOpacity style={styles.btnDetail}
                                             onPress={() => { detailStudent(item) }}>
-                                            <Text style={styles.txtDetail}>Chi tiết</Text>
+                                            <Text style={[styles.txtDetail, { color: '#2D9CDB' }]}>Chi tiết</Text>
                                             <Ionicons
                                                 name='ios-arrow-forward'
-                                                color='#DB422D'
+                                                color='#2D9CDB'
                                                 size={14}
                                                 style={{ marginStart: 5 }}
                                             />
