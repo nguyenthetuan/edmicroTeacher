@@ -100,10 +100,18 @@ class HistoryGift extends Component {
     }
 
     renderEmpty = () => {
+        const { isLoading } = this.props;
         return (
-            <View style={styles.styWrapEmpty}>
-                <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
-            </View>
+            <>
+                {
+                    isLoading ?
+                        <ActivityIndicator color={'#2D9CDB'} size={'small'} style={styles.ActivityIndicator} />
+                        :
+                        <View style={styles.styWrapEmpty}>
+                            <Text style={styles.styTxtEmpty}>Hiện tại chưa có dữ liệu</Text>
+                        </View>
+                }
+            </>
         )
     }
 
@@ -111,19 +119,14 @@ class HistoryGift extends Component {
         const { listHistory, isLoading } = this.props;
         return (
             <View style={styles.contain}>
-                {
-                    isLoading ?
-                        <ActivityIndicator size="small" style={{ flex: 1 }} />
-                        :
-                        <FlatList
-                            data={listHistory}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={this.renderItem}
-                            showsVerticalScrollIndicator={false}
-                            ListEmptyComponent={this.renderEmpty}
-                        />
-                }
 
+                <FlatList
+                    data={listHistory}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={this.renderItem}
+                    showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={this.renderEmpty}
+                />
                 {/* <ModalCard
                     ref={ref => this.refModalCard = ref}
                     refsToast={() => this.toastRef.show('Copy thành công')}
@@ -358,6 +361,10 @@ const styles = StyleSheet.create({
         flex: 1,
         letterSpacing: 0.5,
         fontFamily: 'Nunito-Regular'
+    },
+    ActivityIndicator: {
+        flex: 1,
+        marginTop: height / 2.5,
     }
 })
 
