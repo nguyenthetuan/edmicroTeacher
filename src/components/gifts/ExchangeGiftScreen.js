@@ -207,6 +207,7 @@ class ExchangeGiftScreen extends Component {
             landingPage,
             itemCampa
         } = this.props;
+        // console.log('landingPage',landingPage);
         const { modalVisible } = this.state;
         return (
             <View style={[styles.container]} >

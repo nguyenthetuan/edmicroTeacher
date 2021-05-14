@@ -134,8 +134,9 @@ class HomeScreen extends Component {
 
 
     getDataStatistics = async () => {
-        const { token, enumType } = await dataHelper.getToken();
+        const { token } = await dataHelper.getToken();
         const schoolYear = new Date().getFullYear();
+        const enumType = 0;
         this.props.fetchClassAction({ token, schoolYear });
         this.props.fetchMissionAction({ token, enumType, schoolYear });
         this.props.fetchAssignmentAction({ token, enumType, schoolYear });
