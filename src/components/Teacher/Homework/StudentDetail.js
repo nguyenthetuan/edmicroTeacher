@@ -341,7 +341,7 @@ export default function StudentDetail(props) {
                                 progress={progress || 1}
                                 height={4}
                                 color='#2D9CDB'
-                                widthProps={width - 180}
+                                widthProps={width - 200}
                                 progressUnfilledColor='#C4C4C4'
                             />
                         </View>
@@ -390,8 +390,13 @@ export default function StudentDetail(props) {
                             </View>
                             : null
                     }
-
                 </View>
+                {
+                    item.status == 4 && 2 
+                        ?
+                        <Image source={require('../../../asserts/icon/icon_rightStud.png')} style={{ alignSelf: 'center', right: 10 }} />
+                        : null
+                }
             </View>
         )
     }
@@ -446,7 +451,7 @@ const styles = StyleSheet.create({
         // borderWidth: 0.5,
         margin: 16,
         flexDirection: 'row',
-        paddingVertical: 20
+        paddingVertical: 16
     },
     viewAvatar: {
         alignSelf: 'center',
@@ -472,7 +477,7 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     contentItem: {
-        marginStart: 11,
+        paddingHorizontal: 11,
         flex: 1
     },
     txtStatus: {
@@ -639,13 +644,13 @@ const styles = StyleSheet.create({
     },
     bgStatus: {
         alignSelf: 'flex-end',
-        right: 25,
+        right: 15,
         backgroundColor: '#FF6213',
         borderRadius: 10
     },
     remakeWork: {
         backgroundColor: '#FF6213',
-        paddingHorizontal: 40,
+        paddingHorizontal: 30,
         paddingVertical: 4,
         alignSelf: 'flex-start',
         marginTop: 7,
