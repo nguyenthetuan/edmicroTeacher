@@ -12,7 +12,8 @@ import {
     ScrollView,
     FlatList,
     TouchableWithoutFeedback,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import DropdownMultiSelect from '../../Homework/DropdownMultiSelect';
 import apiPapers from '../../../../services/apiPapersTeacher';
@@ -509,6 +510,7 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         borderRadius: 5,
         padding: 0,
+        paddingBottom: Platform.OS == 'android' ? 0 : 8,
         borderColor: '#C4C4C4',
         borderWidth: 1,
         fontSize: RFFonsize(14),

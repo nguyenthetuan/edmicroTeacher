@@ -26,14 +26,14 @@ export default class StepFourPDF extends Component {
         const { duration, assignmentType, subjectActive } = this.props.navigation.state.params.data;
         let string = 'Bạn đã tạo thành công bộ đề';
         if (assignmentType) {
-            string = string + ` \"Kiểm tra ${duration} phút`
+            string = string + ` Kiểm tra ${duration} phút`
         } else {
-            string = string + ' \"Tự luyện'
+            string = string + ' Tự luyện'
         }
         if (subjectActive.length > 1) {
-            string = string + ' liên môn\"'
+            string = string + ' liên môn'
         } else {
-            string = string + ' môn ' + Common.getDisplaySubject(subjectActive[0]) + '\"';
+            string = string + ' môn ' + Common.getDisplaySubject(subjectActive[0]);
         }
         return string;
 
