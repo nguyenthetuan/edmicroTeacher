@@ -37,7 +37,7 @@ const itemHeight = height;
 const Description = (props) => {
     const { setModalVisible, landingPage, setCloseModal } = props;
     const { shadowBtn } = shadowStyle;
-
+    console.log('landingPage',landingPage);
     const linkApple = () => {
         Linking.openURL("https://apple.co/3mtc38M");
     }
@@ -46,16 +46,17 @@ const Description = (props) => {
     }
 
     const renderItem = ({ item, index }) => {
+        console.log('item', item);
         let name = [];
         let coin = [];
-        if (item.giftsCampaign.length > 0) {
-            name = item.giftsCampaign.map((val) => {
-                return val.giftName + "\n";
+        if (item?.giftsCampaign.length > 0) {
+            name = item?.giftsCampaign.map((val) => {
+                return val?.giftName + "\n";
             });
         }
-        if (item.giftsCampaign.length > 0) {
-            coin = item.giftsCampaign.map((val) => {
-                return val.point + "\n";
+        if (item?.giftsCampaign.length > 0) {
+            coin = item?.giftsCampaign.map((val) => {
+                return val?.point + "\n";
             });
         }
         const CONTENT = {
