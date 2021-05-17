@@ -39,6 +39,7 @@ import OfferGiftDetail from '../components/gifts/OfferGiftDetail';
 import StatisticScreen from '../components/statistics/StatisticScreen';
 import EditConfig from '../components/Teacher/Papers/EditConfig';
 import SchoolResultPDF from '../components/Teacher/Homework/homework-result/SchoolResultPDF';
+import ImageResult from '../components/Teacher/Homework/homework-result/ImageResult';
 import SearchScreen from '../components/common-new/SearchScreen';
 import MarkCamera from '../components/Teacher/Papers/MarkCamera';
 import TakePhotoCamera from '../components/Teacher/Papers/TakePhotoCamera';
@@ -245,6 +246,10 @@ const TeacherStack = createStackNavigator({
   },
   SchoolResultPDF: {
     screen: SchoolResultPDF,
+    navigationOptions: LockNavigationOptions,
+  },
+  ImageResult: {
+    screen: ImageResult,
     navigationOptions: LockNavigationOptions,
   },
   UploadPDFCompleted: {

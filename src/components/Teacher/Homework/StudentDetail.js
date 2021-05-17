@@ -139,6 +139,12 @@ function ModalDetail(props) {
                 nameTest: item.nameStudent,
                 statusbar: 'light-content',
             });
+        } else if (assignmentContentType == AssignmentContentType.image) {
+            props.navigation.navigate('ImageResult', {
+                responseJson: props.dataResult,
+                nameTest: item.nameStudent,
+                statusbar: 'light-content',
+            });
         }
     }
     let arrayOrdered = [];

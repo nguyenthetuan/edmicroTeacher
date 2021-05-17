@@ -92,7 +92,7 @@ class StepThreePDF extends Component {
             }
             if (assignmentType && duration && duration < 5) {
                 this.refToast.show(
-                    <ToastFaild title="Thời gian kiểm tra phải lớn hơn 5 phút!" />
+                    <ToastFaild title="Thời gian kiểm tra tối thiểu là 5 phút!" />
                 );
                 return;
             }
