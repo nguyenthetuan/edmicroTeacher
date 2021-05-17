@@ -228,9 +228,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#C4C4C4',
   },
   txtSelectItem: {
-    color: '#383838',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
+    color: '#000',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
     fontFamily: 'Nunito',
     marginLeft: 10,
   },
@@ -253,9 +253,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    borderRadius: 3,
+    borderRadius: 5,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#C4C4C4'
+    borderColor: '#C4C4C4',
+    borderStyle: 'solid'
   },
 });
