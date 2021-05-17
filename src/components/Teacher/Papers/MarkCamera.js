@@ -302,7 +302,7 @@ class MarkCamera extends Component {
                         urlFilePDF: resSignedUrl.urlFile,
                         loadingUpload: false,
                     });
-                    this.refToast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
+                    this.refToast.show(<ToastSuccess title={"Tải lên thành công!"} />)
                 } else {
                     this.toast.show(<ToastFaild title="Tải lên PDF thất bại!" />);
                     this.setState({ loadingUpload: false });
@@ -417,8 +417,8 @@ class MarkCamera extends Component {
                         token: token,
                         id: res.data,
                     });
-                     this.setState({ resSuccess: response });
-                     this.loadingToast.show((<ActivityIndicator size="small" />), 1000,
+                    this.setState({ resSuccess: response });
+                    this.loadingToast.show((<ActivityIndicator size="small" />), 1000,
                         this.setModalVisible(true)
                     )
                     this.props.needUpdate(true);
@@ -603,14 +603,15 @@ class MarkCamera extends Component {
                         styleTitle={styles.styleTitle}
                         back={true}
                     />
-                    <View>
-                        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
-                            <ScrollView
-                                showsVerticalScrollIndicator={false}
-                                contentContainerStyle={{ paddingTop: 20, paddingBottom: Platform.OS == 'ios' ? 0 : 40 }}
-                                ref={ref => this.scrollview = ref}
-                                contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
-                            >
+                    <View style={{ flex: 1 }}>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{ paddingTop: 20, paddingBottom: Platform.OS == 'ios' ? 0 : 40 }}
+                            ref={ref => this.scrollview = ref}
+                            contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
+                        >
+                            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
+
                                 {/* start create Upload PDF */}
                                 <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); }}>
                                     {/* this.closeModalSelectAnswer() */}
@@ -709,8 +710,8 @@ class MarkCamera extends Component {
                                         </RippleButton>
                                     </View>
                                 </TouchableWithoutFeedback>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
+                            </KeyboardAvoidingView>
+                        </ScrollView>
                         <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess]} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
                         <Toast ref={(ref) => (this.loadingToast = ref)} position={'top'} style={{ backgroundColor: "transparent", marginTop: height * 0.2 }} />
@@ -720,62 +721,31 @@ class MarkCamera extends Component {
                                 <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
                             </View>}
                     </View>
-                    {/* <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                    >
-                        <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <TouchableOpacity
-                                    style={[styles.button, styles.buttonClose]}
-                                    onPress={() => this.setModalVisible(!modalVisible)}
-                                >
-                                    <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
-                                </TouchableOpacity>
-                                <View style={styles.rowFlex}>
-                                    <TouchableOpacity onPress={this.onPickPDF} style={styles.clickOption}>
-                                        <Image source={require('../../../asserts/icon/icon_addPdf.png')} style={styles.iconOp} />
-                                        <Text style={styles.txtOP}>Tải .PDF</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.launchImageLibrary} style={styles.clickOption}>
-                                        <Image source={require('../../../asserts/icon/icon_add_image.png')} style={styles.iconOp} />
-                                        <Text style={styles.txtOP}>Chọn ảnh</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.takeCamera} style={styles.clickOption}>
-                                        <Image source={require('../../../asserts/icon/icon_camera.png')} style={styles.iconOp} />
-                                        <Text style={styles.txtOP}>Chụp ảnh</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </Modal> */}
-
-                    <ModalClass
-                        ref={ref => this.refModalClass = ref}
-                        gradeActive={gradeCode}
-                        listGrades={listGrades}
-                        activeClass={this.activeClass}
-                    />
-                    <ModalSubject
-                        ref={ref => this.refModalSubject = ref}
-                        subjectActive={subjectCode}
-                        listSubjects={listSubjects}
-                        activeSubject={this.activeSubject}
-                        Icon={AppIcon.iconDowSelect}
-                    />
-                    <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={modalVisible}
-                    >
-                        <ModalSuccess
-                            navigation={this.props.navigation}
-                            goToAssigned={this.goToAssigned}
-                            data={this.state.resSuccess}
-                        />
-                    </Modal>
                 </SafeAreaView>
+                <ModalClass
+                    ref={ref => this.refModalClass = ref}
+                    gradeActive={gradeCode}
+                    listGrades={listGrades}
+                    activeClass={this.activeClass}
+                />
+                <ModalSubject
+                    ref={ref => this.refModalSubject = ref}
+                    subjectActive={subjectCode}
+                    listSubjects={listSubjects}
+                    activeSubject={this.activeSubject}
+                    Icon={AppIcon.iconDowSelect}
+                />
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <ModalSuccess
+                        navigation={this.props.navigation}
+                        goToAssigned={this.goToAssigned}
+                        data={this.state.resSuccess}
+                    />
+                </Modal>
             </View>
         );
     }
@@ -838,7 +808,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFF'
     },
     header: {
         // backgroundColor: '#56CCF2',
