@@ -92,7 +92,7 @@ export default class ModalConfigLibrary extends Component {
                     {selectItem.name || value.name}
                   </Text>
                 ) : (
-                  <View />
+                  <Text style={styles.txtPlaceIn}>-------</Text>
                 )}
               <View
                 style={{
@@ -259,4 +259,11 @@ const styles = StyleSheet.create({
     borderColor: '#C4C4C4',
     borderStyle: 'solid'
   },
+  txtPlaceIn: {
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    paddingLeft: 10,
+    color: "#c4c4c4"
+  }
 });
