@@ -38,6 +38,8 @@ import { AssignmentContentType } from '../../../models';
 import Kcolor from '../../../constants/Kcolor';
 import AppIcon from '../../../utils/AppIcon'
 import TourView from '../../../utils/TourView';
+import AsyncStorage from '@react-native-community/async-storage';
+
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -90,40 +92,41 @@ class Papers extends Component {
   componentDidMount() {
     const { user } = this.props;
     const { userId } = user;
-    if (userId == '5f6ec0d787047800015deb9b') {
-      try {
-        this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
-      } catch (error) {
-        
-      }
-      this.timeTour = setTimeout(() => {
-        try {
-          this.dataRef = [
-            {
-              reff: this.addRef,
-              hint: 'Tạo bộ đề mới'
-            },
-            {
-              reff: this.searchRef,
-              hint: 'Tìm kiếm bộ đề'
-            },
-            {
-              reff: this.classRef,
-              hint: 'Lọc bộ đề theo lớp'
-            },
-            {
-              reff: this.subjectRef,
-              hint: 'Lọc bộ đề theo môn học'
-            }
-          ];
-          this.tour.onMeasure(this.dataRef);
-        } catch (error) {
-
-        }
-      }, 1000);
-    }
-
     this.getData();
+    this.handlerShowTourView();
+  }
+
+  handlerShowTourView = async () => {
+    // await AsyncStorage.removeItem('@Onluye_TourView_Paper');
+    const isShow = await AsyncStorage.getItem('@Onluye_TourView_Paper');
+    if (isShow) return;
+
+    this.timeTour = setTimeout(() => {
+      try {
+        this.dataRef = [
+          {
+            reff: this.addRef,
+            hint: 'Tạo bộ đề mới'
+          },
+          {
+            reff: this.searchRef,
+            hint: 'Tìm kiếm bộ đề'
+          },
+          {
+            reff: this.classRef,
+            hint: 'Lọc bộ đề theo lớp'
+          },
+          {
+            reff: this.subjectRef,
+            hint: 'Lọc bộ đề theo môn học'
+          }
+        ];
+        this.tour.onMeasure(this.dataRef);
+        AsyncStorage.setItem('@Onluye_TourView_Paper', '1');
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1000);
   }
 
   getData = async () => {
@@ -433,16 +436,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-              <Text
-                style={{
-                  color: '#000',
-                  fontFamily: 'Nunito-Bold',
-                  fontSize: RFFonsize(14),
-                  textAlign: 'center',
-                }}>
-                Xem thêm
-              </Text>
-            )}
+            <Text
+              style={{
+                color: '#000',
+                fontFamily: 'Nunito-Bold',
+                fontSize: RFFonsize(14),
+                textAlign: 'center',
+              }}>
+              Xem thêm
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     );

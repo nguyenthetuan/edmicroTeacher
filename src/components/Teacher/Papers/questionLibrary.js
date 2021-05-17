@@ -32,7 +32,10 @@ import Header from '../../common-new/Header';
 import { RFFonsize } from '../../../utils/Fonts';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import shadowStyle from '../../../themes/shadowStyle';
-import ModalFilteQuestionLibrary from './ModalFilteQuestionLibrary'
+import ModalFilteQuestionLibrary from './ModalFilteQuestionLibrary';
+import TourView from '../../../utils/TourView';
+import { CustomeButtonRef } from '../../common-new/CustomeButtonRef';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
   headerFilter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 16,
     marginTop: 13,
     marginBottom: 16,
@@ -311,6 +315,25 @@ class QuestionLibrary extends Component {
         this.getDetailSubject();
       } catch (error) { }
     }
+  };
+
+  handlerShowTourView = async () => {
+    // await AsyncStorage.removeItem('@Onluye_TourView_QuestionLibrary');
+    const isShow = await AsyncStorage.getItem('@Onluye_TourView_QuestionLibrary');
+    if (isShow) return;
+    this.dataRef = [
+      {
+        reff: this.refHeader,
+        hint: 'Tạo bộ đề mới'
+      },
+      {
+        reff: this.refFilter,
+        hint: 'Lọc bộ đề mới'
+      },
+
+    ];
+    this.tour.onMeasure(this.dataRef);
+    AsyncStorage.setItem('@Onluye_TourView_QuestionLibrary', '1');
   }
 
   getQuestionLocal = async () => {
@@ -453,6 +476,7 @@ class QuestionLibrary extends Component {
 
   _closeLearnPlaceholder = () => {
     this.setState({ isLoading: false });
+    this.handlerShowTourView();
   };
 
   handleNextPage = (indexPage) => {
@@ -541,6 +565,7 @@ class QuestionLibrary extends Component {
         <SafeAreaView />
         <SafeAreaView style={styles.container}>
           <Header
+            ref={ref => this.refHeader = ref}
             title={'Ngân Hàng Câu Hỏi'}
             color={'white'}
             navigation={this.props.navigation}
@@ -560,11 +585,17 @@ class QuestionLibrary extends Component {
             }}>
             <View style={styles.headerFilter}>
               <Text style={styles.txtFilter} numberOfLines={1}>{this.refModalFilter?.getRenderText()}</Text>
-              <TouchableWithoutFeedback
+              {/* <TouchableWithoutFeedback
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 onPress={() => this.setState({ isModalQustionLibrary: true })}>
                 <Image source={require('../../../asserts/icon/iconFilter.png')} />
-              </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback> */}
+              <CustomeButtonRef
+                ref={ref => this.refFilter = ref}
+                tintColor={'#E59553'}
+                icon={require('../../../asserts/icon/iconFilter.png')}
+                onPress={() => this.setState({ isModalQustionLibrary: true })}
+              />
             </View>
             {isLoading && <LearnPlaceholder />}
             <View style={styles.wrapPageAndNumberQuesion}>
@@ -653,6 +684,7 @@ class QuestionLibrary extends Component {
           />
         </SafeAreaView>
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
+        <TourView ref={(tv) => this.tour = tv} />
       </View>
     );
   }
