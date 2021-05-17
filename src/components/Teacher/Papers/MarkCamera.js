@@ -417,8 +417,10 @@ class MarkCamera extends Component {
                         token: token,
                         id: res.data,
                     });
-                    await this.setState({ resSuccess: response });
-                    await this.setModalVisible(true);
+                     this.setState({ resSuccess: response });
+                     this.loadingToast.show((<ActivityIndicator size="small" />), 1000,
+                        this.setModalVisible(true)
+                    )
                     this.props.needUpdate(true);
                     // cau hinh thanh cong
                     AnalyticsManager.trackWithProperties('School Teacher', {
@@ -711,6 +713,7 @@ class MarkCamera extends Component {
                         </KeyboardAvoidingView>
                         <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess]} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
+                        <Toast ref={(ref) => (this.loadingToast = ref)} position={'top'} style={{ backgroundColor: "transparent", marginTop: height * 0.2 }} />
                         {loadingUpload &&
                             <View>
                                 <ActivityIndicator size="small" style={{ marginTop: 16 }} />

@@ -73,8 +73,8 @@ export default function giftReducer(state = initState, action) {
             return {
                 ...state,
                 isLoading: false,
-                landingPage: action.data.result,
-                itemCampa: action.data.result.giftsCampaign
+                landingPage: action.data?.result,
+                itemCampa: action.data?.result?.giftsCampaign
             }
         case Types.LANDING_PAGE_FAILD_ACTION:
             return {

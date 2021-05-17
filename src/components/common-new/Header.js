@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { forwardRef } from 'react';
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 import { RFFonsize } from '../../utils/Fonts';
 import AppIcon from '../../utils/AppIcon';
@@ -12,7 +12,7 @@ const navigateUser = (props) => {
     });
 }
 
-const HeaderPrimary = (props) => {
+const HeaderPrimary = forwardRef((props, ref) => {
     const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack } = props;
     const { bgColorActive } = props;
     return (
@@ -32,7 +32,14 @@ const HeaderPrimary = (props) => {
             {actionIcon ?
                 <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                     onPress={() => { props.iconAction || navigateUser(props) }}>
-                    <View style={[styles.btnAvatar, { backgroundColor: props.actionColor || 'transparent' }]}>
+                    <View
+                        ref={ref}
+                        style={[styles.btnAvatar,
+                        {
+                            backgroundColor: props.actionColor || 'transparent'
+                        }
+                        ]}
+                    >
                         <Image
                             source={actionIcon}
                             style={[styles.imgAvatar,
@@ -46,7 +53,7 @@ const HeaderPrimary = (props) => {
             }
         </View >
     );
-}
+});
 
 export default HeaderPrimary;
 

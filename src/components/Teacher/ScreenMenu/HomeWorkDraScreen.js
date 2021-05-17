@@ -29,6 +29,9 @@ import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
+import AsyncStorage from '@react-native-community/async-storage';
+import TourView from '../../../utils/TourView';
+
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(
@@ -43,10 +46,10 @@ const initTab = createMaterialTopTabNavigator(
                             Độ hoàn thành
                         </Text>
                     ) : (
-                            <Text numberOfLines={1} style={styles.labelTabActive}>
-                                Độ hoàn thành
-                            </Text>
-                        );
+                        <Text numberOfLines={1} style={styles.labelTabActive}>
+                            Độ hoàn thành
+                        </Text>
+                    );
                 },
             },
         },
@@ -60,10 +63,10 @@ const initTab = createMaterialTopTabNavigator(
                             Tỉ lệ Đ/S
                         </Text>
                     ) : (
-                            <Text numberOfLines={1} style={styles.labelTabActive}>
-                                Tỉ lệ Đ/S
-                            </Text>
-                        );
+                        <Text numberOfLines={1} style={styles.labelTabActive}>
+                            Tỉ lệ Đ/S
+                        </Text>
+                    );
                 },
             },
         },
@@ -79,10 +82,10 @@ const initTab = createMaterialTopTabNavigator(
                             Học sinh
                         </Text>
                     ) : (
-                            <Text numberOfLines={1} style={styles.labelTabActive}>
-                                Học sinh
-                            </Text>
-                        );
+                        <Text numberOfLines={1} style={styles.labelTabActive}>
+                            Học sinh
+                        </Text>
+                    );
                 },
             },
         },
@@ -133,6 +136,8 @@ const indexSelected = {
 function HomeWorkDraScreen(props) {
     const toast = useRef();
     const modalFillter = useRef();
+    const refHeaderNavigation = useRef();
+    const refTourView = useRef();
     const [data, setData] = useState({
         grade: [],
         subject: [],
@@ -141,7 +146,33 @@ function HomeWorkDraScreen(props) {
     });
 
     const [timeExport, setTimeExport] = useState('');
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        handlerShowTourView();
+    }, []);
+
+    const handlerShowTourView = async () => {
+        // await AsyncStorage.removeItem('@Onluye_TourView_HomeWorkDraScreen');
+        const isShow = await AsyncStorage.getItem('@Onluye_TourView_HomeWorkDraScreen');
+        if (isShow) return;
+
+        setTimeout(() => {
+            try {
+                const dataRef = [
+                    {
+                        reff: refHeaderNavigation.current.ref,
+                        hint: 'Lọc thống kê bài tập'
+                    },
+                ];
+                refTourView.current.onMeasure(dataRef);
+                AsyncStorage.setItem('@Onluye_TourView_HomeWorkDraScreen', '1');
+            } catch (error) {
+                console.log(error);
+            }
+        }, 1000);
+    }
+
     const onPressItemGrade = async (index) => {
         indexSelected.grade = index;
 
@@ -393,9 +424,7 @@ function HomeWorkDraScreen(props) {
             setIsLoading(false);
         }, 1000);
         let timeExportTmp = props.data?.data.timeExport;
-        console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
         timeExportTmp = convertTimeHMDMY(timeExport);
-        console.log("🚀 ~ file: MainScreen.js ~ line 395 ~ useEffect ~ timeExportTmp", timeExportTmp)
         setTimeExport(timeExportTmp);
     }, []);
 
@@ -476,6 +505,7 @@ function HomeWorkDraScreen(props) {
         <SafeAreaView style={styles.container}>
             <StatusBar />
             <HeaderNavigation
+                ref={refHeaderNavigation}
                 title={'Thống kê bài tập'}
                 navigation={props.navigation}
                 onRightAction={onClickFillter}
@@ -522,6 +552,7 @@ function HomeWorkDraScreen(props) {
                 onPressItemClass={(index) => onPressItemClass(index)}
                 handleStatistic={handleStatistic}
             />
+            <TourView ref={refTourView} />
         </SafeAreaView>
     );
 }

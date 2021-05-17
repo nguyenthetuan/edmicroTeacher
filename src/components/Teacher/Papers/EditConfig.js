@@ -28,6 +28,8 @@ import SubjectItem from './SubjectItem';
 import ModalClass from './ModalClass';
 import ModalSubject from './ModalSubject';
 import AppIcon from '../../../utils/AppIcon'
+import Toast, { DURATION } from 'react-native-easy-toast';
+
 const { width } = Dimensions.get('window');
 const NAVBAR_HEIGHT = 220;
 
@@ -131,14 +133,14 @@ class EditConfig extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                            <RippleButton
-                                style={Platform.OS === 'ios' ? styles.buttomClassActive : styles.buttomClassActive}
-                                onPress={() => this.activeSubject(item)}>
-                                <View>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
+                        <RippleButton
+                            style={Platform.OS === 'ios' ? styles.buttomClassActive : styles.buttomClassActive}
+                            onPress={() => this.activeSubject(item)}>
+                            <View>
+                                <Text style={styles.txtItemActive}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -189,6 +191,10 @@ class EditConfig extends Component {
 
             if (data.assignmentType) {
                 body['duration'] = parseInt(time) * 60;
+                if (time < 5) {
+                    this.refs.toast.show('Thời gian làm bài tối thiểu là 5 phút!');
+                    return;
+                }
             }
 
             this.setState({
@@ -234,14 +240,14 @@ class EditConfig extends Component {
                             <Text style={styles.txtItem}>{item.name}</Text>
                         </RippleButton>
                     ) : (
-                            <RippleButton
-                                style={styles.buttomActive}
-                                onPress={() => this.activeGrade(item)}>
-                                <View>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
+                        <RippleButton
+                            style={styles.buttomActive}
+                            onPress={() => this.activeGrade(item)}>
+                            <View>
+                                <Text style={styles.txtItemActive}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    );
                 }}
                 removeClippedSubviews={false}
                 // horizontal
@@ -394,6 +400,7 @@ class EditConfig extends Component {
                     listSubjects={listSubjects}
                     activeSubject={this.activeSubject}
                 />
+                <Toast ref="toast" position={'top'} />
             </View>
         )
     }

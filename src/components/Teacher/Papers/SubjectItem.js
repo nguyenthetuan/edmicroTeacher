@@ -12,6 +12,7 @@ import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/AntDesign';
 import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
+import { CustomeButtonRef } from '../../common-new/CustomeButtonRef';
 export default class SubjectItem extends Component {
     openModalSubject = () => {
         try {
@@ -60,17 +61,12 @@ export default class SubjectItem extends Component {
                             showsHorizontalScrollIndicator={false}
                             ListEmptyComponent={<Text style={styles.styTxtEmpty}>Chọn môn</Text>}
                         />
-                        <RippleButton
+                        <CustomeButtonRef
                             onPress={this.openModalSubject}
-                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            style={{ height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}
-                        >
-                            <Image
-                                source={Icon}
-                                resizeMode={'contain'}
-                                style={{ tintColor: '#2D9CDB'}}
-                            />
-                        </RippleButton>
+                            ref={this.props.subjectRef}
+                            icon={Icon}
+                            tintColor={'#2D9CDB'}
+                        />
                     </View>
                 </View>
             </View>

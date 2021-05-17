@@ -11,7 +11,9 @@ import {
     Image,
     ScrollView,
     FlatList,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import DropdownMultiSelect from '../../Homework/DropdownMultiSelect';
 import apiPapers from '../../../../services/apiPapersTeacher';
@@ -221,10 +223,15 @@ class StepThreePDF extends Component {
             duration, assignmentType, subjectActive
         };
         if (res.status == 0) {
-            this.props.screenProps.handleNextStep(3, data);
-            this.props.screenProps.navigation.replace('UploadPDFCompleted', {
-                data: data,
-            });
+            this.loadingToast.show((<ActivityIndicator size="small" />), 100,
+                () => {
+                    this.props.screenProps.handleNextStep(3, data);
+                    this.props.screenProps.navigation.replace('UploadPDFCompleted', {
+                        data: data,
+                    });
+                }
+            )
+
         } else {
             this.toast.show('Tải bộ đề lên không thành công!')
         }
@@ -411,6 +418,7 @@ class StepThreePDF extends Component {
                 />
                 <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
                 <Toast ref={(ref) => (this.refToast = ref)} position={'top'} />
+                <Toast ref={(ref) => (this.loadingToast = ref)} position={'top'} style={{ backgroundColor: 'transparent', marginTop: height * 0.2 }} />
             </View>
         )
     }
@@ -502,6 +510,7 @@ const styles = StyleSheet.create({
         marginBottom: 7,
         borderRadius: 5,
         padding: 0,
+        paddingBottom: Platform.OS == 'android' ? 0 : 8,
         borderColor: '#C4C4C4',
         borderWidth: 1,
         fontSize: RFFonsize(14),

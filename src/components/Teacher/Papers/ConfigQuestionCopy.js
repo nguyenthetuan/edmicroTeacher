@@ -11,7 +11,8 @@ import {
     FlatList,
     Keyboard,
     Alert,
-    Modal
+    Modal,
+    ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
@@ -383,8 +384,13 @@ class ConfigQuestion extends Component {
                     });
                     await this.setState({ assignmentType: 0, resSuccess: res });
                     await this.closePopupCreate();
-                    await this.setModalVisible(true);
-                    this.props.needUpdate(true);
+                    this.loadingToast.show((<ActivityIndicator size="small" />), 100,
+                        () => {
+                            this.setModalVisible(true);
+                        }
+                    ),
+
+                        this.props.needUpdate(true);
                     // this.props.navigation.navigate('CopyFromSubjectExists');
                     const schoolYear = new Date().getFullYear();
                     this.props.fetchAssignmentAction({ token, enumType, schoolYear });
@@ -878,6 +884,7 @@ class ConfigQuestion extends Component {
                 }
                 <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
                 <Toast ref={(ref) => (this.refToast = ref)} position={'top'} style={styles.styleTostSuccess} />
+                <Toast ref={(ref) => (this.loadingToast = ref)} position={'center'} style={{ backgroundColor: "transparent" }} />
                 <WarningModal
                     ref={'warningModal'}
                     navigation={this.props.navigation}
