@@ -61,19 +61,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   indicator: {
-    // height: 5,
-    // width: 40,
-    // borderRadius: 4,
-    // backgroundColor: '#828282',
     alignSelf: 'flex-end',
     right: 20,
-    top: -10
+    top: -10,
+    backgroundColor: '#FF6213',
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    borderRadius: 15
   },
   closeModal: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(18),
-    color: '#000'
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    color: '#fff'
   }
 });
 
@@ -423,6 +423,7 @@ export default class ModalConfigPaper extends Component {
               data={lerningTarget}
               onPress={(value) => this.onPress(4, value)}
               value={valueUnitOfKnowledge}
+              textPlace={true}
             />
             <ModalConfigLibrary
               title="Dạng bài"
