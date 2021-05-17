@@ -518,9 +518,11 @@ class ConfigQuestion extends Component {
                 loading: false,
                 resSuccess: res,
               },
-              () => {
-                this.setModalVisible(true)
-              }
+              this.loadingToast.show((<ActivityIndicator size="small" />), 100,
+                () => {
+                  this.setModalVisible(true)
+                }
+              ),
             );
             // cau hinh thanh cong
             AnalyticsManager.trackWithProperties('School Teacher', {
@@ -542,6 +544,7 @@ class ConfigQuestion extends Component {
       this.refToast.show(<ToastFaild title="Vui lòng điền đầy đủ thông tin" />);
     }
   };
+
 
   handleTickAll = () => {
     var array = [];
@@ -1205,6 +1208,7 @@ class ConfigQuestion extends Component {
         />
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
         <Toast ref={ref => (this.toast = ref)} position={'top'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
+        <Toast ref={ref => (this.loadingToast = ref)} position={'center'} style={{ backgroundColor: "transparent" }} />
       </View>
     );
   }
