@@ -8,6 +8,7 @@ import {
   Animated,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView
 } from 'react-native';
 import HeaderNavigation from '../../../common/HeaderNavigationMenu';
 import * as AppIcon from '../../../../utils/AppIcon';
@@ -139,7 +140,7 @@ class SchoolResultPDF extends PureComponent {
       arrRightAnswer,
     } = this.state;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <HeaderTab
           changeTab={this.changeTab}
           totalCorrect={totalCorrect}
@@ -149,7 +150,7 @@ class SchoolResultPDF extends PureComponent {
           navigation={this.props.navigation}
         />
         {this.changeTabComponent(tabActive)}
-      </View>
+      </SafeAreaView>
     );
   }
 }

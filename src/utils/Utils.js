@@ -388,7 +388,8 @@ module.exports = {
   AssignmentContentType: {
     regular: 0,
     pdf: 1,
-    image: 2
+    image: 2,
+    image: 3
   }
 };
 
