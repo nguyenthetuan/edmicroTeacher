@@ -423,7 +423,6 @@ export default class ModalConfigPaper extends Component {
               data={lerningTarget}
               onPress={(value) => this.onPress(4, value)}
               value={valueUnitOfKnowledge}
-              textPlace={true}
             />
             <ModalConfigLibrary
               title="Dạng bài"

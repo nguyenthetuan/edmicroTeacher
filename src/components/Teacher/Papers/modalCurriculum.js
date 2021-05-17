@@ -242,7 +242,6 @@ export default class ModalCurriculum extends Component {
       value,
       styleTitle,
       borderStyle,
-      textPlace,
     } = this.props;
     selectItem = _.isEmpty(value) ? selectItem : value;
     let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
@@ -253,11 +252,6 @@ export default class ModalCurriculum extends Component {
           <View style={{ flex: 1 }} >
             <Text style={[styles.txtTitle, styleTitle]}>{title}</Text>
             <View style={[styles.wrapModal, borderStyle]}>
-              {
-                textPlace == true ?
-                  <Text style={styles.txtPlaceIn}>Đơn vị kiến thức</Text>
-                  : null
-              }
               {!_.isEmpty(selectItem) && selectItem.name ? (
                 <View style={styles.wrapElementSelect}>
                   <TouchableOpacity
@@ -270,7 +264,7 @@ export default class ModalCurriculum extends Component {
                   </TouchableOpacity>
                 </View>
               ) : (
-                  <View />
+                <Text style={styles.txtPlaceIn}>Đơn vị kiến thức</Text>
                 )}
               <View style={styles.icDow}>
                 <Ionicons
