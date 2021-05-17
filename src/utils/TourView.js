@@ -1,65 +1,12 @@
 import React, { useEffect, useImperativeHandle, useState, useRef } from 'react'
-import { View, Text, Dimensions, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native'
-const { width, height } = Dimensions.get('window');
-const step_view_width = 200;
-const step_view_height = 80;
-const r_button = 20;
+import { View, Text, Dimensions, StyleSheet, Modal, TouchableWithoutFeedback, Animated } from 'react-native'
+import { StepView } from './StepView';
 
-function StepView({
-    tour_size,
-    onPress,
-    hintText,
-    position,
-    scale
-}) {
-    const getLeftPosition = () => {
-        const minX = position.left - (tour_size / 2 - r_button);
-        const maxX = position.left + (tour_size / 2 + r_button);
-        if (position.left + r_button <= width / 2) {
-            return (0 + Math.abs(minX)) + (maxX - step_view_width) / 2;
-        } else {
-            return 0 + (width - Math.abs(minX) - step_view_width) / 2;
-        }
-    }
-
-    const getTopPosition = () => {
-        const minY = position.top - (tour_size / 2 - r_button);
-        const maxY = position.top + (tour_size / 2 + r_button);
-        const centerY = position.top + r_button;
-        if (centerY >= height / 2) {
-            return centerY - step_view_height / 2 - minY - (centerY - minY) / 2;
-        } else {
-            return (0 + Math.abs(minY)) + (maxY - step_view_height) / 2;
-        }
-    }
-
-    return (
-        <Animated.View style={{
-            width: step_view_width,
-            height: step_view_height,
-            position: 'absolute',
-            alignSelf: 'center',
-            left: getLeftPosition(),
-            top: getTopPosition(),
-            transform: [{ scale: scale }],
-            zIndex: 2,
-        }}>
-            <Text style={{
-                alignSelf: 'center',
-                color: '#fff',
-                fontFamily: 'Nunito-Regular'
-            }}>{hintText}</Text>
-            <TouchableWithoutFeedback onPress={onPress}>
-                <View style={styles.buttonNextStep}>
-                    <Text style={{ color: '#383838', fontFamily: 'Nunito-Regular' }}>Tiếp theo</Text>
-                </View>
-            </TouchableWithoutFeedback>
-        </Animated.View>
-    );
-}
+const tour_size = 300;
+const button_size = 40;
+const center_size = button_size / 2;
 
 function TourView(props, ref) {
-    const { tour_size, button_size } = props;
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const dataRef = useRef(null);
     const indexRef = useRef(0);
@@ -77,13 +24,9 @@ function TourView(props, ref) {
         },
     }));
 
-    const setMesure = (index) => {
-        hintText.current = dataRef.current[index].hint;
-        console.log(hintText.current);
-        console.log(dataRef.current[index].reff);
-        alert(dataRef.current[index].reff);
-        dataRef.current[index].reff.measure(async (fx, fy, w, h, px, py) => {
-            alert(px);
+    const setMesure = async (index) => {
+        hintText.current = dataRef.current[indexRef.current].hint;
+        dataRef.current[indexRef.current].reff.measure(async (fx, fy, w, h, px, py) => {
             await setShow(true);
             await setPosition({ ...position, top: py, left: px });
         }, err => {
@@ -91,6 +34,7 @@ function TourView(props, ref) {
         }).catch(err => {
             console.log(err);
         });
+
     }
 
     useEffect(() => {
@@ -119,13 +63,18 @@ function TourView(props, ref) {
         Animated.loop(anim).start();
     }, [show])
 
-    const onPress = async () => {
+    const onNext = async () => {
         setShow(false);
         indexRef.current++;
         if (indexRef.current < dataRef.current.length) {
             setMesure(indexRef.current);
-        } else {
-            indexRef.current = 0;
+        }
+    }
+
+    const onPreview = async () => {
+        setShow(false);
+        indexRef.current--;
+        if (indexRef.current < dataRef.current.length) {
             setMesure(indexRef.current);
         }
     }
@@ -134,8 +83,8 @@ function TourView(props, ref) {
         show ?
             <View style={styles.container}>
                 <View style={[styles.circleContainer, {
-                    top: position.top - tour_size / 2 + 20,
-                    left: position.left - tour_size / 2 + 20,
+                    top: position.top - tour_size / 2 + center_size,
+                    left: position.left - tour_size / 2 + center_size,
                 }]}>
                     <Animated.View style={[styles.circle, {
                         width: tour_size,
@@ -148,7 +97,7 @@ function TourView(props, ref) {
                         }]
                     }]}
                     >
-                        <TouchableWithoutFeedback onPress={onPress}>
+                        <TouchableWithoutFeedback>
                             <Animated.View style={[styles.dotCircle, {
                                 width: button_size * 2,
                                 height: button_size * 2,
@@ -158,12 +107,14 @@ function TourView(props, ref) {
                             }]} />
                         </TouchableWithoutFeedback>
                     </Animated.View>
-                    {/* <StepView {...props}
-                        onPress={onPress}
-                        position={position}
-                        scale={scale}
-                        hintText={hintText.current} /> */}
                 </View>
+                <StepView
+                    {...props}
+                    onNext={onNext}
+                    onPreview={onPreview}
+                    length={dataRef.current.length}
+                    index={indexRef.current}
+                    hintText={hintText.current} />
             </View>
             :
             null

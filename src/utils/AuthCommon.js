@@ -16,7 +16,7 @@ export const LOGIN_TYPE = {
 
 export const isExpried = (exp, curTime) => {
     let time = Number.parseInt(curTime) - Number.parseInt(exp);
-    return time >= 300; // need chan
+    return time >= -300; // need chan
   };
   
   export const isRefresh = (exp, curTime, iat) => {

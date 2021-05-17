@@ -43,6 +43,8 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const NAVBAR_HEIGHT = 220;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
+const tour_size = 200;
+const button_size = 40;
 
 const { width, height } = Dimensions.get('window');
 class Papers extends Component {
@@ -86,23 +88,41 @@ class Papers extends Component {
   };
 
   componentDidMount() {
-    // setTimeout(() => {
-    //   try {
-    //     this.dataRef = [
-    //       {
-    //         reff: this.searchRef,
-    //         hint: 'Tìm kiếm bộ đề'
-    //       },
-    //       {
-    //         reff: this.addRef,
-    //         hint: 'Tạo bộ đề mới'
-    //       },
-    //     ];
-    //     this.tour.onMeasure(this.dataRef);
-    //   } catch (error) {
+    const { user } = this.props;
+    const { userId } = user;
+    if (userId == '5f6ec0d787047800015deb9b') {
+      try {
+        this.refFlatlist.scrollToIndex({ animated: true, index: 0 });
+      } catch (error) {
+        
+      }
+      this.timeTour = setTimeout(() => {
+        try {
+          this.dataRef = [
+            {
+              reff: this.addRef,
+              hint: 'Tạo bộ đề mới'
+            },
+            {
+              reff: this.searchRef,
+              hint: 'Tìm kiếm bộ đề'
+            },
+            {
+              reff: this.classRef,
+              hint: 'Lọc bộ đề theo lớp'
+            },
+            {
+              reff: this.subjectRef,
+              hint: 'Lọc bộ đề theo môn học'
+            }
+          ];
+          this.tour.onMeasure(this.dataRef);
+        } catch (error) {
 
-    //   }
-    // }, 2000);
+        }
+      }, 1000);
+    }
+
     this.getData();
   }
 
@@ -413,16 +433,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
         </TouchableOpacity>
       </View>
     );
@@ -597,6 +617,10 @@ class Papers extends Component {
       clearTimeout(this.myTime);
       this.myTime = null;
     }
+    if (this.timeTour) {
+      clearTimeout(this.timeTour);
+      this.timeTour = null;
+    }
   }
 
   searchPaper = () => {
@@ -622,6 +646,7 @@ class Papers extends Component {
     return (
       <View style={styles.navbar}>
         <ClassItem
+          classRef={(clr) => this.classRef = clr}
           gradeActive={gradeActive}
           onOpen={() => this.refModalClass.onOpen()}
           refFlatlist={this.refFlatlist}
@@ -629,6 +654,7 @@ class Papers extends Component {
           Icon={AppIcon.iconFilter}
         />
         <SubjectItem
+          subjectRef={(clr) => this.subjectRef = clr}
           subjectActive={subjectActive}
           listSubjects={listSubjects}
           onOpen={() => this.refModalSubject.onOpen()}
