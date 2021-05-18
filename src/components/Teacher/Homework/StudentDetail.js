@@ -9,7 +9,8 @@ import {
     Modal,
     Dimensions,
     ActivityIndicator,
-    Alert
+    Alert,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressBar from '../../libs/ProgressBar';
@@ -20,6 +21,7 @@ import _ from 'lodash';
 import { AssignmentContentType } from '../../../utils/Utils';
 import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
+import shadowStyle from '../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -39,25 +41,29 @@ const getStatus = (item, point) => {
         case 0:
             return {
                 title: 'Chưa làm',
-                color: '#828282',
+                color: '#fff',
+                backgroundColor: "#FF6213",
                 result: 'Chưa có'
             };
         case 1:
             return {
                 title: 'Chưa làm',
-                color: '#828282',
+                color: '#fff',
+                backgroundColor: "#FF6213",
                 result: 'Chưa có'
             };
         case 2:
             return {
                 title: 'Đang làm',
-                color: '#828282',
+                color: '#fff',
+                backgroundColor: '#4EBE3B',
                 result: 'Chưa có'
             };
         case 3:
             return {
                 title: 'Đang gửi bài',
-                color: '#828282',
+                color: '#fff',
+                backgroundColor: "#FF6213",
                 result: 'Chưa có'
             };
         case 4:
@@ -65,20 +71,24 @@ const getStatus = (item, point) => {
             result = result % 1 === 0 ? result : result.toFixed(2);
             return {
                 title: 'Đã hoàn thành',
-                color: '#55B619',
+                color: '#fff',
+                backgroundColor: '#4EBE3B',
+                borderRadius: 10
                 // result: `Đã hoàn thành`
             };
         case 6:
             return {
                 title: 'Chờ chấm điểm tự luận',
-                color: '#828282',
+                color: '#fff',
+                backgroundColor: "#FF6213",
                 result: 'Chưa có'
             };
         default:
 
             return {
                 title: 'Chưa làm',
-                color: '#828282',
+                color: '#fff',
+                backgroundColor: "#FF6213",
                 result: 'Chưa có'
             };
     }
@@ -135,12 +145,6 @@ function ModalDetail(props) {
             });
         } else if (assignmentContentType == AssignmentContentType.regular) {
             props.navigation.navigate('HomeWorkResult', {
-                responseJson: props.dataResult,
-                nameTest: item.nameStudent,
-                statusbar: 'light-content',
-            });
-        } else if (assignmentContentType == AssignmentContentType.image) {
-            props.navigation.navigate('ImageResult', {
                 responseJson: props.dataResult,
                 nameTest: item.nameStudent,
                 statusbar: 'light-content',
@@ -217,24 +221,26 @@ function ModalDetail(props) {
                                 )
                             }}
                         />
-                        <TouchableOpacity
+                        <TouchableWithoutFeedback
                             onPress={goToResult}
                         >
                             <Text style={[styles.txtBtn, { fontSize: 14, color: '#000' }]}>Xem kết quả</Text>
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
                         <View style={styles.viewOptionModal}>
-                            <TouchableOpacity
-                                onPress={() => props.onRetryPoint(item.studentId)}
-                                style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
-                                <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
-                                <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => props.onRework(item.studentId)}
-                                style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
-                                <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
-                                <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
-                            </TouchableOpacity>
+                            <TouchableWithoutFeedback
+                                onPress={() => props.onRetryPoint(item.studentId)}>
+                                <View style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
+                                    <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
+                                    <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback
+                                onPress={() => props.onRework(item.studentId)}>
+                                <View style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
+                                    <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
+                                    <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                     </View>
                     <TouchableOpacity style={{ flex: 1 }} onPress={() => props.onClose()} />
@@ -308,8 +314,9 @@ export default function StudentDetail(props) {
     const renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
+        const { shadowBtn } = shadowStyle;
         return (
-            <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }]}>
+            <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }, shadowBtn]}>
                 <View style={styles.viewAvatar}>
                     {
                         item.avatar && !item.avatar.includes('no-avatar')
@@ -321,7 +328,12 @@ export default function StudentDetail(props) {
                     <View style={[styles.dotOnline, { backgroundColor: '#E0E0E0' }]} />
                 </View>
                 <View style={styles.contentItem}>
-                    <Text style={[styles.txtStatus, { color: status.color }]}>{status.title}</Text>
+                    <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>
+                        <Text style={[styles.txtStatus,
+                        { color: status.color }]}>
+                            {status.title}
+                        </Text>
+                    </View>
                     <Text style={styles.txtNameItem}>{item.nameStudent}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <View>
@@ -329,47 +341,62 @@ export default function StudentDetail(props) {
                                 progress={progress || 1}
                                 height={4}
                                 color='#2D9CDB'
-                                widthProps={width - 180}
+                                widthProps={width - 200}
                                 progressUnfilledColor='#C4C4C4'
                             />
                         </View>
-                        <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 8 }]}>{Number.parseFloat(progress).toFixed(2)}%</Text>
+                        <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 20 }]}>{Number.parseFloat(progress).toFixed(2)}%</Text>
                     </View>
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1 }}>
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', marginEnd: 7 }}>
-                            <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
-                            <Text style={styles.txtPoint}>{status.result}</Text>
-                            {
-                                item.status === 4
-                                    ?
-                                    <View style={styles.viewOption}>
-                                        {/* <TouchableOpacity
-                            onPress={() => handleRework(item.studentId)}
-                            style={styles.btnLamlai}>
-                            <Image source={require('../../../asserts/icon/ic_lamlai.png')} style={styles.icRemake} />
-                            <Text style={styles.txtNew}>Làm lại</Text>
-                        </TouchableOpacity> */}
-                                        <TouchableOpacity style={styles.btnDetail}
-                                            onPress={() => { detailStudent(item) }}>
-                                            <Text style={[styles.txtDetail, { color: '#2D9CDB' }]}>Chi tiết</Text>
-                                            <Ionicons
-                                                name='ios-arrow-forward'
-                                                color='#2D9CDB'
-                                                size={14}
-                                                style={{ marginStart: 5 }}
-                                            />
-                                        </TouchableOpacity>
 
-                                    </View>
-                                    : null
-                            }
-                        </View>
                     </View>
+                    {
+                        item.status == 4 ?
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <TouchableWithoutFeedback onPress={() => handleRework(item.studentId)} >
+                                    <View style={styles.remakeWork}>
+                                        <Text style={styles.txtRemake}>Làm lại</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
+                                    <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
+                                    <Text style={styles.txtPoint}>{status.result}</Text>
+                                    {
+                                        item.status === 4
+                                            ?
+                                            <View style={styles.viewOption}>
+                                                {/* <TouchableWithoutFeedback onPress={() => { detailStudent(item) }}>
+                                       <View style={styles.btnDetail}>
+                                           <Text style={styles.txtDetail}>Chi tiết</Text>
+                                           <Ionicons
+                                               name='ios-arrow-forward'
+                                               color='#DB422D'
+                                               size={14}
+                                               style={{ marginStart: 5 }}
+                                           />
+                                       </View>
+                                   </TouchableWithoutFeedback> */}
+                                                <View style={{ flexDirection: 'row', paddingRight: 17 }}>
+                                                    <Text style={styles.pointNew}>{item.point}</Text>
+                                                    <Text style={styles.pointNew}>Điểm</Text>
+                                                </View>
+                                            </View>
+                                            : null}
+                                </View>
+                            </View>
+                            : null
+                    }
                 </View>
+                {
+                    item.status == 4 && 2 
+                        ?
+                        <Image source={require('../../../asserts/icon/icon_rightStud.png')} style={{ alignSelf: 'center', right: 10 }} />
+                        : null
+                }
             </View>
         )
     }
@@ -418,12 +445,13 @@ const styles = StyleSheet.create({
         flex: 1
     },
     containerItem: {
+        // borderColor: '#56CCF2',
+        backgroundColor: '#fff',
         borderRadius: 2,
-        borderColor: '#56CCF2',
-        borderWidth: 0.5,
+        // borderWidth: 0.5,
         margin: 16,
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: 16
     },
     viewAvatar: {
         alignSelf: 'center',
@@ -449,15 +477,18 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     contentItem: {
-        marginStart: 11,
+        paddingHorizontal: 11,
         flex: 1
     },
     txtStatus: {
-        position: 'absolute',
-        top: 0,
-        right: 6,
+        // position: 'absolute',
+        // top: 0,
+        // right: 6,
         fontFamily: 'Nunito-Regular',
-        fontSize: RFFonsize(10)
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        paddingHorizontal: 10,
+        paddingVertical: 2,
     },
     txtNameItem: {
         fontFamily: 'Nunito-Bold',
@@ -466,12 +497,15 @@ const styles = StyleSheet.create({
     },
     viewContent: {
         flexDirection: 'row',
-        marginTop: 4
+        marginTop: 4,
+        paddingRight: 15
     },
     txtTitleItem: {
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(10),
-        color: '#828282'
+        color: '#828282',
+        marginLeft: 5,
+        alignSelf: 'center'
     },
     btnLamlai: {
         marginStart: 23,
@@ -545,7 +579,7 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(10),
         color: '#DB422D',
         textAlign: 'center',
-        marginStart: 12
+        marginStart: 5
     },
     viewOption: {
         flexDirection: 'row',
@@ -607,5 +641,34 @@ const styles = StyleSheet.create({
         width: 55,
         height: 55,
         borderRadius: 28
+    },
+    bgStatus: {
+        alignSelf: 'flex-end',
+        right: 15,
+        backgroundColor: '#FF6213',
+        borderRadius: 10
+    },
+    remakeWork: {
+        backgroundColor: '#FF6213',
+        paddingHorizontal: 30,
+        paddingVertical: 4,
+        alignSelf: 'flex-start',
+        marginTop: 7,
+        borderRadius: 15
+    },
+    txtRemake: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        alignSelf: 'center',
+        color: '#fff'
+    },
+    pointNew: {
+        fontFamily: "Nunito-Bold",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        paddingHorizontal: 3,
+        color: "#DB422D",
+        alignSelf: 'center'
     }
 })
