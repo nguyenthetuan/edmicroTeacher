@@ -41,6 +41,7 @@ import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
 import ToastApi from '../../common-new/ToastApi';
 import { ButtonLoading } from '../../common/ButtonBeta';
+import ShimmerAssigment from './ShimmerAssigment';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 10;
 const slideWidth = width - 95;
@@ -322,9 +323,6 @@ class Assignment extends Component {
   }
 
   async getData(isLoading) {
-    if (isLoading) {
-      await this.setState({ loading: true });
-    }
     const dataItem = this.props.navigation.state.params.item;
     const { token } = await dataHelper.getToken();
     if (token) {
