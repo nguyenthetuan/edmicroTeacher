@@ -39,6 +39,7 @@ import Kcolor from '../../../constants/Kcolor';
 import AppIcon from '../../../utils/AppIcon'
 import TourView from '../../../utils/TourView';
 import AsyncStorage from '@react-native-community/async-storage';
+import ShimerPaper from './ShimerPaper';
 
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -822,26 +823,32 @@ class Papers extends Component {
             {this.renderHeaderFlastList()}
             {this.createTabButton()}
           </Animated.View>
-          <FlastlistCus
-            style={{ paddingHorizontal: 16, paddingTop: 220 }}
-            data={dataFilter}
-            ref={(fl) => this.refFlatlist = fl}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={true}
-            keyExtractor={(item, index) => index.toString()}
-            extraData={dataFilter}
-            removeClippedSubviews={true}
-            listEmptyComponent={this._listTestEmpty}
-            listFooterComponent={this._listTestFooter}
-            _onOpenModal={this._onOpenModal}
-            onScroll={Animated.event([
-              {
-                nativeEvent: { contentOffset: { y: this._scroll_y } }
-              }
-            ],
-              { useNativeDriver: true }
-            )}
-          />
+          {loading ?
+            <View style={{ paddingTop: 220 }}>
+              <ShimerPaper />
+            </View>
+            :
+            <FlastlistCus
+              style={{ paddingHorizontal: 16, paddingTop: 220 }}
+              data={dataFilter}
+              ref={(fl) => this.refFlatlist = fl}
+              contentContainerStyle={styles.contentContainer}
+              showsVerticalScrollIndicator={true}
+              keyExtractor={(item, index) => index.toString()}
+              extraData={dataFilter}
+              removeClippedSubviews={true}
+              listEmptyComponent={this._listTestEmpty}
+              listFooterComponent={this._listTestFooter}
+              _onOpenModal={this._onOpenModal}
+              onScroll={Animated.event([
+                {
+                  nativeEvent: { contentOffset: { y: this._scroll_y } }
+                }
+              ],
+                { useNativeDriver: true }
+              )}
+            />
+          }
         </View>
         {visibleModalEdit ? (
           <ModalEditConfig

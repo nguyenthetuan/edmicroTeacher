@@ -28,10 +28,7 @@ interface Props {
     children: Node;
     visible: boolean;
     contentContainerStyle: ViewStyle,
-    closeModal: () => void;
-    onOpen: () => void,
     modalHeight: Number,
-    onCloseModal: () => void,
     title: String
 }
 
@@ -39,24 +36,17 @@ const ModalLize = (props: Props, ref) => {
     const { title, children, contentContainerStyle, modalHeight } = props;
     const modalizeRef = React.useRef(null);
 
-    let isVisible = false;
-
     useImperativeHandle(ref, () => ({
-        onOpen: () => {
-            if (!isVisible) {
-                modalizeRef.current?.open();
-            } else {
-                modalizeRef.current?.close();
-            }
-        },
+        onOpen: onOpened,
+        onClose: onClosed
     }));
 
     const onOpened = () => {
-        isVisible = true;
+        modalizeRef.current?.open();
     }
 
     const onClosed = () => {
-        isVisible = false;
+        modalizeRef.current?.close();
     }
 
     return (
@@ -66,8 +56,6 @@ const ModalLize = (props: Props, ref) => {
             modalHeight={modalHeight || height - height / 4}
             snapPoint={modalHeight}
             disableScrollIfPossible={false}
-            onClosed={onClosed}
-            onOpened={onOpened}
             HeaderComponent={renderHeader(title)}
             closeSnapPointStraightEnabled={true}
             tapGestureEnabled={true}
