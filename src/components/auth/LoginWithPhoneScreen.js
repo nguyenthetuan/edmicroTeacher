@@ -39,6 +39,7 @@ import TextLink from '../common-new/TextLink';
 import { Row, TextValidate, SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
 import AppIcon from '../../utils/AppIcon';
+import { resetStateReducerAction } from '../../actions/userAction';
 
 const { width, height } = Dimensions.get('window');
 
@@ -68,6 +69,7 @@ class LoginWithPhoneScreen extends Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     this.getRememberPhoneAndPass();
+    this.props.resetStateReducer();
     AsyncStorage.getItem('RememberMe_Onluyen').then(data => {
       if (data == 1) {
         this.setState({ RememberMe: true })
@@ -434,6 +436,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     saveAvatar: (avatar) => dispatch(saveAvatarAction(avatar)),
+    resetStateReducer: () => dispatch(resetStateReducerAction()),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginWithPhoneScreen);
