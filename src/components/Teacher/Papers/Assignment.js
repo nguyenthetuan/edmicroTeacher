@@ -40,6 +40,7 @@ import AwesomeButton from 'react-native-really-awesome-button';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
 import ToastApi from '../../common-new/ToastApi';
+import { ButtonLoading } from '../../common/ButtonBeta';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 10;
 const slideWidth = width - 95;
@@ -61,7 +62,7 @@ function Item(props) {
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
   const [isDisable, setIsDisable] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const [timeStart, setTimeStart] = useState(
     item.timeStart
@@ -120,6 +121,9 @@ function Item(props) {
   };
 
   const validate = () => {
+    if (isDisable) {
+      return false;
+    }
     if (moment(timeStart).format('DD-MM-YYYY, HH:mm') === moment(timeEnd).format('DD-MM-YYYY, HH:mm')) {
       props.onToast(
         <ToastFaild title="Thời gian không hợp lệ!" />
@@ -155,11 +159,13 @@ function Item(props) {
 
       const { token } = await dataHelper.getToken();
       if (token) {
+        setIsLoading(true);
         try {
           const response = await apiPapers.assignment({
             token,
             body
           })
+          setIsLoading(false);
           if (response && response.status === 1) {
             // props.onToast('Giao bài thành công!');
             props.onRefToast((<ToastApi title={"Giao bài thành công!"} />), 3000);
@@ -177,6 +183,7 @@ function Item(props) {
             props.onToast(<ToastFaild title="Có lỗi xảy ra vui lòng thử lại!" />)
           }
         } catch (error) {
+          setIsLoading(false);
         }
 
       } else {
@@ -261,7 +268,7 @@ function Item(props) {
             <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
           </View>
         </TouchableWithoutFeedback>
-        <AwesomeButton
+        {/* <AwesomeButton
           onPress={onAssignment}
           style={[styles.AweBtn]}
           height={45}
@@ -273,7 +280,19 @@ function Item(props) {
           disabled={isDisable}
         >
           <Text style={styles.txtAssignment}>Giao bài</Text>
-        </AwesomeButton>
+        </AwesomeButton> */}
+        <ButtonLoading
+          title='Giao bài'
+          buttonStyle={[styles.AweBtn, { height: 45, width: 200, padding: 0, backgroundColor: isDisable ? '#DADADA' : '#2D9DFE' }]}
+          textStyle={styles.txtAssignment}
+          color={isDisable ? '#DADADA' : '#2D9DFE'}
+          bgColor='#642ED'
+          onPress={onAssignment}
+          disabled={true}
+          isLoading={isLoading}
+          rippleSize={isDisable ? 1 : 200}
+        />
+
       </View>
       {/* {__DEV__ ? null : */}
       <DateTimePickerModal
@@ -596,10 +615,10 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(20),
     fontWeight: '500',
     color: '#fff',
-    marginLeft: 50,
-    marginRight: 50,
-    marginTop: 6,
-    marginBottom: 6
+    // marginLeft: 50,
+    // marginRight: 50,
+    // marginTop: 6,
+    // marginBottom: 6
   },
   checkAllow: {
     width: 18,

@@ -743,7 +743,7 @@ class MarkCamera extends Component {
                     <ModalSuccess
                         navigation={this.props.navigation}
                         goToAssigned={this.goToAssigned}
-                        data={this.state.resSuccess}
+                        data={{...this.state.resSuccess, name :this.state.name}}
                     />
                 </Modal>
             </View>

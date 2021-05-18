@@ -308,13 +308,13 @@ class StepThreePDF extends Component {
 
                     <Text style={styles.styTxtLabel}>Môn học</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                        <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+                        <View style={{ height: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
                             {!subjectActive.length && <Text style={styles.titleDes}>Môn học</Text>}
                         </View>
                         <TouchableWithoutFeedback
                             onPress={() => { this.refModalSubject.onOpen() }}
                         >
-                            <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
+                            <View style={{ height: 40, width: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
                                 <Icon
                                     name={'angle-down'}
                                     size={25}
@@ -340,13 +340,13 @@ class StepThreePDF extends Component {
                     </View>
                     <Text style={styles.styTxtLabel}>Khối lớp</Text>
                     <View style={[styles.styTxtPlace, { paddingHorizontal: 5 }]} >
-                        <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+                        <View style={{ height: 40, alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
                             {!gradeActive.length && <Text style={styles.titleDes}>Khối lớp</Text>}
                         </View>
                         <TouchableWithoutFeedback
                             onPress={() => { this.refModalClass.onOpen() }}
                         >
-                            <View style={{ height: 40, with: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
+                            <View style={{ height: 40, width: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
                                 <Icon
                                     name={'angle-down'}
                                     size={25}
