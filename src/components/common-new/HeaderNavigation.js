@@ -44,7 +44,8 @@ export default class HeaderNavigation extends React.Component {
             isShow = true,
             data,
             actionIconTwo,
-            iconActionTwo
+            iconActionTwo,
+            clBack
         } = this.props;
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
@@ -52,7 +53,7 @@ export default class HeaderNavigation extends React.Component {
                     <TouchableWithoutFeedback onPress={this.onGoback} hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}>
                         <View style={styles.button}>
                             <Image
-                                style={{ tintColor: color }}
+                                style={{ tintColor: color }, clBack}
                                 source={require('../../asserts/icon/icon_arrowLeftv3.png')}
                             />
                         </View>

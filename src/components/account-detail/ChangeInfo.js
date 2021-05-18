@@ -450,7 +450,8 @@ class ChangeInfo extends Component {
         <HeaderNavigation
           title={'Hồ sơ cá nhân'}
           navigation={this.props.navigation}
-          color={'#fff'}
+          color={'#fff'}  
+          clBack={{ tintColor: "#fff" }}
         />
         <View style={{ flex: 1, backgroundColor: '#fff', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
           <ScrollView
