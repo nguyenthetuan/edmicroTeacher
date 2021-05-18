@@ -27,7 +27,7 @@ export default class ModalFillter extends Component {
   }
 
   handleStatistic = () => {
-    this.changeStateModale();
+    this.modalizeRef.onClose();
     this.props.handleStatistic();
   }
 
@@ -48,16 +48,12 @@ export default class ModalFillter extends Component {
     return (
       <Modal
         ref={ref => this.modalizeRef = ref}
-        closeModal={this.changeStateModale}
         modalHeight={height - height / 8}
       >
         <SafeAreaView style={{ backgroundColor: '#F6F7F9' }} />
         <View style={styles.contain}>
           <HeaderNavigation
             title={'Tuỳ chọn'}
-            // onRightAction={this.changeStateModale}
-            // actionIcon={AppIcon.close_img}
-            // actionIcon={require('../../../asserts/icon/icon_closeXmodal.png')}
             isShow={false}
           />
           <View style={[styles.wrapSelect1, { paddingTop: HEIGHT_TOPBAR, marginTop: 50 }]}>

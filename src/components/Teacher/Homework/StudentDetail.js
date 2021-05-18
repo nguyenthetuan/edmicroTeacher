@@ -217,7 +217,7 @@ function ModalDetail(props) {
                                         height: 20,
                                         backgroundColor: Object.values(item) > -1 && Object.values(item) < 3 ? colors[Object.values(item)] : colors[0]
                                     }} >
-                                    </View> 
+                                    </View>
                                 )
                             }}
                         />
@@ -256,6 +256,7 @@ export default function StudentDetail(props) {
     const [dataDetail, setDetail] = useState(null);
     const [point, setPoint] = useState(0);
     const [dataResult, setDataResult] = useState(null);
+    const [isLoading, setisLoading] = useState(false);
 
     const handleRetryCheckPoint = async (studentId) => {
         if (dataDetail) {
@@ -302,13 +303,26 @@ export default function StudentDetail(props) {
         );
     }
 
-    const detailStudent = async (item) => {
-        console.log("🚀 ~ file: StudentDetail.js ~ line 286 ~ detailStudent ~ item", item)
+    const goToResult = item => async () => {
+        setisLoading(true);
         const { token } = await dataHelper.getToken();
-        const response = await apiHomework.getStudentDetail({ token, assignId: props.screenProps?.data?.data.assignId, studentId: item.studentId })
-        setPoint(response.data.totalScore);
-        setDetail(item);
+        const response = await apiHomework.getStudentDetail({ token, assignId: props.screenProps?.data?.data.assignId, studentId: item.studentId });
         setDataResult(response);
+        const { assignmentContentType } = response.data;
+        setisLoading(false);
+        if (assignmentContentType == AssignmentContentType.pdf) {
+            props.screenProps.navigation.navigate('SchoolResultPDF', {
+                responseJson: response,
+                nameTest: item.nameStudent,
+                statusbar: 'light-content',
+            });
+        } else if (assignmentContentType == AssignmentContentType.regular) {
+            props.screenProps.navigation.navigate('HomeWorkResult', {
+                responseJson: response,
+                nameTest: item.nameStudent,
+                statusbar: 'light-content',
+            });
+        }
     }
 
     const renderItem = ({ item, index }) => {
@@ -369,17 +383,6 @@ export default function StudentDetail(props) {
                                         item.status === 4
                                             ?
                                             <View style={styles.viewOption}>
-                                                {/* <TouchableWithoutFeedback onPress={() => { detailStudent(item) }}>
-                                       <View style={styles.btnDetail}>
-                                           <Text style={styles.txtDetail}>Chi tiết</Text>
-                                           <Ionicons
-                                               name='ios-arrow-forward'
-                                               color='#DB422D'
-                                               size={14}
-                                               style={{ marginStart: 5 }}
-                                           />
-                                       </View>
-                                   </TouchableWithoutFeedback> */}
                                                 <View style={{ flexDirection: 'row', paddingRight: 17 }}>
                                                     <Text style={styles.pointNew}>{item.point}</Text>
                                                     <Text style={styles.pointNew}>Điểm</Text>
@@ -392,9 +395,17 @@ export default function StudentDetail(props) {
                     }
                 </View>
                 {
-                    item.status == 4 && 2 
+                    item.status == 4 && 2
                         ?
-                        <Image source={require('../../../asserts/icon/icon_rightStud.png')} style={{ alignSelf: 'center', right: 10 }} />
+                        <TouchableWithoutFeedback
+                            onPress={goToResult(item)}
+                            disabled={isLoading}
+                        >
+                            {isLoading
+                                ? <ActivityIndicator style={{ alignSelf: 'center', right: 10 }} />
+                                : <Image source={require('../../../asserts/icon/icon_rightStud.png')} style={{ alignSelf: 'center', right: 10 }} />
+                            }
+                        </TouchableWithoutFeedback>
                         : null
                 }
             </View>
@@ -422,17 +433,6 @@ export default function StudentDetail(props) {
                                 extraData={props.data}
                                 renderItem={renderItem}
                             />
-                            {
-                                dataDetail ? <ModalDetail
-                                    onRetryPoint={(studentId) => handleRetryCheckPoint(studentId)}
-                                    onRework={(studentId) => handleRework(studentId)}
-                                    data={dataDetail}
-                                    dataResult={dataResult}
-                                    onClose={() => setDetail(null)}
-                                    point={point}
-                                    navigation={props.screenProps.navigation}
-                                /> : null
-                            }
                         </View>)
             }
             <Toast ref={toast} position={'center'} />

@@ -320,6 +320,7 @@ function HomeWorkDraScreen(props) {
     };
 
     const handleStatistic = async () => {
+        setIsLoading(true);
         if (data.class.length > 0) {
             const { token } = await dataHelper.getToken();
             if (token) {
@@ -329,7 +330,9 @@ function HomeWorkDraScreen(props) {
                 });
                 props.needUpdate(true);
             }
+            setIsLoading(false);
         } else {
+            setIsLoading(false);
             toast.current.show('Không tìm thấy lớp nào!');
         }
     };
