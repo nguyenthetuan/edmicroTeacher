@@ -619,7 +619,6 @@ class SearchScreen extends React.Component {
                     navigation={this.props.navigation}
                     goBack={this.openBack}
                     color={'#2D9CDB'}
-                    clBack={{ tintColor: "#000" }}
                 />
                 <View style={styles.backpa}>
                     <SearchComponent
