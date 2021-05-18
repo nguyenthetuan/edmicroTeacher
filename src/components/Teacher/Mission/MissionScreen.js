@@ -18,6 +18,7 @@ import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import HeaderMissionNew from '../../common-new/HeaderMissionNew';
 import SearchComponent from "react-native-search-component";
+import ShimerMission from './ShimerMission';
 const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -176,7 +177,6 @@ export default class MissionScreen extends Component {
       positionY,
       listMissionSearch,
     } = this.state;
-    // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 100],
@@ -210,26 +210,33 @@ export default class MissionScreen extends Component {
                 {this.renderHeader()}
               </Animated.View>
             </Animated.View>
-            <AnimatedFlatList
-              ref={(fl) => this.refFlatlist = fl}
-              data={listMissionSearch}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={this.renderItem}
-              initialNumToRender={3}
-              bounces={false}
-              scrollEventThrottle={1}
-              ListEmptyComponent={this._listTestEmpty}
-              ListFooterComponent={<View style={{ height: 70 }} />}
-              showsVerticalScrollIndicator={true}
-              onScroll={Animated.event([
-                {
-                  nativeEvent: { contentOffset: { y: this._scroll_y } }
-                }
-              ],
-                { useNativeDriver: true }
-              )}
-              style={styles.scroll_view}
-            />
+            {
+              isLoadingMission ?
+                <View style={styles.scroll_view}>
+                  <ShimerMission />
+                </View>
+                :
+                <AnimatedFlatList
+                  ref={(fl) => this.refFlatlist = fl}
+                  data={listMissionSearch}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={this.renderItem}
+                  initialNumToRender={3}
+                  bounces={false}
+                  scrollEventThrottle={1}
+                  ListEmptyComponent={this._listTestEmpty}
+                  ListFooterComponent={<View style={{ height: 70 }} />}
+                  showsVerticalScrollIndicator={true}
+                  onScroll={Animated.event([
+                    {
+                      nativeEvent: { contentOffset: { y: this._scroll_y } }
+                    }
+                  ],
+                    { useNativeDriver: true }
+                  )}
+                  style={styles.scroll_view}
+                />
+            }
           </View>
         </SafeAreaView>
       </>

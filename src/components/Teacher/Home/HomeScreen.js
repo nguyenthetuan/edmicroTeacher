@@ -30,6 +30,7 @@ import {
     statisticAssignmentAction,
     diaryActiveAction
 } from '../../../actions/statisticAction';
+import ShimerHome from './ShimerHome';
 const { height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 
@@ -174,7 +175,7 @@ class HomeScreen extends Component {
                     <View style={HomeStyle.body}>
                         {
                             isLoading ?
-                                <ActivityIndicator size="small" style={{ flex: 1, height: height * 0.5 }} />
+                                <ShimerHome />
                                 :
                                 <StatisticHome
                                     data={data}
