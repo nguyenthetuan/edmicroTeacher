@@ -217,7 +217,7 @@ function ModalDetail(props) {
                                         height: 20,
                                         backgroundColor: Object.values(item) > -1 && Object.values(item) < 3 ? colors[Object.values(item)] : colors[0]
                                     }} >
-                                    </View>
+                                    </View> 
                                 )
                             }}
                         />
