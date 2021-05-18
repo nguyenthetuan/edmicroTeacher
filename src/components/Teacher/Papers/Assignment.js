@@ -298,6 +298,7 @@ function Item(props) {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
+        date={stage === Stage.begin ? timeStart : timeEnd}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
