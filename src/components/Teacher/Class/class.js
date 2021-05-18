@@ -13,6 +13,7 @@ import Api from '../../../services/apiClassTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import { connect } from 'react-redux';
 import { userGiftAction } from '../../../actions/giftAction';
+import ModalSuccess from '../Papers/ModalSuccess/ModalSuccess';
 
 class Class extends Component {
   constructor(props) {
@@ -72,8 +73,8 @@ class Class extends Component {
     const { user } = this.props;
     return (
       <>
-        <StatusBar />
-        <SafeAreaView style={styles.container}>
+        {/* <StatusBar /> */}
+        {/* <SafeAreaView style={styles.container}>
           <ListClass
             isLoading={isLoading}
             user={user}
@@ -82,7 +83,13 @@ class Class extends Component {
             onRefresh={this._getData}
             isRefresh={isRefresh}
           />
-        </SafeAreaView>
+        </SafeAreaView> */}
+        <ModalSuccess data={{
+          subjectCode: 'TOAN',
+          duration: 3000,
+          assignmentType: 1
+        }
+        } />
       </>
     );
   }

@@ -39,6 +39,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AwesomeButton from 'react-native-really-awesome-button';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
+import ToastApi from '../../common-new/ToastApi';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 10;
 const slideWidth = width - 95;
@@ -134,6 +135,10 @@ function Item(props) {
     return true;
   }
 
+  onShowToast = () => {
+    props.onRefToast((<ToastApi title={"Giao bài thành công!"} />), 3000);
+  }
+
   const onAssignment = async () => {
     if (validate()) {
       const body = {
@@ -157,7 +162,7 @@ function Item(props) {
           })
           if (response && response.status === 1) {
             // props.onToast('Giao bài thành công!');
-            props.onRefToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
+            props.onRefToast((<ToastApi title={"Giao bài thành công!"} />), 3000);
             props.needUpdate(true);
             setIsDisable(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
@@ -259,7 +264,6 @@ function Item(props) {
         >
           <Text style={styles.txtAssignment}>Giao bài</Text>
         </AwesomeButton>
-
       </View>
       {/* {__DEV__ ? null : */}
       <DateTimePickerModal
@@ -330,8 +334,8 @@ class Assignment extends Component {
   onToast = (text) => {
     this.toast.show(text)
   }
-  onRefToast = (text) => {
-    this.refToast.show(text)
+  onRefToast = (text, duaration = 2000) => {
+    this.refToast.show(text, duaration)
   }
 
   _handleGoBack = () => {
@@ -419,7 +423,7 @@ class Assignment extends Component {
                     item={item}
                     navigation={this.props.navigation}
                     onToast={(text) => this.onToast(text)}
-                    onRefToast={(text) => this.onRefToast(text)}
+                    onRefToast={(text, duration) => this.onRefToast(text, duration)}
                     dataItem={dataItem}
                     needUpdate={this.props.needUpdate}
                   />
@@ -687,7 +691,7 @@ const styles = StyleSheet.create({
   styleTostSuccess: {
     flex: 1,
     height: 70,
-    width: width - 70,
+    width: 280,
     backgroundColor: '#16BDA9',
     flexDirection: 'row',
     justifyContent: 'space-between',
