@@ -8,7 +8,8 @@ import {
     Animated,
     FlatList,
     ActivityIndicator,
-    Dimensions
+    Dimensions,
+    TouchableWithoutFeedback
 } from "react-native";
 import SearchComponent from "react-native-search-component";
 import { RFFonsize } from '../../utils/Fonts';
@@ -563,6 +564,17 @@ class SearchScreen extends React.Component {
             }, 220);
         });
     };
+    renderItem = ({ item, index }) => {
+        return (
+            <TouchableWithoutFeedback
+                onPress={this.onGetPapers()}
+                hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                <View style={styles.sugges}>
+                    <Text style={styles.nameSug}>{item.name}</Text>
+                </View>
+            </TouchableWithoutFeedback>
+        )
+    }
 
     render() {
         const { userId, timeCached } = this.props;
@@ -607,6 +619,7 @@ class SearchScreen extends React.Component {
                     navigation={this.props.navigation}
                     goBack={this.openBack}
                     color={'#2D9CDB'}
+                    clBack={{ tintColor: "#000" }}
                 />
                 <View style={styles.backpa}>
                     <SearchComponent
@@ -620,6 +633,18 @@ class SearchScreen extends React.Component {
                         placeholderTextColor="#828282"
                     />
                 </View>
+                <View style={{marginHorizontal: 16}}>
+                    <FlatList
+                        data={listPapers}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={this.renderItem}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    // ListEmptyComponent={this.renderEmpty}
+                    />
+                </View>
+
+
                 <AnimatedFlatList
                     style={{ paddingHorizontal: 16 }}
                     data={listPapers}
@@ -731,6 +756,24 @@ const styles = StyleSheet.create({
         paddingRight: 35,
         fontFamily: 'Nunito',
         fontSize: RFFonsize(16)
+    },
+    sugges: {
+        flex: 1,
+        flexDirection: 'row',
+        borderWidth: 0.5,
+        borderColor: "#c4c4c4",
+        borderStyle: 'solid',
+        borderRadius: 20,
+        marginLeft: 10
+    },
+    nameSug: {
+        paddingHorizontal: 16,
+        paddingVertical: 5,
+        alignSelf: "center",
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#000'
     }
 });
 
