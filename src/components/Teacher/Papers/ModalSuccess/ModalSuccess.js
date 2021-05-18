@@ -16,7 +16,7 @@ import Common from '../../../../utils/Common';
 import _ from 'lodash';
 import ZoomAnim from '../../../anim/ZoomAnim';
 
-const getText = (duration, subjectActive, assignmentType, name) => {
+const getText = (duration, assignmentType, name) => {
     let string = 'Bạn đã tạo thành công bộ đề';
     if (assignmentType) {
         string = string + ` kiểm tra ${duration} phút: \"`

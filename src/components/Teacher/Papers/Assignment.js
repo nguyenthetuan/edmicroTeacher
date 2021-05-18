@@ -208,12 +208,6 @@ function Item(props) {
         <View style={styles.viewName}>
           <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
-        {/* <View style={styles.viewName}>
-          <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
-          <View style={styles.inputName}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>{props.dataItem.name}</Text>
-          </View>
-        </View> */}
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Ngày bắt đầu</Text>
           <TouchableWithoutFeedback
@@ -269,19 +263,6 @@ function Item(props) {
             <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
           </View>
         </TouchableWithoutFeedback>
-        {/* <AwesomeButton
-          onPress={onAssignment}
-          style={[styles.AweBtn]}
-          height={45}
-          backgroundColor={isDisable ? '#DADADA' : '#2D9DFE'}
-          borderRadius={25}
-          backgroundActive={'#2D9DFE'}
-          backgroundShadow={'transparent'}
-          backgroundDarker={'transparent'}
-          disabled={isDisable}
-        >
-          <Text style={styles.txtAssignment}>Giao bài</Text>
-        </AwesomeButton> */}
         <ButtonLoading
           title='Giao bài'
           buttonStyle={[styles.AweBtn, { height: 45, width: 200, padding: 0, backgroundColor: isDisable ? '#DADADA' : '#2D9DFE' }]}
@@ -299,6 +280,7 @@ function Item(props) {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
+        date={stage === Stage.begin ? timeStart : timeEnd}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />

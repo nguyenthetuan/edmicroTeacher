@@ -23,7 +23,7 @@ export default class StepFourPDF extends Component {
     }
 
     getText = () => {
-        const { duration, assignmentType, subjectActive, item } = this.props.navigation.state.params.data;
+        const { duration, assignmentType, item } = this.props.navigation.state.params.data;
         let string = 'Bạn đã tạo thành công bộ đề';
         if (assignmentType) {
             string = string + ` kiểm tra ${duration} phút: \"`
