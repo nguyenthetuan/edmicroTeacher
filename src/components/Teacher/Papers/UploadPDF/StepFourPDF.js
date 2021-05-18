@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, Dimensions, StatusBar } from 'react-native';
 import Common from '../../../../utils/Common';
-
+import ZoomAnim from '../../../anim/ZoomAnim';
 const { width } = Dimensions.get('window');
 
 export default class StepFourPDF extends Component {
@@ -23,20 +23,16 @@ export default class StepFourPDF extends Component {
     }
 
     getText = () => {
-        const { duration, assignmentType, subjectActive } = this.props.navigation.state.params.data;
+        const { duration, assignmentType, subjectActive, item } = this.props.navigation.state.params.data;
         let string = 'Bạn đã tạo thành công bộ đề';
         if (assignmentType) {
-            string = string + ` Kiểm tra ${duration} phút`
+            string = string + ` kiểm tra ${duration} phút: \"`
         } else {
-            string = string + ' Tự luyện'
+            string = string + ' tự luyện: \"'
         }
-        if (subjectActive.length > 1) {
-            string = string + ' liên môn'
-        } else {
-            string = string + ' môn ' + Common.getDisplaySubject(subjectActive[0]);
-        }
+        string += item.name;
+        string += '\"'
         return string;
-
     }
 
     render() {
@@ -56,7 +52,9 @@ export default class StepFourPDF extends Component {
                             <Text style={styles.styTxtBtn}>Quay lại</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.textDes}>{this.getText()}</Text>
+                    <ZoomAnim>
+                        <Text style={styles.textDes}>{this.getText()}</Text>
+                    </ZoomAnim>
                 </SafeAreaView>
                 <SafeAreaView style={{ flex: 0 }} />
             </View>
@@ -81,10 +79,10 @@ const styles = StyleSheet.create({
     textDes: {
         fontWeight: '400',
         fontFamily: 'Nunito',
-        fontSize: 16,
+        fontSize: 18,
         color: '#828282',
         top: 20,
-        maxWidth: width / 2
+        maxWidth: width / 3 * 2
     },
     styBtn: {
         backgroundColor: '#36B9FD',

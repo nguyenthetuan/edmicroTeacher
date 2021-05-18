@@ -514,7 +514,7 @@ class ConfigQuestion extends Component {
               {
                 listGrades: this.props.paper.listGrade,
                 listSubjects: this.props.paper.listSubject,
-                name: '',
+                // name: '',
                 loading: false,
                 resSuccess: res,
               },
@@ -714,6 +714,7 @@ class ConfigQuestion extends Component {
       modalVisible
     } = this.state;
     const { shadowBtn } = shadowStyle;
+    console.log("this.state.name: ", this.state.name);
     return (
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
@@ -1161,21 +1162,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                        <WebView
-                          ref={ref => (this.webview = ref)}
-                          source={{
-                            html: html.renderMatarialDetail(htmlContent, urlMedia),
-                            baseUrl,
-                          }}
-                          subjectId={'TOAN'}
-                          originWhitelist={['file://']}
-                          scalesPageToFit={false}
-                          javaScriptEnabled
-                          showsVerticalScrollIndicator={false}
-                          startInLoadingState={false}
-                          style={{ backgroundColor: '#fff' }}
-                        />
-                      )}
+                      <WebView
+                        ref={ref => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={false}
+                        style={{ backgroundColor: '#fff' }}
+                      />
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -1187,7 +1188,7 @@ class ConfigQuestion extends Component {
             visible={modalVisible}
           >
             <ModalSuccess
-              data={this.state.resSuccess}
+              data={{ ...this.state.resSuccess, name: this.state.name }}
               navigation={this.props.navigation}
               goToAssigned={this.goToAssigned}
             />

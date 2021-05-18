@@ -485,16 +485,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                            <RippleButton
-                                key={`b${index}`}
-                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                                onPress={() => this.activeGrade(item)}>
-                                <View
-                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
+                        <RippleButton
+                            key={`b${index}`}
+                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                            onPress={() => this.activeGrade(item)}>
+                            <View
+                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                <Text style={styles.txtItemActive}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -523,16 +523,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                            <RippleButton
-                                key={`d${index}`}
-                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                                onPress={() => this.activeSubject(item)}>
-                                <View
-                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                    <Text style={styles.txtItemActive}>{item.name}</Text>
-                                </View>
-                            </RippleButton>
-                        );
+                        <RippleButton
+                            key={`d${index}`}
+                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                            onPress={() => this.activeSubject(item)}>
+                            <View
+                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                <Text style={styles.txtItemActive}>{item.name}</Text>
+                            </View>
+                        </RippleButton>
+                    );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -901,7 +901,7 @@ class ConfigQuestion extends Component {
                     <ModalSuccess
                         navigation={this.props.navigation}
                         goToAssigned={this.goToAssigned}
-                        data={this.state.resSuccess}
+                        data={{...this.state.resSuccess, name :this.state.name}}
                     />
                 </Modal>
             </View >
