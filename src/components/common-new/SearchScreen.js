@@ -9,19 +9,20 @@ import {
     FlatList,
     ActivityIndicator,
     Dimensions,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Image
 } from "react-native";
+import { connect } from 'react-redux';
+import dataHelper from '../../utils/dataHelper';
+import apiPapers from '../../services/apiPapersTeacher';
+import { getSourceAvatar } from '../../utils/Helper';
+import { updateExamListAction } from '../../actions/paperAction';
+import { setListGrades, setListSubject } from '../../actions/paperAction';
+import _ from 'lodash';
 import SearchComponent from "react-native-search-component";
 import { RFFonsize } from '../../utils/Fonts';
-import { getSourceAvatar } from '../../utils/Helper';
-import dataHelper from '../../utils/dataHelper';
 import Globals from '../../utils/Globals';
-import { connect } from 'react-redux';
-import _ from 'lodash';
 import { alertDeletePaper } from '../../utils/Alert';
-import { updateExamListAction } from '../../actions/paperAction';
-import apiPapers from '../../services/apiPapersTeacher';
-import { setListGrades, setListSubject } from '../../actions/paperAction';
 import ItemListTest from '../Teacher/Papers/ItemListTest';
 import ModalOption from '../Teacher/Papers/ModalOption';
 import ModalEditName from '../Teacher/Papers/ModalEditName';
@@ -63,7 +64,8 @@ class SearchScreen extends React.Component {
             animation: 'fadeInUpBig',
             assignmentContentType: 0,
             typeChange: 0,
-            dataFilter: []
+            dataFilter: [],
+            text: ''
         };
 
 
@@ -361,6 +363,10 @@ class SearchScreen extends React.Component {
 
     onChangeText = e => {
         const textSearch = e?.nativeEvent?.text;
+        this.searchData(textSearch);
+    }
+
+    searchData = (textSearch) => {
         this.setState({ textSearch });
         if (this.timeSearch) {
             clearTimeout(this.timeSearch);
@@ -368,6 +374,7 @@ class SearchScreen extends React.Component {
         }
         this.timeSearch = setTimeout(this.searchPaper, 500);
     }
+
     onSearchClear = () => {
         this.setState({ textSearch: '' });
         if (this.timeSearch) {
@@ -564,13 +571,16 @@ class SearchScreen extends React.Component {
             }, 220);
         });
     };
+
     renderItem = ({ item, index }) => {
+        const textSearch = item.name;
         return (
             <TouchableWithoutFeedback
-                onPress={this.onGetPapers()}
+                onPress={() => { this.searchData(textSearch) }}
                 hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}>
                 <View style={styles.sugges}>
-                    <Text style={styles.nameSug}>{item.name}</Text>
+                    <Text numberOfLines={1}
+                        style={styles.nameSug}>{textSearch}</Text>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -609,7 +619,6 @@ class SearchScreen extends React.Component {
             outputRange: [0, -330],
             extrapolate: 'clamp',
         });
-
         // console.log("render paper");
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -619,57 +628,74 @@ class SearchScreen extends React.Component {
                     navigation={this.props.navigation}
                     goBack={this.openBack}
                     color={'#2D9CDB'}
-                    clBack={{ tintColor: "#000" }}
                 />
                 <View style={styles.backpa}>
-                    <SearchComponent
-                        placeholder="Tìm kiếm"
-                        cancelColor="#2D9CDB"
-                        value={textSearch}
-                        onChange={this.onChangeText}
-                        onSearchClear={this.onSearchClear}
-                        customSearchInputStyle={styles.textSear}
-                        customCancelTextStyle={styles.txtCan}
-                        placeholderTextColor="#828282"
-                    />
-                </View>
-                <View style={{marginHorizontal: 16}}>
-                    <FlatList
-                        data={listPapers}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={this.renderItem}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    // ListEmptyComponent={this.renderEmpty}
-                    />
+                    {/* <TouchableWithoutFeedback
+                        hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                        onPress={() => { this.props.navigation.goBack() }}
+                    >
+                        <View style={{ flex: 1, alignSelf: 'center', paddingHorizontal: 10, paddingRight: 16 }}>
+                            <Image source={require('../../asserts/icon/icon_arrowLeftv3.png')} />
+                        </View>
+                    </TouchableWithoutFeedback> */}
+                    <View style={{ flex: 0 }}>
+                        <SearchComponent
+                            placeholder="Tìm kiếm"
+                            cancelColor="#2D9CDB"
+                            value={textSearch}
+                            onChange={this.onChangeText}
+                            onSearchClear={this.onSearchClear}
+                            customSearchInputStyle={styles.textSear}
+                            customCancelTextStyle={styles.txtCan}
+                            placeholderTextColor="#828282"
+                            autoFocus={true}
+                        />
+                    </View>
                 </View>
 
+                {this.state.textSearch == '' ?
+                    <View style={{ marginHorizontal: 16, paddingTop: 5 }}>
+                        {listPapers == listPapers.length > 0 ?
+                            <ActivityIndicator size="small" style={{ marginTop: height * 0.1 }} />
+                            :
+                            <FlatList
+                                data={listPapers.slice(0, 9)}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={this.renderItem}
+                                numColumns={2}
+                                showsHorizontalScrollIndicator={false}
+                            />
 
-                <AnimatedFlatList
-                    style={{ paddingHorizontal: 16 }}
-                    data={listPapers}
-                    contentContainerStyle={styles.contentContainer}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    extraData={dataFilter}
-                    ListEmptyComponent={this._listTestEmpty}
-                    // ListFooterComponent={this._listTestFooter}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-                        )
-                    }}
-                    initialNumToRender={10}
-                    bounces={false}
-                    scrollEventThrottle={1}
-                    onScroll={Animated.event([
-                        {
-                            nativeEvent: { contentOffset: { y: this._scroll_y } }
                         }
-                    ],
-                        { useNativeDriver: true }
-                    )}
-                />
+
+                    </View>
+                    :
+                    <AnimatedFlatList
+                        style={{ paddingHorizontal: 16 }}
+                        data={listPapers}
+                        contentContainerStyle={styles.contentContainer}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
+                        extraData={dataFilter}
+                        ListEmptyComponent={this._listTestEmpty}
+                        // ListFooterComponent={this._listTestFooter}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+                            )
+                        }}
+                        initialNumToRender={10}
+                        bounces={false}
+                        scrollEventThrottle={1}
+                        onScroll={Animated.event([
+                            {
+                                nativeEvent: { contentOffset: { y: this._scroll_y } }
+                            }
+                        ],
+                            { useNativeDriver: true }
+                        )}
+                    />
+                }
                 {visibleModalEdit ? (
                     <ModalEditConfig
                         onVisible={visible => this.onVisibleModalEdit(visible)}
@@ -755,16 +781,15 @@ const styles = StyleSheet.create({
     textSear: {
         paddingRight: 35,
         fontFamily: 'Nunito',
-        fontSize: RFFonsize(16)
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(20),
+
     },
     sugges: {
         flex: 1,
         flexDirection: 'row',
-        borderWidth: 0.5,
-        borderColor: "#c4c4c4",
-        borderStyle: 'solid',
-        borderRadius: 20,
-        marginLeft: 10
+        marginLeft: 10,
+        marginTop: 16
     },
     nameSug: {
         paddingHorizontal: 16,
@@ -773,7 +798,13 @@ const styles = StyleSheet.create({
         fontFamily: "Nunito",
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
-        color: '#000'
+        color: '#383838',
+        borderWidth: 0.5,
+        borderColor: "#c4c4c4",
+        borderStyle: 'solid',
+        borderRadius: 18,
+        backgroundColor: '#ededed',
+        overflow: 'hidden'
     }
 });
 
