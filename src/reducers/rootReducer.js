@@ -6,7 +6,9 @@ import ReportReucer from './reportReducer';
 import missionReducer from './missionReducer';
 import giftReducer from './giftReducer';
 import statisticReducer from './statisticReducer';
-export default combineReducers({
+import * as Types from '../constants/type';
+
+const appReducer = combineReducers({
   paper: PaperReducer,
   user: userReducer,
   homeworkTeacher: homeworkTeacherReducer,
@@ -15,3 +17,12 @@ export default combineReducers({
   gift: giftReducer,
   statistic: statisticReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === Types.RESET_APP_STATE_ACTION) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+export default rootReducer;
