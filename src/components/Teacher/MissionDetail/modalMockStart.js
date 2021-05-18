@@ -19,6 +19,7 @@ const { width, height } = Dimensions.get('window');
 import ItemInfo from '../../modals/ItemInfo';
 import AppIcon from '../../../utils/AppIcon';
 import shadowStyle from '../../../themes/shadowStyle';
+import ZoomAnim from '../../anim/ZoomAnim';
 export default class ModalMockExamStart extends Component {
   constructor(props) {
     super(props);
@@ -81,62 +82,64 @@ export default class ModalMockExamStart extends Component {
           onPress={() => this.setState({ visible: false })}>
           <View style={styles.container}>
             <TouchableWithoutFeedback>
-              <View style={styles.body}>
-                {!_.isEmpty(data) && !isLoading ? (
-                  <>
-                    <Text style={styles.name}>{data.title}</Text>
-                    <Image source={require('../../../asserts/images/image_modalStart.png')}
-                      style={{ alignSelf: 'center', marginTop: 16 }} />
-                    <View style={styles.totalView}>
-                      <ItemInfo number={data.totalQuestion} type={'Total'} />
-                      <ItemInfo number={data.totalDurationDoing} type={'TimePratice'} />
-                      <ItemInfo number={(data.speed).toFixed(2)} type={'Speed'} />
-                      <ItemInfo number={(data.accuracy).toFixed(2)} type={'Acur'} />
-                    </View>
-                    <View style={styles.boxRow}>
-                      <View style={styles.cusStatis}>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image source={AppIcon.r_correct} style={{ alignSelf: 'center' }} />
-                          <Text style={styles.txtTitle}>Số câu đúng</Text>
-                        </View>
-                        <Text style={styles.numberCount}>
-                          {data.correctAnswer}</Text>
+              <ZoomAnim>
+                <View style={styles.body}>
+                  {!_.isEmpty(data) && !isLoading ? (
+                    <>
+                      <Text style={styles.name}>{data.title}</Text>
+                      <Image source={require('../../../asserts/images/image_modalStart.png')}
+                        style={{ alignSelf: 'center', marginTop: 16 }} />
+                      <View style={styles.totalView}>
+                        <ItemInfo number={data.totalQuestion} type={'Total'} />
+                        <ItemInfo number={data.totalDurationDoing} type={'TimePratice'} />
+                        <ItemInfo number={(data.speed).toFixed(2)} type={'Speed'} />
+                        <ItemInfo number={(data.accuracy).toFixed(2)} type={'Acur'} />
                       </View>
-                      <View style={styles.cusStatis}>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image source={AppIcon.r_false} style={{ alignSelf: 'center' }} />
-                          <Text style={styles.txtTitle}>Số câu sai</Text>
+                      <View style={styles.boxRow}>
+                        <View style={styles.cusStatis}>
+                          <View style={{ flexDirection: "row" }}>
+                            <Image source={AppIcon.r_correct} style={{ alignSelf: 'center' }} />
+                            <Text style={styles.txtTitle}>Số câu đúng</Text>
+                          </View>
+                          <Text style={styles.numberCount}>
+                            {data.correctAnswer}</Text>
                         </View>
-                        <Text style={styles.numberCount}>{data.inCorrectAnswer}</Text>
-                      </View>
-                      <View style={styles.cusStatis}>
-                        <View style={{ flexDirection: "row" }}>
-                          <Image source={AppIcon.icon_number_of_skip} style={{ alignSelf: 'center' }} />
-                          <Text style={styles.txtTitle}>Số câu bỏ qua</Text>
+                        <View style={styles.cusStatis}>
+                          <View style={{ flexDirection: "row" }}>
+                            <Image source={AppIcon.r_false} style={{ alignSelf: 'center' }} />
+                            <Text style={styles.txtTitle}>Số câu sai</Text>
+                          </View>
+                          <Text style={styles.numberCount}>{data.inCorrectAnswer}</Text>
                         </View>
-                        <Text style={styles.numberCount}>{data.totalSkip}</Text>
-                      </View>
+                        <View style={styles.cusStatis}>
+                          <View style={{ flexDirection: "row" }}>
+                            <Image source={AppIcon.icon_number_of_skip} style={{ alignSelf: 'center' }} />
+                            <Text style={styles.txtTitle}>Số câu bỏ qua</Text>
+                          </View>
+                          <Text style={styles.numberCount}>{data.totalSkip}</Text>
+                        </View>
 
-                    </View>
-                    <View style={styles.wrapTime}>
-                      <TouchableWithoutFeedback onPress={() => this._startMockExam()}>
-                        <View style={[styles.btnStart, { ...shadowBtn }]}>
-                          <Text style={styles.txtButon}>
-                            Làm thử
+                      </View>
+                      <View style={styles.wrapTime}>
+                        <TouchableWithoutFeedback onPress={() => this._startMockExam()}>
+                          <View style={[styles.btnStart, { ...shadowBtn }]}>
+                            <Text style={styles.txtButon}>
+                              Làm thử
                         </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback onPress={() => this.setState({ visible: false })}>
-                        <View style={[styles.btnBack, { ...shadowBtn }]}>
-                          <Text style={styles.txtButon}>Quay lại</Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                  </>
-                ) : (
-                    <ActivityIndicator color="blue" />
-                  )}
-              </View>
+                          </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={() => this.setState({ visible: false })}>
+                          <View style={[styles.btnBack, { ...shadowBtn }]}>
+                            <Text style={styles.txtButon}>Quay lại</Text>
+                          </View>
+                        </TouchableWithoutFeedback>
+                      </View>
+                    </>
+                  ) : (
+                      <ActivityIndicator color="blue" />
+                    )}
+                </View>
+              </ZoomAnim>
             </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>

@@ -163,6 +163,7 @@ function Item(props) {
           if (response && response.status === 1) {
             // props.onToast('Giao bài thành công!');
             props.onRefToast((<ToastApi title={"Giao bài thành công!"} />), 3000);
+            props.getData(true);
             props.needUpdate(true);
             setIsDisable(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
@@ -187,6 +188,15 @@ function Item(props) {
   return (
     <View style={styles.containerItem}>
       <View style={styles.contentItem}>
+        <View style={[styles.boxStatus, {
+          backgroundColor: props.item.isAssign ? 'green' : '#FF5242',
+        }]}>
+          <Text style={{
+            fontFamily: 'Nunito',
+            color: '#fff',
+            fontSize: RFFonsize(14)
+          }}>{props.item.isAssign ? 'Đã giao' : 'Chưa giao'}</Text>
+        </View>
         <View style={styles.viewName}>
           <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
@@ -278,17 +288,25 @@ function Item(props) {
 }
 
 class Assignment extends Component {
-  state = {
-    loading: true,
-    data: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      data: []
+    }
+    this.dataItem = {};
+    this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {
     this.getData();
   }
 
-  async getData() {
-    const dataItem = this.props.navigation.getParam('item');
+  async getData(isLoading) {
+    if (isLoading) {
+      await this.setState({ loading: true });
+    }
+    const dataItem = this.props.navigation.state.params.item;
     const { token } = await dataHelper.getToken();
     if (token) {
       const response = await apiPapers.getAssignment({
@@ -425,6 +443,7 @@ class Assignment extends Component {
                     onToast={(text) => this.onToast(text)}
                     onRefToast={(text, duration) => this.onRefToast(text, duration)}
                     dataItem={dataItem}
+                    getData={this.getData}
                     needUpdate={this.props.needUpdate}
                   />
                 }}
@@ -722,5 +741,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     top: -12,
     right: 10
+  },
+  boxStatus: {
+    alignSelf: 'flex-end',
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    paddingVertical: 2
   }
 })
