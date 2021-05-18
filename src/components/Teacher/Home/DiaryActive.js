@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import dataHelper from '../../../utils/dataHelper';
 import { RFFonsize } from '../../../utils/Fonts'
 const { width, height } = Dimensions.get('screen');
+import moment from 'moment';
 const horizontalMargin = 10;
 const slideWidth = width - 100;
 const sliderWidth = Dimensions.get('window').width;
@@ -39,8 +40,8 @@ class DiaryActive extends Component {
         )
     }
     render() {
-        const { diaryActive, countdiaryActive } = this.props;
-
+        const { diaryActive, countdiaryActive, timeActive } = this.props;
+        console.log('diaryActive', diaryActive);
         const dataSets = countdiaryActive.map(val => val.totalCheckPoint);
         dataSets.unshift(0);
         dataSets.push(0);
@@ -67,9 +68,17 @@ class DiaryActive extends Component {
             }
         };
         const dataChart = dataSets;
+        const startTime = moment((diaryActive.startTime) * 1000).format('DD/MM/YYYY');
+        const endTime = moment((diaryActive.endTime) * 1000).format('DD/MM/YYYY');
         return (
             <View style={HomeStyle.container}>
                 <Text style={HomeStyle.titleDes} >Nhật ký hoạt động</Text>
+                <View style={HomeStyle.rowTime}>
+                    <Text style={HomeStyle.txtTime}>Thời gian:</Text>
+                    <Text style={HomeStyle.timeText}>{startTime}</Text>
+                    <Text style={HomeStyle.timeText}>- {endTime}</Text>
+                </View>
+
                 <LineChart
                     data={{
                         labels: dataLabels,
@@ -84,7 +93,7 @@ class DiaryActive extends Component {
                         borderRadius: 16
                     }}
                 />
-                {/* {(countdiaryActive && countdiaryActive.length > 0) &&
+                {(countdiaryActive && countdiaryActive.length > 0) &&
                     <Carousel
                         ref={(c) => { this._carousel = c; }}
                         layout={'default'}
@@ -105,7 +114,7 @@ class DiaryActive extends Component {
                         activeSlideAlignment='center'
                         onSnapToItem={(index) => this.setState({ activeSlide: index })}
                     />
-                } */}
+                }
             </View>
         )
     }
