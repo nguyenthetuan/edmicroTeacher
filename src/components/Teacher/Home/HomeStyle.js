@@ -102,7 +102,24 @@ const HomeStyle = StyleSheet.create({
         justifyContent: 'space-between',
         marginHorizontal: 30,
         marginVertical: 15
-
+    },
+    rowTime: {
+        flexDirection: "row",
+        marginHorizontal: 16,
+        marginVertical: 10
+    },
+    txtTime: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: "#000"
+    },
+    timeText: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(11),
+        lineHeight: RFFonsize(15),
+        color: "#000",
+        marginLeft: 5
     }
 
 });
