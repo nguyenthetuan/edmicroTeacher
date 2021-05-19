@@ -623,36 +623,33 @@ class SearchScreen extends React.Component {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <SafeAreaView />
-                <HeaderNavigation
+                {/* <HeaderNavigation
                     title={'Tìm kiếm bộ đề'}
                     navigation={this.props.navigation}
                     goBack={this.openBack}
                     color={'#2D9CDB'}
-                />
+                /> */}
                 <View style={styles.backpa}>
-                    {/* <TouchableWithoutFeedback
+                    <TouchableWithoutFeedback
                         hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
                         onPress={() => { this.props.navigation.goBack() }}
                     >
-                        <View style={{ flex: 1, alignSelf: 'center', paddingHorizontal: 10, paddingRight: 16 }}>
+                        <View style={{ alignSelf: 'center', paddingLeft: 10 }}>
                             <Image source={require('../../asserts/icon/icon_arrowLeftv3.png')} />
                         </View>
-                    </TouchableWithoutFeedback> */}
-                    <View style={{ flex: 0 }}>
-                        <SearchComponent
-                            placeholder="Tìm kiếm"
-                            cancelColor="#2D9CDB"
-                            value={textSearch}
-                            onChange={this.onChangeText}
-                            onSearchClear={this.onSearchClear}
-                            customSearchInputStyle={styles.textSear}
-                            customCancelTextStyle={styles.txtCan}
-                            placeholderTextColor="#828282"
-                            autoFocus={true}
-                        />
-                    </View>
+                    </TouchableWithoutFeedback>
+                    <SearchComponent
+                        placeholder="Tìm kiếm"
+                        cancelColor="#2D9CDB"
+                        value={textSearch}
+                        onChange={this.onChangeText}
+                        onSearchClear={this.onSearchClear}
+                        customSearchInputStyle={styles.textSear}
+                        customCancelTextStyle={styles.txtCan}
+                        placeholderTextColor="#828282"
+                        autoFocus={true}
+                    />
                 </View>
-
                 {this.state.textSearch == '' ?
                     <View style={{ marginHorizontal: 16, paddingTop: 5 }}>
                         {listPapers == listPapers.length > 0 ?
@@ -754,8 +751,7 @@ const styles = StyleSheet.create({
     },
     backpa: {
         flexDirection: "row",
-        justifyContent: 'space-between',
-        paddingVertical: 5
+        paddingVertical: 5,
     },
     viewNotFound: {
         marginTop: 100,
@@ -776,14 +772,15 @@ const styles = StyleSheet.create({
     txtCan: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(20)
+        lineHeight: RFFonsize(20),
+        marginLeft: -35
     },
     textSear: {
         paddingRight: 35,
         fontFamily: 'Nunito',
         fontSize: RFFonsize(16),
         lineHeight: RFFonsize(20),
-
+        marginRight: width * 0.1
     },
     sugges: {
         flex: 1,
