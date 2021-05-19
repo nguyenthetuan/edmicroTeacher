@@ -120,6 +120,7 @@ export default class ModalOption extends PureComponent {
                                                 <View style={styles.wrapElementModal}>
                                                     <Image
                                                         source={require('../../../asserts/icon/icMarkingPoint.png')}
+                                                        style={{ marginLeft: 5 }}
                                                     />
                                                     <Text style={styles.txtModalDetail}>Chấm điểm ({dataSelected.countCheckPoint} bài)</Text>
                                                 </View>
