@@ -19,7 +19,6 @@ import { getSourceAvatar } from '../../utils/Helper';
 import { updateExamListAction } from '../../actions/paperAction';
 import { setListGrades, setListSubject } from '../../actions/paperAction';
 import _ from 'lodash';
-import SearchComponent from "react-native-search-component";
 import { RFFonsize } from '../../utils/Fonts';
 import Globals from '../../utils/Globals';
 import { alertDeletePaper } from '../../utils/Alert';
@@ -28,6 +27,8 @@ import ModalOption from '../Teacher/Papers/ModalOption';
 import ModalEditName from '../Teacher/Papers/ModalEditName';
 import ModalEditConfig from '../Teacher/Papers/modalEditConfig';
 import HeaderNavigation from './HeaderNavigation';
+import { SearchBar } from 'react-native-elements';
+
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -363,6 +364,7 @@ class SearchScreen extends React.Component {
 
     onChangeText = e => {
         const textSearch = e?.nativeEvent?.text;
+
         this.searchData(textSearch);
     }
 
@@ -503,11 +505,11 @@ class SearchScreen extends React.Component {
                     {isLoadMore ? (
                         <ActivityIndicator size={'small'} />
                     ) : (
-                            <Text
-                                style={styles.more}>
-                                Xem thêm
-                            </Text>
-                        )}
+                        <Text
+                            style={styles.more}>
+                            Xem thêm
+                        </Text>
+                    )}
                 </TouchableOpacity>
             </View>
         );
@@ -638,15 +640,21 @@ class SearchScreen extends React.Component {
                             <Image source={require('../../asserts/icon/icon_arrowLeftv3.png')} />
                         </View>
                     </TouchableWithoutFeedback>
-                    <SearchComponent
+                    <SearchBar
                         placeholder="Tìm kiếm"
-                        cancelColor="#2D9CDB"
                         value={textSearch}
-                        onChange={this.onChangeText}
-                        onSearchClear={this.onSearchClear}
-                        customSearchInputStyle={styles.textSear}
-                        customCancelTextStyle={styles.txtCan}
                         placeholderTextColor="#828282"
+                        onChange={this.onChangeText}
+                        onClear={this.onSearchClear}
+                        onCancel={this.onSearchClear}
+                        containerStyle={{
+                            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', width: width
+                        }}
+                        inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 5 }}
+                    />
+                </View>
+                <View style={{ marginHorizontal: 16 }}>
+                    <FlatList
                         autoFocus={true}
                     />
                 </View>

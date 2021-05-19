@@ -17,8 +17,8 @@ import Api from '../../../services/apiMission';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import HeaderMissionNew from '../../common-new/HeaderMissionNew';
-import SearchComponent from "react-native-search-component";
 import ShimerMission from './ShimerMission';
+import { SearchBar } from 'react-native-elements';
 const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -132,14 +132,17 @@ export default class MissionScreen extends Component {
         {isLoadingMission ?
           null
           :
-          <SearchComponent
+          <SearchBar
             placeholder="Tìm kiếm"
-            cancelColor="#2D9CDB"
             value={textSearch}
+            placeholderTextColor="#828282" 
             onChange={this.onChangeText}
-            onSearchClear={this.onSearchClear}
-            customSearchInputStyle={styles.textSear}
-            customCancelTextStyle={styles.txtCan}
+            onClear={this.onSearchClear}
+            onCancel={this.onSearchClear}
+            containerStyle={{
+              backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
+            inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 5 }}
+          // customCancelTextStyle={styles.txtCan}
           />
         }
       </View>
