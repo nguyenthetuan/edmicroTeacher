@@ -70,6 +70,31 @@ export default class ShimerMockExam extends Component {
                             borderRadius: 3
                         }]} />
                 </View>
+                <View style={styles.styWrap}>
+                    <ShimmerPlaceHolder
+                        visible={false}
+                        style={[{
+                            width: 50,
+                            height: 15,
+                            borderRadius: 3
+                        }]} />
+                    <ShimmerPlaceHolder
+                        visible={false}
+                        style={[{
+                            marginVertical: 10,
+                            width: 50,
+                            height: 15,
+                            borderRadius: 3
+                        }]} />
+                    <ShimmerPlaceHolder
+                        visible={false}
+                        style={[{
+                            marginVertical: 10,
+                            width: 50,
+                            height: 15,
+                            borderRadius: 3
+                        }]} />
+                </View>
             </View>
         );
     }

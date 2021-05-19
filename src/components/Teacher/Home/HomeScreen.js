@@ -106,6 +106,9 @@ class HomeScreen extends Component {
             } else if (isRefresh(exp, curTime, iat)) {
                 console.log("isRefresh");
                 userPost = await dataHelper.getUserPost();
+                if (userPost == '') {
+                    this.props.navigation.navigate('Auth');
+                }
                 userObj = JSON.parse(userPost);
                 res = await apiUserHelper.refreshToken({ token: value });
                 if (res != '' && res.status === 200) {

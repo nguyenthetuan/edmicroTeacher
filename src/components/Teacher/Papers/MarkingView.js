@@ -174,6 +174,10 @@ class MarkingView extends Component {
       {
         selectedValueStudent: studentListAssigned[0]?.studentId,
         listStudentAssigned: studentListAssigned,
+        indexSelected: {
+          ...this.state.indexSelected,
+          status: studentListAssigned[0]?.status
+        }
       },
       async () => {
         const response = await apiPaper.assignmentDetailCheck({
@@ -1341,7 +1345,7 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(19),
     color: '#fff',
     marginLeft: 16,
-    width : width * 0.5
+    width: width * 0.5
   },
   txtBtn: {
     fontFamily: 'Nunito-Bold',
