@@ -40,10 +40,10 @@ const initTab = createMaterialTopTabNavigator(
               Độ hoàn thành
             </Text>
           ) : (
-              <Text numberOfLines={1} style={styles.labelTabActive}>
-                Độ hoàn thành
-              </Text>
-            );
+            <Text numberOfLines={1} style={styles.labelTabActive}>
+              Độ hoàn thành
+            </Text>
+          );
         },
       },
     },
@@ -57,10 +57,10 @@ const initTab = createMaterialTopTabNavigator(
               Tỉ lệ Đ/S
             </Text>
           ) : (
-              <Text numberOfLines={1} style={styles.labelTabActive}>
-                Tỉ lệ Đ/S
-              </Text>
-            );
+            <Text numberOfLines={1} style={styles.labelTabActive}>
+              Tỉ lệ Đ/S
+            </Text>
+          );
         },
       },
     },
@@ -76,10 +76,10 @@ const initTab = createMaterialTopTabNavigator(
               Học sinh
             </Text>
           ) : (
-              <Text numberOfLines={1} style={styles.labelTabActive}>
-                Học sinh
-              </Text>
-            );
+            <Text numberOfLines={1} style={styles.labelTabActive}>
+              Học sinh
+            </Text>
+          );
         },
       },
     },
@@ -317,7 +317,15 @@ export default function StatisticsPoints(props) {
         listSubject = resSubject;
       }
 
-      const resHomework = await apiHomework.getHomework({ token, body: {} });
+      const resHomework = await apiHomework.getHomework({
+        token, body: {
+          indexPage: 0,
+          isShare: true,
+          status: [],
+          subjectCode: [],
+          text: "",
+        }
+      });
       if (resHomework && resHomework.data) {
         indexSelected.homework = 0;
         listHomework = resHomework.data;
@@ -414,7 +422,15 @@ export default function StatisticsPoints(props) {
         listSubject = resSubject;
       }
 
-      const resHomework = await apiHomework.getHomework({ token, body: {} });
+      const resHomework = await apiHomework.getHomework({
+        token, body: {
+          indexPage: 0,
+          isShare: true,
+          status: [],
+          subjectCode: [],
+          text: "",
+        }
+      });
       if (resHomework && resHomework.data) {
         indexSelected.homework = 0;
         listHomework = resHomework.data;
