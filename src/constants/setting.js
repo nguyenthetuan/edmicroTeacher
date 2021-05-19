@@ -14,5 +14,7 @@ module.exports = {
     API_BASE_OAUTH: Config.API_BASE_OAUTH,
     API_PROVIDER: Config.API_PROVIDER,
     API_GIFT: Config.API_GIFT,
+    SITE_KEY: '6LcMZR0UAAAAALgPMcgHwga7gY5p8QMg1Hj-bmUv',
+    BASE_URL: 'https://onluyen-a2989.firebaseapp.com',
     getHeaders
 };

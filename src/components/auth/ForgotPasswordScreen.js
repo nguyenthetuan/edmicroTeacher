@@ -27,7 +27,7 @@ import LoadingScreen from '../libs/LoadingScreen';
 import FormInput from '../common/FormInput';
 import OTPTextView from '../common/InputOTP';
 import _ from 'lodash'
-import { PHONE_DEBUG } from '../../constants/const';
+import { PHONE_DEBUG, PROJECT_ID } from '../../constants/const';
 import { WOOPS_ERROR } from '../../constants/message';
 import { DotIndicator } from 'react-native-indicators';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -37,6 +37,8 @@ import FreshchatComponent from '../../utils/FreshchatComponent';
 import { phoneNumberScheme, forgotPasswordValidate } from '../../utils/SchemaValidate';
 import { SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
+import Recaptcha from 'react-native-recaptcha-that-works';
+import { SITE_KEY, BASE_URL } from '../../constants/setting';
 
 const { width, height } = Dimensions.get('window');
 export default class ForgotPasswordScreen extends Component {
@@ -66,7 +68,8 @@ export default class ForgotPasswordScreen extends Component {
       accountSelected: null,
       isEditPhone: true,
       editableOTP: true,
-      secureTextEntry: false
+      secureTextEntry: false,
+      recaptchaToken: null,
     };
     this.phoneNumber = '';
     this.password = '';
@@ -93,8 +96,8 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   _handleValidation = () => {
-    var result = true;
-    var { errorEmpty, repassword, password } = this.state;
+    let result = true;
+    let { errorEmpty, repassword, password } = this.state;
     _.forEach(['phoneNumber', 'password', 'repassword'], item => {
       if (_.isEmpty(this.state[item])) {
         switch (item) {
@@ -132,6 +135,7 @@ export default class ForgotPasswordScreen extends Component {
         }
         this.setState({ errorEmpty });
       }
+      console.log(errorEmpty);
     });
     return result;
   }
@@ -141,6 +145,7 @@ export default class ForgotPasswordScreen extends Component {
     this.repassword = values.repassword;
     const phoneNumber = this.phoneNumber;
     const phone = Common.formatPhoneNumber(phoneNumber);
+    this.setState({ password: this.password, repassword: this.repassword, phoneNumber: phone });
     this.checkPhoneNumber(phone);
   }
 
@@ -222,7 +227,6 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   onConfirmErrors = (error, phoneNumber) => {
-    console.log(error);
     let message = Common.getMessageConfirmResult(error, phoneNumber);
     this.setState({
       isLoading: false,
@@ -230,6 +234,12 @@ export default class ForgotPasswordScreen extends Component {
       repassword: '',
       errors: message
     });
+  }
+
+  send = () => {
+    let isValid = this._handleValidation();
+    if (!isValid) return;
+    this.recaptcha.open();
   }
 
   checkPhoneNumber(phone) {
@@ -241,7 +251,9 @@ export default class ForgotPasswordScreen extends Component {
         const { status } = response;
         if (status == 302) {
           this.setState({ errors: '', isLoading: true }, () => {
-            this.loginWithPhone(phoneNumber);
+            // this.loginWithPhone(phoneNumber);
+            // cach moi.
+            this.send();
           });
         } else {
           this.setState({ errors: 'Số điện thoại này chưa được đăng kí !', isLoading: false });
@@ -582,7 +594,55 @@ export default class ForgotPasswordScreen extends Component {
       )
     }
     return;
+  };
+
+  onVerify = token => {
+    if (!_.isEmpty(token)) {
+      this.setState({ recaptchaToken: token }, () => {
+        this.onPressForgotpassword();
+      });
+      return;
+    }
+    this.setState({
+      errors: 'Xác thực thất bại, Vui lòng thử lại!',
+      isLoading: false
+    });
   }
+
+  onExpire = () => {
+    console.warn('expired!');
+    this.setState({
+      errors: 'Xác thực thất bại, Vui lòng thử lại!',
+      isLoading: false
+    });
+  }
+
+  onError = error => {
+    console.log(error);
+    this.setState({
+      errors: 'Xác thực thất bại, Vui lòng thử lại!',
+      isLoading: false
+    });
+  }
+
+  onPressForgotpassword = async () => {
+    const { phoneNumber, recaptchaToken } = this.state;
+    const phoneVerify = Common.fomatPhoneVerify(phoneNumber);
+    try {
+      let response = await ApiUser.forgotPasswordSendCode({ phoneNumber: phoneVerify, projectId: PROJECT_ID, recaptchaToken });
+      const { status, sessionInfo, message } = response;
+      if (_.isEmpty(sessionInfo)) {
+        await this.setState({ isLoading: false, errors: message });
+        return;
+      }
+      this.verificationId = sessionInfo;
+      await this.setState({ isVerify: true, isLoading: false, errors: '' });
+    } catch (error) {
+      this.onConfirmErrors(error, phone);
+    }
+  }
+
+
   render() {
     const {
       phoneNumber,
@@ -775,6 +835,14 @@ export default class ForgotPasswordScreen extends Component {
           />
         </SafeAreaView>
         <FreshchatComponent />
+        <Recaptcha
+          ref={recaptcha => this.recaptcha = recaptcha}
+          siteKey={SITE_KEY}
+          baseUrl={BASE_URL}
+          onVerify={this.onVerify}
+          onExpire={this.onExpire}
+          onError={this.onError}
+        />
       </View>
     );
   }

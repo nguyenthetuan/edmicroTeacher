@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   StatusBar,
   Dimensions,
-  Platform,
   BackHandler,
   TouchableWithoutFeedback
 } from 'react-native';
@@ -33,11 +32,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import apiUser from '../../services/apiUserHelper';
 import { WOOPS_ERROR } from '../../constants/message';
 import dataHelper from '../../utils/dataHelper';
-import Mixpanel from 'react-native-mixpanel';
-import jwtDecode from 'jwt-decode';
-import { NavigationActions, StackActions } from 'react-navigation';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import { PHONE_DEBUG } from '../../constants/const';
 import { getUserByToken } from '../../utils/Helper';
 import FastImage from 'react-native-fast-image';
 import { RFFonsize } from '../../utils/Fonts';
@@ -210,6 +205,38 @@ export default class UpdatePhoneScreen extends Component {
       });
   }
 
+  updatePhoneNumberNew = async () => {
+    this.setState({
+      isLoading: true,
+      errors: ''
+    });
+    const { token } = await dataHelper.getToken();
+    const { phoneNumber } = this.state;
+    const phoneCountry = '+84';
+    const phone = this.props.user.phoneNumber;
+    const formatPhone = Common.formatPhoneNumber(`+${phone}`);
+    if (formatPhone == phoneNumber) {
+      this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
+        this.props.navigation.goBack();
+      });
+      return;
+    }
+    const response = await apiUser.updatePhoneNew({ access_token: token, phoneNumber, phoneCountry, });
+    if (response.access_token) {
+      dataHelper.saveToken(response.access_token);
+      if (response.avatar != null) {
+        dataHelper.saveAvatar(response.avatar);
+      }
+      const payload = getUserByToken(response.access_token);
+      this.props.makeRequestProfile(payload);
+      this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
+        this.props.navigation.goBack();
+      });
+    } else {
+      this.updateFailed(error, phone);
+    }
+  }
+
   resendOTP = async () => {
     this.otp.onClear();
     const { phoneNumber } = this.state;
@@ -320,6 +347,10 @@ export default class UpdatePhoneScreen extends Component {
     } else if (!Common.validatePhoneNumberV2(phoneNumber)) {
       this.setState({ errors: 'Số điện thoại không hợp lệ !' });
     } else {
+      // luong cap nhat moi
+      this.updatePhoneNumberNew();
+      return;
+      // luong cap nhat cu
       this.setState({ errors: '', isLoading: true }, () => {
         this.updateWithPhone(phoneNumber);
       });
