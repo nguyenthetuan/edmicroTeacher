@@ -354,7 +354,15 @@ function HomeWorkDraScreen(props) {
                 listSubject = resSubject;
             }
 
-            const resHomework = await apiHomework.getHomework({ token, body: {} });
+            const resHomework = await apiHomework.getHomework({
+                token, body: {
+                    indexPage: 0,
+                    isShare: true,
+                    status: [],
+                    subjectCode: [],
+                    text: "",
+                }
+            });
             if (resHomework && resHomework.data) {
                 indexSelected.homework = 0;
                 listHomework = resHomework.data;
@@ -430,74 +438,6 @@ function HomeWorkDraScreen(props) {
         timeExportTmp = convertTimeHMDMY(timeExport);
         setTimeExport(timeExportTmp);
     }, []);
-
-    const goBack = async () => {
-        const { token } = await dataHelper.getToken();
-        if (token) {
-            let listGrade = [];
-            let listSubject = [];
-            let listHomework = [];
-            let listClass = [];
-
-            const resGrade = await apiHomework.getGrade({ token });
-            if (resGrade) {
-                listGrade = resGrade;
-            }
-
-            const resSubject = await apiHomework.getSubject({ token });
-            if (resSubject) {
-                listSubject = resSubject;
-            }
-
-            const resHomework = await apiHomework.getHomework({ token, body: {} });
-            if (resHomework && resHomework.data) {
-                indexSelected.homework = 0;
-                listHomework = resHomework.data;
-            }
-
-            if (listHomework.length) {
-                const status = {
-                    ToDo: 0,
-                    Doing: 1,
-                    Submit: 2,
-                    Done: 3,
-                    NotOpen: 4,
-                    Paused: 5,
-                    TimeOut: 6,
-                    TimeOutDontDo: 7,
-                };
-                const resClass = await apiHomework.getClass({
-                    token,
-                    classId: listHomework[0].assignmentId,
-                    status: status.ToDo,
-                    indexPage: 0,
-                });
-                if (resClass && resClass.data) {
-                    indexSelected.class = 0;
-                    listClass = resClass.data;
-                }
-            }
-
-            if (listClass.length) {
-                props.fetchHomework({
-                    token,
-                    assignId: listClass[0].assignId,
-                });
-            } else {
-                props.fetchHomework({
-                    token,
-                    assignId: '',
-                });
-            }
-
-            setData({
-                grade: listGrade,
-                subject: listSubject,
-                homework: listHomework,
-                class: listClass,
-            });
-        }
-    };
 
     const onClickFillter = () => {
         modalFillter.current.changeStateModale();

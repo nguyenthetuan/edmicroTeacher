@@ -13,7 +13,8 @@ import {
   Animated,
   SafeAreaView,
   Platform,
-  Alert
+  Alert,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
@@ -64,6 +65,7 @@ class MarkingView extends Component {
       indexSelected: {
         indexClass: 0,
         indexStudent: 0,
+        status: -1
       },
       urlFile: '',
       modalImageFull: false,
@@ -74,9 +76,9 @@ class MarkingView extends Component {
   filterDataStudentAssigned(data) {
     let result = [];
     for (let i = 0; i < data.length; i++) {
-      if (data[i].idLog && data[i].status === 6) {
-        result.push(data[i]);
-      }
+      // if (data[i].idLog && data[i].status === 6) {
+      result.push(data[i]);
+      // }
     }
     return result;
   }
@@ -105,10 +107,15 @@ class MarkingView extends Component {
               if (_.isEmpty(studentListAssigned)) {
                 return;
               }
+              const indexSelected = {
+                ...indexSelected,
+                status: rs[0].status
+              }
               this.setState({
                 selectedValueStudent: studentListAssigned[0]?.studentId,
                 listStudentAssigned: studentListAssigned,
                 selectAssignId: res.data[0].assignId,
+                indexSelected
               });
               apiPaper
                 .assignmentDetailCheck({
@@ -296,6 +303,7 @@ class MarkingView extends Component {
         indexSelected: {
           indexStudent,
           ...indexSelected,
+          status: value.status
         },
         urlFile: '',
       },
@@ -495,8 +503,9 @@ class MarkingView extends Component {
       selectedValueClass,
       listStudentAssigned,
       listClassAssigned,
-      indexSelected,
+      indexSelected
     } = this.state;
+    const { item } = this.props.navigation.state.params;
     const { shadowBtn } = shadowStyle;
     return (
       <SafeAreaView style={styles.header}>
@@ -512,9 +521,9 @@ class MarkingView extends Component {
                 source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
               />
             </RippleButton>
-            <Text
+            <Text numberOfLines={1}
               style={styles.titleScre}>
-              Chấm điểm
+              {item.name}
             </Text>
           </View>
           <RippleButton
@@ -528,7 +537,7 @@ class MarkingView extends Component {
         {
           <View style={styles.rowDrop}>
             <View style={styles.dropTwo}>
-              <Text style={[styles.titleDrop, { top: 4 }]}>
+              <Text style={styles.titleDrop}>
                 Lớp :
               </Text>
               <Text style={styles.titleDrop}>
@@ -548,6 +557,7 @@ class MarkingView extends Component {
                 title="Học Sinh"
                 data={listStudentAssigned}
                 indexSelected={indexSelected.indexStudent}
+                status={indexSelected.status}
                 isShowIcon={true}
                 onPressItem={this.onValueChangePickerStudent}
                 contentStyle={[styles.widthDrop, { top: 7 }]}
@@ -708,11 +718,11 @@ class MarkingView extends Component {
     var bg = '';
     if (item.dataStandard) {
       if (arrayScored.includes(item.dataStandard.stepId)) {
-        bg = '#2D9CDB';
+        bg = '#5DD8FF';
       }
     } else {
       if (arrayScored.includes(item.dataMaterial.data[0].stepId)) {
-        bg = '#2D9CDB';
+        bg = '#84BFE9';
       }
     }
     let typeAnswer =
@@ -724,55 +734,59 @@ class MarkingView extends Component {
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
-    if (typeAnswer === 0) {
+    if (typeAnswer === 0 || typeAnswer == 1) {
       return (
-        <RippleButton
-          onPress={() => {
-            // this.onButtonQuestionPress(index);
-          }}
-          style={[
+        <TouchableWithoutFeedback
+        // onPress={() => {
+        //   this.onButtonQuestionPress(index);
+        // }}
+        >
+          <View style={[
             styles.buttonQuestion,
-            { backgroundColor: '#FF5242', borderColor: '#fff' },
-            makedPoint && { backgroundColor: '#5DD8FF' }
+            { backgroundColor: '#5DD8FF', borderColor: '#fff' },
+            makedPoint && { backgroundColor: '#5DD8FF', borderColor: '#fff' }
           ]}>
-          <Text style={{ color: '#fff' }, makedPoint && { color: '#fff' }}>{index + 1}</Text>
-          <Text style={{ color: '#fff', marginLeft: 3 }, makedPoint && { color: '#fff' }}>
-            {this._answer(answer)}
-          </Text>
-        </RippleButton>
+            <Text style={{ color: '#fff' }}>{index + 1}</Text>
+            <Text style={{ color: '#fff', marginLeft: 1 }}>
+              {this._answer(answer)}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       );
     } else {
       return index !== currentIndex ? (
-        <RippleButton
-          style={[
-            styles.buttonQuestion,
-            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg }, makedPoint && { backgroundColor: '#2D9CDB' },
-          ]}
+        <TouchableWithoutFeedback
           onPress={() => {
             this.onButtonQuestionPress(index);
           }}>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0' }, makedPoint && { color: '#fff' }}>{index + 1}</Text>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }, makedPoint && { color: '#fff' }}>
-            {typeAnswer === 0 && this._answer(answer)}
-          </Text>
-        </RippleButton>
+          <View style={[
+            styles.buttonQuestion, { borderRadius: 20 },
+            { borderColor: (bg && '#fff') || '#828282' }, bg && { backgroundColor: bg }, makedPoint && { backgroundColor: '#5DD8FF' },
+          ]}>
+            <Text style={{ color: (bg && '#fff') || '#828282' }}>{index + 1}</Text>
+            <Text style={{ color: (bg && '#fff') || '#828282', marginLeft: 0 }}>
+              {typeAnswer === 0 && this._answer(answer)}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       ) : (
-          <RippleButton
-            style={[
-              styles.buttonQuestion,
-              { borderColor: '#56CCF2' }, bg && { backgroundColor: bg }
-            ]}
+          <TouchableWithoutFeedback
             onPress={() => {
               this.onButtonQuestionPress(index);
             }}>
-            <Text
-              style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold', left: 1 }}>
-              {index + 1}
-            </Text>
-            <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
-              {typeAnswer === 0 && this._answer(answer)}
-            </Text>
-          </RippleButton>
+            <View style={[
+              styles.buttonQuestion,
+              { borderColor: '#AAFF54', borderRadius: 17, }, bg && { backgroundColor: bg }
+            ]}>
+              <Text
+                style={{ color: (bg && '#fff') || '#828282', fontWeight: 'bold', left: 1 }}>
+                {index + 1}
+              </Text>
+              <Text style={{ color: (bg && '#fff') || '#828282', marginLeft: 3 }}>
+                {typeAnswer === 0 && this._answer(answer)}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         );
     }
   };
@@ -846,6 +860,7 @@ class MarkingView extends Component {
           ) : (
             <View style={{ flex: 1 }}>
               <View style={styles.wrapTop}>
+                <View style={{ height: 5, backgroundColor: '#c4c4c4' }} />
                 <View style={{ backgroundColor: '#58A3CE', padding: 20 }}>
                   <FlatList
                     horizontal
@@ -853,21 +868,25 @@ class MarkingView extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     showsHorizontalScrollIndicator={false}
                     renderItem={this.ItemQuestion}
+                    style={{ marginTop: 10 }}
                   />
-                </View>
-                <View style={{ height: 5, backgroundColor: '#c4c4c4' }} />
-                <View style={styles.poinded}>
-                  <View style={styles.review}>
-                    <View style={[styles.note, { backgroundColor: '#5DD8FF' }]} />
-                    <Text style={styles.txtNote}>Đúng</Text>
-                  </View>
-                  <View style={styles.review}>
-                    <View style={[styles.note, { backgroundColor: '#FF5242' }]} />
-                    <Text style={styles.txtNote}>Sai</Text>
-                  </View>
-                  <View style={styles.review}>
-                    <View style={[styles.note, { backgroundColor: '#C4C4C4' }]} />
-                    <Text style={styles.txtNote}>Chưa chấm</Text>
+                  <View style={styles.poinded}>
+                    <View style={styles.review}>
+                      <View style={[styles.note, { backgroundColor: '#5DD8FF' }]} />
+                      <Text style={styles.txtNote}>Đã chấm</Text>
+                    </View>
+                    <View style={styles.review}>
+                      <View style={[styles.note, { backgroundColor: '#84BFE9', borderColor: "#828282" }]} />
+                      <Text style={styles.txtNote}>Chưa chấm</Text>
+                    </View>
+                    <View style={styles.review}>
+                      <View style={[styles.note, { backgroundColor: '#58A3CE' }]} />
+                      <Text style={styles.txtNote}>Trắc nghiệm</Text>
+                    </View>
+                    <View style={styles.review}>
+                      <View style={[styles.note, { backgroundColor: '#58A3CE', borderRadius: 10 }]} />
+                      <Text style={styles.txtNote}>Tự luận </Text>
+                    </View>
                   </View>
                 </View>
                 <View style={styles.wrapInputScore}>
@@ -879,6 +898,7 @@ class MarkingView extends Component {
                       width: 50,
                       height: 50,
                       justifyContent: 'center',
+                      marginHorizontal: 5
                     }}>
                       <FormInput
                         paddingTopContent={4}
@@ -1098,14 +1118,13 @@ const styles = StyleSheet.create({
     marginBottom: 13,
     color: '#EE0000',
     fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
-    fontFamily: 'Nunito-Bold'
-
+    fontFamily: 'Nunito-Bold',
+    alignSelf: 'center'
   },
   txtNote: {
     color: '#fff',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     fontFamily: 'Nunito',
     marginLeft: 5,
   },
@@ -1250,12 +1269,14 @@ const styles = StyleSheet.create({
   labelTab: {
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
-    color: '#DADADA',
+    color: '#383838',
+    paddingVertical: 3,
   },
   labelTabActive: {
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#000000',
+    paddingVertical: 3,
   },
   wrapTab: {
     justifyContent: 'flex-start',
@@ -1270,9 +1291,11 @@ const styles = StyleSheet.create({
   poinded: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
-    top: 9
+    top: 20,
+    left: 10,
+    marginBottom: 8
   },
   review: {
     flexDirection: 'row',
@@ -1310,18 +1333,20 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(19),
     fontFamily: 'Nunito-Bold',
     color: '#FFFEFE',
+    top: 4
   },
   titleScre: {
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
     color: '#fff',
-    marginLeft: 16
+    marginLeft: 16,
+    width : width * 0.5
   },
   txtBtn: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
     color: '#ff6213',
     marginVertical: 5
   }

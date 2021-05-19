@@ -101,6 +101,21 @@ const forgotPasswordV2 = async (payload) => {
   return responseJson;
 }
 
+const forgotPasswordSendCode = async payload => {
+  const { phoneNumber, projectId, recaptchaToken } = payload;
+  const response = await fetch(`${API_BASE_OAUTH}firebase/forgotPassword/send/code`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Referer': 'https://app.onluyen.vn',
+    },
+    body: JSON.stringify(payload)
+  })
+  const responseJson = await response.json();
+  return responseJson;
+}
+
 const changePassword = async (payload) => {
   const { token, userName, passwordNew, passwordOld } = payload;
   const response = await fetch(`${API_BASE_OAUTH}account/changepassword`, {
@@ -415,6 +430,21 @@ const updatePhone = async (payload) => {
   }
 }
 
+const updatePhoneNew = async (payload) => {
+  try {
+    const { phoneNumber, phoneCountry, access_token } = payload;
+    const response = await fetch(`${API_BASE_OAUTH}account/profile/phone`, {
+      method: 'POST',
+      headers: getHeaders(access_token),
+      body: JSON.stringify({ phoneNumber, phoneCountry })
+    });
+    const responseJson = await response.json();
+    return responseJson;
+  } catch (e) {
+    return e;
+  }
+}
+
 const getListPackage = async ({ token, gradeId, indexPage }) => {
   try {
     const response = await fetch(`${API_BASE}package/${gradeId}/${indexPage}`, {
@@ -542,6 +572,7 @@ module.exports = {
   loginWithGoogle,
   loginWithFacebook,
   forgotPasswordV2,
+  forgotPasswordSendCode,
   changePasswordV2,
   changePassword,
   getStatisticChartBySubjectId,
@@ -558,6 +589,7 @@ module.exports = {
   getDataFlashCardTheory,
   getSearchAccount,
   updatePhone,
+  updatePhoneNew,
   getListPackage,
   getPackageInfo,
   iap,

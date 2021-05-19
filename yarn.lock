@@ -6681,6 +6681,11 @@ react-native-reanimated@^1.7.0:
   dependencies:
     fbjs "^1.0.0"
 
+react-native-recaptcha-that-works@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-recaptcha-that-works/-/react-native-recaptcha-that-works-1.1.0.tgz#172b9498b4d5887ba7a94e046f962fda709c0bc5"
+  integrity sha512-p/J0xSUZ2/1De4QlzQsvOdGor7c+5YeLC6aNWKKaR+m5/2fU0bvUOBBkmXmaFETM4riUiKSTv9Gdy6E2dSiZPg==
+
 react-native-render-html@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/react-native-render-html/-/react-native-render-html-4.2.4.tgz#0b642fb72aee5935bd1cfc427a115ffdf881d522"
