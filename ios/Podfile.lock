@@ -582,6 +582,8 @@ PODS:
     - React
   - react-native-progress-view (1.1.1):
     - React
+  - react-native-safe-area-context (3.2.0):
+    - React-Core
   - react-native-shimmer (0.5.0):
     - React (>= 0.45.1)
     - Shimmer (~> 1)
@@ -782,6 +784,7 @@ DEPENDENCIES:
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - "react-native-progress-bar-android (from `../node_modules/@react-native-community/progress-bar-android`)"
   - "react-native-progress-view (from `../node_modules/@react-native-community/progress-view`)"
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-shimmer (from `../node_modules/react-native-shimmer`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-tracking-transparency (from `../node_modules/react-native-tracking-transparency`)
@@ -942,6 +945,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/progress-bar-android"
   react-native-progress-view:
     :path: "../node_modules/@react-native-community/progress-view"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   react-native-shimmer:
     :path: "../node_modules/react-native-shimmer"
   react-native-splash-screen:
@@ -1101,6 +1106,7 @@ SPEC CHECKSUMS:
   react-native-pdf: 909cd849e6a806731b2135263189fea39494b55e
   react-native-progress-bar-android: d1ec460350b7c0d27418b0c0b9ebf073646db016
   react-native-progress-view: 8529425acbb93f918f3675bbece48f6b551b1384
+  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-shimmer: d9e6f436e8b0318da2b6f391e04725363b01c2d9
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-tracking-transparency: c1c4b412fcdcb0a02e23bb42b123def5a6d86a56
@@ -1154,4 +1160,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7342407d630dd591cd6a023c0bcbc83d8168428e
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0
