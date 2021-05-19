@@ -301,6 +301,7 @@ const styles = StyleSheet.create({
     paddingLeft: width < 350 ? 10 : 20,
   },
   txtTitle: {
+    marginLeft: 10,
     fontSize: RFFonsize(18),
     color: '#2D9CDB',
     fontFamily: 'Nunito-Bold',
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
     color: '#828282',
-    flex: 1, 
+    flex: 1,
     paddingVertical: 10,
   },
   buttonCancel: {
@@ -349,9 +350,10 @@ const styles = StyleSheet.create({
   },
   wrapContent: {
     flexDirection: 'row',
-    flex: 1
+    flex: 1,
+    marginLeft: 10
   },
   wrapTxtContent: {
-    width: width / 1.2 - 5
+    width: width / 1.2 - 25
   }
 });

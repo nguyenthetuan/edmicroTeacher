@@ -656,13 +656,14 @@ class SearchScreen extends React.Component {
                             <ActivityIndicator size="small" style={{ marginTop: height * 0.1 }} />
                             :
                             <FlatList
-                                data={listPapers.slice(0, 9)}
+                                bounces={false}
+                                contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
+                                data={listPapers.slice(0, 12)}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={this.renderItem}
-                                numColumns={2}
+                                showsVerticalScrollIndicator={false}
                                 showsHorizontalScrollIndicator={false}
                             />
-
                         }
 
                     </View>
