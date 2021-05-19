@@ -36,18 +36,12 @@ export default class StepOnePDF extends Component {
     onPressZoom = (type) => {
         if (type === 1) {
             if (!this.state.urlFilePDFAS) {
-                this.toast.show(
-                    <View style={styles.styleTostFaild}>
-                        <Text style={styles.txtSuccess}>Chưa có tài liệu PDF!</Text>
-                    </View>);
+                this.toast.show(<ToastFaild title={'Chưa có file lời giải!'}/>);
                 return;
             }
         } else {
             if (!this.state.urlFilePDFQS) {
-                this.toast.show(
-                    <View style={styles.styleTostFaild}>
-                        <Text style={styles.txtSuccess}>Chưa có tài liệu PDF!</Text>
-                    </View>);
+                this.toast.show(<ToastFaild title={'Chưa có file bộ đề!'}/>);
                 return;
             }
         }
