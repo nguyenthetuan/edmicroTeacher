@@ -19,7 +19,7 @@ export const REQUEST_TIME_OUT = 30000;
 export const PHONE_DEBUG = ['367851356', '847700356'];
 export const WINDOW = { width: SCREEN_WIDTH, height: SCREEN_HEIGHT };
 export const COL_STATISTATIC_WIDTH = 56;
-
+export const PROJECT_ID = 'onluyen-a2989';
 export const DATA_YEAR = [
     { name: '2020-2021', year: '2020' },
     { name: '2019-2020', year: '2019' },

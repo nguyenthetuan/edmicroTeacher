@@ -77,7 +77,7 @@ export default class ShimerMockExam extends Component {
     render() {
         return (
             <FlatList
-                data={Array.from(Array(3).keys())}
+                data={Array.from(Array(5).keys())}
                 renderItem={this.renderItem}
                 keyExtractor={(i, index) => index.toString()}
             />
