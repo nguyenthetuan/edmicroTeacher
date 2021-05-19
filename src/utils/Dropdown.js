@@ -12,13 +12,22 @@ import AppIcon from '../utils/AppIcon';
 import { RFFonsize } from '../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
+const getStatus = (status) => {
+    switch (status) {
+        case 0: return 'Chưa làm';
+        case 6: return 'Chờ chấm điểm'
+        default:
+            return '';
+    }
+}
+
 export default function Dropdown(props) {
     const selectModal = useRef();
 
     const [dropdownVisible, showDropdown] = useState(false);
     const [indexSelected, setIndex] = useState(props.indexSelected);
 
-    const { containerStyle, title, data, contentStyle } = props;
+    const { containerStyle, title, data, contentStyle, status } = props;
     const isData = data && data[indexSelected];
     return (
         <View style={containerStyle}>
@@ -31,7 +40,7 @@ export default function Dropdown(props) {
                 <View style={[styles.styBtn, contentStyle]}>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
                         {isData
-                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName || ''
+                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName + " " + `(${getStatus(status)})` || ''
                             : title}
                     </Text>
                     {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}
