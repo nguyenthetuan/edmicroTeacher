@@ -183,7 +183,7 @@ export default class StepOnePDF extends Component {
                 <UploadPDFComp title='Bộ đề PDF *' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
-                <Toast ref={(ref) => (this.toast = ref)} position={'top'} style={styles.styleTostSuccess} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'top'}/>
                 <Toast ref={(ref) => (this.refToast = ref)} position={'top'} />
                 <View style={{ width: '100%', height: 50, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>

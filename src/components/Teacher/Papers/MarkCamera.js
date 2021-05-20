@@ -642,7 +642,7 @@ class MarkCamera extends Component {
                                                                         console.log(error);
                                                                     }}
                                                                 />}
-                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "Thêm bộ đề..."}</Text>
+                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "..."}</Text>
                                                             </View>
                                                         </TouchableWithoutFeedback>
                                                         <Text style={styles.note}>Lưu ý dung lượng không quá 5Mb!</Text>

@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   },
   scroll_view: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 60,
   },
   txtCan: {
     fontFamily: 'Nunito',
