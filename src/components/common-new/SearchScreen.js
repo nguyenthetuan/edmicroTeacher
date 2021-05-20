@@ -66,7 +66,8 @@ class SearchScreen extends React.Component {
             assignmentContentType: 0,
             typeChange: 0,
             dataFilter: [],
-            text: ''
+            text: '',
+            isLoadingSearching: false
         };
 
 
@@ -206,11 +207,13 @@ class SearchScreen extends React.Component {
                 this.setState({
                     listPapers: resPapers.data,
                     loading: false,
+                    isLoadingSearching: false,
                 });
             }
         } else {
             this.setState({
                 loading: false,
+                isLoadingSearching: false,
             });
         }
     };
@@ -376,7 +379,7 @@ class SearchScreen extends React.Component {
     }
 
     searchData = (textSearch) => {
-        this.setState({ textSearch });
+        this.setState({ textSearch, isLoadingSearching: true, loading: true });
         if (this.timeSearch) {
             clearTimeout(this.timeSearch);
             this.timeSearch = null;
@@ -616,7 +619,7 @@ class SearchScreen extends React.Component {
             textSearch,
             onSearchClear
         } = this.state;
-        // console.log(listPapers);
+        console.log("this.state.textSearch: ", this.state.textSearch);
         const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
         const _header_opacity = _diff_clamp_scroll_y.interpolate({
             inputRange: [0, 50],
@@ -655,9 +658,10 @@ class SearchScreen extends React.Component {
                         onClear={this.onSearchClear}
                         onCancel={this.onSearchClear}
                         containerStyle={{
-                            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', width: '89%'
+                            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', alignItems: 'center'
                         }}
-                        inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 0 }}
+                        showLoading={this.state.isLoadingSearching}
+                        inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 0, width: width - 50 }}
                         autoFocus={true}
                     />
                 </View>
@@ -668,7 +672,7 @@ class SearchScreen extends React.Component {
                 </View>
                 {this.state.textSearch == '' ?
                     <View style={{ marginHorizontal: 16, paddingTop: 5 }}>
-                        {listPapers == listPapers.length > 0 ?
+                        {(listPapers?.length == 0 || loading) ?
                             <ActivityIndicator size="small" style={{ marginTop: height * 0.1 }} />
                             :
                             <FlatList
@@ -684,31 +688,37 @@ class SearchScreen extends React.Component {
 
                     </View>
                     :
-                    <AnimatedFlatList
-                        style={{ paddingHorizontal: 16 }}
-                        data={listPapers}
-                        contentContainerStyle={styles.contentContainer}
-                        showsVerticalScrollIndicator={false}
-                        keyExtractor={(item, index) => index.toString()}
-                        extraData={dataFilter}
-                        ListEmptyComponent={this._listTestEmpty}
-                        // ListFooterComponent={this._listTestFooter}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-                            )
-                        }}
-                        initialNumToRender={10}
-                        bounces={false}
-                        scrollEventThrottle={1}
-                        onScroll={Animated.event([
-                            {
-                                nativeEvent: { contentOffset: { y: this._scroll_y } }
-                            }
-                        ],
-                            { useNativeDriver: true }
-                        )}
-                    />
+                    <View>
+                        {loading
+                            ?
+                            <ActivityIndicator size="small" style={{ marginTop: height * 0.1 }} />
+                            :
+                            <AnimatedFlatList
+                                style={{ paddingHorizontal: 16 }}
+                                data={listPapers}
+                                contentContainerStyle={styles.contentContainer}
+                                showsVerticalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={dataFilter}
+                                ListEmptyComponent={this._listTestEmpty}
+                                // ListFooterComponent={this._listTestFooter}
+                                renderItem={({ item, index }) => {
+                                    return (
+                                        <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+                                    )
+                                }}
+                                initialNumToRender={10}
+                                bounces={false}
+                                scrollEventThrottle={1}
+                                onScroll={Animated.event([
+                                    {
+                                        nativeEvent: { contentOffset: { y: this._scroll_y } }
+                                    }
+                                ],
+                                    { useNativeDriver: true }
+                                )}
+                            />}
+                    </View>
                 }
                 {visibleModalEdit ? (
                     <ModalEditConfig
@@ -768,7 +778,6 @@ const styles = StyleSheet.create({
     },
     backpa: {
         flexDirection: "row",
-        paddingVertical: 5,
     },
     viewNotFound: {
         marginTop: 100,

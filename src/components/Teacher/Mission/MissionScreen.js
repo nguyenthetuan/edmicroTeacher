@@ -142,7 +142,7 @@ export default class MissionScreen extends Component {
           containerStyle={{
             backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'
           }}
-          inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 5 }}
+          inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 5 }}
         // customCancelTextStyle={styles.txtCan}
         />
         {/* } */}
