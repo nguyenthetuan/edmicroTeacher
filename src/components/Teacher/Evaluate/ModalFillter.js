@@ -27,6 +27,10 @@ export default class ModalFillter extends Component {
     this.modalizeRef.onOpen();
     // this.setState({ isShowModal: !isShowModal });
   }
+  handleEvaluate = () => {
+    this.modalizeRef.onClose();
+    // this.props._handleClickFillter();
+  }
 
   _selectYear = (index, item) => {
     this.props.fillter('yearIndex', index);
@@ -56,7 +60,6 @@ export default class ModalFillter extends Component {
         ref={ref => this.modalizeRef = ref}
         visible={isShowModal}
         modalHeight={height - height / 8}
-        // title={'Tuỳ chọn'}
         closeModal={this.changeStateModale}
       >
         <View style={styles.contain}>
@@ -93,7 +96,7 @@ export default class ModalFillter extends Component {
 
           <TouchableWithoutFeedback onPress={this.changeStateModale}>
             <View style={[styles.btnViewStatistic, { ...shadowBtn }]}>
-              <Text style={styles.txtBtn}>Xem thống kê</Text>
+              <Text style={styles.txtBtn}>Xem đánh giá</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
