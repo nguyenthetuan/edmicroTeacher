@@ -809,7 +809,8 @@ const styles = StyleSheet.create({
     sugges: {
         flex: 1,
         flexDirection: 'row',
-        marginTop: 16
+        marginTop: 16,
+        marginRight: 10
     },
     nameSug: {
         paddingHorizontal: 16,

@@ -162,7 +162,7 @@ function HomeWorkDraScreen(props) {
                 const dataRef = [
                     {
                         reff: refHeaderNavigation.current.ref,
-                        hint: 'Lọc thống kê bài tập'
+                        hint: 'Lọc thống kê bài tập theo khối lớp, môn học, bài tập và lớp học'
                     },
                 ];
                 refTourView.current.onMeasure(dataRef);

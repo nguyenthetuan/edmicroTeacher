@@ -339,7 +339,6 @@ export default function StudentDetail(props) {
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.nameStudent)}</Text>
                     }
-                    <View style={[styles.dotOnline, { backgroundColor: '#E0E0E0' }]} />
                 </View>
                 <View style={styles.contentItem}>
                     <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>
