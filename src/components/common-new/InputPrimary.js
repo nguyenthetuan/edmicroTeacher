@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    Image,
+    TouchableWithoutFeedback
+} from 'react-native'
 import { RFFonsize } from '../../utils/Fonts';
 
 export default function TextFormField(props) {
@@ -23,13 +30,13 @@ export default function TextFormField(props) {
                     {...props}
                 />
                 {suffixIcon &&
-                    <TouchableOpacity onPress={suffixIconAction}>
+                    <TouchableWithoutFeedback onPress={suffixIconAction}>
                         <Image
                             source={props.suffixIcon}
                             style={[styles.suffixIcon, {
                                 tintColor: secureTextEntry ? '#E0E0E0' : '#54CEF5'
                             }]} />
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
                 }
             </View>
             {error &&

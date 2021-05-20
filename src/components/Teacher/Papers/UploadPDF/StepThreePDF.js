@@ -314,7 +314,7 @@ class StepThreePDF extends Component {
                         <TouchableWithoutFeedback
                             onPress={() => { this.refModalSubject.onOpen() }}
                         >
-                            <View style={{ height: 40, width: 40, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 10, zIndex: 10 }}>
+                            <View style={styles.iconInputDown}>
                                 <Icon
                                     name={'angle-down'}
                                     size={25}
@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 0,
         borderWidth: 1,
         borderColor: '#C4C4C4',
+        borderStyle: 'solid',
         width: '100%',
         height: 40,
         marginBottom: 5,
@@ -505,16 +506,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         color: '#000',
         fontFamily: 'Nunito-Regular',
-        fontSize: (14),
         paddingStart: 10,
         marginBottom: 7,
         borderRadius: 5,
         padding: 0,
-        paddingBottom: Platform.OS == 'android' ? 0 : 8,
+        paddingBottom: Platform.OS == 'android' ? 0 : 0,
         borderColor: '#C4C4C4',
+        borderStyle: 'solid',
         borderWidth: 1,
         fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(20)
+        lineHeight: RFFonsize(18),
+        paddingRight: 15
     },
     txtItemActive: {
         fontFamily: 'Nunito-Bold',
@@ -531,15 +533,13 @@ const styles = StyleSheet.create({
         top: 5
     },
     wrapEnd: {
-        width: '100%',
-        height: 50,
-        alignItems: 'center',
+        height: 50, 
         alignSelf: 'center',
         bottom: 0,
     },
     buttonNext: {
         width: 160,
-        borderRadius: 15,
+        borderRadius: 20,
         backgroundColor: '#2D9CDB',
         justifyContent: 'center',
         alignItems: 'center',
@@ -582,5 +582,14 @@ const styles = StyleSheet.create({
         color: "#fff",
         top: -12,
         right: 5
+    },
+    iconInputDown: {
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        right: 10,
+        zIndex: 10
     }
 })
