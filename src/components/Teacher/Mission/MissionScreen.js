@@ -129,22 +129,23 @@ export default class MissionScreen extends Component {
     const { isLoadingMission } = this.props;
     return (
       <View style={{ width: '100%' }}>
-        {isLoadingMission ?
+        {/* {isLoadingMission ?
           null
-          :
-          <SearchBar
-            placeholder="Tìm kiếm"
-            value={textSearch}
-            placeholderTextColor="#828282" 
-            onChange={this.onChangeText}
-            onClear={this.onSearchClear}
-            onCancel={this.onSearchClear}
-            containerStyle={{
-              backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
-            inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 5 }}
-          // customCancelTextStyle={styles.txtCan}
-          />
-        }
+          : */}
+        <SearchBar
+          placeholder="Tìm kiếm"
+          value={textSearch}
+          placeholderTextColor="#828282"
+          onChange={this.onChangeText}
+          onClear={this.onSearchClear}
+          onCancel={this.onSearchClear}
+          containerStyle={{
+            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'
+          }}
+          inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 5 }}
+        // customCancelTextStyle={styles.txtCan}
+        />
+        {/* } */}
       </View>
     );
   };

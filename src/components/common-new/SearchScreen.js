@@ -651,6 +651,7 @@ class SearchScreen extends React.Component {
                             backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', width: '89%'
                         }}
                         inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 0 }}
+                        autoFocus={true}
                     />
                 </View>
                 <View style={{ marginHorizontal: 16 }}>
