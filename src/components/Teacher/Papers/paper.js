@@ -457,12 +457,20 @@ class Papers extends Component {
     try {
       const { token } = await dataHelper.getToken();
       const res = await apiPapers.getAssignmentConfig({ token, id: id });
+      console.log("res: ", res)
       if (res && res.assignmentContentType === 0) {
         const question = dataHelper.saveQuestion(res.questions);
         this.props.navigation.navigate('QuestionLibrary', {
           nagigation: this.props.nagigation,
           statusbar: 'light-content',
         });
+      } else if (res && res.assignmentContentType === 3) {
+        const question = dataHelper.saveQuestion(res.questions);
+        this.props.navigation.navigate('MarkCamera', {
+          listGrades,
+          listSubjects,
+          statusbar: 'dark-content',
+        })
       } else {
         this.props.navigation.navigate('UploadPDFStepByStep', {
           nagigation: this.props.nagigation,
@@ -481,6 +489,7 @@ class Papers extends Component {
   };
 
   _handleClickDetail = index => () => {
+    console.log('_handleClickDetail: ', index);
     const {
       dataSelected,
       payloadAssignment,
