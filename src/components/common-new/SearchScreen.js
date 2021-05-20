@@ -662,9 +662,10 @@ class SearchScreen extends React.Component {
                             onClear={this.onSearchClear}
                             onCancel={this.onSearchClear}
                             containerStyle={{
-                                backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', width: '89%'
+                                backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', alignItems: 'center'
                             }}
-                            inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 0 }}
+                            showLoading={this.state.isLoadingSearching}
+                            inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 0, width: width - 50 }}
                             autoFocus={true}
                             showLoading={loading}
                         />
@@ -753,8 +754,23 @@ class SearchScreen extends React.Component {
                                 data={dataSelected}
                             />
                         )
-                        :
-                        null
+                            :
+                            null
+                    }
+                    {
+                        visibleModalEditName
+                            ?
+                            (
+                                <ModalEditName
+                                    onVisible={visible => this.onVisibleModalEditName(visible)}
+                                    onUpdateItem={item => this.onUpdateItem(item)}
+                                    listGrades={listGrades}
+                                    listSubjects={listSubjects}
+                                    data={dataSelected}
+                                />
+                            )
+                            :
+                            null
                     }
                     <ModalOption
                         visibleEdit={visibleEdit}
@@ -767,8 +783,8 @@ class SearchScreen extends React.Component {
                         deletePaper={this.deletePaper}
                     />
                     <SafeAreaView />
-                </SafeAreaView>
-            </TouchableWithoutFeedback>
+                </SafeAreaView >
+            </TouchableWithoutFeedback >
         );
     };
 }
