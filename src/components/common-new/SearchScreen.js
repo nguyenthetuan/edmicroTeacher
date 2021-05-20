@@ -68,8 +68,7 @@ class SearchScreen extends React.Component {
             typeChange: 0,
             dataFilter: [],
             dataPaperGuild: [],
-            text: '',
-            isLoadingSearching: false
+            text: ''
         };
 
 
@@ -519,11 +518,11 @@ class SearchScreen extends React.Component {
                     {isLoadMore ? (
                         <ActivityIndicator size={'small'} />
                     ) : (
-                            <Text
-                                style={styles.more}>
-                                Xem thêm
-                            </Text>
-                        )}
+                        <Text
+                            style={styles.more}>
+                            Xem thêm
+                        </Text>
+                    )}
                 </TouchableOpacity>
             </View>
         );
@@ -668,6 +667,7 @@ class SearchScreen extends React.Component {
                             showLoading={this.state.isLoadingSearching}
                             inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 0, width: width - 50 }}
                             autoFocus={true}
+                            showLoading={loading}
                         />
                     </View>
                     <View style={{ marginHorizontal: 16 }}>
@@ -699,38 +699,55 @@ class SearchScreen extends React.Component {
                         </View>
                         :
                         <View>
-                            <Text style={styles.textResult}>{listPapers.length} bộ đề được tìm thấy</Text>
-                            <AnimatedFlatList
-                                style={{ paddingHorizontal: 16 }}
-                                data={listPapers}
-                                contentContainerStyle={styles.contentContainer}
-                                showsVerticalScrollIndicator={false}
-                                keyExtractor={(item, index) => index.toString()}
-                                extraData={dataFilter}
-                                ListEmptyComponent={this._listTestEmpty}
-                                // ListFooterComponent={this._listTestFooter}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-                                    )
-                                }}
-                                initialNumToRender={10}
-                                bounces={false}
-                                scrollEventThrottle={1}
-                                onScroll={Animated.event([
-                                    {
-                                        nativeEvent: { contentOffset: { y: this._scroll_y } }
-                                    }
-                                ],
-                                    { useNativeDriver: true }
-                                )}
-                            />
+                            {loading ?
+                                <ActivityIndicator size={'small'} />
+                                : <View>
+                                    <Text style={styles.textResult}>{listPapers.length} bộ đề được tìm thấy</Text>
+                                    <AnimatedFlatList
+                                        style={{ paddingHorizontal: 16 }}
+                                        data={listPapers}
+                                        contentContainerStyle={styles.contentContainer}
+                                        showsVerticalScrollIndicator={false}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        extraData={dataFilter}
+                                        ListEmptyComponent={this._listTestEmpty}
+                                        // ListFooterComponent={this._listTestFooter}
+                                        renderItem={({ item, index }) => {
+                                            return (
+                                                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+                                            )
+                                        }}
+                                        initialNumToRender={10}
+                                        bounces={false}
+                                        scrollEventThrottle={1}
+                                        onScroll={Animated.event([
+                                            {
+                                                nativeEvent: { contentOffset: { y: this._scroll_y } }
+                                            }
+                                        ],
+                                            { useNativeDriver: true }
+                                        )}
+                                    />
+                                </View>}
                         </View>
                     }
-                    {
-                        visibleModalEdit ? (
-                            <ModalEditConfig
-                                onVisible={visible => this.onVisibleModalEdit(visible)}
+                    {visibleModalEdit ? (
+                        <ModalEditConfig
+                            onVisible={visible => this.onVisibleModalEdit(visible)}
+                            onUpdateItem={item => this.onUpdateItem(item)}
+                            listGrades={listGrades}
+                            listSubjects={listSubjects}
+                            data={dataSelected}
+                        />
+                    )
+                        :
+                        null
+                    }
+                    {visibleModalEditName
+                        ?
+                        (
+                            <ModalEditName
+                                onVisible={visible => this.onVisibleModalEditName(visible)}
                                 onUpdateItem={item => this.onUpdateItem(item)}
                                 listGrades={listGrades}
                                 listSubjects={listSubjects}
