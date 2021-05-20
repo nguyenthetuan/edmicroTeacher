@@ -364,7 +364,7 @@ class ChangeInfo extends Component {
             // this.getAvatar();
             // global.updateAvatar();
           } else {
-            alertMessage('Thông báo', 'upload avatar không thành công');
+            alertMessage('', 'Upload avatar không thành công');
           }
         });
       })

@@ -275,7 +275,7 @@ export default function StudentDetail(props) {
 
     const handleRework = (studentId) => {
         Alert.alert(
-            'Thông báo',
+            '',
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
                 { text: 'Không', onPress: () => { }, style: 'cancel' },
@@ -294,7 +294,7 @@ export default function StudentDetail(props) {
                         } else {
                             // Global.updateHomeWork();
                             // toast.current.show(res);
-                            Alert.alert('Thông báo', res);
+                            Alert.alert('', res);
                         }
                     }
                 }
@@ -339,7 +339,6 @@ export default function StudentDetail(props) {
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.nameStudent)}</Text>
                     }
-                    <View style={[styles.dotOnline, { backgroundColor: '#E0E0E0' }]} />
                 </View>
                 <View style={styles.contentItem}>
                     <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>

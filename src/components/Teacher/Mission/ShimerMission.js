@@ -36,7 +36,7 @@ export default class ShimerMockExam extends Component {
                             width: width / 2,
                             height: 15,
                             borderRadius: 3,
-                            alignSelf: 'center'
+                            alignSelf: 'center',
                         }} />
 
                     <View style={styles.styWrap}>
@@ -91,7 +91,7 @@ export default class ShimerMockExam extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 10,
+        marginHorizontal: 16,
         marginVertical: 5,
         borderWidth: 2,
         borderColor: '#eee',
@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
     },
     styWrap: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        width,
+        width: width - 70,
 
     }
 });

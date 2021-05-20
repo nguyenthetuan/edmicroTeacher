@@ -27,7 +27,7 @@ export const alertConfirmAvatar = (cal) => {
 
 export const alertChangeGrade = (navigation) => {
   Alert.alert(
-    'Thông báo',
+    '',
     CHANGE_GRADE_ID_SUCCESS,
     [
       { text: 'OK', onPress: () => { navigation.goBack(); } }

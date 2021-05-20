@@ -149,7 +149,7 @@ export default class UploadPDFStepByStep extends Component {
     };
 
     goBack = () => {
-        Alert.alert('Thông báo', 'Dữ liệu sẽ không được lưu khi bạn rời khỏi đây', [
+        Alert.alert('', 'Dữ liệu sẽ không được lưu khi bạn rời khỏi đây', [
             {
                 text: 'Rời khỏi',
                 onPress: () => {

@@ -36,12 +36,12 @@ export default class StepOnePDF extends Component {
     onPressZoom = (type) => {
         if (type === 1) {
             if (!this.state.urlFilePDFAS) {
-                this.toast.show(<ToastFaild title={'Chưa có file lời giải!'}/>);
+                this.toast.show(<ToastFaild title={'Chưa có file lời giải!'} />);
                 return;
             }
         } else {
             if (!this.state.urlFilePDFQS) {
-                this.toast.show(<ToastFaild title={'Chưa có file bộ đề!'}/>);
+                this.toast.show(<ToastFaild title={'Chưa có file bộ đề!'} />);
                 return;
             }
         }
@@ -119,7 +119,7 @@ export default class StepOnePDF extends Component {
                                     urlFilePDFQS: resSignedUrl.urlFile,
                                     loadingUpload: false,
                                 });
-                                this.toast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />);
+                                this.toast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />, 600000);
                             } else {
                                 this.setState({
                                     urlFilePDFAS: resSignedUrl.urlFile,
@@ -183,7 +183,7 @@ export default class StepOnePDF extends Component {
                 <UploadPDFComp title='Bộ đề PDF *' marginTop={24} buttons={buttonConfig1} fileName={fileNameQS} />
                 <UploadPDFComp title='Lời giải' marginTop={10} buttons={buttonConfig2} fileName={fileNameAS} />
                 <Text style={styles.textWarning}>Lưu ý dung lượng không quá 5Mb!</Text>
-                <Toast ref={(ref) => (this.toast = ref)} position={'top'} style={styles.styleTostSuccess} />
+                <Toast ref={(ref) => (this.toast = ref)} position={'top'} style={{backgroundColor :'transparent'}} />
                 <Toast ref={(ref) => (this.refToast = ref)} position={'top'} />
                 <View style={{ width: '100%', height: 50, position: 'absolute', bottom: 0 }}>
                     <RippleButton style={styles.buttonNext} size={40} onPress={() => { this.onPressNextButton() }}>

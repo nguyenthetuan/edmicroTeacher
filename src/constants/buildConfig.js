@@ -9,7 +9,7 @@ export const VERSION_CODE_ANDROID = 11;
  * Update version code push
  */
 export const BUILD_NUMBER_CODE_PUSH = {
-    ios: '41',
+    ios: '43',
     android: '33'
 };
 
@@ -24,7 +24,7 @@ export const getVersionName = () => {
         }
         return APP_VERSION_NAME;
     } else {
-        return APP_VERSION_NAME;
+        return APP_VERSION_NAME+" Beta";
     }
 }
 

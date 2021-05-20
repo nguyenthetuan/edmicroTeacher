@@ -51,7 +51,9 @@ export default class HeaderMissionNew extends React.Component {
         const { isAccessMission } = this.state;
         return (
             <View style={styles.container}>
-                <RippleButton onPress={this.openDrawer}>
+                <RippleButton
+                    hitSlop={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                    onPress={this.openDrawer}>
                     <View style={styles.button}>
                         <Image
                             source={require('../../asserts/icon/menu.png')}
