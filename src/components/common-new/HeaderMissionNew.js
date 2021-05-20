@@ -39,7 +39,7 @@ export default class HeaderMissionNew extends React.Component {
         const res = await Api.checkPermission(token);
         const { isAccessMission } = res;
         this.setState({ isAccessMission })
-        this.props.getListMission({ token });
+        this.props.getListMission && this.props.getListMission({ token });
         this.props.getCommonSubjectMission({ token });
     }
     goToSetupMission = () => {
@@ -65,7 +65,7 @@ export default class HeaderMissionNew extends React.Component {
 
                 {isAccessMission
                     &&
-                    <TouchableWithoutFeedback  hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
+                    <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                         onPress={this.goToSetupMission}>
                         <View style={[styles.addMission, { ...shadowBtn }]}>
                             {/* <Image
