@@ -275,6 +275,13 @@ class SearchScreen extends React.Component {
                     nagigation: this.props.nagigation,
                     statusbar: 'light-content',
                 });
+            } else if (res && res.assignmentContentType === 3) {
+                const question = dataHelper.saveQuestion(res.questions);
+                this.props.navigation.navigate('MarkCamera', {
+                    listGrades,
+                    listSubjects,
+                    statusbar: 'dark-content',
+                })
             } else {
                 this.props.navigation.navigate('UploadPDF', {
                     nagigation: this.props.nagigation,
