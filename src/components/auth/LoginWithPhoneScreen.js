@@ -357,7 +357,7 @@ class LoginWithPhoneScreen extends Component {
                   <Button
                     center={true}
                     title="Đăng nhập"
-                    width={width - 60}
+                    width={width - 50}
                     circle={40}
                     style={styles.btnLogin}
                     styleTitle={styles.styleTitle}
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
     color: '#000',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   btnLogin: {
     backgroundColor: '#54CEF5',

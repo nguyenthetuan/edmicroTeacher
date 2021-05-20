@@ -25,7 +25,8 @@ const HeaderPrimary = forwardRef((props, ref) => {
                         </View>
                     </TouchableWithoutFeedback>
                     :
-                    <View style={styles.boxAction} />
+                    null
+                    // <View style={styles.boxAction} />
                 }
                 <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
             </View>

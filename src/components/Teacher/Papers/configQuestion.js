@@ -727,7 +727,7 @@ class ConfigQuestion extends Component {
             loading={loading}
             notRightButton={true}
             bgColor={{ backgroundColor: "#117DB9" }}
-            leftTitle={{ marginLeft: -50 }}
+            leftTitle={{ marginLeft: -90 }}
           />
           <ScrollView
             contentContainerStyle={{ height: webheight + HEIGHT_WEB }}
@@ -1162,21 +1162,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                      <WebView
-                        ref={ref => (this.webview = ref)}
-                        source={{
-                          html: html.renderMatarialDetail(htmlContent, urlMedia),
-                          baseUrl,
-                        }}
-                        subjectId={'TOAN'}
-                        originWhitelist={['file://']}
-                        scalesPageToFit={false}
-                        javaScriptEnabled
-                        showsVerticalScrollIndicator={false}
-                        startInLoadingState={false}
-                        style={{ backgroundColor: '#fff' }}
-                      />
-                    )}
+                        <WebView
+                          ref={ref => (this.webview = ref)}
+                          source={{
+                            html: html.renderMatarialDetail(htmlContent, urlMedia),
+                            baseUrl,
+                          }}
+                          subjectId={'TOAN'}
+                          originWhitelist={['file://']}
+                          scalesPageToFit={false}
+                          javaScriptEnabled
+                          showsVerticalScrollIndicator={false}
+                          startInLoadingState={false}
+                          style={{ backgroundColor: '#fff' }}
+                        />
+                      )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
