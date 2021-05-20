@@ -976,7 +976,7 @@ const styles = StyleSheet.create({
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
-    color: '#000',
+    color: '#828282',
   },
   fill: {
     flex: 1,

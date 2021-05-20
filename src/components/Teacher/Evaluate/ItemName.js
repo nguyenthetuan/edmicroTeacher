@@ -75,7 +75,7 @@ class ItemName extends Component {
                             <Image
                                 source={require('../../../asserts/icon/ic_name_evaluate.png')}
                             />
-                            <View style={[styles.dotOnline, { backgroundColor: '#91EDC6' }]} />
+                            {/* <View style={[styles.dotOnline, { backgroundColor: '#91EDC6' }]} /> */}
                         </View>
                         <View style={{ marginLeft: 12 }} onPress={this._handleClick}>
                             {showInfo ? (

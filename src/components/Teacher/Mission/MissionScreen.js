@@ -256,8 +256,8 @@ const styles = StyleSheet.create({
   },
   styTxtEmpty: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(21),
     color: '#999',
   },
   header: {
