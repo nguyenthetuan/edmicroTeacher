@@ -145,7 +145,7 @@ export default class WarningModal extends Component {
     const { text, typeError } = this.state;
     if (text.trim() === '') {
       Alert.alert(
-        'Thông báo',
+        '',
         'Nội dung không được để trống',
         [
           {
@@ -159,7 +159,7 @@ export default class WarningModal extends Component {
       );
     } else if (text.length < 12 && text !== '') {
       Alert.alert(
-        'Thông báo',
+        '',
         'Nội dung phải bao gồm ít nhất 12 kí tự',
         [
           {
@@ -210,7 +210,7 @@ export default class WarningModal extends Component {
                       },
                       () => {
                         Alert.alert(
-                          'Thông báo',
+                          '',
                           'Cảm ơn bạn đã gửi thông báo lỗi',
                           [
                             {

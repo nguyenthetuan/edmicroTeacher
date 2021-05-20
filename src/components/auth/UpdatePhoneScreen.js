@@ -36,7 +36,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import { getUserByToken } from '../../utils/Helper';
 import FastImage from 'react-native-fast-image';
 import { RFFonsize } from '../../utils/Fonts';
-
+import ToastSuccess from '../common-new/ToastSuccess';
 const { width, height } = Dimensions.get('window');
 const description = 'Việc cập nhật số điện thoại sẽ giúp bảo mật tài khoản và để cấp lại mật khẩu nếu bạn quên mật khẩu.'
 export default class UpdatePhoneScreen extends Component {
@@ -216,7 +216,7 @@ export default class UpdatePhoneScreen extends Component {
     const phone = this.props.user.phoneNumber;
     const formatPhone = Common.formatPhoneNumber(`+${phone}`);
     if (formatPhone == phoneNumber) {
-      this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
+      this.toast.show(<ToastSuccess title="Cập nhập số điện thoại thành công!" />, 1000, () => {
         this.props.navigation.goBack();
       });
       return;
@@ -229,7 +229,7 @@ export default class UpdatePhoneScreen extends Component {
       }
       const payload = getUserByToken(response.access_token);
       this.props.makeRequestProfile(payload);
-      this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
+      this.toast.show(<ToastSuccess title="Cập nhập số điện thoại thành công!" />, 1000, () => {
         this.props.navigation.goBack();
       });
     } else {
@@ -308,7 +308,7 @@ export default class UpdatePhoneScreen extends Component {
           }
           const payload = getUserByToken(response.access_token);
           this.props.makeRequestProfile(payload);
-          this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
+          this.toast.show(<ToastSuccess title="Cập nhập số điện thoại thành công!" />, 1000, () => {
             this.props.navigation.goBack();
             console.log('update success')
           });
@@ -397,7 +397,7 @@ export default class UpdatePhoneScreen extends Component {
             title={!this.state.inputOtpVisible ? 'Cập nhật số điện thoại' : 'Xác thực'}
             navigation={this.props.navigation}
             goBack={this.handleBtnBack(isShowKeybroad)}
-            color={'#979797'}
+            color={'#383838'}
           />
           <KeyboardAwareScrollView
             contentContainerStyle={{
@@ -457,7 +457,7 @@ export default class UpdatePhoneScreen extends Component {
 
                     {
                       !inputOtpVisible ?
-                        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+                        <View style={{ width: width - 50, alignSelf: 'center' }}>
                           <Text style={styles.txtTitleForm}>Số điện thoại</Text>
                           <FormInput
                             paddingTopContent={4}
@@ -539,7 +539,7 @@ export default class UpdatePhoneScreen extends Component {
                                 </RippleButton>
                               </View>
                               :
-                              <View style={{ height: 20, marginTop: 60, width: 320 }}>
+                              <View style={{ height: 20, marginTop: 60, width: width - 50 }}>
                                 <DotIndicator color={'#54CEF5'} size={6} count={8} />
                               </View>
                           }
@@ -557,7 +557,7 @@ export default class UpdatePhoneScreen extends Component {
             </View>
           </KeyboardAwareScrollView>
         </View>
-        <Toast ref="toast" position={'bottom'} />
+        <Toast ref={ref => this.toast = ref} position={'top'} style={{ backgroundColor: "#16BDA9", height: 70 }} />
         <LoadingScreen
           isLoading={this.state.isLoading}
           bgColor={'transparent'}
@@ -601,7 +601,7 @@ const styles = StyleSheet.create({
   },
   btnLaylaimk: {
     backgroundColor: '#2D9CDB',
-    width: width - width / 5,
+    width: width - 50,
     height: 40,
     alignSelf: 'center',
     marginTop: 20,

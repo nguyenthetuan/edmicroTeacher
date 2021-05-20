@@ -69,7 +69,7 @@ class ExchangeGiftScreen extends Component {
         const { user } = this.props;
         const isGoto = item.point > user.totalEDPoint;
         if (isGoto) {
-            Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
+            Alert.alert('', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
             return;
         }
         this.props.navigation.navigate('GiftDetail', {

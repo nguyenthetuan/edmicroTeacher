@@ -58,7 +58,7 @@ export default class ModalMockExamStart extends Component {
       }
     } catch (error) {
       Alert.alert(
-        'Thông báo',
+        '',
         'Có lỗi xảy ra. Vui lòng thử lại sau',
         [
           { text: 'Thoát', onPress: this.hideModal }

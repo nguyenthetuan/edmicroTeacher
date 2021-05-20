@@ -57,7 +57,7 @@ class GiftDetail extends Component {
             },
             campaignId: dataGift.campaignId
         };
-        Alert.alert('Thông báo', 'Bạn có chắc muốn đổi thưởng?', [
+        Alert.alert('', 'Bạn có chắc muốn đổi thưởng?', [
             {
                 text: 'Xác nhận',
                 onPress: async () => {
@@ -114,25 +114,25 @@ class GiftDetail extends Component {
         if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
             formData['userName'] = '';
             this.setState({ formData });
-            Alert.alert('Thông báo', 'Bạn chưa nhập họ tên');
+            Alert.alert('', 'Bạn chưa nhập họ tên');
             return true;
         }
         if (_.isEmpty(formData['userName']) || formData['userName'].trim() == '') {
             formData['userName'] = '';
             this.setState({ formData });
-            Alert.alert('Thông báo', 'Bạn chưa điền số điện thoại');
+            Alert.alert('', 'Bạn chưa điền số điện thoại');
             return true;
         }
         if (_.isEmpty(formData['address']) || formData['address'].trim() == '') {
             formData['address'] = '';
             this.setState({ formData });
-            Alert.alert('Thông báo', 'Bạn chưa điền địa chỉ');
+            Alert.alert('', 'Bạn chưa điền địa chỉ');
             return true;
         }
         if (_.isEmpty(formData['email']) || formData['email'].trim() == '') {
             formData['email'] = '';
             this.setState({ formData });
-            Alert.alert('Thông báo', 'Bạn chưa điền Email');
+            Alert.alert('', 'Bạn chưa điền Email');
             return true;
         }
         return false;
