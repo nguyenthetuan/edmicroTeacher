@@ -500,7 +500,7 @@ export default class ForgotPasswordScreen extends Component {
   renderAccountSearch = (account) => {
     if (!_.isEmpty(account)) {
       return (
-        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+        <View style={{ width: width - 50, alignSelf: 'center' }}>
           {
             this.state.accountSelected
               ?
@@ -680,7 +680,7 @@ export default class ForgotPasswordScreen extends Component {
           <View style={backArrow}>
             <RippleButton
               size={50}
-              color={'black'}
+              color={'#c4c4c4'}
               duration={200}
               onPress={this.handleBtnBack(isShowKeybroad)}
             >
@@ -718,7 +718,7 @@ export default class ForgotPasswordScreen extends Component {
                       validationSchema={phoneNumberScheme}
                     >
                       {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
-                        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+                        <View style={{ width: width - 50, alignSelf: 'center' }}>
                           <InputPrimary
                             label={'Số điện thoại'}
                             placeholder={'eg.09x....'}
@@ -747,14 +747,14 @@ export default class ForgotPasswordScreen extends Component {
                         color: '#222222',
                         fontFamily: 'Nunito-Bold',
                         fontSize: RFFonsize(15),
-                        width: width - width / 5
+                        width: width - 50
                       }}>
                         Nhập mã OTP
                         </Text>
                       <OTPTextView
                         ref={ref => this.otp = ref}
                         containerStyle={styles.textInputContainer}
-                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, width: width * 2 / 15 }]}
+                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, width: width - 50 }]}
                         handleTextChange={text => this.setState({ codeOTP: text, errors: '' }, () => console.log('text1', this.state.codeOTP))}
                         inputCount={6}
                         keyboardType="numeric"
@@ -791,7 +791,7 @@ export default class ForgotPasswordScreen extends Component {
                             </RippleButton>
                           </View>
                           :
-                          <View style={{ height: 20, marginTop: 60, width: 320 }}>
+                          <View style={{ height: 20, marginTop: 60, width: width - 50 }}>
                             <DotIndicator color={'#54CEF5'} size={6} count={8} />
                           </View>
                       }
@@ -853,7 +853,6 @@ const styles = StyleSheet.create({
     marginTop: (height / width),
     fontFamily: 'Nunito',
     fontSize: RFFonsize(15),
-    lineHeight: RFFonsize(20),
     color: '#000',
     lineHeight: RFFonsize(19),
     marginBottom: 3,
@@ -861,19 +860,19 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito',
+    fontWeight: "500",
     fontSize: RFFonsize(18),
-    lineHeight: RFFonsize(25),
-    color: '#979797',
+    lineHeight: RFFonsize(22),
+    color: '#383838',
   },
   btnBack: {
     tintColor: '#000',
-    width: 20,
-    height: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    alignSelf: "center"
   },
   btnCreate: {
     backgroundColor: '#2D9CDB',
-    width: width - width / 5,
+    width: width - 50,
     height: 40,
     alignSelf: 'center',
     marginTop: 280,
@@ -883,7 +882,7 @@ const styles = StyleSheet.create({
   },
   btnLaylaimk: {
     backgroundColor: '#54CEF5',
-    width: width - width / 5,
+    width: width - 50,
     height: 40,
     alignSelf: 'center',
     marginTop: 20,
@@ -919,14 +918,13 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     padding: 0,
     fontSize: RFFonsize(10),
-    width: width - width / 8,
+    width: width - 50,
   },
   roundedTextInput: {
     margin: 0,
     borderRadius: 5,
     borderBottomWidth: 1,
     borderWidth: 1,
-    //  height: width*2/15,
   },
   txtErrorEmpty: {
     color: '#D22D3F',
