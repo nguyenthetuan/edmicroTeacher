@@ -10,7 +10,8 @@ import {
     ActivityIndicator,
     Dimensions,
     TouchableWithoutFeedback,
-    Image
+    Image,
+    Keyboard
 } from "react-native";
 import { connect } from 'react-redux';
 import dataHelper from '../../utils/dataHelper';
@@ -66,6 +67,7 @@ class SearchScreen extends React.Component {
             assignmentContentType: 0,
             typeChange: 0,
             dataFilter: [],
+            dataPaperGuild: [],
             text: ''
         };
 
@@ -123,10 +125,12 @@ class SearchScreen extends React.Component {
                 listPapers = resPapers.data;
             }
             let dataFilter = this.filterData(listPapers);
+            const dataPaperGuild = listPapers.slice(0, 12);
             this.setState({
                 listGrades,
                 listSubjects,
                 listPapers,
+                dataPaperGuild,
                 loading: false,
                 dataFilter,
                 hideLoadMore: !(listPapers.length % this._pageSize === 0),
@@ -486,7 +490,7 @@ class SearchScreen extends React.Component {
             />
             :
             <View style={styles.viewNotFound}>
-                <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+                <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu :((</Text>
             </View>
         );
     };
@@ -505,11 +509,11 @@ class SearchScreen extends React.Component {
                     {isLoadMore ? (
                         <ActivityIndicator size={'small'} />
                     ) : (
-                        <Text
-                            style={styles.more}>
-                            Xem thêm
-                        </Text>
-                    )}
+                            <Text
+                                style={styles.more}>
+                                Xem thêm
+                            </Text>
+                        )}
                 </TouchableOpacity>
             </View>
         );
@@ -623,124 +627,134 @@ class SearchScreen extends React.Component {
         });
         // console.log("render paper");
         return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <SafeAreaView />
-                {/* <HeaderNavigation
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <SafeAreaView />
+                    {/* <HeaderNavigation
                     title={'Tìm kiếm bộ đề'}
                     navigation={this.props.navigation}
                     goBack={this.openBack}
                     color={'#2D9CDB'}
                 /> */}
-                <View style={styles.backpa}>
-                    <TouchableWithoutFeedback
-                        hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
-                        onPress={() => { this.props.navigation.goBack() }}
-                    >
-                        <View style={{ alignSelf: 'center', paddingLeft: 10 }}>
-                            <Image source={require('../../asserts/icon/icon_arrowLeftv3.png')} />
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <SearchBar
-                        placeholder="Tìm kiếm"
-                        value={textSearch}
-                        placeholderTextColor="#828282"
-                        onChange={this.onChangeText}
-                        onClear={this.onSearchClear}
-                        onCancel={this.onSearchClear}
-                        containerStyle={{
-                            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', width: '89%'
-                        }}
-                        inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 0 }}
-                        autoFocus={true}
-                    />
-                </View>
-                <View style={{ marginHorizontal: 16 }}>
-                    <FlatList
-                        autoFocus={true}
-                    />
-                </View>
-                {this.state.textSearch == '' ?
-                    <View style={{ marginHorizontal: 16, paddingTop: 5 }}>
-                        {listPapers == listPapers.length > 0 ?
-                            <ActivityIndicator size="small" style={{ marginTop: height * 0.1 }} />
-                            :
-                            <FlatList
-                                bounces={false}
-                                contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
-                                data={listPapers.slice(0, 12)}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={this.renderItem}
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                            />
-                        }
-
+                    <View style={styles.backpa}>
+                        <TouchableWithoutFeedback
+                            hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                            onPress={() => { this.props.navigation.goBack() }}
+                        >
+                            <View style={{ alignSelf: 'center', paddingLeft: 10 }}>
+                                <Image source={require('../../asserts/icon/icon_arrowLeftv3.png')} />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <SearchBar
+                            placeholder="Tìm kiếm"
+                            value={textSearch}
+                            placeholderTextColor="#828282"
+                            onChange={this.onChangeText}
+                            onClear={this.onSearchClear}
+                            onCancel={this.onSearchClear}
+                            containerStyle={{
+                                backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', width: '89%'
+                            }}
+                            inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 0 }}
+                            autoFocus={true}
+                        />
                     </View>
-                    :
-                    <AnimatedFlatList
-                        style={{ paddingHorizontal: 16 }}
-                        data={listPapers}
-                        contentContainerStyle={styles.contentContainer}
-                        showsVerticalScrollIndicator={false}
-                        keyExtractor={(item, index) => index.toString()}
-                        extraData={dataFilter}
-                        ListEmptyComponent={this._listTestEmpty}
-                        // ListFooterComponent={this._listTestFooter}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-                            )
-                        }}
-                        initialNumToRender={10}
-                        bounces={false}
-                        scrollEventThrottle={1}
-                        onScroll={Animated.event([
-                            {
-                                nativeEvent: { contentOffset: { y: this._scroll_y } }
-                            }
-                        ],
-                            { useNativeDriver: true }
-                        )}
-                    />
-                }
-                {visibleModalEdit ? (
-                    <ModalEditConfig
-                        onVisible={visible => this.onVisibleModalEdit(visible)}
-                        onUpdateItem={item => this.onUpdateItem(item)}
-                        listGrades={listGrades}
-                        listSubjects={listSubjects}
-                        data={dataSelected}
-                    />
-                )
-                    :
-                    null
-                }
-                {visibleModalEditName
-                    ?
-                    (
-                        <ModalEditName
-                            onVisible={visible => this.onVisibleModalEditName(visible)}
+                    <View style={{ marginHorizontal: 16 }}>
+                        <FlatList
+                            autoFocus={true}
+                        />
+                    </View>
+                    {(this.state.textSearch != '' && this.state.listPapers.length == 0) &&
+                        <Text style={styles.textResult}>{this.state.listPapers.length} bộ đề được tìm thấy</Text>
+                    }
+                    {(this.state.textSearch == '' || listPapers.length == 0) ?
+                        <View style={{ marginHorizontal: 20, paddingTop: 5 }}>
+                            <View>
+                                <Text style={{
+                                    marginTop: 10,
+                                    fontFamily: 'Nunito-Bold', color: '#646D7A',
+                                    fontSize: RFFonsize(16),
+                                }}>Gợi ý bộ đề</Text>
+                                <FlatList
+                                    bounces={false}
+                                    contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
+                                    data={this.state.dataPaperGuild}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    renderItem={this.renderItem}
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
+                                />
+                            </View>
+                        </View>
+                        :
+                        <View>
+                            <Text style={styles.textResult}>{listPapers.length} bộ đề được tìm thấy</Text>
+                            <AnimatedFlatList
+                                style={{ paddingHorizontal: 16 }}
+                                data={listPapers}
+                                contentContainerStyle={styles.contentContainer}
+                                showsVerticalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={dataFilter}
+                                ListEmptyComponent={this._listTestEmpty}
+                                // ListFooterComponent={this._listTestFooter}
+                                renderItem={({ item, index }) => {
+                                    return (
+                                        <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+                                    )
+                                }}
+                                initialNumToRender={10}
+                                bounces={false}
+                                scrollEventThrottle={1}
+                                onScroll={Animated.event([
+                                    {
+                                        nativeEvent: { contentOffset: { y: this._scroll_y } }
+                                    }
+                                ],
+                                    { useNativeDriver: true }
+                                )}
+                            />
+                        </View>
+                    }
+                    {visibleModalEdit ? (
+                        <ModalEditConfig
+                            onVisible={visible => this.onVisibleModalEdit(visible)}
                             onUpdateItem={item => this.onUpdateItem(item)}
                             listGrades={listGrades}
                             listSubjects={listSubjects}
                             data={dataSelected}
                         />
                     )
-                    :
-                    null
-                }
-                <ModalOption
-                    visibleEdit={visibleEdit}
-                    _handleCloseModal={this._handleCloseModal}
-                    _handleClickDetail={this._handleClickDetail}
-                    _OpenModal={this._OpenModal}
-                    animation={animation}
-                    assignmentContentType={assignmentContentType}
-                    dataSelected={dataSelected}
-                    deletePaper={this.deletePaper}
-                />
-                <SafeAreaView />
-            </SafeAreaView>
+                        :
+                        null
+                    }
+                    {visibleModalEditName
+                        ?
+                        (
+                            <ModalEditName
+                                onVisible={visible => this.onVisibleModalEditName(visible)}
+                                onUpdateItem={item => this.onUpdateItem(item)}
+                                listGrades={listGrades}
+                                listSubjects={listSubjects}
+                                data={dataSelected}
+                            />
+                        )
+                        :
+                        null
+                    }
+                    <ModalOption
+                        visibleEdit={visibleEdit}
+                        _handleCloseModal={this._handleCloseModal}
+                        _handleClickDetail={this._handleClickDetail}
+                        _OpenModal={this._OpenModal}
+                        animation={animation}
+                        assignmentContentType={assignmentContentType}
+                        dataSelected={dataSelected}
+                        deletePaper={this.deletePaper}
+                    />
+                    <SafeAreaView />
+                </SafeAreaView>
+            </TouchableWithoutFeedback>
         );
     };
 }
@@ -771,7 +785,7 @@ const styles = StyleSheet.create({
     txtNotFound: {
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(14),
-        color: '#000',
+        color: '#646D7A',
     },
     more: {
         color: '#000',
@@ -795,23 +809,29 @@ const styles = StyleSheet.create({
     sugges: {
         flex: 1,
         flexDirection: 'row',
-        marginLeft: 10,
         marginTop: 16
     },
     nameSug: {
         paddingHorizontal: 16,
-        paddingVertical: 5,
+        paddingVertical: 9,
         alignSelf: "center",
         fontFamily: "Nunito",
         fontSize: RFFonsize(12),
         lineHeight: RFFonsize(16),
-        color: '#383838',
-        borderWidth: 0.5,
+        color: '#646D7A',
+        // borderWidth: 0.5,
         borderColor: "#c4c4c4",
         borderStyle: 'solid',
         borderRadius: 18,
-        backgroundColor: '#ededed',
+        backgroundColor: '#F5F7FA',
         overflow: 'hidden'
+    },
+    textResult: {
+        marginHorizontal: 20,
+        fontFamily: 'Nunito-Bold', color: '#646D7A',
+        fontSize: RFFonsize(14),
+        fontWeight: '500',
+        marginBottom: 10,
     }
 });
 
