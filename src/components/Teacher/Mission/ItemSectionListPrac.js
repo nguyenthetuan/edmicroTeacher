@@ -25,7 +25,7 @@ export default class ItemSectionListPrac extends Component {
     score = parseFloat(score) || '';
     const { item } = this.props;
     if (score < 0 || score > 10) {
-      Alert.alert('Thông báo', 'Điểm nhập nằm trong khoảng 0 đến 10', [
+      Alert.alert('', 'Điểm nhập nằm trong khoảng 0 đến 10', [
         {
           text: 'Đặt lại',
           onPress: () => {
@@ -44,7 +44,7 @@ export default class ItemSectionListPrac extends Component {
     percentCount = parseInt(percentCount) || '';
     const { item } = this.props;
     if (percentCount < 0) {
-      Alert.alert('Thông báo', 'Số lần làm bài phải lớn hơn 0', [
+      Alert.alert('', 'Số lần làm bài phải lớn hơn 0', [
         {
           text: 'Đặt lại',
           onPress: () => {
@@ -57,7 +57,7 @@ export default class ItemSectionListPrac extends Component {
       return;
     }
     if (percentCount > 100) {
-      Alert.alert('Thông báo', 'Số lần làm bài phải nhỏ hơn 100', [
+      Alert.alert('', 'Số lần làm bài phải nhỏ hơn 100', [
         {
           text: 'Đặt lại',
           onPress: () => {

@@ -699,7 +699,7 @@ export const convertNameToAvatar = (name) => {
 }
 
 export const AlertNoti = (message, clickOK) => {
-  Alert.alert('Thông báo', message, [
+  Alert.alert('', message, [
     {
       text: "OK",
       onPress: clickOK

@@ -31,7 +31,9 @@ export default class HeaderMain extends React.Component {
     const source = getSourceAvatar(userId, timeCached);
     return (
       <View style={styles.container}>
-        <RippleButton onPress={this.openDrawer}>
+        <RippleButton
+          hitSlop={{ top: 5, right: 5, left: 5, bottom: 5 }}
+          onPress={this.openDrawer}>
           <View style={styles.button}>
             <Image
               source={require('../../asserts/icon/menu.png')}
@@ -43,7 +45,9 @@ export default class HeaderMain extends React.Component {
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
-        <TouchableWithoutFeedback onPress={this.navigateUser}>
+        <TouchableWithoutFeedback
+          hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+          onPress={this.navigateUser}>
           <View style={styles.btnAvatar}>
             <Avatar
               source={source}

@@ -275,7 +275,7 @@ export default function StudentDetail(props) {
 
     const handleRework = (studentId) => {
         Alert.alert(
-            'Thông báo',
+            '',
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
                 { text: 'Không', onPress: () => { }, style: 'cancel' },
@@ -294,7 +294,7 @@ export default function StudentDetail(props) {
                         } else {
                             // Global.updateHomeWork();
                             // toast.current.show(res);
-                            Alert.alert('Thông báo', res);
+                            Alert.alert('', res);
                         }
                     }
                 }

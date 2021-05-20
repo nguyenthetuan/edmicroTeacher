@@ -191,7 +191,7 @@ class Papers extends Component {
     });
     if (response.status === 1) {
       Alert.alert(
-        'Thông báo',
+        '',
         'Xóa bài thành công!',
         [
           { text: 'OK' }
@@ -437,16 +437,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
         </TouchableOpacity>
       </View>
     );
@@ -824,7 +824,7 @@ class Papers extends Component {
             {this.createTabButton()}
           </Animated.View>
           {loading ?
-            <View style={{ paddingTop: 220 }}>
+            <View style={{ paddingTop: 220, width: width - 15, alignSelf: 'center' }}>
               <ShimerPaper />
             </View>
             :

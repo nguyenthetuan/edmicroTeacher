@@ -81,7 +81,7 @@ export default class ModalMockExamComplete extends Component {
       );
     } else {
       this.setState({ isLoadingSubmit: false });
-      Alert.alert('Thông báo', 'Nộp bài không thành công bạn vui lòng thử lại!');
+      Alert.alert('', 'Nộp bài không thành công bạn vui lòng thử lại!');
     }
   };
 

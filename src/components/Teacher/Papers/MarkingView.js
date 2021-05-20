@@ -462,7 +462,7 @@ class MarkingView extends Component {
   };
 
   onPressPublicScore = () => {
-    Alert.alert('Thông báo', 'Bạn có chắc chắn muốn công bố điểm cho cả lớp không? Lưu ý: Các câu, các bài làm chưa được chấm sẽ bị 0 điểm.', [
+    Alert.alert('', 'Bạn có chắc chắn muốn công bố điểm cho cả lớp không? Lưu ý: Các câu, các bài làm chưa được chấm sẽ bị 0 điểm.', [
       {
         text: 'Xác nhận',
         onPress: () => {
