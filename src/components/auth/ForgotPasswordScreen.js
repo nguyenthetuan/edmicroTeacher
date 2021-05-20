@@ -554,7 +554,7 @@ export default class ForgotPasswordScreen extends Component {
               <SizedBox height={20} />
               <InputPrimary
                 label={'Mật khẩu'}
-                placeholder={'Nhập Mật khẩu'}
+                placeholder={'Nhập mật khẩu'}
                 value={values.password}
                 onChangeText={handleChange('password')}
                 onBlur={() => setFieldTouched('password')}
@@ -563,8 +563,8 @@ export default class ForgotPasswordScreen extends Component {
                 error={(touched.password && errors.password) && errors.password}
               />
               <InputPrimary
-                label={'Nhập lại Mật khẩu'}
-                placeholder={'Nhập lại Mật khẩu'}
+                label={'Nhập lại mật khẩu'}
+                placeholder={'Nhập lại mật khẩu'}
                 value={values.repassword}
                 onChangeText={handleChange('repassword')}
                 onBlur={() => setFieldTouched('repassword')}
@@ -754,7 +754,7 @@ export default class ForgotPasswordScreen extends Component {
                       <OTPTextView
                         ref={ref => this.otp = ref}
                         containerStyle={styles.textInputContainer}
-                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, width: width - 50 }]}
+                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, height: width * 2 / 15}]}
                         handleTextChange={text => this.setState({ codeOTP: text, errors: '' }, () => console.log('text1', this.state.codeOTP))}
                         inputCount={6}
                         keyboardType="numeric"
