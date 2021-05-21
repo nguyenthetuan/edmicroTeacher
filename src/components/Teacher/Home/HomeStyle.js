@@ -120,6 +120,14 @@ const HomeStyle = StyleSheet.create({
         lineHeight: RFFonsize(15),
         color: "#000",
         marginLeft: 5
+    },
+    noDataDiary: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: "#828282",
+        textAlign: "center",
+        marginTop: height * 0.05
     }
 
 });
