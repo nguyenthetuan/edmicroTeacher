@@ -10,16 +10,8 @@ import {
 import SelectModal from './SelectModal';
 import AppIcon from '../utils/AppIcon';
 import { RFFonsize } from '../utils/Fonts';
+import { getAssigmentStatus } from '../models/Assigment';
 const { width, height } = Dimensions.get('window');
-
-const getStatus = (status) => {
-    switch (status) {
-        case 0: return 'Chưa làm';
-        case 6: return 'Chờ chấm điểm'
-        default:
-            return '';
-    }
-}
 
 export default function Dropdown(props) {
     const selectModal = useRef();
@@ -40,7 +32,7 @@ export default function Dropdown(props) {
                 <View style={[styles.styBtn, contentStyle]}>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
                         {isData
-                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName + " " + `(${getStatus(status)})` || ''
+                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName + " " + `(${getAssigmentStatus(status)})` || ''
                             : title}
                     </Text>
                     {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}

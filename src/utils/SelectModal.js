@@ -14,6 +14,7 @@ import {
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import * as Animatable from 'react-native-animatable';
 import { RFFonsize } from '../utils/Fonts';
+import { getAssigmentStatus } from '../models/Assigment';
 
 const { width, height } = Dimensions.get('window');
 
@@ -127,7 +128,7 @@ class SelectModal extends Component {
                                                             color: isSelected ? '#2D9CDB' : '#828282',
                                                             paddingHorizontal: 6,
                                                         }}>
-                                                        {name}
+                                                        {name} ({getAssigmentStatus(item.status)})
                                                     </Text>
                                                 </TouchableOpacity>
                                             );

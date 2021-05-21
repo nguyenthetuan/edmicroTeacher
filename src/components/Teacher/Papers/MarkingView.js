@@ -109,7 +109,7 @@ class MarkingView extends Component {
                 return;
               }
               const indexSelected = {
-                ...indexSelected,
+                ...this.state.indexSelected,
                 status: rs[0].status
               }
               this.setState({
@@ -325,8 +325,8 @@ class MarkingView extends Component {
         selectedValueClass: value.classId,
         selectAssignId: assignId,
         indexSelected: {
-          indexClass,
           ...indexSelected,
+          indexClass,
         },
         urlFile: '',
       },
