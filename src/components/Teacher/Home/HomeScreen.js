@@ -204,7 +204,7 @@ const mapStateToProps = state => {
         assignment: state.statistic.assignment,
         isLoading: state.statistic.isLoading,
         classArray: state.statistic.classArray,
-        diaryActive: state.statistic.diaryActive,
+        diaryActive: [state.statistic.diaryActive],
         countdiaryActive: state.statistic.countdiaryActive
     };
 };
