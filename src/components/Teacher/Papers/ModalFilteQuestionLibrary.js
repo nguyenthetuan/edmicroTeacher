@@ -198,6 +198,8 @@ export default class ModalConfigPaper extends Component {
           token: token,
           curriculumCode: objectSearch.curriculumCode,
         });
+        const arr = response.filter(item => item.parentCode == objectSearch.curriculumCode);
+        console.log(arr);
         if (_.isEmpty(response)) throw 'khong co du lieu';
         this.setState(
           {
@@ -392,6 +394,7 @@ export default class ModalConfigPaper extends Component {
       valueUnitOfKnowledge,
       valueTypeOfExercise,
       valueLevel,
+      objectSearch
     } = this.state;
 
     return (
@@ -442,6 +445,7 @@ export default class ModalConfigPaper extends Component {
               data={lerningTarget}
               onPress={(value) => this.onPress(4, value)}
               value={valueUnitOfKnowledge}
+              curriculumCode={objectSearch.curriculumCode}
             />
             <ModalConfigLibrary
               title="Dạng bài"

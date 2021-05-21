@@ -30,6 +30,7 @@
     "@react-native-firebase/crashlytics": "^6.7.1",
     "@react-native-firebase/firestore": "^6.1.7",
     "@react-native-firebase/messaging": "^6.3.4",
+    "@sanar/react-native-highlight-text": "^1.0.2",
     "formik": "^2.2.5",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
