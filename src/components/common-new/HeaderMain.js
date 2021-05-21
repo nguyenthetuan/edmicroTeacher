@@ -3,11 +3,13 @@ import {
   View,
   StyleSheet,
   Image,
+  Text,
   TouchableWithoutFeedback
 } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from '../common-new/Avatar';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class HeaderMain extends React.Component {
   constructor(props) {
@@ -31,7 +33,9 @@ export default class HeaderMain extends React.Component {
     const source = getSourceAvatar(userId, timeCached);
     return (
       <View style={styles.container}>
-        <RippleButton onPress={this.openDrawer}>
+        <RippleButton
+          hitSlop={{ top: 5, right: 5, left: 5, bottom: 5 }}
+          onPress={this.openDrawer}>
           <View style={styles.button}>
             <Image
               source={require('../../asserts/icon/menu.png')}
@@ -43,7 +47,22 @@ export default class HeaderMain extends React.Component {
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
-        <TouchableWithoutFeedback onPress={this.navigateUser}>
+        <View style={{
+          backgroundColor: '#DB3546',
+          paddingHorizontal: 10,
+          paddingVertical: 2,
+          borderRadius: 5,
+          marginRight: 5
+        }}>
+          <Text style={{
+            color: '#fff',
+            fontFamily: 'Nunito',
+            fontSize: RFFonsize(14)
+          }}>Beta</Text>
+        </View>
+        <TouchableWithoutFeedback
+          hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+          onPress={this.navigateUser}>
           <View style={styles.btnAvatar}>
             <Avatar
               source={source}

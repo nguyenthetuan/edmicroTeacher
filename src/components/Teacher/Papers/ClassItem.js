@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     buttomActive: {
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 0
     },
     txtItem: {
         fontFamily: 'Nunito-Regular',

@@ -597,7 +597,7 @@ class MarkCamera extends Component {
                 <SafeAreaView style={styles.container}>
                     <HeaderNavigation
                         navigation={this.props.navigation}
-                        title={'Chấm điểm camera'}
+                        title={' Tạo bộ đề chấm điểm camera'}
                         bgColor={'#fff'}
                         colorIcon={'#000'}
                         styleTitle={styles.styleTitle}
@@ -624,7 +624,7 @@ class MarkCamera extends Component {
                                                     numberOfLines={1}
                                                     returnKeyType={'done'}
                                                     placeholder={'Nhập tên bài kiểm tra'}
-                                                    placeholderTextColor={'#BDBDBD'}
+                                                    placeholderTextColor={'#979797'}
                                                     style={styles.inputName}
                                                 />
                                                 <View style={styles.wrapAreaUploadPDF}>
@@ -642,7 +642,7 @@ class MarkCamera extends Component {
                                                                         console.log(error);
                                                                     }}
                                                                 />}
-                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "Thêm bộ đề..."}</Text>
+                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "..."}</Text>
                                                             </View>
                                                         </TouchableWithoutFeedback>
                                                         <Text style={styles.note}>Lưu ý dung lượng không quá 5Mb!</Text>
@@ -695,7 +695,7 @@ class MarkCamera extends Component {
                                                             maxLength={4}
                                                             placeholder={'Mời nhập'}
                                                             placeholderTextColor={'#BDBDBD'}
-                                                            style={[styles.inputName, { width: 100, height: 30, fontSize: 14 }]}
+                                                            style={[styles.inputName, { width: 100, height: 30, fontSize: RFFonsize(12), lineHeight: RFFonsize(16) }]}
                                                             onEndEditing={() => this.onEnediting()}
                                                         />
                                                         <Text style={styles.textMinutes}>Phút</Text>
@@ -743,7 +743,7 @@ class MarkCamera extends Component {
                     <ModalSuccess
                         navigation={this.props.navigation}
                         goToAssigned={this.goToAssigned}
-                        data={{...this.state.resSuccess, name :this.state.name}}
+                        data={{ ...this.state.resSuccess, name: this.state.name }}
                     />
                 </Modal>
             </View>
@@ -837,13 +837,15 @@ const styles = StyleSheet.create({
         color: '#000',
         fontFamily: 'Nunito',
         fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(20),
         paddingStart: 10,
         marginBottom: 7,
         borderRadius: 5,
         padding: 0,
         borderColor: '#c4c4c4',
+        borderStyle: 'solid',
         borderWidth: 0.5,
-        paddingRight: 10
+        paddingRight: 15
     },
     wrapAreaUploadPDF: {
         marginTop: 16
@@ -864,7 +866,7 @@ const styles = StyleSheet.create({
     },
     buttonInSideAreaUploadPDF: {
         flexDirection: 'row',
-        borderWidth: 0.5,
+        borderWidth: 0.3,
         borderColor: '#2D9CDB',
         borderStyle: "solid",
         borderRadius: 20,
@@ -895,14 +897,14 @@ const styles = StyleSheet.create({
     },
     addPar: {
         fontFamily: "Nunito",
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(19),
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
         color: "#828282",
-        paddingTop: 5.5,
-        paddingBottom: 5.5,
         alignSelf: 'center',
         paddingRight: 19.5,
-        paddingLeft: 4
+        paddingLeft: 6,
+        paddingVertical: 6
+
     },
     note: {
         fontFamily: 'Nunito',
@@ -914,7 +916,7 @@ const styles = StyleSheet.create({
     },
     btnCreate: {
         backgroundColor: '#2D9CDB',
-        borderRadius: 5,
+        borderRadius: 20,
         marginTop: "10%",
         marginHorizontal: '25%',
     },
@@ -936,9 +938,10 @@ const styles = StyleSheet.create({
     textMinutes: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#000',
         fontWeight: '400',
-        position: 'absolute',
-        left: 110,
+        left: 10,
         top: 5
     },
     textPdfFile: {

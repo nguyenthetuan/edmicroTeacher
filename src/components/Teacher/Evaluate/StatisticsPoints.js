@@ -352,10 +352,9 @@ const styles = StyleSheet.create({
   },
   txtLeftChartBar: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
+    fontSize: RFFonsize(10),
     color: '#000',
-    width: 45,
-    textAlign: 'right',
+    width: 50,
     marginLeft: -10,
   },
   chartBar: {

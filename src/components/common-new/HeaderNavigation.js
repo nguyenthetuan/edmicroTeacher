@@ -61,7 +61,7 @@ export default class HeaderNavigation extends React.Component {
                     <View style={styles.btnAvatar} />
                 }
                 <View style={styles.viewTitle}>
-                    <Text style={[styles.textTitleHeader, {
+                    <Text numberOfLines={1} style={[styles.textTitleHeader, {
                         color: color || '#383838'
                     }]}>{title}</Text>
                 </View>

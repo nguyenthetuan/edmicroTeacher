@@ -191,7 +191,7 @@ class Papers extends Component {
     });
     if (response.status === 1) {
       Alert.alert(
-        'Thông báo',
+        '',
         'Xóa bài thành công!',
         [
           { text: 'OK' }
@@ -437,16 +437,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-            <Text
-              style={{
-                color: '#000',
-                fontFamily: 'Nunito-Bold',
-                fontSize: RFFonsize(14),
-                textAlign: 'center',
-              }}>
-              Xem thêm
-            </Text>
-          )}
+              <Text
+                style={{
+                  color: '#000',
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: RFFonsize(14),
+                  textAlign: 'center',
+                }}>
+                Xem thêm
+              </Text>
+            )}
         </TouchableOpacity>
       </View>
     );
@@ -457,12 +457,20 @@ class Papers extends Component {
     try {
       const { token } = await dataHelper.getToken();
       const res = await apiPapers.getAssignmentConfig({ token, id: id });
+      console.log("res: ", res)
       if (res && res.assignmentContentType === 0) {
         const question = dataHelper.saveQuestion(res.questions);
         this.props.navigation.navigate('QuestionLibrary', {
           nagigation: this.props.nagigation,
           statusbar: 'light-content',
         });
+      } else if (res && res.assignmentContentType === 3) {
+        const question = dataHelper.saveQuestion(res.questions);
+        this.props.navigation.navigate('MarkCamera', {
+          listGrades,
+          listSubjects,
+          statusbar: 'dark-content',
+        })
       } else {
         this.props.navigation.navigate('UploadPDFStepByStep', {
           nagigation: this.props.nagigation,
@@ -481,6 +489,7 @@ class Papers extends Component {
   };
 
   _handleClickDetail = index => () => {
+    console.log('_handleClickDetail: ', index);
     const {
       dataSelected,
       payloadAssignment,
@@ -824,7 +833,7 @@ class Papers extends Component {
             {this.createTabButton()}
           </Animated.View>
           {loading ?
-            <View style={{ paddingTop: 220 }}>
+            <View style={{ paddingTop: 220, width: width - 15, alignSelf: 'center' }}>
               <ShimerPaper />
             </View>
             :
@@ -976,7 +985,7 @@ const styles = StyleSheet.create({
   txtNotFound: {
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
-    color: '#000',
+    color: '#828282',
   },
   fill: {
     flex: 1,

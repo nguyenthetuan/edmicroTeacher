@@ -24,6 +24,7 @@ import SearchInput, { createFilter } from 'react-native-search-filter';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
+import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import _ from 'lodash';
 
 const { width, height } = Dimensions.get('window');
@@ -201,29 +202,30 @@ export default class ModalCurriculum extends Component {
     }
 
     return (
-      <TouchableOpacity
-        style={styles.wrapElement}
-        onPress={() => this.selectItem({ item, index })}
-        onLongPress={() => !item.isLeaf && this.searchExactly({ data, item })}>
-        <Text style={styles.name} numberOfLines={1}>
-          {item.name}
-        </Text>
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => this.selectItem({ item, index })}>
-            <EvilIcons name="search" size={20} color="#BDBDBD" />
-          </TouchableOpacity>
-          {!item.isLeaf && (
+      <TouchableWithoutFeedback>
+        <View style={styles.wrapElement}>
+          <Text style={styles.name} numberOfLines={1}>
+            {item.name}
+          </Text>
+          <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
-              style={{ marginLeft: 5 }}
-              onPress={() => this.searchExactly({ data, item })}>
-              <Image
-                source={require('../../../asserts/appIcon/icSearch.png')}
-                resizeMode="contain"
-              />
+              onPress={() => this.selectItem({ item, index })}
+              hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+            >
+              <IconAntDesign name={'search1'} size={20} color="#BDBDBD" />
             </TouchableOpacity>
-          )}
+            {!item.isLeaf && (
+              <TouchableOpacity
+                style={{ marginLeft: 15 }}
+                onPress={() => !item.isLeaf && this.searchExactly({ data, item })}
+                hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+              >
+                <IconAntDesign name={'login'} size={20} color="#BDBDBD" />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -265,7 +267,7 @@ export default class ModalCurriculum extends Component {
                 </View>
               ) : (
                 <Text style={styles.txtPlaceIn}>Đơn vị kiến thức</Text>
-                )}
+              )}
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -379,6 +381,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFF',
     borderRadius: 5,
     width: width,
+    flex: 1,
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
@@ -412,7 +415,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
+    fontSize: RFFonsize(14),
     color: '#000',
     width: '80%',
   },
@@ -461,6 +464,7 @@ const styles = StyleSheet.create({
   wrapElement: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingLeft: 23,
     paddingVertical: 10,
     paddingRight: 10,

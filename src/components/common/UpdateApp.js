@@ -74,7 +74,7 @@ export default class UpdateApp extends Component {
         .then((supported) => {
           if (!supported) {
             Alert.alert(
-              'Thông báo',
+              '',
               'Cửa hàng CHPlay không thể truy cập. Bạn vui lòng thử lại!',
             );
           } else {
@@ -87,7 +87,7 @@ export default class UpdateApp extends Component {
         .then((supported) => {
           if (!supported) {
             Alert.alert(
-              'Thông báo',
+              '',
               'Cửa hàng Apple Store không thể truy cập. Bạn vui lòng thử lại!',
             );
           } else {

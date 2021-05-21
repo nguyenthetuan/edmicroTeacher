@@ -9,7 +9,8 @@ import {
   Dimensions,
   Platform,
   Keyboard,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback
 } from 'react-native';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
@@ -129,22 +130,23 @@ export default class MissionScreen extends Component {
     const { isLoadingMission } = this.props;
     return (
       <View style={{ width: '100%' }}>
-        {isLoadingMission ?
+        {/* {isLoadingMission ?
           null
-          :
-          <SearchBar
-            placeholder="Tìm kiếm"
-            value={textSearch}
-            placeholderTextColor="#828282" 
-            onChange={this.onChangeText}
-            onClear={this.onSearchClear}
-            onCancel={this.onSearchClear}
-            containerStyle={{
-              backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'}}
-            inputContainerStyle={{ backgroundColor: '#F6F6F6', borderColor: '#F6F6F6', borderRadius: 15, marginHorizontal: 5 }}
-          // customCancelTextStyle={styles.txtCan}
-          />
-        }
+          : */}
+        <SearchBar
+          placeholder="Tìm kiếm"
+          value={textSearch}
+          placeholderTextColor="#828282"
+          onChange={this.onChangeText}
+          onClear={this.onSearchClear}
+          onCancel={this.onSearchClear}
+          containerStyle={{
+            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'
+          }}
+          inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 5 }}
+        // customCancelTextStyle={styles.txtCan}
+        />
+        {/* } */}
       </View>
     );
   };
@@ -191,9 +193,8 @@ export default class MissionScreen extends Component {
       outputRange: [0, -150],
       extrapolate: 'clamp',
     });
-
     return (
-      <>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
           <HeaderMissionNew
             navigation={this.props.navigation}
@@ -242,7 +243,7 @@ export default class MissionScreen extends Component {
             }
           </View>
         </SafeAreaView>
-      </>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -255,8 +256,8 @@ const styles = StyleSheet.create({
   },
   styTxtEmpty: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(21),
     color: '#999',
   },
   header: {
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
   },
   scroll_view: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 60,
   },
   txtCan: {
     fontFamily: 'Nunito',

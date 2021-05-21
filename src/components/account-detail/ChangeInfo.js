@@ -12,6 +12,7 @@ import {
   Keyboard,
   StatusBar,
   SafeAreaView,
+  ImageBackground
 } from 'react-native';
 import { connect } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -364,7 +365,7 @@ class ChangeInfo extends Component {
             // this.getAvatar();
             // global.updateAvatar();
           } else {
-            alertMessage('Thông báo', 'upload avatar không thành công');
+            alertMessage('', 'Upload avatar không thành công');
           }
         });
       })
@@ -446,23 +447,27 @@ class ChangeInfo extends Component {
           Keyboard.dismiss();
         }}>
         <StatusBar />
-        <SafeAreaView style={{ backgroundColor: '#3A608C' }} />
-        <HeaderNavigation
-          title={'Hồ sơ cá nhân'}
-          navigation={this.props.navigation}
-          color={'#fff'}  
-          clBack={{ tintColor: "#fff" }}
-        />
         <View style={{ flex: 1, backgroundColor: '#fff', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
           <ScrollView
             bounces={false}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ opacity: 1, width: width, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
-            <HeaderUserInfo
-              avatarSource={source}
-              {...user}
-              onPress={() => this.uploadAvatar()}
-            />
+            <ImageBackground source={require('../../asserts/images/banner_drawerMenu.png')}
+              resizeMode="stretch"
+              style={{ height: height * 0.33 }}>
+              <SafeAreaView style={{ backgroundColor: 'transparent' }} />
+              <HeaderNavigation
+                title={'Hồ sơ cá nhân'}
+                navigation={this.props.navigation}
+                color={'#fff'}
+                clBack={{ tintColor: "#fff" }}
+              />
+              <HeaderUserInfo
+                avatarSource={source}
+                {...user}
+                onPress={() => this.uploadAvatar()}
+              />
+            </ImageBackground>
             <View style={styles.wrapForm}>
               <FormInput
                 editable={false}

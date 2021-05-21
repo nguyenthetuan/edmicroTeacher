@@ -110,6 +110,7 @@ class EvaluateDraScreen extends Component {
 
     _fillter = (key, value) => {
         const obj = Object.assign({ [key]: value });
+        console.log(obj);
         this.setState(obj, () => {
             console.log(this.state.classSubjectIndex);
             this.getDataStaticExam();
@@ -135,6 +136,7 @@ class EvaluateDraScreen extends Component {
                 classSubjectId,
                 testId,
             });
+            console.log(response);
             if (response.status == 1) {
                 this.setState({
                     student: response.data.students || [],
@@ -158,7 +160,7 @@ class EvaluateDraScreen extends Component {
     };
 
     _handleClickFillter = () => {
-        this.refs.ModalFillter.changeStateModale();
+        this.refModalFillter.onOpened();
     };
 
     render() {
@@ -172,7 +174,6 @@ class EvaluateDraScreen extends Component {
             scores,
             currentExamTest
         } = this.state;
-        console.log('classSubject', classSubjectIndex)
         const payload = {
             classSubject,
             tests,
@@ -181,6 +182,7 @@ class EvaluateDraScreen extends Component {
             testIndex,
             scores,
         };
+        console.log(tests);
         const { user } = this.props;
         return (
             <SafeAreaView style={styles.container}>
@@ -188,15 +190,15 @@ class EvaluateDraScreen extends Component {
                     title={'Kiểm tra đánh giá'}
                     navigation={this.props.navigation}
                     actionIcon={AppIcon.ic_analytics}
-                    actionIconTwo={AppIcon.icons_filter}
                     iconAction={this.goToStatisticsPoints}
-                    iconActionTwo={this._handleClickFillter}
+                // actionIconTwo={AppIcon.icons_filter}
+                // iconActionTwo={this._handleClickFillter}
                 />
                 <ScrollView
                     style={{ zIndex: 1, flex: 1 }}
                     contentContainerStyle={{ paddingTop: 5 }}
                     showsVerticalScrollIndicator={false}>
-                    <View style={[styles.body]}>
+                    <View style={styles.body}>
                         {/* <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                             onPress={this.goToStatisticsPoints}>
                             <View style={styles.btnStatistics}>
@@ -205,26 +207,22 @@ class EvaluateDraScreen extends Component {
                                 />
                                 <Text style={styles.txtStatistics}>Thống kê điểm</Text>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback> */}
+                        <View style={styles.sourceRow}>
+                            <Text numberOfLines={1}
+                                style={styles.textFill}>{yearIndex >= 0 ? DATA_YEAR[yearIndex]?.name : 'Năm học'}</Text>
+                            <Text numberOfLines={1}
+                                style={styles.textFill}>{classSubjectIndex >= 0 ? " / " + classSubject[classSubjectIndex]?.subjectName : " / Lớp học"}</Text>
 
+                            <Text numberOfLines={1}
+                                style={styles.textFill}> / {currentExamTest.name}</Text>
+                        </View>
                         <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                             onPress={this._handleClickFillter}>
-                            <View style={[styles.btnStatistics, { marginTop: 10 }]}>
-                                <Image source={AppIcon.icons_filter} />
-                                <Text style={styles.txtStatistics}>Tuỳ chọn</Text>
+                            <View style={styles.btnStatistics}>
+                                <Image source={AppIcon.icons_filter} style={{ tintColor: '#E59553' }} />
                             </View>
-                        </TouchableWithoutFeedback> */}
-                        {/* <FastImage
-                            source={require('../../../asserts/images/banner_evaluate.png')}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={styles.imgStatistics}
-                        /> */}
-
-                        {/* <FastImage
-                            source={require('../../../asserts/images/banner_evaluate.png')}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={styles.imgStatistics}
-                        /> */}
+                        </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.header}>
                         <Text style={{ color: '#1181C1' }}>{currentExamTest.examName}</Text>
@@ -294,7 +292,7 @@ class EvaluateDraScreen extends Component {
                     </View>
                 </ScrollView>
                 <ModalFillter
-                    ref={'ModalFillter'}
+                    ref={ref => this.refModalFillter = ref}
                     getDataStaticExam={this.getDataStaticExam}
                     payload={payload}
                     fillter={this._fillter}
@@ -331,10 +329,10 @@ const styles = StyleSheet.create({
         minHeight: 200,
     },
     body: {
-        // flex: 1,
-        // minHeight: 200,
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: "space-between",
+        paddingHorizontal: 16,
+        marginTop: 10
     },
     btnStatistics: {
         flexDirection: 'row',
@@ -346,13 +344,6 @@ const styles = StyleSheet.create({
         color: '#2D9CDB',
         marginStart: 8,
         fontFamily: 'Nunito-Regular',
-    },
-    imgStatistics: {
-        alignSelf: 'flex-end',
-        marginEnd: 16,
-        width: 220,
-        height: 200,
-        // position: 'absolute',
     },
     list: {
         flex: 1,
@@ -456,4 +447,30 @@ const styles = StyleSheet.create({
         borderRadius: 11,
         paddingTop: 5,
     },
+    sourceRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: width - 190
+    },
+    txtSource: {
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#E59553'
+    },
+    txtFilter: {
+        color: '#E59553',
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(12),
+        fontWeight: 'bold',
+        flex: 1,
+    },
+    textFill: {
+        color: "#E59553",
+        fontFamily: "Nunito",
+        fontWeight: "700",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+    }
+
 });

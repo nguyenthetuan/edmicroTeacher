@@ -14,18 +14,16 @@ import { DATA_YEAR } from '../../../constants/const';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
-// import Modal from 'react-native-modal';
 import Modal from '../../../utils/Modal';
 const { height, width } = Dimensions.get('window');
 export default class ModalFillter extends Component {
-  state = {
-    isShowModal: false
+
+  onOpened = () => {
+    this.modalizeRef.onOpen();
   }
 
-  changeStateModale = () => {
-    const { isShowModal } = this.state;
-    this.modalizeRef.onOpen();
-    // this.setState({ isShowModal: !isShowModal });
+  onClosed = () => {
+    this.modalizeRef.onClose();
   }
 
   _selectYear = (index, item) => {
@@ -40,6 +38,10 @@ export default class ModalFillter extends Component {
     this.props.fillter('testIndex', index);
   };
 
+  handleFilter = () => {
+    this.onClosed();
+  }
+
   render() {
     const { shadowBtn } = shadowStyle;
     const { payload } = this.props;
@@ -50,13 +52,10 @@ export default class ModalFillter extends Component {
       classSubjectIndex,
       testIndex,
     } = payload;
-    const { isShowModal } = this.state;
     return (
       <Modal
         ref={ref => this.modalizeRef = ref}
-        visible={isShowModal}
         modalHeight={height - height / 8}
-        // title={'Tuỳ chọn'}
         closeModal={this.changeStateModale}
       >
         <View style={styles.contain}>
@@ -91,9 +90,9 @@ export default class ModalFillter extends Component {
             indexSelected={testIndex}
           />
 
-          <TouchableWithoutFeedback onPress={this.changeStateModale}>
+          <TouchableWithoutFeedback onPress={this.handleFilter}>
             <View style={[styles.btnViewStatistic, { ...shadowBtn }]}>
-              <Text style={styles.txtBtn}>Xem thống kê</Text>
+              <Text style={styles.txtBtn}>Xem đánh giá</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

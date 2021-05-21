@@ -28,6 +28,7 @@ import {
 import _ from 'lodash';
 import { changePasswordValidate } from '../../utils/SchemaValidate';
 import ToastSuccess from '../common-new/ToastSuccess';
+import ToastFaild from '../common-new/ToastFaild';
 
 const { width, height } = Dimensions.get('window');
 class ChangePassword extends Component {
@@ -73,6 +74,7 @@ class ChangePassword extends Component {
             this.refToast.show(
               <ToastSuccess title={"Đổi mật khẩu thành công!"} />
             )
+            resetForm();
           } else {
             this.setState({ errorValidate: response.message, isChange: false },
               () => {
@@ -85,9 +87,9 @@ class ChangePassword extends Component {
           this.setState({ passwordNew: '', passwordOld: '', passwordNewAgain: '', errorValidate: '', isChange: false });
         }).catch(err => {
           resetForm();
-          this.refToast.show(<View style={[styles.styleTostSuccess, { backgroundColor: "#c4c4c4" }]}>
-            <Text style={styles.txtSuccess}> Đổi mật khẩu thất bại!</Text>
-          </View>)
+          this.toast.show(
+            <ToastFaild title="Đổi mật khẩu thất bại!" />
+          )
           this.setState({ passwordNew: '', passwordOld: '', passwordNewAgain: '', errorValidate: '', isChange: false });
         });
       });
@@ -178,7 +180,8 @@ class ChangePassword extends Component {
 
                 )}
               </Formik>
-              <Toast ref={ref => this.refToast = ref} position={'center'} style={styles.styleTostSuccess} />
+              <Toast ref={ref => this.refToast = ref} position={'top'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
+              <Toast ref={ref => this.toast = ref} position={'top'} />
               {/* <View style={{ marginTop: 20 }}>
                 <Text style={{ paddingTop: 10, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15, lineHeight: 19 }}>Mật khẩu hiện tại</Text>
                 <FormInput
@@ -246,7 +249,7 @@ class ChangePassword extends Component {
             onPress={this.changePassword.bind(this)}
           />
         </View> */}
-        <Toast ref="toast" position={'bottom'} fadeOutDuration={3000} />
+        {/* <Toast ref="toast" position={'top'} fadeOutDuration={3000} /> */}
         <SafeAreaView></SafeAreaView>
       </ View>
     );
@@ -278,48 +281,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
   },
-  styleTitle: {
-
-  },
   txtErrorEmpty: {
     color: '#D22D3F',
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(11),
   },
-  txtSuccess: {
-    color: '#fff',
-    fontFamily: "Nunito-Bold",
-    fontSize: RFFonsize(13),
-    lineHeight: RFFonsize(17)
-  },
-  styleTostSuccess: {
-    flex: 1,
-    height: 70,
-    width: width - 70,
-    backgroundColor: '#16BDA9',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: "center",
-    borderRadius: 10,
-  },
-  styleTostFaild: {
-    height: 70,
-    width: width - 70,
-    backgroundColor: '#c4c4c4',
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: "center",
-    borderRadius: 10,
-    padding: 0,
-    flex: 1
-  },
-  xstoast: {
-    fontFamily: "Nunito",
-    fontSize: RFFonsize(12),
-    color: "#fff",
-    top: -15,
-    right: 5
-  }
 
 })

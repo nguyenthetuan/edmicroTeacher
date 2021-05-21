@@ -47,11 +47,6 @@ export default class SubjectItem extends Component {
                     <Text style={[styles.txtClass, styleTitle]}>Môn học</Text>
                 </View>
                 <View style={styles.styWrapClass}>
-                    {/* <Image
-                        style={{ marginRight: 10 }}
-                        source={require('../../../asserts/icon/subject.png')}
-                        resizeMode={'contain'}
-                    /> */}
                     <View style={[styles.styWrapClassIn, style]}>
                         <FlatList
                             data={subjectActive}
@@ -96,6 +91,8 @@ const styles = StyleSheet.create({
     buttomActive: {
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 0
+        // backgroundColor:'red'
     },
     txtItem: {
         fontFamily: 'Nunito-Regular',

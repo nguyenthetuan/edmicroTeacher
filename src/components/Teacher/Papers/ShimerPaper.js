@@ -70,7 +70,7 @@ export default class ShimerMockExam extends Component {
                             borderRadius: 3
                         }]} />
                 </View>
-                <View style={styles.styWrap}>
+                {/* <View style={styles.styWrap}>
                     <ShimmerPlaceHolder
                         visible={false}
                         style={[{
@@ -94,7 +94,7 @@ export default class ShimerMockExam extends Component {
                             height: 15,
                             borderRadius: 3
                         }]} />
-                </View>
+                </View> */}
             </View>
         );
     }

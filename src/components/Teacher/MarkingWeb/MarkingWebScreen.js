@@ -78,7 +78,7 @@ export default class MarkingWebScreen extends PureComponent {
     }
 
     onBackPressed() {
-        Alert.alert('Thông báo',
+        Alert.alert('',
             'Bạn có chắc chắn muốn rời khỏi trang này ',
             [
                 { text: "Có", onPress: this._goBack },
