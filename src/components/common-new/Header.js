@@ -25,11 +25,10 @@ const HeaderPrimary = forwardRef((props, ref) => {
                         </View>
                     </TouchableWithoutFeedback>
                     :
-                    null
-                    // <View style={styles.boxAction} />
+                    <View style={styles.boxAction} />
                 }
-                <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
             </View>
+            <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
             {actionIcon ?
                 <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                     onPress={() => { props.iconAction || navigateUser(props) }}>
@@ -50,7 +49,7 @@ const HeaderPrimary = forwardRef((props, ref) => {
                     </View>
                 </TouchableWithoutFeedback >
                 :
-                <View style={styles.btnAvatar} />
+                <View style={styles.boxAction} />
             }
         </View >
     );
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 20,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     leadIcon: {
         marginRight: 5,

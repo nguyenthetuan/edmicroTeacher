@@ -297,7 +297,7 @@ class LoginWithPhoneScreen extends Component {
     return (
       <SafeAreaView style={container}>
         <StatusBar />
-        <HeaderPrimary showLead={false} title={'Đăng nhập'} styleTitle={styles.title} />
+        <HeaderPrimary showLead={true} title={'Đăng nhập'} styleTitle={styles.title} navigation={this.props.navigation} />
         <KeyboardAwareScrollView
           contentContainerStyle={styles.viewKeyboard}
           showsVerticalScrollIndicator={false}
