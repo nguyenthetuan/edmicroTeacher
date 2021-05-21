@@ -5,7 +5,8 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    Text
+    Text,
+    Keyboard
 } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import dataHelper from '../../utils/dataHelper';
@@ -27,6 +28,7 @@ export default class HeaderMissionNew extends React.Component {
     }
     openDrawer = () => {
         requestAnimationFrame(() => {
+            Keyboard.dismiss();
             this.props.navigation.toggleDrawer();
         });
     };

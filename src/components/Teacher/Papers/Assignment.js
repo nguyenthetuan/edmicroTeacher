@@ -197,7 +197,7 @@ function Item(props) {
     <View style={styles.containerItem}>
       <View style={styles.contentItem}>
         <View style={[styles.boxStatus, {
-          backgroundColor: props.item.isAssign ? 'green' : '#FF5242',
+          backgroundColor: props.item.isAssign ? '#5ACF7B' : '#FF5242',
         }]}>
           <Text style={{
             fontFamily: 'Nunito',

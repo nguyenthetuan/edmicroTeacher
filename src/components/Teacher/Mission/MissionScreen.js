@@ -9,7 +9,8 @@ import {
   Dimensions,
   Platform,
   Keyboard,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback
 } from 'react-native';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
@@ -192,9 +193,8 @@ export default class MissionScreen extends Component {
       outputRange: [0, -150],
       extrapolate: 'clamp',
     });
-
     return (
-      <>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
           <HeaderMissionNew
             navigation={this.props.navigation}
@@ -243,7 +243,7 @@ export default class MissionScreen extends Component {
             }
           </View>
         </SafeAreaView>
-      </>
+      </TouchableWithoutFeedback>
     );
   }
 }

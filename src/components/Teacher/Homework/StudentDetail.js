@@ -325,10 +325,20 @@ export default function StudentDetail(props) {
         }
     }
 
+    const getScore = (point, totalPoint) => {
+        if (totalPoint == 0) return '';
+        try {
+            return (point / totalPoint * 10).toFixed(1);
+        } catch (error) {
+            return '';
+        }
+    }
+
     const renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
         const { shadowBtn } = shadowStyle;
+        console.log(item);
         return (
             <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }, shadowBtn]}>
                 <View style={styles.viewAvatar}>
@@ -383,7 +393,7 @@ export default function StudentDetail(props) {
                                             ?
                                             <View style={styles.viewOption}>
                                                 <View style={{ flexDirection: 'row', paddingRight: 17 }}>
-                                                    <Text style={styles.pointNew}>{item.point}</Text>
+                                                    <Text style={styles.pointNew}>{getScore(item.point, item.totalPoint)}</Text>
                                                     <Text style={styles.pointNew}>Điểm</Text>
                                                 </View>
                                             </View>
