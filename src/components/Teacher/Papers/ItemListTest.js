@@ -13,6 +13,7 @@ import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import { RFFonsize } from '../../../utils/Fonts';
 import Kcolor from '../../../constants/Kcolor';
+import shadowStyle from '../../../themes/shadowStyle';
 
 export default class Item extends Component {
     constructor(props) {
@@ -32,6 +33,7 @@ export default class Item extends Component {
 
     render() {
         const item = this.props.item;
+        const { shadowBtn } = shadowStyle;
         let subjectCode =
             item.subjectCode && item.subjectCode.length > 0
                 ? item.subjectCode[0]
@@ -57,17 +59,7 @@ export default class Item extends Component {
             <View
                 style={[
                     styles.itemTest,
-                    {
-                        shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 1,
-                        },
-                        shadowOpacity: 0.20,
-                        shadowRadius: 1.41,
-                        elevation: 2,
-                        borderWidth: 0
-                    },
+                    shadowBtn,
                     // { borderColor: item.status === 4 ? Kcolor.headingPrimaryColor : Kcolor.headingSecondaryColor },
                 ]}
                 onPress={this._handleClickDetail(payloadAssignment)}>
@@ -97,7 +89,7 @@ export default class Item extends Component {
                             }}>
                             <Text style={{
                                 transform: [{ rotate: '90deg' }],
-                                fontSize: 20, color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 5
+                                fontSize: RFFonsize(14), color: '#fff', fontWeight: '900', fontFamily: 'Nunito-Bold', left: 5
                             }}>...</Text>
                         </View>
                     </TouchableWithoutFeedback>
@@ -117,21 +109,21 @@ export default class Item extends Component {
                             </View>
                             <View style={styles.flexSenten}>
                                 {item.totalQuestion == 0 ?
-                                    <>
+                                    <View style={styles.flexSubject}>
                                         <FastImage
                                             source={require('../../../asserts/icon/icon_remakeParacV3.png')}
                                             style={styles.alignIcon}
                                         />
-                                        <Text style={[styles.txtQuestion, { textDecorationLine: 'line-through' }]}>{item.totalQuestion} câu</Text>
-                                    </>
+                                        <Text style={styles.zeroQuestion}>{item.totalQuestion} câu</Text>
+                                    </View>
                                     :
-                                    <>
+                                    <View style={styles.flexSubject}>
                                         <FastImage
                                             source={require('../../../asserts/icon/icon_remakeParacV3.png')}
                                             style={{ width: 25, height: 25 }}
                                         />
                                         <Text style={styles.txtQuestion}>{item.totalQuestion} câu</Text>
-                                    </>
+                                    </View>
                                 }
                             </View>
                         </View>
@@ -234,6 +226,8 @@ const styles = StyleSheet.create({
         paddingLeft: 12,
         paddingVertical: 2,
         height: 30,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
     },
     txtName: {
         fontFamily: 'Nunito-Bold',
@@ -244,8 +238,8 @@ const styles = StyleSheet.create({
         width: "85%",
     },
     itemTest: {
-        borderRadius: 5,
-        borderWidth: 0.5,
+        // borderRadius: 5,
+        // borderWidth: 0.5,
         marginTop: 16,
     },
     bodyTest: {
@@ -254,6 +248,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 14,
         backgroundColor: '#fff',
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
         // flex: 1,
     },
     txtQuestion: {
@@ -290,6 +286,16 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
         alignSelf: 'center'
+    },
+    zeroQuestion: {
+        fontFamily: 'Nunito',
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(14),
+        color: '#000',
+        marginLeft: 5,
+        alignSelf: 'center',
+        textDecorationLine: 'line-through',
+        bottom: 4
     }
 
 });
