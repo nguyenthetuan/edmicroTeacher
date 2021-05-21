@@ -179,7 +179,8 @@ const styles = StyleSheet.create({
   contain: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'#fff'
   },
   wrapElement: {
     minHeight: 100,
