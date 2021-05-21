@@ -41,7 +41,6 @@ class DiaryActive extends Component {
     }
     render() {
         const { diaryActive, countdiaryActive, timeActive } = this.props;
-        console.log('diaryActive', diaryActive);
         const dataSets = countdiaryActive.map(val => val.totalCheckPoint);
         dataSets.unshift(0);
         dataSets.push(0);
@@ -73,26 +72,33 @@ class DiaryActive extends Component {
         return (
             <View style={HomeStyle.container}>
                 <Text style={HomeStyle.titleDes} >Nhật ký hoạt động</Text>
-                <View style={HomeStyle.rowTime}>
-                    <Text style={HomeStyle.txtTime}>Thời gian:</Text>
-                    <Text style={HomeStyle.timeText}>{startTime}</Text>
-                    <Text style={HomeStyle.timeText}>- {endTime}</Text>
-                </View>
+                {countdiaryActive.length > 0 ?
+                    <View>
+                        <View style={HomeStyle.rowTime}>
+                            <Text style={HomeStyle.txtTime}>Thời gian:</Text>
+                            <Text style={HomeStyle.timeText}>{startTime}</Text>
+                            <Text style={HomeStyle.timeText}>- {endTime}</Text>
+                        </View>
 
-                <LineChart
-                    data={{
-                        labels: dataLabels,
-                        datasets: [{ data: dataChart }]
-                    }}
-                    width={Dimensions.get("window").width} // from react-native
-                    height={220}
-                    chartConfig={chartConfig}
-                    bezier
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                    }}
-                />
+                        <LineChart
+                            data={{
+                                labels: dataLabels,
+                                datasets: [{ data: dataChart }]
+                            }}
+                            width={Dimensions.get("window").width} // from react-native
+                            height={220}
+                            chartConfig={chartConfig}
+                            bezier
+                            style={{
+                                marginVertical: 8,
+                                borderRadius: 16
+                            }}
+                        />
+                    </View>
+                    :
+                    <Text style={HomeStyle.noDataDiary}>Chưa có nhật ký hoạt động</Text>
+                }
+
                 {/* {(countdiaryActive && countdiaryActive.length > 0) &&
                     <Carousel
                         ref={(c) => { this._carousel = c; }}

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   wrapContainer: {
     paddingTop: Platform.isPad ? 40 : 20,
-    backgroundColor: '#3A608C',
+    // backgroundColor: '#3A608C',
     paddingBottom: Platform.isPad ? 40 : 20,
   },
   icon_wrap_avatar: {
