@@ -55,10 +55,11 @@ const styles = StyleSheet.create({
     styleTostSuccess: {
         flex: 1,
         height: 70,
-        width: 199,
+        // width: 199,
         backgroundColor: '#16BDA9',
         borderRadius: 10,
-        paddingBottom: 5
+        paddingBottom: 5,
+        paddingHorizontal: 10
     },
     txtSuccess: {
         color: '#fff',

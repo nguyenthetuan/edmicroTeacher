@@ -707,15 +707,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   styleTostSuccess: {
-    flex: 1,
-    height: 70,
-    width: 280,
-    backgroundColor: '#16BDA9',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: "center",
-    borderRadius: 10,
+    // flex: 1,
+    // height: 70,
+    // width: 280,
+    // // backgroundColor: '#16BDA9',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+    // alignSelf: "center",
+    // borderRadius: 10,
+    backgroundColor :'transparent'
   },
   styleWarning: {
     flex: 1,

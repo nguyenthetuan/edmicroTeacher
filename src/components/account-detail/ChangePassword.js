@@ -172,15 +172,14 @@ class ChangePassword extends Component {
                       title={BUTTON_UPDATE_PASS}
                       width={'100%'} circle={40}
                       style={{ backgroundColor: '#2D9CDB', height: 40 }}
-                      styleTitle={{ fontSize: RFFonsize(16), fontFamily: 'Nunito-Regular', }}
+                      styleTitle={{ fontSize: RFFonsize(16), fontFamily: 'Nunito-Regular' }}
                       onPress={handleSubmit}
                     // onPress={this.changePassword.bind(this)}
                     />
                   </View>
-
                 )}
               </Formik>
-              <Toast ref={ref => this.refToast = ref} position={'top'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
+              <Toast ref={ref => this.refToast = ref} position={'top'} style={{ backgroundColor: 'transparent' }} />
               <Toast ref={ref => this.toast = ref} position={'top'} />
               {/* <View style={{ marginTop: 20 }}>
                 <Text style={{ paddingTop: 10, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15, lineHeight: 19 }}>Mật khẩu hiện tại</Text>
