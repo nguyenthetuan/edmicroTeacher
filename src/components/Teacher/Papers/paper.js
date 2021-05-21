@@ -98,7 +98,6 @@ class Papers extends Component {
   }
 
   handlerShowTourView = async () => {
-    // await AsyncStorage.removeItem('@Onluye_TourView_Paper');
     const isShow = await AsyncStorage.getItem('@Onluye_TourView_Paper');
     if (isShow) return;
 
@@ -457,7 +456,6 @@ class Papers extends Component {
     try {
       const { token } = await dataHelper.getToken();
       const res = await apiPapers.getAssignmentConfig({ token, id: id });
-      console.log("res: ", res)
       if (res && res.assignmentContentType === 0) {
         const question = dataHelper.saveQuestion(res.questions);
         this.props.navigation.navigate('QuestionLibrary', {
@@ -538,7 +536,6 @@ class Papers extends Component {
   };
 
   _onOpenModal = item => (payloadAssignment, visibleEdit = true) => {
-    // this.optionRef.openModal();
     this.setState(
       {
         visibleEdit,
@@ -905,7 +902,6 @@ class Papers extends Component {
           visibleModalAdd={visibleModalAdd}
 
           onPressUploadPDF={this.onPressUploadPDF}
-        // onPressCamera={this.onPressCamera}
         />
         <ModalOption
           ref={(refModal) => this.optionRef = refModal}

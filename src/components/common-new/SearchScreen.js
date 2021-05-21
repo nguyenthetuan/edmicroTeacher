@@ -639,12 +639,6 @@ class SearchScreen extends React.Component {
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <SafeAreaView style={{ flex: 1 }}>
                     <SafeAreaView />
-                    {/* <HeaderNavigation
-                    title={'Tìm kiếm bộ đề'}
-                    navigation={this.props.navigation}
-                    goBack={this.openBack}
-                    color={'#2D9CDB'}
-                /> */}
                     <View style={styles.backpa}>
                         <TouchableWithoutFeedback
                             hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
