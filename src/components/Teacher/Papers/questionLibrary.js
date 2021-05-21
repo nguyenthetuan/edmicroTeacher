@@ -198,20 +198,21 @@ class QuestionLibrary extends Component {
     this.state = {
       dropdownVisible: false,
       totalAddQuestion: 0,
-      subject: [],
-      element: [],
-      lerningTarget: [],
+      subject: [],// danh sach mon hoc
+      element: [],// danh sach giao trinh
+      lerningTarget: [],// danh sach don vi kien thuc
       objectSearch: {
-        author: '',
-        curriculumCode: '',
-        grades: null,
+        author: '',//
+        curriculumCode: '',// giao trinh
+        grades: null,// lop
         indexPage: 0,
         isVerified: false,
-        learningTargetsCode: [],
-        levelKnowledge: [],
-        levelQuestion: [],
+        learningTargetsCode: [],//
+        levelKnowledge: [],// don vi kien thuc
+        levelQuestion: [],// cap do
         skill: null,
         typeAnswer: [],
+        subjectCode: '',// mon hoc
       },
       questions: [],
       listQuestionAdded: [],
@@ -302,13 +303,15 @@ class QuestionLibrary extends Component {
     const { objectSearch } = this.state;
     if (token) {
       try {
+        // get list mon hoc
         const response = await apiPapers.getSubjects({ token });
+        if (_.isEmpty(response)) return;
         await this.setState(
           {
-            subject: response && response,
+            subject: response,
             objectSearch: {
               ...objectSearch,
-              curriculumCode: response[0].code,
+              subjectCode: response[0].code, //ma mon hoc de lay data giao trinh.
             },
           }
         );
@@ -349,45 +352,47 @@ class QuestionLibrary extends Component {
     try {
       const { token } = await dataHelper.getToken();
       if (token) {
+        // get list giao trinh thong qua mon hoc
         const response = await apiPapers.getDetailSubject({
           token: token,
-          subjectCode: objectSearch.curriculumCode,
+          subjectCode: objectSearch.subjectCode,
         });
+        if (_.isEmpty(response) || !_.isArray(response)) throw 'khong co du lieu';
         await this.setState(
           {
-            element: response && response,
+            element: response, // danh sach giao trinh
             objectSearch: {
               ...objectSearch,
-              // curriculumCode: response && response[0].id,
+              curriculumCode: response[0].id,// ma giao trinh de lay data don vi kien thuc
             },
-            // isLoading: false,
           },
         );
-        // this.searchPaper();
+        // lay danh sach don vi kien thuc thong qua giao trinh
         this.getLearingTarget();
       }
     } catch (error) {
-      this.setState({ isLoading: false });
+      // this.setState({ isLoading: false });
     }
   };
 
   getLearingTarget = async () => {
+    // lay danh sach don vi kien thuc thong qua giao trinh
     const { objectSearch } = this.state;
     try {
       const { token } = await dataHelper.getToken();
       if (token) {
         const response = await apiPapers.getLearingTarget({
           token: token,
-          subjectCode: objectSearch.curriculumCode,
+          curriculumCode: objectSearch.curriculumCode,
         });
-        this.setState(
-          {
-            lerningTarget: response && response,
-          },
-          () => this.searchPaper(),
-        );
+        if (_.isEmpty(response) || !_.isArray(response)) throw 'khong co du lieu';
+        await this.setState({ lerningTarget: response });
+        // lay data cau hoi bai tap
+        this.searchPaper()
       }
-    } catch (error) { }
+    } catch (error) {
+      // this.setState({ isLoading: false });
+    }
   };
 
   getListSkills = async () => {
@@ -400,59 +405,70 @@ class QuestionLibrary extends Component {
     }, () => this.searchPaper())
   }
 
-  searchPaper = async (objectSearchs) => {
-    console.log("search Paper");
-    const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
+  searchPaper = async (objectSearch) => {
+    const body = _.isEmpty(objectSearch) ? this.state.objectSearch : objectSearch;
+    const key = this.getKeyCache(body);
     try {
       const { token } = await dataHelper.getToken();
+      // lay data cau hoi bai tap
       const response = await apiPapers.searchPaper({
-        token: token,
-        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
-        key: key,
+        token,
+        body,
+        key,
       });
+      // lay tong to cau hoi
       const responseCount = await apiPapers.countSearch({
         token: token,
-        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
+        body,
       });
       const { totalQuestion } = responseCount;
       if (response && response.length > 0) {
         this.setState({
-          questions: !!response && response,
+          questions: response,
           totalQuestion,
         });
       } else {
         this.setState({
-          isLoading: false,
+          // isLoading: false,
           questions: [],
           totalQuestion: 0
         });
       }
-    } catch (error) { }
+    } catch (error) {
+      this.setState({
+        // isLoading: false,
+        questions: [],
+        totalQuestion: 0
+      });
+    }
   };
 
   filter = async (objectSearchs) => {
-    this.setState({ objectSearch: objectSearchs, isLoading: true })
-    const key = this.getKeyCache(!!objectSearchs ? objectSearchs : this.state.objectSearch);
+    this.setState({ objectSearch: objectSearchs, isLoading: true });
+    const body = _.isEmpty(objectSearchs) ? this.state.objectSearch : objectSearchs;
+    const key = this.getKeyCache(body);
     try {
       const { token } = await dataHelper.getToken();
       const response = await apiPapers.searchPaper({
         token: token,
-        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
-        key: key,
+        body,
+        key,
       });
       const responseCount = await apiPapers.countSearch({
         token: token,
-        body: !!objectSearchs ? objectSearchs : this.state.objectSearch,
+        body,
       });
       const { totalQuestion } = responseCount;
+      if (_.isEmpty(response)) return;
       if (response && response.length > 0) {
+        this.refPaginationUtils.resetState();
         this.setState({
-          questions: !!response && response,
+          questions: response,
           totalQuestion,
         });
       } else {
         this.setState({
-          isLoading: false,
+          // isLoading: false,
           questions: [],
           totalQuestion: 0
         });
@@ -585,11 +601,6 @@ class QuestionLibrary extends Component {
             }}>
             <View style={styles.headerFilter}>
               <Text style={styles.txtFilter} numberOfLines={1}>{this.refModalFilter?.getRenderText()}</Text>
-              {/* <TouchableWithoutFeedback
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                onPress={() => this.setState({ isModalQustionLibrary: true })}>
-                <Image source={require('../../../asserts/icon/iconFilter.png')} />
-              </TouchableWithoutFeedback> */}
               <CustomeButtonRef
                 ref={ref => this.refFilter = ref}
                 tintColor={'#E59553'}
@@ -597,36 +608,31 @@ class QuestionLibrary extends Component {
                 onPress={() => this.setState({ isModalQustionLibrary: true })}
               />
             </View>
-            {isLoading && <LearnPlaceholder />}
+
             <View style={styles.wrapPageAndNumberQuesion}>
-              {/* <View>
-                <Text style={styles.totalAddQuestion}>
-                  Số câu hỏi đã thêm: <Text style={{ color: '#159FDA' }}>
-                    {listQuestionAdded.length}
-                  </Text>
-                </Text>
-              </View> */}
               <View style={{ alignSelf: 'flex-end' }}>
                 <PaginationUtils
-                  ref={'PaginationUtils'}
+                  ref={ref => this.refPaginationUtils = ref}
                   totalQuestion={totalQuestion}
                   handleNextPage={this.handleNextPage}
                   countQuestion={listQuestionAdded.length}
+                  disabled={isLoading}
                 />
               </View>
             </View>
             <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-              {!_.isEmpty(this.state.questions) ? (
-                <WebViewComponent
-                  ref={(webComponent) => this.webComponent = webComponent}
-                  onHandleMessage={this.onHandleMessage}
-                  _closeLearnPlaceholder={this._closeLearnPlaceholder}
-                  questions={this.state.questions}
-                  listQuestionAdded={listQuestionAdded}
-                  isModal={isModal}
-                />
 
-              ) : (
+              <WebViewComponent
+                ref={(webComponent) => this.webComponent = webComponent}
+                onHandleMessage={this.onHandleMessage}
+                _closeLearnPlaceholder={this._closeLearnPlaceholder}
+                questions={this.state.questions}
+                listQuestionAdded={listQuestionAdded}
+                isModal={isModal}
+                isLoading={isLoading}
+              />
+
+              {_.isEmpty(this.state.questions) && !isLoading &&
                 <View
                   style={{
                     flex: 1,
@@ -635,8 +641,8 @@ class QuestionLibrary extends Component {
                     marginBottom: 200,
                   }}>
                   <Text>Không có dữ liệu</Text>
-                </View>
-              )}
+                </View>}
+
               {!_.isEmpty(this.state.questions) && (
                 <TouchableWithoutFeedback
                   onPress={() => this._onTop()}>
@@ -681,6 +687,7 @@ class QuestionLibrary extends Component {
             listSkills={listSkills}
             filter={this.filter}
             code={this.props.user.userName}
+            objectSearch={objectSearch}
           />
         </SafeAreaView>
         <SafeAreaView style={{ backgroundColor: '#fff' }} />
@@ -695,48 +702,58 @@ class WebViewComponent extends Component {
     super(props);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.isModal) {
+    if (this.props.questions != nextProps.questions) {
       return true;
     }
-    if (this.props.questions != nextProps.questions) {
+    if (this.props.listQuestionAdded != nextProps.listQuestionAdded) {
+      return true;
+    }
+    if (this.props.isLoading != nextProps.isLoading) {
       return true;
     }
     return false;
   }
+
   _onTop = () => {
     this.webview.postMessage('onTop');
   };
+
   render() {
     const {
       onHandleMessage,
-      _closeLearnPlaceholder,
       questions,
       listQuestionAdded,
+      _closeLearnPlaceholder,
+      isLoading
     } = this.props;
-
-    console.log("render webview");
+    if (_.isEmpty(questions)) {
+      return <LearnPlaceholder />;
+    }
     return (
-      <WebView
-        ref={(ref) => (this.webview = ref)}
-        style={{ backgroundColor: 'transparent' }}
-        onMessage={onHandleMessage}
-        onLoad={_closeLearnPlaceholder}
-        onError={_closeLearnPlaceholder}
-        source={{
-          html: MathJaxLibs.renderHtmlQuestionDetail(
-            questions,
-            'TOAN',
-            listQuestionAdded,
-          ),
-          baseUrl,
-        }}
-        subjectId={'TOAN'}
-        originWhitelist={['file://']}
-        scalesPageToFit={false}
-        javaScriptEnabled
-        showsVerticalScrollIndicator={false}
-        startInLoadingState={false}
-      />
+      <>
+        {isLoading && <LearnPlaceholder />}
+        <WebView
+          ref={(ref) => (this.webview = ref)}
+          style={{ backgroundColor: 'transparent' }}
+          onMessage={onHandleMessage}
+          onLoadEnd={_closeLearnPlaceholder}
+          onError={_closeLearnPlaceholder}
+          source={{
+            html: MathJaxLibs.renderHtmlQuestionDetail(
+              questions,
+              'TOAN',
+              listQuestionAdded,
+            ),
+            baseUrl,
+          }}
+          subjectId={'TOAN'}
+          originWhitelist={['file://']}
+          scalesPageToFit={false}
+          javaScriptEnabled
+          showsVerticalScrollIndicator={false}
+          startInLoadingState={false}
+        />
+      </>
     );
   }
 }

@@ -173,6 +173,8 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.3)
   - BVLinearGradient (2.5.6):
     - React
+  - CocoaAsyncSocket (7.6.5)
+  - CocoaLibEvent (1.0.0)
   - CodePush (6.4.1):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.12)
@@ -275,6 +277,52 @@ PODS:
     - GoogleUtilities/Reachability (~> 6.2)
     - GoogleUtilities/UserDefaults (~> 6.2)
     - Protobuf (>= 3.9.2, ~> 3.9)
+  - Flipper (0.33.1):
+    - Flipper-Folly (~> 2.1)
+    - Flipper-RSocket (~> 1.0)
+  - Flipper-DoubleConversion (1.1.7)
+  - Flipper-Folly (2.3.0):
+    - boost-for-react-native
+    - CocoaLibEvent (~> 1.0)
+    - Flipper-DoubleConversion
+    - Flipper-Glog
+    - OpenSSL-Universal (= 1.0.2.20)
+  - Flipper-Glog (0.3.6)
+  - Flipper-PeerTalk (0.0.4)
+  - Flipper-RSocket (1.1.1):
+    - Flipper-Folly (~> 2.3)
+  - FlipperKit (0.33.1):
+    - FlipperKit/Core (= 0.33.1)
+  - FlipperKit/Core (0.33.1):
+    - Flipper (~> 0.33.1)
+    - FlipperKit/CppBridge
+    - FlipperKit/FBCxxFollyDynamicConvert
+    - FlipperKit/FBDefines
+    - FlipperKit/FKPortForwarding
+  - FlipperKit/CppBridge (0.33.1):
+    - Flipper (~> 0.33.1)
+  - FlipperKit/FBCxxFollyDynamicConvert (0.33.1):
+    - Flipper-Folly (~> 2.1)
+  - FlipperKit/FBDefines (0.33.1)
+  - FlipperKit/FKPortForwarding (0.33.1):
+    - CocoaAsyncSocket (~> 7.6)
+    - Flipper-PeerTalk (~> 0.0.4)
+  - FlipperKit/FlipperKitHighlightOverlay (0.33.1)
+  - FlipperKit/FlipperKitLayoutPlugin (0.33.1):
+    - FlipperKit/Core
+    - FlipperKit/FlipperKitHighlightOverlay
+    - FlipperKit/FlipperKitLayoutTextSearchable
+    - YogaKit (~> 1.18)
+  - FlipperKit/FlipperKitLayoutTextSearchable (0.33.1)
+  - FlipperKit/FlipperKitNetworkPlugin (0.33.1):
+    - FlipperKit/Core
+  - FlipperKit/FlipperKitReactPlugin (0.33.1):
+    - FlipperKit/Core
+  - FlipperKit/FlipperKitUserDefaultsPlugin (0.33.1):
+    - FlipperKit/Core
+  - FlipperKit/SKIOSNetworkPlugin (0.33.1):
+    - FlipperKit/Core
+    - FlipperKit/FlipperKitNetworkPlugin
   - Folly (2018.10.22.00):
     - boost-for-react-native
     - DoubleConversion
@@ -743,6 +791,8 @@ PODS:
   - SSZipArchive (2.2.3)
   - XCDYouTubeKit (2.15.2)
   - Yoga (1.14.0)
+  - YogaKit (1.18.1):
+    - Yoga (~> 1.14)
   - YoutubePlayer-in-WKWebView (0.3.5)
 
 DEPENDENCIES:
@@ -755,6 +805,25 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Messaging
+  - Flipper (~> 0.33.1)
+  - Flipper-DoubleConversion (= 1.1.7)
+  - Flipper-Folly (~> 2.1)
+  - Flipper-Glog (= 0.3.6)
+  - Flipper-PeerTalk (~> 0.0.4)
+  - Flipper-RSocket (~> 1.0)
+  - FlipperKit (~> 0.33.1)
+  - FlipperKit/Core (~> 0.33.1)
+  - FlipperKit/CppBridge (~> 0.33.1)
+  - FlipperKit/FBCxxFollyDynamicConvert (~> 0.33.1)
+  - FlipperKit/FBDefines (~> 0.33.1)
+  - FlipperKit/FKPortForwarding (~> 0.33.1)
+  - FlipperKit/FlipperKitHighlightOverlay (~> 0.33.1)
+  - FlipperKit/FlipperKitLayoutPlugin (~> 0.33.1)
+  - FlipperKit/FlipperKitLayoutTextSearchable (~> 0.33.1)
+  - FlipperKit/FlipperKitNetworkPlugin (~> 0.33.1)
+  - FlipperKit/FlipperKitReactPlugin (~> 0.33.1)
+  - FlipperKit/FlipperKitUserDefaultsPlugin (~> 0.33.1)
+  - FlipperKit/SKIOSNetworkPlugin (~> 0.33.1)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - lottie-ios (from `../node_modules/lottie-ios`)
@@ -839,6 +908,8 @@ SPEC REPOS:
     - Base64
     - boost-for-react-native
     - BoringSSL-GRPC
+    - CocoaAsyncSocket
+    - CocoaLibEvent
     - Crashlytics
     - Fabric
     - FBSDKCoreKit
@@ -855,6 +926,13 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseMessaging
+    - Flipper
+    - Flipper-DoubleConversion
+    - Flipper-Folly
+    - Flipper-Glog
+    - Flipper-PeerTalk
+    - Flipper-RSocket
+    - FlipperKit
     - FreshchatSDK
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -880,6 +958,7 @@ SPEC REPOS:
     - Shimmer
     - SSZipArchive
     - XCDYouTubeKit
+    - YogaKit
     - YoutubePlayer-in-WKWebView
 
 EXTERNAL SOURCES:
@@ -1041,6 +1120,8 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
+  CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   CodePush: 352a7efabd0a7079a1138a5c6f677baedb0dedf9
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
@@ -1061,6 +1142,13 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   FirebaseMessaging: 089b7a4991425783384acc8bcefcd78c0af913bd
+  Flipper: 6c1f484f9a88d30ab3e272800d53688439e50f69
+  Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
+  Flipper-Folly: e4493b013c02d9347d5e0cb4d128680239f6c78a
+  Flipper-Glog: 1dfd6abf1e922806c52ceb8701a3599a79a200a6
+  Flipper-PeerTalk: 116d8f857dc6ef55c7a5a75ea3ceaafe878aadc9
+  Flipper-RSocket: a3acb8812d6adf127deb0a5edae2793b97e6b641
+  FlipperKit: 6dc9b8f4ef60d9e5ded7f0264db299c91f18832e
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   FreshchatSDK: b3876e9b4b7f0cbd31d77722ac26f518fc7bb6b7
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
@@ -1156,8 +1244,9 @@ SPEC CHECKSUMS:
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
   Yoga: 9db9ff2025ad21d1ac0a8b3c85d5ac4e7c29d525
+  YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   YoutubePlayer-in-WKWebView: cfbf46da51d7370662a695a8f351e5fa1d3e1008
 
-PODFILE CHECKSUM: 7342407d630dd591cd6a023c0bcbc83d8168428e
+PODFILE CHECKSUM: d51584a6c938d47019c089f0a49a3110cb4a71b1
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
