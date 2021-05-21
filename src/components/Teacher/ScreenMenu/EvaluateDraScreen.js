@@ -110,6 +110,7 @@ class EvaluateDraScreen extends Component {
 
     _fillter = (key, value) => {
         const obj = Object.assign({ [key]: value });
+        console.log(obj);
         this.setState(obj, () => {
             console.log(this.state.classSubjectIndex);
             this.getDataStaticExam();
@@ -135,6 +136,7 @@ class EvaluateDraScreen extends Component {
                 classSubjectId,
                 testId,
             });
+            console.log(response);
             if (response.status == 1) {
                 this.setState({
                     student: response.data.students || [],
@@ -158,7 +160,7 @@ class EvaluateDraScreen extends Component {
     };
 
     _handleClickFillter = () => {
-        this.refs.ModalFillter.changeStateModale();
+        this.refModalFillter.onOpened();
     };
 
     render() {
@@ -172,7 +174,6 @@ class EvaluateDraScreen extends Component {
             scores,
             currentExamTest
         } = this.state;
-        console.log('classSubject', classSubjectIndex)
         const payload = {
             classSubject,
             tests,
@@ -181,9 +182,8 @@ class EvaluateDraScreen extends Component {
             testIndex,
             scores,
         };
+        console.log(tests);
         const { user } = this.props;
-        console.log('classSubject', classSubject);
-        const toClass = classSubject.map(val => val.subjectName);
         return (
             <SafeAreaView style={styles.container}>
                 <HeaderNavigation
@@ -209,12 +209,14 @@ class EvaluateDraScreen extends Component {
                             </View>
                         </TouchableWithoutFeedback> */}
                         <View style={styles.sourceRow}>
-                            <Text style={styles.txtSource}>12</Text>
-                            <Text style={styles.txtSource}>/12</Text>
-                            <Text style={styles.txtSource}>/{currentExamTest.name}</Text>
-                        </View>
-                        {/* <Text style={styles.txtFilter} numberOfLines={1}>{this.refModalFilter?.getRenderText()}</Text> */}
+                            <Text numberOfLines={1}
+                                style={styles.textFill}>{yearIndex >= 0 ? DATA_YEAR[yearIndex]?.name : 'Năm học'}</Text>
+                            <Text numberOfLines={1}
+                                style={styles.textFill}>{classSubjectIndex >= 0 ? " / " + classSubject[classSubjectIndex]?.subjectName : " / Lớp học"}</Text>
 
+                            <Text numberOfLines={1}
+                                style={styles.textFill}> / {currentExamTest.name}</Text>
+                        </View>
                         <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                             onPress={this._handleClickFillter}>
                             <View style={styles.btnStatistics}>
@@ -290,13 +292,10 @@ class EvaluateDraScreen extends Component {
                     </View>
                 </ScrollView>
                 <ModalFillter
-                    ref={'ModalFillter'}
+                    ref={ref => this.refModalFillter = ref}
                     getDataStaticExam={this.getDataStaticExam}
                     payload={payload}
                     fillter={this._fillter}
-                    // toYear={indexSelected.toYear}
-                    // toClass={indexSelected.toClass}
-                    // toExamTest={indexSelected.toExamTest}
                 />
             </SafeAreaView>
         );
@@ -450,7 +449,8 @@ const styles = StyleSheet.create({
     },
     sourceRow: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: width - 190
     },
     txtSource: {
         fontFamily: "Nunito",
@@ -465,4 +465,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         flex: 1,
     },
+    textFill: {
+        color: "#E59553",
+        fontFamily: "Nunito",
+        fontWeight: "700",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+    }
+
 });
