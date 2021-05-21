@@ -119,7 +119,7 @@ export default class StepOnePDF extends Component {
                                     urlFilePDFQS: resSignedUrl.urlFile,
                                     loadingUpload: false,
                                 });
-                                this.toast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />, 600000);
+                                this.toast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />, 1000);
                             } else {
                                 this.setState({
                                     urlFilePDFAS: resSignedUrl.urlFile,

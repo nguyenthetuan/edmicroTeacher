@@ -216,7 +216,7 @@ export default class UpdatePhoneScreen extends Component {
     const phone = this.props.user.phoneNumber;
     const formatPhone = Common.formatPhoneNumber(`+${phone}`);
     if (formatPhone == phoneNumber) {
-      this.toast.show(<ToastSuccess title="Cập nhập số điện thoại thành công!" />, 1000, () => {
+      this.toast.show(<ToastSuccess title="Cập nhập thành công!" />, 2000, () => {
         this.props.navigation.goBack();
       });
       return;
@@ -557,7 +557,7 @@ export default class UpdatePhoneScreen extends Component {
             </View>
           </KeyboardAwareScrollView>
         </View>
-        <Toast ref={ref => this.toast = ref} position={'top'} style={{ backgroundColor: "#16BDA9", height: 70 }} />
+        <Toast ref={ref => this.toast = ref} position={'top'} style={{ backgroundColor: 'transparent' }} />
         <LoadingScreen
           isLoading={this.state.isLoading}
           bgColor={'transparent'}
