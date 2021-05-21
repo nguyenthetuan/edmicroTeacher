@@ -701,12 +701,12 @@ class SearchScreen extends React.Component {
                         <View>
                             {loading ?
                                 <ActivityIndicator size={'small'} />
-                                : <View>
+                                : <View style={{ height: height - 120, paddingBottom: 20 }}>
                                     <Text style={styles.textResult}>{listPapers.length} bộ đề được tìm thấy</Text>
                                     <AnimatedFlatList
-                                        style={{ paddingHorizontal: 16 }}
+                                        style={{ paddingHorizontal: 16, paddingBottom: 20 }}
                                         data={listPapers}
-                                        contentContainerStyle={styles.contentContainer}
+                                        contentContainerStyle={{ paddingBottom: 10 }}
                                         showsVerticalScrollIndicator={false}
                                         keyExtractor={(item, index) => index.toString()}
                                         extraData={dataFilter}
@@ -754,8 +754,8 @@ class SearchScreen extends React.Component {
                                 data={dataSelected}
                             />
                         )
-                            :
-                            null
+                        :
+                        null
                     }
                     {
                         visibleModalEditName
