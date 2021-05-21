@@ -3,11 +3,13 @@ import {
   View,
   StyleSheet,
   Image,
+  Text,
   TouchableWithoutFeedback
 } from 'react-native';
 import RippleButton from '../common-new/RippleButton';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from '../common-new/Avatar';
+import { RFFonsize } from '../../utils/Fonts';
 
 export default class HeaderMain extends React.Component {
   constructor(props) {
@@ -44,6 +46,18 @@ export default class HeaderMain extends React.Component {
         </RippleButton>
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
+        </View>
+        <View style={{
+          backgroundColor: '#FF6213',
+          paddingHorizontal: 10,
+          paddingVertical: 2,
+          borderRadius: 5
+        }}>
+          <Text style={{
+            color: '#fff',
+            fontFamily: 'Nunito',
+            fontSize: RFFonsize(14)
+          }}>Beta</Text>
         </View>
         <TouchableWithoutFeedback
           hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}

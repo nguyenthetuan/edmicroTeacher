@@ -26,11 +26,11 @@ const ExerciseTab = createMaterialTopTabNavigator(
         tabBarLabel: ({ focused }) => {
           return !focused ? (
             <Text style={styles.labelTab}>
-              Lớp Giao Bài
+              {`Lớp Giao Bài  `}
             </Text>
           ) : (
               <Text style={styles.labelTabActive}>
-                Lớp Giao Bài
+                {`Lớp Giao Bài  `}
               </Text>
             );
         },

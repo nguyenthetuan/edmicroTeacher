@@ -78,7 +78,7 @@ const getStatus = (item, point) => {
             };
         case 6:
             return {
-                title: 'Chờ chấm điểm tự luận',
+                title: 'Chờ chấm điểm TL',
                 color: '#fff',
                 backgroundColor: "#FF6213",
                 result: 'Chưa có'
@@ -278,7 +278,6 @@ export default function StudentDetail(props) {
             '',
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
-                { text: 'Không', onPress: () => { }, style: 'cancel' },
                 {
                     text: 'Có', onPress: async () => {
                         if (dataDetail) {
@@ -289,7 +288,6 @@ export default function StudentDetail(props) {
                             props.screenProps.onRefresh();
                             setTimeout(() => {
                                 toast.current.show('Yêu cầu làm lại thành công!');
-                                props.screenProps.navigation.pop(2);
                             }, 500)
                         } else {
                             // Global.updateHomeWork();
@@ -297,7 +295,8 @@ export default function StudentDetail(props) {
                             Alert.alert('', res);
                         }
                     }
-                }
+                },
+                { text: 'Không', onPress: () => { } },
             ],
             { cancelable: false }
         );
@@ -338,7 +337,6 @@ export default function StudentDetail(props) {
         const progress = getProcess(item);
         const status = getStatus(item, point);
         const { shadowBtn } = shadowStyle;
-        console.log(item);
         return (
             <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }, shadowBtn]}>
                 <View style={styles.viewAvatar}>
@@ -381,12 +379,12 @@ export default function StudentDetail(props) {
                         item.status == 4 ?
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <TouchableWithoutFeedback onPress={() => handleRework(item.studentId)} >
-                                    <View style={styles.remakeWork}>
+                                    <View style={[styles.remakeWork, { ...shadowBtn }]}>
                                         <Text style={styles.txtRemake}>Làm lại</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
                                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
-                                    <Text style={styles.txtTitleItem}>Kết quả bài tập</Text>
+                                    <Text style={styles.txtTitleItem}>Kết quả</Text>
                                     <Text style={styles.txtPoint}>{status.result}</Text>
                                     {
                                         item.status === 4
@@ -412,10 +410,12 @@ export default function StudentDetail(props) {
                         >
                             {isLoading
                                 ? <ActivityIndicator style={{ alignSelf: 'center', right: 10 }} />
-                                : <Image source={require('../../../asserts/icon/icon_rightStud.png')} style={{ alignSelf: 'center', right: 10 }} />
+                                : <Image source={require('../../../asserts/icon/icon_rightStud.png')}
+                                    style={{ alignSelf: 'center', right: 12 }} />
                             }
                         </TouchableWithoutFeedback>
-                        : null
+                        : <Image source={require('../../../asserts/icon/icon_rightStud.png')}
+                            style={{ alignSelf: 'center', right: 12, opacity: 0 }} />
                 }
             </View>
         )
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
         // borderWidth: 0.5,
         margin: 16,
         flexDirection: 'row',
-        paddingVertical: 16
+        paddingVertical: 12
     },
     viewAvatar: {
         alignSelf: 'center',
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     },
     contentItem: {
         paddingHorizontal: 11,
-        flex: 1
+        flex: 1,
     },
     txtStatus: {
         // position: 'absolute',
@@ -653,17 +653,16 @@ const styles = StyleSheet.create({
     },
     bgStatus: {
         alignSelf: 'flex-end',
-        right: 15,
         backgroundColor: '#FF6213',
         borderRadius: 10
     },
     remakeWork: {
         backgroundColor: '#FF6213',
-        paddingHorizontal: 30,
+        paddingHorizontal: 25,
         paddingVertical: 4,
         alignSelf: 'flex-start',
         marginTop: 7,
-        borderRadius: 15
+        borderRadius: 4
     },
     txtRemake: {
         fontFamily: 'Nunito',

@@ -222,17 +222,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
-    borderRadius: 24,
+    borderRadius: 5,
     paddingVertical: 8,
     marginBottom: 8,
   },
   txtbuttom: {
-    fontSize: RFFonsize(11),
-    lineHeight: RFFonsize(15),
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(18),
     fontFamily: 'Nunito-Bold',
     color: '#FFF',
-    marginLeft: 21,
-    marginRight: 28
+    paddingHorizontal: 10,
   },
   buttomTry: {
     backgroundColor: '#7E96EC',
