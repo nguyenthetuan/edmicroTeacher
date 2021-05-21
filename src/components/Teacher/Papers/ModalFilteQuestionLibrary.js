@@ -93,8 +93,9 @@ export default class ModalConfigPaper extends Component {
       listSkills,
       element,
       lerningTarget,
-      code
-    } = this.props
+      code,
+
+    } = this.props;
     this.state = {
       subject: subject || [],
       isModal: isModal || false,
@@ -112,6 +113,7 @@ export default class ModalConfigPaper extends Component {
         levelQuestion: [],
         skill: null,
         typeAnswer: [],
+        subjectCode: ''
       },
       filterQuestion: [
         { name: 'Câu hỏi công khai', code: '' },
@@ -135,7 +137,7 @@ export default class ModalConfigPaper extends Component {
         valueSubject: nextProps.subject[0],
       });
     }
-    if (nextProps.element !== this.props.element) {
+    if (!_.isEqual(nextProps.element, this.props.element)) {
       this.setState({
         element: nextProps.element,
         valueCurriculum: nextProps.element[0]
@@ -147,11 +149,16 @@ export default class ModalConfigPaper extends Component {
     if (nextProps.code !== this.props.code) {
       this.setState({ code: nextProps.code })
     }
+    if (!_.isEqual(nextProps.objectSearch, this.props.objectSearch)) {
+      this.setState({ objectSearch: nextProps.objectSearch });
+    }
     return true;
   }
 
   filters = () => {
-    this.props.filter(this.state.objectSearch)
+    const { objectSearch } = this.state;
+    objectSearch.indexPage = 0;
+    this.props.filter(objectSearch);
   };
 
   getDetailSubject = async () => {
@@ -161,18 +168,20 @@ export default class ModalConfigPaper extends Component {
       if (token) {
         const response = await apiPapers.getDetailSubject({
           token: token,
-          subjectCode: objectSearch.curriculumCode,
+          subjectCode: objectSearch.subjectCode,
         });
+        if (_.isEmpty(response)) throw 'khong co du lieu';
         await this.setState(
           {
-            element: response && response,
+            element: response,
             valueCurriculum: response[0],
             objectSearch: {
               ...objectSearch,
+              curriculumCode: response[0].id,
             },
           },
         );
-        this.filters();
+        // this.filters();
         this.getLearingTarget();
       }
     } catch (error) {
@@ -187,16 +196,19 @@ export default class ModalConfigPaper extends Component {
       if (token) {
         const response = await apiPapers.getLearingTarget({
           token: token,
-          subjectCode: objectSearch.curriculumCode,
+          curriculumCode: objectSearch.curriculumCode,
         });
+        if (_.isEmpty(response)) throw 'khong co du lieu';
         this.setState(
           {
-            lerningTarget: response && response,
+            lerningTarget: response,
           },
           () => this.filters(),
         );
       }
-    } catch (error) { }
+    } catch (error) {
+      this.setState({ isLoading: false });
+    }
   };
 
   getListSkills = async () => {
@@ -213,6 +225,7 @@ export default class ModalConfigPaper extends Component {
     const { objectSearch } = this.state;
     switch (value) {
       case 1:
+        if (item.code == objectSearch.author) return;
         this.setState(
           {
             objectSearch: {
@@ -227,11 +240,12 @@ export default class ModalConfigPaper extends Component {
         );
         break;
       case 2:
+        if (item.code == objectSearch.subjectCode) return;
         this.setState(
           {
             objectSearch: {
               ...objectSearch,
-              curriculumCode: item.code,
+              subjectCode: item.code,
               indexPage: 0,
             },
             isLoading: true,
@@ -241,12 +255,14 @@ export default class ModalConfigPaper extends Component {
             valueTypeOfExercise: null,
           },
           () => {
-            this.filters();
+            // this.filters();
+            // get data giao trinh
             this.getDetailSubject();
           },
         );
         break;
       case 3:
+        if (item.id == objectSearch.curriculumCode) return;
         this.setState(
           {
             objectSearch: {
@@ -264,6 +280,7 @@ export default class ModalConfigPaper extends Component {
         );
         break;
       case 4:
+        if (_.isEqual([item.code], objectSearch.learningTargetsCode)) return;
         this.setState(
           {
             objectSearch: {
@@ -281,6 +298,7 @@ export default class ModalConfigPaper extends Component {
         );
         break;
       case 5:
+        if (item.code == objectSearch.skill) return;
         this.setState({
           objectSearch: {
             ...objectSearch,
@@ -294,6 +312,7 @@ export default class ModalConfigPaper extends Component {
         })
         break;
       case 6:
+        if (_.isEqual([item.code], objectSearch.levelKnowledge)) return;
         {
           this.setState(
             {

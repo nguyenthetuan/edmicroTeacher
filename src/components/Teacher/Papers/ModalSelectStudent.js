@@ -8,7 +8,6 @@ import {
     TouchableNativeFeedback,
     TouchableOpacity,
     TouchableHighlight,
-    Modal,
     ActivityIndicator,
     FlatList,
 } from 'react-native';
@@ -19,6 +18,7 @@ import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RFFonsize } from '../../../utils/Fonts';
+import Modal from 'react-native-modal';
 Icon.loadFont();
 
 const TOUCHABLE_ELEMENTS = [
@@ -264,52 +264,28 @@ export default class ModalSelectStudent extends Component {
     }
 
     render() {
+        const { visibleModal } = this.props;
         return (
             <Modal
-                visible={this.props.visibleModal}
+                isVisible={visibleModal}
+                style={{ margin: 0 }}
                 transparent={true}
-                animationType={'slide'}
+                onBackdropPress={() => this.props.handlePickStudent(this.state.buttonText)}
             >
-                <TouchableWithoutFeedback onPressOut={() => this.props.handlePickStudent(this.state.buttonText)}>
-                    <View style={styles.containerModal}>
-                        <TouchableWithoutFeedback>
-                            <View
-                                style={styles.wrapModal}
-                            // animation={animation}
-                            // duration={500}
-                            >
-                                <View style={{ borderBottomWidth: 0.5, justifyContent: 'center', alignItems: 'center', borderColor: '#828282', height: 40 }}>
-                                    <Text style={{ fontSize: RFFonsize(14) }}>Danh sách học sinh</Text>
-                                </View>
-                                {this._renderFlastList()}
-                            </View>
-                        </TouchableWithoutFeedback>
+                <View style={styles.wrapModal}                >
+                    <View style={{ borderBottomWidth: 0.5, justifyContent: 'center', alignItems: 'center', borderColor: '#828282', height: 40 }}>
+                        <Text style={{ fontSize: RFFonsize(14) }}>Danh sách học sinh</Text>
                     </View>
-                </TouchableWithoutFeedback>
+                    {this._renderFlastList()}
+                </View>
             </Modal>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    containerModal: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: Platform.select({
-            ios: 'rgba(0,0,0,0.3)',
-            android: 'rgba(0,0,0,0.6)',
-        }),
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 12,
-        },
-        shadowOpacity: 0.58,
-        shadowRadius: 16.0,
-        elevation: 24,
-        zIndex: 10,
-    },
     wrapModal: {
+        flex: 1,
         backgroundColor: '#FFF',
         borderRadius: 5,
         width: '100%',

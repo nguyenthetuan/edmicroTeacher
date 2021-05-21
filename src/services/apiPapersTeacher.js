@@ -114,8 +114,8 @@ const getDetailSubject = async ({ token, subjectCode }) => {
   return responseJson;
 }
 
-const getLearingTarget = async ({ token, subjectCode }) => {
-  let response = await fetch(`${API_BASE}school-online/curriculum/curriculum/learning-targets-all/${subjectCode}`, {
+const getLearingTarget = async ({ token, curriculumCode }) => {
+  let response = await fetch(`${API_BASE}school-online/curriculum/curriculum/learning-targets-all/${curriculumCode}`, {
     method: 'GET',
     headers: getHeaders(token)
   });
