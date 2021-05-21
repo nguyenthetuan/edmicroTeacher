@@ -665,7 +665,7 @@ class SearchScreen extends React.Component {
                                 backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', alignItems: 'center'
                             }}
                             showLoading={this.state.isLoadingSearching}
-                            inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 0, width: width - 50 }}
+                            inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 0, width: width - 70 }}
                             autoFocus={true}
                             showLoading={loading}
                         />
