@@ -48,10 +48,11 @@ export default class HeaderMain extends React.Component {
           <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
         <View style={{
-          backgroundColor: '#FF6213',
+          backgroundColor: '#DB3546',
           paddingHorizontal: 10,
           paddingVertical: 2,
-          borderRadius: 5
+          borderRadius: 5,
+          marginRight: 5
         }}>
           <Text style={{
             color: '#fff',

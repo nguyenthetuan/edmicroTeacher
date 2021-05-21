@@ -10,7 +10,8 @@ import {
     Dimensions,
     ActivityIndicator,
     Alert,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    RefreshControl
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressBar from '../../libs/ProgressBar';
@@ -22,6 +23,8 @@ import { AssignmentContentType } from '../../../utils/Utils';
 import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
+import ToastSuccess from '../../common-new/ToastSuccess';
+import ToastFaild from '../../common-new/ToastFaild';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -285,14 +288,14 @@ export default function StudentDetail(props) {
                         }
                         const res = await rework({ assignId: props.screenProps?.data?.data.assignId, studentId });
                         if (!res) {
-                            props.screenProps.onRefresh();
+                            props.screenProps.refreshData();
                             setTimeout(() => {
-                                toast.current.show('Yêu cầu làm lại thành công!');
+                                toast.current.show(<ToastSuccess title={'Yêu cầu làm lại thành công!'} />);
                             }, 500)
                         } else {
                             // Global.updateHomeWork();
                             // toast.current.show(res);
-                            Alert.alert('', res);
+                            toast.current.show(<ToastFaild title={res} />);
                         }
                     }
                 },
@@ -424,28 +427,38 @@ export default function StudentDetail(props) {
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
             {
-                props.screenProps.isLoading
-                    ? <ActivityIndicator size='small' color='#04C6F1' />
-                    :
-                    _.isEmpty(props.screenProps.data) ?
-                        (
-                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                                <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
-                            </View>
-                        )
-                        : (<View style={styles.container}>
-                            <FlatList
-                                showsVerticalScrollIndicator={false}
-                                data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
-                                keyExtractor={(item, index) => index.toString()}
-                                extraData={props.data}
-                                renderItem={renderItem}
-                            />
-                        </View>)
+                // props.screenProps.isLoading
+                //     ? <ActivityIndicator size='small' color='#04C6F1' />
+                //     :
+                _.isEmpty(props.screenProps.data) ?
+                    (
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                            <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
+                        </View>
+                    )
+                    : (<View style={styles.container}>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
+                            keyExtractor={(item, index) => index.toString()}
+                            extraData={props.data}
+                            renderItem={renderItem}
+                        />
+                    </View>)
+
+
+            }
+            {props.screenProps.isRefresh &&
+                <View style={[StyleSheet.absoluteFill, {
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }]}>
+                    <ActivityIndicator color={'#04C6F1'} />
+                </View>
             }
             <Toast ref={toast} position={'center'} />
-        </View>
+        </View >
     )
 }
 

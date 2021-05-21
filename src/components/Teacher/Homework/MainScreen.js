@@ -138,7 +138,8 @@ export default function StatisticsPoints(props) {
   });
 
   const [timeExport, setTimeExport] = useState('');
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefresh, setRefresh] = useState(false);
   const onPressItemGrade = async (index) => {
     indexSelected.grade = index;
 
@@ -286,6 +287,9 @@ export default function StatisticsPoints(props) {
   };
 
   const handleStatistic = async () => {
+
+
+
     if (data.class.length > 0) {
       const { token } = await dataHelper.getToken();
       if (token) {
@@ -380,23 +384,19 @@ export default function StatisticsPoints(props) {
         homework: listHomework,
         class: listClass,
       });
+      setIsLoading(false);
+      setRefresh(false);
     }
   };
 
   const refreshData = async () => {
-    setIsLoading(true);
+    await setRefresh(true);
     fetchData();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   }
 
   Global.updateHomeWork = refreshData;
   useEffect(() => {
     fetchData();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
     let timeExportTmp = props.data?.data.timeExport;
     console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
     timeExportTmp = convertTimeHMDMY(timeExport);
@@ -517,6 +517,7 @@ export default function StatisticsPoints(props) {
           onRefresh: handleStatistic,
           data: props.data,
           isLoading: isLoading,
+          isRefresh: isRefresh,
           refreshData: refreshData,
           navigation: props.navigation
         }}
