@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import AppIcon from '../../../../utils/AppIcon';
 import icon_time_exa from '../../../../asserts/icon/icon_time_exa.png';
 import { formatSecond } from '../../../../utils/Common';
 import MyActivityIndicator from '../../../libs/MyActivityIndicator';
-
+const { width } = Dimensions.get('window');
+import { RFFonsize } from '../../../../utils/Fonts';
 export default class TestResult extends Component {
   constructor(props) {
     super(props);
@@ -44,10 +45,17 @@ export default class TestResult extends Component {
   render() {
     const { report } = this.state;
     const speed = Math.ceil(report.speed * 60);
+    console.log('report', report);
     return (
       <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
         <MyActivityIndicator isLoading={this.state.isLoading} bgColor={'#fff'} />
         <View vertical={20} style={{ padding: 10 }}>
+
+          <View style={styles.totalCore}>
+            <Text style={styles.firstCore}>Tổng điểm</Text>
+            <Text style={styles.txtCore}>{report.totalScore}</Text>
+            <Text style={styles.endCore}>Điểm</Text>
+          </View>
           <View style={styles.reportItem}>
             <Image source={AppIcon.totalQuestion} style={styles.iconReport} />
             <View style={styles.userStats}>
@@ -160,5 +168,34 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: 'bold',
     marginVertical: 10,
+  },
+  totalCore: {
+    paddingHorizontal: 100,
+    paddingVertical: 15,
+    flexDirection: 'row',
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  txtCore: {
+    fontFamily: 'Nunito-Bold',
+    alignSelf: 'center',
+    fontSize: RFFonsize(18),
+    lineHeight: RFFonsize(22),
+    color: '#FF6213',
+    paddingHorizontal: 10
+  },
+  firstCore: {
+    fontFamily: 'Nunito-Bold',
+    alignSelf: 'center',
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(28),
+    color: '#383838'
+  },
+  endCore: {
+    fontFamily: 'Nunito',
+    alignSelf: 'center',
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
+    color: '#383838'
   }
 });

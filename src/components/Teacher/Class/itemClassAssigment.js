@@ -117,7 +117,7 @@ export default class ItemClassAssigment extends Component {
                 <ProgressBar
                   progress={rate ? rate > 100 ? 100 : rate : 1}
                   color="#28A745"
-                  widthProps={width - 120}
+                  widthProps={width - 125}
                   progressUnfilledColor="#E0E0E0"
                 />
                 <Text
@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     position: 'absolute',
     right: 0,
-    top: Platform.OS == 'android' ? -2 : 0,
     alignSelf: 'center'
   },
   ripButton: {
