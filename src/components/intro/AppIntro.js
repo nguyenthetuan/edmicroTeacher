@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, StyleSheet, Dimensions, SafeAreaView, Image } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, Dimensions, SafeAreaView, Image, BackHandler } from 'react-native';
 import Swiper from 'react-native-swiper'
 import RippleButton from '../libs/RippleButton';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,6 +7,8 @@ import AppIcon from '../../utils/AppIcon';
 import Button from '../common/Button';
 import FastImage from 'react-native-fast-image';
 import { RFSquare, RFFonsize } from '../../utils/Fonts';
+import SplashScreen from 'react-native-splash-screen';
+
 const { width } = Dimensions.get("window");
 
 
@@ -20,6 +22,18 @@ export default class AppIntro extends Component {
 
     componentDidMount() {
         console.log("INTRO");
+        SplashScreen.hide();
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+
+    }
+
+    handleBackPress = () => {
+        this.props.navigation.goBack();
+        return true;
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }
 
     renderDot = () => {
