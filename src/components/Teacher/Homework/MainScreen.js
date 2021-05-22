@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   SafeAreaView
 } from 'react-native';
+import moment from 'moment';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import LevelCompletion from '../../../containers/teacher/homework/LevelCompletion';
@@ -40,10 +41,10 @@ const initTab = createMaterialTopTabNavigator(
               Độ hoàn thành
             </Text>
           ) : (
-            <Text numberOfLines={1} style={styles.labelTabActive}>
-              Độ hoàn thành
-            </Text>
-          );
+              <Text numberOfLines={1} style={styles.labelTabActive}>
+                Độ hoàn thành
+              </Text>
+            );
         },
       },
     },
@@ -57,10 +58,10 @@ const initTab = createMaterialTopTabNavigator(
               Tỉ lệ Đ/S
             </Text>
           ) : (
-            <Text numberOfLines={1} style={styles.labelTabActive}>
-              Tỉ lệ Đ/S
-            </Text>
-          );
+              <Text numberOfLines={1} style={styles.labelTabActive}>
+                Tỉ lệ Đ/S
+              </Text>
+            );
         },
       },
     },
@@ -76,10 +77,10 @@ const initTab = createMaterialTopTabNavigator(
               Học sinh
             </Text>
           ) : (
-            <Text numberOfLines={1} style={styles.labelTabActive}>
-              Học sinh
-            </Text>
-          );
+              <Text numberOfLines={1} style={styles.labelTabActive}>
+                Học sinh
+              </Text>
+            );
         },
       },
     },
@@ -135,6 +136,7 @@ export default function StatisticsPoints(props) {
     subject: [],
     homework: [],
     class: [],
+    timeRefresh: new Date()
   });
 
   const [timeExport, setTimeExport] = useState('');
@@ -190,6 +192,7 @@ export default function StatisticsPoints(props) {
         ...data,
         homework: listHomework,
         class: listClass,
+        timeRefresh: new Date()
       });
     }
   };
@@ -505,6 +508,10 @@ export default function StatisticsPoints(props) {
                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
                 {/* <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text> */}
                 <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả {timeExport ? `(${timeExport})` : ''}</Text>
+                <Text style={{
+                  fontFamily: 'Nunito-Regular', fontSize: RFFonsize(12), marginHorizontal: 10,
+                  color: '#4EBE3C'
+                }}>Dữ liệu được làm mới lúc: {moment(data.timeRefresh).format('HH:mm DD/MM/YYYY')}</Text>
               </View>
             :
             <View style={styles.wrapInfo}>
@@ -546,7 +553,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#FFF',
-    paddingTop: HEIGHT_TOPBAR - 10,
+    paddingTop: HEIGHT_TOPBAR - 20,
     zIndex: 99,
   },
   headerNavigation: {

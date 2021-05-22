@@ -13,14 +13,13 @@ import {
     TouchableWithoutFeedback,
     RefreshControl
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as Progress from 'react-native-progress';
 import ProgressBar from '../../libs/ProgressBar';
 import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import { AssignmentContentType } from '../../../utils/Utils';
-import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
 import ToastSuccess from '../../common-new/ToastSuccess';
@@ -60,7 +59,7 @@ const getStatus = (item, point) => {
             return {
                 title: 'Đang làm',
                 color: '#fff',
-                backgroundColor: '#4EBE3B',
+                backgroundColor: '#2D9CDB',
                 result: 'Chưa có'
             };
         case 3:
@@ -74,7 +73,7 @@ const getStatus = (item, point) => {
             let result = (item.point / item.totalPoint) * 10;
             result = result % 1 === 0 ? result : result.toFixed(2);
             return {
-                title: 'Đã hoàn thành',
+                title: 'Hoàn thành',
                 color: '#fff',
                 backgroundColor: '#4EBE3B',
                 borderRadius: 10
@@ -82,9 +81,9 @@ const getStatus = (item, point) => {
             };
         case 6:
             return {
-                title: 'Chờ chấm điểm TL',
+                title: 'Chờ chấm điểm',
                 color: '#fff',
-                backgroundColor: "#FF6213",
+                backgroundColor: "#d89a29",
                 result: 'Chưa có'
             };
         default:
@@ -262,6 +261,15 @@ export default function StudentDetail(props) {
     const [dataResult, setDataResult] = useState(null);
     const [isLoading, setisLoading] = useState(false);
 
+    React.useEffect(() => {
+        const timeRefresh = setInterval(() => {
+            props.screenProps.refreshData();
+        }, 60 * 1000);
+        return () => {
+            clearTimeout(timeRefresh);
+        }
+    }, [])
+
     const handleRetryCheckPoint = async (studentId) => {
         if (dataDetail) {
             setDetail('');
@@ -290,9 +298,7 @@ export default function StudentDetail(props) {
                         const res = await rework({ assignId: props.screenProps?.data?.data.assignId, studentId });
                         if (!res) {
                             props.screenProps.refreshData();
-                            setTimeout(() => {
-                                toast.current.show(<ToastSuccess title={'Yêu cầu làm lại thành công!'} />);
-                            }, 500)
+                            toast.current.show(<ToastSuccess title={'Yêu cầu làm lại bài tập thành công!'} />, 3000);
                         } else {
                             // Global.updateHomeWork();
                             // toast.current.show(res);
@@ -342,7 +348,7 @@ export default function StudentDetail(props) {
         const status = getStatus(item, point);
         const { shadowBtn } = shadowStyle;
         return (
-            <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }, shadowBtn]}>
+            <View style={[styles.containerItem, { marginTop: index === 0 ? 5 : 0 }, shadowBtn]}>
                 <View style={styles.viewAvatar}>
                     {
                         item.avatar && !item.avatar.includes('no-avatar')
@@ -427,6 +433,21 @@ export default function StudentDetail(props) {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
+            {props.screenProps.isRefresh ?
+                <Progress.Bar
+                    style={{ marginTop: 1, marginBottom: 8 }}
+                    indeterminate={true}
+                    width={375}
+                    indeterminateAnimationDuration={900}
+                    unfilledColor={'#ECECEC'}
+                    color={'#fff'}
+                    borderRadius={0}
+                    height={6}
+                    borderWidth={0}
+                />
+                :
+                <View style={{ height: 15 }} />
+            }
             {
                 // props.screenProps.isLoading
                 //     ? <ActivityIndicator size='small' color='#04C6F1' />
@@ -450,15 +471,7 @@ export default function StudentDetail(props) {
 
 
             }
-            {props.screenProps.isRefresh &&
-                <View style={[StyleSheet.absoluteFill, {
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }]}>
-                    <ActivityIndicator color={'#04C6F1'} />
-                </View>
-            }
-            <Toast ref={toast} position={'center'} />
+            <Toast ref={toast} position={'top'} style={{ backgroundColor: 'transparent' }} />
         </View >
     )
 }
