@@ -43,6 +43,11 @@ export default class CopyFromSubjectExists extends Component {
     }
 
     componentDidMount() {
+        const { listSubjects } = this.props.navigation.state.params;
+        console.log("componentDidMount listSubjects: ", listSubjects);
+        let subjectCode = [listSubjects[0].code];
+        this.setState({ subjectCode });
+        this.getDetailSubject(subjectCode)
     }
     async getDetailSubject(subjectCode) {
         const { token } = await dataHelper.getToken();
