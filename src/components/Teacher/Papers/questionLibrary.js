@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 0,
     color: '#fff',
     fontSize: RFFonsize(14),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   txtFilter: {
     color: '#E59553',
@@ -605,6 +605,7 @@ class QuestionLibrary extends Component {
             onRightAction={() => this.configurationQuestion()}
             styleTitle={styles.styleTitle}
             colorBtnBack={'#ffffff'}
+            centerTitle={false}
           />
           <View
             style={styles.styleBody}

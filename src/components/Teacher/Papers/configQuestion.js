@@ -730,7 +730,7 @@ class ConfigQuestion extends Component {
             loading={loading}
             notRightButton={true}
             bgColor={{ backgroundColor: "#117DB9" }}
-            leftTitle={{ marginLeft: -90 }}
+            leftTitle={{ marginLeft: -78 }}
           />
           <ScrollView
             contentContainerStyle={{ height: webheight }}

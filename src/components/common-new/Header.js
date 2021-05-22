@@ -13,22 +13,43 @@ const navigateUser = (props) => {
 }
 
 const HeaderPrimary = forwardRef((props, ref) => {
-    const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack } = props;
+    const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack, centerTitle } = props;
     const { bgColorActive } = props;
     return (
         <View style={[styles.rowContainer, bgColorActive]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {showLead ?
-                    <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                        <View style={styles.boxAction}>
-                            <Image source={AppIcon.icon_arrowLeftv3} style={[styles.leadIcon, { tintColor: colorBtnBack }]} />
+            {
+                centerTitle ?
+                    <>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            {showLead ?
+                                <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+                                    <View style={styles.boxAction}>
+                                        <Image source={AppIcon.icon_arrowLeftv3} style={[styles.leadIcon, { tintColor: colorBtnBack }]} />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                :
+                                <View style={styles.boxAction} />
+                            }
                         </View>
-                    </TouchableWithoutFeedback>
+                        <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
+                    </>
                     :
-                    <View style={styles.boxAction} />
-                }
-            </View>
-            <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
+                    <>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            {showLead ?
+                                <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+                                    <View style={styles.boxAction}>
+                                        <Image source={AppIcon.icon_arrowLeftv3} style={[styles.leadIcon, { tintColor: colorBtnBack }]} />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                :
+                                <View style={styles.boxAction} />
+                            }
+                            <Text style={[styles.textTitle, styleTitle]}>{title}</Text>
+                        </View>
+                    </>
+            }
+
             {actionIcon ?
                 <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                     onPress={() => { props.iconAction || navigateUser(props) }}>
@@ -76,7 +97,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     textTitle: {
-        flex: 1,
+        // flex: 1,
         color: '#757575',
         fontSize: RFFonsize(16),
         textAlign: 'center',
