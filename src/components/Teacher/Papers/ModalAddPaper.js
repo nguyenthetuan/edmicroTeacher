@@ -81,7 +81,7 @@ export default class ModalAddPaper extends PureComponent {
                                 <RippleButton onPress={this.props.onPressCamera}>
                                     <View style={styles.columnAdd}>
                                         <Image
-                                            source={require('../../../asserts/icon/icon_paperPlane.png')}
+                                            source={require('../../../asserts/icon/icon_paperCamera.png')}
                                             style={{ tintColor: '#2D9CDB' }}
                                         />
                                         <Text style={styles.txtUpload}>Tạo bộ đề bằng camera</Text>
