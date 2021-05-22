@@ -254,6 +254,7 @@ export default class ModalSelectStudent extends Component {
                 automaticallyAdjustContentInsets={false}
                 showsVerticalScrollIndicator={showsVerticalScrollIndicator}
                 keyboardShouldPersistTaps={keyboardShouldPersistTaps}
+                ListFooterComponent={<View style={{ height: 50 }} />}
             />
         );
     }
@@ -292,14 +293,5 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: 450,
         bottom: 0,
-        paddingBottom: 23,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 12,
-        },
-        shadowOpacity: 0.58,
-        shadowRadius: 16.0,
-        elevation: 24,
     },
 })
