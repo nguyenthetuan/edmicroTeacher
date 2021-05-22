@@ -333,9 +333,7 @@ export default function StudentDetail(props) {
                     </View>
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1, marginTop: 5 }}>
-                            <View style={styles.bgSuccess}>
-                                <Text style={[styles.txtTitleItem, { color: "#fff" }]}>Hoàn thành</Text>
-                            </View>
+                                <Text style={[styles.txtTitleItem]}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length + item.data.listTest.length}</Text>
                         </View>
                         {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
