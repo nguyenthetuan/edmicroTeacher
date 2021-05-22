@@ -37,6 +37,7 @@ import { AlertNoti, roundToTwo, roundToFour } from '../../../utils/Common';
 import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
 import HeaderPaper from './HeaderPaper';
+import Header from '../../common-new/Header';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { setListGrades, updateExamListAction } from '../../../actions/paperAction';
 import AppIcon from '../../../utils/AppIcon';
@@ -49,7 +50,7 @@ import ClassItem from './ClassItem';
 import ToastFaild from '../../common-new/ToastFaild';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ModalSuccess from './ModalSuccess/ModalSuccess';
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 const HEIGHT_WEB = isIphoneX() ? height - 200 : height - 100;
 let baseUrl = 'file:///android_asset/';
 const webViewScript = `
@@ -722,7 +723,7 @@ class ConfigQuestion extends Component {
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
         <SafeAreaView>
-          <HeaderPaper
+          {/* <HeaderPaper
             title={'Cấu hình câu hỏi'}
             color={'#fff'}
             navigation={this.props.navigation}
@@ -730,8 +731,22 @@ class ConfigQuestion extends Component {
             loading={loading}
             notRightButton={true}
             bgColor={{ backgroundColor: "#117DB9" }}
-            leftTitle={{ marginLeft: -78 }}
-          />
+            leftTitle={{ marginLeft: -90 }}
+          /> */}
+          <View style={{ backgroundColor: '#117DB9' }}>
+            <Header
+              ref={ref => this.refHeader = ref}
+              title={'Cấu hình câu hỏi'}
+              color={'#fff'}
+              navigation={this.props.navigation}
+              onRightAction={() => this.config()}
+              styleTitle={styles.styleTitle}
+              colorBtnBack={'#ffffff'}
+              centerTitle={false}
+              bgColorActive={{ backgroundColor: '#117DB9' }}
+              createPaper={true}
+            />
+          </View>
           <ScrollView
             contentContainerStyle={{ height: webheight }}
             ref={'ScrollView'}
@@ -1175,21 +1190,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                      <WebView
-                        ref={ref => (this.webview = ref)}
-                        source={{
-                          html: html.renderMatarialDetail(htmlContent, urlMedia),
-                          baseUrl,
-                        }}
-                        subjectId={'TOAN'}
-                        originWhitelist={['file://']}
-                        scalesPageToFit={false}
-                        javaScriptEnabled
-                        showsVerticalScrollIndicator={false}
-                        startInLoadingState={false}
-                        style={{ backgroundColor: '#fff' }}
-                      />
-                    )}
+                        <WebView
+                          ref={ref => (this.webview = ref)}
+                          source={{
+                            html: html.renderMatarialDetail(htmlContent, urlMedia),
+                            baseUrl,
+                          }}
+                          subjectId={'TOAN'}
+                          originWhitelist={['file://']}
+                          scalesPageToFit={false}
+                          javaScriptEnabled
+                          showsVerticalScrollIndicator={false}
+                          startInLoadingState={false}
+                          style={{ backgroundColor: '#fff' }}
+                        />
+                      )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -1529,5 +1544,11 @@ const styles = StyleSheet.create({
   },
   flexColumn: {
     flexDirection: 'column'
-  }
+  },
+  styleTitle: {
+    flex: 0,
+    color: '#fff',
+    fontSize: RFFonsize(14),
+    fontWeight: 'bold',
+  },
 });
