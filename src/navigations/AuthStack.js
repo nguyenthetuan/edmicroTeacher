@@ -19,7 +19,8 @@ const AuthStack = createStackNavigator({
   V_SignIn: {
     screen: SignIn,
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false
     }
   },
   V_SignUp: {
