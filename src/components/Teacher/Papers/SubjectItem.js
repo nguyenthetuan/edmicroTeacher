@@ -23,6 +23,17 @@ export default class SubjectItem extends Component {
         this.props.onOpen();
     }
 
+    filterData = (data) => {
+        const { listSubjects } = this.props;
+        for (var i = data.length - 1; i >= 0; i--) {
+            if (listSubjects.indexOf(data[i])) {
+                data.splice(i, 1)
+            }
+        }
+        console.log("data: ", data);
+        return data;
+    }
+
     renderItem = ({ item }) => {
         const { listSubjects } = this.props;
         console.log('listSubjects', listSubjects)
@@ -49,7 +60,7 @@ export default class SubjectItem extends Component {
                 <View style={styles.styWrapClass}>
                     <View style={[styles.styWrapClassIn, style]}>
                         <FlatList
-                            data={subjectActive}
+                            data={this.filterData(subjectActive)}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={this.renderItem}
                             horizontal
