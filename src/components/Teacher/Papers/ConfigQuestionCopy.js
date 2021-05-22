@@ -485,16 +485,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                        <RippleButton
-                            key={`b${index}`}
-                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                            onPress={() => this.activeGrade(item)}>
-                            <View
-                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                <Text style={styles.txtItemActive}>{item.name}</Text>
-                            </View>
-                        </RippleButton>
-                    );
+                            <RippleButton
+                                key={`b${index}`}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                                onPress={() => this.activeGrade(item)}>
+                                <View
+                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -523,16 +523,16 @@ class ConfigQuestion extends Component {
                             </View>
                         </RippleButton>
                     ) : (
-                        <RippleButton
-                            key={`d${index}`}
-                            style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
-                            onPress={() => this.activeSubject(item)}>
-                            <View
-                                style={Platform.OS === 'android' ? styles.buttomActive : null}>
-                                <Text style={styles.txtItemActive}>{item.name}</Text>
-                            </View>
-                        </RippleButton>
-                    );
+                            <RippleButton
+                                key={`d${index}`}
+                                style={Platform.OS === 'ios' ? styles.buttomActive : { height: 30 }}
+                                onPress={() => this.activeSubject(item)}>
+                                <View
+                                    style={Platform.OS === 'android' ? styles.buttomActive : null}>
+                                    <Text style={styles.txtItemActive}>{item.name}</Text>
+                                </View>
+                            </RippleButton>
+                        );
                 }}
                 removeClippedSubviews={false}
                 horizontal
@@ -658,18 +658,19 @@ class ConfigQuestion extends Component {
                                 title={data.name}
                                 createPaper={true}
                             />
+
                             <View style={styles.headerContent}>
                                 <View style={styles.headerContentLeft}>
                                     <View style={styles.flexRow}>
-                                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                        <View style={{ flexDirection: 'row', alignSelf: 'center', flex: 1 }}>
                                             <Text style={styles.textNormalName}>Môn: </Text>
-                                            <View style={{ height: 20, paddingHorizontal: 2, borderColor: '#fff' }}>
+                                            <View style={{ paddingHorizontal: 2, borderColor: '#fff' }}>
                                                 <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
                                             </View>
                                         </View>
-                                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                        <View style={{ flexDirection: 'row', alignSelf: 'center', flex: 1 }}>
                                             <Text style={styles.textNormalName}>Lớp: </Text>
-                                            <View style={{ height: 20, paddingHorizontal: 2, left: 4.5, borderColor: '#fff' }}>
+                                            <View style={{ paddingHorizontal: 2, left: 4.5, borderColor: '#fff' }}>
                                                 <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
                                             </View>
                                         </View>
@@ -682,85 +683,66 @@ class ConfigQuestion extends Component {
                                             </View>
                                         </TouchableWithoutFeedback>
                                     </View>
-                                    <View style={styles.totalCountQuest}>
-                                        <View style={styles.textIcon}>
-                                            <Image source={AppIcon.icon_questionWhiteV3} />
-                                            <Text
-                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center', top: -2 }]}
-                                            >
-                                                Tổng số câu: {data.questions.length}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.textIcon}>
-                                            <Image source={AppIcon.icon_settingsWhiteV3} />
-                                            <Text
-                                                style={[styles.textNormalName, { marginLeft: 5, alignSelf: 'center', top: -2 }]}
-                                            >
-                                                Tổng số điểm: {this.state.totalPoint}
-                                            </Text>
-                                        </View>
-                                    </View>
                                 </View>
-                                <View style={styles.bottomOfHeader}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                        <View style={styles.flexColumn}>
-                                            <TouchableWithoutFeedback
-                                                onPress={() => { this.onChangePosition() }}
-                                            >
-                                                <View style={styles.actionTwo}>
-                                                    <Image source={AppIcon.icon_actionOneV3} />
-                                                    <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Sắp xếp lại</Text>
-                                                </View>
-                                            </TouchableWithoutFeedback>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <View style={styles.flexColumn}>
+                                        <TouchableWithoutFeedback
+                                            onPress={() => { this.onChangePosition() }}
+                                        >
+                                            <View style={styles.actionTwo}>
+                                                <Image source={AppIcon.icon_actionOneV3} />
+                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Sắp xếp lại</Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
 
-                                            <TouchableWithoutFeedback
-                                                onPress={() => { this.deleteCheckedQs() }}
-                                            >
-                                                <View style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}>
-                                                    <MaterialCommunityIcons
-                                                        name="delete-sweep"
-                                                        size={23}
-                                                        color="#828282"
-                                                    />
-                                                    <Text style={[styles.textHeader, { left: 5, right: 5 }]}>Xóa câu đã chọn</Text>
-                                                </View>
-                                            </TouchableWithoutFeedback>
-                                        </View>
+                                        <TouchableWithoutFeedback
+                                            onPress={() => { this.deleteCheckedQs() }}
+                                        >
+                                            <View style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}>
+                                                <MaterialCommunityIcons
+                                                    name="delete-sweep"
+                                                    size={23}
+                                                    color="#828282"
+                                                />
+                                                <Text style={[styles.textHeader, { left: 5, right: 5 }]}>Xóa câu đã chọn</Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
+                                    </View>
 
-                                        <View style={styles.flexColumn}>
-                                            <TouchableWithoutFeedback
-                                                onPress={() => { this.onPressDecidePoint() }}
-                                            >
-                                                <View style={styles.actionOne}>
-                                                    <Image source={AppIcon.icon_actionTwoV3} />
-                                                    <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chia điểm</Text>
-                                                </View>
-                                            </TouchableWithoutFeedback>
-                                            <TouchableWithoutFeedback
-                                                onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}
-                                            >
-                                                <View style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}>
-                                                    <CheckBox
-                                                        disabled={false}
-                                                        value={this.state.toggleCheckBox}
-                                                        onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
-                                                        boxType="square"
-                                                        style={{
-                                                            width: 18,
-                                                            height: 18,
-                                                            marginLeft: 10,
-                                                        }}
-                                                    />
-                                                    <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chọn tất cả</Text>
-                                                </View>
-                                            </TouchableWithoutFeedback>
-                                        </View>
+                                    <View style={styles.flexColumn}>
+                                        <TouchableWithoutFeedback
+                                            onPress={() => { this.onPressDecidePoint() }}
+                                        >
+                                            <View style={styles.actionOne}>
+                                                <Image source={AppIcon.icon_actionTwoV3} />
+                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chia điểm</Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
+                                        <TouchableWithoutFeedback
+                                            onPress={() => { this.onCheckTotal(!this.state.toggleCheckBox) }}
+                                        >
+                                            <View style={[styles.actionFour, { marginTop: 8, marginBottom: 8 }]}>
+                                                <CheckBox
+                                                    disabled={false}
+                                                    value={this.state.toggleCheckBox}
+                                                    onValueChange={(newValue) => { this.onCheckTotal(newValue) }}
+                                                    boxType="square"
+                                                    style={{
+                                                        width: 18,
+                                                        height: 18,
+                                                        marginLeft: 10,
+                                                    }}
+                                                />
+                                                <Text style={[styles.textHeader, { paddingLeft: 5 }]}>Chọn tất cả</Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
                                     </View>
                                 </View>
                             </View>
+
                         </View>
                     </View>
-                    <View style={{ width: '100%', height: height - 220, backgroundColor: 'red' }}>
+                    <View style={{ width: '100%', height: height - 220, }}>
                         <WebView
                             onMessage={this.onHandleMessage.bind(this)}
                             ref={(ref) => (this.webview = ref)}
@@ -901,7 +883,7 @@ class ConfigQuestion extends Component {
                     <ModalSuccess
                         navigation={this.props.navigation}
                         goToAssigned={this.goToAssigned}
-                        data={{...this.state.resSuccess, name :this.state.name}}
+                        data={{ ...this.state.resSuccess, name: this.state.name }}
                     />
                 </Modal>
             </View >
@@ -915,29 +897,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     header: {
-        width: '100%',
         backgroundColor: '#56CCF2',
-        height: height * 0.25,
-        paddingHorizontal: 5
+        height: height * 0.3,
+        paddingHorizontal: 5,
     },
     headerContent: {
-        flexDirection: 'row',
         flex: 1,
-        marginTop: 10
-    },
-    headerContentRight: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerLineParams: {
-        height: 25,
-        flexDirection: 'row'
-    },
-    leftParams: {
-        width: '60%',
-        height: 25,
-        justifyContent: 'center'
+        marginTop: 10,
+        justifyContent: 'space-between',
+        flexDirection: 'column',
     },
     textInPopupCreate: {
         fontFamily: 'Nunito',
@@ -974,7 +942,8 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(19),
         fontFamily: 'Nunito',
         color: '#000',
-        left: 5
+        left: 5,
+        alignSelf: "center"
     },
     buttomClass: {
         flex: 1,
@@ -1002,14 +971,6 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         height: 30
 
-    },
-    bottomOfHeader: {
-        position: 'absolute',
-        height: 70,
-        bottom: 0,
-        right: 0,
-        width: '100%',
-        justifyContent: 'space-evenly'
     },
     popUp: {
         width: 150,
@@ -1088,7 +1049,6 @@ const styles = StyleSheet.create({
         lineHeight: RFFonsize(19),
         fontFamily: 'Nunito',
         color: '#fff',
-        top: 2
     },
     textNormal: {
         fontSize: RFFonsize(16),
@@ -1114,9 +1074,10 @@ const styles = StyleSheet.create({
         marginRight: 17
     },
     headerContentLeft: {
-        flexDirection: 'column',
         paddingHorizontal: 10,
-        flex: 1
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: height * 0.03
     },
     totalCountQuest: {
         flexDirection: 'row',
@@ -1149,7 +1110,8 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         backgroundColor: '#fff',
         height: 30,
-        alignItems: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     actionThree: {
         flexDirection: 'row',
@@ -1171,12 +1133,11 @@ const styles = StyleSheet.create({
         height: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 170
     },
     flexColumn: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginLeft: 10
+        flex: 1,
     },
     inputTitle: {
         height: 40,
