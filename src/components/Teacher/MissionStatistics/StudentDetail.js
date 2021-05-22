@@ -21,6 +21,7 @@ import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 import shadowStyle from '../../../themes/shadowStyle';
+import FastImage from 'react-native-fast-image'
 
 const nameToAvatar = (name) => {
     return name.toUpperCase().split(' ').splice(0, 2)
@@ -173,7 +174,7 @@ function ModalDetail(props) {
                                 {
                                     item.avatar && !item.avatar.includes('no-avatar')
                                         ?
-                                        <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                                        <FastImage source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                                         :
                                         <Text style={styles.txtAvatarModal}>{nameToAvatar(item.nameStudent)}</Text>
                                 }
@@ -221,13 +222,13 @@ function ModalDetail(props) {
                             <TouchableOpacity
                                 onPress={() => props.onRetryPoint(item.studentId)}
                                 style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
-                                <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
+                                <FastImage source={require('../../../asserts/icon/ic_chamlai.png')} />
                                 <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => props.onRework(item.studentId)}
                                 style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
-                                <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
+                                <FastImage source={require('../../../asserts/icon/ic_lamlai.png')} />
                                 <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
                             </TouchableOpacity>
                         </View>
@@ -307,7 +308,7 @@ export default function StudentDetail(props) {
                     {
                         item.student.userAvatar && !item.student.userAvatar.includes('no-avatar')
                             ?
-                            <Image source={{ uri: item.student.userAvatar.indexOf('http') != 0 ? `http:${item.student.userAvatar}` : item.student.userAvatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                            <FastImage source={{ uri: item.student.userAvatar.indexOf('http') != 0 ? `http:${item.student.userAvatar}` : item.student.userAvatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.student.userDisplayName)}</Text>
                     }
@@ -358,13 +359,13 @@ export default function StudentDetail(props) {
                                 <TouchableOpacity
                                     onPress={() => handleRetryCheckPoint(item.studentId)}
                                     style={styles.btnChamlai}>
-                                    <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
+                                    <FastImage source={require('../../../asserts/icon/ic_chamlai.png')} />
                                     <Text style={styles.txtBtn}>Chấm lại</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => handleRework(item.studentId)}
                                     style={styles.btnLamlai}>
-                                    <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
+                                    <FastImage source={require('../../../asserts/icon/ic_lamlai.png')} />
                                     <Text style={styles.txtBtn}>Làm lại</Text>
                                 </TouchableOpacity>
                             </View>
@@ -384,7 +385,7 @@ export default function StudentDetail(props) {
                     _.isEmpty(props.screenProps.data) ?
                         (
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                                <FastImage source={require('../../../asserts/icon/iconNodata.png')} />
                                 <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
                             </View>
                         )
