@@ -97,7 +97,7 @@ export default class ModalCurriculum extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (!_.isEqual(this.props.data, nextProps.data)) {
       if (!_.isEmpty(nextProps.data)) {
-        this.handleHome();
+        this.handleHome(nextProps.data);
       }
     }
     return true;
@@ -107,7 +107,7 @@ export default class ModalCurriculum extends Component {
     const dataFilter = this.props.data.filter(ele => ele.parentCode == item.code);
     const { currentParent } = this.state;
     currentParent.push(item.parentCode);
-    this.setState({ dataFilter, currentParent });
+    this.setState({ dataFilter, currentParent, searchKey: '' });
   };
 
   backBtn = () => {
@@ -148,14 +148,26 @@ export default class ModalCurriculum extends Component {
     );
   };
 
-  handleHome = () => {
-    const arr = this.props.data.filter(item => item.parentCode == this.props.curriculumCode);
-    this.setState({
-      selectItem: { name: '', code: '' },
-      dataFilter: arr,
-      searchKey: '',
-      currentParent: []
-    });
+  handleHome = (data) => {
+    try {
+      let arr = [];
+      if (_.isEmpty(data)) {
+        arr = this.props.data.filter(item => item.parentCode == this.props.curriculumCode);
+      } else {
+        arr = data.filter(item => item.parentCode == this.props.curriculumCode);
+      }
+      this.setState({
+        dataFilter: arr,
+        searchKey: '',
+        currentParent: []
+      });
+    } catch (error) {
+      this.setState({
+        dataFilter: [],
+        searchKey: '',
+        currentParent: []
+      });
+    }
   }
 
   handleSearchText = (searchKey) => {
