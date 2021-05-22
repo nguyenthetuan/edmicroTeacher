@@ -57,7 +57,6 @@ class SelectModal extends Component {
     const { modalVisible, animation } = this.state;
     const { data, title, indexSelected } = this.props;
     const numColumns = this.getColumns(title);
-
     return (
       <Modal animationType="none" transparent={true} visible={modalVisible}>
         <TouchableWithoutFeedback onPressOut={this.onHideModal}>

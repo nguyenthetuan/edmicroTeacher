@@ -129,7 +129,7 @@ export default class MissionScreen extends Component {
     } = this.state;
     const { isLoadingMission } = this.props;
     return (
-      <View style={{ width: '100%' }}>
+      < View style={{ width: '100%' }}>
         {/* {isLoadingMission ?
           null
           : */}
@@ -140,6 +140,8 @@ export default class MissionScreen extends Component {
           onChange={this.onChangeText}
           onClear={this.onSearchClear}
           onCancel={this.onSearchClear}
+          onFocus={() => { }}
+          onBlur={() => { }}
           containerStyle={{
             backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'
           }}

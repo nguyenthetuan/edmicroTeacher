@@ -14,8 +14,8 @@ export default function Dropdown(props) {
   const selectModal = useRef();
 
   const [dropdownVisible, showDropdown] = useState(false);
-  const [indexSelected, setIndex] = useState(props.indexSelected);
-
+  const [indexSelected, setIndex] = useState(props.indexSelected || 0);
+  console.log("indexSelected: ", props.type, indexSelected);
   const { containerStyle, title, data, contentStyle } = props;
   const isData = data && data[indexSelected];
   return (
