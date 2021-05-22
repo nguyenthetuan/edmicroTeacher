@@ -116,7 +116,7 @@ class MarkingView extends Component {
                 selectedValueStudent: studentListAssigned[0]?.studentId,
                 listStudentAssigned: studentListAssigned,
                 selectAssignId: res.data[0].assignId,
-                indexSelected
+                indexSelected,
               });
               apiPaper
                 .assignmentDetailCheck({
@@ -308,7 +308,7 @@ class MarkingView extends Component {
         indexSelected: {
           indexStudent,
           ...indexSelected,
-          status: value.status
+          status: value.status,
         },
         urlFile: '',
       },

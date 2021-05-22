@@ -49,9 +49,9 @@ class StatisticHome extends Component {
                         if (index == 0) {
                             return <ClassItem />
                         } else if (index == 1) {
-                            return <MissionItem navigation={this.props.navigation} />
-                        } else {
                             return <AssignmentItem navigation={this.props.navigation} />
+                        } else {
+                            return <MissionItem navigation={this.props.navigation} />
                         }
                     }}
                     sliderWidth={sliderWidth}

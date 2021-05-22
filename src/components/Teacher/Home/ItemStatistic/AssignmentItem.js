@@ -101,7 +101,7 @@ class AssignmentItem extends Component {
                     <View style={[styles.note, { marginTop: 10 }]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.noteColor} />
-                            <Text style={styles.txtNote}>Hoàn thành</Text>
+                            <Text style={styles.txtNote}>Bài tập đã giao</Text>
                         </View>
                         {/* <Text style={styles.countNumber}>{assignment?.totalAssign}</Text> */}
                         <Text style={styles.countNumber}>{assignment?.totalAssignment - assignment?.totalAssignmentNotAssign}</Text>
