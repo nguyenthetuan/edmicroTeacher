@@ -6,8 +6,8 @@ export const alertLogout = (cal) => {
     '',
     'Bạn có chắc chắn muốn đăng xuất không ?',
     [
-      { text: 'Không', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-      { text: 'Có', onPress: () => { cal() } }
+      { text: 'Có', onPress: () => { cal() } },
+      { text: 'Không', onPress: () => console.log('Cancel Pressed') }
     ],
     { cancelable: false }
   );
@@ -18,8 +18,8 @@ export const alertConfirmAvatar = (cal) => {
     '',
     'Bạn có chắc chắn muốn thay đổi ảnh đại diện ?',
     [
-      { text: 'Không', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-      { text: 'Có', onPress: () => { cal() } }
+      { text: 'Có', onPress: () => { cal() } },
+      { text: 'Không', onPress: () => console.log('Cancel Pressed') },
     ],
     { cancelable: false }
   );
@@ -42,8 +42,8 @@ export const alertExitApp = (BackHandler) => {
     '',
     EXIT_APP_MSG,
     [
-      { text: 'Không', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
       { text: 'Có', onPress: () => BackHandler.exitApp() },
+      { text: 'Không', onPress: () => console.log('Cancel Pressed') },
     ],
     { cancelable: false }
   )
@@ -54,19 +54,19 @@ export const alertMessage = (title, message) => {
     title,
     message,
     [
-      { text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel' }
+      { text: 'OK', onPress: () => console.log('Cancel Pressed') }
     ],
     { cancelable: false }
   )
 }
 
-export const alertDeletePaper = (title, message,onPress) => {
+export const alertDeletePaper = (title, message, onPress) => {
   Alert.alert(
     title,
     message,
     [
-      { text: 'Không', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-      { text: 'Có', onPress: () => onPress(), style: 'cancel' }
+      { text: 'Có', onPress: () => onPress() },
+      { text: 'Không', onPress: () => console.log('Cancel Pressed')},
     ],
     { cancelable: false }
   )

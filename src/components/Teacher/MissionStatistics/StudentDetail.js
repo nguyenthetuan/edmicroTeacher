@@ -266,7 +266,6 @@ export default function StudentDetail(props) {
             '',
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
-                { text: 'Không', onPress: () => { }, style: 'cancel' },
                 {
                     text: 'Có', onPress: async () => {
                         if (dataDetail) {
@@ -283,7 +282,8 @@ export default function StudentDetail(props) {
                             toast.current.show(res);
                         }
                     }
-                }
+                },
+                { text: 'Không', onPress: () => { } }
             ],
             { cancelable: false }
         );
@@ -333,7 +333,7 @@ export default function StudentDetail(props) {
                     </View>
                     <View style={styles.viewContent}>
                         <View style={{ flexDirection: 'row', flex: 1, marginTop: 5 }}>
-                                <Text style={[styles.txtTitleItem]}>Hoàn thành</Text>
+                            <Text style={[styles.txtTitleItem]}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length + item.data.listTest.length}</Text>
                         </View>
                         {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>

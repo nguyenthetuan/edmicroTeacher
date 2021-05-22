@@ -67,8 +67,8 @@ class DiaryActive extends Component {
             }
         };
         const dataChart = dataSets;
-        const startTime = moment((diaryActive.startTime) * 1000).format('DD/MM/YYYY');
-        const endTime = moment((diaryActive.endTime) * 1000).format('DD/MM/YYYY');
+        const startTime = moment((diaryActive.startTime)).format('DD/MM/YYYY');
+        const endTime = moment((diaryActive.endTime)).format('DD/MM/YYYY');
         return (
             <View style={HomeStyle.container}>
                 <Text style={HomeStyle.titleDes} >Nhật ký hoạt động</Text>
