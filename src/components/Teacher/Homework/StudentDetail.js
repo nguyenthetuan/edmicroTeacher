@@ -25,6 +25,7 @@ import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
+import FastImage from 'react-native-fast-image'
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -179,7 +180,7 @@ function ModalDetail(props) {
                                 {
                                     item.avatar && !item.avatar.includes('no-avatar')
                                         ?
-                                        <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                                        <FastImage source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                                         :
                                         <Text style={styles.txtAvatarModal}>{nameToAvatar(item.nameStudent)}</Text>
                                 }
@@ -346,7 +347,7 @@ export default function StudentDetail(props) {
                     {
                         item.avatar && !item.avatar.includes('no-avatar')
                             ?
-                            <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                            <FastImage source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.nameStudent)}</Text>
                     }
