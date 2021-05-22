@@ -38,6 +38,7 @@ import { phoneNumberScheme, forgotPasswordValidate } from '../../utils/SchemaVal
 import { SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
 import Recaptcha from 'react-native-recaptcha-that-works';
+import ModalInfoOtp from '../modals/ModalInfoOtp';
 import { SITE_KEY, BASE_URL } from '../../constants/setting';
 
 const { width, height } = Dimensions.get('window');
@@ -70,6 +71,7 @@ export default class ForgotPasswordScreen extends Component {
       editableOTP: true,
       secureTextEntry: false,
       recaptchaToken: null,
+      syntaxSMS: ''
     };
     this.phoneNumber = '';
     this.password = '';
@@ -412,18 +414,12 @@ export default class ForgotPasswordScreen extends Component {
       if (!!res) {
         console.log(res)
         if (!_.isEmpty(res[0])) {
-          if (res.length > 1) {
+          if (res.length > 0) {
             this.setState({
               accountSearch: res,
               isEditPhone: false
             })
-          } else {
-            this.setState({
-              accountSearch: res,
-              accountSelected: res[0],
-              isEditPhone: false
-            })
-          }
+          } 
         } else {
           this.setState({
             errors: 'Số điện thoại này chưa được đăng kí !',
@@ -435,13 +431,15 @@ export default class ForgotPasswordScreen extends Component {
     });
   }
 
+  openSendPasswordModal = async (item) => {
+    await this.setState({ syntaxSMS: item.syntaxSMS, });
+    this.modalInfoOtp.onSetVisible();
+  }
+
   renderItemAccount = ({ item }) => {
     const uriAvatar = this.getAvatar(item.avatar);
     return (
-      <RippleButton
-        onPress={() => {
-          this.setState({ accountSelected: item })
-        }}>
+      <RippleButton onPress={() => this.openSendPasswordModal(item)}>
         <View style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -754,7 +752,7 @@ export default class ForgotPasswordScreen extends Component {
                       <OTPTextView
                         ref={ref => this.otp = ref}
                         containerStyle={styles.textInputContainer}
-                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, height: width * 2 / 15}]}
+                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, height: width * 2 / 15 }]}
                         handleTextChange={text => this.setState({ codeOTP: text, errors: '' }, () => console.log('text1', this.state.codeOTP))}
                         inputCount={6}
                         keyboardType="numeric"
@@ -842,6 +840,12 @@ export default class ForgotPasswordScreen extends Component {
           onVerify={this.onVerify}
           onExpire={this.onExpire}
           onError={this.onError}
+        />
+        <ModalInfoOtp
+          ref={(modalInfoOtp) => this.modalInfoOtp = modalInfoOtp}
+          syntaxSMS={this.state.syntaxSMS}
+          navigation={this.props.navigation}
+          phoneNumber={this.state.phoneNumber}
         />
       </View>
     );
