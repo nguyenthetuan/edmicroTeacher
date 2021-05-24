@@ -317,14 +317,16 @@ export default function StudentDetail(props) {
                 <View style={styles.contentItem}>
                     <Text style={[styles.txtStatus, { color: status.color }]}>{status.title}</Text>
                     <Text style={styles.txtNameItem}>{item.student.userDisplayName}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <ProgressBar
-                            progress={progress || 1}
-                            height={4}
-                            color='#2D9CDB'
-                            widthProps={width - 160}
-                            progressUnfilledColor='#C4C4C4'
-                        />
+                    <View style={{ flexDirection: 'row', marginTop: 5, alignItems: 'center' }}>
+                        <View>
+                            <ProgressBar
+                                progress={progress || 1}
+                                height={4}
+                                color='#2D9CDB'
+                                widthProps={width - 170}
+                                progressUnfilledColor='#C4C4C4'
+                            />
+                        </View>
                         <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 8 }]}>
                             {progress ?
                                 Number.parseFloat(progress).toFixed(2)
