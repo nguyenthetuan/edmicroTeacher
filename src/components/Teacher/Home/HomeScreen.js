@@ -30,6 +30,7 @@ import {
     statisticAssignmentAction,
     diaryActiveAction
 } from '../../../actions/statisticAction';
+import ShimerHome from './ShimerHome';
 const { height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 
@@ -105,6 +106,9 @@ class HomeScreen extends Component {
             } else if (isRefresh(exp, curTime, iat)) {
                 console.log("isRefresh");
                 userPost = await dataHelper.getUserPost();
+                if (userPost == '') {
+                    this.props.navigation.navigate('Auth');
+                }
                 userObj = JSON.parse(userPost);
                 res = await apiUserHelper.refreshToken({ token: value });
                 if (res != '' && res.status === 200) {
@@ -134,8 +138,9 @@ class HomeScreen extends Component {
 
 
     getDataStatistics = async () => {
-        const { token, enumType } = await dataHelper.getToken();
+        const { token } = await dataHelper.getToken();
         const schoolYear = new Date().getFullYear();
+        const enumType = 0;
         this.props.fetchClassAction({ token, schoolYear });
         this.props.fetchMissionAction({ token, enumType, schoolYear });
         this.props.fetchAssignmentAction({ token, enumType, schoolYear });
@@ -173,7 +178,7 @@ class HomeScreen extends Component {
                     <View style={HomeStyle.body}>
                         {
                             isLoading ?
-                                <ActivityIndicator size="small" style={{ flex: 1, height: height * 0.5 }} />
+                                <ShimerHome />
                                 :
                                 <StatisticHome
                                     data={data}
@@ -199,7 +204,7 @@ const mapStateToProps = state => {
         assignment: state.statistic.assignment,
         isLoading: state.statistic.isLoading,
         classArray: state.statistic.classArray,
-        diaryActive: state.statistic.diaryActive,
+        diaryActive: [state.statistic.diaryActive],
         countdiaryActive: state.statistic.countdiaryActive
     };
 };

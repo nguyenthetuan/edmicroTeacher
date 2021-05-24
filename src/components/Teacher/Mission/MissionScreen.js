@@ -9,7 +9,8 @@ import {
   Dimensions,
   Platform,
   Keyboard,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableWithoutFeedback
 } from 'react-native';
 import ItemMission from './ItemMission';
 import dataHelper from '../../../utils/dataHelper';
@@ -17,7 +18,8 @@ import Api from '../../../services/apiMission';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { RFFonsize } from '../../../utils/Fonts';
 import HeaderMissionNew from '../../common-new/HeaderMissionNew';
-import SearchComponent from "react-native-search-component";
+import ShimerMission from './ShimerMission';
+import { SearchBar } from 'react-native-elements';
 const { width, height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -127,20 +129,26 @@ export default class MissionScreen extends Component {
     } = this.state;
     const { isLoadingMission } = this.props;
     return (
-      <View style={{ width: '100%' }}>
-        {isLoadingMission ?
+      < View style={{ width: '100%' }}>
+        {/* {isLoadingMission ?
           null
-          :
-          <SearchComponent
-            placeholder="Tìm kiếm"
-            cancelColor="#2D9CDB"
-            value={textSearch}
-            onChange={this.onChangeText}
-            onSearchClear={this.onSearchClear}
-            customSearchInputStyle={styles.textSear}
-            customCancelTextStyle={styles.txtCan}
-          />
-        }
+          : */}
+        <SearchBar
+          placeholder="Tìm kiếm"
+          value={textSearch}
+          placeholderTextColor="#828282"
+          onChange={this.onChangeText}
+          onClear={this.onSearchClear}
+          onCancel={this.onSearchClear}
+          onFocus={() => { }}
+          onBlur={() => { }}
+          containerStyle={{
+            backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent'
+          }}
+          inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 5 }}
+        // customCancelTextStyle={styles.txtCan}
+        />
+        {/* } */}
       </View>
     );
   };
@@ -176,7 +184,6 @@ export default class MissionScreen extends Component {
       positionY,
       listMissionSearch,
     } = this.state;
-    // console.log("🚀 ~ file: MissionScreen.js ~ line 129 ~ MissionScreen ~ render ~ listMissionSearch", listMissionSearch)
     const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 150);
     const _header_opacity = _diff_clamp_scroll_y.interpolate({
       inputRange: [0, 100],
@@ -188,9 +195,8 @@ export default class MissionScreen extends Component {
       outputRange: [0, -150],
       extrapolate: 'clamp',
     });
-
     return (
-      <>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
           <HeaderMissionNew
             navigation={this.props.navigation}
@@ -210,29 +216,36 @@ export default class MissionScreen extends Component {
                 {this.renderHeader()}
               </Animated.View>
             </Animated.View>
-            <AnimatedFlatList
-              ref={(fl) => this.refFlatlist = fl}
-              data={listMissionSearch}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={this.renderItem}
-              initialNumToRender={3}
-              bounces={false}
-              scrollEventThrottle={1}
-              ListEmptyComponent={this._listTestEmpty}
-              ListFooterComponent={<View style={{ height: 70 }} />}
-              showsVerticalScrollIndicator={true}
-              onScroll={Animated.event([
-                {
-                  nativeEvent: { contentOffset: { y: this._scroll_y } }
-                }
-              ],
-                { useNativeDriver: true }
-              )}
-              style={styles.scroll_view}
-            />
+            {
+              isLoadingMission ?
+                <View style={styles.scroll_view}>
+                  <ShimerMission />
+                </View>
+                :
+                <AnimatedFlatList
+                  ref={(fl) => this.refFlatlist = fl}
+                  data={listMissionSearch}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={this.renderItem}
+                  initialNumToRender={3}
+                  bounces={false}
+                  scrollEventThrottle={1}
+                  ListEmptyComponent={this._listTestEmpty}
+                  ListFooterComponent={<View style={{ height: 70 }} />}
+                  showsVerticalScrollIndicator={true}
+                  onScroll={Animated.event([
+                    {
+                      nativeEvent: { contentOffset: { y: this._scroll_y } }
+                    }
+                  ],
+                    { useNativeDriver: true }
+                  )}
+                  style={styles.scroll_view}
+                />
+            }
           </View>
         </SafeAreaView>
-      </>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -245,8 +258,8 @@ const styles = StyleSheet.create({
   },
   styTxtEmpty: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
+    fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(21),
     color: '#999',
   },
   header: {
@@ -261,7 +274,7 @@ const styles = StyleSheet.create({
   },
   scroll_view: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 60,
   },
   txtCan: {
     fontFamily: 'Nunito',

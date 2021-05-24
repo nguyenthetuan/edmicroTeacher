@@ -127,7 +127,8 @@ export default class ListQuestionCopy extends Component {
                                 <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                     <Text style={[styles.textNormalName, { fontSize: RFFonsize(14) }]}>Môn: </Text>
                                     <View style={{ height: 20, paddingHorizontal: 0, borderColor: '#fff' }}>
-                                        <Text style={styles.textNormal}>{data.subjectNames[0]}</Text>
+                                        <Text numberOfLines={2}
+                                            style={[styles.textNormal, { width: width - 320 }]}>{data.subjectNames[0]}</Text>
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignSelf: 'center' }}>

@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   viewTitle: {
+    zIndex: -1,
     // alignSelf: 'center',
     // alignItems: 'center',
     // justifyContent: 'center'

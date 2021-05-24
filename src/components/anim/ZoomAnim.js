@@ -8,7 +8,7 @@ export default ZoomAnim = (props) => {
     useEffect(() => {
         Animated.timing(zoom, {
             toValue: 1,
-            duration: 600,
+            duration: 500,
             useNativeDriver:true
         }).start();
     }, [])

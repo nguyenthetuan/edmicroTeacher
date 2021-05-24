@@ -5,10 +5,17 @@ import Forgot from '../components/auth/ForgotPasswordScreen';
 import transition from '../components/anim/Transition';
 import Orientation from 'react-native-orientation';
 import { Platform } from 'react-native';
+import AppIntro from '../components/intro/AppIntro';
 
 Orientation.lockToPortrait();
 
 const AuthStack = createStackNavigator({
+  V_Intro: {
+    screen: AppIntro,
+    navigationOptions: {
+      header: null
+    }
+  },
   V_SignIn: {
     screen: SignIn,
     navigationOptions: {
@@ -26,7 +33,7 @@ const AuthStack = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  },
+  }
 }, Platform.OS == 'android' && transition);
 
 export default AuthStack;

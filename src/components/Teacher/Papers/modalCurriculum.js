@@ -5,13 +5,10 @@ import {
   StyleSheet,
   FlatList,
   TextInput,
-  Platform,
   Modal,
   Text,
   TouchableWithoutFeedback,
   Dimensions,
-  ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
   Animated,
   Keyboard,
@@ -24,7 +21,10 @@ import SearchInput, { createFilter } from 'react-native-search-filter';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import AppIcon from '../../../utils/AppIcon';
 import { RFFonsize } from '../../../utils/Fonts';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import HighlightText from '@sanar/react-native-highlight-text';
 import _ from 'lodash';
+import { removeAccents } from '../../../utils/Common';
 
 const { width, height } = Dimensions.get('window');
 let heightTextInput = 0,
@@ -41,16 +41,17 @@ export default class ModalCurriculum extends Component {
       indexItem: '',
       searchKey: '',
       data: data || [],
+      dataFilter: [],
       isKeyBoard: false,
       searched: false,
       dataDefault: data || [],
-      currentParent: ''
+      currentParent: [],
     };
     this.positionY = new Animated.Value(-40);
     this.arrayHistoryFilter = [];
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.keyboardWillShowSub = Keyboard.addListener(
       'keyboardWillShow',
       this.keyboardWillShow,
@@ -59,6 +60,7 @@ export default class ModalCurriculum extends Component {
       'keyboardWillHide',
       this.keyboardWillHide,
     );
+    this.handleHome();
   }
 
   componentWillUnmount() {
@@ -93,73 +95,30 @@ export default class ModalCurriculum extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (JSON.stringify(nextProps.data) !== JSON.stringify(this.props.data)) {
-      const { dataDefault } = this.state;
-      this.setState({
-        selectItem: { name: '', code: '' },
-        data: nextProps.data,
-      });
-      if (!dataDefault.length) {
-        this.setState({ dataDefault: nextProps.data })
+    if (!_.isEqual(this.props.data, nextProps.data)) {
+      if (!_.isEmpty(nextProps.data)) {
+        this.handleHome();
       }
     }
     return true;
   }
 
   searchExactly = ({ data, item }) => {
-    let dataTMP = [];
-    dataTMP = [...this.arrayHistoryFilter, item.parentCode]
-    let reslult = [];
-    this.arrayHistoryFilter = dataTMP;
-    _.map(data, (element) => {
-      if (element.parentCode === item.code) {
-        reslult.push(element);
-      }
-    });
-    this.setState({
-      searchKey: '',
-      data: reslult,
-      searched: true,
-    });
+    const dataFilter = this.props.data.filter(ele => ele.parentCode == item.code);
+    const { currentParent } = this.state;
+    currentParent.push(item.parentCode);
+    this.setState({ dataFilter, currentParent });
   };
 
-  backBtn = ({ data }) => {
-    const { dataDefault } = this.state
-
-    if (this.arrayHistoryFilter.length === 0) {
+  backBtn = () => {
+    let { currentParent } = this.state;
+    let parentCode = currentParent.pop();
+    if (_.isEmpty(parentCode)) {
+      this.setState({ currentParent });
       return;
     }
-    if (this.arrayHistoryFilter.length === 1) {
-      this.arrayHistoryFilter.pop()
-      this.setState({
-        searchKey: '',
-        data: dataDefault,
-        searched: true
-      });
-      return;
-    }
-    let reslult = [];
-    _.map(dataDefault, (element) => {
-      if (element.parentCode === this.arrayHistoryFilter[this.arrayHistoryFilter.length - 1]) {
-        reslult.push(element);
-      }
-    });
-    this.arrayHistoryFilter.pop()
-    this.setState({
-      searchKey: '',
-      data: reslult,
-      searched: true
-    });
-  }
-
-  compactList() {
-    let itemParent = this.state.dataDefault.find(x => this.state.currentParent === x.code);
-    let arrayFileter = this.state.dataDefault.filter(x => this.state.currentParent === x.parentCode);
-    this.setState({
-      searchKey: '',
-      data: arrayFileter,
-      searched: true,
-    })
+    const dataFilter = this.props.data.filter(ele => ele.parentCode == parentCode);
+    this.setState({ dataFilter, currentParent });
   }
 
   deleteItem = () => {
@@ -189,8 +148,27 @@ export default class ModalCurriculum extends Component {
     );
   };
 
+  handleHome = () => {
+    const arr = this.props.data.filter(item => item.parentCode == this.props.curriculumCode);
+    this.setState({
+      selectItem: { name: '', code: '' },
+      dataFilter: arr,
+      searchKey: '',
+      currentParent: []
+    });
+  }
+
+  handleSearchText = (searchKey) => {
+    if (_.isEmpty(searchKey.trim())) {
+      const arr = this.props.data.filter(item => item.parentCode == this.props.curriculumCode);
+      this.setState({ dataFilter: arr, searchKey });
+      return;
+    }
+    const arr = this.props.data.filter(item => removeAccents(item.name).toUpperCase().includes(removeAccents(searchKey).toUpperCase()));
+    this.setState({ dataFilter: arr, searchKey });
+  }
+
   renderItem = ({ item, index }) => {
-    const { data } = this.state;
     let name = '';
     if (item.name) {
       name = item.name;
@@ -201,29 +179,39 @@ export default class ModalCurriculum extends Component {
     }
 
     return (
-      <TouchableOpacity
-        style={styles.wrapElement}
+      <TouchableWithoutFeedback
         onPress={() => this.selectItem({ item, index })}
-        onLongPress={() => !item.isLeaf && this.searchExactly({ data, item })}>
-        <Text style={styles.name} numberOfLines={1}>
-          {item.name}
-        </Text>
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => this.selectItem({ item, index })}>
-            <EvilIcons name="search" size={20} color="#BDBDBD" />
-          </TouchableOpacity>
-          {!item.isLeaf && (
-            <TouchableOpacity
-              style={{ marginLeft: 5 }}
-              onPress={() => this.searchExactly({ data, item })}>
-              <Image
-                source={require('../../../asserts/appIcon/icSearch.png')}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          )}
+        hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+      >
+        <View style={styles.wrapElement}>
+          {/* <Text style={styles.name} numberOfLines={1}>
+            {item.name}
+          </Text> */}
+          <HighlightText
+            highlightStyle={{ backgroundColor: 'yellow' }}
+            searchWords={[this.state.searchKey]}
+            textToHighlight={item.name}
+            sanitize={removeAccents}
+          />
+          <View style={{ flexDirection: 'row' }}>
+            {/* <TouchableOpacity
+              onPress={() => this.selectItem({ item, index })}
+              hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+            >
+              <IconAntDesign name={'search1'} size={20} color="#BDBDBD" />
+            </TouchableOpacity> */}
+            {!item.isLeaf && (
+              <TouchableOpacity
+                style={{ marginLeft: 15 }}
+                onPress={() => !item.isLeaf && this.searchExactly({ item })}
+                hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+              >
+                <IconAntDesign name={'login'} size={20} color="#BDBDBD" />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -233,19 +221,17 @@ export default class ModalCurriculum extends Component {
       dropdownVisible,
       selectItem,
       searchKey,
-      data
+      data,
+      dataFilter,
+      currentParent
     } = this.state;
     const {
       title,
-      widthItem,
-      colum,
       value,
       styleTitle,
-      borderStyle
+      borderStyle,
     } = this.props;
     selectItem = _.isEmpty(value) ? selectItem : value;
-    let fliter = data.filter(createFilter(searchKey, KEY_TO_FILTERS));
-
     return (
       <View style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={() => this.setState({ visible: true })}>
@@ -264,8 +250,8 @@ export default class ModalCurriculum extends Component {
                   </TouchableOpacity>
                 </View>
               ) : (
-                  <View />
-                )}
+                <Text style={styles.txtPlaceIn}>Đơn vị kiến thức</Text>
+              )}
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -273,6 +259,7 @@ export default class ModalCurriculum extends Component {
                   color="#828282"
                 />
               </View>
+
             </View>
 
             <Modal visible={visible} transparent={true}>
@@ -306,29 +293,23 @@ export default class ModalCurriculum extends Component {
                         />
                       </TouchableOpacity>
                       <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
-                        <TouchableOpacity style={{ marginRight: 10 }} onPress={() => this.backBtn({ data })}>
-                          <AntDesign name='arrowleft' size={20} style={{ color: '#fff' }} />
-                        </TouchableOpacity>
                         <TouchableOpacity
-                          onPress={() => {
-                            this.setState({
-                              data: this.props.data,
-                              searchKey: '',
-                            })
-                          }
-                          }
+                          style={{ marginRight: 10 }}
+                          onPress={() => this.backBtn({ data })}
+                          disabled={_.isEmpty(currentParent)}
                         >
+                          <AntDesign name='arrowleft' size={22} style={{ color: _.isEmpty(currentParent) ? '#ffffff40' : '#fff' }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.handleHome} >
                           <Image
                             source={require('../../../asserts/icon/iconHome.png')}
-                            style={{ height: 16, width: 16, tintColor: '#fff', marginRight: 10 }}
+                            style={{ height: 20, width: 20, tintColor: '#fff', marginRight: 10 }}
                             resizeMode='contain'
                           />
                         </TouchableOpacity>
                         <TextInput
                           style={styles.TextInput}
-                          onChangeText={(Text) =>
-                            this.setState({ searchKey: Text })
-                          }
+                          onChangeText={this.handleSearchText}
                           value={searchKey}
                           onLayout={(e) =>
                             (heightTextInput = e.nativeEvent.layout.height)
@@ -349,7 +330,7 @@ export default class ModalCurriculum extends Component {
                   </TouchableWithoutFeedback>
                   <View style={styles.content}>
                     <FlatList
-                      data={fliter}
+                      data={dataFilter}
                       keyExtractor={(item, index) => index.toString()}
                       renderItem={this.renderItem}
                       ListEmptyComponent={this.renderListEmptyComponent}
@@ -378,6 +359,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFF',
     borderRadius: 5,
     width: width,
+    flex: 1,
   },
   txtTitle: {
     fontFamily: 'Nunito-Bold',
@@ -411,7 +393,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: 'Nunito-Regular',
-    fontSize: RFFonsize(12),
+    fontSize: RFFonsize(14),
     color: '#000',
     width: '80%',
   },
@@ -460,6 +442,7 @@ const styles = StyleSheet.create({
   wrapElement: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingLeft: 23,
     paddingVertical: 10,
     paddingRight: 10,
@@ -469,5 +452,12 @@ const styles = StyleSheet.create({
     height: 12,
     marginRight: -5,
     marginTop: -5
+  },
+  txtPlaceIn: {
+    fontFamily: "Nunito",
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
+    paddingLeft: 10,
+    color: "#c4c4c4"
   }
 });

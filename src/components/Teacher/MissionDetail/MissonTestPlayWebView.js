@@ -90,7 +90,7 @@ export default class MissonPlayWebView extends PureComponent {
     }
 
     onBackPressed() {
-        Alert.alert('Thông báo',
+        Alert.alert('',
             'Bạn có chắc chắn muốn rời khỏi ?',
             [
                 { text: "Có", onPress: this._goBack },

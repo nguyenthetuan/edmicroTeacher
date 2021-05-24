@@ -13,7 +13,9 @@ import {
   Animated,
   SafeAreaView,
   Platform,
-  Alert
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
@@ -64,6 +66,7 @@ class MarkingView extends Component {
       indexSelected: {
         indexClass: 0,
         indexStudent: 0,
+        status: -1
       },
       urlFile: '',
       modalImageFull: false,
@@ -74,9 +77,9 @@ class MarkingView extends Component {
   filterDataStudentAssigned(data) {
     let result = [];
     for (let i = 0; i < data.length; i++) {
-      if (data[i].idLog && data[i].status === 6) {
-        result.push(data[i]);
-      }
+      // if (data[i].idLog && data[i].status === 6) {
+      result.push(data[i]);
+      // }
     }
     return result;
   }
@@ -84,6 +87,7 @@ class MarkingView extends Component {
   componentDidMount() {
     const { assignmentId } = this.props.navigation.state.params.item;
     // const {token} = apiPaper.getToken();
+    console.log("marking Viuew");
     apiHelper.getToken().then(tk => {
       apiPaper
         .getListClassAssigned({ token: tk.token, assignmentId })
@@ -101,14 +105,20 @@ class MarkingView extends Component {
               assignId: res.data[0].assignId,
             })
             .then(rs => {
+              console.log("fetchListStudentAssign: ", rs);
               let studentListAssigned = this.filterDataStudentAssigned(rs);
               if (_.isEmpty(studentListAssigned)) {
                 return;
+              }
+              const indexSelected = {
+                ...this.state.indexSelected,
+                status: rs[0].status
               }
               this.setState({
                 selectedValueStudent: studentListAssigned[0]?.studentId,
                 listStudentAssigned: studentListAssigned,
                 selectAssignId: res.data[0].assignId,
+                indexSelected
               });
               apiPaper
                 .assignmentDetailCheck({
@@ -117,12 +127,14 @@ class MarkingView extends Component {
                   assignId: res.data[0].assignId,
                 })
                 .then(respone => {
+                  console.log("assignmentDetailCheck: ", respone);
+
                   this.setState({
                     assignmentDetailCheck: respone,
                     urlFile:
                       !_.isEmpty(respone.data.listFile) &&
                       respone.data.listFile[0],
-                  }, () => this.state.urlFile && this.checkCurrentIndex());
+                  }, () => this.checkCurrentIndex());
                   this.assignInitDataScoreAndComment(respone.data.data);
                 });
             });
@@ -163,10 +175,15 @@ class MarkingView extends Component {
       assignId: selectAssignId,
     });
     let studentListAssigned = this.filterDataStudentAssigned(student);
+    console.log("data marrking");
     this.setState(
       {
         selectedValueStudent: studentListAssigned[0]?.studentId,
         listStudentAssigned: studentListAssigned,
+        indexSelected: {
+          ...this.state.indexSelected,
+          status: studentListAssigned[0]?.status
+        }
       },
       async () => {
         const response = await apiPaper.assignmentDetailCheck({
@@ -174,6 +191,7 @@ class MarkingView extends Component {
           studentId: this.state.selectedValueStudent,
           assignId: this.state.selectAssignId,
         });
+        console.log("response assignmentDetailCheck: ", response);
         if (response.status === 5) {
           this.setState({ assignmentDetailCheck: {} });
         }
@@ -195,17 +213,23 @@ class MarkingView extends Component {
   checkCurrentIndex = () => {
     const { assignmentDetailCheck } = this.state;
     let count = 0;
-    _.forEach(assignmentDetailCheck.data.data, (e, index) => {
+
+    let data = assignmentDetailCheck.data.data;
+    for (var i = 0; i < data.length; i++) {
       let typeAnswer = 0;
-      if (e.dataMaterial) {
-        typeAnswer = e.dataMaterial?.data[0]?.typeAnswer;
+      if (data[i].dataMaterial) {
+        typeAnswer = data[i].dataMaterial?.data[0]?.typeAnswer;
       } else {
-        typeAnswer = e?.dataStandard.typeAnswer;
+        typeAnswer = data[i]?.dataStandard.typeAnswer;
       }
       if (typeAnswer === 0) {
         count = count + 1;
+        console.log('count: ', count);
+      } else {
+        this.setState({ currentIndex: count });
+        return;
       }
-    });
+    }
     this.setState({ currentIndex: count });
   };
 
@@ -296,6 +320,7 @@ class MarkingView extends Component {
         indexSelected: {
           indexStudent,
           ...indexSelected,
+          status: value.status
         },
         urlFile: '',
       },
@@ -312,8 +337,8 @@ class MarkingView extends Component {
         selectedValueClass: value.classId,
         selectAssignId: assignId,
         indexSelected: {
-          indexClass,
           ...indexSelected,
+          indexClass,
         },
         urlFile: '',
       },
@@ -450,7 +475,7 @@ class MarkingView extends Component {
   };
 
   onPressPublicScore = () => {
-    Alert.alert('Thông báo', 'Bạn có chắc chắn muốn công bố điểm cho cả lớp không? Lưu ý: Các câu, các bài làm chưa được chấm sẽ bị 0 điểm.', [
+    Alert.alert('', 'Bạn có chắc chắn muốn công bố điểm cho cả lớp không? Lưu ý: Các câu, các bài làm chưa được chấm sẽ bị 0 điểm.', [
       {
         text: 'Xác nhận',
         onPress: () => {
@@ -495,8 +520,9 @@ class MarkingView extends Component {
       selectedValueClass,
       listStudentAssigned,
       listClassAssigned,
-      indexSelected,
+      indexSelected
     } = this.state;
+    const { item } = this.props.navigation.state.params;
     const { shadowBtn } = shadowStyle;
     return (
       <SafeAreaView style={styles.header}>
@@ -512,9 +538,9 @@ class MarkingView extends Component {
                 source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
               />
             </RippleButton>
-            <Text
+            <Text numberOfLines={1}
               style={styles.titleScre}>
-              Chấm điểm
+              {item.name}
             </Text>
           </View>
           <RippleButton
@@ -528,7 +554,7 @@ class MarkingView extends Component {
         {
           <View style={styles.rowDrop}>
             <View style={styles.dropTwo}>
-              <Text style={[styles.titleDrop, { top: 4 }]}>
+              <Text style={styles.titleDrop}>
                 Lớp :
               </Text>
               <Text style={styles.titleDrop}>
@@ -548,6 +574,7 @@ class MarkingView extends Component {
                 title="Học Sinh"
                 data={listStudentAssigned}
                 indexSelected={indexSelected.indexStudent}
+                status={indexSelected.status}
                 isShowIcon={true}
                 onPressItem={this.onValueChangePickerStudent}
                 contentStyle={[styles.widthDrop, { top: 7 }]}
@@ -708,11 +735,11 @@ class MarkingView extends Component {
     var bg = '';
     if (item.dataStandard) {
       if (arrayScored.includes(item.dataStandard.stepId)) {
-        bg = '#2D9CDB';
+        bg = '#5DD8FF';
       }
     } else {
       if (arrayScored.includes(item.dataMaterial.data[0].stepId)) {
-        bg = '#2D9CDB';
+        bg = '#84BFE9';
       }
     }
     let typeAnswer =
@@ -724,22 +751,24 @@ class MarkingView extends Component {
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
-    if (typeAnswer === 0) {
+    if (typeAnswer === 0 || typeAnswer == 1) {
       return (
-        <RippleButton
-          onPress={() => {
-            // this.onButtonQuestionPress(index);
-          }}
-          style={[
+        <TouchableWithoutFeedback
+        // onPress={() => {
+        //   this.onButtonQuestionPress(index);
+        // }}
+        >
+          <View style={[
             styles.buttonQuestion,
             { backgroundColor: '#107CB9', borderColor: '#fff' },
             // makedPoint && { backgroundColor: '#5DD8FF' }
           ]}>
-          <Text style={{ color: '#fff' }, makedPoint && { color: '#fff' }}>{index + 1}</Text>
-          <Text style={{ color: '#fff', marginLeft: 3 }, makedPoint && { color: '#fff' }}>
-            {this._answer(answer)}
-          </Text>
-        </RippleButton>
+            <Text style={{ color: '#fff' }}>{index + 1}</Text>
+            <Text style={{ color: '#fff', marginLeft: 1 }}>
+              {this._answer(answer)}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       );
     } else {
       return index !== currentIndex ? (
@@ -1106,14 +1135,13 @@ const styles = StyleSheet.create({
     marginBottom: 13,
     color: '#EE0000',
     fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
-    fontFamily: 'Nunito-Bold'
-
+    fontFamily: 'Nunito-Bold',
+    alignSelf: 'center'
   },
   txtNote: {
     color: '#fff',
-    fontSize: RFFonsize(14),
-    lineHeight: RFFonsize(19),
+    fontSize: RFFonsize(12),
+    lineHeight: RFFonsize(16),
     fontFamily: 'Nunito',
     marginLeft: 5,
   },
@@ -1258,12 +1286,14 @@ const styles = StyleSheet.create({
   labelTab: {
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Regular',
-    color: '#DADADA',
+    color: '#383838',
+    paddingVertical: 3,
   },
   labelTabActive: {
     fontSize: RFFonsize(12),
     fontFamily: 'Nunito-Bold',
     color: '#000000',
+    paddingVertical: 3,
   },
   wrapTab: {
     justifyContent: 'flex-start',
@@ -1278,9 +1308,11 @@ const styles = StyleSheet.create({
   poinded: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
-    top: 9
+    top: 20,
+    left: 10,
+    marginBottom: 8
   },
   review: {
     flexDirection: 'row',
@@ -1318,18 +1350,20 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(19),
     fontFamily: 'Nunito-Bold',
     color: '#FFFEFE',
+    top: 4
   },
   titleScre: {
     fontFamily: 'Nunito-Bold',
     fontSize: RFFonsize(14),
     lineHeight: RFFonsize(19),
     color: '#fff',
-    marginLeft: 16
+    marginLeft: 16,
+    width: width * 0.5
   },
   txtBtn: {
     fontFamily: 'Nunito-Bold',
-    fontSize: RFFonsize(12),
-    lineHeight: RFFonsize(16),
+    fontSize: RFFonsize(10),
+    lineHeight: RFFonsize(14),
     color: '#ff6213',
     marginVertical: 5
   }

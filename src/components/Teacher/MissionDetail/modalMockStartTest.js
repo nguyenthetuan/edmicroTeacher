@@ -17,6 +17,7 @@ import Common from '../../../utils/Common';
 import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
 import ItemInfo from '../../modals/ItemInfo';
+import ZoomAnim from '../../anim/ZoomAnim';
 const { width, height } = Dimensions.get('window');
 export default class ModalMockExamStart extends Component {
     constructor(props) {
@@ -54,7 +55,7 @@ export default class ModalMockExamStart extends Component {
             }
         } catch (error) {
             Alert.alert(
-                'Thông báo',
+                '',
                 'Có lỗi xảy ra. Vui lòng thử lại sau',
                 [
                     { text: 'Thoát', onPress: this.hideModal }
@@ -81,53 +82,55 @@ export default class ModalMockExamStart extends Component {
                     onPress={() => this.setState({ visible: false })}>
                     <View style={styles.container}>
                         <TouchableWithoutFeedback>
-                            <View>
-                                <View style={styles.body}>
-                                    {!_.isEmpty(data) && !isLoading ? (
-                                        <>
-                                            <Text style={styles.name}>{data.title}</Text>
-                                            <ItemInfo number={data.countQuestion} type={'Total'} />
-                                            {data.duration ? (
-                                                <View style={styles.wrapTime}>
-                                                    <View
-                                                        style={{
-                                                            flexDirection: 'row',
-                                                            alignItems: 'center',
-                                                        }}>
-                                                        <Image
-                                                            source={require('../../../asserts/appIcon/iconClock.png')}
-                                                        />
-                                                        <Text style={styles.txtTime}>
-                                                            Thời gian làm bài
+                            <ZoomAnim>
+                                <View>
+                                    <View style={styles.body}>
+                                        {!_.isEmpty(data) && !isLoading ? (
+                                            <>
+                                                <Text style={styles.name}>{data.title}</Text>
+                                                <ItemInfo number={data.countQuestion} type={'Total'} />
+                                                {data.duration ? (
+                                                    <View style={styles.wrapTime}>
+                                                        <View
+                                                            style={{
+                                                                flexDirection: 'row',
+                                                                alignItems: 'center',
+                                                            }}>
+                                                            <Image
+                                                                source={require('../../../asserts/appIcon/iconClock.png')}
+                                                            />
+                                                            <Text style={styles.txtTime}>
+                                                                Thời gian làm bài
                                                         </Text>
-                                                    </View>
-                                                    <View style={[styles.stylLine, { width: '40%' }]} />
-                                                    <Text style={styles.time}>
-                                                        {Common.roundNumber(data.duration / 60)} phút
+                                                        </View>
+                                                        <View style={[styles.stylLine, { width: '40%' }]} />
+                                                        <Text style={styles.time}>
+                                                            {Common.roundNumber(data.duration / 60)} phút
                                                     </Text>
-                                                </View>
-                                            ) : null}
-                                            <View style={styles.wrapTime}>
-                                                <TouchableOpacity
-                                                    onPress={() => this._startMockExam()}
-                                                    style={styles.btnStart}>
-                                                    <Text style={styles.txtButon}>
-                                                        {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
+                                                    </View>
+                                                ) : null}
+                                                <View style={styles.wrapTime}>
+                                                    <TouchableOpacity
+                                                        onPress={() => this._startMockExam()}
+                                                        style={styles.btnStart}>
+                                                        <Text style={styles.txtButon}>
+                                                            {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
                                                         Làm thử
                                                     </Text>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity
-                                                    onPress={() => this.setState({ visible: false })}
-                                                    style={styles.btnBack}>
-                                                    <Text style={styles.txtButon}>Quay lại</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </>
-                                    ) : (
-                                            <ActivityIndicator color="blue" />
-                                        )}
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity
+                                                        onPress={() => this.setState({ visible: false })}
+                                                        style={styles.btnBack}>
+                                                        <Text style={styles.txtButon}>Quay lại</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </>
+                                        ) : (
+                                                <ActivityIndicator color="blue" />
+                                            )}
+                                    </View>
                                 </View>
-                            </View>
+                            </ZoomAnim>
                         </TouchableWithoutFeedback>
                     </View>
                 </TouchableWithoutFeedback>

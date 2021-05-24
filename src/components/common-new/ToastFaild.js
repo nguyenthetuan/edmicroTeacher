@@ -17,7 +17,7 @@ export default ToastFaild;
 const styles = StyleSheet.create({
     styleTostFaild: {
         // flex: 1,
-        height: 25,
+        height: 30,
         width: width - 150,
         backgroundColor: '#000',
         // flexDirection: 'row',

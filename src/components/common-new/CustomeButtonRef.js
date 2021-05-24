@@ -6,10 +6,10 @@ const button_size = 40;
 const CustomeButton = (props, ref) => {
     return (
         <TouchableWithoutFeedback
-            ref={ref}
             onPress={props.onPress}
         >
             <View
+                ref={ref}
                 style={[styles.button, props.style]}>
                 <Image source={props.icon} style={{ tintColor: props.tintColor || '#383838' }} />
             </View>

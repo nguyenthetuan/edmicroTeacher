@@ -29,6 +29,9 @@ import _ from 'lodash';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
+import AsyncStorage from '@react-native-community/async-storage';
+import TourView from '../../../utils/TourView';
+
 const { width, height } = Dimensions.get('window');
 
 const initTab = createMaterialTopTabNavigator(
@@ -43,10 +46,10 @@ const initTab = createMaterialTopTabNavigator(
                             Độ hoàn thành
                         </Text>
                     ) : (
-                            <Text numberOfLines={1} style={styles.labelTabActive}>
-                                Độ hoàn thành
-                            </Text>
-                        );
+                        <Text numberOfLines={1} style={styles.labelTabActive}>
+                            Độ hoàn thành
+                        </Text>
+                    );
                 },
             },
         },
@@ -60,10 +63,10 @@ const initTab = createMaterialTopTabNavigator(
                             Tỉ lệ Đ/S
                         </Text>
                     ) : (
-                            <Text numberOfLines={1} style={styles.labelTabActive}>
-                                Tỉ lệ Đ/S
-                            </Text>
-                        );
+                        <Text numberOfLines={1} style={styles.labelTabActive}>
+                            Tỉ lệ Đ/S
+                        </Text>
+                    );
                 },
             },
         },
@@ -79,10 +82,10 @@ const initTab = createMaterialTopTabNavigator(
                             Học sinh
                         </Text>
                     ) : (
-                            <Text numberOfLines={1} style={styles.labelTabActive}>
-                                Học sinh
-                            </Text>
-                        );
+                        <Text numberOfLines={1} style={styles.labelTabActive}>
+                            Học sinh
+                        </Text>
+                    );
                 },
             },
         },
@@ -133,6 +136,8 @@ const indexSelected = {
 function HomeWorkDraScreen(props) {
     const toast = useRef();
     const modalFillter = useRef();
+    const refHeaderNavigation = useRef();
+    const refTourView = useRef();
     const [data, setData] = useState({
         grade: [],
         subject: [],
@@ -141,7 +146,33 @@ function HomeWorkDraScreen(props) {
     });
 
     const [timeExport, setTimeExport] = useState('');
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        handlerShowTourView();
+    }, []);
+
+    const handlerShowTourView = async () => {
+        // await AsyncStorage.removeItem('@Onluye_TourView_HomeWorkDraScreen');
+        const isShow = await AsyncStorage.getItem('@Onluye_TourView_HomeWorkDraScreen');
+        if (isShow) return;
+
+        setTimeout(() => {
+            try {
+                const dataRef = [
+                    {
+                        reff: refHeaderNavigation.current.ref,
+                        hint: 'Lọc thống kê bài tập theo khối lớp, môn học, bài tập và lớp học'
+                    },
+                ];
+                refTourView.current.onMeasure(dataRef);
+                AsyncStorage.setItem('@Onluye_TourView_HomeWorkDraScreen', '1');
+            } catch (error) {
+                console.log(error);
+            }
+        }, 1000);
+    }
+
     const onPressItemGrade = async (index) => {
         indexSelected.grade = index;
 
@@ -289,6 +320,7 @@ function HomeWorkDraScreen(props) {
     };
 
     const handleStatistic = async () => {
+        setIsLoading(true);
         if (data.class.length > 0) {
             const { token } = await dataHelper.getToken();
             if (token) {
@@ -298,7 +330,9 @@ function HomeWorkDraScreen(props) {
                 });
                 props.needUpdate(true);
             }
+            setIsLoading(false);
         } else {
+            setIsLoading(false);
             toast.current.show('Không tìm thấy lớp nào!');
         }
     };
@@ -320,7 +354,15 @@ function HomeWorkDraScreen(props) {
                 listSubject = resSubject;
             }
 
-            const resHomework = await apiHomework.getHomework({ token, body: {} });
+            const resHomework = await apiHomework.getHomework({
+                token, body: {
+                    indexPage: 0,
+                    isShare: true,
+                    status: [],
+                    subjectCode: [],
+                    text: "",
+                }
+            });
             if (resHomework && resHomework.data) {
                 indexSelected.homework = 0;
                 listHomework = resHomework.data;
@@ -393,79 +435,9 @@ function HomeWorkDraScreen(props) {
             setIsLoading(false);
         }, 1000);
         let timeExportTmp = props.data?.data.timeExport;
-        console.log("🚀 ~ file: MainScreen.js ~ line 468 ~ StatisticsPoints ~ props.data?.data", props.data?.data)
         timeExportTmp = convertTimeHMDMY(timeExport);
-        console.log("🚀 ~ file: MainScreen.js ~ line 395 ~ useEffect ~ timeExportTmp", timeExportTmp)
         setTimeExport(timeExportTmp);
     }, []);
-
-    const goBack = async () => {
-        const { token } = await dataHelper.getToken();
-        if (token) {
-            let listGrade = [];
-            let listSubject = [];
-            let listHomework = [];
-            let listClass = [];
-
-            const resGrade = await apiHomework.getGrade({ token });
-            if (resGrade) {
-                listGrade = resGrade;
-            }
-
-            const resSubject = await apiHomework.getSubject({ token });
-            if (resSubject) {
-                listSubject = resSubject;
-            }
-
-            const resHomework = await apiHomework.getHomework({ token, body: {} });
-            if (resHomework && resHomework.data) {
-                indexSelected.homework = 0;
-                listHomework = resHomework.data;
-            }
-
-            if (listHomework.length) {
-                const status = {
-                    ToDo: 0,
-                    Doing: 1,
-                    Submit: 2,
-                    Done: 3,
-                    NotOpen: 4,
-                    Paused: 5,
-                    TimeOut: 6,
-                    TimeOutDontDo: 7,
-                };
-                const resClass = await apiHomework.getClass({
-                    token,
-                    classId: listHomework[0].assignmentId,
-                    status: status.ToDo,
-                    indexPage: 0,
-                });
-                if (resClass && resClass.data) {
-                    indexSelected.class = 0;
-                    listClass = resClass.data;
-                }
-            }
-
-            if (listClass.length) {
-                props.fetchHomework({
-                    token,
-                    assignId: listClass[0].assignId,
-                });
-            } else {
-                props.fetchHomework({
-                    token,
-                    assignId: '',
-                });
-            }
-
-            setData({
-                grade: listGrade,
-                subject: listSubject,
-                homework: listHomework,
-                class: listClass,
-            });
-        }
-    };
 
     const onClickFillter = () => {
         modalFillter.current.changeStateModale();
@@ -476,6 +448,7 @@ function HomeWorkDraScreen(props) {
         <SafeAreaView style={styles.container}>
             <StatusBar />
             <HeaderNavigation
+                ref={refHeaderNavigation}
                 title={'Thống kê bài tập'}
                 navigation={props.navigation}
                 onRightAction={onClickFillter}
@@ -522,6 +495,7 @@ function HomeWorkDraScreen(props) {
                 onPressItemClass={(index) => onPressItemClass(index)}
                 handleStatistic={handleStatistic}
             />
+            <TourView ref={refTourView} />
         </SafeAreaView>
     );
 }

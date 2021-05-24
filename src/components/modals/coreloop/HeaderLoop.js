@@ -17,7 +17,7 @@ export default class HeaderLoopModal extends Component {
             style={mainStyle.iconHeader} size={16} color={this.props.color || '#333'} /> */}
           {!this.props.isHideAleartIcon && <Image source={AppIcon.icon_warning} style={mainStyle.iconHeader} resizeMode={'contain'} />}
           <View style={{ flex: 1, paddingTop: 10 }}>
-            <Text style={[mainStyle.textHeader, mainStyle.textHeaderModal, { color: this.props.color, alignSelf: 'center', fontSize: RFFonsize(14), fontFamily: 'Nunito-Bold' }]}>
+            <Text style={[mainStyle.textHeader, mainStyle.textHeaderModal, { color: this.props.color, alignSelf: 'center', fontSize: RFFonsize(14), lineHeight: RFFonsize(18), fontFamily: 'Nunito-Bold' }]}>
               {this.props.title ? this.props.title : ''}
             </Text>
           </View>

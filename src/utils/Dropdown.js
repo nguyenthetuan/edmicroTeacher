@@ -10,6 +10,7 @@ import {
 import SelectModal from './SelectModal';
 import AppIcon from '../utils/AppIcon';
 import { RFFonsize } from '../utils/Fonts';
+import { getAssigmentStatus } from '../models/Assigment';
 const { width, height } = Dimensions.get('window');
 
 export default function Dropdown(props) {
@@ -18,7 +19,7 @@ export default function Dropdown(props) {
     const [dropdownVisible, showDropdown] = useState(false);
     const [indexSelected, setIndex] = useState(props.indexSelected);
 
-    const { containerStyle, title, data, contentStyle } = props;
+    const { containerStyle, title, data, contentStyle, status } = props;
     const isData = data && data[indexSelected];
     return (
         <View style={containerStyle}>
@@ -31,7 +32,7 @@ export default function Dropdown(props) {
                 <View style={[styles.styBtn, contentStyle]}>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
                         {isData
-                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName || ''
+                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName + " " + `(${getAssigmentStatus(status)})` || ''
                             : title}
                     </Text>
                     {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}

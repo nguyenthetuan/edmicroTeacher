@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   StatusBar,
   Dimensions,
-  Platform,
   BackHandler,
   TouchableWithoutFeedback
 } from 'react-native';
@@ -33,15 +32,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import apiUser from '../../services/apiUserHelper';
 import { WOOPS_ERROR } from '../../constants/message';
 import dataHelper from '../../utils/dataHelper';
-import Mixpanel from 'react-native-mixpanel';
-import jwtDecode from 'jwt-decode';
-import { NavigationActions, StackActions } from 'react-navigation';
 import Toast, { DURATION } from 'react-native-easy-toast';
-import { PHONE_DEBUG } from '../../constants/const';
 import { getUserByToken } from '../../utils/Helper';
 import FastImage from 'react-native-fast-image';
 import { RFFonsize } from '../../utils/Fonts';
-
+import ToastSuccess from '../common-new/ToastSuccess';
 const { width, height } = Dimensions.get('window');
 const description = 'Việc cập nhật số điện thoại sẽ giúp bảo mật tài khoản và để cấp lại mật khẩu nếu bạn quên mật khẩu.'
 export default class UpdatePhoneScreen extends Component {
@@ -210,6 +205,38 @@ export default class UpdatePhoneScreen extends Component {
       });
   }
 
+  updatePhoneNumberNew = async () => {
+    this.setState({
+      isLoading: true,
+      errors: ''
+    });
+    const { token } = await dataHelper.getToken();
+    const { phoneNumber } = this.state;
+    const phoneCountry = '+84';
+    const phone = this.props.user.phoneNumber;
+    const formatPhone = Common.formatPhoneNumber(`+${phone}`);
+    if (formatPhone == phoneNumber) {
+      this.toast.show(<ToastSuccess title="Cập nhập thành công!" />, 2000, () => {
+        this.props.navigation.goBack();
+      });
+      return;
+    }
+    const response = await apiUser.updatePhoneNew({ access_token: token, phoneNumber, phoneCountry, });
+    if (response.access_token) {
+      dataHelper.saveToken(response.access_token);
+      if (response.avatar != null) {
+        dataHelper.saveAvatar(response.avatar);
+      }
+      const payload = getUserByToken(response.access_token);
+      this.props.makeRequestProfile(payload);
+      this.toast.show(<ToastSuccess title="Cập nhập số điện thoại thành công!" />, 1000, () => {
+        this.props.navigation.goBack();
+      });
+    } else {
+      this.updateFailed(error, phone);
+    }
+  }
+
   resendOTP = async () => {
     this.otp.onClear();
     const { phoneNumber } = this.state;
@@ -281,7 +308,7 @@ export default class UpdatePhoneScreen extends Component {
           }
           const payload = getUserByToken(response.access_token);
           this.props.makeRequestProfile(payload);
-          this.refs.toast.show('Cập nhập số điện thoại thành công!', 600, () => {
+          this.toast.show(<ToastSuccess title="Cập nhập số điện thoại thành công!" />, 1000, () => {
             this.props.navigation.goBack();
             console.log('update success')
           });
@@ -320,6 +347,10 @@ export default class UpdatePhoneScreen extends Component {
     } else if (!Common.validatePhoneNumberV2(phoneNumber)) {
       this.setState({ errors: 'Số điện thoại không hợp lệ !' });
     } else {
+      // luong cap nhat moi
+      this.updatePhoneNumberNew();
+      return;
+      // luong cap nhat cu
       this.setState({ errors: '', isLoading: true }, () => {
         this.updateWithPhone(phoneNumber);
       });
@@ -366,7 +397,7 @@ export default class UpdatePhoneScreen extends Component {
             title={!this.state.inputOtpVisible ? 'Cập nhật số điện thoại' : 'Xác thực'}
             navigation={this.props.navigation}
             goBack={this.handleBtnBack(isShowKeybroad)}
-            color={'#979797'}
+            color={'#383838'}
           />
           <KeyboardAwareScrollView
             contentContainerStyle={{
@@ -426,7 +457,7 @@ export default class UpdatePhoneScreen extends Component {
 
                     {
                       !inputOtpVisible ?
-                        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+                        <View style={{ width: width - 50, alignSelf: 'center' }}>
                           <Text style={styles.txtTitleForm}>Số điện thoại</Text>
                           <FormInput
                             paddingTopContent={4}
@@ -508,7 +539,7 @@ export default class UpdatePhoneScreen extends Component {
                                 </RippleButton>
                               </View>
                               :
-                              <View style={{ height: 20, marginTop: 60, width: 320 }}>
+                              <View style={{ height: 20, marginTop: 60, width: width - 50 }}>
                                 <DotIndicator color={'#54CEF5'} size={6} count={8} />
                               </View>
                           }
@@ -526,7 +557,7 @@ export default class UpdatePhoneScreen extends Component {
             </View>
           </KeyboardAwareScrollView>
         </View>
-        <Toast ref="toast" position={'bottom'} />
+        <Toast ref={ref => this.toast = ref} position={'top'} style={{ backgroundColor: 'transparent' }} />
         <LoadingScreen
           isLoading={this.state.isLoading}
           bgColor={'transparent'}
@@ -570,7 +601,7 @@ const styles = StyleSheet.create({
   },
   btnLaylaimk: {
     backgroundColor: '#2D9CDB',
-    width: width - width / 5,
+    width: width - 50,
     height: 40,
     alignSelf: 'center',
     marginTop: 20,

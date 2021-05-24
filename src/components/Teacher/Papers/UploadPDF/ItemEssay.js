@@ -29,6 +29,7 @@ export default function ItemEssay(props) {
     }
 
     const onChangePoint = (point) => {
+        console.log("onChangePoint: ", point);
         if (point[point.length - 1] == ',') {
             point = `${point.substring(0, point.length - 1)}.`
         }
@@ -45,7 +46,7 @@ export default function ItemEssay(props) {
                     <TextInput
                         style={{ fontFamily: 'Nunito-bold', fontSize: 12, lineHeight: 16, color: '#FF6213', paddingVertical: 0, paddingHorizontal: 10 }}
                         textAlign={'center'}
-                        value={(Math.round(Number(textPoint) * 100) / 100).toString()}
+                        value={textPoint}
                         keyboardType='decimal-pad'
                         onChangeText={(val) => onChangePoint(val)}
                         onBlur={onChangePointEachQS}

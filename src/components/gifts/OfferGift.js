@@ -22,7 +22,7 @@ export default class OfferGift extends Component {
         const { user } = this.props.screenProps;
         const isGoto = item.point > user.totalEDPoint;
         if (isGoto) {
-            Alert.alert('Thông báo', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
+            Alert.alert('', 'Bạn không đủ điểm tích luỹ cho khuyến mãi này');
             return;
         }
         this.props.screenProps.navigation.navigate('GiftDetail', {

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { RFFonsize } from '../utils/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome';
+const opacityDisable = 0.5;
 export default class PaginationUtils extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,7 @@ export default class PaginationUtils extends Component {
   };
 
   renderPagination = () => {
-    const { totalQuestion } = this.props;
+    const { totalQuestion, disabled } = this.props;
     const length = Math.round(totalQuestion / 10);
     const { indexStart, indexEnd, indexCurrent } = this.state;
     const arrElement = new Array();
@@ -38,8 +39,9 @@ export default class PaginationUtils extends Component {
         key={'elementDotEnd'}
         onPress={this.handleClickDot('+')}
         hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+        disabled={disabled}
       >
-        <View style={styles.wrapElement}>
+        <View style={[styles.wrapElement, disabled ? { opacity: opacityDisable } : {}]}>
           <Text style={styles.txtNumber}>...</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -49,8 +51,9 @@ export default class PaginationUtils extends Component {
         key={'elementDotStart'}
         onPress={this.handleClickDot('-')}
         hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+        disabled={disabled}
       >
-        <View style={styles.wrapElement}>
+        <View style={[styles.wrapElement, disabled ? { opacity: opacityDisable } : {}]}>
           <Text style={styles.txtNumber}>...</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -65,10 +68,12 @@ export default class PaginationUtils extends Component {
             key={i}
             onPress={this.handleClickIndex(i)}
             hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+            disabled={disabled}
           >
             <View style={[
               styles.wrapElement,
-              { backgroundColor: indexCurrent == i ? '#107CB9' : '#FFF',borderColor: indexCurrent ==i ? '#107CB9' : "#c4c4c4"} ,
+              { backgroundColor: indexCurrent == i ? '#107CB9' : '#FFF', borderColor: indexCurrent == i ? '#107CB9' : "#c4c4c4" },
+              disabled ? { opacity: opacityDisable } : {}
             ]}>
               <Text
                 style={[
@@ -142,7 +147,7 @@ export default class PaginationUtils extends Component {
   };
 
   render() {
-    const { totalQuestion, countQuestion } = this.props;
+    const { totalQuestion, countQuestion, disabled } = this.props;
     return (
       <View style={styles.contain}>
         <View style={styles.header}>
@@ -159,23 +164,27 @@ export default class PaginationUtils extends Component {
           <View style={styles.wrapPagination}>
             <TouchableWithoutFeedback
               hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
-              onPress={this.handleClickLeft}>
-              <View style={styles.wrapElement}>
+              onPress={this.handleClickLeft}
+              disabled={disabled}
+            >
+              <View style={[styles.wrapElement, disabled ? { opacity: opacityDisable } : {}]}>
                 <Icon name={'angle-left'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
               </View>
             </TouchableWithoutFeedback>
             {this.renderPagination()}
             <TouchableWithoutFeedback
               hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
-              onPress={this.handleClickRight}>
-              <View style={styles.wrapElement}>
+              onPress={this.handleClickRight}
+              disabled={disabled}
+            >
+              <View style={[styles.wrapElement, disabled ? { opacity: opacityDisable } : {}]}>
                 <Icon name={'angle-right'} size={23} color={'rgba(2, 31, 47, 0.4)'} />
               </View>
             </TouchableWithoutFeedback>
           </View>
         ) : (
-            <></>
-          )}
+          <></>
+        )}
       </View>
     );
   }

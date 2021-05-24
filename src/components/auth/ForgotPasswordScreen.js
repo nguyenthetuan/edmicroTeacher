@@ -27,7 +27,7 @@ import LoadingScreen from '../libs/LoadingScreen';
 import FormInput from '../common/FormInput';
 import OTPTextView from '../common/InputOTP';
 import _ from 'lodash'
-import { PHONE_DEBUG } from '../../constants/const';
+import { PHONE_DEBUG, PROJECT_ID } from '../../constants/const';
 import { WOOPS_ERROR } from '../../constants/message';
 import { DotIndicator } from 'react-native-indicators';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -37,6 +37,8 @@ import FreshchatComponent from '../../utils/FreshchatComponent';
 import { phoneNumberScheme, forgotPasswordValidate } from '../../utils/SchemaValidate';
 import { SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
+import Recaptcha from 'react-native-recaptcha-that-works';
+import { SITE_KEY, BASE_URL } from '../../constants/setting';
 
 const { width, height } = Dimensions.get('window');
 export default class ForgotPasswordScreen extends Component {
@@ -66,7 +68,8 @@ export default class ForgotPasswordScreen extends Component {
       accountSelected: null,
       isEditPhone: true,
       editableOTP: true,
-      secureTextEntry: false
+      secureTextEntry: false,
+      recaptchaToken: null,
     };
     this.phoneNumber = '';
     this.password = '';
@@ -93,8 +96,8 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   _handleValidation = () => {
-    var result = true;
-    var { errorEmpty, repassword, password } = this.state;
+    let result = true;
+    let { errorEmpty, repassword, password } = this.state;
     _.forEach(['phoneNumber', 'password', 'repassword'], item => {
       if (_.isEmpty(this.state[item])) {
         switch (item) {
@@ -132,6 +135,7 @@ export default class ForgotPasswordScreen extends Component {
         }
         this.setState({ errorEmpty });
       }
+      console.log(errorEmpty);
     });
     return result;
   }
@@ -141,6 +145,7 @@ export default class ForgotPasswordScreen extends Component {
     this.repassword = values.repassword;
     const phoneNumber = this.phoneNumber;
     const phone = Common.formatPhoneNumber(phoneNumber);
+    this.setState({ password: this.password, repassword: this.repassword, phoneNumber: phone });
     this.checkPhoneNumber(phone);
   }
 
@@ -222,7 +227,6 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   onConfirmErrors = (error, phoneNumber) => {
-    console.log(error);
     let message = Common.getMessageConfirmResult(error, phoneNumber);
     this.setState({
       isLoading: false,
@@ -230,6 +234,12 @@ export default class ForgotPasswordScreen extends Component {
       repassword: '',
       errors: message
     });
+  }
+
+  send = () => {
+    let isValid = this._handleValidation();
+    if (!isValid) return;
+    this.recaptcha.open();
   }
 
   checkPhoneNumber(phone) {
@@ -241,7 +251,9 @@ export default class ForgotPasswordScreen extends Component {
         const { status } = response;
         if (status == 302) {
           this.setState({ errors: '', isLoading: true }, () => {
-            this.loginWithPhone(phoneNumber);
+            // this.loginWithPhone(phoneNumber);
+            // cach moi.
+            this.send();
           });
         } else {
           this.setState({ errors: 'Số điện thoại này chưa được đăng kí !', isLoading: false });
@@ -488,7 +500,7 @@ export default class ForgotPasswordScreen extends Component {
   renderAccountSearch = (account) => {
     if (!_.isEmpty(account)) {
       return (
-        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+        <View style={{ width: width - 50, alignSelf: 'center' }}>
           {
             this.state.accountSelected
               ?
@@ -542,7 +554,7 @@ export default class ForgotPasswordScreen extends Component {
               <SizedBox height={20} />
               <InputPrimary
                 label={'Mật khẩu'}
-                placeholder={'Nhập Mật khẩu'}
+                placeholder={'Nhập mật khẩu'}
                 value={values.password}
                 onChangeText={handleChange('password')}
                 onBlur={() => setFieldTouched('password')}
@@ -551,8 +563,8 @@ export default class ForgotPasswordScreen extends Component {
                 error={(touched.password && errors.password) && errors.password}
               />
               <InputPrimary
-                label={'Nhập lại Mật khẩu'}
-                placeholder={'Nhập lại Mật khẩu'}
+                label={'Nhập lại mật khẩu'}
+                placeholder={'Nhập lại mật khẩu'}
                 value={values.repassword}
                 onChangeText={handleChange('repassword')}
                 onBlur={() => setFieldTouched('repassword')}
@@ -582,7 +594,55 @@ export default class ForgotPasswordScreen extends Component {
       )
     }
     return;
+  };
+
+  onVerify = token => {
+    if (!_.isEmpty(token)) {
+      this.setState({ recaptchaToken: token }, () => {
+        this.onPressForgotpassword();
+      });
+      return;
+    }
+    this.setState({
+      errors: 'Xác thực thất bại, Vui lòng thử lại!',
+      isLoading: false
+    });
   }
+
+  onExpire = () => {
+    console.warn('expired!');
+    this.setState({
+      errors: 'Xác thực thất bại, Vui lòng thử lại!',
+      isLoading: false
+    });
+  }
+
+  onError = error => {
+    console.log(error);
+    this.setState({
+      errors: 'Xác thực thất bại, Vui lòng thử lại!',
+      isLoading: false
+    });
+  }
+
+  onPressForgotpassword = async () => {
+    const { phoneNumber, recaptchaToken } = this.state;
+    const phoneVerify = Common.fomatPhoneVerify(phoneNumber);
+    try {
+      let response = await ApiUser.forgotPasswordSendCode({ phoneNumber: phoneVerify, projectId: PROJECT_ID, recaptchaToken });
+      const { status, sessionInfo, message } = response;
+      if (_.isEmpty(sessionInfo)) {
+        await this.setState({ isLoading: false, errors: message });
+        return;
+      }
+      this.verificationId = sessionInfo;
+      await this.setState({ isVerify: true, isLoading: false, errors: '' });
+    } catch (error) {
+      this.onConfirmErrors(error, phone);
+    }
+  }
+
+
   render() {
     const {
       phoneNumber,
@@ -620,7 +680,7 @@ export default class ForgotPasswordScreen extends Component {
           <View style={backArrow}>
             <RippleButton
               size={50}
-              color={'black'}
+              color={'#c4c4c4'}
               duration={200}
               onPress={this.handleBtnBack(isShowKeybroad)}
             >
@@ -658,7 +718,7 @@ export default class ForgotPasswordScreen extends Component {
                       validationSchema={phoneNumberScheme}
                     >
                       {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
-                        <View style={{ width: width - width / 5, alignSelf: 'center' }}>
+                        <View style={{ width: width - 50, alignSelf: 'center' }}>
                           <InputPrimary
                             label={'Số điện thoại'}
                             placeholder={'eg.09x....'}
@@ -687,14 +747,14 @@ export default class ForgotPasswordScreen extends Component {
                         color: '#222222',
                         fontFamily: 'Nunito-Bold',
                         fontSize: RFFonsize(15),
-                        width: width - width / 5
+                        width: width - 50
                       }}>
                         Nhập mã OTP
                         </Text>
                       <OTPTextView
                         ref={ref => this.otp = ref}
                         containerStyle={styles.textInputContainer}
-                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, width: width * 2 / 15 }]}
+                        textInputStyle={[styles.roundedTextInput, width < 400 && { height: width * 2 / 15, height: width * 2 / 15}]}
                         handleTextChange={text => this.setState({ codeOTP: text, errors: '' }, () => console.log('text1', this.state.codeOTP))}
                         inputCount={6}
                         keyboardType="numeric"
@@ -731,7 +791,7 @@ export default class ForgotPasswordScreen extends Component {
                             </RippleButton>
                           </View>
                           :
-                          <View style={{ height: 20, marginTop: 60, width: 320 }}>
+                          <View style={{ height: 20, marginTop: 60, width: width - 50 }}>
                             <DotIndicator color={'#54CEF5'} size={6} count={8} />
                           </View>
                       }
@@ -775,6 +835,14 @@ export default class ForgotPasswordScreen extends Component {
           />
         </SafeAreaView>
         <FreshchatComponent />
+        <Recaptcha
+          ref={recaptcha => this.recaptcha = recaptcha}
+          siteKey={SITE_KEY}
+          baseUrl={BASE_URL}
+          onVerify={this.onVerify}
+          onExpire={this.onExpire}
+          onError={this.onError}
+        />
       </View>
     );
   }
@@ -785,7 +853,6 @@ const styles = StyleSheet.create({
     marginTop: (height / width),
     fontFamily: 'Nunito',
     fontSize: RFFonsize(15),
-    lineHeight: RFFonsize(20),
     color: '#000',
     lineHeight: RFFonsize(19),
     marginBottom: 3,
@@ -793,19 +860,19 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontFamily: 'Nunito',
+    fontWeight: "500",
     fontSize: RFFonsize(18),
-    lineHeight: RFFonsize(25),
-    color: '#979797',
+    lineHeight: RFFonsize(22),
+    color: '#383838',
   },
   btnBack: {
     tintColor: '#000',
-    width: 20,
-    height: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    alignSelf: "center"
   },
   btnCreate: {
     backgroundColor: '#2D9CDB',
-    width: width - width / 5,
+    width: width - 50,
     height: 40,
     alignSelf: 'center',
     marginTop: 280,
@@ -815,7 +882,7 @@ const styles = StyleSheet.create({
   },
   btnLaylaimk: {
     backgroundColor: '#54CEF5',
-    width: width - width / 5,
+    width: width - 50,
     height: 40,
     alignSelf: 'center',
     marginTop: 20,
@@ -851,14 +918,13 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     padding: 0,
     fontSize: RFFonsize(10),
-    width: width - width / 8,
+    width: width - 50,
   },
   roundedTextInput: {
     margin: 0,
     borderRadius: 5,
     borderBottomWidth: 1,
     borderWidth: 1,
-    //  height: width*2/15,
   },
   txtErrorEmpty: {
     color: '#D22D3F',

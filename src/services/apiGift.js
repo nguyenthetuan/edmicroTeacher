@@ -15,6 +15,9 @@ export const getListGift = async ({ token, page }) => {
     // const limitSize = (pageSize + 1) * 10;
     // const response = await fetch(`${API_GIFT}gift?limit=${limit}`, {
     // const response = await fetch(`https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/gift?schoolId=${schoolId}&limit=${limit}&limitSize=${limitSize}`, {
+    
+        // https://serverless.onluyen.vn
+        // https://serverless.onluyen.vn/api-reward/user/showgifts
     const response = await fetch(`https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/gift?schoolId=50227&page=1&pageSize=12`, {
         method: 'GET',
         headers: getHeaders(token)
@@ -61,7 +64,7 @@ export const landingCampaign = async ({ token, params }) => {
 }
 export const topCampaign = async ({ token }) => {
     try {
-        const response = await fetch(' https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/campaign/topcampaign', {
+        const response = await fetch('https://a8p61ebql5.execute-api.ap-southeast-1.amazonaws.com/dev/campaign/topcampaign', {
             method: 'POST',
             headers: getHeaders(token)
         });

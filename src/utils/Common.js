@@ -699,7 +699,7 @@ export const convertNameToAvatar = (name) => {
 }
 
 export const AlertNoti = (message, clickOK) => {
-  Alert.alert('Thông báo', message, [
+  Alert.alert('', message, [
     {
       text: "OK",
       onPress: clickOK
@@ -725,6 +725,12 @@ export const copyToClipboard = (text) => {
     return true;
   }
   return false;
+}
+
+export function removeAccents(str) {
+  return str.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D');
 }
 
 module.exports = {
@@ -772,5 +778,6 @@ module.exports = {
   roundToFour,
   imageDefault,
   formatNumber,
-  copyToClipboard
+  copyToClipboard,
+  removeAccents
 };

@@ -14,18 +14,17 @@ import { RFFonsize } from '../../../../utils/Fonts';
 import AppIcon from '../../../../utils/AppIcon';
 import Common from '../../../../utils/Common';
 import _ from 'lodash';
-const getText = (duration, subjectActive, assignmentType) => {
+import ZoomAnim from '../../../anim/ZoomAnim';
+
+const getText = (duration, assignmentType, name) => {
     let string = 'Bạn đã tạo thành công bộ đề';
     if (assignmentType) {
-        string = string + ` \"Kiểm tra ${duration} phút`
+        string = string + ` kiểm tra ${duration} phút: \"`
     } else {
-        string = string + ' \ "Tự luyện"'
+        string = string + ' tự luyện: \"'
     }
-    if (subjectActive?.length > 1) {
-        string = string + ' liên môn\"'
-    } else {
-        if (!_.isEmpty(subjectActive)) string = string + ' môn ' + Common.getDisplaySubject(subjectActive[0]) + '\"';
-    }
+    string += name;
+    string += '\"'
     return string;
 }
 
@@ -33,7 +32,7 @@ const ModalSuccess = (props) => {
     const {
         data,
     } = props;
-    const { subjectCode, duration, assignmentType } = data;
+    const { subjectCode, duration, assignmentType, name } = data;
 
     return (
         <View style={{ flex: 1 }}>
@@ -41,7 +40,9 @@ const ModalSuccess = (props) => {
                 <Image
                     source={require('../../../../asserts/images/image_createCompleteV3.png')}
                     style={{ marginTop: 100, width: "80%" }} resizeMode='contain' />
-                <Text style={styles.textDes}>{getText(duration / 60, subjectCode, assignmentType)}</Text>
+                <ZoomAnim>
+                    <Text style={styles.textDes}>{getText(duration / 60, subjectCode, assignmentType, name)}</Text>
+                </ZoomAnim>
 
                 <View style={styles.styWrapBtn}>
                     <TouchableWithoutFeedback onPress={props.goToAssigned}>

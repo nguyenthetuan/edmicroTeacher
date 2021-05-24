@@ -48,7 +48,7 @@ export default class ItemStudent extends React.Component {
                   style={{ height: 60, width: 60, borderRadius: 30 }}
                 />
             }
-            <View style={{
+            {/* <View style={{
               position: 'absolute',
               right: 0,
               bottom: 0,
@@ -56,7 +56,7 @@ export default class ItemStudent extends React.Component {
               width: 7,
               borderRadius: 3.5,
               backgroundColor: '#91EDC6'
-            }} />
+            }} /> */}
           </View>
           <View style={{ marginLeft: 11, flex: 1 }}>
             <View style={{

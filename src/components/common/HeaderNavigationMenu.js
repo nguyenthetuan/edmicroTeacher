@@ -40,10 +40,7 @@ export default class HeaderNavigation extends Component {
   }
 
   onPressgoBack = () => {
-    if (Share.updateCategory) {
-      Share.updateCategory();
-    }
-    this.props.navigation.pop(2);
+    this.props.navigation.goBack();
   }
 
   render() {
@@ -61,7 +58,7 @@ export default class HeaderNavigation extends Component {
             onPress={this.onPressgoBack}
           >
             <View style={[mainStyle.iconContainer, marginLeftIcon && { marginLeft: marginLeftIcon }]}>
-              <Image source={AppIcon.arrow_left} style={{ width: 18, height: 18, tintColor: colorIcon }} resizeMode={'contain'} />
+              <Image source={AppIcon.icon_arrowLeftv3} style={{ width: 18, height: 18, tintColor: '#FFF' }} resizeMode={'contain'} />
             </View>
           </RippleButton>
           :

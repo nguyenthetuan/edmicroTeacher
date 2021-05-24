@@ -302,7 +302,7 @@ class MarkCamera extends Component {
                         urlFilePDF: resSignedUrl.urlFile,
                         loadingUpload: false,
                     });
-                    this.refToast.show(<ToastSuccess title={"Tải lên PDF thành công!"} />)
+                    this.refToast.show(<ToastSuccess title={"Tải lên thành công!"} />)
                 } else {
                     this.toast.show(<ToastFaild title="Tải lên PDF thất bại!" />);
                     this.setState({ loadingUpload: false });
@@ -417,8 +417,10 @@ class MarkCamera extends Component {
                         token: token,
                         id: res.data,
                     });
-                    await this.setState({ resSuccess: response });
-                    await this.setModalVisible(true);
+                    this.setState({ resSuccess: response });
+                    this.loadingToast.show((<ActivityIndicator size="small" />), 1000,
+                        this.setModalVisible(true)
+                    )
                     this.props.needUpdate(true);
                     // cau hinh thanh cong
                     AnalyticsManager.trackWithProperties('School Teacher', {
@@ -595,20 +597,21 @@ class MarkCamera extends Component {
                 <SafeAreaView style={styles.container}>
                     <HeaderNavigation
                         navigation={this.props.navigation}
-                        title={'Chấm điểm camera'}
+                        title={' Tạo bộ đề chấm điểm camera'}
                         bgColor={'#fff'}
                         colorIcon={'#000'}
                         styleTitle={styles.styleTitle}
                         back={true}
                     />
-                    <View>
-                        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
-                            <ScrollView
-                                showsVerticalScrollIndicator={false}
-                                contentContainerStyle={{ paddingTop: 20, paddingBottom: Platform.OS == 'ios' ? 0 : 40 }}
-                                ref={ref => this.scrollview = ref}
-                                contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
-                            >
+                    <View style={{ flex: 1 }}>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{ paddingTop: 20, paddingBottom: Platform.OS == 'ios' ? 0 : 40 }}
+                            ref={ref => this.scrollview = ref}
+                            contentInset={{ bottom: Platform.OS == 'ios' ? 50 : 0 }}
+                        >
+                            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
+
                                 {/* start create Upload PDF */}
                                 <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); }}>
                                     {/* this.closeModalSelectAnswer() */}
@@ -621,7 +624,7 @@ class MarkCamera extends Component {
                                                     numberOfLines={1}
                                                     returnKeyType={'done'}
                                                     placeholder={'Nhập tên bài kiểm tra'}
-                                                    placeholderTextColor={'#BDBDBD'}
+                                                    placeholderTextColor={'#979797'}
                                                     style={styles.inputName}
                                                 />
                                                 <View style={styles.wrapAreaUploadPDF}>
@@ -639,7 +642,7 @@ class MarkCamera extends Component {
                                                                         console.log(error);
                                                                     }}
                                                                 />}
-                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "Thêm bộ đề..."}</Text>
+                                                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textPdfFile}>{this.state.pdfFile || "..."}</Text>
                                                             </View>
                                                         </TouchableWithoutFeedback>
                                                         <Text style={styles.note}>Lưu ý dung lượng không quá 5Mb!</Text>
@@ -692,7 +695,7 @@ class MarkCamera extends Component {
                                                             maxLength={4}
                                                             placeholder={'Mời nhập'}
                                                             placeholderTextColor={'#BDBDBD'}
-                                                            style={[styles.inputName, { width: 100, height: 30, fontSize: 14 }]}
+                                                            style={[styles.inputName, { width: 100, height: 30, fontSize: RFFonsize(12), lineHeight: RFFonsize(16) }]}
                                                             onEndEditing={() => this.onEnediting()}
                                                         />
                                                         <Text style={styles.textMinutes}>Phút</Text>
@@ -707,72 +710,42 @@ class MarkCamera extends Component {
                                         </RippleButton>
                                     </View>
                                 </TouchableWithoutFeedback>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
+                            </KeyboardAvoidingView>
+                        </ScrollView>
                         <Toast ref={ref => this.refToast = ref} position={'top'} style={[styles.styleTostSuccess]} />
                         <Toast ref={(ref) => (this.toast = ref)} position={'top'} />
+                        <Toast ref={(ref) => (this.loadingToast = ref)} position={'top'} style={{ backgroundColor: "transparent", marginTop: height * 0.2 }} />
                         {loadingUpload &&
                             <View>
                                 <ActivityIndicator size="small" style={{ marginTop: 16 }} />
                                 <Text style={styles.txtUploadingPDF}>Đang tải lên file PDF...</Text>
                             </View>}
                     </View>
-                    {/* <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                    >
-                        <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <TouchableOpacity
-                                    style={[styles.button, styles.buttonClose]}
-                                    onPress={() => this.setModalVisible(!modalVisible)}
-                                >
-                                    <Image source={AppIcon.icon_close_modal} style={{ tintColor: '#000' }} />
-                                </TouchableOpacity>
-                                <View style={styles.rowFlex}>
-                                    <TouchableOpacity onPress={this.onPickPDF} style={styles.clickOption}>
-                                        <Image source={require('../../../asserts/icon/icon_addPdf.png')} style={styles.iconOp} />
-                                        <Text style={styles.txtOP}>Tải .PDF</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.launchImageLibrary} style={styles.clickOption}>
-                                        <Image source={require('../../../asserts/icon/icon_add_image.png')} style={styles.iconOp} />
-                                        <Text style={styles.txtOP}>Chọn ảnh</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.takeCamera} style={styles.clickOption}>
-                                        <Image source={require('../../../asserts/icon/icon_camera.png')} style={styles.iconOp} />
-                                        <Text style={styles.txtOP}>Chụp ảnh</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </Modal> */}
-
-                    <ModalClass
-                        ref={ref => this.refModalClass = ref}
-                        gradeActive={gradeCode}
-                        listGrades={listGrades}
-                        activeClass={this.activeClass}
-                    />
-                    <ModalSubject
-                        ref={ref => this.refModalSubject = ref}
-                        subjectActive={subjectCode}
-                        listSubjects={listSubjects}
-                        activeSubject={this.activeSubject}
-                        Icon={AppIcon.iconDowSelect}
-                    />
-                    <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={modalVisible}
-                    >
-                        <ModalSuccess
-                            navigation={this.props.navigation}
-                            goToAssigned={this.goToAssigned}
-                            data={this.state.resSuccess}
-                        />
-                    </Modal>
                 </SafeAreaView>
+                <ModalClass
+                    ref={ref => this.refModalClass = ref}
+                    gradeActive={gradeCode}
+                    listGrades={listGrades}
+                    activeClass={this.activeClass}
+                />
+                <ModalSubject
+                    ref={ref => this.refModalSubject = ref}
+                    subjectActive={subjectCode}
+                    listSubjects={listSubjects}
+                    activeSubject={this.activeSubject}
+                    Icon={AppIcon.iconDowSelect}
+                />
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <ModalSuccess
+                        navigation={this.props.navigation}
+                        goToAssigned={this.goToAssigned}
+                        data={{ ...this.state.resSuccess, name: this.state.name }}
+                    />
+                </Modal>
             </View>
         );
     }
@@ -835,7 +808,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFF'
     },
     header: {
         // backgroundColor: '#56CCF2',
@@ -864,13 +837,15 @@ const styles = StyleSheet.create({
         color: '#000',
         fontFamily: 'Nunito',
         fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(20),
         paddingStart: 10,
         marginBottom: 7,
         borderRadius: 5,
         padding: 0,
         borderColor: '#c4c4c4',
+        borderStyle: 'solid',
         borderWidth: 0.5,
-        paddingRight: 10
+        paddingRight: 15
     },
     wrapAreaUploadPDF: {
         marginTop: 16
@@ -891,7 +866,7 @@ const styles = StyleSheet.create({
     },
     buttonInSideAreaUploadPDF: {
         flexDirection: 'row',
-        borderWidth: 0.5,
+        borderWidth: 0.3,
         borderColor: '#2D9CDB',
         borderStyle: "solid",
         borderRadius: 20,
@@ -922,14 +897,14 @@ const styles = StyleSheet.create({
     },
     addPar: {
         fontFamily: "Nunito",
-        fontSize: RFFonsize(14),
-        lineHeight: RFFonsize(19),
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
         color: "#828282",
-        paddingTop: 5.5,
-        paddingBottom: 5.5,
         alignSelf: 'center',
         paddingRight: 19.5,
-        paddingLeft: 4
+        paddingLeft: 6,
+        paddingVertical: 6
+
     },
     note: {
         fontFamily: 'Nunito',
@@ -941,7 +916,7 @@ const styles = StyleSheet.create({
     },
     btnCreate: {
         backgroundColor: '#2D9CDB',
-        borderRadius: 5,
+        borderRadius: 20,
         marginTop: "10%",
         marginHorizontal: '25%',
     },
@@ -963,9 +938,10 @@ const styles = StyleSheet.create({
     textMinutes: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#000',
         fontWeight: '400',
-        position: 'absolute',
-        left: 110,
+        left: 10,
         top: 5
     },
     textPdfFile: {

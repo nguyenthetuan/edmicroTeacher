@@ -8,8 +8,9 @@ import {
   Animated,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView
 } from 'react-native';
-import HeaderNavigation from '../../../common/HeaderNavigationMenu';
+import HeaderNavigation from '../../../common/HeaderNavigation';
 import * as AppIcon from '../../../../utils/AppIcon';
 import RippleButton from '../../../libs/RippleButton';
 import Pdf from 'react-native-pdf';
@@ -17,6 +18,7 @@ import Common from '../../../../utils/Common';
 import TaskResultComponent from './TaskResultComponent';
 import { roundNumberOne } from '../../../../utils/Common';
 const { width, height } = Dimensions.get('window');
+
 class SchoolResultPDF extends PureComponent {
   constructor(props) {
     super(props);
@@ -138,17 +140,30 @@ class SchoolResultPDF extends PureComponent {
       totalQuestion,
       arrRightAnswer,
     } = this.state;
+    const nameTest = this.props.navigation.state.params.nameTest
     return (
-      <View style={styles.container}>
-        <HeaderTab
-          changeTab={this.changeTab}
-          totalCorrect={totalCorrect}
-          totalQuestion={totalQuestion}
-          arrRightAnswer={arrRightAnswer}
-          getData={this.getData}
-          navigation={this.props.navigation}
-        />
-        {this.changeTabComponent(tabActive)}
+      <View style={{ flex: 1, backgroundColor: '#2D9CDB' }}>
+        <View style={{ top: -10 }}>
+          <HeaderNavigation
+            navigation={this.props.navigation}
+            title={nameTest}
+            bgColor="#2D9CDB"
+            showIcon={1}
+            back={true}
+            colorIcon="#fff"
+          />
+        </View>
+        <SafeAreaView style={styles.container}>
+          <HeaderTab
+            changeTab={this.changeTab}
+            totalCorrect={totalCorrect}
+            totalQuestion={totalQuestion}
+            arrRightAnswer={arrRightAnswer}
+            getData={this.getData}
+            navigation={this.props.navigation}
+          />
+          {this.changeTabComponent(tabActive)}
+        </SafeAreaView>
       </View>
     );
   }
@@ -191,18 +206,9 @@ class HeaderTab extends PureComponent {
     } = this.props;
     return (
       <View style={styles.containerHeader}>
-        <View style={styles.wrapHeader}>
-          <HeaderNavigation
-            navigation={this.props.navigation}
-            bgColor="#2D9CDB"
-            showIcon={1}
-            isBack={true}
-          />
-        </View>
-
-        <View style={{ marginBottom: 10 }}>
+        <View style={{ marginBottom: 30 }}>
           <Text style={styles.txtTotalQuestionLeft}>
-            Tổng số câu hỏi{' '}
+            Tổng số câu hỏi:{' '}
             <Text style={styles.txtTotalQuestion}>
               {' '}
               {totalQuestion || 0} câu
@@ -210,7 +216,7 @@ class HeaderTab extends PureComponent {
           </Text>
 
           <Text style={styles.txtTotalQuestionLeft}>
-            Số câu đúng{' '}
+            Số câu đúng:{' '}
             <Text style={styles.txtTotalQuestion}>
               {' '}
               {totalCorrect || 0}/{totalQuestion || 0} câu
@@ -440,6 +446,12 @@ class SchoolResult extends PureComponent {
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <ScrollView vertical={20} style={{ padding: 10, flex: 1, }}>
           <ElementItem
+            title={'Điểm số'}
+            img={AppIcon.score_9}
+            number={roundNumberOne(report.totalScore)}
+            type={'Điểm'}
+          />
+          <ElementItem
             title={'Tổng số câu'}
             img={AppIcon.totalQuestion}
             number={report?.totalQuestion}
@@ -456,12 +468,6 @@ class SchoolResult extends PureComponent {
             img={AppIcon.r_false}
             number={report?.totalQuestion - report?.totalCorrect}
             type={'Câu'}
-          />
-          <ElementItem
-            title={'Điểm số'}
-            img={AppIcon.score_9}
-            number={roundNumberOne(report.totalScore)}
-            type={'Điểm'}
           />
           <ElementItem
             title={'Chính xác'}
@@ -495,15 +501,15 @@ export default SchoolResultPDF;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   containerHeader: {
     backgroundColor: '#2D9CDB',
-    marginTop: -10
   },
   wrapHeader: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#2D9CDB'
   },
   wrapProgress: {
     justifyContent: 'center',
@@ -526,8 +532,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   txtTotalQuestionLeft: {
-    color: '#87E2FF',
-    fontFamily: 'Nunito-Regular',
+    color: '#fff',
+    fontFamily: 'Nunito-Bold',
     fontSize: 13,
     textAlign: 'left',
     marginHorizontal: 20,
@@ -537,7 +543,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
   },
   txtTab: {
-    color: '#C4C4C4',
+    color: '#f0f0f0',
     fontFamily: 'Nunito-Regular',
   },
   wrapTab: {
@@ -573,13 +579,16 @@ const styles = StyleSheet.create({
     bottom: 15,
   },
   txtH1: {
-    fontFamily: 'Nunito-Bold',
+    fontFamily: 'Nunito',
+    color: '#828282'
+
   },
   containerPdf: {
     flex: 1,
     zIndex: -1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
   reportItem: {
     paddingHorizontal: 10,
@@ -587,7 +596,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     alignItems: 'center',
-    borderColor: '#f8f8f8',
+    borderColor: '#f8f8f8'
   },
   borderBottom: {
     height: 1,

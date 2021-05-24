@@ -24,6 +24,13 @@ import logo_onluyen from '../asserts/appIcon/logov2.png';
  */
 import end_mock_exam from '../asserts/images/end_mock_exam.png';
 
+//Image intro
+import image_class from '../asserts/images/image_class.png';
+import image_assessment from '../asserts/images/image_assessment.png';
+import image_misson from '../asserts/images/image_misson.png';
+import image_statistical from '../asserts/images/image_statistical.png';
+
+
 //ICON
 import avatar_default from '../asserts/appIcon/avatar_default.png';
 import info_account from '../asserts/appIcon/info_account.png';
@@ -243,4 +250,8 @@ module.exports = {
   eye,
   ic_analytics,
   icon_add,
+  image_class,
+  image_assessment,
+  image_misson,
+  image_statistical
 };

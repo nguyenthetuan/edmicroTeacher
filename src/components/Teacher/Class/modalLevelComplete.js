@@ -522,7 +522,7 @@ export default class ModalLevelComplete extends Component {
                     <Text style={styles.txtName}>{data.studentName}</Text>
                   </View>
                   <View>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       onPress={() => this.setState({ visible: !visible })}
                       style={styles.radioBottom}>
                       <View
@@ -541,9 +541,9 @@ export default class ModalLevelComplete extends Component {
                         )}
                       </View>
                       <Text style={styles.txtComplete}>Tỉ lệ hoàn thành</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       style={[styles.radioBottom, { marginTop: 11 }]}
                       onPress={() => this.setState({ visible: !visible })}>
                       <View
@@ -562,7 +562,7 @@ export default class ModalLevelComplete extends Component {
                         )}
                       </View>
                       <Text style={styles.txtComplete}>Đánh giá tự luyện</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </View>
                 {isLoading ? (

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import dataHelper from '../../../utils/dataHelper';
 import { RFFonsize } from '../../../utils/Fonts'
 const { width, height } = Dimensions.get('screen');
+import moment from 'moment';
 const horizontalMargin = 10;
 const slideWidth = width - 100;
 const sliderWidth = Dimensions.get('window').width;
@@ -39,8 +40,7 @@ class DiaryActive extends Component {
         )
     }
     render() {
-        const { diaryActive, countdiaryActive } = this.props;
-
+        const { diaryActive, countdiaryActive, timeActive } = this.props;
         const dataSets = countdiaryActive.map(val => val.totalCheckPoint);
         dataSets.unshift(0);
         dataSets.push(0);
@@ -67,23 +67,38 @@ class DiaryActive extends Component {
             }
         };
         const dataChart = dataSets;
+        const startTime = moment((diaryActive.startTime) * 1000).format('DD/MM/YYYY');
+        const endTime = moment((diaryActive.endTime) * 1000).format('DD/MM/YYYY');
         return (
             <View style={HomeStyle.container}>
                 <Text style={HomeStyle.titleDes} >Nhật ký hoạt động</Text>
-                <LineChart
-                    data={{
-                        labels: dataLabels,
-                        datasets: [{ data: dataChart }]
-                    }}
-                    width={Dimensions.get("window").width} // from react-native
-                    height={220}
-                    chartConfig={chartConfig}
-                    bezier
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                    }}
-                />
+                {countdiaryActive.length > 0 ?
+                    <View>
+                        <View style={HomeStyle.rowTime}>
+                            <Text style={HomeStyle.txtTime}>Thời gian:</Text>
+                            <Text style={HomeStyle.timeText}>{startTime}</Text>
+                            <Text style={HomeStyle.timeText}>- {endTime}</Text>
+                        </View>
+
+                        <LineChart
+                            data={{
+                                labels: dataLabels,
+                                datasets: [{ data: dataChart }]
+                            }}
+                            width={Dimensions.get("window").width} // from react-native
+                            height={220}
+                            chartConfig={chartConfig}
+                            bezier
+                            style={{
+                                marginVertical: 8,
+                                borderRadius: 16
+                            }}
+                        />
+                    </View>
+                    :
+                    <Text style={HomeStyle.noDataDiary}>Chưa có nhật ký hoạt động</Text>
+                }
+
                 {/* {(countdiaryActive && countdiaryActive.length > 0) &&
                     <Carousel
                         ref={(c) => { this._carousel = c; }}

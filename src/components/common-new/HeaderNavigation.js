@@ -44,7 +44,7 @@ export default class HeaderNavigation extends React.Component {
             isShow = true,
             data,
             actionIconTwo,
-            iconActionTwo
+            iconActionTwo,
         } = this.props;
         return (
             <View style={[styles.container, { backgroundColor: backgroundColor }]}>
@@ -61,14 +61,20 @@ export default class HeaderNavigation extends React.Component {
                     <View style={styles.btnAvatar} />
                 }
                 <View style={styles.viewTitle}>
-                    <Text style={[styles.textTitleHeader, {
+                    <Text numberOfLines={1} style={[styles.textTitleHeader, {
                         color: color || '#383838'
                     }]}>{title}</Text>
                 </View>
                 {actionIcon ?
                     <TouchableWithoutFeedback hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                         onPress={this.props.iconAction || this.navigateUser}>
-                        <View style={[styles.btnAvatar, { backgroundColor: this.props.actionColor || 'transparent' }]}>
+                        <View
+                            ref={ref => this.ref = ref}
+                            style={[styles.btnAvatar,
+                            {
+                                backgroundColor: this.props.actionColor || 'transparent'
+                            }]}
+                        >
                             <Image
                                 source={actionIcon}
                                 style={[styles.imgAvatar,

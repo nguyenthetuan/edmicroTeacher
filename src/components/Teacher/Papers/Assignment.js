@@ -39,6 +39,9 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AwesomeButton from 'react-native-really-awesome-button';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
+import ToastApi from '../../common-new/ToastApi';
+import { ButtonLoading } from '../../common/ButtonBeta';
+import ShimmerAssigment from './ShimmerAssigment';
 const { width, height } = Dimensions.get('screen');
 const horizontalMargin = 10;
 const slideWidth = width - 95;
@@ -60,7 +63,7 @@ function Item(props) {
   const item = props.item;
   let [stage, setStage] = useState(Stage.begin);
   const [isDisable, setIsDisable] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const [timeStart, setTimeStart] = useState(
     item.timeStart
@@ -119,6 +122,9 @@ function Item(props) {
   };
 
   const validate = () => {
+    if (isDisable) {
+      return false;
+    }
     if (moment(timeStart).format('DD-MM-YYYY, HH:mm') === moment(timeEnd).format('DD-MM-YYYY, HH:mm')) {
       props.onToast(
         <ToastFaild title="Thời gian không hợp lệ!" />
@@ -132,6 +138,10 @@ function Item(props) {
       return false
     }
     return true;
+  }
+
+  onShowToast = () => {
+    props.onRefToast((<ToastApi title={"Giao bài thành công!"} />), 3000);
   }
 
   const onAssignment = async () => {
@@ -150,14 +160,17 @@ function Item(props) {
 
       const { token } = await dataHelper.getToken();
       if (token) {
+        setIsLoading(true);
         try {
           const response = await apiPapers.assignment({
             token,
             body
           })
+          setIsLoading(false);
           if (response && response.status === 1) {
             // props.onToast('Giao bài thành công!');
-            props.onRefToast((<ToastSuccess title={"Giao bài thành công!"} />), 500);
+            props.onRefToast((<ToastApi title={"Giao bài thành công!"} />), 3000);
+            props.getData(true);
             props.needUpdate(true);
             setIsDisable(true);
             const { subjectCode = '', gradeCode = '' } = props.navigation.state.params.payloadAssignment;
@@ -171,6 +184,7 @@ function Item(props) {
             props.onToast(<ToastFaild title="Có lỗi xảy ra vui lòng thử lại!" />)
           }
         } catch (error) {
+          setIsLoading(false);
         }
 
       } else {
@@ -182,15 +196,18 @@ function Item(props) {
   return (
     <View style={styles.containerItem}>
       <View style={styles.contentItem}>
+        <View style={[styles.boxStatus, {
+          backgroundColor: props.item.isAssign ? '#5ACF7B' : '#FF5242',
+        }]}>
+          <Text style={{
+            fontFamily: 'Nunito',
+            color: '#fff',
+            fontSize: RFFonsize(14)
+          }}>{props.item.isAssign ? 'Đã giao' : 'Chưa giao'}</Text>
+        </View>
         <View style={styles.viewName}>
           <Text numberOfLines={1} style={styles.titleClass}>{props.item.name}</Text>
         </View>
-        {/* <View style={styles.viewName}>
-          <Text style={styles.txtTitleItemContent}>Tên bài tập</Text>
-          <View style={styles.inputName}>
-            <Text numberOfLines={1} style={styles.txtContentItem}>{props.dataItem.name}</Text>
-          </View>
-        </View> */}
         <View style={styles.viewDate}>
           <Text style={styles.txtTitleItemContent}>Ngày bắt đầu</Text>
           <TouchableWithoutFeedback
@@ -246,25 +263,24 @@ function Item(props) {
             <Text style={styles.txtCheckAllow}>Chỉ cho phép xem kết quả khi hết hạn</Text>
           </View>
         </TouchableWithoutFeedback>
-        <AwesomeButton
+        <ButtonLoading
+          title='Giao bài'
+          buttonStyle={[styles.AweBtn, { height: 45, width: 200, padding: 0, backgroundColor: isDisable ? '#DADADA' : '#2D9DFE' }]}
+          textStyle={styles.txtAssignment}
+          color={isDisable ? '#DADADA' : '#2D9DFE'}
+          bgColor='#642ED'
           onPress={onAssignment}
-          style={[styles.AweBtn]}
-          height={45}
-          backgroundColor={isDisable ? '#DADADA' : '#2D9DFE'}
-          borderRadius={25}
-          backgroundActive={'#2D9DFE'}
-          backgroundShadow={'transparent'}
-          backgroundDarker={'transparent'}
-          disabled={isDisable}
-        >
-          <Text style={styles.txtAssignment}>Giao bài</Text>
-        </AwesomeButton>
+          disabled={true}
+          isLoading={isLoading}
+          rippleSize={isDisable ? 1 : 200}
+        />
 
       </View>
       {/* {__DEV__ ? null : */}
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
+        date={stage === Stage.begin ? timeStart : timeEnd}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
@@ -274,17 +290,22 @@ function Item(props) {
 }
 
 class Assignment extends Component {
-  state = {
-    loading: true,
-    data: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      data: []
+    }
+    this.dataItem = {};
+    this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {
     this.getData();
   }
 
-  async getData() {
-    const dataItem = this.props.navigation.getParam('item');
+  async getData(isLoading) {
+    const dataItem = this.props.navigation.state.params.item;
     const { token } = await dataHelper.getToken();
     if (token) {
       const response = await apiPapers.getAssignment({
@@ -330,8 +351,8 @@ class Assignment extends Component {
   onToast = (text) => {
     this.toast.show(text)
   }
-  onRefToast = (text) => {
-    this.refToast.show(text)
+  onRefToast = (text, duaration = 2000) => {
+    this.refToast.show(text, duaration)
   }
 
   _handleGoBack = () => {
@@ -419,8 +440,9 @@ class Assignment extends Component {
                     item={item}
                     navigation={this.props.navigation}
                     onToast={(text) => this.onToast(text)}
-                    onRefToast={(text) => this.onRefToast(text)}
+                    onRefToast={(text, duration) => this.onRefToast(text, duration)}
                     dataItem={dataItem}
+                    getData={this.getData}
                     needUpdate={this.props.needUpdate}
                   />
                 }}
@@ -573,10 +595,10 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(20),
     fontWeight: '500',
     color: '#fff',
-    marginLeft: 50,
-    marginRight: 50,
-    marginTop: 6,
-    marginBottom: 6
+    // marginLeft: 50,
+    // marginRight: 50,
+    // marginTop: 6,
+    // marginBottom: 6
   },
   checkAllow: {
     width: 18,
@@ -685,15 +707,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   styleTostSuccess: {
-    flex: 1,
-    height: 70,
-    width: width - 70,
-    backgroundColor: '#16BDA9',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: "center",
-    borderRadius: 10,
+    // flex: 1,
+    // height: 70,
+    // width: 280,
+    // // backgroundColor: '#16BDA9',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+    // alignSelf: "center",
+    // borderRadius: 10,
+    backgroundColor :'transparent'
   },
   styleWarning: {
     flex: 1,
@@ -718,5 +741,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     top: -12,
     right: 10
+  },
+  boxStatus: {
+    alignSelf: 'flex-end',
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    paddingVertical: 2
   }
 })

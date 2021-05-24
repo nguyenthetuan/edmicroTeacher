@@ -8,24 +8,28 @@ import {
     Animated,
     FlatList,
     ActivityIndicator,
-    Dimensions
+    Dimensions,
+    TouchableWithoutFeedback,
+    Image,
+    Keyboard
 } from "react-native";
-import SearchComponent from "react-native-search-component";
-import { RFFonsize } from '../../utils/Fonts';
-import { getSourceAvatar } from '../../utils/Helper';
-import dataHelper from '../../utils/dataHelper';
-import Globals from '../../utils/Globals';
 import { connect } from 'react-redux';
-import _ from 'lodash';
-import { alertDeletePaper } from '../../utils/Alert';
-import { updateExamListAction } from '../../actions/paperAction';
+import dataHelper from '../../utils/dataHelper';
 import apiPapers from '../../services/apiPapersTeacher';
+import { getSourceAvatar } from '../../utils/Helper';
+import { updateExamListAction } from '../../actions/paperAction';
 import { setListGrades, setListSubject } from '../../actions/paperAction';
+import _ from 'lodash';
+import { RFFonsize } from '../../utils/Fonts';
+import Globals from '../../utils/Globals';
+import { alertDeletePaper } from '../../utils/Alert';
 import ItemListTest from '../Teacher/Papers/ItemListTest';
 import ModalOption from '../Teacher/Papers/ModalOption';
 import ModalEditName from '../Teacher/Papers/ModalEditName';
 import ModalEditConfig from '../Teacher/Papers/modalEditConfig';
 import HeaderNavigation from './HeaderNavigation';
+import { SearchBar } from 'react-native-elements';
+
 const { Value, timing } = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -62,7 +66,9 @@ class SearchScreen extends React.Component {
             animation: 'fadeInUpBig',
             assignmentContentType: 0,
             typeChange: 0,
-            dataFilter: []
+            dataFilter: [],
+            dataPaperGuild: [],
+            text: ''
         };
 
 
@@ -119,10 +125,12 @@ class SearchScreen extends React.Component {
                 listPapers = resPapers.data;
             }
             let dataFilter = this.filterData(listPapers);
+            const dataPaperGuild = listPapers.slice(0, 12);
             this.setState({
                 listGrades,
                 listSubjects,
                 listPapers,
+                dataPaperGuild,
                 loading: false,
                 dataFilter,
                 hideLoadMore: !(listPapers.length % this._pageSize === 0),
@@ -202,11 +210,13 @@ class SearchScreen extends React.Component {
                 this.setState({
                     listPapers: resPapers.data,
                     loading: false,
+                    isLoadingSearching: false,
                 });
             }
         } else {
             this.setState({
                 loading: false,
+                isLoadingSearching: false,
             });
         }
     };
@@ -271,6 +281,13 @@ class SearchScreen extends React.Component {
                     nagigation: this.props.nagigation,
                     statusbar: 'light-content',
                 });
+            } else if (res && res.assignmentContentType === 3) {
+                const question = dataHelper.saveQuestion(res.questions);
+                this.props.navigation.navigate('MarkCamera', {
+                    listGrades,
+                    listSubjects,
+                    statusbar: 'dark-content',
+                })
             } else {
                 this.props.navigation.navigate('UploadPDF', {
                     nagigation: this.props.nagigation,
@@ -360,13 +377,19 @@ class SearchScreen extends React.Component {
 
     onChangeText = e => {
         const textSearch = e?.nativeEvent?.text;
-        this.setState({ textSearch });
+
+        this.searchData(textSearch);
+    }
+
+    searchData = (textSearch) => {
+        this.setState({ textSearch, isLoadingSearching: true, loading: true });
         if (this.timeSearch) {
             clearTimeout(this.timeSearch);
             this.timeSearch = null;
         }
         this.timeSearch = setTimeout(this.searchPaper, 500);
     }
+
     onSearchClear = () => {
         this.setState({ textSearch: '' });
         if (this.timeSearch) {
@@ -476,7 +499,7 @@ class SearchScreen extends React.Component {
             />
             :
             <View style={styles.viewNotFound}>
-                <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu</Text>
+                <Text style={styles.txtNotFound}>Không tìm thấy dữ liệu :((</Text>
             </View>
         );
     };
@@ -495,11 +518,11 @@ class SearchScreen extends React.Component {
                     {isLoadMore ? (
                         <ActivityIndicator size={'small'} />
                     ) : (
-                            <Text
-                                style={styles.more}>
-                                Xem thêm
-                            </Text>
-                        )}
+                        <Text
+                            style={styles.more}>
+                            Xem thêm
+                        </Text>
+                    )}
                 </TouchableOpacity>
             </View>
         );
@@ -564,6 +587,20 @@ class SearchScreen extends React.Component {
         });
     };
 
+    renderItem = ({ item, index }) => {
+        const textSearch = item.name;
+        return (
+            <TouchableWithoutFeedback
+                onPress={() => { this.searchData(textSearch) }}
+                hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                <View style={styles.sugges}>
+                    <Text numberOfLines={1}
+                        style={styles.nameSug}>{textSearch}</Text>
+                </View>
+            </TouchableWithoutFeedback>
+        )
+    }
+
     render() {
         const { userId, timeCached } = this.props;
         const source = getSourceAvatar(userId, timeCached);
@@ -585,7 +622,7 @@ class SearchScreen extends React.Component {
             textSearch,
             onSearchClear
         } = this.state;
-        // console.log(listPapers);
+        console.log("this.state.textSearch: ", this.state.textSearch);
         const _diff_clamp_scroll_y = Animated.diffClamp(this._scroll_y, 0, 330);
         const _header_opacity = _diff_clamp_scroll_y.interpolate({
             inputRange: [0, 50],
@@ -597,92 +634,151 @@ class SearchScreen extends React.Component {
             outputRange: [0, -330],
             extrapolate: 'clamp',
         });
-
         // console.log("render paper");
         return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <SafeAreaView />
-                <HeaderNavigation
-                    title={'Tìm kiếm bộ đề'}
-                    navigation={this.props.navigation}
-                    goBack={this.openBack}
-                    color={'#2D9CDB'}
-                />
-                <View style={styles.backpa}>
-                    <SearchComponent
-                        placeholder="Tìm kiếm"
-                        cancelColor="#2D9CDB"
-                        value={textSearch}
-                        onChange={this.onChangeText}
-                        onSearchClear={this.onSearchClear}
-                        customSearchInputStyle={styles.textSear}
-                        customCancelTextStyle={styles.txtCan}
-                        placeholderTextColor="#828282"
-                    />
-                </View>
-                <AnimatedFlatList
-                    style={{ paddingHorizontal: 16 }}
-                    data={listPapers}
-                    contentContainerStyle={styles.contentContainer}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    extraData={dataFilter}
-                    ListEmptyComponent={this._listTestEmpty}
-                    // ListFooterComponent={this._listTestFooter}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
-                        )
-                    }}
-                    initialNumToRender={10}
-                    bounces={false}
-                    scrollEventThrottle={1}
-                    onScroll={Animated.event([
-                        {
-                            nativeEvent: { contentOffset: { y: this._scroll_y } }
-                        }
-                    ],
-                        { useNativeDriver: true }
-                    )}
-                />
-                {visibleModalEdit ? (
-                    <ModalEditConfig
-                        onVisible={visible => this.onVisibleModalEdit(visible)}
-                        onUpdateItem={item => this.onUpdateItem(item)}
-                        listGrades={listGrades}
-                        listSubjects={listSubjects}
-                        data={dataSelected}
-                    />
-                )
-                    :
-                    null
-                }
-                {visibleModalEditName
-                    ?
-                    (
-                        <ModalEditName
-                            onVisible={visible => this.onVisibleModalEditName(visible)}
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <SafeAreaView />
+                    <View style={styles.backpa}>
+                        <TouchableWithoutFeedback
+                            hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                            onPress={() => { this.props.navigation.goBack() }}
+                        >
+                            <View style={{ alignSelf: 'center', paddingLeft: 10 }}>
+                                <Image source={require('../../asserts/icon/icon_arrowLeftv3.png')} />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <SearchBar
+                            placeholder="Tìm kiếm"
+                            value={textSearch}
+                            placeholderTextColor="#828282"
+                            onChange={this.onChangeText}
+                            onClear={this.onSearchClear}
+                            onCancel={this.onSearchClear}
+                            containerStyle={{
+                                backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent', alignItems: 'center'
+                            }}
+                            showLoading={this.state.isLoadingSearching}
+                            inputContainerStyle={{ backgroundColor: '#e8e8ea', borderColor: '#e8e8ea', borderRadius: 15, marginHorizontal: 0, width: width - 70 }}
+                            autoFocus={true}
+                            showLoading={loading}
+                        />
+                    </View>
+                    <View style={{ marginHorizontal: 16 }}>
+                        <FlatList
+                            autoFocus={true}
+                        />
+                    </View>
+                    {(this.state.textSearch != '' && this.state.listPapers.length == 0) &&
+                        <Text style={styles.textResult}>{this.state.listPapers.length} bộ đề được tìm thấy</Text>
+                    }
+                    {(this.state.textSearch == '' || listPapers.length == 0) ?
+                        <View style={{ marginHorizontal: 20, paddingTop: 5 }}>
+                            <View>
+                                <Text style={{
+                                    marginTop: 10,
+                                    fontFamily: 'Nunito-Bold', color: '#646D7A',
+                                    fontSize: RFFonsize(16),
+                                }}>Gợi ý bộ đề</Text>
+                                <FlatList
+                                    bounces={false}
+                                    contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
+                                    data={this.state.dataPaperGuild}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    renderItem={this.renderItem}
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
+                                />
+                            </View>
+                        </View>
+                        :
+                        <View>
+                            {loading ?
+                                <ActivityIndicator size={'small'} />
+                                : <View style={{ height: height - 120, paddingBottom: 20 }}>
+                                    <Text style={styles.textResult}>{listPapers.length} bộ đề được tìm thấy</Text>
+                                    <AnimatedFlatList
+                                        style={{ paddingHorizontal: 16, paddingBottom: 20 }}
+                                        data={listPapers}
+                                        contentContainerStyle={{ paddingBottom: 10 }}
+                                        showsVerticalScrollIndicator={false}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        extraData={dataFilter}
+                                        ListEmptyComponent={this._listTestEmpty}
+                                        // ListFooterComponent={this._listTestFooter}
+                                        renderItem={({ item, index }) => {
+                                            return (
+                                                <ItemListTest item={item} onOpenModal={this._onOpenModal(item)} />
+                                            )
+                                        }}
+                                        initialNumToRender={10}
+                                        bounces={false}
+                                        scrollEventThrottle={1}
+                                        onScroll={Animated.event([
+                                            {
+                                                nativeEvent: { contentOffset: { y: this._scroll_y } }
+                                            }
+                                        ],
+                                            { useNativeDriver: true }
+                                        )}
+                                    />
+                                </View>}
+                        </View>
+                    }
+                    {visibleModalEdit ? (
+                        <ModalEditConfig
+                            onVisible={visible => this.onVisibleModalEdit(visible)}
                             onUpdateItem={item => this.onUpdateItem(item)}
                             listGrades={listGrades}
                             listSubjects={listSubjects}
                             data={dataSelected}
                         />
                     )
-                    :
-                    null
-                }
-                <ModalOption
-                    visibleEdit={visibleEdit}
-                    _handleCloseModal={this._handleCloseModal}
-                    _handleClickDetail={this._handleClickDetail}
-                    _OpenModal={this._OpenModal}
-                    animation={animation}
-                    assignmentContentType={assignmentContentType}
-                    dataSelected={dataSelected}
-                    deletePaper={this.deletePaper}
-                />
-                <SafeAreaView />
-            </SafeAreaView>
+                        :
+                        null
+                    }
+                    {visibleModalEditName
+                        ?
+                        (
+                            <ModalEditName
+                                onVisible={visible => this.onVisibleModalEditName(visible)}
+                                onUpdateItem={item => this.onUpdateItem(item)}
+                                listGrades={listGrades}
+                                listSubjects={listSubjects}
+                                data={dataSelected}
+                            />
+                        )
+                        :
+                        null
+                    }
+                    {
+                        visibleModalEditName
+                            ?
+                            (
+                                <ModalEditName
+                                    onVisible={visible => this.onVisibleModalEditName(visible)}
+                                    onUpdateItem={item => this.onUpdateItem(item)}
+                                    listGrades={listGrades}
+                                    listSubjects={listSubjects}
+                                    data={dataSelected}
+                                />
+                            )
+                            :
+                            null
+                    }
+                    <ModalOption
+                        visibleEdit={visibleEdit}
+                        _handleCloseModal={this._handleCloseModal}
+                        _handleClickDetail={this._handleClickDetail}
+                        _OpenModal={this._OpenModal}
+                        animation={animation}
+                        assignmentContentType={assignmentContentType}
+                        dataSelected={dataSelected}
+                        deletePaper={this.deletePaper}
+                    />
+                    <SafeAreaView />
+                </SafeAreaView >
+            </TouchableWithoutFeedback >
         );
     };
 }
@@ -703,8 +799,6 @@ const styles = StyleSheet.create({
     },
     backpa: {
         flexDirection: "row",
-        justifyContent: 'space-between',
-        paddingVertical: 5
     },
     viewNotFound: {
         marginTop: 100,
@@ -714,7 +808,7 @@ const styles = StyleSheet.create({
     txtNotFound: {
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(14),
-        color: '#000',
+        color: '#646D7A',
     },
     more: {
         color: '#000',
@@ -725,12 +819,43 @@ const styles = StyleSheet.create({
     txtCan: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(16),
-        lineHeight: RFFonsize(20)
+        lineHeight: RFFonsize(20),
+        marginLeft: -35
     },
     textSear: {
         paddingRight: 35,
         fontFamily: 'Nunito',
-        fontSize: RFFonsize(16)
+        fontSize: RFFonsize(16),
+        lineHeight: RFFonsize(20),
+        marginRight: width * 0.1
+    },
+    sugges: {
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 16,
+        marginRight: 10
+    },
+    nameSug: {
+        paddingHorizontal: 16,
+        paddingVertical: 9,
+        alignSelf: "center",
+        fontFamily: "Nunito",
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        color: '#646D7A',
+        // borderWidth: 0.5,
+        borderColor: "#c4c4c4",
+        borderStyle: 'solid',
+        borderRadius: 18,
+        backgroundColor: '#F5F7FA',
+        overflow: 'hidden'
+    },
+    textResult: {
+        marginHorizontal: 20,
+        fontFamily: 'Nunito-Bold', color: '#646D7A',
+        fontSize: RFFonsize(14),
+        fontWeight: '500',
+        marginBottom: 10,
     }
 });
 

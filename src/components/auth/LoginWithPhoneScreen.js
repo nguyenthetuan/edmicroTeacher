@@ -39,6 +39,7 @@ import TextLink from '../common-new/TextLink';
 import { Row, TextValidate, SizedBox } from '../common-new/Bootstrap';
 import { RFFonsize } from '../../utils/Fonts';
 import AppIcon from '../../utils/AppIcon';
+import { resetStateReducerAction } from '../../actions/userAction';
 
 const { width, height } = Dimensions.get('window');
 
@@ -68,6 +69,7 @@ class LoginWithPhoneScreen extends Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     this.getRememberPhoneAndPass();
+    this.props.resetStateReducer();
     AsyncStorage.getItem('RememberMe_Onluyen').then(data => {
       if (data == 1) {
         this.setState({ RememberMe: true })
@@ -295,7 +297,7 @@ class LoginWithPhoneScreen extends Component {
     return (
       <SafeAreaView style={container}>
         <StatusBar />
-        <HeaderPrimary showLead={false} title={'Đăng nhập'} styleTitle={styles.title} />
+        <HeaderPrimary showLead={true} title={'Đăng nhập'} styleTitle={styles.title} navigation={this.props.navigation} />
         <KeyboardAwareScrollView
           contentContainerStyle={styles.viewKeyboard}
           showsVerticalScrollIndicator={false}
@@ -355,7 +357,7 @@ class LoginWithPhoneScreen extends Component {
                   <Button
                     center={true}
                     title="Đăng nhập"
-                    width={width - 60}
+                    width={width - 50}
                     circle={40}
                     style={styles.btnLogin}
                     styleTitle={styles.styleTitle}
@@ -382,7 +384,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Regular',
     fontSize: RFFonsize(14),
     color: '#000',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   btnLogin: {
     backgroundColor: '#54CEF5',
@@ -434,6 +436,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     saveAvatar: (avatar) => dispatch(saveAvatarAction(avatar)),
+    resetStateReducer: () => dispatch(resetStateReducerAction()),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginWithPhoneScreen);
