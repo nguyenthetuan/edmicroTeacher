@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const { width, height } = Dimensions.get('window');

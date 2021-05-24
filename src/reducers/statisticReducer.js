@@ -9,6 +9,7 @@ const initState = {
     diaryActive: [],
     countdiaryActive: [],
     laboratory: [],
+    isLoadLabora: true
 };
 
 export default function statisticReducer(state = initState, action) {
@@ -89,18 +90,18 @@ export default function statisticReducer(state = initState, action) {
         case Types.LABORATORY_ACTION:
             return {
                 ...state,
-                isLoading: true,
+                isLoadLabora: true,
             }
         case Types.LABORATORY_SUCCESS_ACTION:
             return {
                 ...state,
-                isLoading: false,
+                isLoadLabora: false,
                 laboratory: action.data,
             }
         case Types.LABORATORY_FAILD_ACTION:
             return {
                 ...state,
-                isLoading: false,
+                isLoadLabora: false,
                 laboratory: []
             }
         default:

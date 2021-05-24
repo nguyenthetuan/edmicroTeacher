@@ -146,7 +146,7 @@ class LaboratoryScreen extends Component {
     }
 
     render() {
-        const { user, isLoading, laboratory } = this.props;
+        const { user, isLoadLabora, laboratory } = this.props;
         return (
             <View style={LaboraStyle.container}>
                 <SafeAreaView style={LaboraStyle.top} />
@@ -164,12 +164,12 @@ class LaboratoryScreen extends Component {
                     }
                     showsVerticalScrollIndicator={false}
                     style={{ paddingBottom: 50 }}>
-                    {isLoading ?
+                    {isLoadLabora ?
                         <ShimerLabora />
                         :
                         <ItemLaborary
                             navigation={this.props.navigation}
-                            isLoading={isLoading}
+                            isLoadLabora={isLoadLabora}
                             laboratory={laboratory} />
                     }
                 </ScrollView>
@@ -182,7 +182,7 @@ class LaboratoryScreen extends Component {
 const mapStateToProps = state => {
     return {
         user: state.user,
-        isLoading: state.statistic.isLoading,
+        isLoadLabora: state.statistic.isLoadLabora,
         laboratory: state.statistic.laboratory,
     };
 };

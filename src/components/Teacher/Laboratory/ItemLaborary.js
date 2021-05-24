@@ -22,7 +22,7 @@ class ItemLaborary extends Component {
         super(props);
         this.state = {
             // activeSlide: 0,
-            isLoading: true
+            isLoadLabora: true
         };
     }
 
@@ -65,11 +65,11 @@ class ItemLaborary extends Component {
         )
     }
     renderEmpty = () => {
-        const { isLoading } = this.props;
+        const { isLoadLabora } = this.props;
         return (
             <View>
                 {
-                    isLoading ?
+                    isLoadLabora ?
                         <ActivityIndicator color={'#828282'} size={'small'} style={styles.ActivityIndicator} />
                         :
                         <View style={styles.styWrapEmpty}>
@@ -82,16 +82,16 @@ class ItemLaborary extends Component {
     render() {
         const {
             laboratory,
-            isLoading
+            isLoadLabora
         } = this.props;
         const { shadowBtn } = shadowStyle;
         return (
             <View style={LaboraStyle.container}>
-                { isLoading ?
+                { isLoadLabora ?
                     <ActivityIndicator color={'#828282'} size={'small'} style={styles.ActivityIndicator} />
                     :
                     <FlatList
-                        data={laboratory}
+                        data={[]}
                         keyExtractor={(item, index) => index.toString()}
                         ListHeaderComponent={this.renderHeader}
                         renderItem={this.renderItem}
