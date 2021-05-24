@@ -207,24 +207,6 @@ class HeaderTab extends PureComponent {
     } = this.props;
     return (
       <View style={styles.containerHeader}>
-        <View style={{ marginBottom: 30 }}>
-          <Text style={styles.txtTotalQuestionLeft}>
-            Tổng số câu hỏi:{' '}
-            <Text style={styles.txtTotalQuestion}>
-              {' '}
-              {totalQuestion || 0} câu
-            </Text>
-          </Text>
-
-          <Text style={styles.txtTotalQuestionLeft}>
-            Số câu đúng:{' '}
-            <Text style={styles.txtTotalQuestion}>
-              {' '}
-              {totalCorrect || 0}/{totalQuestion || 0} câu
-            </Text>
-          </Text>
-        </View>
-
         <View style={styles.wrapTab}>
           <ScrollView
             style={{ flex: 1, flexDirection: 'row' }}
