@@ -6,12 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  TextInput,
   Dimensions,
-  ScrollView,
 } from 'react-native';
 import HTML from 'react-native-render-html';
 import ImageZoom from './ImageZoom';
+import ItemQuestion from './ItemQuestion';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+
 const { width, height } = Dimensions.get('window');
 export default class TaskResultComponent extends Component {
   onClickImage = (images) => () => {
@@ -111,8 +112,69 @@ export default class TaskResultComponent extends Component {
   };
 
   _onTop = () => {
-    this.refs.FlatList.scrollToIndex({ animated: true, index: 0 });
+    this.refsFlatList.scrollToIndex({ animated: true, index: 0 });
   };
+
+  changeAnswer = (item) => {
+    let resultStudent = '';
+    if (item.typeAnswer == 0) {
+      // dang bai tap trac nghiem
+      switch (item.userOptionId[0]) {
+        case 0:
+          resultStudent = 'A';
+          break;
+        case 1:
+          resultStudent = 'B';
+          break;
+        case 2:
+          resultStudent = 'C';
+          break;
+        case 3:
+          resultStudent = 'D';
+          break;
+
+        default:
+          resultStudent = '';
+          break;
+      }
+    } else if (item.typeAnswer == 3) {
+      // dang bai tap tu luan
+      resultStudent = item.userOptionText
+        ? item.userOptionText[0].replace(/(<p>||<\/p>)+/g, '')
+        : '';
+    };
+
+    return resultStudent;
+  }
+
+  onHandleNext = (item, index) => () => {
+    this.refsFlatList.scrollToIndex({ animated: true, index });
+  };
+
+  renderItemTaskResult = ({ item, index }) => {
+    return <ItemQuestion
+      item={item.dataStandard}
+      index={index}
+      onHandleNext={this.onHandleNext(item, index)}
+      answer={this.changeAnswer(item.dataStandard)}
+      backgroundColor={item.dataStandard.typeAnswer === 3 ? "#FFF" : item.dataStandard.rightAnswer ? '#10DA91' : '#FF6767'}
+      color={item.dataStandard.typeAnswer === 3 ? '#000' : '#FFF'}
+      style={{ borderColor: '#56CCF2', borderWidth: item.dataStandard.typeAnswer === 3 ? 1 : 0, overflow: 'hidden' }}
+    />
+  }
+
+  renderListHeaderComponent = () => {
+    let { dataForTaskResult } = this.props;
+    return (
+      <FlatList
+        data={dataForTaskResult}
+        renderItem={this.renderItemTaskResult}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={6}
+        style={{ paddingTop: 10, backgroundColor: '#fff', marginLeft: 8, paddingBottom: 10 }}
+      />
+    );
+  }
 
   render() {
     let { dataForTaskResult } = this.props;
@@ -141,35 +203,32 @@ export default class TaskResultComponent extends Component {
         {dataForTaskResult.length > 0 ? (
           <>
             <FlatList
-              ref="FlatList"
+              ref={ref => this.refsFlatList = ref}
               data={dataForTaskResult}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => index.toString()}
               showsVerticalScrollIndicator={false}
+              ListHeaderComponent={this.renderListHeaderComponent}
             />
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={styles.buttomTop}
               onPress={() => this._onTop()}>
-              <Image
-                source={require('../../asserts/appIcon/icUp.png')}
-                resizeMode="contain"
-                style={{ height: 20, width: 20 }}
-              />
+              <IconAntDesign name={'arrowup'} size={18} color={'#FFF'} />
               <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <ImageZoom ref={'ImageZoom'} />
           </>
         ) : (
-            <Text
-              style={{
-                fontFamily: 'Nunito-Regular',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: '#828282',
-              }}>
-              Hiện tại chưa có dữ liệu
-            </Text>
-          )}
+          <Text
+            style={{
+              fontFamily: 'Nunito-Regular',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#828282',
+            }}>
+            Hiện tại chưa có dữ liệu
+          </Text>
+        )}
       </View>
     );
   }
@@ -180,7 +239,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'#fff'
+    backgroundColor: '#fff'
   },
   wrapElement: {
     minHeight: 100,

@@ -312,7 +312,7 @@ export default class ModalCurriculum extends Component {
                         >
                           <AntDesign name='arrowleft' size={22} style={{ color: _.isEmpty(currentParent) ? '#ffffff40' : '#fff' }} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.handleHome} >
+                        <TouchableOpacity onPress={() => this.handleHome()} >
                           <Image
                             source={require('../../../asserts/icon/iconHome.png')}
                             style={{ height: 20, width: 20, tintColor: '#fff', marginRight: 10 }}
