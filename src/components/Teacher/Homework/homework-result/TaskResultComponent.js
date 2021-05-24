@@ -26,6 +26,7 @@ export default class TaskResultComponent extends Component {
   );
 
   renderItem = ({ item }) => {
+    console.log("🚀 ~ file: TaskResultComponent.js ~ line 29 ~ TaskResultComponent ~ item", item)
     let images = item.userImageAnswer || [];
     let resultStudent = '';
     if (item.typeAnswer == 0) {
@@ -50,45 +51,47 @@ export default class TaskResultComponent extends Component {
       }
     } else if (item.typeAnswer == 3) {
       // dang bai tap tu luan
-      resultStudent = item.userOptionText
-        ? item.userOptionText[0].replace(/(<p>||<\/p>)+/g, '')
-        : '';
-
       // resultStudent = item.userOptionText
-      //   ? item.userOptionText[0]
+      //   ? item.userOptionText[0].replace(/(<p>||<\/p>)+/g, '')
       //   : '';
+
+      resultStudent = item.userOptionText
+        ? item.userOptionText[0]
+        : '';
     }
     return (
       <View
         style={[
           styles.wrapElement,
-          { borderColor: item.rightAnswer ? '#6AD789' : '#DB3546' },
         ]}>
         <View style={styles.wrapHeaderElem}>
           <Text style={styles.txtIndex}>Câu {item.stepIndex + 1}</Text>
           <Text style={styles.txtScore}>
-            Điểm số: {item.scoreTeacher || item.score}/{item.maxScore}
+            {item.scoreTeacher || item.score}/{item.maxScore} điểm
           </Text>
         </View>
 
         <View style={styles.wrapView}>
-          <Text style={styles.answerStudent}>Học sinh trả lời: </Text>
-          {/* <TextInput
-            style={styles.inputTxt}
-            editable={false}
-            multiline={true}
-            value={resultStudent}
-          /> */}
-          <Text style={{ marginHorizontal: 10 }}>
-            {resultStudent}
-          </Text>
-          {/* <HTML html={resultStudent} containerStyle={{ marginHorizontal: 10 }} textSelectable={true}/> */}
+          <Text style={styles.answerStudent}>Câu trả lời của hs </Text>
+          {
+            item.typeAnswer === 0 ?
+              <Text style={{ marginHorizontal: 10 }}>
+                {resultStudent}
+              </Text>
+              :
+              <HTML
+                html={resultStudent}
+                containerStyle={{ marginHorizontal: 10, backgroundColor: '#FFF', padding: 20, alignSelf: 'center', width: '100%' }}
+                textSelectable={true}
+              />
+          }
           {images?.length > 0 ? (
             <FlatList
               data={images}
               renderItem={({ item }) => this.renderImage(item, images)}
               keyExtractor={(i, index) => index.toString()}
               horizontal={true}
+              style={{ backgroundColor: "#FFF", borderRadius: 5, padding: 10, }}
             />
           ) : null}
         </View>
@@ -96,14 +99,17 @@ export default class TaskResultComponent extends Component {
         {
           item.contentNoteTeacher ?
             <View style={styles.wrapView}>
-              <Text style={styles.notesTeacher}>Giáo viên nhận xét: </Text>
+              <Text style={styles.notesTeacher}>Nhận xét của Gv </Text>
               {/* <TextInput
             style={styles.inputTxt}
             editable={false}
             multiline={true}
             value={item.contentNoteTeacher?.replace(/(<p>||<\/p>)+/g, '')}
           /> */}
-              <HTML html={item.contentNoteTeacher} containerStyle={{ marginHorizontal: 10 }} />
+              <HTML
+                html={`<body style="color:#FFA113">${item.contentNoteTeacher}</body>`}
+                containerStyle={{ marginHorizontal: 10, borderRadius: 5, backgroundColor: '#FFF', padding: 10, alignSelf: 'center', width: '100%' }}
+              />
             </View>
             : null
         }
@@ -171,7 +177,7 @@ export default class TaskResultComponent extends Component {
         renderItem={this.renderItemTaskResult}
         keyExtractor={(item, index) => index.toString()}
         numColumns={6}
-        style={{ paddingTop: 10, backgroundColor: '#fff', marginLeft: 8, paddingBottom: 10 }}
+        style={{ paddingTop: 10, backgroundColor: '#fff', paddingBottom: 10, alignItems: 'center' }}
       />
     );
   }
@@ -202,14 +208,16 @@ export default class TaskResultComponent extends Component {
       <View style={styles.contain}>
         {dataForTaskResult.length > 0 ? (
           <>
-            <FlatList
-              ref={ref => this.refsFlatList = ref}
-              data={dataForTaskResult}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-              showsVerticalScrollIndicator={false}
-              ListHeaderComponent={this.renderListHeaderComponent}
-            />
+            <View style={{ backgroundColor: '#56ccf230' }}>
+              <FlatList
+                ref={ref => this.refsFlatList = ref}
+                data={dataForTaskResult}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={this.renderListHeaderComponent}
+              />
+            </View>
             <TouchableOpacity
               style={styles.buttomTop}
               onPress={() => this._onTop()}>
@@ -237,38 +245,32 @@ export default class TaskResultComponent extends Component {
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   wrapElement: {
-    minHeight: 100,
-    width: width - 40,
     padding: 10,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#6AD789',
-    marginVertical: 10,
+    borderBottomColor: '#FFF',
+    borderBottomWidth: 2,
   },
   wrapHeaderElem: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between',
   },
   txtIndex: {
     fontFamily: 'Nunito-Bold',
   },
   txtScore: {
-    fontFamily: 'Nunito-Regular',
-    color: '#FF6213',
+    fontFamily: 'Nunito-Bold',
+    color: '#028EFF',
+    marginHorizontal: 15,
   },
   answerStudent: {
     fontFamily: 'Nunito-Regular',
-    color: '#56CCF2',
+    color: '#828282',
   },
   notesTeacher: {
     fontFamily: 'Nunito-Regular',
-    color: '#F39120',
+    color: '#828282',
   },
   inputTxt: {
     borderWidth: 0.5,
@@ -282,6 +284,7 @@ const styles = StyleSheet.create({
   },
   wrapView: {
     marginTop: 10,
+    width: width - 20,
   },
   styImage: {
     width: 50,
