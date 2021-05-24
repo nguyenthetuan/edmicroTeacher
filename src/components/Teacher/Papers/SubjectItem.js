@@ -7,7 +7,7 @@ import {
     Image,
 } from 'react-native';
 import RippleButton from '../../common-new/RippleButton';
-import _ from 'lodash';
+import _, { isBuffer } from 'lodash';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/AntDesign';
 import AppIcon from '../../../utils/AppIcon';
@@ -24,17 +24,31 @@ export default class SubjectItem extends Component {
     }
 
     filterData = (data) => {
-        const { listSubjects } = this.props;
-        for (var i = data.length - 1; i >= 0; i--) {
-            if (listSubjects.indexOf(data[i])) {
+        let dataTMP = [];
+        let { listSubjects } = this.props;
+        listSubjects.map(e => {
+            return dataTMP.push(e.code);
+        })
+        for (let i = data.length - 1; i >= 0; i--) {
+            let index = dataTMP.indexOf(data[i]);
+            if (index < 0) {
+                let itemTMP = data[i];
                 data.splice(i, 1)
+
+                for (let j = dataTMP.length - 1; j > -1; j--) {
+                    let item = dataTMP[j];
+                    if (itemTMP.indexOf(item) >= 0) {
+                        data.push(item)
+                    }
+                }
             }
         }
-        console.log("data: ", data);
+        console.log("data after: ", data);
         return data;
     }
 
     renderItem = ({ item }) => {
+        console.log(item);
         const { listSubjects } = this.props;
         console.log('listSubjects', listSubjects)
         let data = listSubjects.filter(ele => ele.code == item);
@@ -51,7 +65,6 @@ export default class SubjectItem extends Component {
 
     render() {
         const { subjectActive, Icon, styleTitle, style } = this.props;
-        console.log('subjectxxx', subjectActive)
         return (
             <View>
                 <View style={styles.styWrapLabel}>
