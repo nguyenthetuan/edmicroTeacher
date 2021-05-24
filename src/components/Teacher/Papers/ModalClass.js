@@ -55,7 +55,7 @@ export default class ModalClass extends Component {
                 modalHeight={modalHeight}
                 title={'Chọn lớp'}
                 transparent={false}
-                >
+            >
                 <View style={{ width: width, flex: 1, backgroundColor: '#fff' }}>
                     <FlatList
                         data={listGrades}
@@ -64,6 +64,7 @@ export default class ModalClass extends Component {
                         style={styles.contain}
                         ListFooterComponent={() => <View style={{ height: outSideHeight }} />}
                         showsVerticalScrollIndicator={false}
+                        style={{ marginBottom: 20 }}
                     />
                 </View>
             </Modal >

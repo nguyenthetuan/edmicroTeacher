@@ -79,7 +79,7 @@ export default class ModalConfigLibrary extends Component {
     const converData =
       data && (data.length % 2 !== 0 ? [...data, { name: '' }] : data);
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         <View style={{ flex: 1 }}>
           <Text style={styles.txtTitle}>{title}</Text>
           <TouchableWithoutFeedback
@@ -145,7 +145,7 @@ export default class ModalConfigLibrary extends Component {
                       </Text>
                     </View>
                     <ScrollView
-                      showsVerticalScrollIndicator={false}
+                      showsVerticalScrollIndicator={true}
                       style={{ flex: 1 }}>
                       <FlatList
                         numColumns={colum}

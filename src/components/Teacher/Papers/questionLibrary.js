@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    marginTop: 13,
-    marginBottom: 16,
+    marginTop: 10,
+    marginBottom: 5,
   },
   styleBody: {
     flex: 1,

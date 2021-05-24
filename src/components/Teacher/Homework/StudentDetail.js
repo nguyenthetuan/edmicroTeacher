@@ -292,7 +292,7 @@ export default function StudentDetail(props) {
                                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
                                     <Text style={styles.txtTitleItem}>Kết quả</Text>
                                     <Text style={styles.txtPoint}>{status.result}</Text>
-                                    {
+                                    {/* {
                                         item.status === 4
                                             ?
                                             <View style={styles.viewOption}>
@@ -301,7 +301,7 @@ export default function StudentDetail(props) {
                                                     <Text style={styles.pointNew}>Điểm</Text>
                                                 </View>
                                             </View>
-                                            : null}
+                                            : null} */}
                                 </View>
                             </View>
                             : null

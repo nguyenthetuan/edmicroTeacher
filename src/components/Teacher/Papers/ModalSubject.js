@@ -65,6 +65,7 @@ export default class ModalSubject extends Component {
                         ListFooterComponent={() => <View style={{ height: outSideHeight }} />}
                         style={styles.contain}
                         showsVerticalScrollIndicator={false}
+                        style={{ marginBottom: 10 }}
                     />
                 </View>
             </Modal>
