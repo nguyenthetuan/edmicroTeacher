@@ -15,27 +15,22 @@ import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-community/async-storage';
 import SplashScreen from 'react-native-splash-screen';
 import HeaderMain from '../../common-new/HeaderMain';
-import HomeStyle from './HomeStyle';
-import WellcomeTxt from './WellcomeTxt';
-import StatisticHome from './StatisticHome';
-import DiaryActive from './DiaryActive';
+import LaboraStyle from './LaboraStyle';
 import apiUserHelper from '../../../services/apiUserHelper';
 import { LOGIN_TYPE, isExpried, isRefresh } from '../../../utils/AuthCommon';
 import dataHelper from '../../../utils/dataHelper';
 import { getUserByToken } from '../../../utils/Helper';
 import { setProfileUserAction } from '../../../actions/userAction';
+import ItemLaborary from './ItemLaborary';
 import {
-    statisticClassAction,
-    statisticMissionAction,
-    statisticAssignmentAction,
-    diaryActiveAction
+    laboratoryAction
 } from '../../../actions/statisticAction';
-import ShimerHome from './ShimerHome';
+import ShimerLabora from './ShimerLabora';
 const { height } = Dimensions.get('window');
 const { Value, timing } = Animated;
 
 
-class HomeScreen extends Component {
+class LaboratoryScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,14 +46,14 @@ class HomeScreen extends Component {
         await this.onRefreshToken();
         this.setTimeoutRefresh();
         this.initData();
-        // this.getDataStatistics();
+        // this.getDataLaboratory();
     }
 
     initData = async () => {
         const { token } = await dataHelper.getToken();
         const payload = getUserByToken(token);
         this.props.makeRequestProfile(payload);
-        this.getDataStatistics();
+        this.getDataLaboratory();
     }
     onRefresh = () => {
         this.initData();
@@ -137,14 +132,9 @@ class HomeScreen extends Component {
     }
 
 
-    getDataStatistics = async () => {
+    getDataLaboratory = async () => {
         const { token } = await dataHelper.getToken();
-        const schoolYear = new Date().getFullYear();
-        const enumType = 0;
-        this.props.fetchClassAction({ token, schoolYear });
-        this.props.fetchMissionAction({ token, enumType, schoolYear });
-        this.props.fetchAssignmentAction({ token, enumType, schoolYear });
-        this.props.fetchDiaryActiveAction({ token, enumType, schoolYear });
+        this.props.fetchLaboratory({ token });
     }
 
     componentWillUnmount() {
@@ -156,15 +146,14 @@ class HomeScreen extends Component {
     }
 
     render() {
-        const { user, isLoading, diaryActive, countdiaryActive } = this.props;
-        const { data } = this.state;
+        const { user, isLoading, laboratory } = this.props;
         return (
-            <View style={HomeStyle.container}>
-                <SafeAreaView style={HomeStyle.top} />
+            <View style={LaboraStyle.container}>
+                <SafeAreaView style={LaboraStyle.top} />
                 <HeaderMain
                     {...user}
                     navigation={this.props.navigation}
-                    showAvatar={true}
+                    showFillter={true}
                 />
                 <ScrollView
                     refreshControl={
@@ -175,21 +164,14 @@ class HomeScreen extends Component {
                     }
                     showsVerticalScrollIndicator={false}
                     style={{ paddingBottom: 50 }}>
-                    <WellcomeTxt />
-                    <View style={HomeStyle.body}>
-                        {
-                            isLoading ?
-                                <ShimerHome />
-                                :
-                                <StatisticHome
-                                    data={data}
-                                    navigation={this.props.navigation}
-                                />
-                        }
-                    </View>
-                    <View style={HomeStyle.bodyDiaryAc}>
-                        <DiaryActive diaryActive={diaryActive} countdiaryActive={countdiaryActive} />
-                    </View>
+                    {isLoading ?
+                        <ShimerLabora />
+                        :
+                        <ItemLaborary
+                            navigation={this.props.navigation}
+                            isLoading={isLoading}
+                            laboratory={laboratory} />
+                    }
                 </ScrollView>
             </View>
         )
@@ -200,27 +182,19 @@ class HomeScreen extends Component {
 const mapStateToProps = state => {
     return {
         user: state.user,
-        listClass: state.statistic.listClass,
-        mission: state.statistic.mission,
-        assignment: state.statistic.assignment,
         isLoading: state.statistic.isLoading,
-        classArray: state.statistic.classArray,
-        diaryActive: [state.statistic.diaryActive],
-        countdiaryActive: state.statistic.countdiaryActive
+        laboratory: state.statistic.laboratory,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         makeRequestProfile: payload => dispatch(setProfileUserAction(payload)),
-        fetchClassAction: payload => dispatch(statisticClassAction(payload)),
-        fetchMissionAction: payload => dispatch(statisticMissionAction(payload)),
-        fetchAssignmentAction: payload => dispatch(statisticAssignmentAction(payload)),
-        fetchDiaryActiveAction: payload => dispatch(diaryActiveAction(payload))
+        fetchLaboratory: payload => dispatch(laboratoryAction(payload)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LaboratoryScreen);
 
 
 

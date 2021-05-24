@@ -10,7 +10,9 @@ import {
     statisticMissionFaildAction,
     statisticAssignmentFaildAction,
     statisticClassFaildAction,
-    diaryActiveFaildAction
+    diaryActiveFaildAction,
+    laboratorySuccessAction,
+    laboratoryFaildAction
 } from '../actions/statisticAction';
 
 function* fetchStatisticClass(action) {
@@ -47,10 +49,19 @@ function* fetchDiaryActive(action) {
         yield put(diaryActiveFaildAction([]));
     }
 }
+function* fetchLaboratory(action) {
+    try {
+        const response = yield Api.getLaboratory(action.payload);
+        yield put(laboratorySuccessAction(response));
+    } catch (error) {
+        yield put(laboratoryFaildAction([]));
+    }
+}
 
 export function* watchApiStatistic() {
     yield takeLatest(Types.STATISTIC_CLASS_ACTION, fetchStatisticClass);
     yield takeLatest(Types.STATISTIC_MISSION_ACTION, fetchStatisticMission);
     yield takeLatest(Types.STATISTIC_ASSIGNMENT_ACTION, fetchStatisticAssignment);
     yield takeLatest(Types.DIARY_ACTIVE_ACTION, fetchDiaryActive);
+    yield takeLatest(Types.LABORATORY_ACTION, fetchLaboratory);
 }
