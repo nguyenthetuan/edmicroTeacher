@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-
+import shadowStyle from '../../../themes/shadowStyle';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const { width, height } = Dimensions.get('window');
 const row_width = width - 150;
 
 export default class ShimerMockExam extends Component {
+
     render() {
+        const { shadowBtn } = shadowStyle;
         return (
-            <View style={[styles.container]}>
+            <View style={[styles.container, shadowBtn]}>
                 <View style={{ alignItems: 'center', marginBottom: 10, }}>
                     <ShimmerPlaceHolder visible={false}
                         style={[{
@@ -148,16 +150,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: '#FFF',
         paddingVertical: 30,
-
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
     },
     styWrap: {
         flexDirection: 'row',

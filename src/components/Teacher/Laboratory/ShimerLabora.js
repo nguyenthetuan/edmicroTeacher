@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-
+import shadowStyle from '../../../themes/shadowStyle';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const { width, height } = Dimensions.get('window');
@@ -10,9 +10,10 @@ const row_width = width - 150;
 
 export default class ShimerLabora extends Component {
     render() {
+        const { shadowBtn } = shadowStyle;
         return (
             <View>
-                <View style={[styles.bgheader]}>
+                <View style={[styles.bgheader, shadowBtn]}>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{
                             marginBottom: 10,
@@ -30,7 +31,7 @@ export default class ShimerLabora extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -55,7 +56,7 @@ export default class ShimerLabora extends Component {
                         </View>
                     </View>
 
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -81,7 +82,7 @@ export default class ShimerLabora extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -106,7 +107,7 @@ export default class ShimerLabora extends Component {
                         </View>
                     </View>
 
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -132,7 +133,7 @@ export default class ShimerLabora extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -157,7 +158,7 @@ export default class ShimerLabora extends Component {
                         </View>
                     </View>
 
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -183,7 +184,7 @@ export default class ShimerLabora extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -208,7 +209,7 @@ export default class ShimerLabora extends Component {
                         </View>
                     </View>
 
-                    <View style={[styles.container]}>
+                    <View style={[styles.container, shadowBtn]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{
                                 marginBottom: 10,
@@ -250,14 +251,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: '#FFF',
         paddingVertical: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 3,
     },
     styWrap: {
         flexDirection: 'row',
@@ -274,13 +267,5 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: '#FFF',
         paddingVertical: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 3,
     }
 });
