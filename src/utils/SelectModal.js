@@ -128,7 +128,7 @@ class SelectModal extends Component {
                                                             color: isSelected ? '#2D9CDB' : '#828282',
                                                             paddingHorizontal: 6,
                                                         }}>
-                                                        {name} ({getAssigmentStatus(item.status)})
+                                                        {name} {getAssigmentStatus(item.status)}
                                                     </Text>
                                                 </TouchableOpacity>
                                             );
