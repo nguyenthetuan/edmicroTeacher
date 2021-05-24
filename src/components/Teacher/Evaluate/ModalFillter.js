@@ -52,10 +52,11 @@ export default class ModalFillter extends Component {
       classSubjectIndex,
       testIndex,
     } = payload;
+    console.log('classSubjectIndex', classSubjectIndex);
     return (
       <Modal
         ref={ref => this.modalizeRef = ref}
-        modalHeight={height - height / 8}
+        modalHeight={height - height / 6}
         closeModal={this.changeStateModale}
       >
         <View style={styles.contain}>
@@ -89,7 +90,6 @@ export default class ModalFillter extends Component {
             contentStyle={styles.contentStyle}
             indexSelected={testIndex}
           />
-
           <TouchableWithoutFeedback onPress={this.handleFilter}>
             <View style={[styles.btnViewStatistic, { ...shadowBtn }]}>
               <Text style={styles.txtBtn}>Xem đánh giá</Text>

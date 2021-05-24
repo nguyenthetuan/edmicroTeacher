@@ -36,9 +36,9 @@ class EvaluateDraScreen extends Component {
             classSubject: [],
             tests: [],
             isShowFillter: false,
-            yearIndex: -1,
-            classSubjectIndex: -1,
-            testIndex: -1,
+            yearIndex: 0,
+            classSubjectIndex: 0,
+            testIndex: 0,
             scores: [],
             currentExamTest: {},
         };
@@ -106,6 +106,7 @@ class EvaluateDraScreen extends Component {
 
     componentDidMount() {
         this.getDataStaticExam();
+        this._handleClickFillter();
     }
 
     _fillter = (key, value) => {
