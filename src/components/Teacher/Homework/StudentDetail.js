@@ -25,6 +25,7 @@ import shadowStyle from '../../../themes/shadowStyle';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
 import FastImage from 'react-native-fast-image'
+import ProgressRefresh from './ProgressRefresh';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -261,15 +262,6 @@ export default function StudentDetail(props) {
     const [dataResult, setDataResult] = useState(null);
     const [isLoading, setisLoading] = useState(false);
 
-    React.useEffect(() => {
-        const timeRefresh = setInterval(() => {
-            props.screenProps.refreshData();
-        }, 60 * 1000);
-        return () => {
-            clearTimeout(timeRefresh);
-        }
-    }, [])
-
     const handleRetryCheckPoint = async (studentId) => {
         if (dataDetail) {
             setDetail('');
@@ -343,6 +335,24 @@ export default function StudentDetail(props) {
         }
     }
 
+    const onNavigate = (item) => {
+        const { status } = item;
+        const assignmentId = props.screenProps?.data?.data.assignmentId;
+        const name = props.screenProps?.data?.data.name;
+        const dataSelected = { assignmentId, name };
+        switch (status) {
+            case 6:
+                props.screenProps.navigation.navigate('MarkingView', {
+                    item: dataSelected,
+                    statusbar: 'light-content'
+                });
+                return;
+            default:
+                return;
+
+        }
+    }
+
     const renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
@@ -359,12 +369,14 @@ export default function StudentDetail(props) {
                     }
                 </View>
                 <View style={styles.contentItem}>
-                    <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>
-                        <Text style={[styles.txtStatus,
-                        { color: status.color }]}>
-                            {status.title}
-                        </Text>
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => onNavigate(item)}>
+                        <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>
+                            <Text style={[styles.txtStatus,
+                            { color: status.color }]}>
+                                {status.title}
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                     <Text style={styles.txtNameItem}>{item.nameStudent}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <View>
@@ -433,25 +445,11 @@ export default function StudentDetail(props) {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
-            {props.screenProps.isRefresh ?
-                <Progress.Bar
-                    style={{ marginTop: 1, marginBottom: 8 }}
-                    indeterminate={true}
-                    width={375}
-                    indeterminateAnimationDuration={900}
-                    unfilledColor={'#ECECEC'}
-                    color={'#fff'}
-                    borderRadius={0}
-                    height={6}
-                    borderWidth={0}
-                />
-                :
-                <View style={{ height: 15 }} />
-            }
+            <ProgressRefresh isRefresh={props.screenProps.isRefresh} />
             {
-                // props.screenProps.isLoading
-                //     ? <ActivityIndicator size='small' color='#04C6F1' />
-                //     :
+                props.screenProps.isLoading
+                    ? <ActivityIndicator size='small' color='#04C6F1' />
+                    :
                 _.isEmpty(props.screenProps.data) ?
                     (
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>

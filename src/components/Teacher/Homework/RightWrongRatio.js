@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Imag
 import { Svg, Line } from 'react-native-svg';
 import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
+import ProgressRefresh from './ProgressRefresh';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
@@ -16,6 +17,7 @@ export default function RightWrongRatio(props) {
   }
   return (
     <View style={styles.container}>
+      <ProgressRefresh isRefresh={props.screenProps.isRefresh} />
       {
         props.screenProps.isLoading
           ? <ActivityIndicator size='small' color='#04C6F1' />
