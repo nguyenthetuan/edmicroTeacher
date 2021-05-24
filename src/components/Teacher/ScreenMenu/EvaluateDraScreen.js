@@ -41,6 +41,7 @@ class EvaluateDraScreen extends Component {
             testIndex: 0,
             scores: [],
             currentExamTest: {},
+            isMounted: false,
         };
     }
     renderHeader = () => {
@@ -106,7 +107,14 @@ class EvaluateDraScreen extends Component {
 
     componentDidMount() {
         this.getDataStaticExam();
-        this._handleClickFillter();
+        this.showFillter = setTimeout(() => {
+            this._handleClickFillter();
+        }, 500);
+    }
+    componentWillUnmount() {
+        if (this.showFillter) {
+            clearTimeout(this.showFillter);
+        }
     }
 
     _fillter = (key, value) => {
