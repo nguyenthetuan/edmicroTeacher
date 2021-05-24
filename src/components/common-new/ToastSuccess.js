@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     styleTostSuccess: {
         flex: 1,
         height: 70,
-        width: width - 70,
+        // width: width - 70,
+        paddingHorizontal: 20,
         backgroundColor: '#16BDA9',
         flexDirection: 'row',
         justifyContent: 'space-between',

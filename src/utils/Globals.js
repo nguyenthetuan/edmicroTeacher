@@ -71,5 +71,6 @@ module.exports = {
   resetDataPracticeAdd: () => { },
   resetDataTestAdd: () => { },
   resetDataSelect: () => { },
-  nextToStepThreePDF: () => { }
+  nextToStepThreePDF: () => { },
+  handleRework: () => { }
 };

@@ -44,7 +44,6 @@ export default class CopyFromSubjectExists extends Component {
 
     componentDidMount() {
         const { listSubjects } = this.props.navigation.state.params;
-        console.log("componentDidMount listSubjects: ", listSubjects);
         let subjectCode = [listSubjects[0].code];
         this.setState({ subjectCode });
         this.getDetailSubject(subjectCode)
@@ -107,7 +106,7 @@ export default class CopyFromSubjectExists extends Component {
         if (token) {
             const response = await apiPapers.getLearingTarget({
                 token: token,
-                subjectCode: subjectCode,
+                curriculumCode: subjectCode,
             });
             this.setState({ targetLearning: !response ? [] : response });
         }
@@ -123,7 +122,6 @@ export default class CopyFromSubjectExists extends Component {
         let gradeCodes = null;
         let knowledgeUnits = this.state.knowledgeUnits;
         let name = this.state.searchName;
-        console.log("🚀 ~ file: CopyFromSubjectExists.js ~ line 121 ~ CopyFromSubjectExists ~ findPremadeLib ~ this.state.searchName", this.state.searchName)
         if (!indexPage) {
             this.setState({ isLoading: true });
         }
@@ -284,6 +282,7 @@ export default class CopyFromSubjectExists extends Component {
                                 <ModalCurriculum
                                     title="Đơn vị kiến thức"
                                     // height={this.state.height}
+                                    curriculumCode={this.state.currentCurriculum}
                                     data={this.state.targetLearning}
                                     onPress={(value) => this.onPress(value)}
                                     styleTitle={{ color: '#fff' }}

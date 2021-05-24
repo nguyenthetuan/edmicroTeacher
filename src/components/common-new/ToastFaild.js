@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     styleTostFaild: {
         // flex: 1,
         height: 30,
-        width: width - 150,
+        // width: width - 150,
+        paddingHorizontal: 20,
         backgroundColor: '#000',
         // flexDirection: 'row',
         justifyContent: "center",

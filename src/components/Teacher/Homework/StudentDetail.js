@@ -26,6 +26,7 @@ import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
 import FastImage from 'react-native-fast-image'
 import ProgressRefresh from './ProgressRefresh';
+import Global from '../../../utils/Globals';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -132,128 +133,6 @@ const rework = async ({ assignId, studentId }) => {
     return 'Có lỗi xảy ra vui lòng thử lại!';
 }
 
-function ModalDetail(props) {
-    const item = props.data;
-    const progress = getProcess(item);
-    const status = getStatus(item);
-    const point = props.point;
-
-    const goToResult = () => {
-        const { assignmentContentType } = props.dataResult.data;
-        props.onClose();
-        if (assignmentContentType == AssignmentContentType.pdf) {
-            props.navigation.navigate('SchoolResultPDF', {
-                responseJson: props.dataResult,
-                nameTest: item.nameStudent,
-                statusbar: 'light-content',
-            });
-        } else if (assignmentContentType == AssignmentContentType.regular) {
-            props.navigation.navigate('HomeWorkResult', {
-                responseJson: props.dataResult,
-                nameTest: item.nameStudent,
-                statusbar: 'light-content',
-            });
-        }
-    }
-    let arrayOrdered = [];
-    for (const ob in item.questionResult) {
-        arrayOrdered.push({ [ob]: item.questionResult[ob] });
-    }
-    arrayOrdered = arrayOrdered.sort((a, b) => {
-        return Object.keys(a)[0].localeCompare(Object.keys(b)[0]);
-    })
-
-    return (
-        <View style={styles.centeredView}>
-            <Modal
-                animationType="fade"
-                transparent={true}
-            >
-                <View style={{
-                    flex: 1,
-                    backgroundColor: 'rgba(0,0,0,0.6)'
-                }}>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => props.onClose()} />
-                    <View style={styles.modalView}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={styles.viewAvatarModal}>
-                                {
-                                    item.avatar && !item.avatar.includes('no-avatar')
-                                        ?
-                                        <FastImage source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
-                                        :
-                                        <Text style={styles.txtAvatarModal}>{nameToAvatar(item.nameStudent)}</Text>
-                                }
-                                <View style={[styles.dotOnlineModal, { backgroundColor: '#E0E0E0' }]} />
-                            </View>
-                            <View style={styles.contentModal}>
-                                <Text style={styles.txtNameModal}>{item.nameStudent}</Text>
-                                <View style={styles.viewContentModal}>
-                                    <View>
-                                        <Text style={styles.txtTitleItem}>Mức độ hoàn thành</Text>
-                                        <View style={{ flexDirection: 'row', marginTop: 2 }}>
-                                            <Text style={styles.txtProcess}>{item.point}/{item.totalPoint}</Text>
-                                            <View style={{ width: 1, height: 14, backgroundColor: '#D0EFF9' }} />
-                                            <Text style={styles.txtPercentProcess}>{Number.parseFloat(progress).toFixed(2)}%</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.viewResult} />
-                                    <View>
-                                        <Text style={styles.txtTitleItem}>Điểm số</Text>
-                                        <Text style={[styles.txtPoint, { marginTop: 2 }]}>{point}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            style={{ marginTop: 25 }}
-                            data={arrayOrdered}
-                            numColumns={5}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item, index }) => {
-                                const colors = ['#B1D8EE', '#4EBE3C', '#FF3D3D'];
-                                return (
-                                    <View style={{
-                                        marginHorizontal: 8,
-                                        marginBottom: 6,
-                                        width: 20,
-                                        height: 20,
-                                        backgroundColor: Object.values(item) > -1 && Object.values(item) < 3 ? colors[Object.values(item)] : colors[0]
-                                    }} >
-                                    </View>
-                                )
-                            }}
-                        />
-                        <TouchableWithoutFeedback
-                            onPress={goToResult}
-                        >
-                            <Text style={[styles.txtBtn, { fontSize: 14, color: '#000' }]}>Xem kết quả</Text>
-                        </TouchableWithoutFeedback>
-                        <View style={styles.viewOptionModal}>
-                            <TouchableWithoutFeedback
-                                onPress={() => props.onRetryPoint(item.studentId)}>
-                                <View style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
-                                    <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
-                                    <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback
-                                onPress={() => props.onRework(item.studentId)}>
-                                <View style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
-                                    <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
-                                    <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => props.onClose()} />
-                </View>
-            </Modal>
-        </View >
-    )
-}
-
 export default function StudentDetail(props) {
     const toast = useRef();
 
@@ -283,26 +162,30 @@ export default function StudentDetail(props) {
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
                 {
-                    text: 'Có', onPress: async () => {
-                        if (dataDetail) {
-                            setDetail('');
-                        }
-                        const res = await rework({ assignId: props.screenProps?.data?.data.assignId, studentId });
-                        if (!res) {
-                            props.screenProps.refreshData();
-                            toast.current.show(<ToastSuccess title={'Yêu cầu làm lại bài tập thành công!'} />, 3000);
-                        } else {
-                            // Global.updateHomeWork();
-                            // toast.current.show(res);
-                            toast.current.show(<ToastFaild title={res} />);
-                        }
-                    }
+                    text: 'Có', onPress: handleReworkCallApi(studentId)
                 },
                 { text: 'Không', onPress: () => { } },
             ],
             { cancelable: false }
         );
     }
+
+    const handleReworkCallApi = (studentId) => async () => {
+        if (dataDetail) {
+            setDetail('');
+        }
+        const res = await rework({ assignId: props.screenProps?.data?.data.assignId, studentId });
+        if (!res) {
+            props.screenProps.refreshData();
+            toast.current.show(<ToastSuccess title={'Yêu cầu làm lại bài tập thành công!'} />, 3000);
+        } else {
+            // Global.updateHomeWork();
+            // toast.current.show(res);
+            toast.current.show(<ToastFaild title={res} />, 3000);
+        }
+    }
+
+    Global.handleRework = handleReworkCallApi;
 
     const goToResult = item => async () => {
         setisLoading(true);
@@ -316,6 +199,7 @@ export default function StudentDetail(props) {
                 responseJson: response,
                 nameTest: item.nameStudent,
                 statusbar: 'light-content',
+                studentId: item.studentId
             });
         } else if (assignmentContentType == AssignmentContentType.regular) {
             props.screenProps.navigation.navigate('HomeWorkResult', {
@@ -479,10 +363,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     containerItem: {
-        // borderColor: '#56CCF2',
         backgroundColor: '#fff',
         borderRadius: 2,
-        // borderWidth: 0.5,
         margin: 16,
         flexDirection: 'row',
         paddingVertical: 12
