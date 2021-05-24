@@ -19,15 +19,31 @@ class DetailLabora extends Component {
         super(props);
         this.state = {
             // activeSlide: 0,
-            isLoading: true
+            isMounted: false
         };
     }
+
+
+    componentDidMount() {
+        this.timeMounted = setTimeout(() => {
+            this.setState({ isMounted: true });
+        }, 350);
+
+    }
+
+    componentWillUnmount() {
+        if (this.timeMounted) {
+            clearTimeout(this.timeMounted);
+        }
+    }
+
     render() {
         const {
             laboratory,
             isLoading
         } = this.props;
         const { shadowBtn } = shadowStyle;
+        const { isMounted } = this.state;
         const item = this.props.navigation.state.params.item;
         return (
             <View style={LaboraStyle.ViewBg}>
@@ -37,9 +53,12 @@ class DetailLabora extends Component {
                     navigation={this.props.navigation}
                     color={'#fff'}
                 />
-                <WebView source={{ uri: item.urlFile }}
-                    style={{ backgroundColor: '#000' }}
-                />
+                { isMounted &&
+                    <WebView source={{ uri: item.urlFile }}
+                        style={{ backgroundColor: '#000' }}
+                    />
+
+                }
             </View>
         )
     }
