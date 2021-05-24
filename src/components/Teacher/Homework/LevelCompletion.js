@@ -20,7 +20,7 @@ export default function LevelCompletion(props) {
       props.screenProps.refreshData();
     }, 60 * 1000);
     return () => {
-      clearTimeout(timeRefresh);
+      clearInterval(timeRefresh);
     }
   }, [])
 

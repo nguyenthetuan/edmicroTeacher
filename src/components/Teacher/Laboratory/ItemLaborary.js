@@ -91,7 +91,7 @@ class ItemLaborary extends Component {
                     <ActivityIndicator color={'#828282'} size={'small'} style={styles.ActivityIndicator} />
                     :
                     <FlatList
-                        data={[]}
+                        data={laboratory}
                         keyExtractor={(item, index) => index.toString()}
                         ListHeaderComponent={this.renderHeader}
                         renderItem={this.renderItem}
