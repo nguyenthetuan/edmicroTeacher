@@ -128,8 +128,8 @@ const initTab = createMaterialTopTabNavigator(
 const Tab = createAppContainer(initTab);
 
 const indexSelected = {
-    grade: 0,
-    subject: 0,
+    grade: -1,
+    subject: -1,
     homework: 0,
     class: 0,
 };
