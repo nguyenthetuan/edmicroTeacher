@@ -128,11 +128,12 @@ const initTab = createMaterialTopTabNavigator(
 const Tab = createAppContainer(initTab);
 
 const indexSelected = {
-    grade: -1,
-    subject: -1,
+    grade: 0,
+    subject: 0,
     homework: 0,
     class: 0,
 };
+
 
 function HomeWorkDraScreen(props) {
     const toast = useRef();
@@ -149,9 +150,16 @@ function HomeWorkDraScreen(props) {
     const [timeExport, setTimeExport] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isRefresh, setRefresh] = useState(false);
+    // const [isMounted, setMonted] = useState(false)
 
     useEffect(() => {
         handlerShowTourView();
+        const showPopup = setTimeout(() => {
+            onClickFillter();
+        }, 500);
+        return () => {
+            clearTimeout(showPopup);
+        }
     }, []);
 
     const handlerShowTourView = async () => {
