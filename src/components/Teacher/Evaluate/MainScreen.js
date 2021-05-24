@@ -185,7 +185,7 @@ class MainScreen extends Component {
     const { user } = this.props;
     return (
       <SafeAreaView style={styles.container}>
-        <HeaderMain {...user} navigation={this.props.navigation} />
+        <HeaderMain {...user} navigation={this.props.navigation} showAvatar={true}/>
         <ScrollView
           style={{ zIndex: 1 }}
           contentContainerStyle={{ paddingTop: 5 }}

@@ -50,6 +50,8 @@ import HomeWorkDraScreen from '../components/Teacher/ScreenMenu/HomeWorkDraScree
 import EvaluateDraScreen from '../components/Teacher/ScreenMenu/EvaluateDraScreen';
 import HomeScreen from '../components/Teacher/Home/HomeScreen';
 import StepFourPDF from '../components/Teacher/Papers/UploadPDF/StepFourPDF';
+import LaboratoryScreen from '../components/Teacher/Laboratory/LaboratoryScreen';
+import DetailLabora from '../components/Teacher/Laboratory/DetailLabora';
 const LockNavigationOptions = {
   header: null,
   gesturesEnabled: false
@@ -230,6 +232,14 @@ const TeacherStack = createStackNavigator({
   },
   MissionDraScreen: {
     screen: MissionDraScreen,
+    navigationOptions: LockNavigationOptions,
+  },
+  LaboratoryScreen: {
+    screen: LaboratoryScreen,
+    navigationOptions: LockNavigationOptions,
+  },
+  DetailLabora: {
+    screen: DetailLabora,
     navigationOptions: LockNavigationOptions,
   },
   // WebViews:{

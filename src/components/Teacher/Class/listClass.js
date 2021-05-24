@@ -48,6 +48,7 @@ class ListClass extends React.Component {
         <HeaderMain
           {...user}
           navigation={navigation}
+          showAvatar={true}
         />
         {isLoading ?
           <ClassHolder />

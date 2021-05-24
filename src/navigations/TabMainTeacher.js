@@ -13,7 +13,8 @@ import classIcon from '../asserts/icon/icon_class_unactive.png';
 import classIconActive from '../asserts/icon/icon_class_active.png';
 import FreshchatComponent from '../utils/FreshchatComponent';
 import MissionScreen from '../containers/teacher/Mission/MissionContainer';
-import HomeScreen from '../components/Teacher/Home/HomeScreen'
+import HomeScreen from '../components/Teacher/Home/HomeScreen';
+import LaboratoryScreen from '../components/Teacher/Laboratory/LaboratoryScreen';
 import { RFFonsize } from '../utils/Fonts';
 const { width, height } = Dimensions.get('window');
 
@@ -133,6 +134,36 @@ const TabMainTeacher = createBottomTabNavigator(
               <Text style={styles.txtLabel}>Nhiệm vụ</Text>
             ) : (
                 <Text style={styles.txtLabelActive}>Nhiệm vụ</Text>
+              );
+          },
+      },
+    },
+    Laboratory: {
+      screen: LaboratoryScreen,
+      navigationOptions: {
+        title: 'Thí nghiệm',
+        tabBarIcon: ({ tintColor, focused }) => {
+          return !focused ? (
+            <Image
+              color={tintColor}
+              source={AppIcon.icon_laboratoryNActive}
+              resizeMode={'contain'}
+            />
+          ) : (
+              <Image
+                color={tintColor}
+                source={AppIcon.icon_laboratoryActive}
+                resizeMode={'contain'}
+              />
+            );
+        },
+        tabBarLabel: Platform.isPad
+          ? 'Thí nghiệm'
+          : ({ focused }) => {
+            return !focused ? (
+              <Text style={styles.txtLabel}>Thí nghiệm</Text>
+            ) : (
+                <Text style={styles.txtLabelActive}>Thí nghiệm</Text>
               );
           },
       },
@@ -267,7 +298,7 @@ class TabBarComponent extends React.Component {
   render() {
     return (
       <View>
-        <FreshchatComponent navigation={this.props.navigation}/>
+        <FreshchatComponent navigation={this.props.navigation} />
         <BottomTabBar {...this.props} />
       </View>
     );
