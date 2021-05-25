@@ -14,6 +14,8 @@ import {
     RefreshControl
 } from 'react-native';
 import * as Progress from 'react-native-progress';
+import moment from 'moment';
+import localization from 'moment/locale/vi'
 import ProgressBar from '../../libs/ProgressBar';
 import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
@@ -86,6 +88,13 @@ const getStatus = (item, point) => {
                 title: 'Chờ chấm điểm',
                 color: '#fff',
                 backgroundColor: "#d89a29",
+                result: 'Chưa có'
+            };
+        case 10:
+            return {
+                title: 'Đang chấm điểm',
+                color: '#fff',
+                backgroundColor: "#a74aa7",
                 result: 'Chưa có'
             };
         default:
@@ -237,6 +246,10 @@ export default function StudentDetail(props) {
         }
     }
 
+    const getTimeFromNow = (timeStart) => {
+        return moment(timeStart * 1000).fromNow();
+    }
+
     const renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
@@ -275,9 +288,12 @@ export default function StudentDetail(props) {
                         <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 20 }]}>{Number.parseFloat(progress).toFixed(2)}%</Text>
                     </View>
                     <View style={styles.viewContent}>
-                        <View style={{ flexDirection: 'row', flex: 1 }}>
+                        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
+                            {item.status == 2 &&
+                                <Text style={styles.textOnline}>{getTimeFromNow(item.timeStart)}</Text>
+                            }
                         </View>
 
                     </View>
@@ -334,22 +350,22 @@ export default function StudentDetail(props) {
                 props.screenProps.isLoading
                     ? <ActivityIndicator size='small' color='#04C6F1' />
                     :
-                _.isEmpty(props.screenProps.data) ?
-                    (
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                            <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
-                        </View>
-                    )
-                    : (<View style={styles.container}>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
-                            keyExtractor={(item, index) => index.toString()}
-                            extraData={props.data}
-                            renderItem={renderItem}
-                        />
-                    </View>)
+                    _.isEmpty(props.screenProps.data) ?
+                        (
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                                <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
+                            </View>
+                        )
+                        : (<View style={styles.container}>
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={props.data}
+                                renderItem={renderItem}
+                            />
+                        </View>)
 
 
             }
@@ -585,5 +601,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 3,
         color: "#DB422D",
         alignSelf: 'center'
+    },
+    textOnline: {
+        fontFamily: 'Nunito-Regular',
+        color: '#979797',
+        fontSize: RFFonsize(11)
     }
 })

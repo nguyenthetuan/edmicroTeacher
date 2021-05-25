@@ -44,11 +44,11 @@ export default function LevelCompletion(props) {
 
     const dataChart = [
       {
-        students: total !== 0 ? count / total * 100 : 0,
+        students: data.data?.totalUser !== 0 ? data.data?.totalUserSubmit / data.data?.totalUser * 100 : 0,
         color: "#04C6F1"
       },
       {
-        students: total !== 0 ? 100 - (count / total * 100) : 100,
+        students: data.data?.totalUser !== 0 ? 100 - (data.data?.totalUserSubmit / data.data?.totalUser * 100) : 100,
         color: "#6C7988"
       }
     ]
@@ -70,11 +70,11 @@ export default function LevelCompletion(props) {
           </View>
           <View style={styles.viewPercentChartCircle}>
             <Text style={styles.txtPercentChartCircle}>
-              {data && Common.roundNumberOne(count / total * 100)}%
+              {data && Common.roundNumberOne(data.data?.totalUserSubmit / data.data?.totalUser * 100)}%
                             </Text>
           </View>
         </View>
-        <Text style={styles.txtLeftChartCircle}>{count} trong số {total} học sinh</Text>
+        <Text style={styles.txtLeftChartCircle}>{data.data?.totalUserSubmit} trong số {data.data?.totalUser} học sinh</Text>
       </View>
     )
   }

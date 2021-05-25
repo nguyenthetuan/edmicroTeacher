@@ -3,15 +3,16 @@ import {
     View,
     Image,
     StyleSheet,
-    Modal,
     Text,
     Platform,
     Dimensions,
     TouchableWithoutFeedback
 } from 'react-native';
+import Modal from 'react-native-modal';
 import RippleButton from '../../common-new/RippleButton';
 import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
+import ZoomAnim from '../../anim/ZoomAnim';
 
 const { width, height } = Dimensions.get('window');
 
@@ -24,72 +25,75 @@ export default class ModalAddPaper extends PureComponent {
             <Modal
                 visible={visibleModalAdd}
                 transparent={true}
-                animationType={'fade'}>
+                style={{ margin: 0, padding: 0 }}
+                animationType={'none'}>
                 <View
                     style={styles.containerModal}>
-                    <View style={styles.contentModal}>
-                        <View style={styles.topModal}>
-                            <Text style={styles.txtTitleModal}>Tạo bộ đề</Text>
-                            <View style={{ position: 'absolute', right: 5, top: 3 }}>
-                                <TouchableWithoutFeedback hitSlop={{
-                                    left: 10, right: 10
-                                }} onPress={this.props.closeModal} >
-                                    <Image
-                                        source={require('../../../asserts/icon/icCloseModal.png')}
-                                        style={{ height: 22, width: 22 }}
-                                    />
-                                </TouchableWithoutFeedback>
-                            </View>
-                        </View>
-                        <Text style={styles.textTilteModal}>Hãy chọn loại bộ đề muốn tạo</Text>
-                        <View style={{ width: '100%', alignItems: 'center' }}>
-                            <Image
-                                source={require('../../../asserts/icon/icPersonModalCloud.png')}
-                                style={{ width: width * 0.5, height: width * 0.26 }}
-                                resizeMode="contain"
-                            />
-                        </View>
-                        <View style={styles.bodyModal}>
-                            <View style={styles.flexOption}>
-                                <RippleButton onPress={this.props.onPress}>
-                                    <View style={styles.columnAdd}>
+                    <ZoomAnim>
+                        <View style={styles.contentModal}>
+                            <View style={styles.topModal}>
+                                <Text style={styles.txtTitleModal}>Tạo bộ đề</Text>
+                                <View style={{ position: 'absolute', right: 5, top: 3 }}>
+                                    <TouchableWithoutFeedback hitSlop={{
+                                        left: 10, right: 10
+                                    }} onPress={this.props.closeModal} >
                                         <Image
-                                            source={require('../../../asserts/icon/cloud.png')}
+                                            source={require('../../../asserts/icon/icCloseModal.png')}
+                                            style={{ height: 22, width: 22 }}
                                         />
-                                        <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
-                                    </View>
-                                </RippleButton>
-                                <RippleButton onPress={this.props.onPressCopy}>
-                                    <View style={styles.columnAdd}>
-                                        <Image
-                                            source={require('../../../asserts/icon/icon-saochepbode.png')}
-                                        />
-                                        <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
-                                    </View>
-                                </RippleButton>
+                                    </TouchableWithoutFeedback>
+                                </View>
                             </View>
+                            <Text style={styles.textTilteModal}>Hãy chọn loại bộ đề muốn tạo</Text>
+                            <View style={{ width: '100%', alignItems: 'center' }}>
+                                <Image
+                                    source={require('../../../asserts/icon/icPersonModalCloud.png')}
+                                    style={{ width: width * 0.5, height: width * 0.26 }}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                            <View style={styles.bodyModal}>
+                                <View style={styles.flexOption}>
+                                    <RippleButton onPress={this.props.onPress}>
+                                        <View style={styles.columnAdd}>
+                                            <Image
+                                                source={require('../../../asserts/icon/cloud.png')}
+                                            />
+                                            <Text style={styles.txtUpload}>Từ câu hỏi có sẵn</Text>
+                                        </View>
+                                    </RippleButton>
+                                    <RippleButton onPress={this.props.onPressCopy}>
+                                        <View style={styles.columnAdd}>
+                                            <Image
+                                                source={require('../../../asserts/icon/icon-saochepbode.png')}
+                                            />
+                                            <Text style={styles.txtUpload}>Bộ đề có sẵn</Text>
+                                        </View>
+                                    </RippleButton>
+                                </View>
 
-                            <View style={styles.flexOption}>
-                                <RippleButton onPress={this.props.onPressUploadPDF}>
-                                    <View style={styles.columnAdd}>
-                                        <Image
-                                            source={require('../../../asserts/icon/dowload.png')}
-                                        />
-                                        <Text style={styles.txtUpload}>Upload file .PDF</Text>
-                                    </View>
-                                </RippleButton>
-                                <RippleButton onPress={this.props.onPressCamera}>
-                                    <View style={styles.columnAdd}>
-                                        <Image
-                                            source={require('../../../asserts/icon/icon_paperCamera.png')}
-                                            style={{ tintColor: '#2D9CDB' }}
-                                        />
-                                        <Text style={styles.txtUpload}>Tạo bộ đề bằng camera</Text>
-                                    </View>
-                                </RippleButton>
+                                <View style={styles.flexOption}>
+                                    <RippleButton onPress={this.props.onPressUploadPDF}>
+                                        <View style={styles.columnAdd}>
+                                            <Image
+                                                source={require('../../../asserts/icon/dowload.png')}
+                                            />
+                                            <Text style={styles.txtUpload}>Upload file .PDF</Text>
+                                        </View>
+                                    </RippleButton>
+                                    <RippleButton onPress={this.props.onPressCamera}>
+                                        <View style={styles.columnAdd}>
+                                            <Image
+                                                source={require('../../../asserts/icon/icon_paperCamera.png')}
+                                                style={{ tintColor: '#2D9CDB' }}
+                                            />
+                                            <Text style={styles.txtUpload}>Tạo bộ đề bằng camera</Text>
+                                        </View>
+                                    </RippleButton>
+                                </View>
                             </View>
                         </View>
-                    </View>
+                    </ZoomAnim>
                 </View>
             </Modal>
         );
