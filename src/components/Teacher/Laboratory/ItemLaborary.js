@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import dataHelper from '../../../utils/dataHelper';
 import FastImage from 'react-native-fast-image';
 import shadowStyle from '../../../themes/shadowStyle';
+import { HEIGHT_DEVICE } from '../../../constants/const';
 const { width, height } = Dimensions.get('screen');
 
 class ItemLaborary extends Component {
@@ -97,7 +98,7 @@ class ItemLaborary extends Component {
                         renderItem={this.renderItem}
                         numColumns={2}
                         showsVerticalScrollIndicator={false}
-                    // ListEmptyComponent={this.renderEmpty}
+                        ListEmptyComponent={this.renderEmpty}
                     />
                 }
             </View>
@@ -131,5 +132,14 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
         marginHorizontal: 10,
         marginVertical: 16
+    },
+    styWrapEmpty: {
+        height: HEIGHT_DEVICE / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    styTxtEmpty: {
+        color: '#828282',
+        fontFamily: 'Nunito-Regular',
     }
 })
