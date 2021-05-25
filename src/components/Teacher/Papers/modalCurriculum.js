@@ -242,6 +242,7 @@ export default class ModalCurriculum extends Component {
       value,
       styleTitle,
       borderStyle,
+      stylePlace
     } = this.props;
     selectItem = _.isEmpty(value) ? selectItem : value;
     return (
@@ -262,8 +263,8 @@ export default class ModalCurriculum extends Component {
                   </TouchableOpacity>
                 </View>
               ) : (
-                <Text style={styles.txtPlaceIn}>Đơn vị kiến thức</Text>
-              )}
+                  <Text style={[styles.txtPlaceIn, stylePlace]}>Đơn vị kiến thức</Text>
+                )}
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -271,7 +272,6 @@ export default class ModalCurriculum extends Component {
                   color="#828282"
                 />
               </View>
-
             </View>
 
             <Modal visible={visible} transparent={true}>
@@ -301,7 +301,7 @@ export default class ModalCurriculum extends Component {
                         }>
                         <Image
                           style={{ tintColor: '#fff' }}
-                          source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
+                          source={require('../../../asserts/icon/close_popup.png')}
                         />
                       </TouchableOpacity>
                       <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
@@ -353,8 +353,8 @@ export default class ModalCurriculum extends Component {
                   </View>
                 </View>
               </TouchableWithoutFeedback>
-              <SafeAreaView />
             </Modal>
+            <SafeAreaView />
           </View>
         </TouchableWithoutFeedback>
       </View>

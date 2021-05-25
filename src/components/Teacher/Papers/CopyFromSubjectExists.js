@@ -23,8 +23,10 @@ import ListTaskPlaceHolder from '../../shim/ListTaskPlaceHolder';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { RFFonsize } from '../../../utils/Fonts';
 import RippleButton from '../../common-new/RippleButton';
+import shadowStyle from '../../../themes/shadowStyle';
+const { width, height } = Dimensions.get('window');
 
-let height = Dimensions.get('window').height;
+// let height = Dimensions.get('window').height;
 let indexPage = 0;
 export default class CopyFromSubjectExists extends Component {
     constructor(props) {
@@ -164,55 +166,57 @@ export default class CopyFromSubjectExists extends Component {
 
     renderTask = (data) => {
         let { item, index } = data;
+        const { shadowBtn } = shadowStyle;
         return (
-            <TouchableOpacity
-                style={styles.singleTask}
+            <TouchableWithoutFeedback
                 onPress={(item) => { this.onPressItemTask(data.item.id) }}
                 key={index}
             >
-                <View style={styles.headerTask}>
-                    <Text numberOfLines={1}
-                        style={styles.titleTask}>
-                        {item.name}
-                    </Text>
-                </View>
-                <View style={styles.bodyTask}>
-                    <View style={styles.pieceBody}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Image
-                                source={Common.getIconSubject(item.subjectCodes[0])}
-                                resizeMode="contain"
-                                style={{ height: 22, width: 22, borderRadius: 40, marginLeft: 1 }} />
-                            <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                            <Image
-                                source={require('../../../asserts/icon/icon_remakeClassV3.png')}
-                                resizeMode="contain"
-                                style={{ height: 23, width: 23, tintColor: '#F78E30' }} />
-                            <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
-                        </View>
+                <View style={[styles.singleTask, shadowBtn]}>
+                    <View style={styles.headerTask}>
+                        <Text numberOfLines={1}
+                            style={styles.titleTask}>
+                            {item.name}
+                        </Text>
                     </View>
-                    <View style={[styles.pieceBody, { width: "60%", }]}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Image
-                                source={AppIcon.icon_questionV3}
-                                resizeMode="contain"
-                                style={{ height: 20, width: 20, tintColor: '#DB3546' }} />
-                            <Text style={styles.textDetail}>Số câu hỏi: {item.totalQuestion}</Text>
+                    <View style={styles.bodyTask}>
+                        <View style={styles.pieceBody}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Image
+                                    source={Common.getIconSubject(item.subjectCodes[0])}
+                                    resizeMode="contain"
+                                    style={{ height: 22, width: 22, borderRadius: 40, marginLeft: 1 }} />
+                                <Text style={styles.textDetail}>{item.subjectNames[0]}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                                <Image
+                                    source={require('../../../asserts/icon/icon_remakeClassV3.png')}
+                                    resizeMode="contain"
+                                    style={{ height: 23, width: 23, tintColor: '#F78E30' }} />
+                                <Text style={styles.textDetail}>Lớp {item.gradeCodes[0].slice(1)}</Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                            <Image
-                                source={AppIcon.icon_authorV3}
-                                resizeMode="contain"
-                                style={{ height: 20, width: 20, tintColor: '#7E96EC' }} />
-                            <Text style={styles.textDetail}>Tác giả:
+                        <View style={[styles.pieceBody, { width: "60%", }]}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Image
+                                    source={AppIcon.icon_questionV3}
+                                    resizeMode="contain"
+                                    style={{ height: 20, width: 20, tintColor: '#DB3546' }} />
+                                <Text style={styles.textDetail}>Số câu hỏi: {item.totalQuestion}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                                <Image
+                                    source={AppIcon.icon_authorV3}
+                                    resizeMode="contain"
+                                    style={{ height: 20, width: 20, tintColor: '#7E96EC' }} />
+                                <Text style={styles.textDetail}>Tác giả:
                              <Text style={styles.colorTG}> {item.author}</Text></Text>
+                            </View>
                         </View>
+                        <Image source={AppIcon.icon_paperParacV3} style={styles.paperParacV3} />
                     </View>
-                    <Image source={AppIcon.icon_paperParacV3} style={styles.paperParacV3} />
                 </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
         )
     }
 
@@ -242,11 +246,30 @@ export default class CopyFromSubjectExists extends Component {
                             createPaper={true}
                         />
                         <View style={styles.wrapDropdown}>
-                            <Image source={AppIcon.image_headerPaperV3} style={styles.imageHeaderLeft} />
                             <View style={styles.flexColumn}>
+                                <View style={styles.wrap2Dropdown}>
+                                    <Dropdown
+                                        containerStyle={styles.styleDrop}
+                                        contentStyle={styles.firstTwo}
+                                        title="Môn Học"
+                                        data={listSubjects}
+                                        onPressItem={(index) => this.onPressItemSubject(index)}
+                                        boldText={{ fontWeight: "700", color: '#55CCF2' }}
+                                    />
+                                    <Dropdown
+                                        containerStyle={styles.styleDrop}
+                                        contentStyle={styles.firstTwo}
+                                        title="Giáo trình"
+                                        data={this.state.lerningTarget}
+                                        onPressItem={(index) => this.onPressCurriculum(index)}
+                                        indexSelected={this.state.indexSelected}
+                                        boldText={{ fontWeight: "700", color: '#55CCF2' }} ƒ
+                                    />
+                                </View>
+
                                 <View style={styles.styWrapInput}>
                                     <TextInput
-                                        placeholder={'Tên bài kiểm tra'}
+                                        placeholder={'Tên bộ đề'}
                                         placeholderTextColor={'#c4c4c4'}
                                         style={styles.nameTest}
                                         value={this.state.textPreviosSearch}
@@ -262,36 +285,20 @@ export default class CopyFromSubjectExists extends Component {
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>
-                                <View style={styles.wrap2Dropdown}>
-                                    <Dropdown
-                                        containerStyle={styles.styleDrop}
-                                        contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
-                                        title="Môn Học"
-                                        data={listSubjects}
-                                        onPressItem={(index) => this.onPressItemSubject(index)}
-                                    />
-                                    <Dropdown
-                                        containerStyle={styles.styleDrop}
-                                        contentStyle={{ marginHorizontal: 0, paddingLeft: 5 }}
-                                        title="Giáo trình"
-                                        data={this.state.lerningTarget}
-                                        onPressItem={(index) => this.onPressCurriculum(index)}
-                                        indexSelected={this.state.indexSelected}
-                                    />
-                                </View>
                                 <ModalCurriculum
-                                    title="Đơn vị kiến thức"
-                                    // height={this.state.height}
+                                    // title="Đơn vị kiến thức"
                                     curriculumCode={this.state.currentCurriculum}
                                     data={this.state.targetLearning}
                                     onPress={(value) => this.onPress(value)}
                                     styleTitle={{ color: '#fff' }}
-                                    borderStyle={{ height: 30, borderRadius: 5, borderColor: "#fff" }}
+                                    borderStyle={styles.boeSty}
+                                    stylePlace={styles.stylePlace}
                                 />
                             </View>
-
                         </View>
                     </View>
+                </View>
+                <View style={{ height: height * 0.7 }}>
                     {!isLoading
                         ?
                         <View style={styles.viewStatus}>
@@ -309,6 +316,7 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                     }
                 </View>
+
             </View>
         )
     }
@@ -320,11 +328,13 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: '#fff',
+        height: height * 0.3
     },
     header: {
-        width: '100%',
+        flex: 1,
         backgroundColor: '#56CCF2',
-        height: 200
+        paddingHorizontal: 6,
+        height: height * 0.3
     },
     wrapDropdown: {
         width: '100%',
@@ -336,9 +346,9 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     wrap2Dropdown: {
-        width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginTop: 20
     },
     singleTask: {
         height: 100,
@@ -347,6 +357,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#56CCF2',
         borderRadius: 5,
+        backgroundColor: '#fff'
         // paddingLeft: 16,
         // paddingRight: 16,
     },
@@ -386,16 +397,15 @@ const styles = StyleSheet.create({
     styWrapInput: {
         padding: 5,
         borderRadius: 5,
-        marginBottom: 16,
         backgroundColor: '#fff',
         flexDirection: "row",
         alignItems: 'center',
-        height: 30
+        height: 35,
+        marginTop: 6
     },
     styleDrop: {
-        flex: 1,
-        marginHorizontal: 0,
-        marginBottom: 10
+        marginBottom: 10,
+        height: 35
     },
     styleDrop1: {
         flex: 1,
@@ -405,14 +415,12 @@ const styles = StyleSheet.create({
     },
     flexColumn: {
         flex: 1,
-        marginLeft: -5,
-        bottom: 5
+        bottom: 16
     },
     viewStatus: {
-        width: '100%',
         height: height - 230,
-        paddingBottom: "10%",
-        backgroundColor: '#fff'
+        paddingBottom: 15,
+        backgroundColor: 'transparent'
     },
     paperParacV3: {
         marginLeft: -60,
@@ -435,9 +443,10 @@ const styles = StyleSheet.create({
         color: "#7E96EC",
     },
     nameTest: {
-        color: '#000',
+        color: '#55CCF2',
         flex: 1,
         fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
         backgroundColor: '#fff',
         paddingVertical: 0,
         paddingHorizontal: 5
@@ -458,7 +467,7 @@ const styles = StyleSheet.create({
     textLoadMore: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(16),
+        lineHeight: RFFonsize(19),
         fontWeight: '500',
         color: '#55CCF2',
         textAlign: 'center'
@@ -469,5 +478,23 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    firstTwo: {
+        marginHorizontal: 0,
+        paddingLeft: 5,
+        width: width * 0.4,
+        height: 35
+    },
+    boeSty: {
+        height: 35,
+        borderRadius: 5,
+        borderColor: "#fff",
+        paddingRight: 1
+    },
+    stylePlace: {
+        fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
+        fontWeight: "700",
+        color: "#c4c4c4"
     }
 })

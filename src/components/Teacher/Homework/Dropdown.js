@@ -16,7 +16,7 @@ export default function Dropdown(props) {
   const [dropdownVisible, showDropdown] = useState(false);
   const [indexSelected, setIndex] = useState(props.indexSelected || 0);
   console.log("indexSelected: ", props.type, indexSelected);
-  const { containerStyle, title, data, contentStyle } = props;
+  const { containerStyle, title, data, contentStyle, boldText } = props;
   const isData = data && data[indexSelected];
   return (
     <View style={containerStyle}>
@@ -27,7 +27,7 @@ export default function Dropdown(props) {
         }}
       >
         <View style={[styles.styBtn, contentStyle]}>
-          <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }]}>
+          <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#C4C4C4' }, boldText]}>
             {isData
               ? data[indexSelected].className || data[indexSelected].name || ''
               : title}

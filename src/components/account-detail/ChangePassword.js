@@ -87,7 +87,7 @@ class ChangePassword extends Component {
           this.setState({ passwordNew: '', passwordOld: '', passwordNewAgain: '', errorValidate: '', isChange: false });
         }).catch(err => {
           resetForm();
-          this.toast.show(
+          this.refToast.show(
             <ToastFaild title="Đổi mật khẩu thất bại!" />
           )
           this.setState({ passwordNew: '', passwordOld: '', passwordNewAgain: '', errorValidate: '', isChange: false });
@@ -179,8 +179,8 @@ class ChangePassword extends Component {
                   </View>
                 )}
               </Formik>
+              {/* <Toast ref={ref => this.refToast = ref} position={'top'} style={{ backgroundColor: 'transparent' }} /> */}
               <Toast ref={ref => this.refToast = ref} position={'top'} style={{ backgroundColor: 'transparent' }} />
-              <Toast ref={ref => this.toast = ref} position={'top'} />
               {/* <View style={{ marginTop: 20 }}>
                 <Text style={{ paddingTop: 10, color: '#222222', fontFamily: 'Nunito-Bold', fontSize: 15, lineHeight: 19 }}>Mật khẩu hiện tại</Text>
                 <FormInput
