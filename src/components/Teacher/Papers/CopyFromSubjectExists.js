@@ -304,7 +304,7 @@ export default class CopyFromSubjectExists extends Component {
                             />
                         </View>
                         :
-                        <View style={styles.viewStatus}>
+                        <View style={[styles.viewStatus, { flex: 1 }]}>
                             {isLoading && (<ListTaskPlaceHolder />)}
                         </View>
                     }
@@ -437,10 +437,8 @@ const styles = StyleSheet.create({
     },
     loadmoreWrap: {
         width: '100%',
-        height: 30,
         alignItems: 'center',
-        justifyContent: 'center',
-        top: 10
+        paddingVertical: 5
     },
     loadmoreBtn: {
         width: 80,
@@ -451,10 +449,11 @@ const styles = StyleSheet.create({
     textLoadMore: {
         fontFamily: 'Nunito',
         fontSize: RFFonsize(12),
-        lineHeight: RFFonsize(19),
+        lineHeight: RFFonsize(16),
         fontWeight: '500',
         color: '#55CCF2',
-        textAlign: 'center'
+        textAlign: 'center',
+        alignSelf: "center"
     },
     searchIcon: {
         width: 20,

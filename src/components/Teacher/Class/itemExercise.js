@@ -46,7 +46,8 @@ export default class itemExercise extends Component {
     return (
       <View style={[styles.container, { ...shadowBtn }]}>
         <View style={styles.top}>
-          <Text style={styles.name}>{item.name}</Text>
+          <Text numberOfLines={1}
+            style={styles.name}>{item.name}slkdkjdsgkdsfjgksdfjghkdsfjghdksjgksfjghsdfjgl</Text>
         </View>
         <View style={styles.body}>
           <View style={styles.topBody}>
@@ -123,12 +124,13 @@ const styles = StyleSheet.create({
   },
   top: {
     backgroundColor: '#56CCF2',
-    height: 24,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 3,
-    paddingLeft: 16
+    paddingLeft: 16,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5
   },
   status: {
     justifyContent: 'center',
@@ -160,8 +162,11 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: RFFonsize(14),
+    lineHeight: RFFonsize(18),
     fontFamily: 'Nunito-Bold',
-    color: '#FFF'
+    color: '#FFF',
+    paddingVertical: 2.5,
+    width: width * 0.83
   },
   body: {
     backgroundColor: '#FFF',

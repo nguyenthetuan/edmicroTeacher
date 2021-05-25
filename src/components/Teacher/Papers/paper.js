@@ -182,6 +182,7 @@ class Papers extends Component {
   };
 
   deletePaper = async () => alertDeletePaper('Xoá bộ đề', 'Bạn có muốn xoá bộ đề này!', async () => {
+    await this.setState({ visibleEdit: false });
     const { dataSelected } = this.state;
     const { token } = await dataHelper.getToken();
     const response = await apiPapers.deletePaper({

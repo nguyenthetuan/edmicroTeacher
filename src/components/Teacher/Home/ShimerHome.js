@@ -11,9 +11,8 @@ const row_width = width - 150;
 export default class ShimerMockExam extends Component {
 
     render() {
-        const { shadowBtn } = shadowStyle;
         return (
-            <View style={[styles.container, shadowBtn]}>
+            <View style={[styles.container]}>
                 <View style={{ alignItems: 'center', marginBottom: 10, }}>
                     <ShimmerPlaceHolder visible={false}
                         style={[{

@@ -75,15 +75,17 @@ export default class UpdatePlan extends Component {
             color={'#2D9CDB'}
           />
           <View style={[styles.body]}>
-            <TextInput
-              style={[styles.textInput, { ...shadowBtn }]}
-              multiline={true}
-              placeholder='Nhập nội dung...'
-              placeholderTextColor='#828282'
-              value={value}
-              onChangeText={text => this.onChange(text)}
-              editable={!isLoading}
-            />
+            <View style={styles.viewOut}>
+              <TextInput
+                style={styles.textInput}
+                multiline={true}
+                placeholder='Nhập nội dung...'
+                placeholderTextColor='#828282'
+                value={value}
+                onChangeText={text => this.onChange(text)}
+                editable={!isLoading}
+              />
+            </View>
             {/* <RippleButton onPress={this.save}>
               <View style={[styles.btn, { alignSelf: 'center', ...shadowBtn }]}>
                 <Text style={styles.txtBtn}>Cập nhật</Text>
@@ -126,15 +128,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInput: {
-    height: 242,
-    backgroundColor: '#fff',
+    height: height * 0.33,
     borderRadius: 4,
     paddingLeft: 15,
     paddingTop: 11,
-    // borderWidth: 1,
-    // borderColor: '#2D9CDB',
     textAlignVertical: 'top',
-
   },
   btn: {
     alignContent: 'center',
@@ -175,4 +173,10 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 6
   },
+  viewOut: {
+    borderWidth: 0.5,
+    borderColor: "#2D9CDB",
+    borderRadius: 3,
+    overflow: 'hidden'
+  }
 })
