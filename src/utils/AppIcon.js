@@ -91,6 +91,8 @@ import task_inactive from '../asserts/icon/task_inactive.png';
 import task_active from '../asserts/icon/task_active.png';
 
 import icons_filter from '../asserts/appIcon/icons_filter.png';
+import pdf_icon from '../asserts/icon/pdf_icon.png';
+import eyes_icon from '../asserts/icon/eyes_icon.png';
 import close_img from '../asserts/appIcon/close_img.png';
 import pic_mission from '../asserts/images/pic_mission.png';
 import task_test from '../asserts/icon/task_test.png';
@@ -141,7 +143,9 @@ import icon_add from '../asserts/icon/icon_add.png'
 
 module.exports = {
   done_icon,
+  pdf_icon,
   config_icon,
+  eyes_icon,
   answer_icon,
   upload_icon,
   logo_onluyen,
