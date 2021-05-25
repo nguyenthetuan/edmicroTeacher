@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  FlatList,
   TouchableWithoutFeedback,
   Text,
   Platform,
@@ -14,9 +13,8 @@ import {
   ScrollView,
   Modal,
   ActivityIndicator,
-  Alert,
+  Animated,
 } from 'react-native';
-import RippleButton from '../../common-new/RippleButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dropdown from '../Homework/Dropdown';
 import { WebView } from 'react-native-webview';
@@ -34,9 +32,7 @@ import { HEIGHT_TOPBAR } from '../../../utils/Common';
 import SwitchButton from '../../../components/common/ButtonSwitch';
 import { RFFonsize } from '../../../utils/Fonts';
 import { AlertNoti, roundToTwo, roundToFour } from '../../../utils/Common';
-import HTML from 'react-native-render-html';
 import html from '../../../utils/ModalMatarial';
-import HeaderPaper from './HeaderPaper';
 import Header from '../../common-new/Header';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { setListGrades, updateExamListAction } from '../../../actions/paperAction';
@@ -48,8 +44,11 @@ import SubjectItem from './SubjectItem';
 import ModalSubject from './ModalSubject';
 import ClassItem from './ClassItem';
 import ToastFaild from '../../common-new/ToastFaild';
-import ToastSuccess from '../../common-new/ToastSuccess';
+import { DraggableGrid } from 'react-native-draggable-grid';
 import ModalSuccess from './ModalSuccess/ModalSuccess';
+
+const NUM_ITEMS = 10;
+
 const { width, height } = Dimensions.get('screen');
 const HEIGHT_WEB = isIphoneX() ? height - 200 : height - 100;
 let baseUrl = 'file:///android_asset/';
@@ -94,19 +93,20 @@ class ConfigQuestion extends Component {
       modalVisible: false,
       resSuccess: null,
     };
+    this.animatedValue = new Animated.Value(0);
   }
   onHandleMessage(event) {
     const data = event.nativeEvent.data.split('---');
     let { questions, totalPoint } = this.state;
 
     if (data[0] === 'warningWeb') {
-      this.setState({ numberQuestion: data[1] }, () => {
+      this.setState({ numberQuestion: data[2] }, () => {
         this.displayWarning(true);
       });
     }
     if (data[0] === 'pushArray') {
       this.setState({
-        arrayQuestion: [...this.state.arrayQuestion, data[1]],
+        arrayQuestion: [...this.state.arrayQuestion, data[2]],
       });
     }
     if (data[0] === 'popArray') {
@@ -133,7 +133,8 @@ class ConfigQuestion extends Component {
     }
 
     if (event.nativeEvent.data && parseInt(event.nativeEvent.data)) {
-      this.setState({ webheight: questions.length * 435 + 125 + HEIGHTTOP });
+      const h = parseInt(event.nativeEvent.data);
+      this.setState({ webheight: h + HEIGHTTOP });
     }
     if (data[0] === 'matariaDetail') {
       this.getDetailMatarial();
@@ -146,11 +147,12 @@ class ConfigQuestion extends Component {
   }
 
   async componentDidMount() {
-    const getListQuestion = await dataHelper.getQuestion();
+    let getListQuestion = await dataHelper.getQuestion();
     const { totalPoint } = this.state;
     for (let item of getListQuestion) {
       item.point = roundToFour(totalPoint / getListQuestion.length);
     }
+    getListQuestion = getListQuestion.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
     !_.isEmpty(getListQuestion) &&
       this.setState({
         questions: getListQuestion,
@@ -693,6 +695,44 @@ class ConfigQuestion extends Component {
     });
   };
 
+  renderItemSort = (item, order) => {
+    const id = item.questionNumber.toString().substr(-3);
+    return (
+      <View
+        key={order}
+        style={styles.styWrapItemSort}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontFamily: 'Nunito-Bold',
+            fontSize: 12
+          }}
+        >
+          {id}
+        </Text>
+      </View>
+    );
+  }
+
+  onDragEnd = (questions) => {
+    questions = questions.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
+    this.setState({ questions });
+  }
+
+  confirmSort = () => {
+    let { questions } = this.state;
+    dataHelper.saveQuestion(questions);
+  }
+
+  onDragStart = () => {
+    this.animatedValue.setValue(1);
+    Animated.timing(this.animatedValue, {
+      toValue: 1.5,
+      duration: 400,
+    }).start();
+  }
+
   render() {
     const {
       name,
@@ -718,21 +758,13 @@ class ConfigQuestion extends Component {
       wrapTopHeight: height
     } = this.state;
     const { shadowBtn } = shadowStyle;
-    console.log("this.state.name: ", this.state.name);
+    console.log(questions);
+    const heightSort = _.isArray(questions) ? 100 + (Math.ceil(questions.length / 10) - 1) * 40 : 100;
+
     return (
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
         <SafeAreaView>
-          {/* <HeaderPaper
-            title={'Cấu hình câu hỏi'}
-            color={'#fff'}
-            navigation={this.props.navigation}
-            onRightAction={() => this.config()}
-            loading={loading}
-            notRightButton={true}
-            bgColor={{ backgroundColor: "#117DB9" }}
-            leftTitle={{ marginLeft: -90 }}
-          /> */}
           <View style={{ backgroundColor: '#117DB9' }}>
             <Header
               ref={ref => this.refHeader = ref}
@@ -748,7 +780,7 @@ class ConfigQuestion extends Component {
             />
           </View>
           <ScrollView
-            contentContainerStyle={{ height: webheight }}
+            contentContainerStyle={{ height: webheight + heightSort }}
             ref={'ScrollView'}
           >
             <View
@@ -770,7 +802,6 @@ class ConfigQuestion extends Component {
                       <Text
                         style={[
                           { color: '#000', fontSize: RFFonsize(14), lineHeight: RFFonsize(19), fontFamily: 'Nunito-Bold', marginTop: 4 },
-                          // errors.name && { color: '#EB5757' },
                         ]}>
                         Tên bài tập
                       </Text>
@@ -796,25 +827,11 @@ class ConfigQuestion extends Component {
                     <View>
                       {!_.isEmpty(listGrades) && (
                         <View style={{ marginTop: 10 }}>
-                          {/* <Text
-                          style={[
-                            styles.txtTitleGrade,
-                            errors.gradeCode && { color: '#EB5757' },
-                          ]}>
-                          Khối
-                      </Text> */}
                           {this._renderGrade()}
                         </View>
                       )}
                       {!_.isEmpty(listSubjects) && (
                         <View style={{ marginTop: 10 }}>
-                          {/* <Text
-                          style={[
-                            styles.txtTitleGrade,
-                            errors.subjectCode && { color: '#EB5757' },
-                          ]}>
-                          Môn học
-                      </Text> */}
                           {this._renderSubject()}
                         </View>
                       )}
@@ -1007,6 +1024,31 @@ class ConfigQuestion extends Component {
               </View>
 
               <View style={{ backgroundColor: '#fff' }}>
+                {/* start sort */}
+                <View style={{ height: heightSort, padding: 20, }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.styTxtSort}>Kéo thả sắp xếp lại thứ tự câu</Text>
+                    <TouchableWithoutFeedback onPress={this.confirmSort}>
+                      <View style={[styles.styBtnSort, shadowBtn]}>
+                        <Text style={[styles.txtDeleteChoose, { marginVertical: 2 }]}>Lưu</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                  <DraggableGrid
+                    numColumns={10}
+                    renderItem={this.renderItemSort}
+                    data={questions || []}
+                    onDragRelease={this.onDragEnd}
+                    onDragStart={this.onDragStart}
+                    dragStartAnimation={{
+                      transform: [
+                        { scale: this.animatedValue }
+                      ],
+                    }}
+                    style={{ marginVertical: 10 }}
+                  />
+                </View>
+                {/* end sort*/}
                 <View style={{ paddingHorizontal: 16, marginBottom: 20 }}>
                   <View
                     style={{
@@ -1014,113 +1056,50 @@ class ConfigQuestion extends Component {
                       justifyContent: 'space-between',
                       marginTop: 17
                     }}>
-                    <View style={styles.flexColumn}>
-                      <View style={[{ justifyContent: 'flex-end' }]}>
-                        <TouchableWithoutFeedback
-                          onPress={() => this.setState({ activeSort: !activeSort })}>
-                          <View style={[styles.btnOption, shadowBtn, {
-                            justifyContent: 'center', paddingHorizontal: 30, backgroundColor: "#56CCF2",
-                          }]}>
-                            <Image
-                              source={require('../../../asserts/icon/icon_sortConfig.png')}
-                              resizeMode="contain"
-                            />
-                            <Text style={styles.txtDeleteChoose}>Sắp xếp lại</Text>
-                          </View>
-                        </TouchableWithoutFeedback>
-                        {activeSort && (
-                          <View
-                            style={{
-                              alignItems: 'center',
-                              zIndex: 10,
-                              position: 'absolute',
-                              bottom: -25,
-                              left: 20,
-                              top: 15,
-                            }}>
-                            <View
-                              style={{ flexDirection: 'row', alignItems: 'center' }}>
-                              <TouchableWithoutFeedback
-                                onPress={() => this._moveQuestion()}>
-                                <View style={[
-                                  styles.buttonMove,
-                                  { height: Platform.OS === 'ios' ? 20.5 : 22 },
-                                ]}>
-                                  <Text style={{ fontSize: RFFonsize(11) }}>Đến</Text>
-                                </View>
-                              </TouchableWithoutFeedback>
-                              <View
-                                style={{ marginTop: Platform.OS === 'ios' ? 5 : 5 }}>
-                                <FormInput
-                                  style={{
-                                    borderTopRightRadius: 4,
-                                    borderBottomRightRadius: 4,
-                                    paddingBottom: 4,
-                                    paddingHorizontal: 2,
-                                  }}
-                                  styleInput={{ paddingBottom: 10 }}
-                                  width={45}
-                                  height={Platform.OS === 'ios' ? 20.5 : 22}
-                                  borderWidth={0.5}
-                                  borderColor={'#828282'}
-                                  onChangeText={text =>
-                                    this.setState({
-                                      position: parseInt(text),
-                                    })
-                                  }
-                                  value={!!this.state.position.toString()}
-                                  onSubmitEditing={Keyboard.dismiss}
-                                  bgColor="#F0F0F0"
-                                  keyboardType={'numeric'}
-                                  maxLength={3}
-                                />
-                              </View>
-                            </View>
-                          </View>
-                        )}
-                      </View>
-                      <TouchableWithoutFeedback
-                        onPress={this.deleteQuestion}>
-                        <View style={[styles.btnOption, shadowBtn, { marginTop: 14 }]}>
-                          <MaterialCommunityIcons
-                            name="delete-sweep"
-                            size={26}
-                            color="#fff"
+
+                    <TouchableWithoutFeedback
+                      onPress={() => this.setState({ totalPoint: 10 }, () => this.updateScore())}>
+                      <View style={[styles.btnOption, shadowBtn, { backgroundColor: "#7E96EC", justifyContent: 'center', marginTop: 14 }]}>
+                        <View style={{ marginLeft: 5 }}>
+                          <Image
+                            source={require('../../../asserts/icon/icon_shareMark.png')}
+                            resizeMode="contain"
+                            style={{ width: 10, height: 10 }}
                           />
-                          <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
                         </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                    <View style={styles.flexColumn}>
-                      <TouchableWithoutFeedback
-                        onPress={() => this.setState({ totalPoint: 10 }, () => this.updateScore())}>
-                        <View style={[styles.btnOption, shadowBtn, { backgroundColor: "#7E96EC", ustifyContent: 'center', paddingHorizontal: 30 }]}>
-                          <View style={{ marginLeft: 5 }}>
+                        <Text style={styles.txtDeleteChoose}>Chia điểm</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback
+                      onPress={this.deleteQuestion}>
+                      <View style={[styles.btnOption, shadowBtn, { marginTop: 14, paddingHorizontal: 2, justifyContent: 'center', }]}>
+                        <MaterialCommunityIcons
+                          name="delete-sweep"
+                          size={20}
+                          color="#fff"
+                        />
+                        <Text style={styles.txtDeleteChoose}>Xoá câu đã chọn</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback
+                      onPress={this.handleTickAll}>
+                      <View style={[styles.btnOption, shadowBtn, { backgroundColor: '#56BB73', justifyContent: 'center', marginTop: 14 }]}>
+                        <View
+                          style={styles.styleTick}>
+                          {this.state.allQuestion && (
                             <Image
-                              source={require('../../../asserts/icon/icon_shareMark.png')}
+                              source={require('../../../asserts/icon/icon_tick.png')}
                               resizeMode="contain"
+                              style={{ width: 10, height: 10 }}
                             />
-                          </View>
-                          <Text style={styles.txtDeleteChoose}>Chia điểm</Text>
+                          )}
                         </View>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback
-                        onPress={this.handleTickAll}>
-                        <View style={[styles.btnOption, shadowBtn, { backgroundColor: '#56BB73', justifyContent: 'center', paddingHorizontal: 30, marginTop: 14 }]}>
-                          <View
-                            style={styles.styleTick}>
-                            {this.state.allQuestion && (
-                              <Image
-                                source={require('../../../asserts/icon/icon_tick.png')}
-                                resizeMode="contain"
-                                style={{ alignSelf: 'center', marginTop: 3 }}
-                              />
-                            )}
-                          </View>
-                          <Text style={styles.txtDeleteChoose}>Chọn tất cả</Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
+                        <Text style={styles.txtDeleteChoose}>Chọn tất cả</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
                   </View>
                 </View>
               </View>
@@ -1157,17 +1136,6 @@ class ConfigQuestion extends Component {
             />
             <SafeAreaView />
           </ScrollView>
-          <TouchableWithoutFeedback
-            onPress={() => this._onTop()}>
-            <View style={styles.buttomTop}>
-              <Image
-                source={require('../../../asserts/appIcon/icUp.png')}
-                resizeMode="stretch"
-                style={{ height: 20, width: 20 }}
-              />
-              <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-            </View>
-          </TouchableWithoutFeedback>
           <Modal visible={isModal} transparent={true}>
             <TouchableWithoutFeedback
               onPress={() => this.setState({ isModal: false })}>
@@ -1190,21 +1158,21 @@ class ConfigQuestion extends Component {
                         style={{ justifyContent: 'center', alignItems: 'center' }}
                       />
                     ) : (
-                        <WebView
-                          ref={ref => (this.webview = ref)}
-                          source={{
-                            html: html.renderMatarialDetail(htmlContent, urlMedia),
-                            baseUrl,
-                          }}
-                          subjectId={'TOAN'}
-                          originWhitelist={['file://']}
-                          scalesPageToFit={false}
-                          javaScriptEnabled
-                          showsVerticalScrollIndicator={false}
-                          startInLoadingState={false}
-                          style={{ backgroundColor: '#fff' }}
-                        />
-                      )}
+                      <WebView
+                        ref={ref => (this.webview = ref)}
+                        source={{
+                          html: html.renderMatarialDetail(htmlContent, urlMedia),
+                          baseUrl,
+                        }}
+                        subjectId={'TOAN'}
+                        originWhitelist={['file://']}
+                        scalesPageToFit={false}
+                        javaScriptEnabled
+                        showsVerticalScrollIndicator={false}
+                        startInLoadingState={false}
+                        style={{ backgroundColor: '#fff' }}
+                      />
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -1238,6 +1206,18 @@ class ConfigQuestion extends Component {
         <Toast ref={ref => (this.refToast = ref)} position={'top'} />
         <Toast ref={ref => (this.toast = ref)} position={'top'} style={{ backgroundColor: '#16BDA9', height: 70 }} />
         <Toast ref={ref => (this.loadingToast = ref)} position={'center'} style={{ backgroundColor: "transparent" }} />
+
+        <TouchableWithoutFeedback onPress={() => this._onTop()}>
+          <View style={styles.buttomTop}>
+            <Image
+              source={require('../../../asserts/appIcon/icUp.png')}
+              resizeMode="stretch"
+              style={{ height: 20, width: 20 }}
+            />
+            <Text style={{ color: '#FAFAFA' }}>TOP</Text>
+          </View>
+        </TouchableWithoutFeedback>
+
       </View >
     );
   }
@@ -1389,12 +1369,13 @@ const styles = StyleSheet.create({
   },
   txtDeleteChoose: {
     fontFamily: 'Nunito',
-    fontSize: RFFonsize(14),
+    fontSize: RFFonsize(12),
     lineHeight: RFFonsize(19),
     color: '#fff',
-    marginRight: 8,
-    marginLeft: 12,
-    marginVertical: 5
+    // marginRight: 8,
+    // marginLeft: 12,
+    // marginVertical: 5
+    marginHorizontal: 5,
   },
   addQuestion: {
     fontSize: RFFonsize(14),
@@ -1485,6 +1466,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     right: 15,
     bottom: Platform.OS === 'ios' ? 15 : 60,
+    zIndex: 100,
   },
   btnSwitch: {
     marginRight: 15,
@@ -1527,12 +1509,14 @@ const styles = StyleSheet.create({
   },
   styleTick: {
     backgroundColor: '#56BB73',
-    height: 18,
-    width: 18,
+    height: 15,
+    width: 15,
     borderWidth: 0.5,
     borderColor: '#fff',
     borderRadius: 1,
     borderStyle: "solid",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnOption: {
     flexDirection: 'row',
@@ -1540,7 +1524,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF5242',
     padding: 5,
     borderRadius: 4,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   flexColumn: {
     flexDirection: 'column'
@@ -1551,4 +1535,24 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(14),
     fontWeight: 'bold',
   },
+  styTxtSort: {
+    fontFamily: 'Nunito-Bold',
+    fontSize: RFFonsize(14),
+    flex: 1,
+  },
+  styWrapItemSort: {
+    height: 30,
+    width: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 3,
+    backgroundColor: '#56CCF2',
+  },
+  styBtnSort: {
+    alignItems: 'center',
+    borderRadius: 4,
+    paddingHorizontal: 5,
+    justifyContent: 'center',
+    backgroundColor: "#56CCF2",
+  }
 });

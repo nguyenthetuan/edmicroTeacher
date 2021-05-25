@@ -1,5 +1,5 @@
-import {isSubjectMathJax, getAnswerName, getMathJaxScript} from './WebUtils';
-import {roundToTwo} from './Common';
+import { isSubjectMathJax, getAnswerName, getMathJaxScript } from './WebUtils';
+import { roundToTwo } from './Common';
 import WebColor from './WebColorConfig';
 
 const {
@@ -138,7 +138,6 @@ const renderHtmlQuestionDetail = (
 
   for (let i = 0; i < totalAll; i++) {
     let typeData = data[i].typeViewContent;
-    console.log("🚀 ~ file: webViewConfigQuestion.js ~ line 141 ~ typeData", typeData)
     if (typeData == 1) {
       //contentHtml
       html += `<div style="overflow:auto;padding: 10px 15px;border-bottom: 1px solid #eaeaea" class="q_material">
@@ -170,18 +169,15 @@ const renderHtmlQuestionDetail = (
         }
 
         html += `<div style="padding:10px 15px">
-            // <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${
-              i + 1
-            }</span>
+            // <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${i + 1
+          }</span>
             ${rightAnswer}
             <span style="color:#9B9B9B;margin: 0 5px;font-size: 14px;">|</span>
-            <span style="color:#9B9B9B;font-size: 14px">#${
-              dataMaterial.numberQuestion
-            }</span>
+            <span style="color:#9B9B9B;font-size: 14px">#${dataMaterial.numberQuestion
+          }</span>
             <span style="float: right">
-                <span style="padding-right: 5px" onclick="myWarningFunction('${
-                  dataMaterial.numberQuestion
-                }')">
+                <span style="padding-right: 5px" onclick="myWarningFunction('${dataMaterial.numberQuestion
+          }')">
                     <i class="fa fa-warning" style="color:#9B9B9B;font-size: 14px;"></i>
                     <span style="color:#9B9B9B;font-size: 14px">Báo lỗi</span>
                 </span>
@@ -195,8 +191,7 @@ const renderHtmlQuestionDetail = (
         let typeAnswer = dataMaterial.typeAnswer;
         if (typeAnswer > 2) {
           html += `<div style="margin-left:15px;margin-right:15px;">
-            <textarea placeholder="Nhập câu trả lời" disabled type="text" name="in" style="width:96%;min-height:80px;max-height:140px;padding:5px;margin:15px 0" value="";> ${
-              dataMaterial.userTextAnswer || ''
+            <textarea placeholder="Nhập câu trả lời" disabled type="text" name="in" style="width:96%;min-height:80px;max-height:140px;padding:5px;margin:15px 0" value="";> ${dataMaterial.userTextAnswer || ''
             }</textarea>
             </div>`;
         }
@@ -215,9 +210,8 @@ const renderHtmlQuestionDetail = (
                 </div>
                 <div style="text-align:center;margin-bottom:20px;margin-top:20px;">
                     <span id="review" style="${displayFlash};margin-right: 10px;padding: 7px 12px;font-size:14px; background: #fff; border-radius: 20px;color: ${textReviewColor}; border: solid 1px #eaeaea;font-weight:bold;font-size:12px;"
-                    onclick="myReviewActionresult('${
-                      dataMaterial.questionId
-                    }','${dataMaterial.stepId}')">
+                    onclick="myReviewActionresult('${dataMaterial.questionId
+            }','${dataMaterial.stepId}')">
                     <i class="fa fa-refresh" style="color:${textReviewColor}"></i> Xem lại khái niệm
                     </span>
                     <span id="revideo" style="display:none;margin-right: 10px;padding: 7px 12px;font-size:14px;background: #fff;border-radius: 20px;color: ${textVideoColor};border: solid 1px #eaeaea;font-weight:bold;font-size:12px;"
@@ -261,17 +255,21 @@ const renderHtmlQuestionDetail = (
        border-radius: 5px;margin-left: 16px;
        margin-right: 16px;overflow: hidden;">
       `;
+
+      html += `<div style="padding:10px 15px">
+      <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${dataStandard.numberQuestion} | ${dataStandard.questionNumber}</span>
+      </div>
+      `;
+
       html += `
-      <div style="padding:10px 15px">
-      ${dataStandard.idMaterial&&` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
+      <div style="padding:0px 15px">
+      ${dataStandard.idMaterial && ` <span  style="font-weight: bold;font-size: 10px;color:#28a745 "onclick="matariaDetail('${dataStandard.idMaterial}')">
       xem học liệu
-      </span>`||``
-    }
-      <span style="float: right" id="arrayWarn${
-        dataStandard.index
-      }" data-numberQuestion="${
-        dataStandard.questionNumber
-      }" onclick="addQuestion('${dataStandard.questionId}')">
+      </span>`|| ``
+        }
+      <span style="float: right" id="arrayWarn${dataStandard.index
+        }" data-numberQuestion="${dataStandard.questionNumber
+        }" onclick="addQuestion('${dataStandard.questionId}')">
       <div 
          style="
         display: flex;
@@ -285,8 +283,7 @@ const renderHtmlQuestionDetail = (
         width: 14px;
       " 
       >
-        <i  id="checkBox${
-          dataStandard.questionId
+        <i  id="checkBox${dataStandard.questionId
         }" class="fa fa-check" aria-hidden="true" style="color:#37B34A;font-size: 14px; display:none"></i>
      </div>
       </span>
@@ -318,9 +315,8 @@ const renderHtmlQuestionDetail = (
       let typeAnswer = dataStandard.typeAnswer;
       if (typeAnswer > 2) {
         html += `<div style="margin-left:15px;margin-right:15px;">
-        <textarea placeholder="Nhập câu trả lời" disabled type="text" name="in" style="width:96%;min-height:80px;max-height:140px;padding:5px;margin:15px 0" value="";> ${
-          dataStandard.userTextAnswer || ''
-        }</textarea>
+        <textarea placeholder="Nhập câu trả lời" disabled type="text" name="in" style="width:96%;min-height:80px;max-height:140px;padding:5px;margin:15px 0" value="";> ${dataStandard.userTextAnswer || ''
+          }</textarea>
         </div>`;
       }
 
@@ -351,8 +347,7 @@ const renderHtmlQuestionDetail = (
             font-size: 8px;
             ">${getAnswerName(j)}</span>
             </span>
-            <span class="opcontent" style="width:86% !important;display:inline-block !important;float: left !important;overflow: auto;">${
-              dataStandard.options[j].content
+            <span class="opcontent" style="width:86% !important;display:inline-block !important;float: left !important;overflow: auto;">${dataStandard.options[j].content
             }</span>
             </div>
             `;
