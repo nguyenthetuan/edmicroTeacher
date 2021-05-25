@@ -16,10 +16,10 @@ import Common from '../../../../utils/Common';
 import _ from 'lodash';
 import ZoomAnim from '../../../anim/ZoomAnim';
 
-const getText = (duration, assignmentType, name) => {
+const getText = (duration, subjectCode, assignmentType, name) => {
     let string = 'Bạn đã tạo thành công bộ đề';
     if (assignmentType) {
-        string = string + ` kiểm tra ${duration} phút: \"`
+        string = string + ` kiểm tra ${name} phút: \"`
     } else {
         string = string + ' tự luyện: \"'
     }
@@ -33,10 +33,10 @@ const ModalSuccess = (props) => {
         data,
     } = props;
     const { subjectCode, duration, assignmentType, name } = data;
-
     return (
         <View style={{ flex: 1 }}>
             <SafeAreaView style={styles.contain}>
+                <Text style={styles.textDone}>Thành Công!</Text>
                 <Image
                     source={require('../../../../asserts/images/image_createCompleteV3.png')}
                     style={{ marginTop: 100, width: "80%" }} resizeMode='contain' />
@@ -119,5 +119,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: "800",
         // top: 5,
-    }
+    },
+    textDone: {
+        fontSize: 31,
+        lineHeight: 40,
+        fontFamily: 'Nunito-bold',
+        fontWeight: '400',
+        color: '#2D9CDB',
+        top: 40
+    },
 })

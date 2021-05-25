@@ -723,16 +723,6 @@ class ConfigQuestion extends Component {
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
         <SafeAreaView>
-          {/* <HeaderPaper
-            title={'Cấu hình câu hỏi'}
-            color={'#fff'}
-            navigation={this.props.navigation}
-            onRightAction={() => this.config()}
-            loading={loading}
-            notRightButton={true}
-            bgColor={{ backgroundColor: "#117DB9" }}
-            leftTitle={{ marginLeft: -90 }}
-          /> */}
           <View style={{ backgroundColor: '#117DB9' }}>
             <Header
               ref={ref => this.refHeader = ref}

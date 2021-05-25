@@ -28,7 +28,7 @@ export default class StepFourPDF extends Component {
         if (assignmentType) {
             string = string + ` kiểm tra ${duration} phút: \"`
         } else {
-            string = string + ' tự luyện: \"'
+            string = string + ' tự luyện: \"'  
         }
         string += item.name;
         string += '\"'
