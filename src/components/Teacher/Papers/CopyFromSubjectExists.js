@@ -46,7 +46,7 @@ export default class CopyFromSubjectExists extends Component {
 
     componentDidMount() {
         const { listSubjects } = this.props.navigation.state.params;
-        let subjectCode = [listSubjects[0].code];
+        let subjectCode = [listSubjects[0]?.code];
         this.setState({ subjectCode });
         this.getDetailSubject(subjectCode)
     }
@@ -234,10 +234,10 @@ export default class CopyFromSubjectExists extends Component {
         const { listSubjects } = this.props.navigation.state.params;
         const { lerningTarget, isLoading } = this.state;
         return (
-            <View style={{ flex: 1 }}>
+            <SafeAreaView style={{ backgroundColor: '#56CCF2', flex: 1 }}>
                 <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
                 <View style={styles.root}>
-                    <View style={styles.header}>
+                    {/* <View style={styles.header}> */}
                         <HeaderPaper
                             title={'Bộ đề có sẵn'}
                             navigation={this.props.navigation}
@@ -266,7 +266,6 @@ export default class CopyFromSubjectExists extends Component {
                                         boldText={{ fontWeight: "700", color: '#55CCF2' }} ƒ
                                     />
                                 </View>
-
                                 <View style={styles.styWrapInput}>
                                     <TextInput
                                         placeholder={'Tên bộ đề'}
@@ -294,11 +293,11 @@ export default class CopyFromSubjectExists extends Component {
                                     borderStyle={styles.boeSty}
                                     stylePlace={styles.stylePlace}
                                 />
-                            </View>
+                            {/* </View> */}
                         </View>
                     </View>
                 </View>
-                <View style={{ height: height * 0.7 }}>
+                <View style={{ flex: 1, backgroundColor: '#fff' }}>
                     {!isLoading
                         ?
                         <View style={styles.viewStatus}>
@@ -309,6 +308,7 @@ export default class CopyFromSubjectExists extends Component {
                                 style={{ paddingHorizontal: 5 }}
                                 ListFooterComponent={this.renderLoadMoreButton}
                             />
+                            <SafeAreaView style={{ backgroundColor: "#fff" }} />
                         </View>
                         :
                         <View style={styles.viewStatus}>
@@ -316,8 +316,7 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                     }
                 </View>
-
-            </View>
+            </SafeAreaView>
         )
     }
 }
@@ -327,7 +326,7 @@ export default class CopyFromSubjectExists extends Component {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         height: height * 0.3
     },
     header: {
@@ -418,9 +417,8 @@ const styles = StyleSheet.create({
         bottom: 16
     },
     viewStatus: {
-        height: height - 230,
         paddingBottom: 15,
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
     },
     paperParacV3: {
         marginLeft: -60,
