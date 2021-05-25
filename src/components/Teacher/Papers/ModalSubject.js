@@ -34,7 +34,8 @@ export default class ModalSubject extends Component {
     };
 
     onClose = () => {
-        this.setState({ visible: false });
+        // this.setState({ visible: false });
+        this.modalizeRef.onClose();
     }
 
     renderItem = ({ item, index }) => <Item item={item} index={index} {...this.props} />
@@ -48,13 +49,13 @@ export default class ModalSubject extends Component {
 
     render() {
         const { visible } = this.state;
-        const { listSubjects } = this.props;
+        const { listSubjects, marginTop } = this.props;
         return (
             <Modal
                 ref={ref => this.modalizeRef = ref}
                 visible={visible}
                 closeModal={this.onClose}
-                modalHeight={modalHeight}
+                modalHeight={marginTop || modalHeight}
                 title={'Chọn môn'}
                 transparent={true}>
                 <View style={{ width: width, flex: 1, backgroundColor: '#fff' }}>

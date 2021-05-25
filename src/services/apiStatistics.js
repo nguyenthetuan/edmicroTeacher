@@ -44,9 +44,8 @@ export const diaryActive = async ({ token, enumType }) => {
     const responseJson = await response.json();
     return responseJson;
 }
-export const getLaboratory = async ({ token, }) => {
-    const response = await fetch(`https://api-elb.onluyen.vn/api/laboratory/find?
-    `, {
+export const getLaboratory = async ({ token, subjectCode }) => {
+    const response = await fetch(`${API_BASE}laboratory/find?subjectCode=${subjectCode}`, {
         method: 'GET',
         headers: getHeaders(token)
     });

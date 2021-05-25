@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     SafeAreaView,
     Animated,
     AppState,
-    ActivityIndicator,
     RefreshControl,
     ScrollView,
-    Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
@@ -26,16 +23,40 @@ import {
     laboratoryAction
 } from '../../../actions/statisticAction';
 import ShimerLabora from './ShimerLabora';
-const { height } = Dimensions.get('window');
+import ModalSubject from '../Papers/ModalSubject';
+import _ from 'lodash';
+import { HEIGHT_DEVICE, } from '../../../constants/const';
 const { Value, timing } = Animated;
-
+const dataSubject = [
+    {
+        code: "TOAN",
+        name: "Toán",
+        order: 1,
+    },
+    {
+        code: "HOAHOC",
+        name: "Hóa học",
+        order: 2,
+    },
+    {
+        code: "VATLY",
+        name: "Vật lí",
+        order: 3,
+    },
+    {
+        code: "SINH",
+        name: "Sinh học",
+        order: 4
+    },
+]
 
 class LaboratoryScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [1, 2, 3],
-            appState: AppState.currentState
+            appState: AppState.currentState,
+            subjectActive: []
         }
         this._scroll_y = new Value(0)
     }
@@ -134,8 +155,25 @@ class LaboratoryScreen extends Component {
 
     getDataLaboratory = async () => {
         const { token } = await dataHelper.getToken();
-        this.props.fetchLaboratory({ token });
+        this.props.fetchLaboratory({ token, subjectCode: '' });
     }
+
+    handleFilter = () => {
+        this.refModalSubject.onOpen();
+    }
+
+    activeSubject = async item => {
+        await this.setState({ subjectActive: [item.code] });
+        this.onGetPapers();
+        this.refModalSubject.onClose();
+    };
+
+    onGetPapers = async () => {
+        const { subjectActive, } = this.state;
+        const { token } = await dataHelper.getToken();
+        this.props.fetchLaboratory({ subjectCode: subjectActive[0] || '', token });
+
+    };
 
     componentWillUnmount() {
         if (this.timeRefresh != null) {
@@ -146,7 +184,8 @@ class LaboratoryScreen extends Component {
     }
 
     render() {
-        const { user, isLoadLabora, laboratory } = this.props;
+        const { user, isLoadLabora, laboratory, } = this.props;
+        const { subjectActive } = this.state;
         return (
             <View style={LaboraStyle.container}>
                 <SafeAreaView style={LaboraStyle.top} />
@@ -154,6 +193,7 @@ class LaboratoryScreen extends Component {
                     {...user}
                     navigation={this.props.navigation}
                     showFillter={true}
+                    handleFilter={this.handleFilter}
                 />
                 <ScrollView
                     refreshControl={
@@ -173,6 +213,13 @@ class LaboratoryScreen extends Component {
                             laboratory={laboratory} />
                     }
                 </ScrollView>
+                <ModalSubject
+                    ref={ref => this.refModalSubject = ref}
+                    subjectActive={subjectActive}
+                    listSubjects={dataSubject}
+                    activeSubject={this.activeSubject}
+                    marginTop={HEIGHT_DEVICE / 2}
+                />
             </View>
         )
     }

@@ -81,6 +81,7 @@ export default class HeaderMain extends React.Component {
           showFillter ?
             <TouchableWithoutFeedback
               hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+              onPress={this.props.handleFilter}
             >
               <View style={{ alignSelf: 'center', zindex: 1 }}>
                 <Image source={AppIcon.iconFilter} style={{ tintColor: '#2D9CDB' }} />

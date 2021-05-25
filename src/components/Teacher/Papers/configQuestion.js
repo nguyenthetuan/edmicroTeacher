@@ -106,7 +106,7 @@ class ConfigQuestion extends Component {
     }
     if (data[0] === 'pushArray') {
       this.setState({
-        arrayQuestion: [...this.state.arrayQuestion, data[2]],
+        arrayQuestion: [...this.state.arrayQuestion, data[1]],
       });
     }
     if (data[0] === 'popArray') {
@@ -758,7 +758,6 @@ class ConfigQuestion extends Component {
       wrapTopHeight: height
     } = this.state;
     const { shadowBtn } = shadowStyle;
-    console.log(questions);
     const heightSort = _.isArray(questions) ? 100 + (Math.ceil(questions.length / 10) - 1) * 40 : 100;
 
     return (
