@@ -301,7 +301,7 @@ export default class ModalCurriculum extends Component {
                         }>
                         <Image
                           style={{ tintColor: '#fff' }}
-                          source={require('../../../asserts/icon/close_popup.png')}
+                          source={require('../../../asserts/icon/icon_closeX.png')}
                         />
                       </TouchableOpacity>
                       <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
