@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Dimensions,
   Text,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';

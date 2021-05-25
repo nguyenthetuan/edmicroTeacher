@@ -428,20 +428,17 @@ function HomeWorkDraScreen(props) {
                 class: listClass,
             });
             setRefresh(false);
+            setIsLoading(false);
         }
     };
 
     const refreshData = async () => {
-        await setRefresh(true);
-        fetchData();
+        // await setRefresh(true);
     }
 
     Global.updateHomeWork = refreshData;
     useEffect(() => {
         fetchData();
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
         let timeExportTmp = props.data?.data.timeExport;
         timeExportTmp = convertTimeHMDMY(timeExport);
         setTimeExport(timeExportTmp);

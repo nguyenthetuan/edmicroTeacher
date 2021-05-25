@@ -299,16 +299,23 @@ export default function StudentDetail(props) {
                     </View>
                     {
                         item.status == 4 ?
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <TouchableWithoutFeedback onPress={() => handleRework(item.studentId)} >
                                     <View style={[styles.remakeWork, { ...shadowBtn }]}>
                                         <Text style={styles.txtRemake}>Làm lại</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
+                                {props.screenProps.data.data?.assignmentContentType != 3 &&
+                                    <TouchableWithoutFeedback onPress={goToResult(item)} >
+                                        <View style={[styles.remakeWork, { backgroundColor: '#4fafd6', marginLeft: 10 }, { ...shadowBtn }]}>
+                                            <Text style={styles.txtRemake}>Kết quả</Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                }
+                                {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
                                     <Text style={styles.txtTitleItem}>Kết quả</Text>
                                     <Text style={styles.txtPoint}>{status.result}</Text>
-                                    {/* {
+                                    {
                                         item.status === 4
                                             ?
                                             <View style={styles.viewOption}>
@@ -317,28 +324,12 @@ export default function StudentDetail(props) {
                                                     <Text style={styles.pointNew}>Điểm</Text>
                                                 </View>
                                             </View>
-                                            : null} */}
-                                </View>
+                                            : null}
+                                </View> */}
                             </View>
                             : null
                     }
                 </View>
-                {
-                    item.status == 4 && 2
-                        ?
-                        <TouchableWithoutFeedback
-                            onPress={goToResult(item)}
-                            disabled={isLoading}
-                        >
-                            {isLoading
-                                ? <ActivityIndicator style={{ alignSelf: 'center', right: 10 }} />
-                                : <Image source={require('../../../asserts/icon/icon_rightStud.png')}
-                                    style={{ alignSelf: 'center', right: 12 }} />
-                            }
-                        </TouchableWithoutFeedback>
-                        : <Image source={require('../../../asserts/icon/icon_rightStud.png')}
-                            style={{ alignSelf: 'center', right: 12, opacity: 0 }} />
-                }
             </View>
         )
     }
