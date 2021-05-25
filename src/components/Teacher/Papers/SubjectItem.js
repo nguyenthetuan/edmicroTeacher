@@ -43,14 +43,11 @@ export default class SubjectItem extends Component {
                 }
             }
         }
-        console.log("data after: ", data);
         return data;
     }
 
     renderItem = ({ item }) => {
-        console.log(item);
         const { listSubjects } = this.props;
-        console.log('listSubjects', listSubjects)
         let data = listSubjects.filter(ele => ele.code == item);
         data = data && data[0];
         return (
