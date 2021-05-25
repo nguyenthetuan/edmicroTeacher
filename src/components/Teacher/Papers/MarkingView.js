@@ -16,8 +16,10 @@ import {
   Alert,
   TouchableWithoutFeedback,
   Keyboard,
-  Easing
+  Easing,
+  ViewPropTypes
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
 import apiHelper from '../../../utils/dataHelper';
@@ -1001,6 +1003,9 @@ class MarkingView extends Component {
               </View>
 
             </View>
+            <SingleSidedShadowBox>
+              <View style={styles.shadowView} />
+            </SingleSidedShadowBox>
             {!_.isEmpty(assignmentDetailCheck.data.listFile) && (
               <>
                 <View style={{ width: width, height: 30, flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20 }}>
@@ -1139,6 +1144,18 @@ class MarkingView extends Component {
   }
 }
 
+const SingleSidedShadowBox = ({ children, style }) => (
+  <View style={[styles.container, style]}>
+    { children}
+  </View>
+);
+
+SingleSidedShadowBox.propTypes = {
+  children: PropTypes.element,
+  style: ViewPropTypes.style,
+};
+
+
 class TabOfPaper extends Component {
   constructor(props) {
     super(props);
@@ -1268,6 +1285,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 10,
     marginVertical: 20,
+    backgroundColor: '#fff',
   },
   buttonUpdate: {
     width: 95,
@@ -1296,6 +1314,10 @@ const styles = StyleSheet.create({
     top: 30,
     width: 40,
     height: 30,
+  },
+  container: {
+    overflow: 'hidden',
+    paddingBottom: 5,
   },
   buttonOK: {
     width: 60,
@@ -1456,6 +1478,16 @@ const styles = StyleSheet.create({
     lineHeight: RFFonsize(14),
     color: '#ff6213',
     marginVertical: 5
+  },
+  shadowView: {
+    // width: '100%',
+    // height: 2,
+    // backgroundColor: '#fff',
+    // shadowColor: '#000',
+    // shadowOffset: { width: 1, height: 1 },
+    // shadowOpacity: 0.4,
+    // shadowRadius: 3,
+    // elevation: 5,
   }
 
 });
