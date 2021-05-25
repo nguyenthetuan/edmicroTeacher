@@ -329,7 +329,7 @@ class StepThree extends Component {
           >
             <View style={[styles.styBtnNext, !isVisiable && { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
               <Text style={styles.styTxtBtnNext}>
-                Bước tiếp theo
+                Tạo nhiệm vụ
             </Text>
             </View>
           </TouchableWithoutFeedback>
