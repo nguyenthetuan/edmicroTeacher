@@ -190,6 +190,8 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
   name: {
     color: '#FFF',
