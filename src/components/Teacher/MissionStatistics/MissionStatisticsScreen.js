@@ -75,7 +75,7 @@ const initTab = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       style: {
         backgroundColor: '#FFF',
-        borderBottomWidth: 2,
+        borderBottomWidth: 1.5,
         borderBottomColor: '#2D9CDB',
         height: 40,
         elevation: 0,

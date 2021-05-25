@@ -59,6 +59,7 @@ class DetailLabora extends Component {
                     />
 
                 }
+                <SafeAreaView />
             </View>
         )
     }

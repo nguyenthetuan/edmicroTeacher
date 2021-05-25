@@ -18,6 +18,7 @@ import _ from 'lodash';
 import { RFFonsize } from '../../../utils/Fonts';
 import ItemInfo from '../../modals/ItemInfo';
 import ZoomAnim from '../../anim/ZoomAnim';
+import shadowStyle from '../../../themes/shadowStyle';
 const { width, height } = Dimensions.get('window');
 export default class ModalMockExamStart extends Component {
     constructor(props) {
@@ -76,6 +77,7 @@ export default class ModalMockExamStart extends Component {
 
     render() {
         const { visible, data, isLoading } = this.state;
+        const { shadowBtn } = shadowStyle;
         return (
             <Modal visible={visible} transparent={true}>
                 <TouchableWithoutFeedback
@@ -110,17 +112,18 @@ export default class ModalMockExamStart extends Component {
                                                     </View>
                                                 ) : null}
                                                 <View style={styles.wrapTime}>
-                                                    <TouchableOpacity
-                                                        onPress={() => this._startMockExam()}
-                                                        style={styles.btnStart}>
-                                                        <Text style={styles.txtButon}>
-                                                            {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
+                                                    <TouchableWithoutFeedback
+                                                        onPress={() => this._startMockExam()}>
+                                                        <View style={[styles.btnStart, shadowBtn]}>
+                                                            <Text style={styles.txtButon}>
+                                                                {/* {data.status == 0 ? 'Bắt đầu' : 'Tiếp tục'} */}
                                                         Làm thử
                                                     </Text>
-                                                    </TouchableOpacity>
+                                                        </View>
+                                                    </TouchableWithoutFeedback>
                                                     <TouchableOpacity
                                                         onPress={() => this.setState({ visible: false })}
-                                                        style={styles.btnBack}>
+                                                        style={[styles.btnBack, shadowBtn]}>
                                                         <Text style={styles.txtButon}>Quay lại</Text>
                                                     </TouchableOpacity>
                                                 </View>
@@ -177,9 +180,12 @@ const styles = StyleSheet.create({
     },
     txtButon: {
         fontSize: RFFonsize(14),
+        lineHeight: RFFonsize(18),
         fontFamily: 'Nunito-Regular',
         color: '#fff',
         fontWeight: 'bold',
+        alignSelf: 'center',
+        paddingVertical: 3
     },
     stylLine: {
         height: 1,
@@ -198,7 +204,6 @@ const styles = StyleSheet.create({
         marginTop: 23,
     },
     btnStart: {
-        height: 30,
         backgroundColor: '#55B619',
         borderRadius: 5,
         // paddingHorizontal: 50,
@@ -207,7 +212,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     btnBack: {
-        height: 30,
         backgroundColor: '#F98E2F',
         borderRadius: 5,
         // paddingHorizontal: 50,
