@@ -5,7 +5,8 @@ import {
   SafeAreaView,
   Keyboard,
   Alert,
-  Text
+  Text,
+  KeyboardAvoidingView
 } from 'react-native';
 import HeaderNavigation from '../../common-new/HeaderNavigation';
 import dataHelper from '../../../utils/dataHelper';
@@ -18,6 +19,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import Global from '../../../utils/Globals';
 import _ from 'lodash';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export default class MissionStepByStep extends Component {
   token = null;
   state = {
@@ -75,14 +77,18 @@ export default class MissionStepByStep extends Component {
           goBack={this.goBack}
           color={'#979797'}
         />
-        <View style={{ backgroundColor: '#fff' }}>
-          <StepIndicator
-            customStyles={customStyles}
-            currentPosition={this.state.currentPosition}
-            labels={labels}
-            stepCount={4}
-          />
-        </View>
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+        >
+          <KeyboardAvoidingView style={{ backgroundColor: '#fff' }}>
+            <StepIndicator
+              customStyles={customStyles}
+              currentPosition={this.state.currentPosition}
+              labels={labels}
+              stepCount={4}
+            />
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
         <TopTabMissionContain
           screenProps={{
             ...this.props,
