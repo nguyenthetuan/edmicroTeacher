@@ -257,7 +257,7 @@ const renderHtmlQuestionDetail = (
       `;
 
       html += `<div style="padding:10px 15px">
-      <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${dataStandard.numberQuestion}</span>
+      <span style="font-weight: bold;font-size: 14px;color: #9B9B9B">Câu ${dataStandard.numberQuestion} | ${dataStandard.questionNumber}</span>
       </div>
       `;
 
