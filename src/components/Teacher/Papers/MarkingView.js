@@ -15,7 +15,8 @@ import {
   Platform,
   Alert,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDataAssignmentAction, updateExamListAction } from '../../../actions/paperAction';
@@ -70,7 +71,10 @@ class MarkingView extends Component {
       },
       urlFile: '',
       modalImageFull: false,
-      arrayImage: []
+      arrayImage: [],
+      goToNewScreen: false,
+      indexScreen: 0,
+      translateY: new Animated.Value(0)
     };
   }
 
@@ -82,6 +86,32 @@ class MarkingView extends Component {
       // }
     }
     return result;
+  }
+
+  onFocus = () => {
+    const moveToTop = Animated.timing(
+      this.state.translateY,
+      {
+        toValue: -350,
+        duration: 100,
+        delay: 0,
+        easing: Easing.linear,
+      }
+    );
+    moveToTop.start();
+  }
+
+  onBlur = () => {
+    const moveToIdle = Animated.timing(
+      this.state.translateY,
+      {
+        toValue: 0,
+        duration: 100,
+        delay: this.props.delay ? this.props.delay : 0,
+        easing: Easing.linear,
+      }
+    );
+    moveToIdle.start();
   }
 
   componentDidMount() {
@@ -639,12 +669,12 @@ class MarkingView extends Component {
     )
   }
 
-  _changeTabComponent = () => {
-    const { tabActive } = this.state;
+  _changeTabComponent = (index) => {
+    const { tabActive, indexScreen } = this.state;
     const { assignmentDetailCheck } = this.state;
     const source = { uri: assignmentDetailCheck.data.listFile[0] };
     const answer = { uri: assignmentDetailCheck.data.answerFile }
-    switch (tabActive) {
+    switch (indexScreen) {
       case 0:
         return (
           source.uri && <Pdf
@@ -713,15 +743,15 @@ class MarkingView extends Component {
   _answer = type => {
     switch (type) {
       case 0:
-        return 'A';
+        return '.A';
         break;
       case 1:
-        return 'B';
+        return '.B';
       case 2:
-        return 'C';
+        return '.C';
         break;
       case 3:
-        return 'D';
+        return '.D';
         break;
       default:
         '';
@@ -764,7 +794,7 @@ class MarkingView extends Component {
             // makedPoint && { backgroundColor: '#5DD8FF' }
           ]}>
             <Text style={{ color: '#fff' }}>{index + 1}</Text>
-            <Text style={{ color: '#fff', marginLeft: 1 }}>
+            <Text style={{ color: '#fff', marginLeft: 1, fontFamily: 'Nunito', fontWeight: '700' }}>
               {this._answer(answer)}
             </Text>
           </View>
@@ -776,14 +806,14 @@ class MarkingView extends Component {
           rippleSize={30}
           style={[
             styles.buttonQuestion,
-            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg }, { backgroundColor: makedPoint ? '#2D9CDB' : '#FDC214' }, { borderRadius: 20 },
+            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg }, { backgroundColor: makedPoint ? '##107CB9' : '#FDC214' }, { borderRadius: 20 },
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
           }
           }>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0' }, makedPoint && { color: '#fff' }}>{index + 1}</Text>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }, makedPoint && { color: '#fff' }}>
+          <Text style={{ color: '#fff', marginLeft: 1, fontFamily: 'Nunito', fontWeight: '700' }}>{index + 1}</Text>
+          <Text style={{ color: '#fff', marginLeft: 1, fontFamily: 'Nunito', fontWeight: '700' }}>
             {typeAnswer === 0 && this._answer(answer)}
           </Text>
         </RippleButton >
@@ -792,17 +822,17 @@ class MarkingView extends Component {
           rippleSize={30}
           style={[
             styles.buttonQuestion,
-            { borderColor: '#56CCF2' }, bg && { backgroundColor: bg },
-            { borderRadius: 20 }, { backgroundColor: makedPoint ? '#2D9CDB' : '#FDC214' }
+            { borderColor: '#65db1d' }, bg && { backgroundColor: bg },
+            { borderRadius: 20 }, { backgroundColor: makedPoint ? '##107CB9' : '#FDC214' }
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
           }}>
           <Text
-            style={{ color: (bg && '#fff') || '#a4a6b0', fontWeight: 'bold', left: 1 }}>
+            style={{ color: '#fff', marginLeft: 1, fontFamily: 'Nunito', fontWeight: '700', left: 1 }}>
             {index + 1}
           </Text>
-          <Text style={{ color: (bg && '#fff') || '#a4a6b0', marginLeft: 3 }}>
+          <Text style={{ color: '#fff', marginLeft: 1, fontFamily: 'Nunito', fontWeight: '700', marginLeft: 3 }}>
             {typeAnswer === 0 && this._answer(answer)}
           </Text>
         </RippleButton>
@@ -827,6 +857,14 @@ class MarkingView extends Component {
     })
   }
 
+  onPressSource = () => {
+    this.setState({ indexScreen: 0, goToNewScreen: true })
+  }
+
+  onPressAnswer = () => {
+    this.setState({ indexScreen: 1, goToNewScreen: true })
+  }
+
   render() {
     const {
       assignmentDetailCheck,
@@ -834,7 +872,9 @@ class MarkingView extends Component {
       tabActive,
       selectedValueClass,
       modalImageFull,
-      arrayImage
+      arrayImage,
+      indexScreen,
+      translateY
     } = this.state;
     const { shadowBtn } = shadowStyle;
     if (_.isEmpty(assignmentDetailCheck)) {
@@ -871,7 +911,7 @@ class MarkingView extends Component {
       point = (point).replace(/^0+/, '');
 
     return (
-      <View style={styles.rootView}>
+      <Animated.View style={[styles.rootView]} onStartShouldSetResponder={() => Keyboard.dismiss()}>
         {this.renderHeader()}
         {Object.keys(assignmentDetailCheck).length === 0 ||
           assignmentDetailCheck.data.data.length === 0 ? (
@@ -888,28 +928,28 @@ class MarkingView extends Component {
                   renderItem={this.ItemQuestion}
                 />
               </View>
-              <View style={{ height: 5, backgroundColor: '#c4c4c4' }} />
+              {/* <View style={{ height: 5, backgroundColor: '#c4c4c4' }} /> */}
               <View style={styles.poinded}>
                 <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#5DD8FF' }]} />
-                  <Text style={styles.txtNote}>Chưa chấm</Text>
-                </View>
-                <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#FDC214' }]} />
+                  <View style={[styles.note, { backgroundColor: '#107CB9' }]} />
                   <Text style={styles.txtNote}>Đã chấm</Text>
                 </View>
                 <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#C4C4C4' }]} />
+                  <View style={[styles.note, { backgroundColor: '#FDC214' }]} />
+                  <Text style={styles.txtNote}>Chưa chấm</Text>
+                </View>
+                <View style={styles.review}>
+                  <View style={[styles.note, { backgroundColor: '#fff', borderColor: '#107CB9' }]} />
                   <Text style={styles.txtNote}>Trắc nhiệm</Text>
                 </View>
                 <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#C4C4C4' }]} />
+                  <View style={[styles.note, { backgroundColor: '#fff', borderRadius: 20, borderColor: '#107CB9' }]} />
                   <Text style={styles.txtNote}>Tự luận</Text>
                 </View>
               </View>
               <View style={styles.wrapInputScore}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: '#fff' }}>
+                  <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: '#757575' }}>
                     Câu {this.state.currentIndex + 1}{' '}
                   </Text>
                   <View style={{
@@ -929,12 +969,12 @@ class MarkingView extends Component {
                       styleInput={styles.point}
                     />
                   </View>
-                  <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: "#fff" }}>
+                  <Text style={{ fontFamily: 'Nunito-Bold', fontSize: RFFonsize(14), color: "#757575" }}>
                     {' '}
                     /{maxScore}.đ
                     </Text>
                 </View>
-                <RippleButton
+                {/* <RippleButton
                   style={[styles.buttonCommnet, shadowBtn]}
                   rippleContainerBorderRadius={10}
                   onPress={() => {
@@ -945,7 +985,7 @@ class MarkingView extends Component {
                     Nhận xét
                   </Text>
                   <Image source={require('../../../asserts/icon/icon_cmtMarking.png')} style={{ right: 3 }} />
-                </RippleButton>
+                </RippleButton> */}
                 <RippleButton
                   style={[styles.buttonUpdate, shadowBtn]}
                   rippleContainerBorderRadius={10}
@@ -958,57 +998,28 @@ class MarkingView extends Component {
                   </Text>
                 </RippleButton>
               </View>
-              {!this.state.isHideCommentInput && (
-                <View
-                  style={{
-                    width: '90%',
-                    height: 30,
-                    borderWidth: 0.5,
-                    borderRadius: 5,
-                    paddingHorizontal: 5,
-                    height: 100,
-                    marginVertical: 20,
-                    backgroundColor: '#F2F2F2',
-                    borderColor: '#C4C4C4',
-                    alignSelf: 'center',
-                  }}>
-                  <TextInput
-                    onChangeText={text => {
-                      this.onChangeTextComment(text);
-                    }}
-                    value={
-                      this.state[`valueCommnent${this.state.currentIndex}`]
-                    }
-                    multiline={true}
-                    autoFocus={true}
-                  />
-                  {/* <RippleButton
-                    style={styles.buttonSubmit}
-                    rippleContainerBorderRadius={10}
-                    onPress={() => {
-                      this.onpressComment();
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontFamily: 'Nunito',
-                        fontSize: RFFonsize(12),
-                      }}>
-                      Lưu
-                    </Text>
-                  </RippleButton> */}
-                </View>
-              )}
+
             </View>
             {!_.isEmpty(assignmentDetailCheck.data.listFile) && (
               <>
-                <TabOfPaper
+                <View style={{ width: width, height: 30, flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 20 }}>
+                  <RippleButton style={{ flexDirection: 'row', justifyContent: '', alignItems: 'center' }} onPress={this.onPressSource}>
+                    <Image source={AppIcon.config_icon} />
+                    <Text style={{ fontFamily: 'Nunito', fontWeight: '600', fontSize: 14, lineHeight: 19, marginLeft: 5 }}>Xem lại bộ đề</Text>
+                  </RippleButton>
+                  <RippleButton style={{ flexDirection: 'row', justifyContent: '', alignItems: 'center', marginLeft: 20 }} onPress={this.onPressAnswer}>
+                    <Image source={AppIcon.eyes_icon} />
+                    <Text style={{ fontFamily: 'Nunito', fontWeight: '600', fontSize: 14, lineHeight: 19, marginLeft: 5 }}>Xem lời giải</Text>
+                  </RippleButton>
+                </View>
+                {/* <TabOfPaper
                   tabActive={tabActive}
                   _changeTab={this._changeTab}
                   currentIndex={currentIndex}
                   assignmentDetailCheck={assignmentDetailCheck}
                 />
-                {this._changeTabComponent()}
+                {this._changeTabComponent()} */}
+                {this.tabHomework()}
               </>
             )}
             {_.isEmpty(assignmentDetailCheck.data.listFile) && (
@@ -1037,6 +1048,54 @@ class MarkingView extends Component {
                 />
               </>
             )}
+            <Animated.View style={{ alignItems: 'center', backgroundColor: '#fff', transform: [{ translateY }] }}>
+              <Text style={{ width: '90%', fontWeight: '800', fontSize: 14, lineHeight: 19, fontFamily: 'Nunito-bold' }}>Nhận xét của giáo viên</Text>
+              <View
+                style={{
+                  width: '90%',
+                  height: 30,
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  paddingHorizontal: 5,
+                  height: 100,
+                  marginVertical: 20,
+                  backgroundColor: 'rgba(86, 204, 242, 0.1)',
+                  borderColor: '#2D9CDB',
+                  alignSelf: 'center',
+                  borderStyle: 'dashed',
+                  // position: 'absolute',
+                  bottom: 20
+                }}>
+                <TextInput
+                  onChangeText={text => {
+                    this.onChangeTextComment(text);
+                  }}
+                  value={
+                    this.state[`valueCommnent${this.state.currentIndex}`]
+                  }
+                  multiline={true}
+                  autoFocus={true}
+                  style={{ flex: 1 }}
+                  onFocus={this.onFocus}
+                  onBlur={this.onBlur}
+                />
+                {/* <RippleButton
+                    style={styles.buttonSubmit}
+                    rippleContainerBorderRadius={10}
+                    onPress={() => {
+                      this.onpressComment();
+                    }}>
+                    <Text
+                      style={{
+                        color: '#fff',
+                        fontFamily: 'Nunito',
+                        fontSize: RFFonsize(12),
+                      }}>
+                      Lưu
+                    </Text>
+                  </RippleButton> */}
+              </View>
+            </Animated.View>
           </View>
         )}
         <Modal visible={modalImageFull}>
@@ -1050,7 +1109,31 @@ class MarkingView extends Component {
             enableImageZoom={true}
           />
         </Modal>
-      </View>
+        {this.state.goToNewScreen && <View style={styles.screenPopUp}>
+          <SafeAreaView style={{ backgroundColor: '#107CB9', flex: 1 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 80, paddingHorizontal: 20 }}>
+              <RippleButton
+                style={styles.buttonBack}
+                onPress={() => {
+                  this.setState({ goToNewScreen: false })
+                }}>
+                <Image
+                  style={{ tintColor: "#fff" }}
+                  source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
+                />
+              </RippleButton>
+              <Text numberOfLines={1}
+                style={[styles.titleScre]}>
+                {indexScreen === 0 ? 'Xem lại bộ đề' : 'Xem lời giải'}
+              </Text>
+            </View>
+            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+              {this._changeTabComponent()}
+            </View>
+          </SafeAreaView>
+          <SafeAreaView style={{ backgroundColor: '#fff' }} />
+        </View>}
+      </Animated.View >
     );
   }
 }
@@ -1138,8 +1221,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     alignSelf: 'center'
   },
+
+  screenPopUp: {
+    position: 'absolute',
+    backgroundColor: '#fff',
+    width: width,
+    height: height
+  },
   txtNote: {
-    color: '#fff',
+    color: '#828282',
     fontSize: RFFonsize(12),
     lineHeight: RFFonsize(16),
     fontFamily: 'Nunito',
@@ -1170,7 +1260,6 @@ const styles = StyleSheet.create({
   },
   wrapTop: {
     width: '100%',
-    backgroundColor: '#107CB9',
   },
   wrapInputScore: {
     flexDirection: 'row',
