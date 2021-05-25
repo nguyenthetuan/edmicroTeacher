@@ -196,9 +196,6 @@ export default class ModalCurriculum extends Component {
         hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
       >
         <View style={styles.wrapElement}>
-          {/* <Text style={styles.name} numberOfLines={1}>
-            {item.name}
-          </Text> */}
           <HighlightText
             highlightStyle={{ backgroundColor: 'yellow' }}
             searchWords={[this.state.searchKey]}
@@ -206,12 +203,6 @@ export default class ModalCurriculum extends Component {
             sanitize={removeAccents}
           />
           <View style={{ flexDirection: 'row' }}>
-            {/* <TouchableOpacity
-              onPress={() => this.selectItem({ item, index })}
-              hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
-            >
-              <IconAntDesign name={'search1'} size={20} color="#BDBDBD" />
-            </TouchableOpacity> */}
             {!item.isLeaf && (
               <TouchableOpacity
                 style={{ marginLeft: 15 }}
@@ -292,6 +283,7 @@ export default class ModalCurriculum extends Component {
                     }}>
                       <TouchableOpacity
                         style={{ alignSelf: 'flex-end', marginBottom: 3 }}
+                        hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
                         onPress={() => {
                           this.setState({
                             visible: false,

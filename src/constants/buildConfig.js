@@ -9,7 +9,7 @@ export const VERSION_CODE_ANDROID = 12;
  * Update version code push
  */
 export const BUILD_NUMBER_CODE_PUSH = {
-    ios: '51',
+    ios: '52',
     android: '35'
 };
 

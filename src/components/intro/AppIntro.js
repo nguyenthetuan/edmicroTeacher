@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
     textDes: {
         fontFamily: 'Nunito',
-        fontSize: 14,
+        fontSize: RFFonsize(14),
         lineHeight: 17,
         fontWeight: '400',
         color: 'rgba(117, 117, 117, 1)',

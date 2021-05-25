@@ -234,70 +234,64 @@ export default class CopyFromSubjectExists extends Component {
         const { listSubjects } = this.props.navigation.state.params;
         const { lerningTarget, isLoading } = this.state;
         return (
-            <SafeAreaView style={{ backgroundColor: '#56CCF2', flex: 1 }}>
-                <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
-                <View style={styles.root}>
-                    {/* <View style={styles.header}> */}
-                        <HeaderPaper
-                            title={'Bộ đề có sẵn'}
-                            navigation={this.props.navigation}
-                            color={'#fff'}
-                            notRightButton={true}
-                            createPaper={true}
+            <View style={{ backgroundColor: '#56CCF2', flex: 1 }}>
+                <SafeAreaView />
+                <HeaderPaper
+                    title={'Bộ đề có sẵn'}
+                    navigation={this.props.navigation}
+                    color={'#fff'}
+                    notRightButton={true}
+                    createPaper={true}
+                />
+                <View style={styles.wrapDropdown}>
+                    <View style={styles.wrap2Dropdown}>
+                        <Dropdown
+                            containerStyle={styles.styleDrop}
+                            contentStyle={styles.firstTwo}
+                            title="Môn Học"
+                            data={listSubjects}
+                            onPressItem={(index) => this.onPressItemSubject(index)}
+                            boldText={{ fontWeight: "700", color: '#55CCF2' }}
                         />
-                        <View style={styles.wrapDropdown}>
-                            <View style={styles.flexColumn}>
-                                <View style={styles.wrap2Dropdown}>
-                                    <Dropdown
-                                        containerStyle={styles.styleDrop}
-                                        contentStyle={styles.firstTwo}
-                                        title="Môn Học"
-                                        data={listSubjects}
-                                        onPressItem={(index) => this.onPressItemSubject(index)}
-                                        boldText={{ fontWeight: "700", color: '#55CCF2' }}
-                                    />
-                                    <Dropdown
-                                        containerStyle={styles.styleDrop}
-                                        contentStyle={styles.firstTwo}
-                                        title="Giáo trình"
-                                        data={this.state.lerningTarget}
-                                        onPressItem={(index) => this.onPressCurriculum(index)}
-                                        indexSelected={this.state.indexSelected}
-                                        boldText={{ fontWeight: "700", color: '#55CCF2' }} ƒ
-                                    />
-                                </View>
-                                <View style={styles.styWrapInput}>
-                                    <TextInput
-                                        placeholder={'Tên bộ đề'}
-                                        placeholderTextColor={'#c4c4c4'}
-                                        style={styles.nameTest}
-                                        value={this.state.textPreviosSearch}
-                                        onChangeText={this.onChangePreviosSearchText}
-                                    />
-                                    <TouchableWithoutFeedback
-                                        onPress={() => { this.onPressSearch() }}>
-                                        <View style={styles.searchIcon}>
-                                            <IconAntDesign
-                                                name={'search1'}
-                                                style={styles.iconSearch}
-                                            />
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                </View>
-                                <ModalCurriculum
-                                    // title="Đơn vị kiến thức"
-                                    curriculumCode={this.state.currentCurriculum}
-                                    data={this.state.targetLearning}
-                                    onPress={(value) => this.onPress(value)}
-                                    styleTitle={{ color: '#fff' }}
-                                    borderStyle={styles.boeSty}
-                                    stylePlace={styles.stylePlace}
-                                />
-                            {/* </View> */}
-                        </View>
+                        <Dropdown
+                            containerStyle={styles.styleDrop}
+                            contentStyle={styles.firstTwo}
+                            title="Giáo trình"
+                            data={this.state.lerningTarget}
+                            onPressItem={(index) => this.onPressCurriculum(index)}
+                            indexSelected={this.state.indexSelected}
+                            boldText={{ fontWeight: "700", color: '#55CCF2' }} ƒ
+                        />
                     </View>
+                    <View style={styles.styWrapInput}>
+                        <TextInput
+                            placeholder={'Tên bộ đề'}
+                            placeholderTextColor={'#c4c4c4'}
+                            style={styles.nameTest}
+                            value={this.state.textPreviosSearch}
+                            onChangeText={this.onChangePreviosSearchText}
+                        />
+                        <TouchableWithoutFeedback
+                            onPress={() => { this.onPressSearch() }}>
+                            <View style={styles.searchIcon}>
+                                <IconAntDesign
+                                    name={'search1'}
+                                    style={styles.iconSearch}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                    <ModalCurriculum
+                        curriculumCode={this.state.currentCurriculum}
+                        data={this.state.targetLearning}
+                        onPress={(value) => this.onPress(value)}
+                        styleTitle={{ color: '#fff' }}
+                        borderStyle={styles.boeSty}
+                        stylePlace={styles.stylePlace}
+                    />
+
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                <View style={{ flex: 1, backgroundColor: '#fff', marginTop: 55 }}>
                     {!isLoading
                         ?
                         <View style={styles.viewStatus}>
@@ -308,7 +302,6 @@ export default class CopyFromSubjectExists extends Component {
                                 style={{ paddingHorizontal: 5 }}
                                 ListFooterComponent={this.renderLoadMoreButton}
                             />
-                            <SafeAreaView style={{ backgroundColor: "#fff" }} />
                         </View>
                         :
                         <View style={styles.viewStatus}>
@@ -316,7 +309,8 @@ export default class CopyFromSubjectExists extends Component {
                         </View>
                     }
                 </View>
-            </SafeAreaView>
+                <SafeAreaView style={{ backgroundColor: '#fff' }} />
+            </View>
         )
     }
 }
@@ -326,8 +320,6 @@ export default class CopyFromSubjectExists extends Component {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        // backgroundColor: '#fff',
-        height: height * 0.3
     },
     header: {
         flex: 1,
@@ -336,18 +328,12 @@ const styles = StyleSheet.create({
         height: height * 0.3
     },
     wrapDropdown: {
-        width: '100%',
-        justifyContent: 'space-between',
-        paddingHorizontal: 10,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        flex: 1,
-        marginRight: 10,
+        paddingHorizontal: 16,
+        marginTop: 10,
     },
     wrap2Dropdown: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20
     },
     singleTask: {
         height: 100,
@@ -400,7 +386,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: 'center',
         height: 35,
-        marginTop: 6
+        marginTop: 3,
+        marginBottom: 10
     },
     styleDrop: {
         marginBottom: 10,
@@ -417,7 +404,6 @@ const styles = StyleSheet.create({
         bottom: 16
     },
     viewStatus: {
-        paddingBottom: 15,
         backgroundColor: 'transparent',
     },
     paperParacV3: {
