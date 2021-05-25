@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 0,
     color: '#fff',
     fontSize: RFFonsize(14),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   txtFilter: {
     color: '#E59553',
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    marginTop: 13,
-    marginBottom: 16,
+    marginTop: 10,
+    marginBottom: 5,
   },
   styleBody: {
     flex: 1,
@@ -418,25 +418,26 @@ class QuestionLibrary extends Component {
       });
       // lay tong to cau hoi
       const responseCount = await apiPapers.countSearch({
-        token: token,
+        token,
         body,
       });
       const { totalQuestion } = responseCount;
-      if (response && response.length > 0) {
+      if (!_.isEmpty(response) || totalQuestion != 0) {
         this.setState({
           questions: response,
           totalQuestion,
+          isLoading: false,
         });
       } else {
         this.setState({
-          // isLoading: false,
+          isLoading: false,
           questions: [],
           totalQuestion: 0
         });
       }
     } catch (error) {
       this.setState({
-        // isLoading: false,
+        isLoading: false,
         questions: [],
         totalQuestion: 0
       });
@@ -459,21 +460,35 @@ class QuestionLibrary extends Component {
         body,
       });
       const { totalQuestion } = responseCount;
-      if (_.isEmpty(response)) return;
-      if (response && response.length > 0) {
+      if (_.isEmpty(response) || totalQuestion == 0) {
+        this.setState({
+          isLoading: false,
+          questions: [],
+          totalQuestion: 0
+        });
+        return;
+      }
+      if (response.length > 0) {
         this.refPaginationUtils.resetState();
         this.setState({
+          isLoading: false,
           questions: response,
           totalQuestion,
         });
       } else {
         this.setState({
-          // isLoading: false,
+          isLoading: false,
           questions: [],
           totalQuestion: 0
         });
       }
-    } catch (error) { }
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        questions: [],
+        totalQuestion: 0
+      });
+    }
   };
 
   getKeyCache = (obj) => {
@@ -491,7 +506,7 @@ class QuestionLibrary extends Component {
   };
 
   _closeLearnPlaceholder = () => {
-    this.setState({ isLoading: false });
+    // this.setState({ isLoading: false });
     this.handlerShowTourView();
   };
 
@@ -590,6 +605,7 @@ class QuestionLibrary extends Component {
             onRightAction={() => this.configurationQuestion()}
             styleTitle={styles.styleTitle}
             colorBtnBack={'#ffffff'}
+            centerTitle={false}
           />
           <View
             style={styles.styleBody}
@@ -630,18 +646,8 @@ class QuestionLibrary extends Component {
                 listQuestionAdded={listQuestionAdded}
                 isModal={isModal}
                 isLoading={isLoading}
+                totalQuestion={totalQuestion}
               />
-
-              {_.isEmpty(this.state.questions) && !isLoading &&
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 200,
-                  }}>
-                  <Text>Không có dữ liệu</Text>
-                </View>}
 
               {!_.isEmpty(this.state.questions) && (
                 <TouchableWithoutFeedback
@@ -705,10 +711,14 @@ class WebViewComponent extends Component {
     if (this.props.questions != nextProps.questions) {
       return true;
     }
-    if (this.props.listQuestionAdded != nextProps.listQuestionAdded) {
+    // if (this.props.listQuestionAdded != nextProps.listQuestionAdded) {
+    //   console.log('reRender');
+    //   return true;
+    // }
+    if (this.props.isLoading != nextProps.isLoading) {
       return true;
     }
-    if (this.props.isLoading != nextProps.isLoading) {
+    if (this.props.totalQuestion != nextProps.totalQuestion) {
       return true;
     }
     return false;
@@ -724,10 +734,21 @@ class WebViewComponent extends Component {
       questions,
       listQuestionAdded,
       _closeLearnPlaceholder,
-      isLoading
+      isLoading,
+      totalQuestion
     } = this.props;
-    if (_.isEmpty(questions)) {
-      return <LearnPlaceholder />;
+    if (!totalQuestion && !isLoading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: 200,
+          }}>
+          <Text>Không có dữ liệu</Text>
+        </View>
+      );
     }
     return (
       <>

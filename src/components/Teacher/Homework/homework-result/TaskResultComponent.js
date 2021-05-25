@@ -6,12 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  TextInput,
   Dimensions,
-  ScrollView,
 } from 'react-native';
 import HTML from 'react-native-render-html';
 import ImageZoom from './ImageZoom';
+import ItemQuestion from './ItemQuestion';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+
 const { width, height } = Dimensions.get('window');
 export default class TaskResultComponent extends Component {
   onClickImage = (images) => () => {
@@ -25,7 +26,102 @@ export default class TaskResultComponent extends Component {
   );
 
   renderItem = ({ item }) => {
+    console.log("🚀 ~ file: TaskResultComponent.js ~ line 29 ~ TaskResultComponent ~ item", item)
     let images = item.userImageAnswer || [];
+    let resultStudent = '';
+    if (item.typeAnswer == 0) {
+      // dang bai tap trac nghiem
+      switch (item.userOptionId[0]) {
+        case 0:
+          resultStudent = 'A';
+          break;
+        case 1:
+          resultStudent = 'B';
+          break;
+        case 2:
+          resultStudent = 'C';
+          break;
+        case 3:
+          resultStudent = 'D';
+          break;
+
+        default:
+          resultStudent = '';
+          break;
+      }
+    } else if (item.typeAnswer == 3) {
+      // dang bai tap tu luan
+      // resultStudent = item.userOptionText
+      //   ? item.userOptionText[0].replace(/(<p>||<\/p>)+/g, '')
+      //   : '';
+
+      resultStudent = item.userOptionText
+        ? item.userOptionText[0]
+        : '';
+    }
+    return (
+      <View
+        style={[
+          styles.wrapElement,
+        ]}>
+        <View style={styles.wrapHeaderElem}>
+          <Text style={styles.txtIndex}>Câu {item.stepIndex + 1}</Text>
+          <Text style={styles.txtScore}>
+            {item.scoreTeacher || item.score}/{item.maxScore} điểm
+          </Text>
+        </View>
+
+        <View style={styles.wrapView}>
+          <Text style={styles.answerStudent}>Câu trả lời của hs </Text>
+          {
+            item.typeAnswer === 0 ?
+              <Text style={{ marginHorizontal: 10 }}>
+                {resultStudent}
+              </Text>
+              :
+              <HTML
+                html={resultStudent}
+                containerStyle={{ marginHorizontal: 10, backgroundColor: '#FFF', padding: 20, alignSelf: 'center', width: '100%' }}
+                textSelectable={true}
+              />
+          }
+          {images?.length > 0 ? (
+            <FlatList
+              data={images}
+              renderItem={({ item }) => this.renderImage(item, images)}
+              keyExtractor={(i, index) => index.toString()}
+              horizontal={true}
+              style={{ backgroundColor: "#FFF", borderRadius: 5, padding: 10, }}
+            />
+          ) : null}
+        </View>
+
+        {
+          item.contentNoteTeacher ?
+            <View style={styles.wrapView}>
+              <Text style={styles.notesTeacher}>Nhận xét của Gv </Text>
+              {/* <TextInput
+            style={styles.inputTxt}
+            editable={false}
+            multiline={true}
+            value={item.contentNoteTeacher?.replace(/(<p>||<\/p>)+/g, '')}
+          /> */}
+              <HTML
+                html={`<body style="color:#FFA113">${item.contentNoteTeacher}</body>`}
+                containerStyle={{ marginHorizontal: 10, borderRadius: 5, backgroundColor: '#FFF', padding: 10, alignSelf: 'center', width: '100%' }}
+              />
+            </View>
+            : null
+        }
+      </View>
+    );
+  };
+
+  _onTop = () => {
+    this.refsFlatList.scrollToIndex({ animated: true, index: 0 });
+  };
+
+  changeAnswer = (item) => {
     let resultStudent = '';
     if (item.typeAnswer == 0) {
       // dang bai tap trac nghiem
@@ -52,67 +148,39 @@ export default class TaskResultComponent extends Component {
       resultStudent = item.userOptionText
         ? item.userOptionText[0].replace(/(<p>||<\/p>)+/g, '')
         : '';
+    };
 
-      // resultStudent = item.userOptionText
-      //   ? item.userOptionText[0]
-      //   : '';
-    }
+    return resultStudent;
+  }
+
+  onHandleNext = (item, index) => () => {
+    this.refsFlatList.scrollToIndex({ animated: true, index });
+  };
+
+  renderItemTaskResult = ({ item, index }) => {
+    return <ItemQuestion
+      item={item.dataStandard}
+      index={index}
+      onHandleNext={this.onHandleNext(item, index)}
+      answer={this.changeAnswer(item.dataStandard)}
+      backgroundColor={item.dataStandard.typeAnswer === 3 ? "#FFF" : item.dataStandard.rightAnswer ? '#10DA91' : '#FF6767'}
+      color={item.dataStandard.typeAnswer === 3 ? '#000' : '#FFF'}
+      style={{ borderColor: '#56CCF2', borderWidth: item.dataStandard.typeAnswer === 3 ? 1 : 0, overflow: 'hidden' }}
+    />
+  }
+
+  renderListHeaderComponent = () => {
+    let { dataForTaskResult } = this.props;
     return (
-      <View
-        style={[
-          styles.wrapElement,
-          { borderColor: item.rightAnswer ? '#6AD789' : '#DB3546' },
-        ]}>
-        <View style={styles.wrapHeaderElem}>
-          <Text style={styles.txtIndex}>Câu {item.stepIndex + 1}</Text>
-          <Text style={styles.txtScore}>
-            Điểm số: {item.scoreTeacher || item.score}/{item.maxScore}
-          </Text>
-        </View>
-
-        <View style={styles.wrapView}>
-          <Text style={styles.answerStudent}>Học sinh trả lời: </Text>
-          {/* <TextInput
-            style={styles.inputTxt}
-            editable={false}
-            multiline={true}
-            value={resultStudent}
-          /> */}
-          <Text style={{ marginHorizontal: 10 }}>
-            {resultStudent}
-          </Text>
-          {/* <HTML html={resultStudent} containerStyle={{ marginHorizontal: 10 }} textSelectable={true}/> */}
-          {images?.length > 0 ? (
-            <FlatList
-              data={images}
-              renderItem={({ item }) => this.renderImage(item, images)}
-              keyExtractor={(i, index) => index.toString()}
-              horizontal={true}
-            />
-          ) : null}
-        </View>
-
-        {
-          item.contentNoteTeacher ?
-            <View style={styles.wrapView}>
-              <Text style={styles.notesTeacher}>Giáo viên nhận xét: </Text>
-              {/* <TextInput
-            style={styles.inputTxt}
-            editable={false}
-            multiline={true}
-            value={item.contentNoteTeacher?.replace(/(<p>||<\/p>)+/g, '')}
-          /> */}
-              <HTML html={item.contentNoteTeacher} containerStyle={{ marginHorizontal: 10 }} />
-            </View>
-            : null
-        }
-      </View>
+      <FlatList
+        data={dataForTaskResult}
+        renderItem={this.renderItemTaskResult}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={6}
+        style={{ paddingTop: 10, backgroundColor: '#fff', paddingBottom: 10, alignItems: 'center' }}
+      />
     );
-  };
-
-  _onTop = () => {
-    this.refs.FlatList.scrollToIndex({ animated: true, index: 0 });
-  };
+  }
 
   render() {
     let { dataForTaskResult } = this.props;
@@ -140,36 +208,35 @@ export default class TaskResultComponent extends Component {
       <View style={styles.contain}>
         {dataForTaskResult.length > 0 ? (
           <>
-            <FlatList
-              ref="FlatList"
-              data={dataForTaskResult}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-              showsVerticalScrollIndicator={false}
-            />
-            {/* <TouchableOpacity
+            <View style={{ backgroundColor: '#56ccf230' }}>
+              <FlatList
+                ref={ref => this.refsFlatList = ref}
+                data={dataForTaskResult}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={this.renderListHeaderComponent}
+              />
+            </View>
+            <TouchableOpacity
               style={styles.buttomTop}
               onPress={() => this._onTop()}>
-              <Image
-                source={require('../../asserts/appIcon/icUp.png')}
-                resizeMode="contain"
-                style={{ height: 20, width: 20 }}
-              />
+              <IconAntDesign name={'arrowup'} size={18} color={'#FFF'} />
               <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <ImageZoom ref={'ImageZoom'} />
           </>
         ) : (
-            <Text
-              style={{
-                fontFamily: 'Nunito-Regular',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: '#828282',
-              }}>
-              Hiện tại chưa có dữ liệu
-            </Text>
-          )}
+          <Text
+            style={{
+              fontFamily: 'Nunito-Regular',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#828282',
+            }}>
+            Hiện tại chưa có dữ liệu
+          </Text>
+        )}
       </View>
     );
   }
@@ -178,38 +245,32 @@ export default class TaskResultComponent extends Component {
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor:'#fff'
+    backgroundColor: '#fff',
   },
   wrapElement: {
-    minHeight: 100,
-    width: width - 40,
     padding: 10,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#6AD789',
-    marginVertical: 10,
+    borderBottomColor: '#FFF',
+    borderBottomWidth: 2,
   },
   wrapHeaderElem: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between',
   },
   txtIndex: {
     fontFamily: 'Nunito-Bold',
   },
   txtScore: {
-    fontFamily: 'Nunito-Regular',
-    color: '#FF6213',
+    fontFamily: 'Nunito-Bold',
+    color: '#028EFF',
+    marginHorizontal: 15,
   },
   answerStudent: {
     fontFamily: 'Nunito-Regular',
-    color: '#56CCF2',
+    color: '#828282',
   },
   notesTeacher: {
     fontFamily: 'Nunito-Regular',
-    color: '#F39120',
+    color: '#828282',
   },
   inputTxt: {
     borderWidth: 0.5,
@@ -223,6 +284,7 @@ const styles = StyleSheet.create({
   },
   wrapView: {
     marginTop: 10,
+    width: width - 20,
   },
   styImage: {
     width: 50,

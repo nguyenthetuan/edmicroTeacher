@@ -15,5 +15,9 @@ export const statisticAssignmentFaildAction = (error) => ({ type: Types.STATISTI
 export const diaryActiveAction = (payload) => ({ type: Types.DIARY_ACTIVE_ACTION, payload });
 export const diaryActiveSuccessAction = (data) => ({ type: Types.DIARY_ACTIVE_SUCCESS_ACTION, data });
 export const diaryActiveFaildAction = (error) => ({ type: Types.DIARY_ACTIVE_FAILD_ACTION, error });
- 
+
+export const laboratoryAction = (payload) => ({ type: Types.LABORATORY_ACTION, payload });
+export const laboratorySuccessAction = (data) => ({ type: Types.LABORATORY_SUCCESS_ACTION, data });
+export const laboratoryFaildAction = (error) => ({ type: Types.LABORATORY_FAILD_ACTION, error });
+
 

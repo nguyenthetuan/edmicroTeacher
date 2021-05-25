@@ -20,6 +20,8 @@ import _ from 'lodash';
 import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
 const { width, height } = Dimensions.get('window');
+import shadowStyle from '../../../themes/shadowStyle';
+import FastImage from 'react-native-fast-image'
 
 const nameToAvatar = (name) => {
     return name.toUpperCase().split(' ').splice(0, 2)
@@ -172,7 +174,7 @@ function ModalDetail(props) {
                                 {
                                     item.avatar && !item.avatar.includes('no-avatar')
                                         ?
-                                        <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                                        <FastImage source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                                         :
                                         <Text style={styles.txtAvatarModal}>{nameToAvatar(item.nameStudent)}</Text>
                                 }
@@ -220,13 +222,13 @@ function ModalDetail(props) {
                             <TouchableOpacity
                                 onPress={() => props.onRetryPoint(item.studentId)}
                                 style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
-                                <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
+                                <FastImage source={require('../../../asserts/icon/ic_chamlai.png')} />
                                 <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => props.onRework(item.studentId)}
                                 style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center' }]}>
-                                <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
+                                <FastImage source={require('../../../asserts/icon/ic_lamlai.png')} />
                                 <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
                             </TouchableOpacity>
                         </View>
@@ -265,7 +267,6 @@ export default function StudentDetail(props) {
             '',
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
-                { text: 'Không', onPress: () => { }, style: 'cancel' },
                 {
                     text: 'Có', onPress: async () => {
                         if (dataDetail) {
@@ -282,7 +283,8 @@ export default function StudentDetail(props) {
                             toast.current.show(res);
                         }
                     }
-                }
+                },
+                { text: 'Không', onPress: () => { } }
             ],
             { cancelable: false }
         );
@@ -299,13 +301,14 @@ export default function StudentDetail(props) {
     renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
+        const { shadowBtn } = shadowStyle;
         return (
-            <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }]}>
+            <View style={[styles.containerItem, shadowBtn, { marginTop: index === 0 ? 16 : 0 }]}>
                 <View style={styles.viewAvatar}>
                     {
                         item.student.userAvatar && !item.student.userAvatar.includes('no-avatar')
                             ?
-                            <Image source={{ uri: item.student.userAvatar.indexOf('http') != 0 ? `http:${item.student.userAvatar}` : item.student.userAvatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                            <FastImage source={{ uri: item.student.userAvatar.indexOf('http') != 0 ? `http:${item.student.userAvatar}` : item.student.userAvatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.student.userDisplayName)}</Text>
                     }
@@ -314,14 +317,16 @@ export default function StudentDetail(props) {
                 <View style={styles.contentItem}>
                     <Text style={[styles.txtStatus, { color: status.color }]}>{status.title}</Text>
                     <Text style={styles.txtNameItem}>{item.student.userDisplayName}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <ProgressBar
-                            progress={progress || 1}
-                            height={4}
-                            color='#2D9CDB'
-                            widthProps={width - 160}
-                            progressUnfilledColor='#C4C4C4'
-                        />
+                    <View style={{ flexDirection: 'row', marginTop: 5, alignItems: 'center' }}>
+                        <View>
+                            <ProgressBar
+                                progress={progress || 1}
+                                height={4}
+                                color='#2D9CDB'
+                                widthProps={width - 170}
+                                progressUnfilledColor='#C4C4C4'
+                            />
+                        </View>
                         <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 8 }]}>
                             {progress ?
                                 Number.parseFloat(progress).toFixed(2)
@@ -330,8 +335,8 @@ export default function StudentDetail(props) {
                             </Text>
                     </View>
                     <View style={styles.viewContent}>
-                        <View style={{ flexDirection: 'row', flex: 1 }}>
-                            <Text style={styles.txtTitleItem}>Hoàn thành</Text>
+                        <View style={{ flexDirection: 'row', flex: 1, marginTop: 5 }}>
+                            <Text style={[styles.txtTitleItem]}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{getProcessDone(item)}/{item.data.listProblem.length + item.data.listTest.length}</Text>
                         </View>
                         {/* <View style={{ flexDirection: 'row', marginEnd: 7 }}>
@@ -356,13 +361,13 @@ export default function StudentDetail(props) {
                                 <TouchableOpacity
                                     onPress={() => handleRetryCheckPoint(item.studentId)}
                                     style={styles.btnChamlai}>
-                                    <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
+                                    <FastImage source={require('../../../asserts/icon/ic_chamlai.png')} />
                                     <Text style={styles.txtBtn}>Chấm lại</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => handleRework(item.studentId)}
                                     style={styles.btnLamlai}>
-                                    <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
+                                    <FastImage source={require('../../../asserts/icon/ic_lamlai.png')} />
                                     <Text style={styles.txtBtn}>Làm lại</Text>
                                 </TouchableOpacity>
                             </View>
@@ -382,7 +387,7 @@ export default function StudentDetail(props) {
                     _.isEmpty(props.screenProps.data) ?
                         (
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                                <FastImage source={require('../../../asserts/icon/iconNodata.png')} />
                                 <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
                             </View>
                         )
@@ -415,12 +420,13 @@ const styles = StyleSheet.create({
         flex: 1
     },
     containerItem: {
-        borderRadius: 2,
-        borderColor: '#56CCF2',
-        borderWidth: 0.5,
+        borderRadius: 3,
+        // borderColor: '#56CCF2',
+        // borderWidth: 0.5,
         margin: 16,
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: 16,
+        backgroundColor: '#fff'
     },
     viewAvatar: {
         alignSelf: 'center',
@@ -469,7 +475,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Regular',
         fontSize: RFFonsize(10),
         color: '#828282',
-        marginLeft: 20
     },
     btnLamlai: {
         marginStart: 23,
@@ -510,6 +515,7 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(10),
         flex: 1,
         color: '#2D9CDB',
+        alignSelf: 'center'
     },
     txtPercentProcess: {
         fontFamily: 'Nunito-Regular',
@@ -589,5 +595,11 @@ const styles = StyleSheet.create({
         width: 55,
         height: 55,
         borderRadius: 28
+    },
+    bgSuccess: {
+        backgroundColor: "#FF6213",
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        borderRadius: 15
     }
 })

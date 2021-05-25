@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   textTitleHeader: {
-    marginLeft: 15,
+    // marginLeft: 15,
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
     fontSize: RFFonsize(16),

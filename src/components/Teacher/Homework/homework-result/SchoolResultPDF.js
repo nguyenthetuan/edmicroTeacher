@@ -10,13 +10,14 @@ import {
   ScrollView,
   SafeAreaView
 } from 'react-native';
-import HeaderNavigation from '../../../common/HeaderNavigation';
+import HeaderResultPDF from './HeaderResultPDF';
 import * as AppIcon from '../../../../utils/AppIcon';
 import RippleButton from '../../../libs/RippleButton';
 import Pdf from 'react-native-pdf';
 import Common from '../../../../utils/Common';
 import TaskResultComponent from './TaskResultComponent';
 import { roundNumberOne } from '../../../../utils/Common';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 const { width, height } = Dimensions.get('window');
 
 class SchoolResultPDF extends PureComponent {
@@ -144,7 +145,7 @@ class SchoolResultPDF extends PureComponent {
     return (
       <View style={{ flex: 1, backgroundColor: '#2D9CDB' }}>
         <View style={{ top: -10 }}>
-          <HeaderNavigation
+          <HeaderResultPDF
             navigation={this.props.navigation}
             title={nameTest}
             bgColor="#2D9CDB"
@@ -206,24 +207,6 @@ class HeaderTab extends PureComponent {
     } = this.props;
     return (
       <View style={styles.containerHeader}>
-        <View style={{ marginBottom: 30 }}>
-          <Text style={styles.txtTotalQuestionLeft}>
-            Tổng số câu hỏi:{' '}
-            <Text style={styles.txtTotalQuestion}>
-              {' '}
-              {totalQuestion || 0} câu
-            </Text>
-          </Text>
-
-          <Text style={styles.txtTotalQuestionLeft}>
-            Số câu đúng:{' '}
-            <Text style={styles.txtTotalQuestion}>
-              {' '}
-              {totalCorrect || 0}/{totalQuestion || 0} câu
-            </Text>
-          </Text>
-        </View>
-
         <View style={styles.wrapTab}>
           <ScrollView
             style={{ flex: 1, flexDirection: 'row' }}
@@ -325,11 +308,7 @@ class ViewPDFDeBai extends PureComponent {
         <TouchableOpacity
           style={styles.buttomTop}
           onPress={() => this.props._onTop()}>
-          {/* <Image
-            source={require('../../asserts/appIcon/icUp.png')}
-            resizeMode="contain"
-            style={{ height: 20, width: 20 }}
-          /> */}
+          <IconAntDesign name={'arrowup'} size={18} color={'#FFF'} />
           <Text style={{ color: '#FAFAFA' }}>TOP</Text>
         </TouchableOpacity>
       </View>
@@ -355,31 +334,27 @@ class ViewPDFDapAn extends PureComponent {
         {!answerFile ? (
           <Text style={styles.txtH1}>Hiện tại chưa có đáp án</Text>
         ) : (
-            <>
-              <Pdf
-                ref="ViewPDFDapAn"
-                fitPolicy={0}
-                enableAnnotationRendering={false}
-                enableAntialiasing={true}
-                activityIndicatorProps={{
-                  color: '#009900',
-                  progressTintColor: '#009900',
-                }}
-                source={{ uri: answerFile, cache: true }}
-                style={styles.pdf}
-              />
-              <TouchableOpacity
-                style={styles.buttomTop}
-                onPress={() => this.props._onTop()}>
-                {/* <Image
-                  source={require('../../asserts/appIcon/icUp.png')}
-                  resizeMode="contain"
-                  style={{ height: 20, width: 20 }}
-                /> */}
-                <Text style={{ color: '#FAFAFA' }}>TOP</Text>
-              </TouchableOpacity>
-            </>
-          )}
+          <>
+            <Pdf
+              ref="ViewPDFDapAn"
+              fitPolicy={0}
+              enableAnnotationRendering={false}
+              enableAntialiasing={true}
+              activityIndicatorProps={{
+                color: '#009900',
+                progressTintColor: '#009900',
+              }}
+              source={{ uri: answerFile, cache: true }}
+              style={styles.pdf}
+            />
+            <TouchableOpacity
+              style={styles.buttomTop}
+              onPress={() => this.props._onTop()}>
+              <IconAntDesign name={'arrowup'} size={18} color={'#FFF'} />
+              <Text style={{ color: '#FAFAFA' }}>TOP</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     );
   }

@@ -56,6 +56,8 @@ import search_pdf from '../asserts/icon/searchpdf.png';
 // import tuluyen from '../asserts/appIcon/ICON_TU_LUYEN.png';
 import kiemtra from '../asserts/appIcon/ICON_TEST.png';
 import kiemtraActive from '../asserts/appIcon/ICON_TEST_ACTIVE.png';
+import icon_laboratoryActive from '../asserts/appIcon/icon_laboratoryActive.png';
+import icon_laboratoryNActive from '../asserts/appIcon/icon_laboratoryNActive.png';
 // school online
 
 // warning modal
@@ -257,5 +259,7 @@ module.exports = {
   image_class,
   image_assessment,
   image_misson,
-  image_statistical
+  image_statistical,
+  icon_laboratoryNActive,
+  icon_laboratoryActive
 };

@@ -10,6 +10,7 @@ import {
     ActivityIndicator,
     SafeAreaView
 } from 'react-native';
+import moment from 'moment';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { connect } from 'react-redux';
 import { fetchHomeworkAction } from '../../../actions/homeworkTeacherAction';
@@ -46,10 +47,10 @@ const initTab = createMaterialTopTabNavigator(
                             Độ hoàn thành
                         </Text>
                     ) : (
-                        <Text numberOfLines={1} style={styles.labelTabActive}>
-                            Độ hoàn thành
-                        </Text>
-                    );
+                            <Text numberOfLines={1} style={styles.labelTabActive}>
+                                Độ hoàn thành
+                            </Text>
+                        );
                 },
             },
         },
@@ -63,10 +64,10 @@ const initTab = createMaterialTopTabNavigator(
                             Tỉ lệ Đ/S
                         </Text>
                     ) : (
-                        <Text numberOfLines={1} style={styles.labelTabActive}>
-                            Tỉ lệ Đ/S
-                        </Text>
-                    );
+                            <Text numberOfLines={1} style={styles.labelTabActive}>
+                                Tỉ lệ Đ/S
+                            </Text>
+                        );
                 },
             },
         },
@@ -82,10 +83,10 @@ const initTab = createMaterialTopTabNavigator(
                             Học sinh
                         </Text>
                     ) : (
-                        <Text numberOfLines={1} style={styles.labelTabActive}>
-                            Học sinh
-                        </Text>
-                    );
+                            <Text numberOfLines={1} style={styles.labelTabActive}>
+                                Học sinh
+                            </Text>
+                        );
                 },
             },
         },
@@ -133,6 +134,7 @@ const indexSelected = {
     class: 0,
 };
 
+
 function HomeWorkDraScreen(props) {
     const toast = useRef();
     const modalFillter = useRef();
@@ -147,9 +149,17 @@ function HomeWorkDraScreen(props) {
 
     const [timeExport, setTimeExport] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [isRefresh, setRefresh] = useState(false);
+    // const [isMounted, setMonted] = useState(false)
 
     useEffect(() => {
         handlerShowTourView();
+        const showPopup = setTimeout(() => {
+            onClickFillter();
+        }, 500);
+        return () => {
+            clearTimeout(showPopup);
+        }
     }, []);
 
     const handlerShowTourView = async () => {
@@ -417,23 +427,18 @@ function HomeWorkDraScreen(props) {
                 homework: listHomework,
                 class: listClass,
             });
+            setRefresh(false);
+            setIsLoading(false);
         }
     };
 
     const refreshData = async () => {
-        setIsLoading(true);
-        fetchData();
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
+        // await setRefresh(true);
     }
 
     Global.updateHomeWork = refreshData;
     useEffect(() => {
         fetchData();
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
         let timeExportTmp = props.data?.data.timeExport;
         timeExportTmp = convertTimeHMDMY(timeExport);
         setTimeExport(timeExportTmp);
@@ -465,6 +470,10 @@ function HomeWorkDraScreen(props) {
                                 <Text style={styles.txtTitle}>{props.data?.data.className || ''}</Text>
                                 {/* <Text style={styles.txtTime}>Kết thúc lúc {timeEnd}</Text> */}
                                 <Text style={styles.txtTime}>Hệ thống đang tổng hợp kết quả {timeExport ? `(${timeExport})` : ''}</Text>
+                                <Text style={{
+                                    fontFamily: 'Nunito-Regular', fontSize: RFFonsize(12), marginHorizontal: 10,
+                                    color: '#4EBE3C'
+                                }}>Dữ liệu được làm mới lúc: {moment(data.timeRefresh).format('HH:mm DD/MM/YYYY')}</Text>
                             </View>
                         :
                         <View style={styles.wrapInfo}>
@@ -477,6 +486,7 @@ function HomeWorkDraScreen(props) {
                     onRefresh: handleStatistic,
                     data: props.data,
                     isLoading: isLoading,
+                    isRefresh: isRefresh,
                     refreshData: refreshData,
                     navigation: props.navigation
                 }}

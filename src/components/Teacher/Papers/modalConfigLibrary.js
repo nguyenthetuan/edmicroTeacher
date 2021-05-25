@@ -130,64 +130,62 @@ export default class ModalConfigLibrary extends Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
-
           <Modal visible={visible} transparent={true}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                this.setState({ visible: false });
-              }}>
-              <View style={styles.container}>
-                <TouchableWithoutFeedback>
-                  <View style={styles.content}>
-                    <View style={styles.topModal}>
-                      <Text numberOfLines={1} style={styles.txtTitleModal}>
-                        {title}
-                      </Text>
-                    </View>
-                    <ScrollView
-                      showsVerticalScrollIndicator={false}
-                      style={{ flex: 1 }}>
-                      <FlatList
-                        numColumns={colum}
-                        data={converData}
-                        keyExtractor={(item, index) => index}
-                        contentContainerStyle={{
-                          flex: 1,
-                          alignContent: 'center',
-                          alignItems: 'center',
-                          paddingBottom: 20,
-                        }}
-                        renderItem={({ item, index }) => {
-                          return selectItem && selectItem.name === item.name && selectItem.id === item.id ? (
-                            <TouchableWithoutFeedback onPress={() => this.selectItem({ item, index })}>
-                              <View style={{
-                                marginHorizontal: 15,
-                                width: (widthItem && `${widthItem}%`) || '100%',
-                                marginTop: 25,
-                                alignItems: 'center',
-                              }}>
-                                <Text style={styles.txtActive}>{item.name}</Text>
-                              </View>
-                            </TouchableWithoutFeedback>
-                          ) : (
-                              <TouchableWithoutFeedback onPress={() => this.selectItem({ item, index })}>
-                                <View style={{
-                                  marginHorizontal: 15,
-                                  width: (widthItem && `${widthItem}%`) || '100%',
-                                  marginTop: 25,
-                                  alignItems: 'center',
-                                }}>
-                                  <Text style={styles.txtItem}>{item.name}</Text>
-                                </View>
-                              </TouchableWithoutFeedback>
-                            );
-                        }}
-                      />
-                    </ScrollView>
-                  </View>
-                </TouchableWithoutFeedback>
+            <View style={styles.container}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  this.setState({ visible: false });
+                }}>
+                <View style={{ flex: 1 }} />
+              </TouchableWithoutFeedback>
+              <View style={styles.content}>
+                <View style={styles.topModal}>
+                  <Text numberOfLines={1} style={styles.txtTitleModal}>
+                    {title}
+                  </Text>
+                </View>
+                <ScrollView
+                  showsVerticalScrollIndicator={true}
+                  style={{ flex: 1 }}>
+                  <FlatList
+                    numColumns={colum}
+                    data={converData}
+                    keyExtractor={(item, index) => index}
+                    contentContainerStyle={{
+                      flex: 1,
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      paddingBottom: 20,
+                    }}
+                    renderItem={({ item, index }) => {
+                      return selectItem && selectItem.name === item.name && selectItem.id === item.id ? (
+                        <TouchableWithoutFeedback onPress={() => this.selectItem({ item, index })}>
+                          <View style={{
+                            marginHorizontal: 15,
+                            width: (widthItem && `${widthItem}%`) || '100%',
+                            marginTop: 25,
+                            alignItems: 'center',
+                          }}>
+                            <Text style={styles.txtActive}>{item.name}</Text>
+                          </View>
+                        </TouchableWithoutFeedback>
+                      ) : (
+                          <TouchableWithoutFeedback onPress={() => this.selectItem({ item, index })}>
+                            <View style={{
+                              marginHorizontal: 15,
+                              width: (widthItem && `${widthItem}%`) || '100%',
+                              marginTop: 25,
+                              alignItems: 'center',
+                            }}>
+                              <Text style={styles.txtItem}>{item.name}</Text>
+                            </View>
+                          </TouchableWithoutFeedback>
+                        );
+                    }}
+                  />
+                </ScrollView>
               </View>
-            </TouchableWithoutFeedback>
+            </View>
             <SafeAreaView />
           </Modal>
         </View>

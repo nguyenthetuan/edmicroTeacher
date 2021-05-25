@@ -10,7 +10,7 @@ import RippleButton from '../common-new/RippleButton';
 import { getSourceAvatar } from '../../utils/Helper';
 import Avatar from '../common-new/Avatar';
 import { RFFonsize } from '../../utils/Fonts';
-
+import AppIcon from '../../utils/AppIcon';
 export default class HeaderMain extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +29,7 @@ export default class HeaderMain extends React.Component {
   }
 
   render() {
-    const { userId, timeCached } = this.props;
+    const { userId, timeCached, showFillter, showAvatar } = this.props;
     const source = getSourceAvatar(userId, timeCached);
     return (
       <View style={styles.container}>
@@ -47,29 +47,49 @@ export default class HeaderMain extends React.Component {
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Image source={require('../../asserts/appIcon/logo_TearcherTxt.png')} />
         </View>
-        <View style={{
-          backgroundColor: '#DB3546',
-          paddingHorizontal: 10,
-          paddingVertical: 2,
-          borderRadius: 5,
-          marginRight: 5
-        }}>
-          <Text style={{
-            color: '#fff',
-            fontFamily: 'Nunito',
-            fontSize: RFFonsize(14)
-          }}>Beta</Text>
-        </View>
-        <TouchableWithoutFeedback
-          hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
-          onPress={this.navigateUser}>
-          <View style={styles.btnAvatar}>
-            <Avatar
-              source={source}
-              size={25}
-            />
-          </View>
-        </TouchableWithoutFeedback>
+
+        {
+          showAvatar ?
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{
+                backgroundColor: '#DB3546',
+                paddingHorizontal: 10,
+                paddingVertical: 2,
+                borderRadius: 5,
+                marginRight: 5
+              }}>
+                <Text style={{
+                  color: '#fff',
+                  fontFamily: 'Nunito',
+                  fontSize: RFFonsize(14)
+                }}>Beta</Text>
+              </View>
+              <TouchableWithoutFeedback
+                hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                onPress={this.navigateUser}>
+                <View style={styles.btnAvatar}>
+                  <Avatar
+                    source={source}
+                    size={25}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+            : null
+        }
+        {
+          showFillter ?
+            <TouchableWithoutFeedback
+              hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+            >
+              <View style={{ alignSelf: 'center', zindex: 1 }}>
+                <Image source={AppIcon.iconFilter} style={{ tintColor: '#2D9CDB' }} />
+              </View>
+            </TouchableWithoutFeedback>
+            :
+            null
+        }
+
       </View>
     );
   }

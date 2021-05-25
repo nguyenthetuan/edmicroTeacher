@@ -13,18 +13,22 @@ import {
     TouchableWithoutFeedback,
     RefreshControl
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as Progress from 'react-native-progress';
+import moment from 'moment';
+import localization from 'moment/locale/vi'
 import ProgressBar from '../../libs/ProgressBar';
 import apiHomework from '../../../services/apiHomeworkTeacher';
 import Toast from 'react-native-easy-toast';
 import dataHelper from '../../../utils/dataHelper';
 import _ from 'lodash';
 import { AssignmentContentType } from '../../../utils/Utils';
-import Global from '../../../utils/Globals';
 import { RFFonsize } from '../../../utils/Fonts';
 import shadowStyle from '../../../themes/shadowStyle';
 import ToastSuccess from '../../common-new/ToastSuccess';
 import ToastFaild from '../../common-new/ToastFaild';
+import FastImage from 'react-native-fast-image'
+import ProgressRefresh from './ProgressRefresh';
+import Global from '../../../utils/Globals';
 const { width, height } = Dimensions.get('window');
 
 const nameToAvatar = (name) => {
@@ -59,7 +63,7 @@ const getStatus = (item, point) => {
             return {
                 title: 'Đang làm',
                 color: '#fff',
-                backgroundColor: '#4EBE3B',
+                backgroundColor: '#2D9CDB',
                 result: 'Chưa có'
             };
         case 3:
@@ -73,7 +77,7 @@ const getStatus = (item, point) => {
             let result = (item.point / item.totalPoint) * 10;
             result = result % 1 === 0 ? result : result.toFixed(2);
             return {
-                title: 'Đã hoàn thành',
+                title: 'Hoàn thành',
                 color: '#fff',
                 backgroundColor: '#4EBE3B',
                 borderRadius: 10
@@ -81,9 +85,16 @@ const getStatus = (item, point) => {
             };
         case 6:
             return {
-                title: 'Chờ chấm điểm TL',
+                title: 'Chờ chấm điểm',
                 color: '#fff',
-                backgroundColor: "#FF6213",
+                backgroundColor: "#d89a29",
+                result: 'Chưa có'
+            };
+        case 10:
+            return {
+                title: 'Đang chấm điểm',
+                color: '#fff',
+                backgroundColor: "#a74aa7",
                 result: 'Chưa có'
             };
         default:
@@ -131,128 +142,6 @@ const rework = async ({ assignId, studentId }) => {
     return 'Có lỗi xảy ra vui lòng thử lại!';
 }
 
-function ModalDetail(props) {
-    const item = props.data;
-    const progress = getProcess(item);
-    const status = getStatus(item);
-    const point = props.point;
-
-    const goToResult = () => {
-        const { assignmentContentType } = props.dataResult.data;
-        props.onClose();
-        if (assignmentContentType == AssignmentContentType.pdf) {
-            props.navigation.navigate('SchoolResultPDF', {
-                responseJson: props.dataResult,
-                nameTest: item.nameStudent,
-                statusbar: 'light-content',
-            });
-        } else if (assignmentContentType == AssignmentContentType.regular) {
-            props.navigation.navigate('HomeWorkResult', {
-                responseJson: props.dataResult,
-                nameTest: item.nameStudent,
-                statusbar: 'light-content',
-            });
-        }
-    }
-    let arrayOrdered = [];
-    for (const ob in item.questionResult) {
-        arrayOrdered.push({ [ob]: item.questionResult[ob] });
-    }
-    arrayOrdered = arrayOrdered.sort((a, b) => {
-        return Object.keys(a)[0].localeCompare(Object.keys(b)[0]);
-    })
-
-    return (
-        <View style={styles.centeredView}>
-            <Modal
-                animationType="fade"
-                transparent={true}
-            >
-                <View style={{
-                    flex: 1,
-                    backgroundColor: 'rgba(0,0,0,0.6)'
-                }}>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => props.onClose()} />
-                    <View style={styles.modalView}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={styles.viewAvatarModal}>
-                                {
-                                    item.avatar && !item.avatar.includes('no-avatar')
-                                        ?
-                                        <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
-                                        :
-                                        <Text style={styles.txtAvatarModal}>{nameToAvatar(item.nameStudent)}</Text>
-                                }
-                                <View style={[styles.dotOnlineModal, { backgroundColor: '#E0E0E0' }]} />
-                            </View>
-                            <View style={styles.contentModal}>
-                                <Text style={styles.txtNameModal}>{item.nameStudent}</Text>
-                                <View style={styles.viewContentModal}>
-                                    <View>
-                                        <Text style={styles.txtTitleItem}>Mức độ hoàn thành</Text>
-                                        <View style={{ flexDirection: 'row', marginTop: 2 }}>
-                                            <Text style={styles.txtProcess}>{item.point}/{item.totalPoint}</Text>
-                                            <View style={{ width: 1, height: 14, backgroundColor: '#D0EFF9' }} />
-                                            <Text style={styles.txtPercentProcess}>{Number.parseFloat(progress).toFixed(2)}%</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.viewResult} />
-                                    <View>
-                                        <Text style={styles.txtTitleItem}>Điểm số</Text>
-                                        <Text style={[styles.txtPoint, { marginTop: 2 }]}>{point}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            style={{ marginTop: 25 }}
-                            data={arrayOrdered}
-                            numColumns={5}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item, index }) => {
-                                const colors = ['#B1D8EE', '#4EBE3C', '#FF3D3D'];
-                                return (
-                                    <View style={{
-                                        marginHorizontal: 8,
-                                        marginBottom: 6,
-                                        width: 20,
-                                        height: 20,
-                                        backgroundColor: Object.values(item) > -1 && Object.values(item) < 3 ? colors[Object.values(item)] : colors[0]
-                                    }} >
-                                    </View>
-                                )
-                            }}
-                        />
-                        <TouchableWithoutFeedback
-                            onPress={goToResult}
-                        >
-                            <Text style={[styles.txtBtn, { fontSize: 14, color: '#000' }]}>Xem kết quả</Text>
-                        </TouchableWithoutFeedback>
-                        <View style={styles.viewOptionModal}>
-                            <TouchableWithoutFeedback
-                                onPress={() => props.onRetryPoint(item.studentId)}>
-                                <View style={[styles.btnChamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
-                                    <Image source={require('../../../asserts/icon/ic_chamlai.png')} />
-                                    <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Chấm lại</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback
-                                onPress={() => props.onRework(item.studentId)}>
-                                <View style={[styles.btnLamlai, { borderRadius: 4, paddingHorizontal: 12, alignItems: 'center', height: 30 }]}>
-                                    <Image source={require('../../../asserts/icon/ic_lamlai.png')} />
-                                    <Text style={[styles.txtBtn, { fontSize: RFFonsize(14) }]}>Làm lại</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => props.onClose()} />
-                </View>
-            </Modal>
-        </View >
-    )
-}
-
 export default function StudentDetail(props) {
     const toast = useRef();
 
@@ -282,28 +171,30 @@ export default function StudentDetail(props) {
             'Bạn có chắc chắn cho học sinh này làm lại?',
             [
                 {
-                    text: 'Có', onPress: async () => {
-                        if (dataDetail) {
-                            setDetail('');
-                        }
-                        const res = await rework({ assignId: props.screenProps?.data?.data.assignId, studentId });
-                        if (!res) {
-                            props.screenProps.refreshData();
-                            setTimeout(() => {
-                                toast.current.show(<ToastSuccess title={'Yêu cầu làm lại thành công!'} />);
-                            }, 500)
-                        } else {
-                            // Global.updateHomeWork();
-                            // toast.current.show(res);
-                            toast.current.show(<ToastFaild title={res} />);
-                        }
-                    }
+                    text: 'Có', onPress: handleReworkCallApi(studentId)
                 },
                 { text: 'Không', onPress: () => { } },
             ],
             { cancelable: false }
         );
     }
+
+    const handleReworkCallApi = (studentId) => async () => {
+        if (dataDetail) {
+            setDetail('');
+        }
+        const res = await rework({ assignId: props.screenProps?.data?.data.assignId, studentId });
+        if (!res) {
+            props.screenProps.refreshData();
+            toast.current.show(<ToastSuccess title={'Yêu cầu làm lại bài tập thành công!'} />, 3000);
+        } else {
+            // Global.updateHomeWork();
+            // toast.current.show(res);
+            toast.current.show(<ToastFaild title={res} />, 3000);
+        }
+    }
+
+    Global.handleRework = handleReworkCallApi;
 
     const goToResult = item => async () => {
         setisLoading(true);
@@ -317,6 +208,7 @@ export default function StudentDetail(props) {
                 responseJson: response,
                 nameTest: item.nameStudent,
                 statusbar: 'light-content',
+                studentId: item.studentId
             });
         } else if (assignmentContentType == AssignmentContentType.regular) {
             props.screenProps.navigation.navigate('HomeWorkResult', {
@@ -336,28 +228,52 @@ export default function StudentDetail(props) {
         }
     }
 
+    const onNavigate = (item) => {
+        const { status } = item;
+        const assignmentId = props.screenProps?.data?.data.assignmentId;
+        const name = props.screenProps?.data?.data.name;
+        const dataSelected = { assignmentId, name };
+        switch (status) {
+            case 6:
+                props.screenProps.navigation.navigate('MarkingView', {
+                    item: dataSelected,
+                    statusbar: 'light-content'
+                });
+                return;
+            default:
+                return;
+
+        }
+    }
+
+    const getTimeFromNow = (timeStart) => {
+        return moment(timeStart * 1000).fromNow();
+    }
+
     const renderItem = ({ item, index }) => {
         const progress = getProcess(item);
         const status = getStatus(item, point);
         const { shadowBtn } = shadowStyle;
         return (
-            <View style={[styles.containerItem, { marginTop: index === 0 ? 16 : 0 }, shadowBtn]}>
+            <View style={[styles.containerItem, { marginTop: index === 0 ? 5 : 0 }, shadowBtn]}>
                 <View style={styles.viewAvatar}>
                     {
                         item.avatar && !item.avatar.includes('no-avatar')
                             ?
-                            <Image source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
+                            <FastImage source={{ uri: item.avatar.indexOf('http') != 0 ? `http:${item.avatar}` : item.avatar }} style={styles.imgAvatarItem} resizeMode={'contain'} />
                             :
                             <Text style={styles.txtAvatar}>{nameToAvatar(item.nameStudent)}</Text>
                     }
                 </View>
                 <View style={styles.contentItem}>
-                    <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>
-                        <Text style={[styles.txtStatus,
-                        { color: status.color }]}>
-                            {status.title}
-                        </Text>
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => onNavigate(item)}>
+                        <View style={[styles.bgStatus, { backgroundColor: status.backgroundColor }]}>
+                            <Text style={[styles.txtStatus,
+                            { color: status.color }]}>
+                                {status.title}
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                     <Text style={styles.txtNameItem}>{item.nameStudent}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <View>
@@ -372,21 +288,31 @@ export default function StudentDetail(props) {
                         <Text style={[styles.txtProcess, { flex: 1, textAlign: 'right', marginEnd: 20 }]}>{Number.parseFloat(progress).toFixed(2)}%</Text>
                     </View>
                     <View style={styles.viewContent}>
-                        <View style={{ flexDirection: 'row', flex: 1 }}>
+                        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
                             <Text style={styles.txtTitleItem}>Hoàn thành</Text>
                             <Text style={[styles.txtProcess, { marginStart: 5 }]} numberOfLines={1}>{item.point}/{item.totalPoint}</Text>
+                            {item.status == 2 &&
+                                <Text style={styles.textOnline}>{getTimeFromNow(item.timeStart)}</Text>
+                            }
                         </View>
 
                     </View>
                     {
                         item.status == 4 ?
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <TouchableWithoutFeedback onPress={() => handleRework(item.studentId)} >
                                     <View style={[styles.remakeWork, { ...shadowBtn }]}>
                                         <Text style={styles.txtRemake}>Làm lại</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
+                                {props.screenProps.data.data?.assignmentContentType != 3 &&
+                                    <TouchableWithoutFeedback onPress={goToResult(item)} >
+                                        <View style={[styles.remakeWork, { backgroundColor: '#4fafd6', marginLeft: 10 }, { ...shadowBtn }]}>
+                                            <Text style={styles.txtRemake}>Kết quả</Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                }
+                                {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 5 }}>
                                     <Text style={styles.txtTitleItem}>Kết quả</Text>
                                     <Text style={styles.txtPoint}>{status.result}</Text>
                                     {
@@ -399,65 +325,42 @@ export default function StudentDetail(props) {
                                                 </View>
                                             </View>
                                             : null}
-                                </View>
+                                </View> */}
                             </View>
                             : null
                     }
                 </View>
-                {
-                    item.status == 4 && 2
-                        ?
-                        <TouchableWithoutFeedback
-                            onPress={goToResult(item)}
-                            disabled={isLoading}
-                        >
-                            {isLoading
-                                ? <ActivityIndicator style={{ alignSelf: 'center', right: 10 }} />
-                                : <Image source={require('../../../asserts/icon/icon_rightStud.png')}
-                                    style={{ alignSelf: 'center', right: 12 }} />
-                            }
-                        </TouchableWithoutFeedback>
-                        : <Image source={require('../../../asserts/icon/icon_rightStud.png')}
-                            style={{ alignSelf: 'center', right: 12, opacity: 0 }} />
-                }
             </View>
         )
     }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ProgressRefresh isRefresh={props.screenProps.isRefresh} />
             {
-                // props.screenProps.isLoading
-                //     ? <ActivityIndicator size='small' color='#04C6F1' />
-                //     :
-                _.isEmpty(props.screenProps.data) ?
-                    (
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                            <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
-                        </View>
-                    )
-                    : (<View style={styles.container}>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
-                            keyExtractor={(item, index) => index.toString()}
-                            extraData={props.data}
-                            renderItem={renderItem}
-                        />
-                    </View>)
+                props.screenProps.isLoading
+                    ? <ActivityIndicator size='small' color='#04C6F1' />
+                    :
+                    _.isEmpty(props.screenProps.data) ?
+                        (
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                                <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
+                            </View>
+                        )
+                        : (<View style={styles.container}>
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                data={!_.isEmpty(props.screenProps.data) ? props.screenProps?.data?.data.students : []}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={props.data}
+                                renderItem={renderItem}
+                            />
+                        </View>)
 
 
             }
-            {props.screenProps.isRefresh &&
-                <View style={[StyleSheet.absoluteFill, {
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }]}>
-                    <ActivityIndicator color={'#04C6F1'} />
-                </View>
-            }
-            <Toast ref={toast} position={'center'} />
+            <Toast ref={toast} position={'top'} style={{ backgroundColor: 'transparent' }} />
         </View >
     )
 }
@@ -467,10 +370,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     containerItem: {
-        // borderColor: '#56CCF2',
         backgroundColor: '#fff',
         borderRadius: 2,
-        // borderWidth: 0.5,
         margin: 16,
         flexDirection: 'row',
         paddingVertical: 12
@@ -691,5 +592,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 3,
         color: "#DB422D",
         alignSelf: 'center'
+    },
+    textOnline: {
+        fontFamily: 'Nunito-Regular',
+        color: '#979797',
+        fontSize: RFFonsize(11)
     }
 })

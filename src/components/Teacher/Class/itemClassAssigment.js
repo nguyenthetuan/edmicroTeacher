@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   top: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: 3,
+    paddingVertical: 5,
     paddingLeft: 10,
     paddingRight: 5,
     justifyContent: 'space-between',

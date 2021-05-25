@@ -29,12 +29,6 @@ export class HeaderName extends Component {
                         <Text style={styles.textName}>Họ và tên</Text>
                     </View>
                 </View>
-                {!_.isEmpty(currentExamTest.examName) && (
-                    <View style={styles.wrapTitle}>
-                        <Text style={styles.styTxtExaName}>{currentExamTest.examName}</Text>
-                        <Text style={styles.styTxtName}>{currentExamTest.name}</Text>
-                    </View>
-                )}
             </View>
         );
     }

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Dimensions,
   Text,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import apiPapers from '../../../services/apiPapersTeacher';
 import _ from 'lodash';
@@ -407,14 +407,14 @@ export default class ModalConfigPaper extends Component {
       // swipeDirection={'down'}
       >
         <View style={styles.wrapModal}>
-          <TouchableWithoutFeedback
+          {/* <TouchableWithoutFeedback
             hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
             onPress={this.closeOnpress}
           >
             <View style={styles.indicator}>
               <Text style={styles.closeModal}>Đóng</Text>
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> */}
           <View style={styles.wrapSelectQuestion}>
             <ModalConfigLibrary
               title="Câu hỏi"

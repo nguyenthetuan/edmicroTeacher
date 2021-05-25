@@ -523,6 +523,7 @@ class Papers extends Component {
             statusbar: 'dark-content',
           });
         } else {
+          console.log(dataSelected);
           this.props.navigation.navigate('MarkingView', {
             item: dataSelected,
             statusbar: 'light-content',

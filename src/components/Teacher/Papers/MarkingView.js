@@ -148,7 +148,7 @@ class MarkingView extends Component {
                 selectedValueStudent: studentListAssigned[0]?.studentId,
                 listStudentAssigned: studentListAssigned,
                 selectAssignId: res.data[0].assignId,
-                indexSelected
+                indexSelected,
               });
               apiPaper
                 .assignmentDetailCheck({
@@ -350,7 +350,7 @@ class MarkingView extends Component {
         indexSelected: {
           indexStudent,
           ...indexSelected,
-          status: value.status
+          status: value.status,
         },
         urlFile: '',
       },
@@ -778,6 +778,7 @@ class MarkingView extends Component {
     if (this.state[`${selectedValueStudent}marked${index}`]) {
       makedPoint = true;
     }
+    console.log(`câu ${index + 1}: marked: ${makedPoint}, typeAnswer: ${typeAnswer}`)
     let answer =
       item.dataMaterial ? item.dataMaterial.data[0].userOptionId[0] :
         item.dataStandard?.userOptionId[0];
@@ -806,7 +807,7 @@ class MarkingView extends Component {
           rippleSize={30}
           style={[
             styles.buttonQuestion,
-            { borderColor: (bg && '#56CCF2') || '#828282' }, bg && { backgroundColor: bg }, { backgroundColor: makedPoint ? '##107CB9' : '#FDC214' }, { borderRadius: 20 },
+            { borderColor: (bg && '#56CCF2') || '#828282' }, { backgroundColor: makedPoint ? '#107CB9' : '#FDC214' }, { borderRadius: 20 },
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
@@ -822,8 +823,8 @@ class MarkingView extends Component {
           rippleSize={30}
           style={[
             styles.buttonQuestion,
-            { borderColor: '#65db1d' }, bg && { backgroundColor: bg },
-            { borderRadius: 20 }, { backgroundColor: makedPoint ? '##107CB9' : '#FDC214' }
+            { borderColor: '#65db1d' },
+            { borderRadius: 20 }, { backgroundColor: makedPoint ? '#107CB9' : '#FDC214' }
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);

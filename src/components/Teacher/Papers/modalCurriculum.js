@@ -97,7 +97,7 @@ export default class ModalCurriculum extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (!_.isEqual(this.props.data, nextProps.data)) {
       if (!_.isEmpty(nextProps.data)) {
-        this.handleHome();
+        this.handleHome(nextProps.data);
       }
     }
     return true;
@@ -107,7 +107,7 @@ export default class ModalCurriculum extends Component {
     const dataFilter = this.props.data.filter(ele => ele.parentCode == item.code);
     const { currentParent } = this.state;
     currentParent.push(item.parentCode);
-    this.setState({ dataFilter, currentParent });
+    this.setState({ dataFilter, currentParent, searchKey: '' });
   };
 
   backBtn = () => {
@@ -148,14 +148,26 @@ export default class ModalCurriculum extends Component {
     );
   };
 
-  handleHome = () => {
-    const arr = this.props.data.filter(item => item.parentCode == this.props.curriculumCode);
-    this.setState({
-      selectItem: { name: '', code: '' },
-      dataFilter: arr,
-      searchKey: '',
-      currentParent: []
-    });
+  handleHome = (data) => {
+    try {
+      let arr = [];
+      if (_.isEmpty(data)) {
+        arr = this.props.data.filter(item => item.parentCode == this.props.curriculumCode);
+      } else {
+        arr = data.filter(item => item.parentCode == this.props.curriculumCode);
+      }
+      this.setState({
+        dataFilter: arr,
+        searchKey: '',
+        currentParent: []
+      });
+    } catch (error) {
+      this.setState({
+        dataFilter: [],
+        searchKey: '',
+        currentParent: []
+      });
+    }
   }
 
   handleSearchText = (searchKey) => {
@@ -184,9 +196,6 @@ export default class ModalCurriculum extends Component {
         hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
       >
         <View style={styles.wrapElement}>
-          {/* <Text style={styles.name} numberOfLines={1}>
-            {item.name}
-          </Text> */}
           <HighlightText
             highlightStyle={{ backgroundColor: 'yellow' }}
             searchWords={[this.state.searchKey]}
@@ -194,12 +203,6 @@ export default class ModalCurriculum extends Component {
             sanitize={removeAccents}
           />
           <View style={{ flexDirection: 'row' }}>
-            {/* <TouchableOpacity
-              onPress={() => this.selectItem({ item, index })}
-              hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
-            >
-              <IconAntDesign name={'search1'} size={20} color="#BDBDBD" />
-            </TouchableOpacity> */}
             {!item.isLeaf && (
               <TouchableOpacity
                 style={{ marginLeft: 15 }}
@@ -230,6 +233,7 @@ export default class ModalCurriculum extends Component {
       value,
       styleTitle,
       borderStyle,
+      stylePlace
     } = this.props;
     selectItem = _.isEmpty(value) ? selectItem : value;
     return (
@@ -250,8 +254,8 @@ export default class ModalCurriculum extends Component {
                   </TouchableOpacity>
                 </View>
               ) : (
-                <Text style={styles.txtPlaceIn}>Đơn vị kiến thức</Text>
-              )}
+                  <Text style={[styles.txtPlaceIn, stylePlace]}>Đơn vị kiến thức</Text>
+                )}
               <View style={styles.icDow}>
                 <Ionicons
                   name={dropdownVisible ? 'ios-arrow-up' : 'ios-chevron-down'}
@@ -259,7 +263,6 @@ export default class ModalCurriculum extends Component {
                   color="#828282"
                 />
               </View>
-
             </View>
 
             <Modal visible={visible} transparent={true}>
@@ -280,6 +283,7 @@ export default class ModalCurriculum extends Component {
                     }}>
                       <TouchableOpacity
                         style={{ alignSelf: 'flex-end', marginBottom: 3 }}
+                        hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
                         onPress={() => {
                           this.setState({
                             visible: false,
@@ -289,7 +293,7 @@ export default class ModalCurriculum extends Component {
                         }>
                         <Image
                           style={{ tintColor: '#fff' }}
-                          source={require('../../../asserts/icon/icon_arrowLeftv3.png')}
+                          source={require('../../../asserts/icon/icon_closeX.png')}
                         />
                       </TouchableOpacity>
                       <View style={{ flexDirection: 'row', overflow: 'hidden', alignSelf: 'flex-end', alignItems: 'center' }}>
@@ -300,7 +304,7 @@ export default class ModalCurriculum extends Component {
                         >
                           <AntDesign name='arrowleft' size={22} style={{ color: _.isEmpty(currentParent) ? '#ffffff40' : '#fff' }} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.handleHome} >
+                        <TouchableOpacity onPress={() => this.handleHome()} >
                           <Image
                             source={require('../../../asserts/icon/iconHome.png')}
                             style={{ height: 20, width: 20, tintColor: '#fff', marginRight: 10 }}
@@ -341,8 +345,8 @@ export default class ModalCurriculum extends Component {
                   </View>
                 </View>
               </TouchableWithoutFeedback>
-              <SafeAreaView />
             </Modal>
+            <SafeAreaView />
           </View>
         </TouchableWithoutFeedback>
       </View>

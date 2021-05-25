@@ -159,7 +159,6 @@ export default class ListQuestionCopy extends Component {
                                     <Text style={styles.textNormal}>{this.state[`knowledge0`]} câu</Text>
                                 </View>
                             </View>}
-                            {/* <View style={styles.borderWidthColumn} /> */}
                             {!!this.state[`knowledge1`] && <View style={styles.headerLineParams}>
                                 <View style={styles.leftParams}>
                                     <Text style={styles.textNormalName}>{knowledgeText['1']}</Text>
@@ -168,7 +167,6 @@ export default class ListQuestionCopy extends Component {
                                     <Text style={styles.textNormal}>{this.state[`knowledge1`]} câu</Text>
                                 </View>
                             </View>}
-                            {/* <View style={styles.borderWidthColumn} /> */}
                             {!!this.state[`knowledge2`] && < View style={styles.headerLineParams}>
                                 <View style={styles.leftParams}>
                                     <Text style={styles.textNormalName}>{knowledgeText['2']}</Text>
@@ -226,7 +224,7 @@ const styles = StyleSheet.create({
     header: {
         width: '100%',
         backgroundColor: '#56CCF2',
-        height: height * 0.25,
+        height: height * 0.3,
         paddingHorizontal: 5
     },
     headerContent: {

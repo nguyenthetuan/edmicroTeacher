@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Dimensions, ScrollView, ActivityIndicator, Image, Platform } from 'react-native';
+import * as Progress from 'react-native-progress';
 import { PieChart } from 'react-native-chart-kit';
 import { Svg, Line, Rect } from 'react-native-svg';
 import _ from 'lodash';
 import Common from '../../../utils/Common';
 import { RFFonsize } from '../../../utils/Fonts';
+import ProgressRefresh from './ProgressRefresh';
 const { width, height } = Dimensions.get('window');
 
 const chartConfig = {
@@ -12,6 +14,16 @@ const chartConfig = {
 };
 
 export default function LevelCompletion(props) {
+
+  React.useEffect(() => {
+    const timeRefresh = setInterval(() => {
+      props.screenProps.refreshData();
+    }, 60 * 1000);
+    return () => {
+      clearInterval(timeRefresh);
+    }
+  }, [])
+
   convertNumberToTime = (number) => {
     return Math.floor(number / 60) + 'm ' + Math.floor(number % 60) + 's';
   }
@@ -32,11 +44,11 @@ export default function LevelCompletion(props) {
 
     const dataChart = [
       {
-        students: total !== 0 ? count / total * 100 : 0,
+        students: data.data?.totalUser !== 0 ? data.data?.totalUserSubmit / data.data?.totalUser * 100 : 0,
         color: "#04C6F1"
       },
       {
-        students: total !== 0 ? 100 - (count / total * 100) : 100,
+        students: data.data?.totalUser !== 0 ? 100 - (data.data?.totalUserSubmit / data.data?.totalUser * 100) : 100,
         color: "#6C7988"
       }
     ]
@@ -58,11 +70,11 @@ export default function LevelCompletion(props) {
           </View>
           <View style={styles.viewPercentChartCircle}>
             <Text style={styles.txtPercentChartCircle}>
-              {data && Common.roundNumberOne(count / total * 100)}%
+              {data && Common.roundNumberOne(data.data?.totalUserSubmit / data.data?.totalUser * 100)}%
                             </Text>
           </View>
         </View>
-        <Text style={styles.txtLeftChartCircle}>{count} trong số {total} học sinh</Text>
+        <Text style={styles.txtLeftChartCircle}>{data.data?.totalUserSubmit} trong số {data.data?.totalUser} học sinh</Text>
       </View>
     )
   }
@@ -317,30 +329,34 @@ export default function LevelCompletion(props) {
     )
   }
   return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      {
-        props.screenProps.isLoading
-          ? <ActivityIndicator size='small' color='#04C6F1' />
-          :
-          _.isEmpty(props.screenProps.data) ?
-            (
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={require('../../../asserts/icon/iconNodata.png')} />
-                <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
-              </View>
-            )
-            : (<ScrollView style={styles.container}>
-              <View style={{ flex: 1, justifyContent: 'center' }}>
-                {renderChartCircle()}
-                <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
-                  <Text style={styles.txtTitleChart}>
-                    Tỷ lệ học sinh tham gia làm bài
-              </Text>
+    <View style={{ flex: 1 }}>
+      <ProgressRefresh isRefresh={props.screenProps.isRefresh} />
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+
+        {
+          props.screenProps.isLoading
+            ? <ActivityIndicator size='small' color='#04C6F1' />
+            :
+            _.isEmpty(props.screenProps.data) ?
+              (
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  <Image source={require('../../../asserts/icon/iconNodata.png')} />
+                  <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30 }}>Không đủ dữ liệu thống kê</Text>
                 </View>
-                {renderChartLevelComplete()}
-              </View>
-            </ScrollView>)
-      }
+              )
+              : (<ScrollView style={styles.container}>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  {renderChartCircle()}
+                  <View style={{ marginLeft: -10, alignItems: 'center', marginTop: 20 }}>
+                    <Text style={styles.txtTitleChart}>
+                      Tỷ lệ học sinh tham gia làm bài
+              </Text>
+                  </View>
+                  {renderChartLevelComplete()}
+                </View>
+              </ScrollView>)
+        }
+      </View>
     </View>
   )
 }

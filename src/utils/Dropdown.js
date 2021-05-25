@@ -32,7 +32,7 @@ export default function Dropdown(props) {
                 <View style={[styles.styBtn, contentStyle]}>
                     <Text numberOfLines={1} style={[styles.styTxt, { color: isData ? '#2D9CDB' : '#828282' }]}>
                         {isData
-                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName + " " + `(${getAssigmentStatus(status)})` || ''
+                            ? data[indexSelected].className || data[indexSelected].name || data[indexSelected].subjectName || data[indexSelected].studentName + " " + `${getAssigmentStatus(status)}` || ''
                             : title}
                     </Text>
                     {props.isShowIcon && <Image source={require('../asserts/icon/icon_down.png')} resizeMode='stretch' style={styles.styArrowDown} />}

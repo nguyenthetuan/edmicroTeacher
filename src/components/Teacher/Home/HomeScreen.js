@@ -164,6 +164,7 @@ class HomeScreen extends Component {
                 <HeaderMain
                     {...user}
                     navigation={this.props.navigation}
+                    showAvatar={true}
                 />
                 <ScrollView
                     refreshControl={

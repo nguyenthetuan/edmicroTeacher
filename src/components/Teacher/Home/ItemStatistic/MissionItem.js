@@ -101,7 +101,7 @@ class MissionItem extends React.PureComponent {
                     <View style={[styles.note, { marginTop: 10 }]}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.noteColor} />
-                            <Text style={styles.txtNote}>Hoàn thành</Text>
+                            <Text style={styles.txtNote}>Nhiệm vụ đã giao</Text>
                         </View>
                         <Text style={styles.countNumber}>{mission?.totalMissionAssign}</Text>
                     </View>

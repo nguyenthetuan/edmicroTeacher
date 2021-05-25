@@ -297,7 +297,7 @@ class LoginWithPhoneScreen extends Component {
     return (
       <SafeAreaView style={container}>
         <StatusBar />
-        <HeaderPrimary showLead={true} title={'Đăng nhập'} styleTitle={styles.title} navigation={this.props.navigation} />
+        <HeaderPrimary showLead={true} title={'Đăng nhập'} styleTitle={styles.title} navigation={this.props.navigation} centerTitle={true} />
         <KeyboardAwareScrollView
           contentContainerStyle={styles.viewKeyboard}
           showsVerticalScrollIndicator={false}
@@ -385,6 +385,7 @@ const styles = StyleSheet.create({
     fontSize: RFFonsize(14),
     color: '#000',
     fontWeight: 'bold',
+    alignItems: 'center'
   },
   btnLogin: {
     backgroundColor: '#54CEF5',
