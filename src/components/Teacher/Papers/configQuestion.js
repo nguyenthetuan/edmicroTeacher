@@ -53,9 +53,12 @@ const { width, height } = Dimensions.get('screen');
 const HEIGHT_WEB = isIphoneX() ? height - 200 : height - 100;
 let baseUrl = 'file:///android_asset/';
 const webViewScript = `
-  setTimeout(function() { 
-    window.ReactNativeWebView.postMessage(document.body.scrollHeight); 
-  }, 0);
+ window.onload = function(){
+  window.ReactNativeWebView.postMessage(document.body.scrollHeight); 
+ }
+  // setTimeout(function() { 
+  //   window.ReactNativeWebView.postMessage(document.body.scrollHeight); 
+  // }, 0);
 `;
 
 const HEIGHTTOP = height;

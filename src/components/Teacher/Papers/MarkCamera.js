@@ -649,13 +649,12 @@ class MarkCamera extends Component {
                                                                     <Text style={styles.addPar}>Upload PDF</Text>
                                                                 </View>
                                                             </TouchableWithoutFeedback>
-
-                                                            <TouchableWithoutFeedback onPress={this.launchImageLibrary}>
+                                                            {/* <TouchableWithoutFeedback onPress={this.launchImageLibrary}>
                                                                 <View style={styles.buttonInSideAreaUploadPDF}>
                                                                     <Image source={require('../../../asserts/icon/upload_icon.png')} style={styles.wiIcon} />
                                                                     <Text style={styles.addPar}>Chọn ảnh</Text>
                                                                 </View>
-                                                            </TouchableWithoutFeedback>
+                                                            </TouchableWithoutFeedback> */}
                                                         </View>
                                                     </View>
                                                 </View>

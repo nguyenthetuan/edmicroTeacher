@@ -54,13 +54,18 @@ function TourView(props, ref) {
     }, [show])
 
     useEffect(() => {
-        const anim = Animated.timing(scaleLoop, {
-            toValue: 1,
-            duration: 640,
-            useNativeDriver: false
-        });
-        scaleLoop.setValue(new Animated.Value(0.9));
-        Animated.loop(anim).start();
+        try {
+            const anim = Animated.timing(scaleLoop, {
+                toValue: 1,
+                duration: 640,
+                useNativeDriver: false
+            });
+            scaleLoop.setValue(0.9);
+            Animated.loop(anim).start();
+        } catch (error) {
+
+        }
+
     }, [show])
 
     const onNext = async () => {
