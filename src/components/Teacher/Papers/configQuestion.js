@@ -92,6 +92,7 @@ class ConfigQuestion extends Component {
       loading: false,
       modalVisible: false,
       resSuccess: null,
+      dragging: false,
     };
     this.animatedValue = new Animated.Value(0);
   }
@@ -717,7 +718,7 @@ class ConfigQuestion extends Component {
 
   onDragEnd = (questions) => {
     questions = questions.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
-    this.setState({ questions });
+    this.setState({ questions, dragging: false });
   }
 
   confirmSort = () => {
@@ -726,6 +727,7 @@ class ConfigQuestion extends Component {
   }
 
   onDragStart = () => {
+    this.setState({ dragging: true });
     this.animatedValue.setValue(1);
     Animated.timing(this.animatedValue, {
       toValue: 1.5,
@@ -755,11 +757,12 @@ class ConfigQuestion extends Component {
       loading,
       gradeCode,
       modalVisible,
+      dragging,
       wrapTopHeight: height
     } = this.state;
     const { shadowBtn } = shadowStyle;
-    const heightSort = _.isArray(questions) ? 100 + (Math.ceil(questions.length / 10) - 1) * 40 : 100;
-
+    let heightSort = _.isArray(questions) ? 100 + (Math.ceil(questions.length / 10) - 1) * 40 : 100;
+    heightSort = Platform.select({ ios: heightSort, android: heightSort + 50 });
     return (
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
@@ -781,6 +784,7 @@ class ConfigQuestion extends Component {
           <ScrollView
             contentContainerStyle={{ height: webheight + heightSort }}
             ref={'ScrollView'}
+            scrollEnabled={!dragging}
           >
             <View
               onLayout={(event) => {
@@ -1024,7 +1028,7 @@ class ConfigQuestion extends Component {
 
               <View style={{ backgroundColor: '#fff' }}>
                 {/* start sort */}
-                <View style={{ height: heightSort, padding: 20, }}>
+                <View style={{ height: heightSort, width: '100%', padding: 20, }}>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.styTxtSort}>Kéo thả sắp xếp lại thứ tự câu</Text>
                     <TouchableWithoutFeedback onPress={this.confirmSort}>
