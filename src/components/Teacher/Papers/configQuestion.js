@@ -779,9 +779,9 @@ class ConfigQuestion extends Component {
     heightSort = Platform.select({ ios: heightSort, android: heightSort + 50 });
     return (
       <View style={styles.container}>
-        <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
+        <SafeAreaView style={{ backgroundColor: '#2D9CDB' }} />
         <SafeAreaView>
-          <View style={{ backgroundColor: '#117DB9' }}>
+          <View style={{ backgroundColor: '#2D9CDB' }}>
             <Header
               ref={ref => this.refHeader = ref}
               title={'Cấu hình câu hỏi'}
@@ -791,7 +791,7 @@ class ConfigQuestion extends Component {
               styleTitle={styles.styleTitle}
               colorBtnBack={'#ffffff'}
               centerTitle={false}
-              bgColorActive={{ backgroundColor: '#117DB9' }}
+              bgColorActive={{ backgroundColor: '#2D9CDB' }}
               createPaper={true}
               disabled={loading}
             />
@@ -936,7 +936,7 @@ class ConfigQuestion extends Component {
                         {
                           borderBottomWidth: 1,
                           borderBottomColor: '#E0E0E0',
-                          backgroundColor: '#107CB9',
+                          backgroundColor: '#2D9CDB',
                           borderTopLeftRadius: 5,
                           borderTopRightRadius: 5,
                           padding: 10
@@ -1275,7 +1275,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: '#117DB9',
+    // backgroundColor: '#2D9CDB',
     backgroundColor: "transparent",
   },
   topheader: {

@@ -237,7 +237,7 @@ export default class CopyFromSubjectExists extends Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}
             >
-                <View style={{ backgroundColor: '#56CCF2', flex: 1 }}>
+                <View style={{ backgroundColor: '#2D9CDB', flex: 1 }}>
                     <SafeAreaView />
                     <HeaderPaper
                         title={'Bộ đề có sẵn'}
@@ -254,7 +254,7 @@ export default class CopyFromSubjectExists extends Component {
                                 title="Môn Học"
                                 data={listSubjects}
                                 onPressItem={(index) => this.onPressItemSubject(index)}
-                                boldText={{ fontWeight: "700", color: '#55CCF2' }}
+                                boldText={{ fontWeight: "700", color: '#2D9CDB' }}
                             />
                             <Dropdown
                                 containerStyle={styles.styleDrop}
@@ -263,7 +263,7 @@ export default class CopyFromSubjectExists extends Component {
                                 data={this.state.lerningTarget}
                                 onPressItem={(index) => this.onPressCurriculum(index)}
                                 indexSelected={this.state.indexSelected}
-                                boldText={{ fontWeight: "700", color: '#55CCF2' }}
+                                boldText={{ fontWeight: "700", color: '#2D9CDB' }}
                             />
                         </View>
                         <View style={styles.styWrapInput}>
@@ -341,14 +341,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
         borderWidth: 1,
-        borderColor: '#56CCF2',
+        borderColor: '#2D9CDB',
         borderRadius: 5,
         backgroundColor: '#fff'
         // paddingLeft: 16,
         // paddingRight: 16,
     },
     headerTask: {
-        backgroundColor: '#56CCF2',
+        backgroundColor: '#2D9CDB',
         borderTopRightRadius: 5,
         borderTopLeftRadius: 5,
         paddingVertical: 3,

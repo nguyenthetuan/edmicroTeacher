@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#107CB9',
+    backgroundColor: '#2D9CDB',
   },
   header: {
-    backgroundColor: '#56CCF2',
+    backgroundColor: '#2D9CDB',
     zIndex: 99,
   },
   topheader: {

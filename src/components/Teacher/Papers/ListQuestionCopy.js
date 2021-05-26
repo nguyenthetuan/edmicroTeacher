@@ -113,8 +113,8 @@ export default class ListQuestionCopy extends Component {
         const data = this.props.navigation.state.params.data.data;
         this.filterDataRender(data.questions);
         return (
-            <View>
-                <SafeAreaView style={{ backgroundColor: '#107CB9' }} />
+            <View style={{ flex: 1 }}>
+                <SafeAreaView style={{ backgroundColor: '#2D9CDB' }} />
                 {/* <View style={styles.root}> */}
                 <View style={styles.header}>
                     <Header
@@ -208,7 +208,7 @@ export default class ListQuestionCopy extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{ width: '100%', height: height - 220 }}>
+                <View style={{ width: '100%', flex: 1 }}>
                     <WebView
                         ref={(ref) => (this.webview = ref)}
                         source={{
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        backgroundColor: '#107CB9',
+        backgroundColor: '#2D9CDB',
         height: height * 0.2,
     },
     headerContent: {
