@@ -793,7 +793,7 @@ class MarkingView extends Component {
         >
           <View style={[
             styles.buttonQuestion,
-            { backgroundColor: '#107CB9', borderColor: '#fff' },
+            { backgroundColor: '#2D9CDB', borderColor: '#fff' },
             // makedPoint && { backgroundColor: '#5DD8FF' }
           ]}>
             <Text style={{ color: '#fff' }}>{index + 1}</Text>
@@ -809,7 +809,7 @@ class MarkingView extends Component {
           rippleSize={30}
           style={[
             styles.buttonQuestion,
-            { borderColor: (bg && '#56CCF2') || '#828282' }, { backgroundColor: makedPoint ? '#107CB9' : '#FDC214' }, { borderRadius: 20 },
+            { borderColor: (bg && '#56CCF2') || '#828282' }, { backgroundColor: makedPoint ? '#2D9CDB' : '#FDC214' }, { borderRadius: 20 },
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
@@ -826,7 +826,7 @@ class MarkingView extends Component {
           style={[
             styles.buttonQuestion,
             { borderColor: '#65db1d' },
-            { borderRadius: 20 }, { backgroundColor: makedPoint ? '#107CB9' : '#FDC214' }
+            { borderRadius: 20 }, { backgroundColor: makedPoint ? '#2D9CDB' : '#FDC214' }
           ]}
           onPress={() => {
             this.onButtonQuestionPress(index);
@@ -934,7 +934,7 @@ class MarkingView extends Component {
               {/* <View style={{ height: 5, backgroundColor: '#c4c4c4' }} /> */}
               <View style={styles.poinded}>
                 <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#107CB9' }]} />
+                  <View style={[styles.note, { backgroundColor: '#2D9CDB' }]} />
                   <Text style={styles.txtNote}>Đã chấm</Text>
                 </View>
                 <View style={styles.review}>
@@ -942,11 +942,11 @@ class MarkingView extends Component {
                   <Text style={styles.txtNote}>Chưa chấm</Text>
                 </View>
                 <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#fff', borderColor: '#107CB9' }]} />
+                  <View style={[styles.note, { backgroundColor: '#fff', borderColor: '#2D9CDB' }]} />
                   <Text style={styles.txtNote}>Trắc nhiệm</Text>
                 </View>
                 <View style={styles.review}>
-                  <View style={[styles.note, { backgroundColor: '#fff', borderRadius: 20, borderColor: '#107CB9' }]} />
+                  <View style={[styles.note, { backgroundColor: '#fff', borderRadius: 20, borderColor: '#2D9CDB' }]} />
                   <Text style={styles.txtNote}>Tự luận</Text>
                 </View>
               </View>
@@ -1116,7 +1116,7 @@ class MarkingView extends Component {
           />
         </Modal>
         {this.state.goToNewScreen && <View style={styles.screenPopUp}>
-          <SafeAreaView style={{ backgroundColor: '#107CB9', flex: 1 }}>
+          <SafeAreaView style={{ backgroundColor: '#2D9CDB', flex: 1 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 80, paddingHorizontal: 20 }}>
               <RippleButton
                 style={styles.buttonBack}
@@ -1363,7 +1363,7 @@ const styles = StyleSheet.create({
     // height: 40,
   },
   header: {
-    backgroundColor: '#107CB9',
+    backgroundColor: '#2D9CDB',
     alignItems: 'center',
     width: '100%',
   },

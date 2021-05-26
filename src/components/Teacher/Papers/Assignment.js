@@ -212,7 +212,7 @@ function Item(props) {
           <Text style={styles.txtTitleItemContent}>Ngày bắt đầu</Text>
           <TouchableWithoutFeedback
             disabled={item.timeStart}
-            onPress={() => showDatePicker(Stage.begin)}
+            // onPress={() => showDatePicker(Stage.begin)}
           >
             <View
               style={[styles.btnDate, { backgroundColor: item.timeStart ? '#f0f0f0' : '#f0f0f0' }]}>
