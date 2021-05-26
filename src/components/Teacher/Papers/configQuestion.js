@@ -92,6 +92,7 @@ class ConfigQuestion extends Component {
       loading: false,
       modalVisible: false,
       resSuccess: null,
+      dragging: false,
     };
     this.animatedValue = new Animated.Value(0);
   }
@@ -148,38 +149,38 @@ class ConfigQuestion extends Component {
 
   async componentDidMount() {
     const { data } = this.props.navigation.state.params || {};
+    let getListQuestion = [];
     if (data) {
-      // vao tu sao chep bo de
-      console.log(data);
-      this.getListQuestionCopy(data);
+      const { questions } = data;
+      getListQuestion = questions;
     } else {
-      let getListQuestion = await dataHelper.getQuestion();
-      const { totalPoint } = this.state;
-      for (let item of getListQuestion) {
-        item.point = roundToFour(totalPoint / getListQuestion.length);
-      }
-      getListQuestion = getListQuestion.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
-      !_.isEmpty(getListQuestion) &&
-        this.setState({
-          questions: getListQuestion,
-        });
-      const { token } = await dataHelper.getToken();
-
-      const resGrade = await apiPapers.getGrade({ token });
-      if (resGrade) {
-        this.props.saveGrades(resGrade);
-      }
-      this.setState(
-        {
-          listGrades: resGrade,
-          listSubjects: this.props.paper.listSubject,
-        },
-        () =>
-          this.activeSubject({
-            code: this.props.navigation.state.params.curriculumCode,
-          }),
-      );
+      getListQuestion = await dataHelper.getQuestion();
     }
+    const { totalPoint } = this.state;
+    for (let item of getListQuestion) {
+      item.point = roundToFour(totalPoint / getListQuestion.length);
+    }
+    getListQuestion = getListQuestion.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
+    !_.isEmpty(getListQuestion) &&
+      this.setState({
+        questions: getListQuestion,
+      });
+    const { token } = await dataHelper.getToken();
+
+    const resGrade = await apiPapers.getGrade({ token });
+    if (resGrade) {
+      this.props.saveGrades(resGrade);
+    }
+    this.setState(
+      {
+        listGrades: resGrade,
+        listSubjects: this.props.paper.listSubject,
+      },
+      () =>
+        this.activeSubject({
+          code: this.props.navigation.state.params.curriculumCode,
+        }),
+    );
   }
 
   getListQuestionCopy = (data) => {
@@ -476,6 +477,7 @@ class ConfigQuestion extends Component {
   }
 
   config = async () => {
+    await this.setState({ loading: true });
     if (this.validate()) {
       const {
         gradeCode,
@@ -515,7 +517,6 @@ class ConfigQuestion extends Component {
       formData.append('question', JSON.stringify(this.getQuestionPostData(questions)));
 
       try {
-        this.setState({ loading: true });
         console.log("config token: ");
         const { token } = await dataHelper.getToken();
         console.log("config token: ", token);
@@ -559,6 +560,7 @@ class ConfigQuestion extends Component {
         console.log('error', error);
       }
     } else {
+      this.setState({ loading: false });
       this.refToast.show(<ToastFaild title="Vui lòng điền đầy đủ thông tin" />);
     }
   };
@@ -730,7 +732,7 @@ class ConfigQuestion extends Component {
 
   onDragEnd = (questions) => {
     questions = questions.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
-    this.setState({ questions });
+    this.setState({ questions, dragging: false });
   }
 
   confirmSort = () => {
@@ -739,6 +741,7 @@ class ConfigQuestion extends Component {
   }
 
   onDragStart = () => {
+    this.setState({ dragging: true });
     this.animatedValue.setValue(1);
     Animated.timing(this.animatedValue, {
       toValue: 1.5,
@@ -768,11 +771,12 @@ class ConfigQuestion extends Component {
       loading,
       gradeCode,
       modalVisible,
+      dragging,
       wrapTopHeight: height
     } = this.state;
     const { shadowBtn } = shadowStyle;
-    const heightSort = _.isArray(questions) ? 100 + (Math.ceil(questions.length / 10) - 1) * 40 : 100;
-
+    let heightSort = _.isArray(questions) ? 100 + (Math.ceil(questions.length / 10) - 1) * 40 : 100;
+    heightSort = Platform.select({ ios: heightSort, android: heightSort + 50 });
     return (
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#117DB9' }} />
@@ -783,17 +787,19 @@ class ConfigQuestion extends Component {
               title={'Cấu hình câu hỏi'}
               color={'#fff'}
               navigation={this.props.navigation}
-              onRightAction={() => this.config()}
+              onRightAction={this.config}
               styleTitle={styles.styleTitle}
               colorBtnBack={'#ffffff'}
               centerTitle={false}
               bgColorActive={{ backgroundColor: '#117DB9' }}
               createPaper={true}
+              disabled={loading}
             />
           </View>
           <ScrollView
             contentContainerStyle={{ height: webheight + heightSort }}
             ref={'ScrollView'}
+            scrollEnabled={!dragging}
           >
             <View
               onLayout={(event) => {
@@ -1037,7 +1043,7 @@ class ConfigQuestion extends Component {
 
               <View style={{ backgroundColor: '#fff' }}>
                 {/* start sort */}
-                <View style={{ height: heightSort, padding: 20, }}>
+                <View style={{ height: heightSort, width: '100%', padding: 20, }}>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.styTxtSort}>Kéo thả sắp xếp lại thứ tự câu</Text>
                     <TouchableWithoutFeedback onPress={this.confirmSort}>

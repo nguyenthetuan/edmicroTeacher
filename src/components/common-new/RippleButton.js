@@ -11,6 +11,7 @@ const TouchAndroid = (props) => {
         props.onPress();
       }}
       style={[props.style]}
+      disabled={props.disabled}
     >
       {props.children}
     </TouchableOpacity>

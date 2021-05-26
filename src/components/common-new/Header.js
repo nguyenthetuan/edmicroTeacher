@@ -14,8 +14,9 @@ const navigateUser = (props) => {
 }
 
 const HeaderPrimary = forwardRef((props, ref) => {
+
     const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack, centerTitle, createPaper, onRightAction, btnCopy } = props;
-    const { bgColorActive } = props;
+    const { bgColorActive, disabled } = props;
     const { shadowBtn } = shadowStyle;
     return (
         <View style={[styles.rowContainer, bgColorActive]}>
@@ -75,7 +76,10 @@ const HeaderPrimary = forwardRef((props, ref) => {
             }
             {createPaper
                 ?
-                <TouchableWithoutFeedback onPress={onRightAction}>
+                <TouchableWithoutFeedback
+                    onPress={onRightAction}
+                    disabled={disabled}
+                >
                     <View style={[styles.buttonCreateAssessment, shadowBtn]} >
                         <Text style={styles.textCreateAssessment}>Tạo bộ đề</Text>
                     </View>
