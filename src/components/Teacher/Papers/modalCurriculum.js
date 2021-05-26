@@ -233,7 +233,7 @@ export default class ModalCurriculum extends Component {
       value,
       styleTitle,
       borderStyle,
-      stylePlace
+      stylePlace,
     } = this.props;
     selectItem = _.isEmpty(value) ? selectItem : value;
     return (

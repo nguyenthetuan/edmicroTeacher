@@ -260,7 +260,7 @@ export default class CopyFromSubjectExists extends Component {
                             data={this.state.lerningTarget}
                             onPressItem={(index) => this.onPressCurriculum(index)}
                             indexSelected={this.state.indexSelected}
-                            boldText={{ fontWeight: "700", color: '#55CCF2' }} ƒ
+                            boldText={{ fontWeight: "700", color: '#55CCF2' }}
                         />
                     </View>
                     <View style={styles.styWrapInput}>
@@ -274,10 +274,7 @@ export default class CopyFromSubjectExists extends Component {
                         <TouchableWithoutFeedback
                             onPress={() => { this.onPressSearch() }}>
                             <View style={styles.searchIcon}>
-                                <IconAntDesign
-                                    name={'search1'}
-                                    style={styles.iconSearch}
-                                />
+                                <Image source={require('../../../asserts/icon/icon_searchNamePaper.png')} style={{ width: 15, height: 15 }} />
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -418,7 +415,7 @@ const styles = StyleSheet.create({
     iconSearch: {
         alignSelf: 'center',
         color: '#828282',
-        marginRight: 3
+        marginRight: 3,
     },
     colorTG: {
         fontFamily: 'Nunito',
@@ -456,8 +453,7 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     searchIcon: {
-        width: 20,
-        height: 20,
+        right: 4,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center'
@@ -472,12 +468,12 @@ const styles = StyleSheet.create({
         height: 35,
         borderRadius: 5,
         borderColor: "#fff",
-        paddingRight: 1
+        paddingRight: 2
     },
     stylePlace: {
         fontSize: RFFonsize(14),
         lineHeight: RFFonsize(18),
-        fontWeight: "700",
+        fontWeight: "500",
         color: "#c4c4c4"
     }
 })
