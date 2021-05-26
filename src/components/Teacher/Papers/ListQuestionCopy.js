@@ -92,19 +92,11 @@ export default class ListQuestionCopy extends Component {
 
     copySubjectMatter = async () => {
         const data = this.state.data;
-        // const { token } = await dataHelper.getToken();
-        // const { listSubjects } = this.props.navigation.state.params;
-        // this.props.navigation.navigate('ConfigQuestion', {
-        //     nagigation: this.props.nagigation,
-        //     statusbar: 'light-content',
-        //     curriculumCode: this.state.objectSearch.curriculumCode,
-        //     // data: data,
-        //     // listSubjects: listSubjects,
-        // });
+
         this.props.navigation.navigate('ConfigQuestion', {
             nagigation: this.props.nagigation,
             statusbar: 'light-content',
-            curriculumCode: 'TOAN',
+            curriculumCode: data.subjectCode,
             data: data,
         });
     }

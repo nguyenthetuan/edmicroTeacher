@@ -7,7 +7,7 @@ import ProgressRefresh from './ProgressRefresh';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
-  const data = !!props.screenProps.data && !_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
+  const data = !!props.screenProps?.data && !_.isEmpty(props.screenProps?.data?.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
     return a.localeCompare(b);
   }).map(k => props.screenProps?.data?.data?.questionResult[k]) : [];
   let widthChart = width - 60;
