@@ -18,33 +18,34 @@ function StepView({
     index
 }) {
     return (
-        <Modal
-            visible={true}
-            transparent={true}
-            style={{
-                backgroundColor: 'transparent'
-            }}
-        >
-            <View style={styles.container} >
-                <Text style={styles.textTitle}>{hintText}</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <TouchableWithoutFeedback
-                        onPress={onPreview}
-                    >
-                        <View style={styles.viewAction}>
-                            <Text style={styles.textButton}>{getActionLeft(index)}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback
-                        onPress={onNext}
-                    >
-                        <View style={styles.viewAction}>
-                            <Text style={styles.textButton}>{getActionRight(index, length)}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+        // <Modal
+        //     visible={true}
+        //     transparent={true}
+        //     style={{
+        //         backgroundColor: 'transparent'
+        //     }}
+        // >
+        <View style={styles.container} >
+            <Text style={styles.textTitle}>{hintText}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                <TouchableWithoutFeedback
+                    onPress={onPreview}
+                >
+                    <View style={styles.viewAction}>
+                        <Text style={styles.textButton}>{getActionLeft(index)}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <View style={{ width: 20 }} />
+                <TouchableWithoutFeedback
+                    onPress={onNext}
+                >
+                    <View style={styles.viewAction}>
+                        <Text style={styles.textButton}>{getActionRight(index, length)}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
-        </Modal>
+        </View>
+        // </Modal>
     );
 }
 

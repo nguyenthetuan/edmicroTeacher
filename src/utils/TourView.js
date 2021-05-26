@@ -91,7 +91,7 @@ function TourView(props, ref) {
                         height: tour_size,
                         borderRadius: tour_size / 2,
                         borderWidth: tour_size / 2 - 30,
-                        borderColor: indexRef.current % 2 == 0 ? '#EA2C46' : 'rgba(3,102, 214, 1)',
+                        borderColor: 'rgba(76, 147, 228, 0.75))',
                         transform: [{
                             scale: scale
                         }]
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     circle: {
-        borderColor: 'rgba(3,102, 214, 1)',
+        borderColor: 'rgba(76, 147, 228, 0.18)',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     dotCircle: {
         borderWidth: 10,
         borderRadius: 100,
-        borderColor: 'orange',
+        borderColor: '#f8f8f8',
         alignSelf: 'center',
         backgroundColor: 'transparent'
     },

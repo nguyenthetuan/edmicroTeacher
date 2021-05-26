@@ -10,7 +10,7 @@ export const VERSION_CODE_ANDROID = 13;
  */
 export const BUILD_NUMBER_CODE_PUSH = {
     ios: '53',
-    android: '36'
+    android: '37'
 };
 
 export const APP_VERSION_NAME = DeviceInfo.getVersion();

@@ -126,7 +126,7 @@ class Papers extends Component {
       } catch (error) {
         console.log(error);
       }
-    }, 1000);
+    }, 1500);
   }
 
   getData = async () => {

@@ -148,7 +148,7 @@ class Item extends Component {
         const { item } = this.props;
         const { isCheck } = this.state;
         return (
-            <View style={[styles.styWrapElement, { margin: 5, }]}>
+            <View style={[styles.styWrapElement, { margin: 5, marginHorizontal: 16 }]}>
                 <TouchableWithoutFeedback onPress={this.onCheck}>
                     <View style={styles.styWrapElement}>
                         <Image source={require('../../../asserts/icon/icon_remakeClassV3.png')} resizeMode={'contain'} style={{ width: 30, height: 30 }} />

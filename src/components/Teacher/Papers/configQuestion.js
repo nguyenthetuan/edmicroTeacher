@@ -1045,12 +1045,12 @@ class ConfigQuestion extends Component {
                 {/* start sort */}
                 <View style={{ height: heightSort, width: '100%', padding: 20, }}>
                   <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.styTxtSort}>Kéo thả sắp xếp lại thứ tự câu</Text>
-                    <TouchableWithoutFeedback onPress={this.confirmSort}>
+                    <Text style={styles.styTxtSort}>Giữ 1s và kéo thả sắp xếp lại thứ tự câu</Text>
+                    {/* <TouchableWithoutFeedback onPress={this.confirmSort}>
                       <View style={[styles.styBtnSort, shadowBtn]}>
                         <Text style={[styles.txtDeleteChoose, { marginVertical: 2 }]}>Lưu</Text>
                       </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback> */}
                   </View>
                   <DraggableGrid
                     numColumns={10}

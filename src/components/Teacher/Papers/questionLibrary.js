@@ -36,6 +36,7 @@ import ModalFilteQuestionLibrary from './ModalFilteQuestionLibrary';
 import TourView from '../../../utils/TourView';
 import { CustomeButtonRef } from '../../common-new/CustomeButtonRef';
 import AsyncStorage from '@react-native-community/async-storage';
+import ZoomAnim from '../../anim/ZoomAnim';
 
 const messageNoQuestion = 'Vui lòng thêm câu hỏi';
 const messageAddError =
@@ -298,26 +299,28 @@ class QuestionLibrary extends Component {
   };
 
   async componentDidMount() {
-    this.getQuestionLocal();
-    const { token } = await dataHelper.getToken();
-    const { objectSearch } = this.state;
-    if (token) {
-      try {
-        // get list mon hoc
-        const response = await apiPapers.getSubjects({ token });
-        if (_.isEmpty(response)) return;
-        await this.setState(
-          {
-            subject: response,
-            objectSearch: {
-              ...objectSearch,
-              subjectCode: response[0].code, //ma mon hoc de lay data giao trinh.
-            },
-          }
-        );
-        this.getDetailSubject();
-      } catch (error) { }
-    }
+    this.timeMounted = setTimeout(async () => {
+      // this.getQuestionLocal(); // tam thoi chua dung
+      const { token } = await dataHelper.getToken();
+      const { objectSearch } = this.state;
+      if (token) {
+        try {
+          // get list mon hoc
+          const response = await apiPapers.getSubjects({ token });
+          if (_.isEmpty(response)) return;
+          await this.setState(
+            {
+              subject: response,
+              objectSearch: {
+                ...objectSearch,
+                subjectCode: response[0].code, //ma mon hoc de lay data giao trinh.
+              },
+            }
+          );
+          this.getDetailSubject();
+        } catch (error) { }
+      }
+    }, 350);
   };
 
   handlerShowTourView = async () => {
@@ -554,6 +557,13 @@ class QuestionLibrary extends Component {
     return textHeader
   }
 
+  componentWillUnmount = () => {
+    if (this.timeMounted) {
+      clearTimeout(this.timeMounted);
+      this.timeMounted = null;
+    }
+  }
+
   render() {
     const { shadowBtn } = shadowStyle;
     const {
@@ -752,7 +762,9 @@ class WebViewComponent extends Component {
     }
     return (
       <>
-        {isLoading && <LearnPlaceholder />}
+        {isLoading &&
+          <LearnPlaceholder />
+        }
         <WebView
           ref={(ref) => (this.webview = ref)}
           style={{ backgroundColor: 'transparent' }}

@@ -22,7 +22,7 @@ export default function RightWrongRatio(props) {
         props.screenProps.isLoading
           ? <ActivityIndicator size='small' color='#04C6F1' />
           :
-          props.screenProps.data.data?.assignmentContentType == 3 ?
+          props.screenProps?.data?.data?.assignmentContentType == 3 ?
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Image source={require('../../../asserts/icon/iconNodata.png')} />
               <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30, marginHorizontal: 60, textAlign: 'center' }}>{`Dạng bài này không thống kê tỷ lệ đúng sai.`}
