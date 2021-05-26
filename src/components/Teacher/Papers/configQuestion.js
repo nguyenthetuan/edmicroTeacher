@@ -477,6 +477,7 @@ class ConfigQuestion extends Component {
   }
 
   config = async () => {
+    await this.setState({ loading: true });
     if (this.validate()) {
       const {
         gradeCode,
@@ -516,7 +517,6 @@ class ConfigQuestion extends Component {
       formData.append('question', JSON.stringify(this.getQuestionPostData(questions)));
 
       try {
-        this.setState({ loading: true });
         console.log("config token: ");
         const { token } = await dataHelper.getToken();
         console.log("config token: ", token);
@@ -560,6 +560,7 @@ class ConfigQuestion extends Component {
         console.log('error', error);
       }
     } else {
+      this.setState({ loading: false });
       this.refToast.show(<ToastFaild title="Vui lòng điền đầy đủ thông tin" />);
     }
   };
@@ -786,12 +787,13 @@ class ConfigQuestion extends Component {
               title={'Cấu hình câu hỏi'}
               color={'#fff'}
               navigation={this.props.navigation}
-              onRightAction={() => this.config()}
+              onRightAction={this.config}
               styleTitle={styles.styleTitle}
               colorBtnBack={'#ffffff'}
               centerTitle={false}
               bgColorActive={{ backgroundColor: '#117DB9' }}
               createPaper={true}
+              disabled={loading}
             />
           </View>
           <ScrollView

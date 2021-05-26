@@ -57,7 +57,8 @@ class StepThreePDF extends Component {
             subjectCode: [],
             subjectActive: [],
             gradeActive: [],
-            scrollViewHeight: height - 300
+            scrollViewHeight: height - 300,
+            isLoading: false,
         }
     }
 
@@ -210,6 +211,7 @@ class StepThreePDF extends Component {
     }
 
     handleNextStepFour = async () => {
+        await this.setState({ isLoading: true });
         const { duration, assignmentType, subjectActive } = this.state;
         let validate = this.validation();
         if (!validate) {
@@ -229,11 +231,12 @@ class StepThreePDF extends Component {
                     this.props.screenProps.navigation.replace('UploadPDFCompleted', {
                         data: data,
                     });
+                    this.setState({ isLoading: false });
                 }
-            )
-
+            );
         } else {
-            this.toast.show('Tải bộ đề lên không thành công!')
+            this.toast.show('Tải bộ đề lên không thành công!');
+            this.setState({ isLoading: false });
         }
     };
 
@@ -288,7 +291,8 @@ class StepThreePDF extends Component {
             assignmentTypes,
             name,
             gradeActive,
-            subjectActive
+            subjectActive,
+            isLoading
         } = this.state;
         return (
             <View style={styles.rootView}>
@@ -400,7 +404,12 @@ class StepThreePDF extends Component {
                     ) : null}
                 </ScrollView>
                 <View style={styles.wrapEnd}>
-                    <RippleButton style={styles.buttonNext} radius={15} onPress={this.handleNextStepFour}>
+                    <RippleButton
+                        style={styles.buttonNext}
+                        radius={15}
+                        onPress={this.handleNextStepFour}
+                        disabled={isLoading}
+                    >
                         <Text style={styles.textNext}>Tạo bộ đề</Text>
                     </RippleButton>
                 </View>
@@ -533,7 +542,7 @@ const styles = StyleSheet.create({
         top: 5
     },
     wrapEnd: {
-        height: 50, 
+        height: 50,
         alignSelf: 'center',
         bottom: 0,
     },
