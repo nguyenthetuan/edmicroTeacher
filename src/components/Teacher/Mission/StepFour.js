@@ -23,9 +23,11 @@ export default class StepFour extends Component {
     }
 
     assignedMission = () => {
+        const nameMission = this.props.navigation.state.params.nameMission;
         this.reset();
         this.props.screenProps.navigation.navigate('MissionDetail', {
-            statusbar: 'dark-content'
+            statusbar: 'dark-content',
+            nameMission: nameMission
         });
     }
 

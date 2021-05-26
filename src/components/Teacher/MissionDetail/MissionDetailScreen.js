@@ -11,7 +11,7 @@ export default class MissionDetailScreen extends Component {
     render() {
         const { isLoading, navigation } = this.props;
         const { title } = this.props.navigation.state.params;
-        console.log('this.props',this.props)
+        const nameMission = this.props.navigation.state.params.nameMission;
         return (
             <View style={styles.contain}>
                 <View style={{ backgroundColor: '#FFF' }}>
@@ -20,7 +20,7 @@ export default class MissionDetailScreen extends Component {
                         color={'#000'}
                         navigation={this.props.navigation}
                         goBack={this.goBack}
-                        title={title}
+                        title={nameMission}
                     />
                     {/* <Image source={AppIcon.pic_mission}
                         resizeMode={'contain'}

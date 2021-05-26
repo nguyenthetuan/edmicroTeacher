@@ -111,7 +111,7 @@ class StepThree extends Component {
     };
     const response = await createMission(payload);
     if (response.status == 0) {
-      this.props.navigation.navigate('StepFour');
+      this.props.navigation.navigate('StepFour', { nameMission: nameMission });
       this.props.screenProps.handleNextStep(3);
       this.props.screenProps.getAssignmentByMission({ token: this.token, _id: response._id });
       const { token, enumType } = await dataHelper.getToken();
