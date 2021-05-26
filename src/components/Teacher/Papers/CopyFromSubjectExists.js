@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     SafeAreaView,
     TextInput,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import _ from 'lodash';
 import HeaderPaper from './HeaderPaper';
@@ -234,80 +235,83 @@ export default class CopyFromSubjectExists extends Component {
         const { listSubjects } = this.props.navigation.state.params;
         const { lerningTarget, isLoading } = this.state;
         return (
-            <View style={{ backgroundColor: '#56CCF2', flex: 1 }}>
-                <SafeAreaView />
-                <HeaderPaper
-                    title={'Bộ đề có sẵn'}
-                    navigation={this.props.navigation}
-                    color={'#fff'}
-                    notRightButton={true}
-                    createPaper={true}
-                />
-                <View style={styles.wrapDropdown}>
-                    <View style={styles.wrap2Dropdown}>
-                        <Dropdown
-                            containerStyle={styles.styleDrop}
-                            contentStyle={styles.firstTwo}
-                            title="Môn Học"
-                            data={listSubjects}
-                            onPressItem={(index) => this.onPressItemSubject(index)}
-                            boldText={{ fontWeight: "700", color: '#55CCF2' }}
-                        />
-                        <Dropdown
-                            containerStyle={styles.styleDrop}
-                            contentStyle={styles.firstTwo}
-                            title="Giáo trình"
-                            data={this.state.lerningTarget}
-                            onPressItem={(index) => this.onPressCurriculum(index)}
-                            indexSelected={this.state.indexSelected}
-                            boldText={{ fontWeight: "700", color: '#55CCF2' }}
-                        />
-                    </View>
-                    <View style={styles.styWrapInput}>
-                        <TextInput
-                            placeholder={'Tên bộ đề'}
-                            placeholderTextColor={'#c4c4c4'}
-                            style={styles.nameTest}
-                            value={this.state.textPreviosSearch}
-                            onChangeText={this.onChangePreviosSearchText}
-                        />
-                        <TouchableWithoutFeedback
-                            onPress={() => { this.onPressSearch() }}>
-                            <View style={styles.searchIcon}>
-                                <Image source={require('../../../asserts/icon/icon_searchNamePaper.png')} style={{ width: 15, height: 15 }} />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </View>
-                    <ModalCurriculum
-                        curriculumCode={this.state.currentCurriculum}
-                        data={this.state.targetLearning}
-                        onPress={(value) => this.onPress(value)}
-                        styleTitle={{ color: '#fff' }}
-                        borderStyle={styles.boeSty}
-                        stylePlace={styles.stylePlace}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}
+            >
+                <View style={{ backgroundColor: '#56CCF2', flex: 1 }}>
+                    <SafeAreaView />
+                    <HeaderPaper
+                        title={'Bộ đề có sẵn'}
+                        navigation={this.props.navigation}
+                        color={'#fff'}
+                        notRightButton={true}
+                        createPaper={true}
                     />
-
-                </View>
-                <View style={{ flex: 1, backgroundColor: '#fff', marginTop: 55 }}>
-                    {!isLoading
-                        ?
-                        <View style={styles.viewStatus}>
-                            <FlatList
-                                data={this.state.listTask}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={this.renderTask}
-                                style={{ paddingHorizontal: 5 }}
-                                ListFooterComponent={this.renderLoadMoreButton}
+                    <View style={styles.wrapDropdown}>
+                        <View style={styles.wrap2Dropdown}>
+                            <Dropdown
+                                containerStyle={styles.styleDrop}
+                                contentStyle={styles.firstTwo}
+                                title="Môn Học"
+                                data={listSubjects}
+                                onPressItem={(index) => this.onPressItemSubject(index)}
+                                boldText={{ fontWeight: "700", color: '#55CCF2' }}
+                            />
+                            <Dropdown
+                                containerStyle={styles.styleDrop}
+                                contentStyle={styles.firstTwo}
+                                title="Giáo trình"
+                                data={this.state.lerningTarget}
+                                onPressItem={(index) => this.onPressCurriculum(index)}
+                                indexSelected={this.state.indexSelected}
+                                boldText={{ fontWeight: "700", color: '#55CCF2' }}
                             />
                         </View>
-                        :
-                        <View style={[styles.viewStatus, { flex: 1 }]}>
-                            {isLoading && (<ListTaskPlaceHolder />)}
+                        <View style={styles.styWrapInput}>
+                            <TextInput
+                                placeholder={'Tên bộ đề'}
+                                placeholderTextColor={'#c4c4c4'}
+                                style={styles.nameTest}
+                                value={this.state.textPreviosSearch}
+                                onChangeText={this.onChangePreviosSearchText}
+                            />
+                            <TouchableWithoutFeedback
+                                onPress={() => { this.onPressSearch() }}>
+                                <View style={styles.searchIcon}>
+                                    <Image source={require('../../../asserts/icon/icon_searchNamePaper.png')} style={{ width: 15, height: 15 }} />
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
-                    }
+                        <ModalCurriculum
+                            curriculumCode={this.state.currentCurriculum}
+                            data={this.state.targetLearning}
+                            onPress={(value) => this.onPress(value)}
+                            styleTitle={{ color: '#fff' }}
+                            borderStyle={styles.boeSty}
+                            stylePlace={styles.stylePlace}
+                        />
+
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: '#fff', marginTop: 55 }}>
+                        {!isLoading
+                            ?
+                            <View style={styles.viewStatus}>
+                                <FlatList
+                                    data={this.state.listTask}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    renderItem={this.renderTask}
+                                    style={{ paddingHorizontal: 5 }}
+                                    ListFooterComponent={this.renderLoadMoreButton}
+                                />
+                            </View>
+                            :
+                            <View style={[styles.viewStatus, { flex: 1 }]}>
+                                {isLoading && (<ListTaskPlaceHolder />)}
+                            </View>
+                        }
+                    </View>
+                    <SafeAreaView style={{ backgroundColor: '#fff' }} />
                 </View>
-                <SafeAreaView style={{ backgroundColor: '#fff' }} />
-            </View>
+            </TouchableWithoutFeedback>
         )
     }
 }
