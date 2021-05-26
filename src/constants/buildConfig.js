@@ -3,14 +3,14 @@ import { Platform } from 'react-native';
 /**
  * Update version code build grade
  */
-export const VERSION_CODE_ANDROID = 12;
+export const VERSION_CODE_ANDROID = 13;
 
 /**
  * Update version code push
  */
 export const BUILD_NUMBER_CODE_PUSH = {
-    ios: '52',
-    android: '35'
+    ios: '53',
+    android: '36'
 };
 
 export const APP_VERSION_NAME = DeviceInfo.getVersion();
