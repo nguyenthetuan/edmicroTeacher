@@ -7,7 +7,7 @@ import ProgressRefresh from './ProgressRefresh';
 const { width, height } = Dimensions.get('window');
 
 export default function RightWrongRatio(props) {
-  const data = !!props.screenProps.data && !_.isEmpty(props.screenProps.data.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
+  const data = !!props.screenProps?.data && !_.isEmpty(props.screenProps?.data?.data) ? Object.keys(props.screenProps.data?.data?.questionResult).sort((a, b) => {
     return a.localeCompare(b);
   }).map(k => props.screenProps?.data?.data?.questionResult[k]) : [];
   let widthChart = width - 60;
@@ -22,7 +22,7 @@ export default function RightWrongRatio(props) {
         props.screenProps.isLoading
           ? <ActivityIndicator size='small' color='#04C6F1' />
           :
-          props.screenProps.data.data?.assignmentContentType == 3 ?
+          props.screenProps?.data?.data?.assignmentContentType == 3 ?
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Image source={require('../../../asserts/icon/iconNodata.png')} />
               <Text style={{ color: '#828282', fontFamily: 'Nunito-Regular', marginTop: 30, marginHorizontal: 60, textAlign: 'center' }}>{`Dạng bài này không thống kê tỷ lệ đúng sai.`}

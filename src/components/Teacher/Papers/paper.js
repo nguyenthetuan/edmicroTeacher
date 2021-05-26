@@ -1,4 +1,10 @@
-import React, { Component, useRef, useMemo, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  Component,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useCallback
+} from 'react';
 import {
   View,
   StyleSheet,
@@ -324,6 +330,7 @@ class Papers extends Component {
     }
     this.setState({
       listPapers: listPapersTmp,
+      dataFilter: listPapersTmp,
     });
   };
 
@@ -437,16 +444,16 @@ class Papers extends Component {
           {isLoadMore ? (
             <ActivityIndicator size={'small'} />
           ) : (
-              <Text
-                style={{
-                  color: '#000',
-                  fontFamily: 'Nunito-Bold',
-                  fontSize: RFFonsize(14),
-                  textAlign: 'center',
-                }}>
-                Xem thêm
-              </Text>
-            )}
+            <Text
+              style={{
+                color: '#000',
+                fontFamily: 'Nunito-Bold',
+                fontSize: RFFonsize(14),
+                textAlign: 'center',
+              }}>
+              Xem thêm
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -924,13 +931,8 @@ class Papers extends Component {
 
 
 const FlastlistCus = forwardRef((props, ref) => {
-
+  const { data } = props;
   const refFlastList = useRef();
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    setData(props.data);
-  }, [props.data])
 
   useImperativeHandle(ref, () => ({
     scrollToIndex: ({ animated, index }) => {
@@ -938,37 +940,36 @@ const FlastlistCus = forwardRef((props, ref) => {
     },
   }));
 
-  const render =
-    useMemo(() => {
-      return (
-        <AnimatedFlatList
-          style={{ paddingHorizontal: 16, paddingTop: 220 }}
-          data={data}
-          ref={refFlastList}
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={true}
-          keyExtractor={(item, index) => index.toString()}
-          extraData={data}
-          removeClippedSubviews={true}
-          ListEmptyComponent={props.listEmptyComponent}
-          ListFooterComponent={props.listFooterComponent}
-          ListFooterComponent={<View style={{ height: 240 }} />}
-          renderItem={({ item, index }) => {
-            return (
-              <ItemListTest item={item} onOpenModal={props._onOpenModal(item)} />
-            )
-          }}
-          initialNumToRender={2}
-          bounces={false}
-          scrollEventThrottle={1}
-          onScroll={props.onScroll}
-        />
-      )
-    }, [data]);
+  const render = useCallback(() => {
+    return (
+      <AnimatedFlatList
+        style={{ paddingHorizontal: 16, paddingTop: 220 }}
+        data={data}
+        ref={refFlastList}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={true}
+        keyExtractor={(item, index) => index.toString()}
+        extraData={data}
+        removeClippedSubviews={true}
+        ListEmptyComponent={props.listEmptyComponent}
+        ListFooterComponent={props.listFooterComponent}
+        ListFooterComponent={<View style={{ height: 240 }} />}
+        renderItem={({ item, index }) => {
+          return (
+            <ItemListTest item={item} onOpenModal={props._onOpenModal(item)} />
+          )
+        }}
+        initialNumToRender={2}
+        bounces={false}
+        scrollEventThrottle={1}
+        onScroll={props.onScroll}
+      />
+    )
+  }, [data]);
 
   return (
     <>
-      {render}
+      {render()}
     </>
   )
 })
