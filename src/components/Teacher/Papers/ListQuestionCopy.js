@@ -102,8 +102,8 @@ export default class ListQuestionCopy extends Component {
             nagigation: this.props.nagigation,
             statusbar: 'light-content',
             curriculumCode: 'TOAN',
-            data : data,
-          });
+            data: data,
+        });
     }
 
     filterDataRender(dataSource) {

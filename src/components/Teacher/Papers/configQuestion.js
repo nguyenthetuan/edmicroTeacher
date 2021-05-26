@@ -149,38 +149,38 @@ class ConfigQuestion extends Component {
 
   async componentDidMount() {
     const { data } = this.props.navigation.state.params || {};
+    let getListQuestion = [];
     if (data) {
-      // vao tu sao chep bo de
-      console.log(data);
-      this.getListQuestionCopy(data);
+      const { questions } = data;
+      getListQuestion = questions;
     } else {
-      let getListQuestion = await dataHelper.getQuestion();
-      const { totalPoint } = this.state;
-      for (let item of getListQuestion) {
-        item.point = roundToFour(totalPoint / getListQuestion.length);
-      }
-      getListQuestion = getListQuestion.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
-      !_.isEmpty(getListQuestion) &&
-        this.setState({
-          questions: getListQuestion,
-        });
-      const { token } = await dataHelper.getToken();
-
-      const resGrade = await apiPapers.getGrade({ token });
-      if (resGrade) {
-        this.props.saveGrades(resGrade);
-      }
-      this.setState(
-        {
-          listGrades: resGrade,
-          listSubjects: this.props.paper.listSubject,
-        },
-        () =>
-          this.activeSubject({
-            code: this.props.navigation.state.params.curriculumCode,
-          }),
-      );
+      getListQuestion = await dataHelper.getQuestion();
     }
+    const { totalPoint } = this.state;
+    for (let item of getListQuestion) {
+      item.point = roundToFour(totalPoint / getListQuestion.length);
+    }
+    getListQuestion = getListQuestion.map((item, index) => ({ ...item, numberQuestion: index + 1, key: index.toString() }));
+    !_.isEmpty(getListQuestion) &&
+      this.setState({
+        questions: getListQuestion,
+      });
+    const { token } = await dataHelper.getToken();
+
+    const resGrade = await apiPapers.getGrade({ token });
+    if (resGrade) {
+      this.props.saveGrades(resGrade);
+    }
+    this.setState(
+      {
+        listGrades: resGrade,
+        listSubjects: this.props.paper.listSubject,
+      },
+      () =>
+        this.activeSubject({
+          code: this.props.navigation.state.params.curriculumCode,
+        }),
+    );
   }
 
   getListQuestionCopy = (data) => {
