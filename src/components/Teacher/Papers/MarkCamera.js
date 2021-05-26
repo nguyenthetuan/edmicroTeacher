@@ -105,6 +105,7 @@ class MarkCamera extends Component {
             listSubjects: listSubjects || [],
             listGrades: listGrades || [],
             resSuccess: null,
+            isLoading: false,
         };
     }
 
@@ -388,6 +389,7 @@ class MarkCamera extends Component {
     }
 
     UploadPdfCam = async () => {
+        await this.setState({ isLoading: true });
         Keyboard.dismiss();
         if (this.validation()) {
             const {
@@ -429,6 +431,8 @@ class MarkCamera extends Component {
                         grade: gradeCode,
                         subject: subjectCode,
                     });
+                } else {
+                    this.setState({ isLoading: false });
                 }
             }
         }
@@ -569,28 +573,19 @@ class MarkCamera extends Component {
         const {
             listGrades,
             listSubjects,
-            urlFile,
         } = this.props.navigation.state.params;
         const {
             urlFilePDF,
-            urlFileAnswerPDF,
-            totalQuestionTN,
-            totalQuestionTL,
             assignmentTypes,
             modalVisible,
             loadingUpload,
             name,
             assignmentType,
             duration,
-            viewFileFDF,
-            typeQuestion,
             gradeCode,
-            subjectCode
+            subjectCode,
+            isLoading
         } = this.state;
-        const backgroundColor = this.props;
-        const numColumns = this.getNumColumns();
-        const urlPdf = (viewFileFDF && urlFilePDF) || urlFileAnswerPDF || urlFile;
-        const points = this.selectAnswer?.getTotalPoint();
         const { shadowBtn } = shadowStyle;
         return (
             <View style={{ flex: 1 }}>
@@ -614,7 +609,6 @@ class MarkCamera extends Component {
 
                                 {/* start create Upload PDF */}
                                 <TouchableWithoutFeedback onPress={() => { this._hideKeybroad(); }}>
-                                    {/* this.closeModalSelectAnswer() */}
                                     <View>
                                         <View style={[styles.bodyHeader, { flex: 1 }]}>
                                             <View style={{ flex: 1 }}>
@@ -648,7 +642,6 @@ class MarkCamera extends Component {
                                                         <Text style={styles.note}>Lưu ý dung lượng không quá 5Mb!</Text>
                                                     </View>
                                                     <View style={styles.wrapEndAreaUploadPDF}>
-                                                        {/* onPress={() => this.setModalVisible(true)} */}
                                                         <View style={{ flexDirection: 'row' }}>
                                                             <TouchableWithoutFeedback onPress={this.onPickPDF}>
                                                                 <View style={styles.buttonInSideAreaUploadPDF}>
@@ -664,13 +657,6 @@ class MarkCamera extends Component {
                                                                 </View>
                                                             </TouchableWithoutFeedback>
                                                         </View>
-                                                        {/* {urlFilePDF ?
-                                                            <TouchableOpacity style={[styles.buttonInSideAreaUploadPDF, { borderColor: '#56CCF2' }]} onPress={() => { this._onFullView(0) }}>
-                                                                <Image source={AppIcon.search_pdf} style={styles.pdfView} />
-                                                                <Text style={styles.addPar}>Xem</Text>
-                                                            </TouchableOpacity>
-                                                            : null
-                                                        } */}
                                                     </View>
                                                 </View>
                                                 {this.renderHeaderFlastList()}
@@ -705,7 +691,9 @@ class MarkCamera extends Component {
                                         </View>
                                         <RippleButton
                                             style={[styles.btnCreate, { ...shadowBtn }]}
-                                            onPress={this.UploadPdfCam}>
+                                            onPress={this.UploadPdfCam}
+                                            disabled={isLoading}
+                                        >
                                             <Text style={styles.txtCreate}>Tạo bộ đề</Text>
                                         </RippleButton>
                                     </View>
