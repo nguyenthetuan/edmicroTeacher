@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     textAlign: 'center',
     fontSize: RFFonsize(16),
-    width: width * 0.7
+    width: width * 0.7,
   },
   btnAvatar: {
     height: 38,

@@ -116,7 +116,7 @@ const renderListquestion = (data, points, renderCheckbox) => {
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
         let options = item.options;
-        html += `<div style="margin-top:15px; border:1px solid #e5e5e5" onclick="">
+        html += `<div style="margin-top:15px; border:0.5px solid #107CB9; border-radius: 5px "   onclick="">
                     <div style="padding: 10px 10px 0px 10px;">`
         if (renderCheckbox) {
             html += `<div style="display:flex">
@@ -139,7 +139,7 @@ const renderListquestion = (data, points, renderCheckbox) => {
                 </div>`
         }
         html += '</div>'
-        html += `<div style="display: flex; background-color: #2D9CDB;flex-direction: row; padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center;">
+        html += `<div style="display: flex; background-color: #107CB9;flex-direction: row; padding-right: 8px; padding-left: 15px;justify-content: space-between; align-items: center; border-radius: 0px 0px 5px 5px ">
             <p style="font-family: Nunito-regular;font-size: 13px;color: #FFF;">ID: ${item.questionNumber}</p>
             <div style="display: flex; flex-direction: row;">
                 <span style="font-family: Nunito-regular;font-size: 13px;color: #FFF;margin-left: 16px;">Tạo bởi:</span>
