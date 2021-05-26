@@ -3,13 +3,13 @@ import { Platform } from 'react-native';
 /**
  * Update version code build grade
  */
-export const VERSION_CODE_ANDROID = 13;
+export const VERSION_CODE_ANDROID = 14;
 
 /**
  * Update version code push
  */
 export const BUILD_NUMBER_CODE_PUSH = {
-    ios: '53',
+    ios: '54',
     android: '37'
 };
 
