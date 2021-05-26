@@ -20,7 +20,7 @@ export default class MissionDetailScreen extends Component {
                         color={'#000'}
                         navigation={this.props.navigation}
                         goBack={this.goBack}
-                        title={nameMission}
+                        title={title || nameMission}
                     />
                     {/* <Image source={AppIcon.pic_mission}
                         resizeMode={'contain'}

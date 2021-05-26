@@ -7,14 +7,16 @@ import {
     Dimensions,
     TouchableWithoutFeedback,
     ActivityIndicator,
-    Alert
+    Alert,
+    Image,
 } from 'react-native';
-import HeaderPaper from './HeaderPaper';
+import Header from '../../common-new/Header';
 import apiPapers from '../../../services/apiPapersTeacher';
 import dataHelper from '../../../utils/dataHelper';
 import Common from '../../../utils/CommonBeta';
 import AppIcon from '../../../utils/AppIcon';
 import htmlHelper from '../../../utils/WebviewListQuestionCopy';
+import Toast, { DURATION } from 'react-native-easy-toast';
 import { WebView } from 'react-native-webview';
 import WarningModal from '../../modals/WarningModal';
 import { RFFonsize } from '../../../utils/Fonts';
@@ -26,7 +28,8 @@ if (Platform.OS === 'ios') {
 
 const { width, height } = Dimensions.get('window');
 
-const knowledgeText = { 0: 'Nhận biết', 1: 'Thông hiểu', 2: 'Vận dụng', 3: 'Vận dụng cao' };
+const knowledgeText = { 0: '0', 1: '1', 2: '2', 3: '3' };
+// 0. Nhận biết, 1.Thông hiểu, 2. Vân dụng, 3. Vận dụng cao
 export default class ListQuestionCopy extends Component {
     constructor(props) {
         super(props);
@@ -110,86 +113,106 @@ export default class ListQuestionCopy extends Component {
         let result = dataSource.sort((a, b) => (a.index - b.index));
         return result;
     }
-
+    showToast() {
+        // if() {
+        // }
+    }
     render() {
         const data = this.props.navigation.state.params.data.data;
         this.filterDataRender(data.questions);
         return (
             <View>
-                <SafeAreaView style={{ backgroundColor: '#56CCF2' }} />
+                <SafeAreaView style={{ backgroundColor: '#107CB9' }} />
                 {/* <View style={styles.root}> */}
                 <View style={styles.header}>
-                    <HeaderPaper
-                        // title={'Bộ đề có sẵn'}
-                        navigation={this.props.navigation}
-                        color={'#fff'}
-                        buttonRightText={'Cấu hình bộ đề'}
-                        onRightAction={this.copySubjectMatter}
+                    <Header
+                        ref={ref => this.refHeader = ref}
                         title={data.name}
-                        createPaper={true}
+                        color={'#fff'}
+                        navigation={this.props.navigation}
+                        onRightAction={this.copySubjectMatter}
+                        styleTitle={styles.styleTitle}
+                        colorBtnBack={'#ffffff'}
+                        centerTitle={false}
+                        createPaper={false}
+                        btnCopy={true}
                     />
                     <View style={styles.headerContent}>
                         <View style={styles.headerContentLeft}>
                             <View style={styles.flexRow}>
-                                <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                                    <Text style={[styles.textNormalName, { fontSize: RFFonsize(14) }]}>Môn: </Text>
-                                    <View style={{ height: 20, paddingHorizontal: 0, borderColor: '#fff' }}>
-                                        <Text numberOfLines={2}
-                                            style={[styles.textNormal, { width: width - 320 }]}>{data.subjectNames[0]}</Text>
-                                    </View>
-                                </View>
                                 <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                     <Text style={[styles.textNormalName, { fontSize: RFFonsize(14) }]}>Lớp: </Text>
                                     <View style={{ height: 20, paddingHorizontal: 0, left: 4.5, borderColor: '#fff' }}>
                                         <Text style={styles.textNormal}>{data.gradeCode[0].slice(1)}</Text>
                                     </View>
                                 </View>
-                                <TouchableWithoutFeedback
-                                    hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
-                                    onPress={this.copySubjectMatter}
-                                >
-                                    <View style={styles.rightHeader}>
-                                        <Text style={styles.txtRightHeader}>{`Sao chép bộ đề` || `Lưu cấu hình`}</Text>
+                                <View style={{ flexDirection: 'row', alignSelf: 'center', right: 16 }}>
+                                    <Text style={[styles.textNormalName, { fontSize: RFFonsize(14) }]}>Môn: </Text>
+                                    <View style={{ height: 20, paddingHorizontal: 0, borderColor: '#fff' }}>
+                                        <Text numberOfLines={2}
+                                            style={[styles.textNormal, { width: width - 320 }]}>{data.subjectNames[0]}</Text>
                                     </View>
-                                </TouchableWithoutFeedback>
+                                </View>
+                                {/* <TouchableWithoutFeedback
+                                        hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                                        onPress={this.copySubjectMatter}
+                                    >
+                                        <View style={styles.rightHeader}>
+                                            <Text style={styles.txtRightHeader}>{`Sao chép bộ đề` || `Lưu cấu hình`}</Text>
+                                        </View>
+                                    </TouchableWithoutFeedback> */}
                             </View>
                         </View>
-                        <View style={styles.headerLineTitle}>
-                            <Text style={styles.textTitle}>Loại câu hỏi</Text>
-                        </View>
                         <View style={styles.headerContentRight}>
-                            {!!this.state[`knowledge0`] && <View style={styles.headerLineParams}>
-                                <View style={styles.leftParams}>
+                            {!!this.state[`knowledge0`] &&
+                                <TouchableWithoutFeedback onPress={this.showToast}>
+                                    <View style={styles.headerLineParams}>
+                                        {/* <View style={styles.leftParams}>
                                     <Text style={styles.textNormalName}>{knowledgeText['0']}</Text>
-                                </View>
-                                <View style={styles.rightParams}>
-                                    <Text style={styles.textNormal}>{this.state[`knowledge0`]} câu</Text>
-                                </View>
-                            </View>}
-                            {!!this.state[`knowledge1`] && <View style={styles.headerLineParams}>
-                                <View style={styles.leftParams}>
-                                    <Text style={styles.textNormalName}>{knowledgeText['1']}</Text>
-                                </View>
-                                <View style={styles.rightParams}>
-                                    <Text style={styles.textNormal}>{this.state[`knowledge1`]} câu</Text>
-                                </View>
-                            </View>}
-                            {!!this.state[`knowledge2`] && < View style={styles.headerLineParams}>
-                                <View style={styles.leftParams}>
-                                    <Text style={styles.textNormalName}>{knowledgeText['2']}</Text>
-                                </View>
-                                <View style={styles.rightParams}>
-                                    <Text style={styles.textNormal}>{this.state[`knowledge2`]} câu</Text>
-                                </View>
-                            </View>}
-                            {!!this.state[`knowledge3`] && <View style={styles.headerLineParams}>
-                                <View style={styles.leftParams}>
-                                    <Text style={styles.textNormalName}>{knowledgeText['3']}</Text>
-                                </View>
-                                <View style={styles.rightParams}>
-                                    <Text style={styles.textNormal}>{this.state[`knowledge3`]} câu</Text>
-                                </View>
-                            </View>}
+                                </View> */}
+                                        <View style={styles.leftParams}>
+                                            <Image source={require('../../../asserts/icon/icon_testDemoCopy.png')} />
+                                        </View>
+                                        <View style={styles.rightParams}>
+                                            <Text style={styles.txtQuestion}>{this.state[`knowledge0`]} câu</Text>
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            }
+                            {!!this.state[`knowledge1`] &&
+                                <TouchableWithoutFeedback onPress={this.showToast}>
+                                    <View style={styles.headerLineParams}>
+                                        <View style={styles.leftParams}>
+                                            <Image source={require('../../../asserts/icon/icon_testDemoCopy.png')} />
+                                        </View>
+                                        <View style={styles.rightParams}>
+                                            <Text style={styles.txtQuestion}>{this.state[`knowledge1`]} câu</Text>
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>}
+                            {!!this.state[`knowledge2`] &&
+                                <TouchableWithoutFeedback onPress={this.showToast}>
+                                    < View style={styles.headerLineParams}>
+                                        <View style={styles.leftParams}>
+                                            <Image source={require('../../../asserts/icon/icon_testDemoCopy.png')} />
+                                        </View>
+                                        <View style={styles.rightParams}>
+                                            <Text style={styles.txtQuestion}>{this.state[`knowledge2`]} câu</Text>
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            }
+                            {!!this.state[`knowledge3`] &&
+                                <TouchableWithoutFeedback onPress={this.showToast}>
+                                    <View style={styles.headerLineParams}>
+                                        <View style={styles.leftParams}>
+                                            <Image source={require('../../../asserts/icon/icon_testDemoCopy.png')} />
+                                        </View>
+                                        <View style={styles.rightParams}>
+                                            <Text style={styles.txtQuestion}>{this.state[`knowledge3`]} câu</Text>
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>}
                         </View>
                     </View>
                 </View>
@@ -218,6 +241,7 @@ export default class ListQuestionCopy extends Component {
                     subjectId={'TOAN'}
                 />
                 {/* </View> */}
+                <Toast ref="toast" position={'top'} />
             </View >
         )
     }
@@ -230,38 +254,28 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        backgroundColor: '#56CCF2',
-        height: height * 0.3,
-        paddingHorizontal: 5
+        backgroundColor: '#107CB9',
+        height: height * 0.2,
     },
     headerContent: {
         flexDirection: 'column',
-        justifyContent: 'space-between',
         flex: 1,
         paddingHorizontal: 10,
-        marginTop: 10
     },
     headerContentLeft: {
-        // width: 150,
         justifyContent: 'center',
-        marginBottom: 10
+        marginVertical: 8
     },
     headerContentRight: {
-        flex: 1,
-        justifyContent: 'space-between',
-        borderWidth: 1,
-        borderRadius: 4,
-        borderColor: '#fff',
-        marginBottom: 10,
+        marginVertical: height * 0.02,
         flexDirection: 'row',
-        paddingHorizontal: 5,
+        alignItems: 'center',
+        marginHorizontal: 5,
     },
     headerLineParams: {
-        borderColor: '#fff',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        flexDirection: 'row',
         alignSelf: 'center',
-        flex: 1
+        paddingHorizontal: 10,
     },
     headerLineTitle: {
         height: 25,
@@ -275,7 +289,8 @@ const styles = StyleSheet.create({
     },
     rightParams: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: 5
     },
     textTitle: {
         fontSize: RFFonsize(14),
@@ -296,6 +311,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito',
         color: '#fff'
     },
+    txtQuestion: {
+        fontSize: RFFonsize(12),
+        lineHeight: RFFonsize(16),
+        fontFamily: 'Nunito-Bold',
+        color: '#fff'
+    },
     textName: {
         fontSize: RFFonsize(14),
         fontWeight: '800',
@@ -305,7 +326,8 @@ const styles = StyleSheet.create({
     flexRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: 5
     },
     txtRightHeader: {
         paddingHorizontal: 13,
@@ -329,5 +351,11 @@ const styles = StyleSheet.create({
         marginTop: 13,
         marginBottom: 13,
         borderColor: '#fff',
-    }
+    },
+    styleTitle: {
+        flex: 0,
+        color: '#fff',
+        fontSize: RFFonsize(14),
+        fontWeight: 'bold',
+    },
 })

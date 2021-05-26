@@ -14,7 +14,8 @@ const navigateUser = (props) => {
 }
 
 const HeaderPrimary = forwardRef((props, ref) => {
-    const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack, centerTitle, createPaper, onRightAction } = props;
+
+    const { showLead = true, navigation, actionIcon, title, styleTitle, colorBtnBack, centerTitle, createPaper, onRightAction, btnCopy } = props;
     const { bgColorActive, disabled } = props;
     const { shadowBtn } = shadowStyle;
     return (
@@ -86,6 +87,20 @@ const HeaderPrimary = forwardRef((props, ref) => {
                 :
                 null
             }
+            {
+                btnCopy
+                    ?
+                    <TouchableWithoutFeedback
+                        hitSlop={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                        onPress={onRightAction}
+                    >
+                        <View style={[styles.bgCopy, shadowBtn]} >
+                            <Text style={styles.textCopy}>Sao chép</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    :
+                    null
+            }
         </View >
     );
 });
@@ -144,6 +159,22 @@ const styles = StyleSheet.create({
         fontSize: RFFonsize(10),
         lineHeight: RFFonsize(14),
         color: '#fff',
+        alignSelf: 'center'
+    },
+    bgCopy: {
+        width: 90,
+        height: 25,
+        borderRadius: 5,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        zIndex: 1,
+        right: 5
+    },
+    textCopy: {
+        fontFamily: 'Nunito-Bold',
+        fontSize: RFFonsize(10),
+        lineHeight: RFFonsize(14),
+        color: '#FF6213',
         alignSelf: 'center'
     },
 });
